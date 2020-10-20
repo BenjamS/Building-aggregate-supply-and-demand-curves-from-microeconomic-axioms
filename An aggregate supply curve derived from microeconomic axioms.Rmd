@@ -1,0 +1,599 @@
+---
+title: Building aggregate suply and demand curves from microeconomic axioms
+#date: "`r Sys.Date()`"
+authors:
+ - name: Ben Schiek
+  email: b.schiek@ccgiar.org
+  address: Some Institute of Technology
+abstract: |
+ This is the abstract.
+
+ It consists of two paragraphs.
+acknowledgements: |
+ This is an acknowledgement.
+
+ It consists of two paragraphs.
+keywords:
+ - key
+ - dictionary
+ - word
+#fontsize: 12pt
+#spacing: halfline # could also be oneline
+#classoptions:
+# - endnotes
+bibliography: mybibfile.bib
+output: rticles::oup_article
+#header-includes:
+# - \usepackage[nomarkers,tablesfirst]{endfloat} # For figures and tables at end
+# - \usepackage{lineno} # For line numbering
+# - \linenumbers # For line numbering
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE) # By default, hide code; set to TRUE to see code
+#knitr::opts_chunk$set(fig.pos = 'p') # Places figures on pages separate from text
+knitr::opts_chunk$set(out.width = '100%', dpi=300) # Figure resolution and size
+knitr::opts_chunk$set(fig.env="figure") # Latex figure environment
+
+library(tidyverse)
+
+```
+
+
+* In agricultural economic ex-ante impact assessment exercises, it is standard practice to specify aggregate supply and demand curves without providing an empirical or theoretical basis for the choice of functional form. This is particularly true in partial equilibrium modeling [@alston1995science], but can also be seen in more complex models. The sector equilibrium model IMPACT, for example, uses constant elasticity (CE) supply curves, without explaining why [].
+
+* Presumably, the perceived benefits of such a cavalier approach to supply-demand curve specification are that it is expedient, and that the precise relation of this or that functional form to microeconomic axioms is merely academic. So long as the specified functional form agrees with basic intuition and experience (has the right sign on the slope, and so on), it is better to apply the tool to improve our understanding of the world, rather than to waste time trying to reach a better understanding of the tool itself.
+
+* But the drawbacks of this expediency soon become apparent, as the cavalier disregard for theoretical details quickly lands the analyst in serious contradictions of basic facts, or of well documented empirical laws. The linear aggregate demand curve on which countless impact studies rest, for example, implies either that all consumers have the same budget (an absurdity), or that their preferences are homothetic, which violates Engel's and Bennett's Laws. Linear supply curves, meanwhile, imply the possibility of negative supply quantities. Such issues, some of which are well known [], quickly accumulate in the name of expediency, ultimately forcing the expedient analyst into the peculiar position of arguing that the specification of supply and demand curves is immaterial to partial equilibrium analysis [@alston1995science].
+There is also no explanation of the aggregation. For some reason, aggregation is viewed as an intractable problem... alston quote []
+
+<!-- Many economists recognize that the optimal input mix changes as parameters change, and yet these same economists are prone to specify a linear supply curve, which implies homothetic inputs  -->
+* More importantly, the absence of a theoretical grounding makes it impossible to decipher the real world implications of different functional forms, or of changes in the curves' parameter values given an exogenous shock of interest. attribution problem...Alston and Pardey [-@alston2001attribution], point to the aforementioned opacity in the supply curve parameterization itself, which makes it difficult to distinguish between benefits due to AR4D impacts and benefits due to other, unrelated processes (the attribution problem). Their argument was later supported by Evenson and Gollin's seminal impact assessment of the green revolution [-@evenson2003assessing], which found that just 17% of the increase in production in the developing world from 1961-1980 could be attributed to improved germplasm.
+In the agricultural research for development (AR4D) context, there was considerable debate in the 1970s over whether the research-induced supply curve shift should be modeled as a parallel shift or a pivot [@alston1995science; @norton1981evaluating; @lindner1978supply]. The debate was further complicated by differing views as to whether supply should be modeled as a linear or a curved CE function. Without a theoretical framework to link parameter values and functional forms to real world conditions, the debate was ultimately inconclusive. The answers to the questions left unresolved by the debate have come down to us today as a matter of preference. In their highly influential book, _Science Under Scarcity_, Alston et al. indicate their preference for the linear parallel shift [-@alston1995science]; and AR4D partial equilibrium impact studies generally follow suit.
+
+
+<!-- The answers to these questions are highly non-trivial, as an AR4D center effectively doubles its expected impact merely by choosing a linear parallel shift over a CE pivot []. -->
+* Curiously, the literature has plodded ahead undeterred by such considerations, confident, perhaps, that the expediency gained offsets these "technical" issues, which are (hopefully) of third or fourth order. However, there is evidence that donor patience with the cavalier approach has worn thin. Hurley et al. [-@hurley2014re; -@hurley2016returns] note a growing "disconnect" between donor funding levels and modeled AR4D rates of return. They concede that this is likely because donors have simply stopped believing the steady stream of ex-ante impact assessments reporting implausibly high estimates of returns---59.5% on average---to AR4D investments.
+
+>"Agricultural R&D spending by the United States Department of Agriculture and state agricultural experiment stations was $4.1 billion in 2000. With an annual rate of return equal to the average internal rate of return of 59.5 percent, such an investment would be worth $56.3 quintillion ($56.3 x 1018) in 2050---a value that is more than 2.3 million times the projected size of the global gross domestic product in 2050" [@hurley2016returns].
+
+Alston and Pardey made a similar observation many years earlier [-@alston2001attribution]. Hurley et al. [-@hurley2016returns] propose to correct for any methodological flaw in the modeling by replacing the internal rate of return (IRR) calculation with the more conservative "modified IRR".
+Certainly, when the modeler comes up with a result implying potential benefits several orders of magnitude greater than world GDP, they had better be able to offer a clear explanation of the assumptions involved. 
+
+
+
+
+
+
+* Here I show how the specification of aggregate supply and demand curves follows directly from two microeconomic axioms: 1) The law of diminishing marginal returns and 2) the optimizing agent. The supply curve, so derived, is a CE curve, while the demand curve is a hyperbola. The parameters of these curves have a clear interpretation in terms of input elasticities of yield, degree of homogeneity, and control variables. The form allows for precision modeling of exogenous, research induced shocks to specific input elasticities while holding the rest of the technology and control variables constant. Alternatively, more complex scenarios may be modeled involving simultaneous shocks to multiple elasticities, as well as changes in control variables to reflect future trends. In any case, the form allows the modeler to explain in very clear and precise terms where the benefits are coming from, and how much of the benefits are attributable to the research induced shock.
+
+Contrary to current preference and practice, the theoretically derived supply curve implies that exogenous shocks result in a pivot, not a parallel shift, of the curve. This results in benefits that are generally much lower than those reported using the linear parallel shift. It also introduces increased complexity as to consumer vs producer benefits.
+
+
+
+<!-- "Mathiness" that introduces "slippage" that confuses real economic problems with problems that are mere artifacts of the (arbitrarily chosen) model specification. [Romer]. then there's a confusion of results with surmises and anticipations of results [Von Neumann]. This can to some extent be viewed as a case of documented empirical laws in search of a theoretical framework (or vice versa a theory in search of empirical basis)...Houthakker's comment on empirical and theoretical... /The empirical basis for supply curves exhibiting constant price elasticity is well established []. Yet a formal theory explaining this phenomenon has yet to come forward. This is widely held to be all but impossible [Alston.]. Below I show how the elusive theory is a straightforward consequence of two micro-economic axioms: the law of diminishing marginal returns, and the optimizing agent. -->
+
+
+Here I...the theoretical derivation allows for transparency in attribution...
+
+
+"Laws are in the first instance empirical regularities, which may 
+originally have been observed without much theoretical basis.... A large part of the business of the empirical sciences is to develop theories within which already discovered laws have their place and new regularities can be explored. By linking these laws to other phenomena the theories give meaning to the laws, for a mere empirical regularity conveys only limited credibility and cannot be extrapolated with much confidence. In their turn, the laws give significance to the theories that can account for them. In particular, the establishment of empirical laws enables us to avoid the ceteris paribus assumption that has long been the bane of economic theory. The propositions of economic theory are always conditional, but empirical research tells us which of the conditions have to be formulated explicitly and which can be swept under the rug in the form of an error term" [@houthakker1992aggregation].
+
+<!-- Expansion of the agricultural frontier accounted for another 20% of the increase, leaving 63% of the increase to be explained by other factors. -->
+
+<!-- Donor patience for such a cavalier approach to ex-ante impact assessment is at an end. []. There is strong evidence, at any rate, that donors have simply ceased to believe in these assessments [@hurley2014re;@nin2018revisiting]. -->
+
+
+
+* perhaps going back to Marshall's suggestion that aggregation is a matter of a discrete sum of individual supply curves
+
+
+
+
+
+
+
+* Economists at agricultural research for development (AR4D) centers typically take a cavalier approach to the estimation of agricultural commodity supply curves. ...leaving questions unaddressed: how does the optimal input mix change with technology? How do supply curves shift given a change in technology, at both the individual and aggregate level? AR4D economists are clearly aware of the nuance involved [science under scarcity], but this awareness has not translated into practice. DSSAT modelers...
+ Patience has run out for this cavalier attitude.
+
+
+
+
+
+
+
+
+This is widely considered to be impossible.
+
+[@alston1995science]
+Accurate measurement of even ordinary demand-and-supply curves, par-
+ticularly along their entire length, is  very difficult.  And it is  very  hard to predict the nature of shifts in these curves (Scobie 1976; Lindner and Jarrett 1978; Rose 1980). Supply-and-demand curves may be nonlinear, but they 
+are often assumed to be linear to simplify consumer and producer surplus 
+calculations. Errors associated with this simplification may not be too severe, but errors associated with unavoidable assumptions about the nature of the 
+research-induced supply shift (i.e., parallel, pivotal, or some other shift) can be major (e.g., see Voon and Edwards 1991c). A parallel shift almost doubles the benefit compared with a pivotal shift. Of course, these errors only arise in consumer-producer surplus applications in which curves are shifting, such as when new technologies are being adopted.
+
+What  does  economic  theory  tell  us  about  the  nature  of these  shifts? 
+Unfortunately,  not  very  much.  To  be  confident  about  this  aspect  of the problem would require either (a) precise econometric evidence or (b)  de-
+tailed  information on the effects on  individual  agents,  details  of industry structure including details on exit and entry of firms, and a complete theory of aggregation. This information is not available; assumptions are unavoidable. The consequences of assumptions for potential error in using producer and  consumer  surplus  for  predicting  research  impact  in  priority-setting exercises  should  be  kept in  mind.  In  most  cases,  the  effect on producer surplus will be greater than the effect on consumer surplus. 
+
+
+"Unfortunately, economic theory is not informative about either the func-
+tional form of supply and demand or the functional form (parallel, pivotal, 
+proportional, or otherwise) of the research-induced supply shift.... with current techniques and typically available data, it is not possible to settle these questions econometrically. We might hope to obtain plausible estimates of elasticities at the data means, but definitive results concerning functional forms are unlikely and it is impossible to get statistical results that can be extrapolated to the price or quantity axes (i.e., the full length of the function) with any confidence. Thus, assumptions about the nature of the research-induced supply shift are unavoidable. Our conclusion is that it is important to be aware of the consequences of different assumptions" (Alston & Norton, 1995).
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+In the AR4D context, returns to investment are marginally diminishing. In other words, _the additional return resulting from any small increase in investment in a given portfolio item will be inversely proportionate to the sum already invested in that portfolio item_. This is essentially a "production side" analogue of the time honored, empirical consumer side observation going back to Bernoulli (and perhaps as far back as Aristotle [@kauder1953genesis]) that _"in the absence of the unusual, the utility resulting from any small increase in wealth will be inversely proportionate to the quantity of goods previously possessed"_ [@bernoulli1954exposition].
+
+Formalization of such statements depends upon how one interprets, mathematically, the notion of change expressed in words like "additional return" and "small increase". If these are interpreted as percentage changes, then the production side statement can be formalized as follows.
+
+\begin{equation}
+\frac{\partial \ln(R)}{\partial \ln(w_i)} \sim \frac{1}{w_i}
+\label{eq:dimRetDefine}
+\end{equation}
+
+Where, to be clear, the term $\frac{\partial \ln(R)}{\partial \ln(w_i)}$ is the portfolio return elasticity with respect to investment in the $i^{th}$ portfolio item. In other words, this indicates the percentage increase in portfolio return given a $1$ percent increase in investment in the $i^{th}$ portfolio item. The subsequent portion of the equation, "$\sim 1 / w_i$", then means "inversely proportionate to the quantity of funds already invested".
+
+An expression for $R$ can be derived from this formalization by first rewriting it as
+
+\begin{equation}
+\frac{\partial \ln(R)}{\partial \ln(w_i)} = \alpha_i \frac{d \ln (w_i)}{dw_i}
+\label{eq:dimRetDefine_2}
+\end{equation}
+
+Where $\alpha_i$ is a proportionality parameter.
+
+Now, letting $\nabla_{\ln \mathbf{w}} \ln R$ denote the gradient of the logged portfolio return with respect to all $n$ portfolio items, i.e.,
+
+\begin{equation}
+\nabla_{\ln \mathbf{w}} \ln R = \left[ \begin{matrix} \frac{\partial \ln(R)}{\partial \ln(w_1)} \\
+\frac{\partial \ln(R)}{\partial \ln(w_2)} \\
+\vdots \\
+\frac{\partial \ln(R)}{\partial \ln(w_n)}
+\end{matrix} \right]
+\end{equation}
+
+And integrating this gradient with respect to the respective investment shares $\mathbf{w}$,
+
+\begin{equation}
+\begin{split}
+\ln R &= \int \nabla_{\ln \mathbf{w}} \ln R \cdot d\mathbf{w} \\
+&= \int \nabla_{\mathbf{w}} \ln\mathbf{w} \cdot d\ln\mathbf{w} \\
+&= \int \mathbf{w}^{-2} \cdot d\mathbf{w} \\
+&= \boldsymbol{\alpha} \cdot \mathbf{w}^{-1} + k
+\end{split}
+\label{eq:integrate_lnR}
+\end{equation}
+
+And substituting $\bar{R}=e^{k}$, one arrives at the following expression for $R$, derived entirely from the law of diminishing marginal returns formalized in equation \ref{eq:dimRetDefine}. 
+
+\begin{equation}
+R(\mathbf{w}; \boldsymbol{\alpha}, \bar{R}) = \bar{R}e^{\boldsymbol{\alpha} \cdot \mathbf{w}^{-1}}
+\label{eq:dimRetfn}
+\end{equation}
+
+The graph of this function in Figure \ref{fig:dimRet_f_basic_illust} agrees with intuition and experience, exhibiting increasing returns up to a point of constant returns, and then decreasing returns. The function approaches, but never reaches, the upper bound given by $\bar{R}$.
+
+\begin{equation}
+\bar{R} = \lim_{\mathbf{w} \rightarrow \infty} R
+\end{equation}
+
+```{r, fig.show = 'hold', fig.width=3, fig.height=2, fig.align='center', fig.cap="\\label{fig:dimRet_f_basic_illust}The returns function derived from the law of diminishing returns. In this illustration, one budget share is allowed to vary while the rest are held contstant. The dashed line at the top indicates the ceiling given by $\\bar{R}$.", echo=FALSE}
+
+Investment <- seq(0, 4, length.out = 35)
+Return <- exp(-1 / Investment)
+gg <- ggplot(data.frame(Investment, Return), aes(Investment, Return))
+gg <- gg + geom_line(size = 1.2)
+gg <- gg + geom_hline(yintercept = 1, size = 1.2, linetype = "dashed")
+gg <- gg + theme(axis.text = element_blank(),
+         axis.ticks = element_blank(),
+         axis.title = element_text(size = 7))
+gg
+
+```
+The proportionality parameters $\boldsymbol{\alpha}$ are determined by context; and so it is important to build intuition regarding their meaning. First of all, note that return is decreasing in $\boldsymbol{\alpha}$. That is,
+
+\begin{equation}
+\frac{\partial R}{\partial \alpha_i} = -\frac{R}{w_i} < 0
+\label{eq:dRda}
+\end{equation}
+
+This means that, as $\alpha_i$ is lower, return is more responsive to increments in funding. Conversely, as $\alpha_i$ is higher, return is less responsive to increments in funding. The proportionality parameter $\alpha_i$ can thus be thought of as the inverse of the respective portfolio item's return response to increases in investment, or, more succinctly, the inverse of its _expected scalability_.
+<!-- This is related to, but also quite different from, the expected return typically assessed in a conventional ex-ante impact assessment exercise occurring in step 3 of Mills' resource allocation workflow (Figure \ref{fig:mills_missing_step}). Explicit accounting of the law of diminishing returns implies a shift in emphasis from expected return at a particular fixed level of investment to a focus on _expected scalability_. -->
+
+Note also that equation \ref{eq:dRda} can be multiplied through by $\alpha_i / R$ to arrive at
+
+\begin{equation}
+\begin{split}
+\frac{\partial \ln (R)}{\partial \ln (\alpha_i)} &= -\frac{\alpha_i}{w_i} \\
+&= -\frac{\partial \ln (R)}{\partial \ln (w_i)}
+\end{split}
+\end{equation}
+
+The percentage change in return given a $1$ percent change in $\alpha_i$ is thus equal to the negative of the portfolio return elasticity with respect to investment.
+
+In practice, a given $\alpha_i$ can be deduced by assessing expected return at a wide range of investment levels and evaluating
+
+\begin{equation}
+\alpha_i = -w_i (\ln(R) - \ln(\bar{R}))
+\end{equation}
+
+at each investment level. If the research proposal conforms to the law of diminishing returns formalized in equation \ref{eq:dimRetDefine_2}, then the the evaluations should converge to a single value. Note from this equation that $\alpha_i$ has the same units of measurement as the investment (for eg., dollars, euros, yuan, or simply "investment share", if the investment is expressed as a fraction of the budget).
+
+Again, there is room for exploration here, as the definition in equation \ref{eq:dimRetfn} depends on the decision to interpret "additional change" as percentage change. Alternatively, the change could be interpreted as a marginal change, in which case the law is formalized
+
+\begin{equation}
+\frac{\partial R}{\partial w_i} \sim \frac{1}{w_i}
+\end{equation}
+
+Which, when multiplied by $w_i / R$, yields the interesting corrollary
+
+\begin{equation}
+\frac{\partial \ln(R)}{\partial \ln(w_i)} \sim \frac{1}{R}
+\end{equation}
+
+Integration of the gradient $\nabla_{\mathbf{w}} R$ with respect to the investment shares $\mathbf{w}$ (as in equation \ref{eq:integrate_lnR}) then leads to a Cobb-Douglas form for $R$.
+
+
+
+
+# Example
+
+```{r, echo=F}
+
+
+this_folder <- "C:/Users/bensc/OneDrive/Documents/Data/Tegemeo Data/"
+this_subfolder <- "OSU Work 230713/"
+this_file <- "Kenya 2007 Clean 03-08-13.csv"
+this_filepath <- paste0(this_folder, this_subfolder, this_file)
+df <- read.csv(this_filepath, stringsAsFactors = F)
+#colnames(df)
+# df$educ <- exp(df$leduc)
+# df$drainage <- exp(df$ldrainage)
+keep_these <- c("hhid", "acres", "yieldmaiz", "fertactot_F",
+                "ageavg",
+                "labfammale_qtyM_F",
+                #"labfamfem_qtyM_F",
+                #"hybmz_F",
+                "pkgftot_vil",
+                "qwetxt",
+                "qwetpre")
+df_mod <- df[, keep_these]
+# df_mod <- merge(df_mod, df_input, by = "hhid")
+# df_mod$pestkg <- df_mod$pestkg / df_mod$acres
+df_mod$hhid <- NULL
+df_mod$acres <- NULL
+log_these <- setdiff(colnames(df_mod), c("hybmz_F", "gend"))
+df_mod[, log_these] <- as.data.frame(apply(df_mod[, log_these], 2, log))
+# df_mod[, -1] <- as.data.frame(apply(df_mod[, -1], 2, function(x) 1 / x))
+# df_mod$yieldmaiz <- log(df_mod$yieldmaiz)
+for(i in 1:ncol(df_mod)){
+  df_mod[which(is.infinite(df_mod[, i])), i] <- NA
+}
+mod <- lm(yieldmaiz~., df_mod, na.action = na.omit)
+summary(mod)
+#plot(mod$fitted.values, mod$residuals)
+
+a <- coefficients(mod)
+yint <- a[1]
+a_inputs <- a[c("fertactot_F", "labfammale_qtyM_F")]
+a_inputs1 <- a_inputs
+a_inputs1[1] <- a_inputs[1] + 0.5
+
+a_control <- setdiff(a, c(yint, a_inputs))
+mat_control <- as.matrix(df_mod[, c("ageavg", "pkgftot_vil", "qwetxt", "qwetpre")])
+
+b_control <- as.numeric(t(colMeans(mat_control, na.rm = T)) %*% a_control)
+b_const <- as.numeric(sum(a_inputs * log(a_inputs)) + yint)
+b <- b_const + b_control
+h <- sum(a_inputs)
+h1 <- sum(a_inputs1)
+#============================================================================
+QSfun <- function(P, h, b, N_S){
+  QS <- N_S * exp(b / (1 - h)) * P^(h / (1 - h))
+  return(QS)
+}
+
+QDfun <- function(P, eta_D, u_D, a_D, N_D){
+  # 0 < eta_D < 1
+  QD <- N_D * a_D * u_D * P^(eta_D - 1)
+  return(QD)
+}
+
+Pefun <- function(h, b, a_D, eta_D, u_D, N_D, N_S){
+  term <- -(1 - h) / (eta_D * (1 - h) - 1)
+  P_e <- (N_D / N_S * a_D * u_D)^term * exp(b / (eta_D * (1 - h) - 1))
+  return(P_e)
+  }
+
+yStar_fun <- function(lambda, h, b, a_D, eta_D, u_D, N_D, N_S){
+  P_e <- Pefun(h, b, a_D, eta_D, u_D, N_D, N_S)
+  yStar <- exp(b / (1 - h)) * (P_e / lambda)^(h / (h - 1))
+  return(yStar)
+}
+
+Rstar_fun <- function(lambda, h, b, a_D, eta_D, u_D, N_D, N_S){
+  P_e <- Pefun(h, b, a_D, eta_D, u_D, N_D, N_S)
+  yStar <- yStar_fun(lambda, h, b, a_D, eta_D, u_D, N_D, N_S)
+  Rstar <- P_e * yStar
+  return(Rstar)
+}
+
+
+#============================================================================
+# P <- df$pkgmaiz
+# hist(log(P))
+N_S <- 7 * 10^6
+N_D <- 7 * 10^9
+P <- seq(0.1, 50, length.out = 40)
+QS <- QSfun(P, h, b, N_S)
+QS1 <- QSfun(P, h1, b, N_S)
+
+a_D <- 0.75
+# value_added <- 1.3
+eta_D <- 0.7
+u_D <- 1.2
+QD <- QDfun(P, eta_D, u_D, a_D, N_D)
+
+P_e <- Pefun(h, b, a_D, eta_D, u_D, N_D, N_S)
+P_e1 <- Pefun(h1, b, a_D, eta_D, u_D, N_D, N_S)
+
+P_e <- P_e * 100
+P_e1 <- P_e1 * 100
+#Q_e <- Q_e / 1000 * 10^-6
+
+df_plot <- data.frame(P, Supply = QS, Supply1 = QS1, Demand = QD)
+df_plot <- df_plot %>% gather(Type, Value, Supply:Demand)
+df_plot$Value <- df_plot$Value / 1000 * 10^-6
+df_plot$P <- df_plot$P * 100
+colnames(df_plot)[c(1, 3)] <- c("Price (KES / metric ton)", "Million metric tons")
+gg <- ggplot(df_plot, aes(x = `Million metric tons`,
+                          y = `Price (KES / metric ton)`,
+                          group = Type, color = Type))
+gg <- gg + geom_line(lwd = 1.3)
+#gg <- gg + geom_vline(xintercept = Q_e)
+gg <- gg + geom_hline(yintercept = P_e)
+gg <- gg + coord_cartesian(xlim = c(0, 5))
+gg <- gg + theme(legend.title = element_blank())
+gg
+
+
+yStar <- df$yieldmaiz
+# #hist(log(yStar))
+# P <- df$pkgmaiz
+# #hist(log(P))
+# lambda <- (exp(b / (1 - h)) / yStar)^((1 - h) / h) * P
+# hist(lambda)
+# hist(log(lambda^(-h / (1 - h))))
+
+#yStar <- yStar[-which(is.infinite(yStar))]
+q <- quantile(yStar, probs = c(.05, .95), na.rm = T)
+y05 <- q[1]
+y95 <- q[2]
+n_out <- 25
+yvec <- seq(y05, y95, length.out = n_out)
+
+lambda <- (exp(b / (1 - h)) / yvec)^((1 - h) / h) * P_e
+#lambda <- 20000
+Rstar <- Rstar_fun(lambda, h, b, a_D, eta_D, u_D, N_D, N_S)
+#hist(log(Rstar))
+h1vec <- seq(h + 0.01, 0.2, length.out = n_out) 
+list_out <- list()
+for(i in 1:n_out){
+  h1 <- h1vec[i]
+  Rstar1 <- Rstar_fun(lambda, h1, b, a_D, eta_D, u_D, N_D, N_S)
+  Lstar_diff <- Rstar1 * (1 - h1) - Rstar * (1 - h)
+  list_out[[i]] <- Lstar_diff
+
+}
+df_Ldiff <- as.data.frame(do.call(cbind, list_out))
+colnames(df_Ldiff) <- as.character(round(h1vec, 3))
+df_Ldiff$y_baseline <- exp(b / (1 - h)) * (P_e / lambda)^(h / (1 - h))
+gathercols <- colnames(df_Ldiff)[1:n_out]
+df_plot <- df_Ldiff %>% gather_("h", "Ldiff", gathercols)
+#df_plot$h <- as.numeric(df_plot$h)
+#df_plot <- subset(df_plot, y_baseline > 300)
+
+gg <- ggplot(df_plot, aes(x = h, y = y_baseline, fill = Ldiff))
+gg <- gg + geom_tile()
+gg <- gg + scale_fill_gradient2(low = "magenta", mid = "khaki", high = "cyan", 0, na.value = "white")
+gg
+
+#Rstar_diff <- log(Rstar1) - log(Rstar)
+hist((Lstar_diff))
+
+plot(h1, Lstar_diff)
+
+
+P_e0 <- Pefun(h, b, a_D, eta_D, u_D, N_D, N_S)
+P_e1 <- Pefun(h1, b, a_D, eta_D, u_D, N_D, N_S)
+
+  yStar0 <- exp(b0 / (1 - h0)) * (P_e0 / lambda)^(h0 / (h0 - 1))
+  R0 <- P_e0 * yStar0
+
+
+
+
+
+environ0 <- list()
+environ0[["h0"]] <- h
+environ0[["b0"]] <- b
+environ0[["a_D0"]] <- a_D
+environ0[["eta_D0"]] <- eta_D
+environ0[["u_D0"]] <- u_D
+environ0[["N_D0"]] <- N_D
+environ0[["N_S0"]] <- N_S
+environ1 <- list()
+environ1[["h1"]] <- h1
+environ1[["b1"]] <- b1
+environ1[["a_D1"]] <- a_D1
+environ1[["eta_D1"]] <- eta_D1
+environ1[["u_D1"]] <- u_D1
+environ1[["N_D1"]] <- N_D1
+environ1[["N_S1"]] <- N_S1
+
+
+Ldiff_fun <- function(lambda, environ0, environ1){
+h0 <- environ0[["h0"]]
+b0 <- environ0[["b0"]]
+a_D0 <- environ0[["a_D0"]]
+eta_D0 <- environ0[["eta_D0"]]
+u_D0 <- environ0[["u_D0"]]
+N_D0 <- environ0[["N_D0"]]
+N_S0 <- environ0[["N_S0"]]
+
+h1 <- environ1[["h1"]]
+b1 <- environ1[["b1"]]
+a_D1 <- environ1[["a_D1"]]
+eta_D1 <- environ1[["eta_D1"]]
+u_D1 <- environ1[["u_D1"]]
+N_D1 <- environ1[["N_D1"]]
+N_S1 <- environ1[["N_S1"]]
+
+P_e0 <- Pefun(h0, b0, a_D0, eta_D0, u_D0, N_D0, N_S0)
+P_e1 <- Pefun(h1, b1, a_D1, eta_D1, u_D1, N_D1, N_S1)
+
+  yStar0 <- exp(b0 / (1 - h0)) * (P_e0 / lambda)^(h0 / (h0 - 1))
+  R0 <- P_e0 * yStar0
+  C0 <- R0 * h0 / lambda
+  yStar1 <- exp(b1 / (1 - h1)) * P_e1^(h1 / (h1 - 1))
+  R1 <- P_e1 * yStar1
+  C1 <- R1 * h1 / lambda
+  
+  Ldiff <- R1 * h1 - lambda * C1 - R0 * h0 - lambda * C0
+  
+ return(Ldiff) 
+}
+
+Ldiff_fun(lambda, environ)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+yStar <- df$yieldmaiz
+#hist(log(yStar))
+P <- df$pkgmaiz
+#hist(log(P))
+lambda <- (exp(b / (1 - h)) / yStar)^((1 - h) / h) * P
+hist(log(lambda^(-h / (1 - h))))
+
+u <- exp(b_control / (1 - h)) * lambda^(-h / (1 - h))
+hist(log(u))
+
+#"pctsoldmaiz_F"
+df_plot <- data.frame(kgsold = df$kgcsoldmaiz_F, 
+                      qStar = df$acres * yStar,
+                      #pfert = df$pkgftot_vil,
+                      pmaiz = df$pkgmaiz)
+#df_plot <- subset(df_plot, lambda < 100)
+df_mod <- as.data.frame(apply(df_plot, 2, log))
+for(i in 1:ncol(df_mod)){
+  df_mod[which(is.infinite(df_mod[, i])), i] <- NA
+}
+mod <- lm(kgsold~., df_mod)
+summary(mod)
+plot(mod$fitted.values, mod$residuals)
+
+gg <- ggplot(df_mod, aes(qStar, kgsold))
+gg <- gg + geom_point()
+gg <- gg #+ scale_y_log10() + scale_x_log10()
+gg
+
+
+yStar <- function(P, environ){
+  h <- environ[["h"]]
+  b <- environ[["b"]]
+  lambda <- environ[["lambda"]]
+  
+  yStar <- exp(b / (1 - h)) * (P / lambda)^(h / (1 - h))
+  
+  return(yStar)
+  
+}
+
+
+QS_at_P <- function(P, environ){
+  b <- environ[["b"]]
+  h <- environ[["h"]]
+  bounds <- environ[["bounds"]]
+  mu <- environ[["mu"]]
+  sig <- environ[["sig"]]
+  N <- environ[["N"]]
+  
+  cv <- sig / mu
+  s <- sqrt(log(cv^2 + 1))
+  m <- log(mu) - 1 / 2 * s^2
+  
+  bounds <- c(0, h^(-h / (1 - h)))
+  
+  Phi_upper <- plnorm(bounds[2], m, s)
+  Phi_lower <- plnorm(bounds[1], m, s)
+  mkt_particip <- N * (Phi_upper - Phi_lower)
+  Supply <- exp(b / (1 - h)) * P^(h / (1 - h)) * mkt_particip
+  df_out <- data.frame(P, Supply, mkt_particip)
+  return(df_out)
+}
+
+
+
+environ <- list()
+environ[["h"]] <- h
+environ[["b"]] <- b
+environ[["lambda"]] <- lambda
+yStar(P, environ)
+
+
+```
+
+
+
+
+
+
+
+
+# Conclusion
+
+<!-- The CGIAR are said to have a long history of... Here I have attempted to reduce, in some measure, the methodological premise for this "limited success". -->
+
+# References
