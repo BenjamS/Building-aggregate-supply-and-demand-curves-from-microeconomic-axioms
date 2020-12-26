@@ -1,18 +1,18 @@
 ---
-title: Building aggregate suply and demand curves from microeconomic axioms
+title: The research induced supply curve shift revisted
 #date: "`r Sys.Date()`"
 authors:
  - name: Ben Schiek
   email: b.schiek@ccgiar.org
   address: Some Institute of Technology
 abstract: |
- This is the abstract.
+This is the abstract.
 
- It consists of two paragraphs.
+It consists of two paragraphs.
 acknowledgements: |
- This is an acknowledgement.
+This is an acknowledgement.
 
- It consists of two paragraphs.
+It consists of two paragraphs.
 keywords:
  - key
  - dictionary
@@ -47,6 +47,8 @@ library(tidyverse)
 * But the drawbacks of this expediency soon become apparent, as the cavalier disregard for theoretical details quickly lands the analyst in serious contradictions of basic facts, or of well documented empirical laws. The linear aggregate demand curve on which countless impact studies rest, for example, implies either that all consumers have the same budget (an absurdity), or that their preferences are homothetic, which violates Engel's and Bennett's Laws. Linear supply curves, meanwhile, imply the possibility of negative supply quantities. Such issues, some of which are well known [], quickly accumulate in the name of expediency, ultimately forcing the expedient analyst into the peculiar position of arguing that the specification of supply and demand curves is immaterial to partial equilibrium analysis [@alston1995science].
 There is also no explanation of the aggregation. For some reason, aggregation is viewed as an intractable problem... alston quote []
 
+cobb-douglas implies constant marginal cost (which contradicts the predominant theory but is in line with the evidence [@lavoie2014post])
+
 <!-- Many economists recognize that the optimal input mix changes as parameters change, and yet these same economists are prone to specify a linear supply curve, which implies homothetic inputs  -->
 * More importantly, the absence of a theoretical grounding makes it impossible to decipher the real world implications of different functional forms, or of changes in the curves' parameter values given an exogenous shock of interest. attribution problem...Alston and Pardey [-@alston2001attribution], point to the aforementioned opacity in the supply curve parameterization itself, which makes it difficult to distinguish between benefits due to AR4D impacts and benefits due to other, unrelated processes (the attribution problem). Their argument was later supported by Evenson and Gollin's seminal impact assessment of the green revolution [-@evenson2003assessing], which found that just 17% of the increase in production in the developing world from 1961-1980 could be attributed to improved germplasm.
 In the agricultural research for development (AR4D) context, there was considerable debate in the 1970s over whether the research-induced supply curve shift should be modeled as a parallel shift or a pivot [@alston1995science; @norton1981evaluating; @lindner1978supply]. The debate was further complicated by differing views as to whether supply should be modeled as a linear or a curved CE function. Without a theoretical framework to link parameter values and functional forms to real world conditions, the debate was ultimately inconclusive. The answers to the questions left unresolved by the debate have come down to us today as a matter of preference. In their highly influential book, _Science Under Scarcity_, Alston et al. indicate their preference for the linear parallel shift [-@alston1995science]; and AR4D partial equilibrium impact studies generally follow suit.
@@ -68,6 +70,7 @@ Certainly, when the modeler comes up with a result implying potential benefits s
 * Here I show how the specification of aggregate supply and demand curves follows directly from two microeconomic axioms: 1) The law of diminishing marginal returns and 2) the optimizing agent. The supply curve, so derived, is a CE curve, while the demand curve is a hyperbola. The parameters of these curves have a clear interpretation in terms of input elasticities of yield, degree of homogeneity, and control variables. The form allows for precision modeling of exogenous, research induced shocks to specific input elasticities while holding the rest of the technology and control variables constant. Alternatively, more complex scenarios may be modeled involving simultaneous shocks to multiple elasticities, as well as changes in control variables to reflect future trends. In any case, the form allows the modeler to explain in very clear and precise terms where the benefits are coming from, and how much of the benefits are attributable to the research induced shock.
 
 Contrary to current preference and practice, the theoretically derived supply curve implies that exogenous shocks result in a pivot, not a parallel shift, of the curve. This results in benefits that are generally much lower than those reported using the linear parallel shift. It also introduces increased complexity as to consumer vs producer benefits.
+
 
 
 
@@ -95,7 +98,7 @@ originally have been observed without much theoretical basis.... A large part of
 
 
 * Economists at agricultural research for development (AR4D) centers typically take a cavalier approach to the estimation of agricultural commodity supply curves. ...leaving questions unaddressed: how does the optimal input mix change with technology? How do supply curves shift given a change in technology, at both the individual and aggregate level? AR4D economists are clearly aware of the nuance involved [science under scarcity], but this awareness has not translated into practice. DSSAT modelers...
- Patience has run out for this cavalier attitude.
+Patience has run out for this cavalier attitude.
 
 
 
@@ -128,9 +131,180 @@ proportional, or otherwise) of the research-induced supply shift.... with curren
 
 
 
+Adoption rate studies: [@wang2017socioeconomic] and references.
 
 
 
+
+
+
+
+
+
+# Deriving the production function from the Law of Diminishing Marginal Returns
+
+Increments in the quantity of a good or service or wealth are inversely proportional to amount of the good already acquired. Astute observers have documented this law, in one guise or another, throughout much of written history [@kauder1953genesis]. In 1738, Daniel Bernoulli put it this way:
+
+>"[i]n the absence of the unusual, the utility resulting from any small increase in wealth will be inversely proportionate to the quantity of goods previously possessed" [@bernoulli1954exposition].
+
+Formalization of this statement depends somewhat upon how one interprets "small increase". If this is interpreted as a marginal increase, then the statement can be formalized as follows.
+
+\begin{equation}
+\frac{\partial U}{\partial x} \sim \frac{1}{x}
+\label{eq:dimUtilDefine}
+\end{equation}
+
+Where, to be clear, the term $\partial U / \partial x$ is the marginal change in utility given a marginal increase in the quantity of good $x$, and "$\sim 1 / x$", means "inversely proportionate to the quantity of good $x$ already acquired". An expression $U(x)$ for the utility of good $x$ can then be obtained by integrating Bernoulli's statement.
+
+\begin{equation}
+\begin{split}
+\int \frac{d U}{d x} \: dx &= \int \alpha \frac{d \ln(x)}{dx} \: dx \\
+U(x)  &= \alpha \ln(x) + k
+\end{split}
+\label{eq:integrate_lnU}
+\end{equation}
+
+Where the proportionality constant $\alpha = dU/d\ln(x)$ regulates the marginal change in utility given a $1$ percent increase in good $x$.
+
+In the multivariate case, an expression $U(\mathbf{x})$ for the utility of a vector of $n$ goods $\mathbf{x} = [x_1,x_2,...,x_n]$ can be obtained as follows.
+
+\begin{equation}
+\begin{split}
+\int \nabla_{\mathbf{x}} U \: d \mathbf{x} &= \int D(\mathbf{\alpha}) \nabla_{\mathbf{x}} \ln(\mathbf{x}) \: d \mathbf{x} \\
+\ln(U(\mathbf{x}))  &= \boldsymbol{\alpha} {'} \ln(\mathbf{x}) + \alpha_0
+\end{split}
+\label{eq:cobbDoug}
+\end{equation}
+
+where $\boldsymbol{\alpha}$ is the vector of proportionality constants corresponding to each $x_i$, the notation $D(\boldsymbol{\alpha})$ indicates a diagonal matrix with the elements of $\boldsymbol{\alpha}$ along its diagonal, and
+
+\begin{equation}
+\nabla_{\mathbf{x}} \ln(U) = \left[ \begin{matrix} \frac{\partial \ln(U)}{\partial \ln(x_1)} \\
+\frac{\partial \ln(U)}{\partial \ln(x_2)} \\
+\vdots \\
+\frac{\partial \ln(U)}{\partial \ln(x_n)}
+\end{matrix} \right]
+\end{equation}
+
+Equation \ref{eq:cobbDoug} is well-known to economists as the Cobb-Douglas form, and is also well-known to fit the data across a wide range of contexts and scales.
+
+also... It has often been observed that consumption of different categories of goods increases in different proportions to increases in income. Engel's Law, for example, famously notes that a household's food consumption increases less than proportionately with its income. Others have noted similar relations between income and consumer expenditures on clothing, utilities, rent, and other items [@zimmerman1932ernst; @stigler1954early]. All of this may be viewed as a result of the Law of Diminshing Marginal Utility.
+
+The marginal decrease in the usefulness of income must equal the marginal increase in the usefulness of the good gained in exchange.
+
+\begin{equation}
+\begin{split}
+\frac{\partial U}{\partial B} &= \frac{\partial U}{dx_i} \\
+\alpha_B \frac{d \ln(B)}{d B} &= \alpha_i \frac{d \ln(x_i)}{dx_i}
+\end{split}
+\label{eq:condEqualU}
+\end{equation}
+
+But note that $\frac{d \ln(B)}{d B} = \frac{\partial \ln(B)}{\partial (w_i x_i)}$. And so
+
+\begin{equation}
+\begin{split}
+\alpha_B \frac{\partial \ln(B)}{\partial (w_i x_i)} &= \alpha_i \frac{d \ln(x_i)}{dx_i}
+\end{split}
+\label{eq:margUtilAssump}
+\end{equation}
+
+Rearranging and integrating...
+
+\begin{equation}
+\begin{split}
+\int \alpha_B \frac{\partial \ln(B)}{\partial x_i} \: dx_i &= \int w_i  \alpha_{x_i} \frac{d \ln(x_i)}{dx_i} \: dx_i \\
+\alpha_B \ln(B) + k_B  &= w_i \alpha_i \ln(x_i) + k_i
+\end{split}
+\end{equation}
+
+Which can then be rearranged into a log-linear expression.
+
+\begin{equation}
+\ln(x_i) = m \ln(B) + K
+\label{eq:generalLaw}
+\end{equation}
+
+Where
+
+\begin{equation}
+m = \frac{\alpha_B}{w_i \alpha_i} = \frac{d \ln(x_i)}{d \ln(B)}, \:\: K = \frac{k_B - k_i}{w_i \alpha_i}
+\end{equation}
+
+Linear demand curves imply either that all consumers have the same income, or that incomes vary but that consumption increases linearly with income... as noted by Alston et al. []. This would mean that $m = 1$ across all goods in equation \ref{eq:generalLaw}. Empirically, $m$ diverges from $1$ for many goods. The linear demand curve may thus be discarded on empirical grounds.
+
+On the production side, the Law of Diminishing Marginal Utility is known as the Law of Diminishing Marginal Returns. Replacing $U$ with $y$ in Equations \ref{eq:dimUtilDefine} to \ref{eq:condEqualU}, all of the forgoing applies.
+
+\begin{equation}
+\ln(y(\mathbf{x})) &= \alpha_0 + \boldsymbol{\alpha} {'} \ln(\mathbf{x})
+\label{eq:cobbDougProd}
+\end{equation}
+
+It stands to reason, then, that $m$ also diverges from $1$ in equation \ref{eq:generalLaw} on the production side. That is, expenditures on inputs increase less than propotionately with income. This means that the supply curve cannot be linear.
+
+The yield envelope.
+
+The yield function can include control variables $k_i$ to account for exogenously given factors (demographic, soil, climate, etc.), with corresponding elasticities $\chi_i$.
+
+\begin{equation}
+y(\mathbf{x}) &= e^{\alpha_0} \prod_i x_i^{\alpha_i} \prod_i k_i^{\chi_i}
+\label{eq:cobbDougProd}
+\end{equation}
+
+This can be formulated
+
+\begin{equation}
+\max_{\mathbf{x}} Py \:\:\: s.t. C \leq B
+\end{equation}
+
+with Lagrangian
+
+\begin{equation}
+\mathcal{L} = Py - \lambda (C - B)
+\end{equation}
+
+The first order conditions are then
+
+\begin{equation}
+\nabla_{\mathbf{x}} \mathcal{L} = Py D(\mathbf{x})^{-1} \boldsymbol{\alpha} - \lambda \mathbf{x} = \mathbf{0}
+\end{equation}
+
+where the $\mathbf{0}$ indicates a vector of zeroes equal to the length of $\mathbf{x}$. This is then solved for the optimal input levels.
+
+\begin{equation}
+\mathbf{x}^* = P y^* / \lambda D(\mathbf{w})^{-1} \boldsymbol{\alpha}
+\end{equation}
+
+The optimal yield is then $y^* = y(\mathbf{x}^*)$. Substituting this back into $y$ gives
+
+\begin{equation}
+y(\mathbf{x}^*) = e^{\alpha_0} \prod_i (\frac{P y^* \alpha_i}{\lambda w_i} )^{\alpha_i} \prod_i k_i^{\chi_i}
+\end{equation}
+
+Taking logs,
+
+\begin{equation}
+\ln(y^*) = \alpha_0 + \sum_i \alpha_i (\ln(\frac{P y^*}{\lambda}) + \ln(\alpha_i / w_i)) + \ln(\kappa) 
+\end{equation}
+
+
+
+
+where $h$ is the yield homogeneity $h = \sum_i \alpha_i$ and
+
+\begin{equation}
+\begin{split}
+\beta &= \Pi_i (\frac{P y^* \alpha_i}{\lambda w_i} )^{\alpha_i} \\
+b &= e^{\alpha_0}
+\chi &= \Pi_i k_i^{k_i}
+\end{split}
+\end{equation}
+
+The factor $\chi$ contains exogenously given control variables like age, soil quality, or climate variables.
+
+
+
+Many economists assume $h = 1$...
 
 
 
@@ -144,7 +318,12 @@ proportional, or otherwise) of the research-induced supply shift.... with curren
 
 In the AR4D context, returns to investment are marginally diminishing. In other words, _the additional return resulting from any small increase in investment in a given portfolio item will be inversely proportionate to the sum already invested in that portfolio item_. This is essentially a "production side" analogue of the time honored, empirical consumer side observation going back to Bernoulli (and perhaps as far back as Aristotle [@kauder1953genesis]) that _"in the absence of the unusual, the utility resulting from any small increase in wealth will be inversely proportionate to the quantity of goods previously possessed"_ [@bernoulli1954exposition].
 
-Formalization of such statements depends upon how one interprets, mathematically, the notion of change expressed in words like "additional return" and "small increase". If these are interpreted as percentage changes, then the production side statement can be formalized as follows.
+Formalization of such statements depends upon how one interprets, mathematically, the notion of change expressed in words like "additional return" and "small increase".
+
+If these are interpreted as marginal changes, then 
+
+
+If these are interpreted as percentage changes, then the production side statement can be formalized as follows.
 
 \begin{equation}
 \frac{\partial \ln(R)}{\partial \ln(w_i)} \sim \frac{1}{w_i}
@@ -205,8 +384,8 @@ gg <- ggplot(data.frame(Investment, Return), aes(Investment, Return))
 gg <- gg + geom_line(size = 1.2)
 gg <- gg + geom_hline(yintercept = 1, size = 1.2, linetype = "dashed")
 gg <- gg + theme(axis.text = element_blank(),
-         axis.ticks = element_blank(),
-         axis.title = element_text(size = 7))
+                 axis.ticks = element_blank(),
+                 axis.title = element_text(size = 7))
 gg
 
 ```
@@ -253,112 +432,554 @@ Which, when multiplied by $w_i / R$, yields the interesting corrollary
 
 Integration of the gradient $\nabla_{\mathbf{w}} R$ with respect to the investment shares $\mathbf{w}$ (as in equation \ref{eq:integrate_lnR}) then leads to a Cobb-Douglas form for $R$.
 
+Supply curve
 
+Assuming linear independence of the control variables and input vars
+
+Demand curve
+
+Demand curve can parameterized using mean expenditure of firms instead of mean  y/lambda.
+
+Important that the commodity under analysis be the demander's primary input, because in equation ... it is assumed that the demander's output price is a markup of the commodity price.
+
+Assumption of lognormal output (supply) implies (input) demand also lognormal
+
+Equilibrium price and quantity
 
 
 # Example
 
-```{r, echo=F}
+Nakuru county, 
+
+The main demanders in this case are large scale millers [@kirimi2011farm].
+
+Prices vary considerably across the country (graphic). This effectively limits the geographical scope to the district level, since it only makes sense to apply the model in settings where all participants in the market face the same prices. (what Jevons called the "Law of Indifference"). Prices may even vary considerably within districts...negiotiating skills are key to determining price [@kirimi2011farm].
+
+Farms do not necessarily sell all or even part of their produce.
+
+Regression
+
+```{r, results = "asis", message = F, echo=F}
 
 
 this_folder <- "C:/Users/bensc/OneDrive/Documents/Data/Tegemeo Data/"
-this_subfolder <- "OSU Work 230713/"
-this_file <- "Kenya 2007 Clean 03-08-13.csv"
-this_filepath <- paste0(this_folder, this_subfolder, this_file)
+this_file <- "Kenya Tegemeo maize and beans.csv"
+this_filepath <- paste0(this_folder, this_file)
 df <- read.csv(this_filepath, stringsAsFactors = F)
 #colnames(df)
-# df$educ <- exp(df$leduc)
-# df$drainage <- exp(df$ldrainage)
-keep_these <- c("hhid", "acres", "yieldmaiz", "fertactot_F",
-                "ageavg",
-                "labfammale_qtyM_F",
-                #"labfamfem_qtyM_F",
-                #"hybmz_F",
-                "pkgftot_vil",
-                "qwetxt",
-                "qwetpre")
-df_mod <- df[, keep_these]
-# df_mod <- merge(df_mod, df_input, by = "hhid")
-# df_mod$pestkg <- df_mod$pestkg / df_mod$acres
-df_mod$hhid <- NULL
-df_mod$acres <- NULL
-log_these <- setdiff(colnames(df_mod), c("hybmz_F", "gend"))
-df_mod[, log_these] <- as.data.frame(apply(df_mod[, log_these], 2, log))
-# df_mod[, -1] <- as.data.frame(apply(df_mod[, -1], 2, function(x) 1 / x))
-# df_mod$yieldmaiz <- log(df_mod$yieldmaiz)
-for(i in 1:ncol(df_mod)){
-  df_mod[which(is.infinite(df_mod[, i])), i] <- NA
-}
-mod <- lm(yieldmaiz~., df_mod, na.action = na.omit)
+#--------------------------------------------------------------------------
+# Fix colnames
+colnames(df) <- gsub("\\.\\.", " (", colnames(df))
+colnames(df) <- gsub("\\(\\.", "(", colnames(df))
+colnames(df) <- gsub(".acre.", "/acre)", colnames(df))
+colnames(df) <- gsub("tenure \\(", "tenure: ", colnames(df))
+colnames(df) <- gsub("landprep \\(", "landprep: ", colnames(df))
+colnames(df) <- gsub("acres \\(", "acres_", colnames(df))
+colnames(df) <- gsub("\\.", " ", colnames(df))
+colnames(df) <- gsub("KES kg", "KES/kg", colnames(df))
+colnames(df) <- gsub("hours ", "hours)", colnames(df))
+colnames(df) <- gsub("kg ", "kg)", colnames(df))
+colnames(df) <- gsub("days ", "days)", colnames(df))
+colnames(df) <- gsub("KES day", "KES/day)", colnames(df))
+colnames(df) <- gsub("pest plague", "pest/plague", colnames(df))
+colnames(df) <- gsub("fert", "fert.", colnames(df))
+colnames(df) <- gsub("synth \\(fert.", "synth. fert.", colnames(df))
+colnames(df) <- gsub("wage \\(KES/day\\) ", "wage (KES/day)", colnames(df))
+#--------------------------------------------------------------------------
+# Selecct vars to include in model
+input_vars <- c("Adult family labor (man hours/acre)",
+                #"Wage labor (man days/acre)",
+                "Total synth. fert. (kg/acre)",
+                "Total organic fert. (kg/acre)",
+                "seed (kg/acre)", "pest/plague chems (kg/acre)")
+demog_vars <- c("age"#,
+                #"aehh07"
+                #"hhsize07"
+)
+clim_vars <- c(#"Rain anomaly",
+  "qwetpre"#,
+  #"main07"#,
+  #"qwetxt"
+  #"qwetit"
+)
+bin_vars <- c("adopter", #"gend",
+              #"irrigated",
+              # "tenure: govt/communal/cooperative",
+              # "tenure: owned by parent/relative", 
+              # "tenure: owned with title deed",
+              # "tenure: owned without title deed",
+              # "tenure: rented", "landprep: manual",
+              #"landprep: none",
+              "landprep: oxen",
+              "landprep: tractor"
+)
+mod_vars <- c("dist", "crop", "yield (kg/acre)", input_vars, bin_vars, demog_vars, clim_vars)
+#setdiff(mod_vars, colnames(df))
+df_mod <- subset(df[, mod_vars], crop == "maize" &
+                   dist != "Kakamega" &
+                   `yield (kg/acre)` > 1)
+
+df_mod$crop <- NULL
+df_mod$dist <- NULL
+ind_bin <- which(colnames(df_mod) %in% bin_vars)
+df_mod[, -ind_bin] <- log(df_mod[, -ind_bin])
+fun <- function(x){
+  x[which(is.infinite(x))] <- 0
+  return(x)}
+df_mod[, -ind_bin] <- as.data.frame(apply(df_mod[, -ind_bin], 2, fun))
+#----------------------------------------------------------------------------
+mod <- lm(`yield (kg/acre)`~., df_mod)
 summary(mod)
+stargazer::stargazer(mod, type = "latex",
+                     header = F,
+                     single.row = T)
+#----------------------------------------------------------------------------
 #plot(mod$fitted.values, mod$residuals)
+# count_missing <- function(x){n_na <- length(which(is.na(x))); return(n_na)}
+# apply(df_mod, 2, count_missing)
+```
 
+Deduce lambda
+
+```{r, echo = F}
+#===========================================================================
 a <- coefficients(mod)
-yint <- a[1]
-a_inputs <- a[c("fertactot_F", "labfammale_qtyM_F")]
-a_inputs1 <- a_inputs
-a_inputs1[1] <- a_inputs[1] + 0.5
+a_int <- a["(Intercept)"]
+a_adopter <- a["adopter"]
+names(a) <- gsub("`", "", names(a))
+a_oxen <- a["landprep: oxen"]
+a_tractor <- a["landprep: tractor"]
+a_control <- a[c("age", "qwetpre")]
+a_inputs <- a[c("Adult family labor (man hours/acre)",
+                "Total synth. fert. (kg/acre)",
+                "Total organic fert. (kg/acre)",
+                "seed (kg/acre)",
+                "pest/plague chems (kg/acre)")]
 
-a_control <- setdiff(a, c(yint, a_inputs))
-mat_control <- as.matrix(df_mod[, c("ageavg", "pkgftot_vil", "qwetxt", "qwetpre")])
+# Get price data
+# Focus on area whereprices are about the same.
+this_file <- "Kenya Tegemeo all bean maize input prices long.csv"
+this_filepath <- paste0(this_folder, this_file)
+df_price <- read.csv(this_filepath, stringsAsFactors = F)
+ind_rm <- grep("bean|day", df_price$Item)
+df_price <- df_price[-ind_rm, ]
+#---------------------------------------------------------------------------
+# Check variations in prices across districts
+gg <- ggplot(df_price, aes(x = District, y = Value))
+gg <- gg + geom_bar(stat = "identity")# + coord_flip()
+gg <- gg + facet_wrap(~Item, ncol = 2, scales = "free_y")
+gg <- gg + theme(axis.title = element_blank(),
+                 axis.text.x = element_text(angle = 60, hjust = 1))
+gg
+#---------------------------------------------------------------------------
+# Focus on Nakuru district
+# Prices
+dist_vec <- "Nakuru"
+df_price <- subset(df_price, District %in% dist_vec)
+maize_price <- df_price$Value[which(df_price$Item == "maize price (KES/kg)")]
+df_inputPrices <- df_price[-which(df_price$Item == "maize price (KES/kg)"), ]
+wage <- df_inputPrices$Value[which(df_inputPrices$Item == "wage (KES/hour)")]
+synthFert_price <- df_inputPrices$Value[which(df_inputPrices$Item == "synth fert price (KES/kg)")]
+orgFert_price <- df_inputPrices$Value[which(df_inputPrices$Item == "organic fert price (KES/kg)")]
+seed_price <- df_inputPrices$Value[which(df_inputPrices$Item == "hybrid maize seed price (KES/kg)")]
+pest_price <- df_inputPrices$Value[which(df_inputPrices$Item == "pest/plague chem price (KES/kg)")]
 
-b_control <- as.numeric(t(colMeans(mat_control, na.rm = T)) %*% a_control)
-b_const <- as.numeric(sum(a_inputs * log(a_inputs)) + yint)
-b <- b_const + b_control
+input_prices <- c(wage, synthFert_price, orgFert_price, seed_price, pest_price)
+
+lbx <- sum(a_inputs * log(a_inputs / input_prices))
+bx <- exp(lbx)
 h <- sum(a_inputs)
-h1 <- sum(a_inputs1)
-#============================================================================
-QSfun <- function(P, h, b, N_S){
-  QS <- N_S * exp(b / (1 - h)) * P^(h / (1 - h))
+#--------------------------------------------------------------------------
+# df_control <- subset(df[, c("dist", "age", "qwetpre", "yield (kg/acre)",
+#                             "landprep: tractor", "landprep: oxen",
+#                             "adopter")],
+#                      dist %in% dist_vec &
+#                        `yield (kg/acre)` > 1 &
+#                        adopter == 0 & `landprep: tractor` == 1 &
+#                        `landprep: oxen` == 0)
+#------------------------
+control_vars <- c("age", "qwetpre")
+add_to_a0 <- c("adopter", "landprep: tractor", "landprep: oxen")
+#------------------------
+these_cols <- c("dist", "yield (kg/acre)", control_vars, add_to_a0)
+df_sub <- subset(df[, these_cols],
+                     dist %in% dist_vec &
+                       `yield (kg/acre)` > 1 &
+                       adopter == 0 &
+                       `landprep: tractor` == 1 &
+                       `landprep: oxen` == 0)
+mat_control <- as.matrix(df_sub[, c(control_vars, add_to_a0)])
+mat_control[, c(1:length(control_vars))] <- log(mat_control[, c(1:length(control_vars))])
+
+a_control2 <- as.matrix(c(a_control, a[add_to_a0]))
+lb_control <- mat_control %*% a_control2
+b_control <- exp(lb_control)
+#----------------------------------------------------------------------------
+yStar <- df_sub$`yield (kg/acre)`
+# & `landprep: tractor` == 1 &
+                  # `landprep: oxen` == 0)$`yield (kg/acre)`
+# Note yStar is lognormally distributed!
+a0 <- a_int
+lambda <- as.numeric(maize_price * (yStar^(-(1 - h)) * exp(a0) * bx * b_control)^(1 / h))
+# Lambda is near 1 and greater than h! (Implying no farm sows at a loss.)
+hist(lambda)
+min(lambda)
+cStar <- (yStar * maize_price * h / lambda) # Implicit cost/ha
+hist(cStar)
+hist(log(yStar), breaks = 4)
+hist(yStar * maize_price - cStar) # Implicit profit/acre
+#yStar_max <- (exp(a0) * bx * b_control * (maize_price / h)^h)^(1 / (1 - h))
+#hist(yStar_max)
+# Mean and stand dev of the not truncated normal dist of lambda
+#----------------------------------------------------------------------------
+slack_fun <- function(guess_vec, mu_trunc, sig2_trunc, h){
+  mu <- guess_vec[1]
+  sig <- guess_vec[2]
+  
+  norm_arg <- (h - mu) / sig
+  Z <- 1 - pnorm(norm_arg)
+  term <- 1 + h * dnorm(norm_arg) / Z - (dnorm(norm_arg) / Z)^2
+  
+  sig2 <- sig^2
+  slack1 <- sig2_trunc - sig2 * term
+  slack2 <- mu_trunc - mu + sig2 * dnorm(norm_arg) / Z
+  
+  slack_vec <- c(slack1, slack2)
+  
+  return(slack_vec)
+
+}
+#----------------------------------------------------------------------------
+m_trunc <- mean(log(lambda))
+s2_trunc <- sd(log(lambda))^2
+guess_vec <- runif(2) #c(m_trunc, s2_trunc)
+out <- nleqslv::nleqslv(guess_vec, slack_fun, jac = NULL, m_trunc, s2_trunc, h)
+m_lambda <- out$x[1]
+s_lambda <- out$x[2]
+out$fvec
+m_lambda
+s_lambda
+m_trunc
+sqrt(s2_trunc)
+
+```
+
+Status quo equilibrium
+
+```{r, echo=F}
+
+#adoption rate
+e_upper <- 0.8
+sig_e <- 2
+a <- pnorm(e_upper, 0, sig_e)
+a
+#net benefit
+e_upper - sig_e * dnorm(e_upper, 0, sig_e) / pnorm(e_upper, 0, sig_e)
+
+
+
+# Define supply curve function
+QSfun <- function(P, a_inputs, a0, bx, mu_bk, N_S,
+                  m_lambda, s_lambda){
+  #-------
+  h <- sum(a_inputs)
+  eta_S <- h / (1 - h)
+  #-------
+  arg <- -(log(h) - m_lambda ) / s_lambda - eta_S * s_lambda
+  Phi_upper <- pnorm(arg)
+  Phi_lower <- 0
+  #-------
+  mu_etaLambda <- exp(-eta_S * m_lambda + eta_S^2 * s_lambda^2 / 2)
+  mu_etaLambda_trunc <- mu_etaLambda * (Phi_upper - Phi_lower)
+  #-------
+  QS <- N_S * (exp(a0) * bx * mu_bk * P^h)^(1 / (1 - h)) * mu_etaLambda_trunc
+  #-------
   return(QS)
 }
-
-QDfun <- function(P, eta_D, u_D, a_D, N_D){
-  # 0 < eta_D < 1
-  QD <- N_D * a_D * u_D * P^(eta_D - 1)
+#============================================================================
+# Check supply curve function
+# N_S <- 10^5
+# mu_bk <- mean(b_control)
+# P_vec <- seq(0.1, 20, length.out = 40)
+# outQS <- purrr::map(P_vec, QSfun, a_inputs, a0, bx, mu_bk, N_S,
+#                   m_lambda, s_lambda)
+# outQS <- unlist(outQS)
+# df_QS <- data.frame(QS = outQS, P = P_vec)
+# df_QS$QS <- df_QS$QS / 10^6
+# colnames(df_QS) <- c("Supply (1000 metric tons)", "Price (KES/kg)")
+# gg <- ggplot(df_QS, aes(x = `Price (KES/kg)`, y = `Supply (1000 metric tons)`))
+# gg <- gg + geom_line(lwd = 1.1)
+# gg
+#============================================================================
+# Define demand curve function
+QDfun_full <- function(P, a_D, markup, eta_pDpS, h_D, N_D,
+                  mu_yLambda, s_yLambda, factr_D){
+  #--------------------------------
+  # factr_D = exp(a0_D) * bx_D * bk_D
+  P_D <- markup * P^eta_pDpS
+  max_yStarD <- (factr_D * (P_D / h_D)^h_D)^(1 / (1 - h_D))
+  max_yLambda <- max_yStarD / h_D
+  arg <- (log(max_yLambda) - m_yLambda ) / s_yLambda - s_yLambda
+  Phi_upper <- pnorm(arg)
+  Phi_lower <- 0
+  #--------------------------------
+  mu_yLambda <- exp(m_yLambda + s_yLambda^2 / 2)
+  mu_yLambda_trunc <- mu_yLambda * (Phi_upper - Phi_lower)
+  #--------------------------------
+  eta_D <- eta_pDpS - 1
+  QD <- N_D * a_D * markup * P^eta_D * mu_yLambda_trunc
+  #--------------------------------
   return(QD)
 }
 
-Pefun <- function(h, b, a_D, eta_D, u_D, N_D, N_S){
-  term <- -(1 - h) / (eta_D * (1 - h) - 1)
-  P_e <- (N_D / N_S * a_D * u_D)^term * exp(b / (eta_D * (1 - h) - 1))
-  return(P_e)
-  }
+QDfun <- function(P, eta_D, factr_D){
+  #--------------------------------
+  #factr_D = N_D * a_D * markup  * mu_yLambda_trunc
+  QD <- factr_D * P^eta_D
+  #--------------------------------
+  return(QD)
+}
 
-yStar_fun <- function(lambda, h, b, a_D, eta_D, u_D, N_D, N_S){
-  P_e <- Pefun(h, b, a_D, eta_D, u_D, N_D, N_S)
-  yStar <- exp(b / (1 - h)) * (P_e / lambda)^(h / (h - 1))
+#============================================================================
+# Check demand curve function
+# (Have to first deduce factr_D via the equilibrium price formula below)
+#============================================================================
+# Define equilibrium price and quantity function
+equilibrium_price_and_qty <- function(a_inputs, a0, bx, mu_bk, N_S,
+                              m_lambda, s_lambda,
+                              eta_D, factr_D){
+  #-------
+  h <- sum(a_inputs)
+  eta_S <- h / (1 - h)
+  #-------
+  arg <- -(log(h) - m_lambda ) / s_lambda - eta_S * s_lambda
+  Phi_upper <- pnorm(arg)
+  Phi_lower <- 0
+  #-------
+  mu_etaLambda <- exp(-eta_S * m_lambda + eta_S^2 * s_lambda^2 / 2)
+  mu_etaLambda_trunc <- mu_etaLambda * (Phi_upper - Phi_lower)
+  #-------
+  denom <- N_S * (exp(a0) * bx)^(1 / (1 - h)) * mu_bk * mu_etaLambda_trunc
+  #-------
+  Pe <- (factr_D / denom)^(1 / (eta_S - eta_D))
+  Qe <- (factr_D^eta_S / denom^eta_D)^(1 / (eta_S - eta_D))
+  outvec <- c(Pe, Qe)
+  #-------
+  return(outvec)
+}
+#============================================================================
+# Define "get factr_D and eta_D" slack function
+slack_fun <- function(guess_vec, Pe, Qe,
+                                a_inputs, a0, bx, mu_bk, N_S,
+                                m_lambda, s_lambda){
+  #-------
+  eta_D <- guess_vec[1]
+  factr_D <- guess_vec[2]
+  #-------
+  out_vec <- equilibrium_price_and_qty(a_inputs, a0, bx, mu_bk, N_S,
+                              m_lambda, s_lambda,
+                              eta_D, factr_D)
+  slack_vec <- c(Pe, Qe) - out_vec
+  #-------
+  return(slack_vec)
+}
+
+#============================================================================
+# Plot supply and demand curves with equilibrium point highlighted
+N_S <- 10^5
+mu_bk <- mean(b_control)
+Pe <- 10
+Qe <- 10^10
+guess_etaD <- -runif(1)
+guess_factrD <- 10^2 * runif(1)
+guess_vec <- c(guess_etaD, guess_factrD)
+etaD_and_factrD <- nleqslv::nleqslv(guess_vec, slack_fun, jac = NULL, Pe, Qe,
+                                a_inputs, a0, bx, mu_bk, N_S,
+                                m_lambda, s_lambda)
+etaD_and_factrD$x
+etaD_and_factrD$fvec
+
+eta_D <- -0.98
+factr_D <- get_factrD(Pe, a_inputs, a0, bx, mu_bk, N_S,
+                       m_lambda, s_lambda, eta_D)
+
+
+
+
+
+
+
+
+P_vec <- seq(0.1, 20, length.out = 40)
+
+outQS <- purrr::map(P_vec, QSfun, a_inputs, a0, bx, mu_bk, N_S,
+                  m_lambda, s_lambda)
+outQS <- unlist(outQS)
+df_QS <- data.frame(QS = outQS, P = P_vec)
+df_QS$QS <- df_QS$QS / 10^6
+colnames(df_QS) <- c("Quantity (1000 metric tons)", "Price (KES/kg)")
+df_QS$Type <- "Supply"
+
+outQD <- purrr::map(P_vec, QDfun, eta_D, factr_D)
+outQD <- unlist(outQD)
+df_QD <- data.frame(QD = outQD, P = P_vec)
+df_QD$QD <- df_QD$QD / 10^6
+colnames(df_QD) <- c("Quantity (1000 metric tons)", "Price (KES/kg)")
+df_QD$Type <- "Demand"
+
+gg <- ggplot(df_QD, aes(x = `Price (KES/kg)`,
+                        y = `Quantity (1000 metric tons)`))
+gg <- gg + geom_line(lwd = 1.1)
+gg
+
+
+
+outvec <- equilibrium_price_and_qty(a_inputs, a0, bx, mu_bk, N_S,
+                              m_lambda, s_lambda,
+                              eta_D, factr_D)
+
+df_plot <- as.data.frame(rbind(df_QS, df_QD))
+gg <- ggplot(df_plot, aes(x = `Price (KES/kg)`,
+                          y = `Quantity (1000 metric tons)`,
+                          group = Type,
+                          color = Type))
+gg <- gg + geom_line(lwd = 1.1)
+#gg <- gg + geom_point(aes(x = Pe, y = Qe), color = "green")
+gg <- gg + theme(legend.title = element_blank())
+gg
+
+
+
+
+```
+
+
+
+
+
+```{r, echo=F}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+yStar_fun <- function(P, lambda, h, b){
+  eta_S <- h / (1 - h)
+  yStar <- exp(b / (1 - h)) * (P / lambda)^eta_S
   return(yStar)
 }
 
-Rstar_fun <- function(lambda, h, b, a_D, eta_D, u_D, N_D, N_S){
-  P_e <- Pefun(h, b, a_D, eta_D, u_D, N_D, N_S)
-  yStar <- yStar_fun(lambda, h, b, a_D, eta_D, u_D, N_D, N_S)
-  Rstar <- P_e * yStar
+Pe_fun <- function(h, b, a_D, eta_D, u_D, N_D, N_S){
+  eta_S <- h / (1 - h)
+  factr <- N_D / N_S * a_D * u_D
+  P_e <- (factr * exp(-b / (1 - h)))^(1 / (eta_S - eta_D))
+  return(P_e)
+}
+
+yStar_e_fun <- function(lambda, h, b, a_D, eta_D, u_D, N_D, N_S){
+  Pe <- Pe_fun(h, b, a_D, eta_D, u_D, N_D, N_S)
+  yStar_e <- yStar_fun(Pe, lambda, h, b)
+  return(yStar_e)
+}
+
+Rstar_e_fun <- function(lambda, h, b, a_D, eta_D, u_D, N_D, N_S){
+  Pe <- Pe_fun(h, b, a_D, eta_D, u_D, N_D, N_S)
+  yStar_e <- yStar_e_fun(h, b, a_D, eta_D, u_D, N_D, N_S)
+  Rstar <- Pe * yStar_e
   return(Rstar)
+}
+
+eta_Peh_fun <- function(h, b, a_D, eta_D, u_D, N_D, N_S){
+  Pe <- Pe_fun(h, b, a_D, eta_D, u_D, N_D, N_S)
+  eta_Peh <- -h / ((eta_S - eta_D) * (1 - h)^2) * (b + log(Pe))
+  return(eta_Peh)
+}
+
+eta_yStarh_fun <- function(lambda, P, b, h){
+  eta_yStarh <- h / (1 - h)^2 * (b + log(P / lambda))
+  return(eta_yStarh)
+}
+
+eta_yStarh_e_fun <- function(lambda, h, b, a_D, eta_D, u_D, N_D, N_S){
+  eta_S <- h / (1 - h)
+  eta_Peh <- eta_Peh_fun(h, b, a_D, eta_D, u_D, N_D, N_S)
+  Pe <- Pe_fun(h, b, a_D, eta_D, u_D, N_D, N_S)
+  eta_yStarh_e <- eta_yStarh_fun(lambda, Pe, b, h) + eta_S * eta_Peh
+  return(eta_yStarh_e)
+}
+
+dLstardh_e_fun <- function(lambda, h, b, a_D, eta_D, u_D, N_D, N_S){
+  eta_S <- 1 / (1 - h)
+  Pe <- Pe_fun(h, b, a_D, eta_D, u_D, N_D, N_S)
+  yStar_e <- yStar_fun(Pe, lambda, h, b)
+  dLstardh_e <- Pe * yStar_e * (1 / eta_S * (eta_yStarh_e + eta_Peh))
+  return(dLstardh_e)
+}
+
+dLstardh_fun <- function(lambda, P, b, h){
+  eta_S <- h / (1 - h)
+  yStar <- yStar_fun(P, lambda, h, b)
+  eta_yStarh <- eta_yStarh_fun(lambda, P, b , h)
+  dLstardh <- P * yStar * (eta_yStarh / eta_S - 1)
+  return(dLstardh)
+}
+
+Lstar_fun <- function(P, lambda, h, b){
+  yStar <- yStar_fun(P, lambda, h, b)
+  Lstar <- P * yStar * (1 - h) + lambda * Cbar
+  
 }
 
 
 #============================================================================
 # P <- df$pkgmaiz
 # hist(log(P))
-N_S <- 7 * 10^6
-N_D <- 7 * 10^9
+N_S <- 6 * 10^6
+N_D <- 6 * 10^9
 P <- seq(0.1, 50, length.out = 40)
 QS <- QSfun(P, h, b, N_S)
 QS1 <- QSfun(P, h1, b, N_S)
 
 a_D <- 0.75
 # value_added <- 1.3
-eta_D <- 0.7
+eta_D <- 0.7 - 1
 u_D <- 1.2
 QD <- QDfun(P, eta_D, u_D, a_D, N_D)
 
-P_e <- Pefun(h, b, a_D, eta_D, u_D, N_D, N_S)
-P_e1 <- Pefun(h1, b, a_D, eta_D, u_D, N_D, N_S)
+Pe <- Pefun(h, b, a_D, eta_D, u_D, N_D, N_S)
+Pe1 <- Pefun(h1, b, a_D, eta_D, u_D, N_D, N_S)
 
-P_e <- P_e * 100
-P_e1 <- P_e1 * 100
+PeMT <- Pe * 100
+PeMT1 <- Pe1 * 100
 #Q_e <- Q_e / 1000 * 10^-6
 
 df_plot <- data.frame(P, Supply = QS, Supply1 = QS1, Demand = QD)
@@ -371,28 +992,86 @@ gg <- ggplot(df_plot, aes(x = `Million metric tons`,
                           group = Type, color = Type))
 gg <- gg + geom_line(lwd = 1.3)
 #gg <- gg + geom_vline(xintercept = Q_e)
-gg <- gg + geom_hline(yintercept = P_e)
+gg <- gg + geom_hline(yintercept = PeMT)
 gg <- gg + coord_cartesian(xlim = c(0, 5))
 gg <- gg + theme(legend.title = element_blank())
 gg
 
 
 yStar <- df$yieldmaiz
-# #hist(log(yStar))
-# P <- df$pkgmaiz
-# #hist(log(P))
-# lambda <- (exp(b / (1 - h)) / yStar)^((1 - h) / h) * P
+lambda <- (exp(b / (1 - h)) / yStar)^((1 - h) / h) * P
 # hist(lambda)
 # hist(log(lambda^(-h / (1 - h))))
 
 #yStar <- yStar[-which(is.infinite(yStar))]
-q <- quantile(yStar, probs = c(.05, .95), na.rm = T)
-y05 <- q[1]
-y95 <- q[2]
-n_out <- 25
-yvec <- seq(y05, y95, length.out = n_out)
+# q <- quantile(yStar, probs = c(.05, .95), na.rm = T)
+# y05 <- q[1]
+# y95 <- q[2]
+# n_out <- 25
+# yvec <- seq(y05, y95, length.out = n_out)
 
-lambda <- (exp(b / (1 - h)) / yvec)^((1 - h) / h) * P_e
+#lambda <- (exp(b / (1 - h)) / yvec)^((1 - h) / h) * Pe
+
+dLstardh <- dLstardh_fun(lambda, Pe, b, h)
+
+#plot(log(lambda), dLstardh)
+
+minyStar <- exp(b + h)
+maxlambda <- exp(b - (1 - h)) * Pe
+df_plot <- data.frame(lambda, yStar, dLstardh)
+gg <- ggplot(df_plot, aes(x = lambda, y = dLstardh))
+gg <- gg + geom_line(lwd = 1.3)
+gg <- gg + geom_vline(xintercept = maxlambda)
+gg <- gg + geom_hline(yintercept = 0, color = "red")
+gg <- gg + scale_x_log10()
+gg
+
+
+
+
+
+
+
+m_yStar <- mean(log(yStar[-which(is.na(df_mod$yieldmaiz))]))
+s_yStar <- sd(log(yStar[-which(is.na(df_mod$yieldmaiz))]))
+
+dens <- dlnorm(yStar, m_yStar, s_yStar)
+
+
+1 - plnorm(yStarmin, m_yStar, s_yStar)
+
+df_plot <- data.frame(yStar, dens)
+gg <- ggplot(df_plot, aes(x = yStar, y = dens))
+gg <- gg + geom_line(lwd = 1.3)
+gg <- gg + geom_vline(xintercept = yStarmin)
+gg
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 #lambda <- 20000
 Rstar <- Rstar_fun(lambda, h, b, a_D, eta_D, u_D, N_D, N_S)
 #hist(log(Rstar))
@@ -403,7 +1082,7 @@ for(i in 1:n_out){
   Rstar1 <- Rstar_fun(lambda, h1, b, a_D, eta_D, u_D, N_D, N_S)
   Lstar_diff <- Rstar1 * (1 - h1) - Rstar * (1 - h)
   list_out[[i]] <- Lstar_diff
-
+  
 }
 df_Ldiff <- as.data.frame(do.call(cbind, list_out))
 colnames(df_Ldiff) <- as.character(round(h1vec, 3))
@@ -427,8 +1106,8 @@ plot(h1, Lstar_diff)
 P_e0 <- Pefun(h, b, a_D, eta_D, u_D, N_D, N_S)
 P_e1 <- Pefun(h1, b, a_D, eta_D, u_D, N_D, N_S)
 
-  yStar0 <- exp(b0 / (1 - h0)) * (P_e0 / lambda)^(h0 / (h0 - 1))
-  R0 <- P_e0 * yStar0
+yStar0 <- exp(b0 / (1 - h0)) * (P_e0 / lambda)^(h0 / (h0 - 1))
+R0 <- P_e0 * yStar0
 
 
 
@@ -453,25 +1132,25 @@ environ1[["N_S1"]] <- N_S1
 
 
 Ldiff_fun <- function(lambda, environ0, environ1){
-h0 <- environ0[["h0"]]
-b0 <- environ0[["b0"]]
-a_D0 <- environ0[["a_D0"]]
-eta_D0 <- environ0[["eta_D0"]]
-u_D0 <- environ0[["u_D0"]]
-N_D0 <- environ0[["N_D0"]]
-N_S0 <- environ0[["N_S0"]]
-
-h1 <- environ1[["h1"]]
-b1 <- environ1[["b1"]]
-a_D1 <- environ1[["a_D1"]]
-eta_D1 <- environ1[["eta_D1"]]
-u_D1 <- environ1[["u_D1"]]
-N_D1 <- environ1[["N_D1"]]
-N_S1 <- environ1[["N_S1"]]
-
-P_e0 <- Pefun(h0, b0, a_D0, eta_D0, u_D0, N_D0, N_S0)
-P_e1 <- Pefun(h1, b1, a_D1, eta_D1, u_D1, N_D1, N_S1)
-
+  h0 <- environ0[["h0"]]
+  b0 <- environ0[["b0"]]
+  a_D0 <- environ0[["a_D0"]]
+  eta_D0 <- environ0[["eta_D0"]]
+  u_D0 <- environ0[["u_D0"]]
+  N_D0 <- environ0[["N_D0"]]
+  N_S0 <- environ0[["N_S0"]]
+  
+  h1 <- environ1[["h1"]]
+  b1 <- environ1[["b1"]]
+  a_D1 <- environ1[["a_D1"]]
+  eta_D1 <- environ1[["eta_D1"]]
+  u_D1 <- environ1[["u_D1"]]
+  N_D1 <- environ1[["N_D1"]]
+  N_S1 <- environ1[["N_S1"]]
+  
+  P_e0 <- Pefun(h0, b0, a_D0, eta_D0, u_D0, N_D0, N_S0)
+  P_e1 <- Pefun(h1, b1, a_D1, eta_D1, u_D1, N_D1, N_S1)
+  
   yStar0 <- exp(b0 / (1 - h0)) * (P_e0 / lambda)^(h0 / (h0 - 1))
   R0 <- P_e0 * yStar0
   C0 <- R0 * h0 / lambda
@@ -481,7 +1160,7 @@ P_e1 <- Pefun(h1, b1, a_D1, eta_D1, u_D1, N_D1, N_S1)
   
   Ldiff <- R1 * h1 - lambda * C1 - R0 * h0 - lambda * C0
   
- return(Ldiff) 
+  return(Ldiff) 
 }
 
 Ldiff_fun(lambda, environ)

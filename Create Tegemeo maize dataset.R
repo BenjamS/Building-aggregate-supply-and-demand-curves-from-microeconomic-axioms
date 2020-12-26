@@ -35,7 +35,7 @@ df_crop <- df_crop[, keep_cols] %>%
   summarise(kgharv = sum(kgharv, na.rm = T),
             kgsold = sum(kgsold, na.rm = T),
             seedkg = sum(seedkg, na.rm = T),
-            scost = sum(seedkg, na.rm = T),
+            scost = sum(scost, na.rm = T),
             adopter = mean(adopter, na.rm = T))
 #---------------------------------------------------------------------------
 # Define adopters
@@ -159,7 +159,14 @@ fertcols <- colnames(df_fert)[3:10]
 df_yield[, fertcols] <- df_yield[, fertcols] / df_yield$acres
 colnames(df_yield)[which(colnames(df_yield) %in% fertcols)] <- gsub("\\)", "/acre\\)", colnames(df_yield[, fertcols]))
 #---------------------------------------------------------------------------
-# Labor
+# Get seed price
+df_seedPrice <- df_yield[, c("hhid", "dist", "crop", "adopter", "seedkg", "scost")]
+df_seedPrice$`seed price (KES/kg)` <- df_seedPrice$scost / df_seedPrice$seedkg
+df_seedPrice$crop[which(df_seedPrice$adopter == 1 & df_seedPrice$crop == "maize")] <- "hybrid maize"
+df_seedPrice <- df_seedPrice %>% group_by(dist, crop) %>%
+  summarise(`seed price (KES/kg)` = mean(`seed price (KES/kg)`, na.rm = T))
+#---------------------------------------------------------------------------
+# Get labor and wage rate
 this_filepath <- paste0(this_folder, "labour07.dta")
 df_labor <- read.dta(this_filepath)
 df_labor <- de_factorizer(df_labor)
@@ -172,17 +179,39 @@ df_labor <- de_factorizer(df_labor)
 #lb08 = hours worked by each female family worker
 #lb09 = number children family workers
 #lb10 = hours worked by each child family worker
-
 df_labor$lab_wg <- df_labor$lb01 * df_labor$lb02
 df_labor$lab_fam_male <- df_labor$lb05 * df_labor$lb06
 df_labor$lab_fam_fem <- df_labor$lb07 * df_labor$lb08
 df_labor$lab_fam_ch <- df_labor$lb09 * df_labor$lb10
-
-keep_cols <- c("hhid", "activity", "lb03", "lab_wg", "lab_fam_male",
+#---------------------------------------------------------------------------
+# Set apart labor wage
+df_laborPrice <- df_labor[, c("dist", "hhid", "activity", "lb03")]
+colnames(df_laborPrice)[4] <- "wage (KES/day)"
+main_activities <- c("1st weeding", "harvesting", "planting",
+                     "1st ploughing", "2nd weeding", "shelling")
+df_laborPrice <- subset(df_laborPrice, activity %in% main_activities)
+this_filepath <- paste0(this_folder, "hh07.dta")
+df_laborPrice2 <- read.dta(this_filepath)
+df_laborPrice2 <- de_factorizer(df_laborPrice2)
+df_laborPrice2 <- df_laborPrice2[, c("hhid", "dist", "wagerate")]
+#hist(df_laborPrice2$wagerate)
+df_laborPrice <- merge(df_laborPrice, df_laborPrice2, by = c("hhid", "dist"))
+df_laborPrice <- df_laborPrice %>% group_by(dist) %>%
+  summarise_all(mean, na.rm = T)
+# Go with the wage rate reported in the hh07.dta file because the other one
+# (from labor07.dta) only reports wage for activities for which wage labor was
+# hired, and so averaging over activities may be skewed (b/c in some areas 
+# no wage labor hired for main activities like harvesting--it's all family labor).
+df_laborPrice$`wage (KES/day)` <- NULL
+df_laborPrice$activity <- NULL
+df_laborPrice$hhid <- NULL
+colnames(df_laborPrice)[2] <- "wage (KES/day)"
+ggplot(df_laborPrice, aes(x=dist,y=`wage (KES/day)`))+geom_bar(stat="identity")+coord_flip()
+df_laborPrice$`wage (KES/hour)` <- df_laborPrice$`wage (KES/day)` / 8
+#---------------------------------------------------------------------------
+keep_cols <- c("hhid", "activity", "lab_wg", "lab_fam_male",
                "lab_fam_fem", "lab_fam_ch")
 df_labor <- df_labor[, keep_cols]
-colnames(df_labor)[3] <- "wage (KES/day)"
-
 #---
 df_look_wg <- df_labor[, c("hhid", "activity", "lab_wg")] %>%
   spread(activity, lab_wg) 
@@ -225,23 +254,18 @@ gg <- ggplot(df_look, aes(x = activity, y = qty))
 gg <- gg + geom_bar(stat = "identity") + coord_flip()
 gg <- gg + facet_wrap(~labtype, scales = "free_x")
 gg
+# Main activities are:
+#1st weeding, harvesting, planting, 1st ploughing, 2nd weeding, shelling
 #---
+df_labor$activity <- NULL
 df_labor <- df_labor %>% group_by(hhid) %>%
-  summarise(lab_fam_ch = sum(lab_fam_ch, na.rm = T),
-            lab_fam_male = sum(lab_fam_male, na.rm = T),
-            lab_fam_fem = sum(lab_fam_fem, na.rm = T),
-            lab_wg = sum(lab_wg, na.rm = T),
-            `wage (KES/day)` = mean(`wage (KES/day)`, na.rm = T))
-df_labor$`wage (KES/day)`[which(is.nan(df_labor$`wage (KES/day)`))] <- NA
+  summarise_all(sum, na.rm = T)
 df_labor$`Adult family labor (man hours)` <- df_labor$lab_fam_male + df_labor$lab_fam_fem
-colnames(df_labor)[c(2:5)] <- c("Child family labor (man hours)",
+colnames(df_labor)[c(2:5)] <- c("Wage labor (man days)",
                                 "Male adult family labor (man hours)",
                                 "Female adult family labor (man hours)",
-                                "Wage labor (man days)")
-rm(df_look, df_look_fam_ch, df_look_fam_fem, df_look_fam_male, df_look_wg)
-#---------------------------------------------------------------------------
-# Get seed
-# Seed qty and cost included in df_crop from croplev07.dta
+                                "Child family labor (man hours)")
+rm(df_look, df_look_fam_ch, df_look_fam_fem, df_look_fam_male, df_look_wg, df_labor2)
 #---------------------------------------------------------------------------
 # Get pest/plague control inputs and distace to input markets
 this_filepath <- paste0(this_folder, "input07.dta")
@@ -407,8 +431,9 @@ df_fertPrice <- df_fertPrice %>% spread(inputype, pfert)
 colnames(df_fertPrice)[2:3] <- c("organic fert price (KES/kg)",
                                  "synth fert price (KES/kg)")
 #===========================================================================
-list_df <- list(df_yield, df_labor, df_pest, df_clim, df_demog, df_km,
-                df_cropPrice, df_fertPrice, df_pestPrice)
+list_df <- list(df_yield, df_labor, df_pest, df_clim, df_demog, df_km)#,
+                # df_cropPrice, df_fertPrice, df_pestPrice, 
+                # df_seedPrice, df_laborPrice)
 df <- plyr::join_all(list_df)
 colnames(df) <- gsub("_", ": ", colnames(df))
 colnames(df) <- gsub(" /", "/", colnames(df))
@@ -418,7 +443,6 @@ df$`seed (kg/acre)` <- df$seedkg / df$acres
 df$`Wage labor (man days/acre)` <- df$`Wage labor (man days)` / df$acres
 df$`Adult family labor (man hours/acre)` <- df$`Adult family labor (man hours)` / df$acres
 df$`Rain anomaly` <- df$main07 - df$qwetpre
-df$`seed price (KES/kg)` <- df$scost / df$seedkg
 #===========================================================================
 # Test it out
 #colnames(df)
@@ -427,18 +451,18 @@ input_vars <- c("Adult family labor (man hours/acre)",
                 "Total synth. fert. (kg/acre)",
                 "Total organic fert. (kg/acre)",
                 "seed (kg/acre)", "pest/plague chems (kg/acre)")
-demog_vars <- c("age",
+demog_vars <- c("age"#,
                 #"aehh07",
                 #"hhsize07"
                 # "km to organic fert mkt",
                 #"km to synth fert mkt",
-                "km to pest/plague chem mkt"
+                #"km to pest/plague chem mkt"
                 )
 clim_vars <- c(#"Rain anomaly",
                "qwetpre"
                #"main07",
-               #"qwetxt",
-               #"qwetit"
+                #"qwetxt",
+                #"qwetit"
                )
 bin_vars <- c("adopter", #"gend",
               #"irrigated",
@@ -452,7 +476,8 @@ bin_vars <- c("adopter", #"gend",
               "landprep: tractor")
 mod_vars <- c("dist", "crop", "yield (kg/acre)", input_vars, bin_vars, demog_vars, clim_vars)
 df_mod <- subset(df[, mod_vars], crop == "maize" &
-                   dist != "Kakamega")
+                   dist != "Kakamega" &
+                   `yield (kg/acre)` > 1)
 df_mod$crop <- NULL
 df_mod$dist <- NULL
 ind_bin <- which(colnames(df_mod) %in% bin_vars)
@@ -467,11 +492,45 @@ summary(mod)
 #car::vif(mod)
 #----------------------------------------------------------------------------
 plot(mod$fitted.values, mod$residuals)
+#120 NAs omitted. Where are they?
 count_missing <- function(x){n_na <- length(which(is.na(x))); return(n_na)}
 apply(df_mod, 2, count_missing)
 #===========================================================================
-# Write file
+# Create files just for prices too
+df_pestPrice <- subset(df_pestPrice, crop == "maize") # pest control price same for all crops
+df_pestPrice$crop <- NULL
+df_inputPrices <- plyr::join_all(list(df_fertPrice, df_pestPrice, df_laborPrice))
+colnames(df_cropPrice)
+df_cropPrice <- df_cropPrice[, c("dist", "crop", "crop price (KES/kg)")]
+colnames(df_cropPrice)[2:3] <- c("Item", "Value")
+df_cropPrice$Item <- paste(df_cropPrice$Item, "price (KES/kg)")
+colnames(df_seedPrice)[2:3] <- c("Item", "Value")
+df_seedPrice$Item <- paste(df_seedPrice$Item, "seed price (KES/kg)")
+gathercols <- colnames(df_inputPrices)[-1]
+df_inputPriceLong <- df_inputPrices %>% gather_("Item", "Value", gathercols)
+df_seedPrice <- as.data.frame(df_seedPrice)
+df_cropPrice <- as.data.frame(df_cropPrice)
+list_df <- list(df_cropPrice, df_seedPrice, df_inputPriceLong)
+df_priceLong <- as.data.frame(do.call(rbind, list_df))
+colnames(df_priceLong)[1] <- "District"
+#---------------------------------------------------------------------------
+# Check price variation across districts
+ggplot(df_priceLong,aes(x=District,y=Value))+geom_bar(stat="identity")+coord_flip()+facet_wrap(~Item, scales = "free_x")
+#===========================================================================
+# Write files
 this_file <- "Kenya Tegemeo maize and beans.csv"
 this_folder <- "C:/Users/bensc/OneDrive/Documents/Data/Tegemeo Data/"
 this_filepath <- paste0(this_folder, this_file)
 write.csv(df, this_filepath, row.names = F)
+this_file <- "Kenya Tegemeo maize bean crop prices.csv"
+this_filepath <- paste0(this_folder, this_file)
+write.csv(df_cropPrice, this_filepath, row.names = F)
+this_file <- "Kenya Tegemeo input prices.csv"
+this_filepath <- paste0(this_folder, this_file)
+write.csv(df_inputPrices, this_filepath, row.names = F)
+this_file <- "Kenya Tegemeo seed prices.csv"
+this_filepath <- paste0(this_folder, this_file)
+write.csv(df_seedPrice, this_filepath, row.names = F)
+this_file <- "Kenya Tegemeo all bean maize input prices long.csv"
+this_filepath <- paste0(this_folder, this_file)
+write.csv(df_priceLong, this_filepath, row.names = F)
