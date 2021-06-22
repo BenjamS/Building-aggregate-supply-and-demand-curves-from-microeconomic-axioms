@@ -591,7 +591,7 @@ Axioms 1-3, from which inequality \ref{eq:ydAdoptCond} is derived, thus imply th
 It follows, moreover, that impact assessment studies that assume unique prices while also assuming or reporting an adoption rate between 0% and 100% possibly stand in violation of one or more of Axioms 1-3.
 <!-- In fact, input and output prices often vary considerably within a given farm population, especially in the developing world.  and this is reflected in adoption rates falling somewhere between 0% and 100%. -->
 
-### Technology change as a change in input elasticity
+### Technology change as a change in input elasticity \label{sec:techChangeAi}
 
 If the change in technology comes in the form of a more efficient input, then the resulting marginal change in net benefit is defined
 
@@ -887,6 +887,7 @@ A closed form solution for equilibrium price $P_e$ can be derived by setting the
 Q_S &= Q_D \\
 \theta_S P^{\eta_S} &= \theta_D P^{\eta_D} \\
 P_e &= P \bigr|_{Q_S = Q_D} = \left(\frac{\theta_S}{\theta_D} \right)^{\frac{1}{\eta_D - \eta_S}}
+\label{eq:defPe}
 \end{split}
 \end{equation}
 
@@ -907,7 +908,7 @@ The percentage change in equilibrium supply given a $1$% increase in basal yield
 \begin{equation}
 \begin{split}
 \frac{\partial \ln(Q_e)}{\partial \ln(y_0)} &= \frac{\eta_D}{\eta_D - \eta_S} \frac{\partial \ln(\theta_S)}{\partial \ln(y_0)} \\
-&= \frac{\eta_D}{(\eta_D - \eta_S) (1 - h)} \left(1 - \boldsymbol{\alpha} \cdot \frac{\partial \ln(\mathbf{w})}{\partial \ln(y_0)} \right)
+&= \frac{\eta_D \left(1 - \boldsymbol{\alpha} \cdot \frac{\partial \ln(\mathbf{w})}{\partial \ln(y_0)} \right)}{(\eta_D - \eta_S) (1 - h)}
 \end{split}
 \end{equation}
 
@@ -918,24 +919,91 @@ By Axioms 1-3, $\eta_S > 0$, $\eta_D < 0$, and $0 < h < 1$. The change in equili
 \label{eq:QeIncCond}
 \end{equation}
 
-Which is always true on adopting farms. (Recall the adoption condition in equation \ref{eq:ydAdoptCondy0}.)
+Which is always true on adopting farms. (Recall the adoption condition derived in inequality \ref{eq:ydAdoptCondy0}.)
 
 The percentage change in equilibrium price given a $1$% increase in basal yield, meanwhile, is given by
 
 \begin{equation}
 \begin{split}
-\frac{1}{\eta_D - \eta_S} \frac{\partial \ln(\theta_S)}{\partial \ln(y_0)} \\
-&= \frac{1}{(\eta_D - \eta_S)(1 - h)} \left(1 - \boldsymbol{\alpha} \cdot \frac{\partial \ln(\mathbf{w})}{\partial \ln(y_0)} \right)
+\frac{\partial \ln(P_e)}{\partial \ln(y_0)} &= \frac{1}{\eta_D - \eta_S} \frac{\partial \ln(\theta_S)}{\partial \ln(y_0)} \\
+&= \frac{\left(1 - \boldsymbol{\alpha} \cdot \frac{\partial \ln(\mathbf{w})}{\partial \ln(y_0)} \right)}{(\eta_D - \eta_S)(1 - h)} \\
+&= \frac{1}{\eta_D} \frac{\partial \ln(Q_e)}{\partial \ln(y_0)}
+\label{eq:dLnPedLny0}
 \end{split}
 \end{equation}
 
 Again, this implies that the change in equilibrium price is negative so long as inequality \ref{eq:QeIncCond} holds, which it always does on adopting farms.
 
-The changes in equilibrium quantity and price are thus always positive and negative, respectively, under circumstances of voluntary adoption of basal yield enhancing technology. Under circumstances of an exogenous, involuntary increase in basal yield, on the other hand, it may be that $Q_e$ decreases while $P_e$ increases.
+The changes in equilibrium quantity and price are thus always positive and negative, respectively, under circumstances of voluntary adoption of basal yield enhancing technology. Under circumstances of an exogenous, involuntary increase in basal yield, on the other hand, inequality \ref{eq:QeIncCond} implies that it may be that $Q_e$ decreases while $P_e$ increases.
 
 #### Input enhancing technology
 
-...
+The percentage change in equilibrium supply per $1$% increase in partial yield $y_i$ is defined as follows.
+
+\begin{equation}
+\begin{split}
+\frac{\partial \ln(Q_e)}{\partial \ln(y_i)} &= \frac{\partial \ln(Q_e)}{\partial \alpha_i} \\
+&= \ln(\theta_S) \frac{\partial}{\partial \alpha_i} \left( \frac{\eta_D}{\eta_D - \eta_S} \right) + \frac{\eta_D}{\eta_D - \eta_S} \frac{\partial \ln(\theta_S)}{\partial \alpha_i} - \ln(\theta_D) \frac{\partial}{\partial \alpha_i} \left( \frac{\eta_S}{\eta_D - \eta_S} \right)
+\end{split}
+\label{eq:dLnQedai}
+\end{equation}
+
+Where
+
+\begin{equation}
+\begin{split}
+\frac{\partial}{\partial \alpha_i} \left( \frac{\eta_D}{\eta_D - \eta_S} \right) &= \frac{\eta_D}{(\eta_D - \eta_S)^2} \frac{\partial \eta_S}{\partial \alpha_i} \:\:;\:\:\: \frac{\partial \eta_S}{\partial \alpha_i} = \frac{\partial}{\partial \alpha_i}\left( \frac{h}{1 - h} \right) = \frac{1}{(1 - h)^2} \\
+&= \frac{\eta_D}{(\eta_D - \eta_S)^2 (1 - h)^2}
+\end{split}
+\end{equation}
+
+\begin{equation}
+\frac{\partial}{\partial \alpha_i} \left( \frac{\eta_S}{\eta_D - \eta_S} \right) = \frac{\partial}{\partial \alpha_i} \left( \frac{\eta_D}{\eta_D - \eta_S} \right)
+\end{equation}
+
+So that equation \ref{eq:dLnQedai} can be rewritten
+
+\begin{equation}
+\begin{split}
+\frac{\partial \ln(Q_e)}{\partial \alpha_i} &= \frac{\eta_D}{(\eta_D - \eta_S)^2 (1 - h)^2} \ln \left(\frac{\theta_S}{\theta_D} \right) + \frac{\eta_D}{\eta_D - \eta_S} \frac{\partial \ln(\theta_S)}{\partial \alpha_i} \\
+&= \frac{\eta_D}{\eta_D - \eta_S} \left( \frac{\ln(P_e)}{(1 - h)^2} + \frac{\partial \ln(\theta_S)}{\partial \alpha_i} \right)
+\end{split}
+\end{equation}
+
+Where equation \ref{eq:defPe} has been invoked to substitute for $\ln(\theta_S / \theta_D)$ in the second line.
+
+This implies that the change in aggregate equilibrium supply given release and voluntary uptake of input enhancing technology is positive so long as
+
+\begin{equation}
+P_e > e^{-(1 - h)^2 \frac{\partial \ln(\theta_S)}{\partial \alpha_i}}
+\label{eq:QePoscondAi}
+\end{equation}
+
+Where the derivative $\frac{\partial \ln(\theta_S)}{\partial \alpha_i}$ works out to
+
+\begin{equation}
+\begin{split}
+\frac{\partial \ln(\theta_S)}{\partial \alpha_i} &= \frac{1}{1 - h} \left[1 - \boldsymbol{\alpha} \cdot \frac{\partial \mathbf{w}}{\partial \alpha_i} + \ln(\frac{\alpha_i}{w_i}) + \ln(\theta_S) - \ln(\mu_k) - \ln(F(\bar{\chi})) \right] + \frac{\partial \ln(\mu_k)}{\partial \alpha_i} + \frac{\ln(F(\bar{chi}))}{\partial \alpha_i}
+\label{eq:dLnThetaSdai}
+\end{split}
+\end{equation}
+
+The percentage change in equilibrium price given a $1$% increase in the partial yield $y_i$, meanwhile, works out to
+
+\begin{equation}
+\begin{split}
+\frac{\partial \ln(P_e)}{\partial \ln(y_i)} &= \frac{\partial \ln(P_e)}{\partial \alpha_i} \\
+&= \frac{1}{\eta_D - \eta_S} \left( \frac{\ln(P_e)}{(1 - h)^2} + \frac{\partial \ln(\theta_S)}{\partial \alpha_i} \right) \\
+&= \frac{1}{\eta_D} \frac{\partial \ln(Q_e)}{\partial \alpha_i}
+\label{eq:dLnPedai}
+\end{split}
+\end{equation}
+
+By which it follows that the change in equilibrium price under release and voluntary uptake of the input enhancing technology is negative so long as inequality \ref{eq:QePoscondAi} is true.
+
+Without toiling through the considerable ambiguity of the derivative in equation \ref{eq:dLnThetaSdai}, it is already clear from the farm level analysis in section \ref{sec:techChangeAi} that, under Axioms 1-3, all adopting farms find it in their best economic interest to increase output given the new input enhancing technology. Aggregate output must therefore also increase. By inequality \ref{eq:QePoscondAi}, it then follows that the equilibrium price must decrease.
+
+Under circumstances of an involuntary increase in the input elasticity, on the other hand, inequality \ref{eq:QePoscondAi} implies that equilibrium supply may decrease while the equilibrium price rises.
 
 ## The aggregate change in net benefit resulting from new technology
 
@@ -971,7 +1039,7 @@ At equlibrium, this becomes
 \psi_e^S = \left( 1 - \mathbf{\alpha} \cdot \frac{\partial \ln(\mathbf{w})}{\partial \ln(y_0)} + \frac{\partial \ln(P_e)}{\partial \ln(y_0)} \right) P_e Q_e
 \end{equation}
 
-Using equation \ref to substitute for $\frac{\partial \ln(P_e)}{\partial \ln(y_0)}$, this becomes
+Using equation \ref{eq:dLnPedLny0} to substitute for $\frac{\partial \ln(P_e)}{\partial \ln(y_0)}$, this becomes
 
 \begin{equation}
 \begin{split}
