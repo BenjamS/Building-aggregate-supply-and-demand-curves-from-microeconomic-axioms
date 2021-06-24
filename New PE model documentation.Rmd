@@ -272,16 +272,17 @@ y^* =  \left(y_0 \left(\frac{P}{\lambda}\right)^h \prod_i \left(\frac{\alpha_i}{
 To reduce notational clutter, the yield envelope is henceforth rewritten as follows.
 
 \begin{equation}
-y^* =  (y_0 r \lambda^{-h} \beta_x \beta_k)^{\frac{1}{1 - h}}
+y^* =  \left(y_0  \left(\frac{P}{\lambda} \right)^h \frac{\beta_x \beta_k}{\beta_w} \right)^{\frac{1}{1 - h}}
 \label{eq:YdEnvCompact}
 \end{equation}
 
 Where the following shorthands have been introduced:
+<!-- r &= \frac{P^h}{\beta_w} \:\:\:; \:\: \beta_w = \prod_i w_i^{\alpha_i} \\ -->
 
 \begin{equation}
 \begin{split}
-r &= \frac{P^h}{\beta_w} \:\:\:; \:\: \beta_w = \prod_i w_i^{\alpha_i} \\
-\beta_x &= \prod_i \alpha_i^{\alpha_i}
+\beta_w &= \prod_i w_i^{-\alpha_i} \\
+\beta_x &= \prod_i \alpha_i^{\alpha_i} \\
 \beta_k &= \prod_i \k_i^{\kappa_i}
 \end{split}
 \end{equation}
@@ -503,51 +504,75 @@ Again, the last two inequalities are the demand side analogues of the results de
 
 New technology can be modeled either as a change in the basal yield $y_0$, or as a change in one of the input elasticities $\alpha_i$. Generally speaking, a change in basal yield implies planting an improved variety, whereas a change in one of the input elasticities implies the application of a more efficient input (or a more efficient way of applying the status quo input).
 
-The change in farm level net benefit resulting from introduction of the new technology is, by definition, the percentage change in net benefit times the baseline level of net benefit. That is, for basal yield enhancing technology,
+Matehmatically, the change in farm level net benefit resulting from introduction of the new technology is measured as the change in the farm's optimized objective function $\mathcal{L}^*$ or "net benefit envelope", which is just the objective function $\mathcal{L}$ evaluated at the optimal yield $y^*$.
 
 \begin{equation}
-\begin{split}
-\text{Change in Net Benefit} &= \frac{\partial \ln(\mathcal{L}^*)}{\partial \ln(y_0)} \mathcal{L}^* \\
-&= \frac{\partial \mathcal{L}^*}{\partial \ln(y_0)}
-\end{split}
+\mathcal{L}^* = \mathcal{L} \bigr_{y = y^*} = P y^* - \lambda (C^* - B)
 \end{equation}
 
-And, likewise, for input enhancing technology,
+Note that, applying the handy relation in equation \ref{eq:lambdaHandy}, the net benefit envelope can be rewritten without the optimal expenditure term $C^*$.
 
 \begin{equation}
-\begin{split}
-\text{Change in Net Benefit} &= \frac{\partial \ln(\mathcal{L}^*)}{\partial \alpha_i} \mathcal{L}^* \\
-&= \frac{\partial \mathcal{L}^*}{\partial \alpha_i}
-\end{split}
+\mathcal{L}^* = (1 - h) P y^* + \lambda B
 \end{equation}
 
-By Axiom 2, it is assumed that a farm adopts a given new technology only if the expected change in net benefit is positive. That is, the adoption conditions for basal yield enhancing and input enhancing technology release may be expressed, respectively,
+By Axiom 2, it is assumed that a farm adopts a given new technology only if the expected change in net benefit is positive. Formally, this condition can be expressed for basal yield and input enhancing technology, respectively,
 
 \begin{equation}
 \begin{split}
 \frac{\partial \mathcal{L}^*}{\partial \ln(y_0)} > 0 \\
-\frac{\partial \mathcal{L}^*}{\partial \alpha_i} &> 0
+\frac{\partial \mathcal{L}^*}{\partial \ln(y_i)} &> 0
+\label{eq:adoptCondBasic}
 \end{split}
 \end{equation}
 
-Below these two conditions are explored in more detail.
+Below, these two conditions are explored in more detail.
 
 ### Technology change as a change in basal yield
 
-In most impact assessment studies, technology change comes in the form of a new cultivar with improved germplasm, and/or a package of new management practices, which do not act upon any single input in particular, but generally raise the basal yield. Many such studies specify a Cobb-Douglas yield function and report a statistically significant dummy variable that equals 1 on adopting farms and 0 otherwise. The dummy variable coefficient may then be interpreted as [the percentage increase in yield resulting from technology adoption.]
+In most impact assessment studies, technology change comes in the form of a new cultivar with improved germplasm, and/or a package of new management practices, which do not act upon any single input in particular, but generally raise the basal yield. Many such studies specify a Cobb-Douglas yield function and report a statistically significant dummy variable that equals 1 on adopting farms and 0 otherwise. The dummy variable coefficient may then be interpreted as the increase in yield resulting from technology adoption.]
 
-can be expressed as follows.
+The marginal change in farm net benefit given a $1$% increase basal yield is expressed as follows.
 
 \begin{equation}
 \begin{split}
-\frac{\partial \mathcal{L}^*}{\partial \ln(y_0)} &= (1 - h) P \frac{\partial y^*}{\partial \ln(y_0)} \\
-&= P y^* (\frac{\partial \ln(r)}{\partial \ln(y_0)} + 1)
-&= P y^* (h \frac{\partial \ln(P)}{\partial \ln(y_0)} - \boldsymbol{\alpha} \cdot \frac{\partial \ln(\mathbf{w})}{\partial \ln(y_0)} + 1)
+\frac{\partial \mathcal{L}^*}{\partial \ln(y_0)} &= (1 - h) \left( \frac{y^* \partial P}{\partial \ln(y_0)} + P \frac{\partial y^*}{\partial \ln(y_0)} \right) \\
+&= (1 - h) P y^* \left( \frac{\partial \ln(P)}{\partial \ln(y_0)}  + \frac{\partial \ln(y^*)}{\partial \ln(y_0)} \right)
+\end{split}
+\end{equation}
+
+Where
+
+\begin{equation}
+\frac{\partial \ln(y^*)}{\partial \ln(y_0)} &= \frac{1}{1 - h} \left(1 + h \frac{\partial \ln(P)}{\partial \ln(y_0)} - \boldsymbol{\alpha} \cdot \frac{\partial \ln(\mathbf{w})}{\partial \ln(y_0)} \right)
+\end{equation}
+
+Substituting this for $\frac{\partial \ln(y^*)}{\partial \ln(y_0)}$ in the previous equation gives
+
+\begin{equation}
+\begin{split}
+\frac{\partial \mathcal{L}^*}{\partial \ln(y_0)} &= (1 - h) P y^* \left( \frac{\partial \ln(P)}{\partial \ln(y_0)}  + \frac{1}{1 - h} \left(1 + h \frac{\partial \ln(P)}{\partial \ln(y_0)} - \boldsymbol{\alpha} \cdot \frac{\partial \ln(\mathbf{w})}{\partial \ln(y_0)} \right) \right) \\
+&= P y^* \left( \frac{\partial \ln(P)}{\partial \ln(y_0)} - \boldsymbol{\alpha} \cdot \frac{\partial \ln(\mathbf{w})}{\partial \ln(y_0)} + 1  \right)
 \label{eq:prodNBy0}
 \end{split}
 \end{equation}
 
-Here it is important to keep in mind that the release and uptake of yield enhancing technology tends to boost supply, which in turn (by Axiom 3) lowers the output price $P$. At the same time, uptake of the new technology usually implies increased use of (i.e. demand for) inputs, which (again by Axiom 3) drives up input prices. Also, the price of improved seeds (an input) is typically higher than the price of the status quo seed variety. Hence,
+Applying the adoption condition (inequality \ref{eq:adoptCondBasic}) and rearranging,
+
+\begin{equation}
+\begin{split}
+1 &> \boldsymbol{\alpha} \cdot \frac{\partial \ln(\mathbf{w})}{\partial \ln(y_0)} - \frac{\partial \ln(P)}{\partial \ln(y_0)}
+\partial \ln(y_0) &> \boldsymbol{\alpha} \cdot \partial \ln(\mathbf{w}) - \partial \ln(P)
+\end{split}
+\label{eq:ydAdoptCondy0}
+\end{equation}
+
+This condition says that a farm stands to increase its net benefit through adoption of basal yield enhancing technology only if the percentage increase in basal yield is greater than the corresponding percentage increase in input prices (scaled by their respective input elasticities) minus the corresponding percentage change in output price.
+<!-- More compactly, it says that the percentage increase in basal yield must be greater than the absolute value of the corresponding percentage decrease in the technology adjusted output-input price ratio ($r$). -->
+
+Here it is important to keep in mind that the release and uptake of yield enhancing technology tends to boost supply, which in turn (by Axiom 3) lowers the output price $P$. At the same time, uptake of the new technology usually implies increased use of (i.e. demand for) inputs, which (again by Axiom 3) drives up input prices. Also, the price of improved seeds (an input) is typically higher than the price of the status quo seed variety.
+
+Hence, the general expectation is
 
 \begin{equation}
 \begin{split}
@@ -556,152 +581,175 @@ Here it is important to keep in mind that the release and uptake of yield enhanc
 \end{split}
 \end{equation}
 
-And so, since $h > 0$ and $\boldsymbol{\alpha} > \mathbf{0}$,
-
-\begin{equation}
-\frac{\partial \ln(r)}{\partial \ln(y_0)} < 0
-\end{equation}
-
-Again, by Axiom 2, it is assumed that only farms who stand to increase their net benefit will adopt the new technology. The adoption condition is thus found by solving the inequality $\frac{\partial \mathcal{L}^*}{\partial \ln(y_0)} > 0$ as follows.
-
-\begin{equation}
-\begin{split}
-1 &> \boldsymbol{\alpha} \cdot \frac{\partial \ln(\mathbf{w})}{\partial \ln(y_0)} - h \frac{\partial \ln(P)}{\partial \ln(y_0)}
-\partial \ln(y_0) &> \boldsymbol{\alpha} \cdot \partial \ln(\mathbf{w}) - h \partial \ln(P)
-\end{split}
-\label{eq:ydAdoptCondy0}
-\end{equation}
-
-This condition says that a farm stands to increase its net benefit through new technology adoption only if the percentage increase in basal yield is greater than the corresponding percentage increase in input prices (scaled by their respective input elasticities) plus the absolute value of the corresponding percentage decrease in output price (scaled by the degree of homogeneity). More compactly, it says that the percentage increase in basal yield must be greater than the absolute value of the corresponding percentage decrease in the technology adjusted output-input price ratio ($r$).
-
-The adoption condition in inequality \ref{eq:ydAdoptCondy0}, theoretically derived from Axioms 1-3, closely resembles the adoption condition asserted by Lipton in 2005:
+Note that the adoption condition in inequality \ref{eq:ydAdoptCondy0} closely resembles the "price/productivity tightrope" formulated by Lipton:
 
 >"New science usually raises farm supply of outputs and demand for inputs. That makes outputs cheaper and inputs more expensive; hence the ratio of farm output prices to input prices falls. Do small and poor farmers gain? If, and only if, this science-induced fall in their relative farm prices is slower than the science-induced rise in their conversion ratio of physical inputs into physical outputs (that is, TFP)." [@lipton2005family]
 
 (Where, again, "TFP" refers to the basal yield, $y_0$.)
 
-The one substantive difference between Lipton's assertion, which he calls the "price/productivity tightrope", and the condition derived in inequality \ref{eq:ydAdoptCondy0}, is that the percentage changes in output and input prices in the latter are scaled by the technological parameters $h$ and $\boldsymbol{\alpha}$, respectively. Inequality \ref{eq:ydAdoptCondy0} might thus be called the technology adjusted price/productivity tightrope.
+The one substantive difference between Lipton's condition and the condition derived in inequality \ref{eq:ydAdoptCondy0}, is that the percentage change in input prices in the latter are scaled by the technology $\boldsymbol{\alpha}$. Inequality \ref{eq:ydAdoptCondy0} might thus be called the "technology adjusted price/productivity tightrope".
 <!-- "For new science to help poor farmers and poor food consumers (a lot), it must cut staples prices (a lot) but must raise total factor productivity (TFP) on small farms (a lot) faster.19  -->
 <!-- In contrast to the adoption condition derived in the previous section (inequality \ref{eq:ydAdoptCond}), the technology adjusted price/productivity tightrope implies that, for given prices and technology ($y_0$ and $\boldsymbol{\alpha}$), either all farms or no farms adopt.  -->
 
-Since $y_0$, $h$, and $\boldsymbol{\alpha}$ are population level parameters (they do not vary from farm to farm), the technology adjusted price/productivity tightrope implies that, for given prices, all farms in the given population will either adopt or not adopt.
-
-Axioms 1-3, from which inequality \ref{eq:ydAdoptCond} is derived, thus imply that the adoption rate of basal yield enhancing technology must be either 0% or 100% if prices are the same for all farms (in other words, if Jevons' "law of indifference" holds). Conversely, adoption rates between 0% and 100% imply that prices vary within the farm population. 
-
-It follows, moreover, that impact assessment studies that assume unique prices while also assuming or reporting an adoption rate between 0% and 100% possibly stand in violation of one or more of Axioms 1-3.
+Since $y_0$ and $\boldsymbol{\alpha}$ are population level parameters (they do not vary from farm to farm), the technology adjusted price/productivity tightrope implies that, for a given set of prices $\{P, \mathbf{w} \}$, all farms in the given population will either adopt or not adopt. In other words, the adoption rate of basal yield enhancing technology must be either 0% or 100% if prices are the same for all farms (i.e., if Jevons' "law of indifference" holds). Conversely, it follows that adoption rates between 0% and 100% imply that prices vary within the farm population.
+<!-- Impact assessment studies that assume unique prices while also reporting an adoption rate between 0% and 100% possibly stand in violation of one or more of Axioms 1-3. -->
 <!-- In fact, input and output prices often vary considerably within a given farm population, especially in the developing world.  and this is reflected in adoption rates falling somewhere between 0% and 100%. -->
 
 ### Technology change as a change in input elasticity \label{sec:techChangeAi}
 
-If the change in technology comes in the form of a more efficient input, then the resulting marginal change in net benefit is defined
+The change in farm net benefit resulting from input enhancing technology is considerably more complex than the change resulting from basal yield enhancing technology due to the presence of $\alpha_i$ in multiple terms ($h$, $\beta_w$, $\beta_x$) within the net benefit envelope.
+
+The marginal change in net benefit given a $1$% increase in one of the partial yields is expressed as follows.
 
 \begin{equation}
-\frac{\partial \mathcal{L}^*}{\partial \alpha_i} = P y^* (1 - h) \left(\frac{\partial \ln(y^*)}{\partial \alpha_i} - \frac{1}{1 - h} \right)
+\begin{split}
+\frac{\partial \mathcal{L}^*}{\partial \ln(y_i)} &= \frac{\partial \mathcal{L}^*}{\partial \alpha_i} \\
+&= (1 - h) \left(y^* \frac{\partial P}{\partial \alpha_i} + P \frac{\partial y^*}{\partial \alpha_i} \right) + P y^* \frac{\partial}{\partial \alpha_i} (1 - h) \\
+&= P y^* \left(\frac{\partial \ln(y^*)}{\partial \alpha_i} + \frac{\partial \ln(P)}{\partial \alpha_i} - 1 \right) \\
+&= (1 - h) P y^* \left(\frac{\partial \ln(y^*)}{\partial \alpha_i} + \frac{\partial \ln(P)}{\partial \alpha_i} - \frac{1}{1 - h} \right)
 \label{eq:dLdai}
+\end{split}
 \end{equation}
+<!-- Note that multiplying this through by $\alpha_i$ gives an instructive alternative expression. -->
 
-Note that multiplying this through by $\alpha_i$ gives an instructive alternative expression.
+<!-- \begin{equation} -->
+<!-- \frac{\partial \mathcal{L}^*}{\partial \ln(\alpha_i)} = P y^* (1 - h) (\frac{\partial \ln(y^*)}{\partial \ln(\alpha_i)} + \frac{\partial \ln(y^*)}{\partial \ln(w_i)} - 1) -->
+<!-- \end{equation} -->
+
+<!-- Where (recall from section \ref{sec:inDem}) $\frac{\partial \ln(y^*)}{\partial \ln(w_i)}$ is the own price elasicity of demand for the input in question. -->
+
+Where
 
 \begin{equation}
-\frac{\partial \mathcal{L}^*}{\partial \ln(\alpha_i)} = P y^* (1 - h) (\frac{\partial \ln(y^*)}{\partial \ln(\alpha_i)} + \frac{\partial \ln(y^*)}{\partial \ln(w_i)} - 1)
+\begin{split}
+\frac{\partial \ln(y^*)}{\partial \alpha_i} &= \frac{\ln(y^*)}{1 - h} + \frac{1}{1 - h} \left(\ln \left(\frac{P}{\lambda} \right) + h \frac{\partial \ln(P)}{\partial \alpha_i} - \boldsymbol{\alpha} \cdot \frac{\partial \ln(\mathbf{w})}{\partial \alpha_i} - \ln(w_i) + \ln(\alpha_i) + 1 \right) \\
+&= \frac{1}{1 - h} \left( \ln(y^*) + \ln \left(\frac{P}{\lambda} \right) + \left( \ln(y^*) + \ln \left(\frac{\alpha_i}{w_i} + h \frac{\partial \ln(P)}{\partial \alpha_i} - \boldsymbol{\alpha} \cdot \frac{\partial \ln(\mathbf{w})}{\partial \alpha_i} \right) \right)
+\end{split}
 \end{equation}
 
-Where (recall from section \ref{sec:inDem}) $\frac{\partial \ln(y^*)}{\partial \ln(w_i)}$ is the own price elasicity of demand for the input in question.
-
-Now, it is not immediately self-evident from either of these equations whether $\frac{\partial \mathcal{L}^*}{\partial \alpha_i}$ is positive or negative for a given farm. By Axiom 2, only farms that stand to increase their net benefit will be interested in adoption of the new technology. That is, a farm is assumed to adopt only if $\frac{\partial \mathcal{L}^*}{\partial \ln(\alpha_i)} > 0$. Below, this condition is applied to equation \ref{eq:dLdai} to derive a measurable baseline yield adoption threshold. The baseline yield adoption threshold indicates the starting yield above which farms stand to increase their net benefit by adoption, and below which farms stand to suffer a decrease in their net benefit. Only a sketch of the derivation is provided here, with full details given in Appendix \ref{sec:derivYdCond1}.
-
-Applying the condition $\frac{\partial \mathcal{L}^*}{\partial \ln(\alpha_i)} > 0$ and rearranging gives the following expression.
+But note from equation \ref{eq:YdEnvCompact} that
 
 \begin{equation}
-\frac{\partial \ln(y^*)}{\partial \alpha_i} > \frac{1}{1 - h}
-\label{eq:adoptCondInpElas}
+\ln \left( \frac{P}{\lambda} \right) = \frac{1}{h} ((1 - h) \ln(y^*) - \ln(y_0) - \ln(\beta)) \:\:; \:\:\: \beta = \frac{\beta_x \beta_k}{\beta_w}
 \end{equation}
 
-The derivative on the lefthand side of this inequality works out to
+Substituting for $\ln(P / \lambda)$ in the previous equation then gives an expression in prices and population level parameters only.
 
 \begin{equation}
-\frac{\partial \ln(y^*)}{\partial \alpha_i} = \frac{1}{1 - h} \left(\ln(y^*) + \ln(P / \lambda) + h \frac{\partial \ln(P)}{\partial \alpha_i} - \boldsymbol{\alpha} \cdot \frac{\partial \mathbf{w}}{\partial \alpha_i} + \ln(\alpha_i / w_i) + 1 \right)
-\label{eq:dLnYstardai}
+\begin{split}
+\frac{\partial \ln(y^*)}{\partial \alpha_i} &= \frac{1}{1 - h} \left(\ln(y^*) + \frac{1}{h} ((1 - h) \ln(y^*) - \ln(y_0) - \ln(\beta)) + \ln \left(\frac{\alpha_i}{w_i} \right) + h \frac{\partial \ln(P)}{\partial \alpha_i} - \boldsymbol{\alpha} \cdot \frac{\partial \ln(\mathbf{w})}{\partial \alpha_i} + 1 \right) \\
+&= \frac{1}{1 - h} \left( \frac{1}{h} (\ln(y^*) - \ln(y_0) - \ln(\beta)) + \ln \left( \frac{\alpha_i}{w_i} \right) + h \frac{\partial \ln(P)}{\partial \alpha_i} - \boldsymbol{\alpha} \cdot \frac{\partial \ln(\mathbf{w})}{\partial \alpha_i} + 1 \right)
+\end{split}
 \end{equation}
 
-Substituting this into inequality \ref{eq:adoptCondInpElas} and solving for $y^*$ then gives the baseline yield adoption threshold.
+Substituting this expression for $\frac{\partial \ln(y^*)}{\partial \alpha_i}$ in equation \ref{eq:dLdai} then gives
 
 \begin{equation}
-y^* &> \left[w_i / \alpha_i (y_0 \beta_w^{-1} \beta_x \beta_k)^{1 / h} e^{\boldsymbol{\alpha} \cdot \frac{\partial \ln(\mathbf{w})}{\partial \alpha_i} - h \frac{\partial \ln(P)}{\partial \alpha_i}} \right]
-\label{eq:ydAdoptCond}
+\begin{split}
+\frac{\partial \mathcal{L}^*}{\partial \ln(y_i)} &= (1 - h) Py^* \left[ \frac{1}{1 - h} \left( \frac{1}{h} (\ln(y^*) - \ln(y_0) - \ln(\beta)) + \ln \left( \frac{\alpha_i}{w_i} \right) + h \frac{\partial \ln(P)}{\partial \alpha_i} - \boldsymbol{\alpha} \cdot \frac{\partial \ln(\mathbf{w})}{\partial \alpha_i} + 1 \right) + \frac{\partial \ln(P)}{\partial \alpha_i} - \frac{1}{1 - h} \right] \\
+&= Py^* \left[ \left( \frac{1}{h} (\ln(y^*) - \ln(y_0) - \ln(\beta)) + \ln \left( \frac{\alpha_i}{w_i} \right) + h \frac{\partial \ln(P)}{\partial \alpha_i} - \boldsymbol{\alpha} \cdot \frac{\partial \ln(\mathbf{w})}{\partial \alpha_i} + 1 \right) + (1 - h) \frac{\partial \ln(P)}{\partial \alpha_i} - 1 \right] \\
+&= Py^* \left[ \frac{1}{h} (\ln(y^*) - \ln(y_0) - \ln(\beta)) + \ln \left(\frac{\alpha_i}{w_i} \right) + \frac{\partial \ln(P)}{\partial \alpha_i} - \boldsymbol{\alpha} \cdot \frac{\partial \ln(\mathbf{w})}{\partial \alpha_i} \right]
+\end{split}
 \end{equation}
 
-Again, farms with a baseline yield greater than the righthand side of this inequality stand to increase their net benefit by adopting the new technology, while farms with a baseline yield equal to or below the righthand side stand to make no gains or suffer a decrease in their net benefit by adopting. By Axiom 2, then, only the former group of farms would adopt the new technology, while the latter group would not be interested.
-
-Note from equation \ref{eq:dLnYstardai} that there is considerable ambiguity surrounding the change in yield that results from introduction of the new technology. Are there conditions under which a farm would find it in their best interest to reduce output after adopting the input enhancing technology?
-
-Considering inequality \ref{eq:adoptCondInpElas} and the domain of $h$ derived earlier, the answer under Axioms 1 and 2 must be no. Since $1 / (1 - h) > 0$ then the change in yield ($\frac{\partial \ln(y^*)}{\partial \alpha_i}$) is positive on adopting farms. The exact baseline yield threshold above which adopting farms find it in their best interest to increase output works out to
+The adoption condition $\frac{\partial \mathcal{L}^*}{\partial \ln(y_i)} > 0$ then implies
 
 \begin{equation}
-y^* > \left[w_i / \alpha_i (y_0 \beta_w^{-1} \beta_x \beta_k)^{1 / h} e^{\boldsymbol{\alpha} \cdot \frac{\partial \ln(\mathbf{w})}{\partial \alpha_i} - h \frac{\partial \ln(P)}{\partial \alpha_i} - 1} \right]^{1 - h}
-\label{eq:YdIncCond1}
+\begin{split}
+\frac{1}{h} (\ln(y^*) - \ln(y_0) - \ln(\beta)) + \ln \left(\frac{\alpha_i}{w_i} \right) + \frac{\partial \ln(P)}{\partial \alpha_i} - \boldsymbol{\alpha} \cdot \frac{\partial \ln(\mathbf{w})}{\partial \alpha_i} > 0 \\
+\frac{1}{h} (\ln(y^*) - \ln(y_0) - \ln(\beta)) &> \boldsymbol{\alpha} \cdot \frac{\partial \ln(\mathbf{w})}{\partial \alpha_i} - \frac{\partial \ln(P)}{\partial \alpha_i} - \ln \left(\frac{\alpha_i}{w_i} \right) \\
+\ln(y^*) &> h \left( \boldsymbol{\alpha} \cdot \frac{\partial \ln(\mathbf{w})}{\partial \alpha_i} - \frac{\partial \ln(P)}{\partial \alpha_i} + \ln \left(\frac{w_i}{\alpha_i} \right) \right) + \ln(y_0) + \ln(\beta) \\
+y^* &> y_0 \beta \left(\frac{w_i}{\alpha_i} \right)^h e^{h \left( \boldsymbol{\alpha} \cdot \frac{\partial \ln(\mathbf{w})}{\partial \alpha_i} - \frac{\partial \ln(P)}{\partial \alpha_i} \right)}
+\label{eq:adoptCondai}
+\end{split}
+\end{equation}
+<!-- Now, it is not immediately self-evident from either of these equations whether $\frac{\partial \mathcal{L}^*}{\partial \alpha_i}$ is positive or negative for a given farm. By Axiom 2, only farms that stand to increase their net benefit will be interested in adoption of the new technology. That is, a farm is assumed to adopt only if $\frac{\partial \mathcal{L}^*}{\partial \ln(\alpha_i)} > 0$. Below, this condition is applied to equation \ref{eq:dLdai} to derive a measurable baseline yield adoption threshold. -->
+
+That is to say, under Axioms 1-3, only farms with baseline yields greater than the righthand side of this inequality find it in their best economic interest to adopt the input enhancing technology. Farms with a baseline yield less than this would incur a decrease in their net benefit if they were to adopt.
+
+How do adopting farms change their output given the new technology? Equation \ref together with the output expansion condition $\frac{\partial \ln(y^*)}{\partial \alpha_i} > 0$ imply that adopting farms increase output if
+
+\begin{equation}
+\begin{split}
+\frac{1}{h} (\ln(y^*)) - \ln(y_0) - \ln(\beta) > \boldsymbol{\alpha} \cdot \frac{\partial \ln(\mathbf{w})}{\partial \alpha_i} - \frac{\partial \ln(P)}{\partial \alpha_i} + \ln \left(\frac{w_i}{\alpha_i} \right) - 1 \\
+\ln(y^*) &> h \left( \boldsymbol{\alpha} \cdot \frac{\partial \ln(\mathbf{w})}{\partial \alpha_i} - \frac{\partial \ln(P)}{\partial \alpha_i} + \ln \left(\frac{w_i}{\alpha_i} \right) - 1 \right) + \ln(y_0) + \ln(\beta) \\
+y^* &> y_0 \beta \left(\frac{w_i}{\alpha_i} \right)^h e^{h \left( \boldsymbol{\alpha} \cdot \frac{\partial \ln(\mathbf{w})}{\partial \alpha_i} - \frac{\partial \ln(P)}{\partial \alpha_i} + \ln \left(\frac{w_i}{\alpha_i} \right) - 1 \right)}
+\label{eq:ydIncCondai}
+\end{split}
 \end{equation}
 
-(Details in Appendix \ref{sec:derivYdIncCond1}.)
+Which differs from the righthand side of inequality \ref{eq:adoptCondai} by a factor of
 
-The righthand side of this condition is less than the righthand side of condition \ref{eq:ydAdoptCond} by a factor of $e^{h - 1}$, further confirming that all adopting farms find it in their best interest to increase output.
+\begin{equation}
+e^{h \left( (1 - h)\frac{\partial \ln(P)}{\partial \alpha_i} - 1 \right)}
+\end{equation}
 
-Given an exogenously imposed, involuntary increase in input elasticity of yield, condition \ref{eq:YdIncCond1} implies that the lower centiles of the yield distribution (those farms with baseline yields less than the righthand side of the condition) would choose to reduce ouput. Condition \ref{eq:ydAdoptCond} likewise implies a reduction in net benefit for farms in the lower centiles of the yield distribution under such circumstances. Farms with baseline yields between conditions \ref{eq:YdIncCond1} and \ref{eq:ydAdoptCond}, meanwhile, would suffer a decrease in net benefit but choose to increase output.
+That is, letting $y^*_y$ denote the righthand side of inequality \ref{eq:ydIncCondai} and $y^*_{\mathcal{L}}$ the righthand side of inequality \ref{eq:adoptCondai},
+
+\begin{equation}
+y^*_y = e^{h \left( (1 - h)\frac{\partial \ln(P)}{\partial \alpha_i} - 1 \right)} y^*_{\mathcal{L}}
+\label{eq:compLoBounds}
+\end{equation}
+
+If $y^*_y < y^*_{\mathcal{L}}$, then all adopting farms find it in their best economic interest to increase output. From equation \ref{eq:compLoBounds} it is clear that this is true if
+
+\begin{equation}
+\frac{\partial \ln(P)}{\partial \alpha_i} < \frac{1}{1 - h}
+\end{equation}
+
+Which is generally true given the domain of $h$ derived from Axioms 1-3 in section \ref{sec:degHomog}, and since it is generally expected that $\frac{\partial \ln(P)}{\partial \alpha_i} < 0$.
+
+Under circumstances of an exogenously imposed, involuntary increase in one of the input elasticities of yield, condition \ref{eq:ydIncCondai} implies that farms with baseline yields less than $y^*_y$ would choose to reduce ouput. Condition \ref{eq:adoptCondai} likewise implies a reduction in net benefit for farms with baseline yiedls less than $y^*_{\mathcal{L}}$. Farms with baseline yields between $y^*_y$ and $y^*_{\mathcal{L}}$, meanwhile, would suffer a decrease in net benefit but choose to increase output.
 <!-- Note that, in some analyses, technology change may not be voluntary. A study may examine, for example, the possibility of increased fertilizer efficiency resulting from a deterioration extension services. In such cases, the net benefit of both  -->
 
 ### Estimation of the technology adoption rate
 
-Estimation of the technology adoption rate hinges upon the introduction of Axiom 4: the assumed farm yield density function $f(y^*)$. It also depends on which of the two types of technology adoption discussed above is at stake.
+Estimation of the technology adoption rate hinges upon whether the technology is basal yield or input enhancing, and hence upon the corresponding assumed density function (Axiom 4).
 
-In the case of new technology affecting an input elasticity, the adoption rate $a$ is given by:
+In the case of basal yield enhancing technology, inequality \ref{eq:ydAdoptCondy0} implies the following adoption rate. 
 
 \begin{equation}
-a = {F(\overline{y}^*) - F(\underline{y}^*)}{F(\overline{y}^*)}
+a = \int_0^{\partial \ln(y_0)} g(u) du \:\:\:;\:\: u = \boldsymbol{\alpha} \cdot \partial \ln(\mathbf{w}) - \partial \ln(P)
 \end{equation}
 
-Where $F(\tau)$ is the cumulative distribution function, defined as follows,
+Where $g(\boldsymbol{\alpha} \cdot \partial \ln(\mathbf{w}) - \partial \ln(P))$ is the assumed density of $\boldsymbol{\alpha} \cdot \partial \ln(\mathbf{w}) - \partial \ln(P)$.
+
+In the case of input enhancing technology, inequality \ref{eq:adoptCondai} implies the following adoption rate.
+
+\begin{equation}
+a = \frac{\int_{\underline{y}^*}^{\bar{y}^*} f(y^*) dy^*}{\int_{0}^{\bar{y}^*} f(y^*) dy^*}
+\end{equation}
+
+Where $f(y^*)$ is the assumed density of $y^*$. More compactly,
+
+\begin{equation}
+a = \frac{F(\bar{y}^*) - F(\underline{y^*_{\mathcal{L}}})}{F(\bar{y}^*)}
+\end{equation}
+
+Where $F(\tau)$ is the cumulative distribution function corresponding to $f(y^*)$.
 
 \begin{equation}
 F(\tau) = \int_{0}^{\tau} f(y^*) dy^*
 \end{equation}
-
-And where $\overline{y}^*$ is the upper yield bound derived in inequality \ref{eq:ydUpBound}, and $\underline{y}^*$ is the minimum yield adoption threshold derived in inequality \ref{eq:ydAdoptCond}.
-
-Estimation of the adoption rate in the case of basal yield enhancing technology also hinges upon Axiom 4. But, in this case, the density function to be introduced is for $r$, not $y^*$. As explained in the previous subsection, this is because adoption of such technology is either 0% or 100% for a given set of input elasticities, input prices, and output price. Within a farm population, then, adoption varies only with respect to prices, not with respect to the baseline yield.
-
-Moreover, it is first necessary to convert the technology adjusted price/productivity tightrope into a form that can be evaluated as a bound of integration. This is done by integrating and rearranging inequality \ref{eq:ydAdoptCondy0}.
-
-\begin{equation}
-\begin{split}
-\int \partial \ln(y_0) &> \int \boldsymbol{\alpha} \cdot \partial \ln(\mathbf{w}) - h \int \partial \ln(P) \\
-\ln(y_0) &> \boldsymbol{\alpha} \cdot \ln(\mathbf{w}) - h \ln(P) + K
-\end{split}
-\end{equation}
-
-Assuming the constant of integration $K$ is zero,
-
-\begin{equation}
-\begin{split}
--\ln(y_0) &< \ln(r) \\
-1 / y_0 &< r
-\end{split}
-\end{equation}
-
-Letting $g(r)$ denote the density function for the tech-adjusted price ratio, the adoption rate then follows as
-
-\begin{equation}
-\begin{split}
-a &= G(\overline{r}) \\
-a &= G(1 / y_0)
-\end{split}
-\end{equation}
-
-Where $G(\tau)$ is the cumulative distribution function corresponding to $g(r)$.
+<!-- Moreover, it is first necessary to convert the technology adjusted price/productivity tightrope into a form that can be evaluated as a bound of integration. This is done by integrating and rearranging inequality \ref{eq:ydAdoptCondy0}. -->
+<!-- \begin{equation} -->
+<!-- \begin{split} -->
+<!-- \int \partial \ln(y_0) &> \int \boldsymbol{\alpha} \cdot \partial \ln(\mathbf{w}) - h \int \partial \ln(P) \\ -->
+<!-- \ln(y_0) &> \boldsymbol{\alpha} \cdot \ln(\mathbf{w}) - h \ln(P) + K -->
+<!-- \end{split} -->
+<!-- \end{equation} -->
+<!-- Assuming the constant of integration $K$ is zero, -->
+<!-- \begin{equation} -->
+<!-- \begin{split} -->
+<!-- -\ln(y_0) &< \ln(r) \\ -->
+<!-- 1 / y_0 &< r -->
+<!-- \end{split} -->
+<!-- \end{equation} -->
 <!-- _Adoption rate is endogenous to the model._ -->
 
 ### The demand side impact of supply side technology change 
 
-Demand side technology is typically left unaltered by a change in farm technology.^[Although there are important exceptions. Small granule cassava simluaneously reduces farm basal yield and increases bioethanol factory efficiency.] However, new farm technology does have an indirect impact on demand side net benefit $\mathcal{L}_D^*$ through its influence on the farm output price. For basal yield enhancing technology, the change in consumer net benefit works as follows.
+As a general rule, demand side technology is left unaltered by a change in farm technology.^[Although there are important exceptions. Small granule cassava simluaneously reduces farm basal yield and increases bioethanol factory efficiency.] However, new farm technology does have an indirect impact on demand side net benefit $\mathcal{L}_D^*$ through its influence on the farm output price. For basal yield enhancing technology, the change in consumer net benefit works as follows.
 
 \begin{equation}
 \begin{split}
@@ -733,9 +781,9 @@ By definition, aggregate supply is the integral of the yield envelope over its d
 Q_S = \int_{0}^{\bar{y}^*} y* N_S f(y^*) dy^*
 \end{equation}
 
-Where the density function is scaled by $N_S$, the number of hectares in the population, and $\bar{y}^*$ is the upper bound on economic yield assuming farms only enter production if their expected revenue is greater than their cost, (derived in equation \ref).
+Where the density function is scaled by $N_S$, the number of hectares in the population, and $\bar{y}^*$ is the upper bound on economic yield assuming farms only enter production if their expected revenue is greater than their cost (derived in equation \ref{eq:ydUpBound}).
 
-Using equation \ref to substitute for $y^*$ and factoring out constants, aggregate supply can be rewritten as follows.
+Using equation \ref{eq:YdEnvCompact} to substitute for $y^*$ and factoring out constants, aggregate supply can be rewritten as follows.
 
 \begin{equation}
 Q_S = N_S (y_0 r \beta_x)^{\frac{1}{1 - h}} \mu_k \int_{0}^{\bar{\chi}} \chi f(\chi) d\chi
@@ -988,6 +1036,12 @@ Where the derivative $\frac{\partial \ln(\theta_S)}{\partial \alpha_i}$ works ou
 \end{split}
 \end{equation}
 
+Without toiling through the considerable ambiguity of the derivative in equation \ref{eq:dLnThetaSdai}, it is already clear from the farm level analysis in section \ref{sec:techChangeAi} that, under Axioms 1-3, all adopting farms find it in their best economic interest to increase output given the new input enhancing technology. It follows, therefore, that $\frac{\partial \ln(Q_e)}{\partial \alpha_i} > 0$. Combining this knowledge with the aggregate expansion condition in inequality \ref{eq:QePoscondAi}, it follows, moreover, that
+
+\begin{equation}
+\frac{\partial \ln(\theta_S)}{\partial \alpha_i} > -\frac{\ln(P_e)}{(1 - h)^2}
+\end{equation}
+
 The percentage change in equilibrium price given a $1$% increase in the partial yield $y_i$, meanwhile, works out to
 
 \begin{equation}
@@ -1001,8 +1055,6 @@ The percentage change in equilibrium price given a $1$% increase in the partial 
 
 By which it follows that the change in equilibrium price under release and voluntary uptake of the input enhancing technology is negative so long as inequality \ref{eq:QePoscondAi} is true.
 
-Without toiling through the considerable ambiguity of the derivative in equation \ref{eq:dLnThetaSdai}, it is already clear from the farm level analysis in section \ref{sec:techChangeAi} that, under Axioms 1-3, all adopting farms find it in their best economic interest to increase output given the new input enhancing technology. Aggregate output must therefore also increase. By inequality \ref{eq:QePoscondAi}, it then follows that the equilibrium price must decrease.
-
 Under circumstances of an involuntary increase in the input elasticity, on the other hand, inequality \ref{eq:QePoscondAi} implies that equilibrium supply may decrease while the equilibrium price rises.
 
 ## The aggregate change in net benefit resulting from new technology
@@ -1015,23 +1067,31 @@ Again, impacts vary considerably depending upon whether the technology change is
 
 For a given basal yield enhancing technology, the aggregate change in producer net benefit $\psi^S$ is, by definition, the change in farm level net benefit integrated over its density.
 
-\begin{equation}
-\psi^S = \int \frac{\partial \ln(\mathcal{L}^*)}{\partial \ln(y_0)} \mathcal{L}^* v \left( \frac{\partial \ln(\mathcal{L}^*)}{\partial \ln(y_0)} \mathcal{L}^* \right) d \left( \frac{\partial \ln(\mathcal{L}^*)}{\partial \ln(y_0)} \mathcal{L}^* \right)
-\end{equation}
-
-But $\frac{\partial \ln(\mathcal{L}^*)}{\partial \ln(y_0)} \mathcal{L}^* = \frac{\partial \mathcal{L}^*}{\partial \ln(y_0)}$, and so, recalling the expression for $\frac{\partial \mathcal{L}^*}{\partial \ln(y_0)}$ derived in  equation \ref{eq:prodNBy0}, this integral can be rewritten
+The change in farm level net benefit due to basal yield enhancing technology is just the percentage increase in the basal yield times the percentage change in net benefit per $1$% change in the basal or partial yield, times the baseline net benefit. Mathematically, this may be expressed as follows.
 
 \begin{equation}
-\psi^S &= \left( 1 - \mathbf{\alpha} \cdot \frac{\partial \ln(\mathbf{w})}{\partial \ln(y_0)} + \frac{\partial \ln(P)}{\partial \ln(y_0)} \right) P \int y^* f(y^*) d y^*
+\begin{split}
+\text{Change in Net Benefit} &= \rho_0 \frac{\partial \ln(\mathcal{L}^*)}{\partial \ln(y_0)} \mathcal{L}^* \\
+&= \rho_0 \frac{\partial \mathcal{L}^*}{\partial \ln(y_0)}
+\end{split}
 \end{equation}
 
-Where the law of the unconscious statistician has been invoked to replace $v \left( \frac{\partial \ln(\mathcal{L}^*)}{\partial \ln(y_0)} \mathcal{L}^* \right) d \left( \frac{\partial \ln(\mathcal{L}^*)}{\partial \ln(y_0)} \mathcal{L}^* \right)$ with $f(y^*) d y^*$.
-
-Evaluating the integral, the aggregate change in producer net benefit reduces to
+Where $\rho_q$ is the percentage change in basal or partial yield, as the case may be. The aggregate change is thus
 
 \begin{equation}
-\psi^S = \left( 1 - \mathbf{\alpha} \cdot \frac{\partial \ln(\mathbf{w})}{\partial \ln(y_0)} + \frac{\partial \ln(P)}{\partial \ln(y_0)} \right) P Q
+\psi^S = \rho_0 \int \frac{\partial \mathcal{L}^*}{\partial \ln(y_0)} v \left(\frac{\partial \mathcal{L}^*}{\partial \ln(y_0)} \right) d \left( \frac{\partial \mathcal{L}^*}{\partial \ln(y_0)} \right)
 \end{equation}
+
+Recalling the expression for $\frac{\partial \ln(\mathcal{L}^*)}{\partial \ln(y_0)}$ derived in equation \ref\ref{eq:prodNBy0}, this can be rewritten
+
+\begin{equation}
+\begin{split}
+\psi^S &= \rho_0 \left( 1 - \mathbf{\alpha} \cdot \frac{\partial \ln(\mathbf{w})}{\partial \ln(y_0)} + \frac{\partial \ln(P)}{\partial \ln(y_0)} \right) P \int y^* f(y^*) d y^* \\
+&= \left( 1 - \mathbf{\alpha} \cdot \frac{\partial \ln(\mathbf{w})}{\partial \ln(y_0)} + \frac{\partial \ln(P)}{\partial \ln(y_0)} \right) P Q
+\end{split}
+\end{equation}
+
+Where the law of the unconscious statistician has been invoked to replace $v \left( \frac{\partial \mathcal{L}^*}{\partial \ln(y_0)} \right) d \left( \frac{\partial \mathcal{L}^*}{\partial \ln(y_0)} \right)$ with $f(y^*) d y^*$.
 
 At equlibrium, this becomes
 
@@ -1098,8 +1158,14 @@ Dividing $\psi_e^S$ and $\psi_e^D$ by $\psi_e$ gives the respective shares of ne
 \frac{\psi_e^D}{\psi_e^D} = \frac{(1 - h_D) P_D Q^D}{(1 - h) P_e Q_e + (1 - h_D) P_D Q^D}
 \end{equation}
 
-### Consumer and producer surplus
+### Aggregate change in producer net benefit, input enhancing technology
 
+### Aggregate change in demand side net benefit, input enhancing technology
+
+### Aggregate change in net benefit, input enhancing technology
+
+
+### Consumer and producer surplus
 
 ## Example application
 
@@ -1121,110 +1187,121 @@ Research question: How much of the non-adopting maize farm population in Kenya c
 
 ## Appendix
 
-### Derivation of the baseline yield threshold for adoption of input enhancing technology \label{sec:derivYdCond1}
+<!-- ### Derivation of the baseline yield threshold for adoption of input enhancing technology \label{sec:derivYdCond1} -->
 
-\begin{equation}
-\mathcal{L}^* = Py^* - \lambda (C^* - B)
-\end{equation}
+<!-- \begin{equation} -->
+<!-- \mathcal{L}^* = Py^* - \lambda (C^* - B) -->
+<!-- \end{equation} -->
 
-But recall that dotting the first order conditions in equations \ref{eq:eqFOC} gives the handy expression
+<!-- But recall that dotting the first order conditions in equations \ref{eq:eqFOC} gives the handy expression -->
 
-\begin{equation}
-P y^* h - \lambda C^* = 0
-\end{equation}
+<!-- \begin{equation} -->
+<!-- P y^* h - \lambda C^* = 0 -->
+<!-- \end{equation} -->
 
-Hence, using this to substitute for $\lambda C^*$ in the previous equation and simplifying,
+<!-- Hence, using this to substitute for $\lambda C^*$ in the previous equation and simplifying, -->
 
-\begin{equation}
-\mathcal{L}^* = (1 - h) P y^* + \lambda B
-\end{equation}
+<!-- \begin{equation} -->
+<!-- \mathcal{L}^* = (1 - h) P y^* + \lambda B -->
+<!-- \end{equation} -->
 
-Differentiating with respect to $\alpha_i$,
+<!-- Differentiating with respect to $\alpha_i$, -->
 
-\begin{equation}
-\begin{split}
-\frac{\partial \mathcal{L}^*}{\partial \alpha_i} &= P [-y^* + (1 - h) \frac{\partial y^*}{\partial \alpha_i}] \\
-&= (1 - h) P y^* (\frac{\partial \ln(y^*)}{\partial \alpha_i} - \frac{1}{1 - h})
-\end{split}
-\end{equation}
+<!-- \begin{equation} -->
+<!-- \begin{split} -->
+<!-- \frac{\partial \mathcal{L}^*}{\partial \alpha_i} &= P [-y^* + (1 - h) \frac{\partial y^*}{\partial \alpha_i}] \\ -->
+<!-- &= (1 - h) P y^* (\frac{\partial \ln(y^*)}{\partial \alpha_i} - \frac{1}{1 - h}) -->
+<!-- \end{split} -->
+<!-- \end{equation} -->
 
-The adoption condition $\frac{\partial \mathcal{L}^*}{\partial \alpha_i} > 0$ thus implies
+<!-- The adoption condition $\frac{\partial \mathcal{L}^*}{\partial \alpha_i} > 0$ thus implies -->
 
-\begin{equation}
-\frac{\partial \ln(y^*)}{\partial \alpha_i} > \frac{1}{1 - h}
-\label{eq:adoptCondInpElasAPP}
-\end{equation}
+<!-- \begin{equation} -->
+<!-- \frac{\partial \ln(y^*)}{\partial \alpha_i} > \frac{1}{1 - h} -->
+<!-- \label{eq:adoptCondInpElasAPP} -->
+<!-- \end{equation} -->
 
-The derivative on the lefthand side of this inequality works out as follows.
+<!-- The derivative on the lefthand side of this inequality works out as follows. -->
 
-\begin{equation}
-\begin{split}
-\frac{\partial \ln(y^*)}{\partial \alpha_i} &= \frac{\partial}{\partial \alpha_i} \left[\frac{1}{1 - h} (\ln(y_0) - h \ln(P / \lambda) - \ln(\beta_w) + \ln(\beta_x) + \ln(\beta_k)) \right] \\
-&= \frac{1}{1 - h} \left(\ln(y^*) + \ln(P / \lambda) + h \frac{\partial \ln(P)}{\partial \alpha_i} - \boldsymbol{\alpha} \cdot \frac{\partial \mathbf{w}}{\partial \alpha_i} + \ln(\alpha_i / w_i) + 1 \right)
-\end{split}
-\label{eq:dLnYstardaiAPP}
-\end{equation}
+<!-- \begin{equation} -->
+<!-- \begin{split} -->
+<!-- \frac{\partial \ln(y^*)}{\partial \alpha_i} &= \frac{\partial}{\partial \alpha_i} \left[\frac{1}{1 - h} (\ln(y_0) - h \ln(P / \lambda) - \ln(\beta_w) + \ln(\beta_x) + \ln(\beta_k)) \right] \\ -->
+<!-- &= \frac{1}{1 - h} \left(\ln(y^*) + \ln(P / \lambda) + h \frac{\partial \ln(P)}{\partial \alpha_i} - \boldsymbol{\alpha} \cdot \frac{\partial \mathbf{w}}{\partial \alpha_i} + \ln(\alpha_i / w_i) + 1 \right) -->
+<!-- \end{split} -->
+<!-- \label{eq:dLnYstardaiAPP} -->
+<!-- \end{equation} -->
 
-Substituting this into the adoption condition (equation \ref{eq:adoptCondInpElasAPP}) and simplifying,
+<!-- Substituting this into the adoption condition (equation \ref{eq:adoptCondInpElasAPP}) and simplifying, -->
 
-\begin{equation}
-\begin{split}
-\frac{1}{1 - h} \left(\ln(y^*) + \ln(P / \lambda) + h \frac{\partial \ln(P)}{\partial \alpha_i} - \boldsymbol{\alpha} \cdot \frac{\partial \mathbf{w}}{\partial \alpha_i} + \ln(\alpha_i / w_i) + 1 \right) &= \frac{1}{1 - h} \\
-\ln(y^*) + \ln(P / \lambda) + h \frac{\partial \ln(P)}{\partial \alpha_i} - \boldsymbol{\alpha} \cdot \frac{\partial \mathbf{w}}{\partial \alpha_i} + \ln(\alpha_i / w_i) > 0
-\end{split}
-\end{equation}
+<!-- \begin{equation} -->
+<!-- \begin{split} -->
+<!-- \frac{1}{1 - h} \left(\ln(y^*) + \ln(P / \lambda) + h \frac{\partial \ln(P)}{\partial \alpha_i} - \boldsymbol{\alpha} \cdot \frac{\partial \mathbf{w}}{\partial \alpha_i} + \ln(\alpha_i / w_i) + 1 \right) &= \frac{1}{1 - h} \\ -->
+<!-- \ln(y^*) + \ln(P / \lambda) + h \frac{\partial \ln(P)}{\partial \alpha_i} - \boldsymbol{\alpha} \cdot \frac{\partial \mathbf{w}}{\partial \alpha_i} + \ln(\alpha_i / w_i) > 0 -->
+<!-- \end{split} -->
+<!-- \end{equation} -->
 
-But note that the yield envelope can be solved to give an expression for the term $\ln(P / \lambda)$ as follows.
+<!-- But note that the yield envelope can be solved to give an expression for the term $\ln(P / \lambda)$ as follows. -->
 
-\begin{equation}
-\ln \left(\frac{P}{\lambda} \right) = 1 / h [(1 - h) \ln(y^*) - \ln(y_0) + \ln(\beta_w) - \ln(\beta_x) - \ln(\beta_k)]
-\label{eq:LnPoLambda}
-\end{equation}
+<!-- \begin{equation} -->
+<!-- \ln \left(\frac{P}{\lambda} \right) = 1 / h [(1 - h) \ln(y^*) - \ln(y_0) + \ln(\beta_w) - \ln(\beta_x) - \ln(\beta_k)] -->
+<!-- \label{eq:LnPoLambda} -->
+<!-- \end{equation} -->
 
-Substituting this into the previous equation and solving for $\ln(y^*)$,
+<!-- Substituting this into the previous equation and solving for $\ln(y^*)$, -->
 
-\begin{equation}
-\begin{split}
-\ln(y^*) &> \ln(w_i / \alpha_i) + \boldsymbol{\alpha} \cdot \frac{\partial \ln(\mathbf{w})}{\partial \alpha_i} - h \frac{\partial \ln(P)}{\partial \alpha_i} - 1 / h ((1 - h) \ln(y^*) - \ln(y_0 \beta_w^{-1} \beta_x \beta_k)) \\
-\ln(y^*) &> (1 - h) \left(\ln(w_i / \alpha_i) + 1 / h \ln(y_0 \beta_w^{-1} \beta_x \beta_k) + \boldsymbol{\alpha} \cdot \frac{\partial \ln(\mathbf{w})}{\partial \alpha_i} - h \frac{\partial \ln(P)}{\partial \alpha_i}
-\end{split}
-\end{equation}
+<!-- \begin{equation} -->
+<!-- \begin{split} -->
+<!-- \ln(y^*) &> \ln(w_i / \alpha_i) + \boldsymbol{\alpha} \cdot \frac{\partial \ln(\mathbf{w})}{\partial \alpha_i} - h \frac{\partial \ln(P)}{\partial \alpha_i} - 1 / h ((1 - h) \ln(y^*) - \ln(y_0 \beta_w^{-1} \beta_x \beta_k)) \\ -->
+<!-- \ln(y^*) &> (1 - h) \left(\ln(w_i / \alpha_i) + 1 / h \ln(y_0 \beta_w^{-1} \beta_x \beta_k) + \boldsymbol{\alpha} \cdot \frac{\partial \ln(\mathbf{w})}{\partial \alpha_i} - h \frac{\partial \ln(P)}{\partial \alpha_i} -->
+<!-- \end{split} -->
+<!-- \end{equation} -->
 
-Taking the exponential function then gives the baseline yield threshold for adoption of the input enhancing technology.
+<!-- Taking the exponential function then gives the baseline yield threshold for adoption of the input enhancing technology. -->
 
-\begin{equation}
-y^* > \left[w_i / \alpha_i (y_0 \beta_w^{-1} \beta_x \beta_k)^{1 / h} e^{\boldsymbol{\alpha} \cdot \frac{\partial \ln(\mathbf{w})}{\partial \alpha_i} - h \frac{\partial \ln(P)}{\partial \alpha_i}} \right]
-\label{eq:ydCond1APP}
-\end{equation}
+<!-- \begin{equation} -->
+<!-- y^* > \left[w_i / \alpha_i (y_0 \beta_w^{-1} \beta_x \beta_k)^{1 / h} e^{\boldsymbol{\alpha} \cdot \frac{\partial \ln(\mathbf{w})}{\partial \alpha_i} - h \frac{\partial \ln(P)}{\partial \alpha_i}} \right] -->
+<!-- \label{eq:ydCond1APP} -->
+<!-- \end{equation} -->
 
-This condition says that adoption will result in higher net benefit on farms with yields above the righthand side of the condition, but lower net benefit on farms with baseline yields below the righthand side of the condition. Assuming technology adoption is voluntary and that farms want to maximize their net benefit, the theory derived above says that those farms with baseline yields below the righthand side of the condition will not adopt.
+<!-- This condition says that adoption will result in higher net benefit on farms with yields above the righthand side of the condition, but lower net benefit on farms with baseline yields below the righthand side of the condition. Assuming technology adoption is voluntary and that farms want to maximize their net benefit, the theory derived above says that those farms with baseline yields below the righthand side of the condition will not adopt. -->
 
-Given an exogenously imposed, involuntary change in input elasticity of yield, condition \ref{eq:ydCond1APP} implies that the lower centiles of the yield distribution would suffer a decrease in their net benefit.
+<!-- Given an exogenously imposed, involuntary change in input elasticity of yield, condition \ref{eq:ydCond1APP} implies that the lower centiles of the yield distribution would suffer a decrease in their net benefit. -->
 
-### Derivation of the baseline yield threshold for increased output under input enhancing technology \label{sec:derivYdIncCond1}
+<!-- ### Derivation of the baseline yield threshold for increased output under input enhancing technology \label{sec:derivYdIncCond1} -->
 
-Applying the increased output condition ($\frac{\partial y^*}{\partial \alpha_i}$) to equation \ref{eq:dLnYstardaiAPP} and simplifying gives
+<!-- Applying the increased output condition ($\frac{\partial y^*}{\partial \alpha_i}$) to equation \ref{eq:dLnYstardaiAPP} and simplifying gives -->
 
-\begin{equation}
-\ln(y^*) + \ln(P / \lambda) + h \frac{\partial \ln(P)}{\partial \alpha_i} - \boldsymbol{\alpha} \cdot \frac{\partial \ln(\mathbf{w})}{\partial \alpha_i} + \ln(\alpha_i / w_i + 1) > 0
-\end{equation}
+<!-- \begin{equation} -->
+<!-- \ln(y^*) + \ln(P / \lambda) + h \frac{\partial \ln(P)}{\partial \alpha_i} - \boldsymbol{\alpha} \cdot \frac{\partial \ln(\mathbf{w})}{\partial \alpha_i} + \ln(\alpha_i / w_i + 1) > 0 -->
+<!-- \end{equation} -->
 
-Using equation \ref{eq:LnPoLambda} to substitute for the term $\ln(P / \lambda)$ and solving for $\ln(y^*)$,
+<!-- Using equation \ref{eq:LnPoLambda} to substitute for the term $\ln(P / \lambda)$ and solving for $\ln(y^*)$, -->
 
-\begin{equation}
-\ln(y^*) > (1 - h) \left(1 / h \ln(y_0 \beta_w^{-1} \beta_x \beta_k) - \ln(\alpha_i / w_i) + \boldsymbol{\alpha} \cdot \frac{\partial \ln(\mathbf{w})}{\partial \alpha_i} - h \frac{\partial \ln(P)}{\partial \alpha_i} - 1 \right)
-\end{equation}
+<!-- \begin{equation} -->
+<!-- \ln(y^*) > (1 - h) \left(1 / h \ln(y_0 \beta_w^{-1} \beta_x \beta_k) - \ln(\alpha_i / w_i) + \boldsymbol{\alpha} \cdot \frac{\partial \ln(\mathbf{w})}{\partial \alpha_i} - h \frac{\partial \ln(P)}{\partial \alpha_i} - 1 \right) -->
+<!-- \end{equation} -->
 
-Taking the exponential function then gives the baseline yield threshold for increased output under input enhancing technology.
+<!-- Taking the exponential function then gives the baseline yield threshold for increased output under input enhancing technology. -->
 
-\begin{equation}
-y^* > \left[w_i / \alpha_i (y_0 \beta_w^{-1} \beta_x \beta_k)^{1 / h} e^{\boldsymbol{\alpha} \cdot \frac{\partial \ln(\mathbf{w})}{\partial \alpha_i} - h \frac{\partial \ln(P)}{\partial \alpha_i} - 1} \right]^{1 - h}
-\label{eq:YdIncCond1}
-\end{equation}
+<!-- \begin{equation} -->
+<!-- y^* > \left[w_i / \alpha_i (y_0 \beta_w^{-1} \beta_x \beta_k)^{1 / h} e^{\boldsymbol{\alpha} \cdot \frac{\partial \ln(\mathbf{w})}{\partial \alpha_i} - h \frac{\partial \ln(P)}{\partial \alpha_i} - 1} \right]^{1 - h} -->
+<!-- \label{eq:YdIncCond1} -->
+<!-- \end{equation} -->
 
-Farms with baseline yields greater than the righthand side of this condition find it in their best interest to increase output given new input enhancing technology. Note that the righthand side of this condition is less than the righthand side of the baseline yield adoption threshold (inequality \ref{eq:ydCond1APP}) by a factor of $e^{h - 1}$. Therfore, all adopting farms find it in their best interest to increase output.
+<!-- Farms with baseline yields greater than the righthand side of this condition find it in their best interest to increase output given new input enhancing technology. Note that the righthand side of this condition is less than the righthand side of the baseline yield adoption threshold (inequality \ref{eq:ydCond1APP}) by a factor of $e^{h - 1}$. Therfore, all adopting farms find it in their best interest to increase output. -->
 
-Given an exogenously imposed, involuntary change in input elasticity of yield, condition \ref{eq:YdIncCond1} implies that the lower centiles of the yield distribution would choose to reduce ouput.
+<!-- Given an exogenously imposed, involuntary change in input elasticity of yield, condition \ref{eq:YdIncCond1} implies that the lower centiles of the yield distribution would choose to reduce ouput. -->
+
+
+
+
+
+
+
+
+
+
+
 <!-- Clipboard: -->
 <!-- In 1944, John Von Neumann et al. observed that "part of the feeling of dissatisfaction with the mathematical treatment of economic theory derives largely from the fact that frequently one is offered not proofs but mere assertions which are really no better than the same assertions given in literary form" and from the fact that genuine results are often confused with "very valuable surmises and inspiring anticipations of results" (2006). -->
 <!-- It can be added that these "assertions", "valuable surmises", and "inspiring anticipations of results", when made by celebrated scholars, have often taken on the character of, if not proofs, then axioms that-consciously or unconsciously-prefigure all subsequent inquiry, regardless of their truth value. In a recent critique of macroeconomic models, former World Bank director Paul Romer characterized such economic assertions as "Facts With Unknown Truth Value" (2016). Here we prefer to use the term "axioms" or "celebrity axioms", in order to underscore that these assertions are not verified facts, but rather, as Von Neumann said, the opinions and surmises of celebrated scholars. -->
