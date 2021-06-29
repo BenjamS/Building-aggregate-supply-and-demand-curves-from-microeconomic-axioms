@@ -88,9 +88,11 @@ An initiative of the International Food  Policy  Research  Institute  (IFPRI)  i
 
 
 Axiom 1: the law of diminishing marginal returns
-Axiom 2: Farms want to maximize their net benefit subject to a budget constraint, and farms will not enter the market if their expected net benefit is negative.
-Axiom 3: upward sloping supply curves and downward sloping demand curves
-Axiom 4: the shape of the relevant density functions: farm yield, consumer yield/utility, and technology adjusted price ratio.
+Axiom 2: Farms want to maximize their net benefit subject to a budget constraint.
+Axiom 3: Farms will not enter the market if their expected net benefit is negative.
+Axiom 4: Upward sloping supply curves and downward sloping demand curves (It will be seen that Axioms 1-2 require that the former implies the latter, and vice versa.)
+Axiom 5: Relation between consumer output price and farm output price
+Axiom 6: the shape of the relevant density functions: farm yield, consumer yield/utility, and technology adjusted price ratio.
 
 The meaning of consumer yield and technology adjusted price ratio become evident below.
 
@@ -314,7 +316,7 @@ Note, in passing, that the input price elasticity of yield likewise bears the ex
 \frac{\partial \ln(y^*)}{\partial \ln(w_i)} = \frac{-\alpha_i}{1 - h}
 \end{equation}
 
-### The farm supply curve is a power law with convexity dependent upon $h$ \label{sec:pwrLaw}
+### Convexity of the farm supply curve
 
 The yield envelope derived in equation \ref{eq:YdEnvCompact} implies that the farm supply curve is a power law---or, in economics jargon, a constant elasticity of supply curve. This becomes clearer if the yield envelope is rewritten as follows.
 
@@ -335,6 +337,21 @@ Both the scale parameter $t$ and exponent $\eta(P, y^*)$ depend critically upon 
 This is important information. This means that (insofar as Axioms 1-3 are true) for a given increase in output price, the supply response in a population of farms with inefficient input elasticities (such that $h < 1 / 2$) will be less than proportionate to the increase in price. In a population of relatively input-efficient farms (such that $h > 1 / 2$), on the other hand, the supply response will be more than proportionate to the increase in price.
 
 The exponent $\eta(P, y^*)$ also implies that farm supply approaches, but never reaches, perfect elasticity as $h$ approaches $1$; and that farm supply approaches, but never reaches, perfect inelasticity as $h$ approaches $0$.
+
+### The farm net benefit envelope
+
+The optimized objective function or "net benefit envelope" $\mathcal{L}^*$ is just the objective function $\mathcal{L}$ evaluated at the optimal yield $y^*$.
+
+\begin{equation}
+\mathcal{L}^* = \mathcal{L} \bigr_{y = y^*} = P y^* - \lambda (C^* - B)
+\end{equation}
+
+Note that, applying the handy relation in equation \ref{eq:lambdaHandy}, the net benefit envelope can be rewritten without the optimal expenditure term $C^*$.
+
+\begin{equation}
+\mathcal{L}^* = (1 - h) P y^* + \lambda B
+\label{eq:NBenv}
+\end{equation}
 
 ### Input demand revisited \label{sec:inDem}
 
@@ -421,38 +438,56 @@ x_i^* < \frac{\alpha_i}{w_i}(y_0 P h^{-1} \beta_w^{-1} \beta_x \beta_k)
 
 [Also address? -- cobb-douglas implies constant marginal cost (which contradicts the predominant theory but is in line with the evidence [@lavoie2014post])]
 
-### The demand side yield or utility envelope
+## Consumer utility/yield and demand
 
 The axioms on which the equations of supply side behavior are based also apply to the demand side. This means that the consumer utility, utility envelope, and demand equations take the same form as the producer yield, yield envelope, and input demand equations, respectively.^["Consumer" here can refer to individual people or to demand side firms (mills, factories, etc.). Likewise, consumer utility can refer either to the utility of individual people, or to mill or factory yield.]
 
-This means that consumer demand for a given farm output $x_i^{D*}$ is just a demand side analogue of farm input demand, which was derived above in equation \ref{eq:inputDem2}.
+Consumer utility (or yield, in the case of mills, factories, etc.) is therefore just the demand side analogue of the farm yield envelope derived in equation \ref{eq:YdEnvCompact}.
+
+\begin{equation}
+y_D^* = \left(y_0^D \left( \frac{P_D}{\lambda_D} \right)^h_D \frac{\beta_x^D \beta_k^D}{\beta_w^D} \right)^{\frac{1}{1 - h_D}}
+\end{equation}
+
+Where $y_D^*$, $y_0^D$, $P_D$, $\lambda_D$, $h_D$, $\beta_x^D$, $\beta_k^D$, and $\beta_w^D$, are the respective demand side analogues of $y^*$, $y_0$, $P$, $\lambda$, $h$, $\beta_x$, $\beta_k$, and $\beta_w$.
+
+Consumer demand for the given farm output $x_v^{D*}$ is likewise just the demand side analogue of farm input demand, which was derived above in equation \ref{eq:inputDem2}.
 
 \begin{equation}
 \begin{split}
-x_i^{D*} &= \frac{P_D y_D^* \alpha_i^D}{\lambda_D P} \\
+x_v^{D*} &= \frac{P_D y_D^* \alpha_v^D}{\lambda_D P} \\
 &= \frac{\alpha_i^D}{P} (y_0^D P_D / \lambda_D \beta_x^D  \beta_k^D / \beta_w^D )^{\frac{1}{1 - h_D}}
 \end{split}
 \end{equation}
 
-Where $w_i^D$, $P_D$, $\alpha_i^D$, $y_0^D$, $\lambda_D$, $\beta_D$, and $h_D$ are the respective demand side analogues of $w_i$, $P$, $\alpha_i$, $y_0$, $\lambda$, $\beta$, and $h$.
+Where $w_v^D$ and $\alpha_v^D$ are the respective demand side analogues of $w_v$ and $\alpha_v$.
 
-Note, moreover, that the consumer's "input" price $w_i^D$ is just the producer's output price $P$. Factoring $\alpha_i^D / P$ out of $\beta_w^D$ then gives
+But note that the consumer's "input price" $w_v^D$ is just the producer's output price $P$. Substituting $P$ for $w_v^D$ and factoring out $P$, then, optimal consumer yield and demand can be rewritten in a way that clarifies the role of price $P$.
 
 \begin{equation}
-x_i^{D*} = \left(\frac{\alpha_i^D}{P} \right)^{\frac{\alpha_i^D}{1 - h_D} + 1} (y_0^D P_D / \lambda_D \beta_x^D  \beta_k^D / \tilde{\beta}_w^D )^{\frac{1}{1 - h_D}}
-\label{eq:inputDemDEM}
+y_D^* = P^{\frac{-\alpha_D}{1 - h_D}} \left(y_0^D \left( \frac{P_D}{\lambda_D} \right)^h_D \frac{\beta_x^D \beta_k^D}{\tilde{\beta}_w^D} \right)^{\frac{1}{1 - h_D}}
+\label{eq:consYdEnv0}
 \end{equation}
 
-Where $\tilde{\beta}_w^D = P / \alpha_i^D \beta_w^D$.
+\begin{equation}
+x_D^* = \left(\frac{\alpha_D}{P} \right)^{\frac{\alpha_D}{1 - h_D} + 1} \left(y_0^D \frac{P_D}{\lambda_D} \frac{\tilde{\beta}_x^D \beta_k^D}{\tilde{\beta}_w^D} \left)^{\frac{1}{1 - h_D}}
+\label{eq:inputDemDEM0}
+\end{equation}
+
+Where, to reduce notational clutter, the index $v$ is henceforth dropped such that $x_v^{D*}$ is replaced with $x_D^*$ and $\alpha_v^D$ is replaced with $\alpha_D$; and where
+
+\begin{equation}
+\begin{split}
+\tilde{\beta}_w^D &= P^{-\alpha_D}\beta_w^D \\
+\tilde{\beta}_x^D &= \alpha_D^{-\alpha_D}\beta_x^D
+\end{split}
+\end{equation}
 
 The consumer's price elasticity of demand then follows as
 
 \begin{equation}
 \frac{\partial \ln(x_D*)}{\partial \ln(P)} = \frac{-\alpha_D}{1 - h_D} - 1
-\label{eq:PelasDem}
+\label{eq:PelasDem0}
 \end{equation}
-
-(Where, to reduce notational clutter, the index $i$ is henceforth dropped such that $x_i^{D*}$ is replaced with $x_D^*$ and $\alpha_i^D$ is replaced with $\alpha_D$.)
 
 Which is just the demand side analogue of the own price elasticity of input demand derived in equation \ref{eq:ownPriceElas}. Note, moreover, that changes in the price of other goods in the consumer's basket also influence their demand for a given farm output of interest.
 
@@ -463,58 +498,155 @@ Which is just the demand side analogue of the own price elasticity of input dema
 
 Where this is just the demand side analogue of the cross price elasticity of farm input demand derived in equation \ref{eq:CrossPriceElas}.
 
-Equation \ref{eq:inputDemDEM} says that the consumer demand curve is a power law. This becomes clearer if the equation is written more compactly as follows.
+### Consumer output price as a function of the farm output price
+
+When $x_D$ is feedstock in some consumer's production process (as in the case of mills and factories, for example), then a close relationship often exists between $P$ and $P_D$. A reasonable first attempt at formalization of this relation is $P_D = b P$, where $b$ is the factory markup. However, substituting $b P$ for $P_D$ in equation \ref{eq:inputDemDEM0} results in the following price elasticity of demand,
 
 \begin{equation}
-\x_D^* = t_D P^{\eta(P, x_D^*)}
-\label{eq:inputDemDEMpwrLaw}
+\frac{\partial \ln(x_D*)}{\partial \ln(P)} = \frac{1 - \alpha_D}{1 - h_D} - 1
 \end{equation}
 
-Where
+Which is impossible under Axiom 4 since the assumption that $\frac{\partial \ln(x_D*)}{\partial \ln(P)} < 0$ (negatively sloped demand curves) would thereby imply that $\alpha_D > h_D$, when in fact $h_D = \sum_i \alpha_i^D$ (and $\alpha_i^D > 0$ for all $i$).
+
+This consideration leads to a more informed second attempt at formalization of the relation between $P$ and $P_D$.
 
 \begin{equation}
-t_D = \alpha_D^{\frac{\alpha_D}{1 - h_D} + 1} \left(y_0^D \frac{P_D \beta_x^D  \beta_k^D}{\lambda_D \tilde{\beta}_w^D})^{\frac{1}{1 - h_D}}
+P_D = b P^{\varepsilon} \:\:;\:\:\:P_D > P
+\label{eq:PDasFunOfP}
 \end{equation}
 
-And where the exponent $\eta(P, x_D^*)$ is the consumer's price elasticity of demand (equation \ref{eq:PelasDem}).
+Where the exponent $\varepsilon$ is the percentage change in the consumer's output price $P_D$ given a $1$% increase in the farm product price $P$.
 
-Moreover, equation \ref{eq:inputDemDEMpwrLaw} implies that the consumer demand curve is convex for all possible values of $h_D$ (keeping in mind that Axioms 1-3 limit the domain of $h_D$ to $(0, 1)$), such that the consumer's demand response to a a decrease in price more than proportionate to the price decrease, regardless of the degree of homogeneity $h_D$.
-<!-- The same is not true, however, for changes in the prices of other goods in the consumer's basket. Equation \ref{eq:crossPelasDem} implies that the consumer demand curve is convex in a given cross price over $0 < h_D < 1 - \alpha_j^D$ and concave over $1 - \alpha_j^D < h_D < 1$. -->
+\begin{equation}
+\frac{\partial \ln(P_D)}{\partial \ln(P)} = \varepsilon
+\end{equation}
 
-Assuming consumers enter the market only if they expect to increase their net utility (Axiom 2), then
+Equation \ref{eq:PDasFunOfP} is a surmise or definition, and not a result derived from the Axioms. For this reason, it takes its place among the Axioms as Axiom 5. Nonetheless, the domain of $\varepsilon$ _is_ derived from the preceding Axioms as follows.
+
+Substituting $bP^{\varepsilon}$ for $P_D$ and factoring out $P$ further clarifies the role of $P$ in consumer yield and demand.
+<!-- \ref{eq:consYdEnv0} and \ref{eq:inputDemDEM0} -->
+
+\begin{equation}
+y_D^* = P^{\frac{\varepsilon h_D - \alpha_D}{1 - h_D}} \left(y_0^D \left( \frac{b}{\lambda_D} \right)^h_D \frac{\beta_x^D \beta_k^D}{\tilde{\beta}_w^D} \right)^{\frac{1}{1 - h_D}}
+\label{eq:consYdEnv}
+\end{equation}
+
+\begin{equation}
+x_D^* = \left(\frac{\alpha_D}{P} \right)^{\frac{\alpha_D - \varepsilon}{1 - h_D} + 1} \left(\frac{y_0^D b \tilde{\beta_x}^D  \beta_k^D}{\lambda_D \tilde{\beta}_w^D} \right)^{\frac{1}{1 - h_D}}
+\label{eq:inputDemDEM}
+\end{equation}
+
+(If there is no relation between $P$ and $P_D$, then the original consumer yield and demand expressions in equations \ref{eq:consYdEnv} and \ref{eq:inputDemDEM0} are recovered by setting $b = P_D$ and $\varepsilon = 0$.)
+
+The consumer's output price ($P_D$) elasticity of yield then follows as
+
+\begin{equation}
+\frac{\partial \ln(y_D^*)}{\partial \ln(P_D)} = \frac{\varepsilon h_D - \alpha_D}{\varepsilon (1 - h_D)}}
+\end{equation}
+
+Where Axiom 4 (positively sloped supply curves) requires the following lower bound on $\varepsilon$.
+
+\begin{equation}
+\varepsilon > \frac{\alpha_D}{h_D}}
+\end{equation}
+
+The consumer's farm price ($P$) elasticity of demand, meanwhile, follows from equation \ref{eq:inputDemDEM} as
+
+\begin{equation}
+\frac{\partial \ln(x_D*)}{\partial \ln(P)} = \frac{\varepsilon - \alpha_D}{1 - h_D} - 1
+\label{eq:PelasDem}
+\end{equation}
+
+Where Axiom 4 (negatively sloped demand curves) requires the following upper bound on $\varepsilon$.
+
+\begin{equation}
+\varepsilon < 1 - h_D + \alpha_D
+\end{equation}
+
+The domain of $\varepsilon$ thus follows from the $P_D$ elasticity of consumer yield and $P$ elasticity of consumer demand as
+
+\begin{equation}
+\frac{\alpha_D}{h_D}} < \varepsilon < 1 - h_D + \alpha_D
+\end{equation}
+
+This, in turn, restricts the domain of the output price ($P_D$) elasticity of consumer yield and the farm price ($P$) elasticity of consumer demand as follows.
+
+\begin{equation}
+0 < \frac{\partial \ln(y_D^*)}{\partial \ln(P_D)} < h_D - \alpha_D
+\end{equation}
+
+\begin{equation}
+-1 < \frac{\partial \ln(x_D^*)}{\partial \ln(P)} < \frac{\alpha_D}{h_D}}
+\end{equation}
+
+Since $0 < h_D < 1$ and $0 < \alpha_D < h_D$, it follows that $\frac{\partial \ln(y_D^*)}{\partial \ln(P_D)} < 1$ when Axiom 5 is added. That is, insofar as equation \ref{eq:PDasFunOfP} is a realistic model of the consumer's output price (and insofar as the other Axioms are also true), then the increase in consumer output given a $1$% increase in consumer output price $P_D$ is less than proportionate to the increase in price. In economics jargon, such an output curve is said to be inelastic. The consumer's output curve approaches perfect inelasticity as $\varepsilon$ approaches its lower bound.
+
+Likewise, the domain of $\frac{\partial \ln(x_D^*)}{\partial \ln(P)}$ implies that the consumer's demand for the farm product is inelastic when Axiom 5 is added, such that the increase in consumer demand given a $1$% decrease in farm price $P$ is less than proportionate to the fall in price.
+
+### Domain of consumer demand
+
+Assuming consumers enter the market only if they expect to increase their net utility (Axiom 3), then
 
 \begin{equation}
 \lambda_D > h_D
+\label{eq:lamLoBoundDEM}
 \end{equation}
 
 Which in turn implies the following upper bound on any individual consumer's demand for a given product.
 
 \begin{equation}
-x_D^* < \frac{\alpha_D}{P}(y_0^D P_D h_D^{-1} \beta_w^{D-1} \beta_x^D \beta_k^D)
+x_D^* < \left( \frac{\alpha_D}{P} \right)^{\frac{\alpha_D - \varepsilon}{1 - h_D} + 1} \left(\frac{y_0^D b \tilde{\beta}_x^D \beta_k^D}{h_D \tilde{\beta}_w^D} \right)^{\frac{1}{1 - h_D}}
 \label{eq:inputUpBoundDEM}
 \end{equation}
+
+The last two inequalities are the demand side analogues of the results derived in equations \ref{eq:lamLoBound} and \ref{eq:inputUpBound}, respectively.
+
+<!-- ### Proportionality of changes in consumer demand to changes in price -->
+
+<!-- The consumer demand curve derived in equation \ref{eq:inputDemDEM} is a power law. This becomes clearer if the equation is written in the following more compact form. -->
+
 <!-- \begin{equation} -->
-<!-- y^* < (y_0 r (h^{-h} \beta_x \beta_k))^{\frac{1}{1 - h}} -->
-<!-- \label{eq:ydUpBoundDEM} -->
+<!-- \x_D^* = t_D P^{\eta(P, x_D^*)} -->
+<!-- \label{eq:inputDemDEMpwrLaw} -->
 <!-- \end{equation} -->
 
-Again, the last two inequalities are the demand side analogues of the results derived in equations \ref{eq:lamLoBound} and \ref{eq:inputUpBound}, respectively.
+<!-- Where -->
+
+<!-- \begin{equation} -->
+<!-- t_D = \alpha_D^{\frac{\alpha_D - \varepsilon}{1 - h_D} + 1} \left(y_0^D \frac{b \tilde{\beta}_x^D  \beta_k^D}{\lambda_D \tilde{\beta}_w^D} \right)^{\frac{1}{1 - h_D}} -->
+<!-- \end{equation} -->
+
+<!-- And where the exponent $\eta(P, x_D^*)$ stands for the consumer's price elasticity of demand, derived in equation \ref{eq:PelasDem}. -->
+
+<!-- By the definition of $\eta(P, x_D^*)$ it is evident that, for consumers with $\varepsilon$ such that $\alpha_D / h_D < \varepsilon < \alpha_D$, the increase in consumer demand resulting from a decrease in price is more than proportionate to the fall in price ($\frac{\partial \ln(x_D^*)}{\partial \ln(P)} < -1$); whereas, for consumers with $\varepsilon$ such that $\alpha_D < \varepsilon < 1 - h_D + \alpha_D$, the increase in consumer demand resulting from a decrease in price is less than proportionate to the fall in price ($0 > \frac{\partial \ln(x_D^*)}{\partial \ln(P)} > -1$). For consumers with $\varepsilon = \alpha_D$, the increase in demand is exactly proportionate to the fall in price. -->
+
+### The demand side net benefit envelope
+
+The demand side net benefit envelope is the optimized demand side objective function, that is, the consumer's objective function evaluated at $x_D^*$.
+
+\begin{equation}
+\mathcal{L}_D^* = \mathcal{L_D} \bigr_{x_D = x_D^*} = P_D y_D^* - \lambda_D (C_D^* - B_D)
+\end{equation}
+
+As in equation \ref{eq:NBenv}, the demand side analogue of the handy relation in equation \ref{eq:lambdaHandy} can be applied to rewrite this without the optimal expenditure term $C_D^*$.
+
+\begin{equation}
+\mathcal{L}_D^* = (1 - h_D) P_D y_D^* + \lambda_D B_D
+\label{eq:NBenvDem}
+\end{equation}
+
+Using equations \ref{eq:consYdEnv} and \ref{eq:PDasFunOfP} to substitute for $y_D^*$ and $P_D$, respectively, this can be rewritten as follows.
+
+\begin{equation}
+\mathcal{L}_D^* = (1 - h_D) P^{\frac{\varepsilon - \alpha_D}{1 - h_D}} \left(y_0^D b \frac{\beta_x^D \beta_k^D}{\tilde{\beta}_w^D \lambda^{h_D}} \right) + \lambda_D B_D
+\label{eq:NBenvDem}
+\end{equation}
 
 ## The ambiguous benefits of technological change
 
 New technology can be modeled either as a change in the basal yield $y_0$, or as a change in one of the input elasticities $\alpha_i$. Generally speaking, a change in basal yield implies planting an improved variety, whereas a change in one of the input elasticities implies the application of a more efficient input (or a more efficient way of applying the status quo input).
 
-Matehmatically, the change in farm level net benefit resulting from introduction of the new technology is measured as the change in the farm's optimized objective function $\mathcal{L}^*$ or "net benefit envelope", which is just the objective function $\mathcal{L}$ evaluated at the optimal yield $y^*$.
-
-\begin{equation}
-\mathcal{L}^* = \mathcal{L} \bigr_{y = y^*} = P y^* - \lambda (C^* - B)
-\end{equation}
-
-Note that, applying the handy relation in equation \ref{eq:lambdaHandy}, the net benefit envelope can be rewritten without the optimal expenditure term $C^*$.
-
-\begin{equation}
-\mathcal{L}^* = (1 - h) P y^* + \lambda B
-\end{equation}
+Mathematically, the change in farm level net benefit resulting from introduction of the new technology is measured as the change in the farm's net benefit envelope $\mathcal{L}^*$ (derived in equation \ref{eq:NBenv}).
 
 By Axiom 2, it is assumed that a farm adopts a given new technology only if the expected change in net benefit is positive. Formally, this condition can be expressed for basal yield and input enhancing technology, respectively,
 
@@ -545,6 +677,7 @@ Where
 
 \begin{equation}
 \frac{\partial \ln(y^*)}{\partial \ln(y_0)} &= \frac{1}{1 - h} \left(1 + h \frac{\partial \ln(P)}{\partial \ln(y_0)} - \boldsymbol{\alpha} \cdot \frac{\partial \ln(\mathbf{w})}{\partial \ln(y_0)} \right)
+\label{eq:dLnYstardLny0}
 \end{equation}
 
 Substituting this for $\frac{\partial \ln(y^*)}{\partial \ln(y_0)}$ in the previous equation gives
@@ -594,6 +727,14 @@ The one substantive difference between Lipton's condition and the condition deri
 Since $y_0$ and $\boldsymbol{\alpha}$ are population level parameters (they do not vary from farm to farm), the technology adjusted price/productivity tightrope implies that, for a given set of prices $\{P, \mathbf{w} \}$, all farms in the given population will either adopt or not adopt. In other words, the adoption rate of basal yield enhancing technology must be either 0% or 100% if prices are the same for all farms (i.e., if Jevons' "law of indifference" holds). Conversely, it follows that adoption rates between 0% and 100% imply that prices vary within the farm population.
 <!-- Impact assessment studies that assume unique prices while also reporting an adoption rate between 0% and 100% possibly stand in violation of one or more of Axioms 1-3. -->
 <!-- In fact, input and output prices often vary considerably within a given farm population, especially in the developing world.  and this is reflected in adoption rates falling somewhere between 0% and 100%. -->
+
+Note from equation \ref{eq:dLnYstardLny0} that the output expansion condition $\frac{\partial \ln(y^*)}{\partial \ln(y_0)} > 0$ implies
+
+\begin{equation}
+\partial \ln(y_0) &> \boldsymbol{\alpha} \cdot \partial \ln(\mathbf{w}) - h \partial \ln(P)
+\end{equation}
+
+Considering that $0 < h < 1$, it follows that all adopting farms increase their output.
 
 ### Technology change as a change in input elasticity \label{sec:techChangeAi}
 
@@ -876,7 +1017,7 @@ Where the density is scaled by $N_D$, the number of consumers in the demand side
 Using equation \ref{eq:inputDemDEM} to substitute for $x_D^*$, and factoring out constants, $Q_D$ can be rewritten as follows.
 
 \begin{equation}
-Q_D = N_D \left( \frac{\alpha_D}{P} \right)^{\frac{\alpha_D}{1 - h_D} + 1} (y_0^D P_D \tilde{\beta}_w^{D - 1} \beta_x^D )^{\frac{1}{1 - h_D}} \mu_k^D \int_0^{\bar{\chi}_D} \chi_D f_D \left(\chi_D \right) d \chi_D
+Q_D = N_D \left( \frac{\alpha_D}{P} \right)^{\frac{\varepsilon - \alpha_D}{1 - h_D} + 1} \left( \frac{y_0^D b \tilde{\beta}_x^D}{\tilde{\beta}_w^D} \right)^{\frac{1}{1 - h_D}} \mu_k^D \int_0^{\bar{\chi}_D} \chi_D f_D \left(\chi_D \right) d \chi_D
 \label{eq:QD}
 \end{equation}
 
@@ -895,13 +1036,13 @@ And where the law of the unconscious statistician has been invoked to replace $f
 The price elasticity of aggregate demand is then
 
 \begin{equation}
-\frac{\partial \ln(Q_D)}{\partial \ln(Q_D)} = -\frac{\alpha_D}{1 - h_D} - 1
+\frac{\partial \ln(Q_D)}{\partial \ln(Q_D)} = \frac{\varepsilon - \alpha_D}{1 - h_D} - 1
 \label{eq:PelasDemAgg}
 \end{equation}
 
-Which is the same as the price elasticity of demand at the level of individual consumers, derived in equation \ref{eq:PelasDem}.
+Which is the same as the price elasticity of demand at the level of individual consumers, derived in equation \ref{eq:PelasDem}. It follows that the aggregate demand curve is likewise convex ($\frac{\partial \ln(x_D^*)}{\partial \ln(P)} < -1$) so long as $0 < \varepsilon < \alpha_D$, and concave ($\frac{\partial \ln(x_D^*)}{\partial \ln(P)} < -1$) over $\alpha_D < \varepsilon < 1 - h_D + \alpha_D$. Like the consumer demand curve, the aggregate demand curve approaches, but never reaches, perfect inelasticity as $\varepsilon$ approaches its upper bound $1 - h_D + \alpha_D$.
 
-Like the individual consumer demand curve, the aggregate demand curve is a power law. This becomes clearer if $Q_D$ is written more compactly as follows.
+The aggregate demand curve is a power law. This becomes clearer if $Q_D$ is written more compactly as follows.
 
 \begin{equation}
 Q_D = \theta_D P^{\eta(P, Q_D)}
@@ -911,12 +1052,10 @@ Q_D = \theta_D P^{\eta(P, Q_D)}
 Where
 
 \begin{equation}
-\theta_D = N_D (\alpha_D)^{\frac{\alpha_D}{1 - h_D} + 1} (y_0^D P_D \tilde{\beta}_w^{D - 1} \beta_x^D )^{\frac{1}{1 - h_D}} \mu_k^D
+\theta_D = N_D (\alpha_D)^{\frac{\varepsilon - \alpha_D}{1 - h_D} + 1} \left(\frac{y_0^D b \tilde{\beta}_x^D}{\tilde{\beta}_w^} \right)^{\frac{1}{1 - h_D}} \mu_k^D
 \end{equation}
 
 And where the exponent $\eta(P, Q_D)$ is the price elasticity of demand (equation \ref{eq:PelasDemAgg}).
-
-As with the consumer demand curve, the price elasticity of demand $\eta(P, Q_S)$ implies convexity for all possible demand side degrees of homogeneity (keeping in mind that Axioms 1-3 limit the domain of $h_D$ to $(0, 1)$). That is to say, for a given price decrease, the aggregate demand response is more than proportionate to the fall in price.
 
 #### Aggregating demand over varying prices
 
@@ -1086,8 +1225,8 @@ Recalling the expression for $\frac{\partial \ln(\mathcal{L}^*)}{\partial \ln(y_
 
 \begin{equation}
 \begin{split}
-\psi^S &= \rho_0 \left( 1 - \mathbf{\alpha} \cdot \frac{\partial \ln(\mathbf{w})}{\partial \ln(y_0)} + \frac{\partial \ln(P)}{\partial \ln(y_0)} \right) P \int y^* f(y^*) d y^* \\
-&= \left( 1 - \mathbf{\alpha} \cdot \frac{\partial \ln(\mathbf{w})}{\partial \ln(y_0)} + \frac{\partial \ln(P)}{\partial \ln(y_0)} \right) P Q
+\psi^S &= \rho_0 \left( 1 - \boldsymbol{\alpha} \cdot \frac{\partial \ln(\mathbf{w})}{\partial \ln(y_0)} + \frac{\partial \ln(P)}{\partial \ln(y_0)} \right) P \int y^* f(y^*) d y^* \\
+&= \left( 1 - \boldsymbol{\alpha} \cdot \frac{\partial \ln(\mathbf{w})}{\partial \ln(y_0)} + \frac{\partial \ln(P)}{\partial \ln(y_0)} \right) P Q
 \end{split}
 \end{equation}
 
@@ -1096,16 +1235,16 @@ Where the law of the unconscious statistician has been invoked to replace $v \le
 At equlibrium, this becomes
 
 \begin{equation}
-\psi_e^S = \left( 1 - \mathbf{\alpha} \cdot \frac{\partial \ln(\mathbf{w})}{\partial \ln(y_0)} + \frac{\partial \ln(P_e)}{\partial \ln(y_0)} \right) P_e Q_e
+\psi_e^S = \rho_0 \left( 1 - \boldsymbol{\alpha} \cdot \frac{\partial \ln(\mathbf{w})}{\partial \ln(y_0)} + \frac{\partial \ln(P_e)}{\partial \ln(y_0)} \right) P_e Q_e
 \end{equation}
 
 Using equation \ref{eq:dLnPedLny0} to substitute for $\frac{\partial \ln(P_e)}{\partial \ln(y_0)}$, this becomes
 
 \begin{equation}
 \begin{split}
-\psi_e^S &= \left( 1 - \mathbf{\alpha} \cdot \frac{\partial \ln(\mathbf{w})}{\partial \ln(y_0)} + \frac{1 - \boldsymbol{\alpha} \cdot \frac{\partial \ln(\mathbf{w})}{\partial \ln(y_0)}}{(\eta_D - \eta_S) (1 - h)} \right) P_e Q_e \\
-&= \left(1 + \frac{1}{(\eta_D - \eta_S) (1 - h)} \right) \left( 1 - \boldsymbol{\alpha} \cdot \frac{\partial \ln(\mathbf{w})}{\partial \ln(y_0)} \right) P_e Q_e \\
-&= \frac{-\alpha_D}{(\eta_D - \eta_S) (1 - h_D)} \left( 1 - \boldsymbol{\alpha} \cdot \frac{\partial \ln(\mathbf{w})}{\partial \ln(y_0)} \right) P_e Q_e
+\psi_e^S &= \rho_0 \left( 1 - \boldsymbol{\alpha} \cdot \frac{\partial \ln(\mathbf{w})}{\partial \ln(y_0)} + \frac{1 - \boldsymbol{\alpha} \cdot \frac{\partial \ln(\mathbf{w})}{\partial \ln(y_0)}}{(\eta_D - \eta_S) (1 - h)} \right) P_e Q_e \\
+&= \rho_0 \left(1 + \frac{1}{(\eta_D - \eta_S) (1 - h)} \right) \left( 1 - \boldsymbol{\alpha} \cdot \frac{\partial \ln(\mathbf{w})}{\partial \ln(y_0)} \right) P_e Q_e \\
+&= \frac{\varepsilon -\alpha_D}{(\eta_D - \eta_S) (1 - h_D)} \left( 1 - \boldsymbol{\alpha} \cdot \frac{\partial \ln(\mathbf{w})}{\partial \ln(y_0)} \right) P_e Q_e
 \end{split}
 \end{equation}
 
@@ -1114,14 +1253,14 @@ Using equation \ref{eq:dLnPedLny0} to substitute for $\frac{\partial \ln(P_e)}{\
 For a given basal yield enhancing technology, the aggregate change in demand side net benefit $\psi^D$ is derived through an analogous set of steps. By definition, the aggregate change in demand side net benefit is the change in consumer level net benefit integrated over its density.
 
 \begin{equation}
-\psi^D &= \int \frac{\partial \ln(\mathcal{L}_D^*)}{\partial \ln(y_0)} \mathcal{L}_D^* v_D \left( \frac{\partial \ln(\mathcal{L}_D^*)}{\partial \ln(y_0)} \mathcal{L}_D^* \right) d \left( \frac{\partial \ln(\mathcal{L}_D^*)}{\partial \ln(y_0)} \mathcal{L}_D^* \right)
+\psi^D &= \rho_0^D \int \frac{\partial \ln(\mathcal{L}_D^*)}{\partial \ln(y_0)} \mathcal{L}_D^* v_D \left( \frac{\partial \ln(\mathcal{L}_D^*)}{\partial \ln(y_0)} \mathcal{L}_D^* \right) d \left( \frac{\partial \ln(\mathcal{L}_D^*)}{\partial \ln(y_0)} \mathcal{L}_D^* \right)
 \end{equation}
 
 But $\frac{\partial \ln(\mathcal{L}_D^*)}{\partial \ln(y_0)} \mathcal{L}_D^* = \frac{\partial \mathcal{L}_D^*}{\partial \ln(y_0)}$, and so, recalling the expression for $\frac{\partial \mathcal{L}_D^*}{\partial \ln(y_0)}$ derived in equation \ref{eq:consNBy0}, the integral can be rewritten
 
 \begin{equation}
-\psi^D &= -\alpha_D P_D \frac{\partial \ln(P)}{\partial \ln(y_0)} \int y_D^* f_D(y_D^*) d y_D^* \\
-&= -\alpha_D P_D Q^D \frac{\partial \ln(P)}{\partial \ln(y_0)}
+\psi^D &= \rho_0^D (\varepsilon - \alpha_D) P_D \frac{\partial \ln(P)}{\partial \ln(y_0)} \int y_D^* f_D(y_D^*) d y_D^* \\
+&= (\varepsilon - \alpha_D) P_D Q^D \frac{\partial \ln(P)}{\partial \ln(y_0)}
 \end{equation}
 
 Where the law of the unconscious statistician has been invoked to replace $v \left( \frac{\partial \ln(\mathcal{L}_D^*)}{\partial \ln(y_0)} \mathcal{L}_D^* \right) d \left( \frac{\partial \ln(\mathcal{L}_D^*)}{\partial \ln(y_0)} \mathcal{L}_D^* \right)$ with $f(y_D^*) d y_D^*$.
@@ -1132,30 +1271,30 @@ At equilibrium,
 
 \begin{equation}
 \begin{split}
-\psi_e^D &= -\alpha_D P_D Q^D \frac{\partial \ln(P_e)}{\partial \ln(y_0)} \\
-&= \frac{-\alpha_D}{(\eta_D - \eta_S) (1 - h)} P_D Q^D \left( 1 - \boldsymbol{\alpha} \cdot \frac{\partial \ln(\mathbf{w})}{\partial \ln(y_0)} \right) P_D Q^D
+\psi_e^D &= \rho_0^D (\varepsilon -\alpha_D) P_D Q^D \frac{\partial \ln(P_e)}{\partial \ln(y_0)} \\
+&= \rho_0^D \frac{\varepsilon - \alpha_D}{(\eta_D - \eta_S) (1 - h)} P_D Q^D \left( 1 - \boldsymbol{\alpha} \cdot \frac{\partial \ln(\mathbf{w})}{\partial \ln(y_0)} \right) P_D Q^D
 \end{split}
 \end{equation}
 
 ### Aggregate net change in net benefit, basal yield enhancing technology
 
-Adding $\psi_e^S$ and $\psi_e^D$ together gives the total aggregate change in net benefit.
+Adding $\psi_e^S$ and $\psi_e^D$ together gives the total aggregate change in net benefit. 
 
 \begin{equation}
 \begin{split}
 \psi_e &= \psi_e^S + \psi_e^D \\
-&= \frac{-\alpha_D }{\eta_D - \eta_S} \left( 1 - \boldsymbol{\alpha} \cdot \frac{\partial \ln(\mathbf{w})}{\partial \ln(y_0)} \right) \left(\frac{P_e Q_e}{1 - h_D} + \frac{P_D Q^D}{1 - h} \right)
+&= \frac{\varepsilon -\alpha_D }{\eta_D - \eta_S} \left( 1 - \boldsymbol{\alpha} \cdot \frac{\partial \ln(\mathbf{w})}{\partial \ln(y_0)} \right) \left(\rho_0 \frac{P_e Q_e}{1 - h_D} + \rho_0^D \frac{P_D Q^D}{1 - h} \right)
 \end{split}
 \end{equation}
 
 Dividing $\psi_e^S$ and $\psi_e^D$ by $\psi_e$ gives the respective shares of net benefit.
 
 \begin{equation}
-\frac{\psi_e^S}{\psi_e^D} = \frac{(1 - h) P_e Q_e}{(1 - h) P_e Q_e + (1 - h_D) P_D Q^D}
+\frac{\psi_e^S}{\psi_e^D} = \frac{(1 - h) \rho_0 P_e Q_e}{(1 - h) \rho_0 P_e Q_e + (1 - h_D) \rho_0^D P_D Q^D}
 \end{equation}
 
 \begin{equation}
-\frac{\psi_e^D}{\psi_e^D} = \frac{(1 - h_D) P_D Q^D}{(1 - h) P_e Q_e + (1 - h_D) P_D Q^D}
+\frac{\psi_e^D}{\psi_e^D} = \frac{(1 - h_D) \rho_0^D P_D Q^D}{(1 - h) \rho_0 P_e Q_e + (1 - h_D) \rho_0^D P_D Q^D}
 \end{equation}
 
 ### Aggregate change in producer net benefit, input enhancing technology
@@ -1164,8 +1303,44 @@ Dividing $\psi_e^S$ and $\psi_e^D$ by $\psi_e$ gives the respective shares of ne
 
 ### Aggregate change in net benefit, input enhancing technology
 
+### Producer and consumer surplus, a problematic welfare measure
 
-### Consumer and producer surplus
+Many economists prefer to express benefits in terms of "consumer surplus" and "producer surplus". This approach is problematic for several reasons, some of which are elucidated by... []. Here, I limit the discussion to issues relevant to the .
+
+Consumer surplus is defined as "the level of benefit (utility) that consumers derive by being able to purchase a product for a price that is less than the maximum they would be willing to pay" [new palgrave]. x has recently demonstrated that consumer surplus is proportionate to consumer welfare only under highly restrictive, unrealistic conditions [].
+
+First of all, the definition of  assumes that consumers _always_ benefit by paying a price that is lower than some higher benchmark or maximum price. The only circumstance under which this would be unambiguously true is if the prices paid were somehow independent from the corresponding quantities purchased, such that the same quantity of a good could be acquired at different prices. But this is never true in any economic context. On the contrary, there exists a one-to-one correspondence between price and quantity called the demand curve, which implies a tradeoff between price and quantity. Lower prices come at the cost of lower quantities acquired, while higher quantities come at the cost of higher prices paid. To determine whether or not a change in price results in increased or decreased net benefit the 
+
+Given the demand model derived from Axioms 1-4 in equation \ref, moreover, the consumer's maximum price is infinity; and the level of net benefit corresponding to the maximum price (derived in equation \ref) is either infinity or 0, depending upon the relation between the farm price $P$ and output price $P_D$ (in particular, depending upon whether $\varepsilon$ is greater than or less than $alpha_D$).  
+
+The demand side net benefit envelope derived in equation. 
+
+For an individual consumer, this is expressed mathematically as follows.
+
+
+
+
+\begin{equation}
+\omega^D = \mathcal{L}_D^*(P_{max}) - \mathcal{L}_D^*(P_e)
+\end{equation}
+
+Given the form of $\mathcal{L}_D^*$ derived from Axioms 1 and 2 in equation \ref{eq:NBenvDem}, $P_max = \infty$, and $\mathcal{L}_D^* = $
+
+\begin{equation}
+\mathcal{L}_D^* = (1 - h_D) P^{\frac{\varepsilon - \alpha_D}{1 - h_D}} \left(y_0^D b \frac{\beta_x^D \beta_k^D}{\tilde{\beta}_w^D \lambda^{h_D}} \right) + \lambda_D B_D
+\label{eq:NBenvDem}
+\end{equation}
+
+
+
+By convention, consumer surplus is calculated as the area under the demand curve between infinity and the equilibrium price.
+
+Conversely, producer surplus is the level of benefit that producers derive by selling their product at a price that is higher than the minimum they would be willing to accept. By convention, producer surplus is calculated as the area between the equilibrium price and the supply curve.
+
+"[t]he excess of the price which he would be willing to pay rather than go without the thing, over that which he actually does pay, is the economic measure of this surplus satisfaction".[Marshall]
+
+
+Producer surplus is defined as the area under the supply curve evaluated from zero up to the quantity offered at the equilibrium price.   the difference between the equilibrium price and the price 
 
 ## Example application
 
