@@ -88,15 +88,17 @@ An initiative of the International Food  Policy  Research  Institute  (IFPRI)  i
 
 
 Axiom 1: the law of diminishing marginal returns
-Axiom 2: Farms want to maximize their net benefit subject to a budget constraint.
-Axiom 3: Farms will not enter the market if their expected net benefit is negative.
-Axiom 4: Upward sloping supply curves and downward sloping demand curves (It will be seen that Axioms 1-2 require that the former implies the latter, and vice versa.)
-Axiom 5: Relation between consumer output price and farm output price
-Axiom 6: the shape of the relevant density functions: farm yield, consumer yield/utility, and technology adjusted price ratio.
+Axiom 2: Farms want to maximize their net benefit subject to a budget constraint
+Axiom 3: Upward sloping supply curves
+Axiom 4: Downward sloping demand curves
+Axiom 5: Farms will not enter the market if their expected net benefit is negative.
+Axiom 6: The functional form of the relation between consumer output price and farm output price
+Axiom 7: The farm yield density function
+Axiom 8: The consumer demand density function
+Axiom 9: The consumer percentage markup density function
+, consumer yield/utility, [technology adjusted price ratio]
 
 The meaning of consumer yield and technology adjusted price ratio become evident below.
-
-
 
 ## Derivation of the yield function from the axiom of diminishing marginal returns
 
@@ -166,22 +168,8 @@ In equation \ref{eq:cobbDoug2}, the shorthand $y_0 = e^{\alpha_0}$ has also been
 Many economists prefer to call $y_0$ the "total factor productivity" (TFP). This is because $y_0$ equals, in some sense, the "yield per unit all inputs" when it is isolated on one side of the equation. However, the presence of control variables complicates this interpretation. Moreover, TFP implies bizarre and rather useless units of measurement. For example, if the inputs $x_i$ are labor and pesticide, while the control variables $k_i$ are rainfall, temperature, and farmer age, then the TFP $y_0$ has units of kg hectare$^{-1}$ manhour$^{-1}$ liter$^{-1}$ millimeter$^{-1}$ degree Celsius$^{-1}$ years$^{-1}$, each of which is raised to various exponents (the respective elasticities $\alpha_i$ and $\kappa_i$).
 [A more accurate name would be the "technology adjusted total factor productivity"]
 
-Nonetheless, a very mature literature has developed around TFP, and the reader is encouraged to continue thinking of $y_0$ in terms of TFP if that is what they are most comfortable with. The "basal yield" interpretation is merely provided here as an alternative for those of us who wrestle with the idea of TFP or not yet familiar with it.
+Nonetheless, a very mature literature has developed around TFP, and the reader is encouraged to continue thinking of $y_0$ in terms of TFP if that is what they are most comfortable with. The "basal yield" interpretation is merely provided here as an alternative for those of us who wrestle with the idea of TFP or are not yet familiar with it.
 <!-- exogenously given control variables like age, soil quality, or climate variables. -->
-
-Economic yield is thus a function of:
-
-1) Input prices $\mathbf{w}$
-
-2) The output price $P$
-
-3) The input elasticities of yield $\boldsymbol{\alpha}$ (i.e. the technology)
-
-4) The control variables $\mathbf{k}$ (demographic, agroclimatic, and market access (and possibly security)) [typically contain demographic variables such as age and education, as well as agroclimatic variables such as soil quality, temperature, solar radiation, and precipitation. These variables can vary considerably across a farm population. Analysis is said to be "ceteris paribus" when these variables are held constant at a particular value across the population.]
-
-5) Their control variable elasticities of yield $\boldsymbol{\kappa}$
-
-6) The farm budget shadow price $\lambda$
 
 ## Derivation of the yield envelope from the axiom of net benefit maximization
 
@@ -229,7 +217,7 @@ Where the $\mathbf{0}$ indicates a vector of zeroes equal to the length of $\mat
 Which, alternatively, can also be written
 
 \begin{equation}
-x_i^* = \frac{P y^* \alpha_i}{\lambda w_i}
+x_v^* = \frac{P y^* \alpha_v}{\lambda w_v}
 \label{eq:inputDem1}
 \end{equation}
 
@@ -271,6 +259,20 @@ y^* =  \left(y_0 \left(\frac{P}{\lambda}\right)^h \prod_i \left(\frac{\alpha_i}{
 \label{eq:YdEnv1}
 \end{equation}
 
+Economic yield is thus a function of:
+
+1) Input prices $\mathbf{w}$
+
+2) The output price $P$
+
+3) The input elasticities of yield $\boldsymbol{\alpha}$ (i.e. the technology)
+
+4) The control variables $\mathbf{k}$ (demographic, agroclimatic, and market access (and possibly security)) [typically contain demographic variables such as age and education, as well as agroclimatic variables such as soil quality, temperature, solar radiation, and precipitation. These variables can vary considerably across a farm population. Analysis is said to be "ceteris paribus" when these variables are held constant at a particular value across the population.]
+
+5) Their control variable elasticities of yield $\boldsymbol{\kappa}$
+
+6) The farm budget shadow price $\lambda$
+
 To reduce notational clutter, the yield envelope is henceforth rewritten as follows.
 
 \begin{equation}
@@ -302,13 +304,21 @@ The appearance of $h$ in the yield envelope also offers an instructive expressio
 \label{eq:PelastYstar}
 \end{equation}
 
-Whereby the domain of $h$ may be readily deduced, considering Axiom 3 (positively sloped supply curves).
+Where Axiom 3 (upward sloping supply curves) requires that $\frac{\partial \ln(y^*)}{\partial \ln(P)} > 0$, thus imposing the following domain on $h$.
 
 \begin{equation}
-0 > h > 1
+h \in (0, 1)
 \end{equation}
 
-It follows, conversely, that increasing returns to scale ($h > 1$) imply a negatively sloped farm supply curve, which violates Axiom 3.
+Farms are thus limited to decreasing returns to scale, as the yield envelope is undefined at constant returns to scale, and increasing returns to scale ($h > 1$) imply a negatively sloped supply curve, in violation of Axiom 3.
+
+In section \ref{sec:PDfunP}, circumstances are explored under which increasing returns to scale are possible. However, these circumstances generally apply to mills and factories, and not to farms.
+
+The domain of $h$ derived above in turn implies the following bounds on the price elasticity of yield.
+
+\begin{equation}
+\frac{\partial \ln(y^*)}{\partial \ln(P)} \in (0, \infty)
+\end{equation}
 
 Note, in passing, that the input price elasticity of yield likewise bears the expected sign only under decreasing returns to scale.
 
@@ -316,9 +326,13 @@ Note, in passing, that the input price elasticity of yield likewise bears the ex
 \frac{\partial \ln(y^*)}{\partial \ln(w_i)} = \frac{-\alpha_i}{1 - h}
 \end{equation}
 
-### Convexity of the farm supply curve
+With domain
 
-The yield envelope derived in equation \ref{eq:YdEnvCompact} implies that the farm supply curve is a power law---or, in economics jargon, a constant elasticity of supply curve. This becomes clearer if the yield envelope is rewritten as follows.
+\begin{equation}
+\frac{\partial \ln(y^*)}{\partial \ln(w_v)} \in (-\infty, -\alpha_v)
+\end{equation}
+
+The yield envelope derived in equation \ref{eq:YdEnvCompact} implies that the farm supply curve^["Farm supply curve" is used as a shorthand for the "yield envelope as a function of price $P$, with all other variables held constant".] is a power law---or, in economics jargon, a constant elasticity of supply curve. This becomes clearer if the yield envelope is rewritten as follows.
 
 \begin{equation}
 y^* = t P^{\eta(P, y^*)}
@@ -332,11 +346,159 @@ t = \left(y_0 \frac{\beta_x \beta_k}{\lambda^h \beta_w} \right)^{\frac{1}{1 - h}
 
 And $\eta(P, y^*)$ is the price elasticity of yield defined in equation \ref{eq:PelastYstar}.
 
-Both the scale parameter $t$ and exponent $\eta(P, y^*)$ depend critically upon the degree of homogeneity. The exponent implies that the farm supply curve is convex for $1 / 2 > h > 1$, concave for $0 < h < 1 / 2$, and linear with slope $t$ when $h = 1 / 2$.
+<!-- Both the scale parameter $t$ and exponent $\eta(P, y^*)$ depend critically upon the degree of homogeneity. -->
+The price elasticity of yield implies that the farm supply curve is elastic for $h \in (1 / 2 , 1)$, and inelastic for $h \in (0, 1 / 2)$, and linear with slope $t$ when $h = 1 / 2$. The curve approaches, but never reaches, perfect elasticity as $h$ approaches $1$; and approaches, but never reaches, perfect inelasticity as $h$ approaches $0$.
 
 This is important information. This means that (insofar as Axioms 1-3 are true) for a given increase in output price, the supply response in a population of farms with inefficient input elasticities (such that $h < 1 / 2$) will be less than proportionate to the increase in price. In a population of relatively input-efficient farms (such that $h > 1 / 2$), on the other hand, the supply response will be more than proportionate to the increase in price.
 
-The exponent $\eta(P, y^*)$ also implies that farm supply approaches, but never reaches, perfect elasticity as $h$ approaches $1$; and that farm supply approaches, but never reaches, perfect inelasticity as $h$ approaches $0$.
+### Input demand \label{sec:inDem}
+
+Using equation \ref{eq:YdEnvCompact} to substitute for $y^*$ in input demand (equation \ref{eq:inputDem1}) gives the following expression for input demand as a function of basal yield, prices, input elasticities, the budget shadow price, and control variables together with their respective elasticities.
+
+\begin{equation}
+x_v^* = \frac{\alpha_v}{w_v}(y_0 P \lambda^{-1} \beta_w^{-1} \beta_x \beta_k)^{\frac{1}{1 - h}}
+\label{eq:inputDem2}
+\end{equation}
+
+Note that input demand is undefined at $h = 1$. The own price elasticity of input demand is
+
+\begin{equation}
+\begin{split}
+\frac{\partial log(x_v^*)}{\partial log(w_v)} &= - 1 - \frac{1}{1 - h} \frac{\partial \ln(\beta_w)}{\partial \ln(w_v)} \\
+\frac{\partial log(x_v^*)}{\partial log(w_v)} &= \frac{-\alpha_v}{1 - h} - 1
+\end{split}
+\label{eq:ownPriceElas}
+\end{equation}
+
+Where Axiom 4 (negatively sloped demand curves) requires $\frac{\partial log(x_v^*)}{\partial log(w_v)} < 0 \:;\:\:\forall v$, thus imposing the following domain on $h$.
+
+\begin{equation}
+h \in (-\infty, 1 + \underline{\alpha}) \:\:; \:\:\: \underline{\alpha} = \min(\boldsymbol{\alpha})
+\end{equation}
+
+Considering that $\underline{\alpha} > 0$, the effective domain of $h$ satisfying both Axioms 3 and 4 is
+
+\begin{equation}
+h \in (0, 1)
+\end{equation}
+
+The effective domain of $h$ in turn implies the following bounds on the own price elasticity of input demand.
+
+\begin{equation}
+\frac{\partial \ln(x_v^*)}{\partial \ln(w_v)} \in (\infty, -1)
+\end{equation}
+
+The input demand curve is thus always elastic, such that the increase in farm level demand resulting from a decrease in the input price is always more than proportionate to the fall in price.
+
+Note that the cross price and output price elasticities of input demand also bear the expected sign under the effective domain of $h$.
+
+\begin{equation}
+\frac{\partial log(x_v^*)}{\partial log(w_{j \neq v})} = \frac{-\alpha_j}{1 - h}
+\label{eq:CrossPriceElas}
+\end{equation}
+
+\begin{equation}
+\frac{\partial log(x_v^*)}{\partial log(P)} = \frac{1}{1 - h}
+\end{equation}
+
+Equation \ref{eq:inputDem2} implies that the input demand curve^["Input demand curve" is used as a shorthand for the "optimal input level as a function of its price, with all other variables held constant".] is a power law. This is more evident when expressed in the following compact form.
+
+\begin{equation}
+x_v^* = z w_v^{\eta(w_v, x_v^*)}
+\end{equation}
+
+Where
+
+\begin{equation}
+z = \left(y_0 \frac{\beta_x \beta_k}{\lambda^h \tilde{\beta}_w} \right)^{\frac{1}{1 - h}} \:\:;\:\:\: \tilde{\beta}_w = w_v^{-\alpha_v}\beta_w
+\end{equation}
+
+And $\eta(w_v, x_v^*)$ is the own price elasticity of input demand, derived in equation \ref{eq:ownPriceElas}.
+
+### Deriving the domains of the budget shadow price, optimal yield, and optimal input level
+
+Dotting the first order conditions (equations \ref{eq:eqFOC}) through by $\ref{\mathbf{x}}$ and rearranging gives the following formula for the farm budget shadow price.
+
+\begin{equation}
+\lambda = \frac{P y^*}{C^*} h
+\label{eq:lambdaHandy}
+\end{equation}
+
+That is, a farm's budget shadow price is equal to its revenue to cost ratio, scaled by the degree of homogeneity.
+
+Assuming that farms only enter production if their expected revenue is greater than their cost (Axiom 5), then the following lower bound on $\lambda$ may be readily deduced.
+
+\begin{equation}
+\lambda > h
+\label{eq:lamLoBound}
+\end{equation}
+
+This, in turn, implies the following upper bound on optimal yield.
+
+\begin{equation}
+y^* <  (y_0 r (h^{-h} \beta_x \beta_k))^{\frac{1}{1 - h}}
+\label{eq:ydUpBound}
+\end{equation}
+
+Note, in passing, that the notion of an upper bound on economic yields agrees with empirical observations. Pingali [], for example, observes that even the best rice yields in India are typically 80% of yields achieved at experimental stations.
+
+The lower bound on $\lambda$ likewise implies the following upper bound on input demand.
+
+\begin{equation}
+x_v^* < \frac{\alpha_v}{w_v} \left(y_0 P h^{-1} \frac{\beta_x \beta_k}{\beta_w} \right)
+\label{eq:inputUpBound}
+\end{equation}
+
+Recall that the upper bound on optimal expenditure is not derived but assumed as Axiom 5: $C^* < Py^*$.
+
+### Income elasticity of demand revisited
+
+Using equation \ref{eq:lambdaHandy} to substitute for $\lambda$ in equation \ref{eq:inputDem1} gives yet another instructive expression for input demand.
+
+\begin{equation}
+x_v^* = \frac{C^* \alpha_v}{h w_v}
+\end{equation}
+
+By which it follows that
+
+\begin{equation}
+\frac{\ln(x_v^*)}{\ln(C^*)} = 1
+\label{eq:optExpElasInpDem}
+\end{equation}
+
+Most economists interpret this as meaning that the income elasticity of demand is $1$. If this is true, then the Cobb-Douglas model contradicts well documented empirical laws, particularly Engel's law, that clearly indicate changing demand for different items in a given basket as income changes.
+
+However, no such contrdiction in fact arises since $C^*$ does not represent income or budget ($B$), but rather _optimal expenditure_. Optimal expenditure is defined as
+
+\begin{equation}
+C^* = \sum_i x_i^* w_i
+\end{equation}
+
+Or, rearranging equation \ref{eq:lambdaHandy},
+
+\begin{equation}
+C^* = Py^* h / \lambda
+\label{eq:cStar}
+\end{equation}
+
+In either case, equations \ref{eq:inputDem2} and \ref{eq:YdEnvCompact} clearly demonstrate that $C^*$ is a function of basal yield, prices, the budget shadow price, input elasticities, and control variables together with their respective elasticities, in which income $B$ plays no part. As such, $C^*$ may be greater or less than income. To be clear, then, equation \ref{eq:optExpElasInpDem} says that the income elsticity of _optimal expenditure_, _not of income_, is equal to $1$.
+<!-- More generally, the forgoing sections demonstrate that, under Axioms 1 and 2, optimal yield, input demand, and expenditure are all invariant under changes in $B$. -->
+
+Moreover, the empirically observed relation between expenditures and income can be explained by Axiom 1
+...Axiom 1 implies that demand does change with income.
+
+...proof
+
+
+### Marginal cost
+
+From equation \ref{eq:cStar} it follows that the marginal cost of output is
+
+\begin{equation}
+\frac{\partial C^*}{\partial y^*} = \frac{P h}{\lambda} = \frac{C^*}{y^*}
+\end{equation}
+
+Under Axioms 1 and 2, then, the marginal cost of output is constant with respect to output. This agrees with empirical evidence [@lavoie2014post]. It also contradicts the theory of the firm presented in most microeconomic textbooks, which assumes (with no evidentiary basis) increasing marginal cost as output rises.
 
 ### The farm net benefit envelope
 
@@ -353,94 +515,9 @@ Note that, applying the handy relation in equation \ref{eq:lambdaHandy}, the net
 \label{eq:NBenv}
 \end{equation}
 
-### Input demand revisited \label{sec:inDem}
+## Consumer utility and demand
 
-Using equation \ref{eq:YdEnvCompact} to substitute for $y^*$ in input demand (equation \ref{eq:inputDem1}) gives the following expression for input demand as a function of basal yield, prices, input elasticities, the budget shadow price, and control variables together with their respective elasticities.
-
-\begin{equation}
-x_i^* = \frac{\alpha_i}{w_i}(y_0 P \lambda^{-1} \beta_w^{-1} \beta_x \beta_k)^{\frac{1}{1 - h}}
-\label{eq:inputDem2}
-\end{equation}
-
-The own price elasticity of input demand is then
-
-\begin{equation}
-\frac{\partial log(x_i^*)}{\partial log(w_i)} = \frac{-\alpha_i}{1 - h}
-\label{eq:ownPriceElas}
-\end{equation}
-
-And the cross price elasticity of input demand is
-
-\begin{equation}
-\frac{\partial log(x_i^*)}{\partial log(w_{j \neq i})} = \frac{-\alpha_j}{1 - h}
-\label{eq:CrossPriceElas}
-\end{equation}
-
-Given the domain of $h$ derived above ($0 > h > 1$), both price elasticities are negative, in agreement with Axiom 3 (negatively sloped demand curves). Conversely, note that increasing returns to scale ($h > 1$) would imply positively sloped input demand curves, in violation of Axiom 3.
-
-The output price elasticity of input demand likewise bears the expected sign only under decreasing returns to scale.
-
-\begin{equation}
-\frac{\partial log(x_i^*)}{\partial log(P)} = \frac{1}{1 - h}
-\end{equation}
-
-What about the income elasticity of input demand? Many consumer side economists dismiss the Cobb-Douglas envelope from their toolboxes because they believe that it implies unitary income elasticity of demand (also known as homothetic preferences). However,  
-Many economists interpret this as unitary income elasticity of demand, and dismiss the Cobb-Douglas envelope from their toolboxes on this basis.^[A model implying unitary income elasticity of demand (also known as homothetic preferences) is unacceptable because it contradicts a body of well documented empirical laws, including Engel's law, which clearly indicate that budget shares change with income.] However, $C^*$ is not income or budget ($B$). It is _optimal expenditure_, a function of basal yield, prices, the budget shadow price, input elasticities, and control variables together with their respective elasticities, in which income plays no part. As such, $C^*$ may be greater or less than income. Income elasticity of demand cannot even be evaluated because demand is not a function of income.
-
-Well, first...Yet another expression for input demand can be found by dotting the first order conditions (equations \ref{eq:eqFOC}) through by $\mathbf{x}^*$ and rearranging as follows.
-
-\begin{equation}
-\lambda = \frac{P y^*}{C^*} h
-\label{eq:lambdaHandy}
-\end{equation}
-
-That is, a farm's budget shadow price is equal to its revenue to cost ratio, scaled by the degree of homogeneity. (A handy way to make back of the envelope calculations of the farm budget shadow price!)
-
-Substituting this in for $\lambda$ in input demand then gives
-
-\begin{equation}
-x_i^* = \frac{C^* \alpha_i}{h w_i}
-\end{equation}
-
-Note then that
-
-\begin{equation}
-\frac{\ln(x_i^*)}{\ln(C^*)} = 1
-\end{equation}
-
-* Remark: The Cobb-Douglas yield envelope does not imply unitary income elasticity of  violate Engel's law.
-
-### Deriving the domains of the budget shadow price, optimal input, and optimal yield
-
-Assuming that farms only enter production if their expected revenue is greater than their cost (this is the second part of Axiom 2), then the following lower bound on $\lambda$ may be readily deduced from equation \ref{eq:lambdaHandy}.
-
-\begin{equation}
-\lambda > h
-\label{eq:lamLoBound}
-\end{equation}
-
-This, in turn, implies the following upper bound on optimal yield.
-
-\begin{equation}
-y^* <  (y_0 r (h^{-h} \beta_x \beta_k))^{\frac{1}{1 - h}}
-\label{eq:ydUpBound}
-\end{equation}
-
-[Bring in Axiom 4 and talk about employment, reserve, etc?]
-Note, in passing, that the notion of an upper bound on economic yields agrees with empirical observations. Pingali [], for example, observes that even the best rice yields in India are typically 80% of yields achieved at experimental stations.
-
-The lower bound on $\lambda$ likewise implies the following upper bound on input demand.
-
-\begin{equation}
-x_i^* < \frac{\alpha_i}{w_i}(y_0 P h^{-1} \beta_w^{-1} \beta_x \beta_k)
-\label{eq:inputUpBound}
-\end{equation}
-
-[Also address? -- cobb-douglas implies constant marginal cost (which contradicts the predominant theory but is in line with the evidence [@lavoie2014post])]
-
-## Consumer utility/yield and demand
-
-The axioms on which the equations of supply side behavior are based also apply to the demand side. This means that the consumer utility, utility envelope, and demand equations take the same form as the producer yield, yield envelope, and input demand equations, respectively.^["Consumer" here can refer to individual people or to demand side firms (mills, factories, etc.). Likewise, consumer utility can refer either to the utility of individual people, or to mill or factory yield.]
+The Axioms from which supply side behavior is deriveed also apply to the demand side. This means that the consumer utility, utility envelope, and demand equations take the same form as the producer yield, yield envelope, and input demand equations, respectively.^["Consumer" here can refer to individual people or to demand side firms (mills, factories, etc.). Likewise, consumer utility can refer either to the utility of individual people, or to mill or factory yield.]
 
 Consumer utility (or yield, in the case of mills, factories, etc.) is therefore just the demand side analogue of the farm yield envelope derived in equation \ref{eq:YdEnvCompact}.
 
@@ -455,7 +532,7 @@ Consumer demand for the given farm output $x_v^{D*}$ is likewise just the demand
 \begin{equation}
 \begin{split}
 x_v^{D*} &= \frac{P_D y_D^* \alpha_v^D}{\lambda_D P} \\
-&= \frac{\alpha_i^D}{P} (y_0^D P_D / \lambda_D \beta_x^D  \beta_k^D / \beta_w^D )^{\frac{1}{1 - h_D}}
+&= \frac{\alpha_v^D}{P} \left (y_0^D \frac{P_D \beta_x^D \beta_k^D}{\lambda_D  \beta_w^D} \right)^{\frac{1}{1 - h_D}}
 \end{split}
 \end{equation}
 
@@ -469,18 +546,11 @@ y_D^* = P^{\frac{-\alpha_D}{1 - h_D}} \left(y_0^D \left( \frac{P_D}{\lambda_D} \
 \end{equation}
 
 \begin{equation}
-x_D^* = \left(\frac{\alpha_D}{P} \right)^{\frac{\alpha_D}{1 - h_D} + 1} \left(y_0^D \frac{P_D}{\lambda_D} \frac{\tilde{\beta}_x^D \beta_k^D}{\tilde{\beta}_w^D} \left)^{\frac{1}{1 - h_D}}
+x_D^* = \alpha_D P^{\frac{-\alpha_D}{1 - h_D} - 1} \left(y_0^D \frac{P_D}{\lambda_D} \frac{\beta_x^D \beta_k^D}{\tilde{\beta}_w^D} \left)^{\frac{1}{1 - h_D}}
 \label{eq:inputDemDEM0}
 \end{equation}
 
-Where, to reduce notational clutter, the index $v$ is henceforth dropped such that $x_v^{D*}$ is replaced with $x_D^*$ and $\alpha_v^D$ is replaced with $\alpha_D$; and where
-
-\begin{equation}
-\begin{split}
-\tilde{\beta}_w^D &= P^{-\alpha_D}\beta_w^D \\
-\tilde{\beta}_x^D &= \alpha_D^{-\alpha_D}\beta_x^D
-\end{split}
-\end{equation}
+Where, to reduce notational clutter, the index $v$ has been dropped such that $x_v^{D*}$ is replaced with $x_D^*$ and $\alpha_v^D$ is replaced with $\alpha_D$; and where $\tilde{\beta}_w^D &= P^{-\alpha_D}\beta_w^D$.
 
 The consumer's price elasticity of demand then follows as
 
@@ -498,9 +568,9 @@ Which is just the demand side analogue of the own price elasticity of input dema
 
 Where this is just the demand side analogue of the cross price elasticity of farm input demand derived in equation \ref{eq:CrossPriceElas}.
 
-### Consumer output price as a function of the farm output price
+### Consumer output price as a function of the farm output price \label{sec:PDfunP}
 
-When $x_D$ is feedstock in some consumer's production process (as in the case of mills and factories, for example), then a close relationship often exists between $P$ and $P_D$. A reasonable first attempt at formalization of this relation is $P_D = b P$, where $b$ is the factory markup. However, substituting $b P$ for $P_D$ in equation \ref{eq:inputDemDEM0} results in the following price elasticity of demand,
+When $x_D$ is feedstock in some consumer's production process (as in the case of mills and factories, for example), then a close relationship often exists between $P$ and $P_D$. A reasonable first attempt at formalization of this relation is $P_D = b P$, where $b > 1$ is the factory markup. However, substituting $b P$ for $P_D$ in equation \ref{eq:inputDemDEM0} results in the following price elasticity of demand,
 
 \begin{equation}
 \frac{\partial \ln(x_D*)}{\partial \ln(P)} = \frac{1 - \alpha_D}{1 - h_D} - 1
@@ -521,71 +591,145 @@ Where the exponent $\varepsilon$ is the percentage change in the consumer's outp
 \frac{\partial \ln(P_D)}{\partial \ln(P)} = \varepsilon
 \end{equation}
 
-Equation \ref{eq:PDasFunOfP} is a surmise or definition, and not a result derived from the Axioms. For this reason, it takes its place among the Axioms as Axiom 5. Nonetheless, the domain of $\varepsilon$ _is_ derived from the preceding Axioms as follows.
+Equation \ref{eq:PDasFunOfP} is an ansatz, and not a result derived from the Axioms. For this reason, it takes its place among the Axioms as Axiom 6.
 
-Substituting $bP^{\varepsilon}$ for $P_D$ and factoring out $P$ further clarifies the role of $P$ in consumer yield and demand.
-<!-- \ref{eq:consYdEnv0} and \ref{eq:inputDemDEM0} -->
+Using equation \ref{eq:PDasFunOfP} to substitute for $P$ and factoring out $P_D$ gives the following modified form of consumer yield.
 
 \begin{equation}
-y_D^* = P^{\frac{\varepsilon h_D - \alpha_D}{1 - h_D}} \left(y_0^D \left( \frac{b}{\lambda_D} \right)^h_D \frac{\beta_x^D \beta_k^D}{\tilde{\beta}_w^D} \right)^{\frac{1}{1 - h_D}}
+y_D^* = P_D^{\frac{h_D - \alpha_D / \varepsilon}{1 - h_D}} \left(y_0^D b^{\alpha_D / \varepsilon} \fraC{\beta_k^D \beta_x^D}{\lambda_D^h_D \tilde{\beta}_w^D} \right)^{\frac{1}{1 - h_D}}
 \label{eq:consYdEnv}
-\end{equation}
-
-\begin{equation}
-x_D^* = \left(\frac{\alpha_D}{P} \right)^{\frac{\alpha_D - \varepsilon}{1 - h_D} + 1} \left(\frac{y_0^D b \tilde{\beta_x}^D  \beta_k^D}{\lambda_D \tilde{\beta}_w^D} \right)^{\frac{1}{1 - h_D}}
-\label{eq:inputDemDEM}
 \end{equation}
 
 (If there is no relation between $P$ and $P_D$, then the original consumer yield and demand expressions in equations \ref{eq:consYdEnv} and \ref{eq:inputDemDEM0} are recovered by setting $b = P_D$ and $\varepsilon = 0$.)
 
+Using equation \ref{eq:PDasFunOfP} to substitute for $P_D$ and factoring out $P$ then gives the following modified version of consumer demand $x_D^*$.
+
+\begin{equation}
+x_D^* = \alpha_D P^{\frac{\varepsilon - \alpha_D}{1 - h_D} - 1} \left(y_0^D b \frac{\beta_x^D  \beta_k^D}{\lambda_D \tilde{\beta}_w^D} \right)^{\frac{1}{1 - h_D}}
+\label{eq:inputDemDEM}
+\end{equation}
+
 The consumer's output price ($P_D$) elasticity of yield then follows as
 
 \begin{equation}
-\frac{\partial \ln(y_D^*)}{\partial \ln(P_D)} = \frac{\varepsilon h_D - \alpha_D}{\varepsilon (1 - h_D)}}
+\frac{\partial \ln(y_D^*)}{\partial \ln(P_D)} = \frac{h_D - \alpha_D / \varepsilon}{1 - h_D}
+\label{eq:PDelasydD}
 \end{equation}
 
-Where Axiom 4 (positively sloped supply curves) requires the following lower bound on $\varepsilon$.
-
-\begin{equation}
-\varepsilon > \frac{\alpha_D}{h_D}}
-\end{equation}
-
-The consumer's farm price ($P$) elasticity of demand, meanwhile, follows from equation \ref{eq:inputDemDEM} as
+And the consumer's farm output price ($P$) elasticity of demand then follows as
 
 \begin{equation}
 \frac{\partial \ln(x_D*)}{\partial \ln(P)} = \frac{\varepsilon - \alpha_D}{1 - h_D} - 1
 \label{eq:PelasDem}
 \end{equation}
 
-Where Axiom 4 (negatively sloped demand curves) requires the following upper bound on $\varepsilon$.
+It follows, then, that Axioms 3 and 4 impose the following domain on $\varepsilon$.
 
 \begin{equation}
-\varepsilon < 1 - h_D + \alpha_D
+\varepsilon \in (\alpha_D / h_D, 1 + \alpha_D - h_D)
+\label{eq:domEpsilon}
 \end{equation}
 
-The domain of $\varepsilon$ thus follows from the $P_D$ elasticity of consumer yield and $P$ elasticity of consumer demand as
+Considering that $h_D = \sum_i \alpha_i^D$ and $\alpha_i^D > 0\:;\:\: \forall i$, the lower bound $\alpha_D / h_D$ is always greater than $0$ and less than $1$. Note, moreover, that $\alpha_D - h_D < 0$, and so the upper bound is also less than $1$.
+
+Is the upper bound always greater than the lower bound? Supposing it is, then,
 
 \begin{equation}
-\frac{\alpha_D}{h_D}} < \varepsilon < 1 - h_D + \alpha_D
+\begin{split}
+\alpha_D / h_D &< 1 + \alpha_D - h_D \\
+\alpha_D (1 / h_D - 1) &< 1 - h_D \\
+\alpha_D / h_D (1 - h_D) &< 1 - h_D \\
+\alpha_D / h_D &< 1
+\end{split}
 \end{equation}
 
-This, in turn, restricts the domain of the output price ($P_D$) elasticity of consumer yield and the farm price ($P$) elasticity of consumer demand as follows.
+Which has just been shown to be true. Thus the supposition, that $\varepsilon$'s upper bound is always greater than its lower bound, is true.
+
+Under Axiom 4, the elasticity of demand in equation \ref{eq:PelasDem} requires that
 
 \begin{equation}
-0 < \frac{\partial \ln(y_D^*)}{\partial \ln(P_D)} < h_D - \alpha_D
+h_D \in (-\infty, \min(1 + \underline{\alpha}_D, 1 - \varepsilon + \alpha_D))
+\end{equation}
+
+Where $\underline{\alpha}_D$ is the smallest of the consumer's input elasticities of utility. The upper bound on the righthand side of this expression can be simplified considering the upper bound of $\varepsilon$ derived in expression \ref{eq:domEpsilon}, and the lower bound placed on $\underline{\alpha}_D$ by equation \ref{eq:PelasDem} and Axiom 4. That is to say, evaluating $\min(1 + \underline{\alpha}_D, 1 - \varepsilon + \alpha_D)$ at $\max(\varepsilon)$, gives
+
+\begin{equation}
+\min(1 + \underline{\alpha}_D, 1 - \varepsilon + \alpha_D) \bigr|_{\varepsilon = \max(\varepsilon) = \min(1 + \underline{\alpha}_D, h_D)}
+\end{equation}
+
+But, by equation \ref{eq:PelasDem} and Axiom 4,
+
+\begin{equation}
+\begin{split}
+\frac{-\underline{\alpha}_D}{1 - h_D} -1 &< 0 \\
+-\underline{\alpha}_D &< 1 - h_D \\
+1 + \underline{\alpha}_D &< h_D
+\end{split}
+\end{split}
+
+Hence,
+
+\begin{equation}
+\min(1 + \underline{\alpha}_D, 1 - \varepsilon + \alpha_D) \bigr|_{\varepsilon = \max{\varepsilon}} = h_D
+\end{equation}
+
+Moreover, since $1 - \varepsilon + \alpha_D$ is decreasing in $\varepsilon$, then the following must hold true more generally, for all possible values of $\varepsilon$.
+
+\begin{equation}
+\min(1 + \underline{\alpha}_D, 1 - \varepsilon + \alpha_D)  = 1 - \varepsilon + \alpha_D
+\end{equation}
+
+The domain of $h_D$ imposed by Axiom 4 thus reduces to
+
+\begin{equation}
+h_D \in (-\infty, 1 - \varepsilon + \alpha_D)
+\end{equation}
+
+Meanwhile, Axiom 3 (positively sloped supply curves) and equation \ref{eq:PDelasydD} also constrain the domain of $h_D$ as follows.
+
+\begin{equation}
+h_D \in
+\begin{cases}
+(\alpha_D / \varepsilon, 1), & \text{if $\varepsilon > \alpha_D$} \\
+(1, \alpha_D / \varepsilon), & \text{if $\varepsilon < \alpha_D$}
+\end{cases}
+\end{equation}
+
+The effective domain of $h_D$ satisfying both Axioms 3 and 4, then, is
+
+\begin{equation}
+h_D \in
+\begin{cases}
+(\alpha_D / \varepsilon, 1 - \varepsilon + \alpha_D), & \text{if $\varepsilon > \alpha_D$} \\
+(1, 1 - \varepsilon + \alpha_D), & \text{if $\varepsilon < \alpha_D$}
+\end{cases}
+\end{equation}
+
+Under Axiom 6, then, increasing returns to scale are possible if $\varepsilon < \alpha_D$. Note that, as a general rule, Axiom 5 applies to mills and factories, but not to farms. Farms are generally not at liberty to raise their output price in response to a higher input price, especially not in the developing world. An important asymmetry is thereby introduced between the supply and demand side of the primary sector, whereby producers are limited to decreasing returns to scale while consumers may attain increasing returns to scale if the condition $\varepsilon < \alpha_D$ is met.
+
+The effective domain of $h_D$ in turn imposes the following domains on the consumer's output price elasticity of supply and the consumer's farm output price elasticity of demand, respectively.
+
+\begin{equation}
+\frac{\partial \ln(y_D^*)}{\partial \ln(P_D)} \in
+\begin{cases}
+(0, 1 / \varepsilon - 1), & \text{if $\varepsilon > \alpha_D$} \\
+(1 / \varepsilon - 1, \infty), & \text{if $\varepsilon < \alpha_D$}
+\end{cases}
 \end{equation}
 
 \begin{equation}
--1 < \frac{\partial \ln(x_D^*)}{\partial \ln(P)} < \frac{\alpha_D}{h_D}}
+\frac{\partial \ln(x_D^*)}{\partial \ln(P)} \in
+\begin{cases}
+(\varepsilon - 1, 0), & \text{if $\varepsilon > \alpha_D$} \\
+(-\infty, \varepsilon - 1), & \text{if $\varepsilon < \alpha_D$}
+\end{cases}
 \end{equation}
 
-Since $0 < h_D < 1$ and $0 < \alpha_D < h_D$, it follows that $\frac{\partial \ln(y_D^*)}{\partial \ln(P_D)} < 1$ when Axiom 5 is added. That is, insofar as equation \ref{eq:PDasFunOfP} is a realistic model of the consumer's output price (and insofar as the other Axioms are also true), then the increase in consumer output given a $1$% increase in consumer output price $P_D$ is less than proportionate to the increase in price. In economics jargon, such an output curve is said to be inelastic. The consumer's output curve approaches perfect inelasticity as $\varepsilon$ approaches its lower bound.
+Under Axiom 6, then, consumer supply and demand can be elastic only when $\varepsilon <\alpha_D$, and are inelastic when $\varepsilon > \alpha_D$.
 
-Likewise, the domain of $\frac{\partial \ln(x_D^*)}{\partial \ln(P)}$ implies that the consumer's demand for the farm product is inelastic when Axiom 5 is added, such that the increase in consumer demand given a $1$% decrease in farm price $P$ is less than proportionate to the fall in price.
+### Upper bounds on consumer supply and demand
 
-### Domain of consumer demand
-
-Assuming consumers enter the market only if they expect to increase their net utility (Axiom 3), then
+Assuming consumers enter the market only if they expect to increase their net utility (Axiom 4), then
 
 \begin{equation}
 \lambda_D > h_D
