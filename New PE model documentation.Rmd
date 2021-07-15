@@ -16,9 +16,10 @@ abstract: |
   This is the abstract.
 
   It consists of two paragraphs.
-bibliography: Ag supply response.bib
+bibliography: New PE model.bib
 biblio-style: apalike
 header-includes:
+  - \usepackage{setspace}\doublespacing
   - \usepackage{float}
   - \floatplacement{figure}{H}
 numbersections: true
@@ -104,7 +105,7 @@ The meaning of consumer yield and technology adjusted price ratio become evident
 
 Throughout much of written history, astute observers have noticed that the usefulness of increments in the quantity of an input (in the case of producer yield functions) or good or service (in the case of consumer utility functions) is inversely proportional to amount of the input or good or service already acquired [@kauder1953genesis]. In 1738, Daniel Bernoulli put it this way:
 
->\singlespacing "[i]n the absence of the unusual, the utility resulting from any small increase in wealth will be inversely proportionate to the quantity of goods previously possessed" [@bernoulli1954exposition].
+>\singlespacing "In the absence of the unusual, the utility resulting from any small increase in wealth will be inversely proportionate to the quantity of goods previously possessed" [@bernoulli1954exposition].
 
 \doublespacing
 
@@ -466,7 +467,206 @@ By which it follows that
 \label{eq:optExpElasInpDem}
 \end{equation}
 
-Most economists interpret this as meaning that the income elasticity of demand is $1$. If this is true, then the Cobb-Douglas model contradicts well documented empirical laws, particularly Engel's law, that clearly indicate changing demand for different items in a given basket as income changes.
+Most economists interpret this as meaning that the income elasticity of demand is $1$. If this is true, then the Cobb-Douglas model contradicts well documented empirical laws, particularly Engel's law, that clearly indicate changing demand for different items in the consumer's basket as income changes. (See Figure \ref{fig:otherLaws}.)
+
+```{r Fig10, fig.show = "hold", fig.width = 5, fig.height=6, fig.align="center", fig.cap="\\label{fig:otherLaws}A log-linear relation exists between demand and GDP per capita for all major consumer good categories. World Bank ICP 2017 data for 152 countries. GDP is at the market exchange rate, current prices.", echo = FALSE}
+
+#===========================================================================
+# Create Engel's law graphic for next chunk, also get slope and N for text.
+#===========================================================================
+this_file <- "Engels Law WB ICP data.csv"
+df_icp <- read.csv(this_file, stringsAsFactors = F)
+colnames(df_icp) <- gsub("US\\.\\.", "US$", colnames(df_icp))
+colnames(df_icp) <- gsub("\\.\\.", ", ", colnames(df_icp))
+colnames(df_icp) <- gsub("\\.", " ", colnames(df_icp))
+colnames(df_icp) <- gsub("billions ", "billions", colnames(df_icp))
+#unique(df_icp$Element)
+these_elements <- c("Expenditure per capita, market exchange rate-based (US$)",
+                    "Expenditure component share of GDP (GDP = 100%)")
+# these_elements <- c("Expenditure per capita, PPP-based (US$)",
+#                     "Expenditure, PPP-based (US$, billions)")
+df_icp <- subset(df_icp, Element %in% these_elements)
+
+df_icp$Element[grep("share", df_icp$Element)] <- "Expenditure (as % of GDP)"
+# df_icp$Element[grep("per capita", df_icp$Element)] <- "expenditure/capita (USD)"
+# df_icp$Element[grep("billions", df_icp$Element)] <- "expenditure (billion USD)"
+
+
+all_goods <- unique(df_icp$Good)
+df_icpOther <- df_icp
+
+df_icpOther$Good[grep("1101100:FOOD", df_icpOther$Good)] <- "Food"
+df_icpOther$Good[grep("RESTAURANTS", df_icpOther$Good)] <- "Restaurants and hotels"
+df_icpOther$Good[grep("EDUCATION", df_icpOther$Good)] <- "Education"
+df_icpOther$Good[grep("RECREATION", df_icpOther$Good)] <- "Recreation and culture"
+df_icpOther$Good[grep("CLOTHING", df_icpOther$Good)] <- "Clothing and footwear"
+df_icpOther$Good[grep("CONSTRUCTION", df_icpOther$Good)] <- "Construction"
+df_icpOther$Good[grep("MACHINERY", df_icpOther$Good)] <- "Machinery and equipment"
+df_icpOther$Good[grep("FURNISHINGS", df_icpOther$Good)] <- "Furnishings, hh equip., &\nroutine hh maintenance"
+df_icpOther$Good[grep("ACTUAL HOUSING", df_icpOther$Good)] <- "Housing, electricity,\n& other utilities"
+df_icpOther$Good[grep("VEHICLES", df_icpOther$Good)] <- "Purchase of vehicles"
+df_icpOther$Good[grep("1107000:TRANSPORT", df_icpOther$Good)] <- "Transport" #"1107300:TRANSPORT SERVICES"
+df_icpOther$Good[grep("COMMUNICATION", df_icpOther$Good)] <- "Communication"
+df_icpOther$Good[grep("HEALTH", df_icpOther$Good)] <- "Health"
+
+not_these <- all_goods[grep("[0-9]", all_goods)]
+not_these <- c(not_these, "Communication", "Purchase of vehicles",
+               "Furnishings, hh equip., &\nroutine hh maintenance",
+               "Machinery and equipment", "Construction")
+#not_these <- c(not_these, "Food")
+this_element <- "Expenditure per capita, market exchange rate-based (US$)"
+# this_element <- "Expenditure (as % of GDP)"
+df_plot <- subset(df_icpOther, !(Good %in% not_these) &
+                    Element == this_element &
+                    Region != "Aggregated")
+#unique(df_icpOther$Good)
+#colnames(df_icpOther)
+#unique(df_icpOther$Element)
+
+df_plot$`GDP/capita (USD), logged` <- log(df_plot$`GDP per capita, market exchange rate based, US$`)
+
+these_goods <- unique(df_plot$Good)
+facet_labels <- c()
+adjR2_vec <- c()
+for(i in 1:length(these_goods)){
+  this_good <- these_goods[i]
+  this_df_plot <- subset(df_plot, Good == this_good)
+  mod <- lm(`Expenditure, logged` ~ `GDP/capita (USD), logged`, this_df_plot)
+  #summary(mod)
+  m <- round(mod$coefficients[2], 3)
+  b <- round(mod$coefficients[1], 3)
+  df_out <- as.data.frame(broom::glance(mod))
+  adjR2 <- round(df_out$adj.r.squared, 2)
+  N <- df.residual(mod)
+  facet_labels[i] <- paste0(this_good, "\nAdj. R-squared = ", adjR2, "\nSlope = ", m, "\nY intercept = ", b)
+  adjR2_vec[i] <- adjR2
+  #print(N)
+}
+
+names(facet_labels) <- these_goods
+
+library(tidyverse)
+shape_vec <- c(21:24, 4)
+# point_size <- 1.5
+smallPoint_size <- 1
+# label_size <- 2.5
+# smallLabel_size <- 2
+# title_size <- 8
+# subtitle_size <- 7
+legendText_size <- 7
+axisText_size <- 6
+axisTitle_size <- 7
+facetTitle_size <- 7
+n <- length(unique(df_plot$Good))
+bag_of_colors <- randomcoloR::distinctColorPalette(k = 2 * n)
+color_vec <- sample(bag_of_colors, n)
+
+shift_legend2 <- function(p) {
+  # ...
+  # to grob
+  gp <- ggplotGrob(p)
+  facet.panels <- grep("^panel", gp[["layout"]][["name"]])
+  empty.facet.panels <- sapply(facet.panels, function(i) "zeroGrob" %in% class(gp[["grobs"]][[i]]))
+  empty.facet.panels <- facet.panels[empty.facet.panels]
+  
+  # establish name of empty panels
+  empty.facet.panels <- gp[["layout"]][empty.facet.panels, ]
+  names <- empty.facet.panels$name
+  # example of names:
+  #[1] "panel-3-2" "panel-3-3"
+  
+  # now we just need a simple call to reposition the legend
+  #lemon::reposition_legend(p, 'center', panel=names)
+  p_out <- lemon::reposition_legend(p, 'center', panel=names)
+  #class(lemon::reposition_legend(p, 'center', panel=names))
+  return(p_out)
+}
+
+
+
+colnames(df_plot) <- gsub("Expenditure, logged", "Expenditure/capita (USD), logged", colnames(df_plot))
+gg <- ggplot(df_plot, aes(x = `GDP/capita (USD), logged`,
+                          y = `Expenditure/capita (USD), logged`,
+                          #label = label_these,
+                          group = Region, fill = Region, shape = Region))
+gg <- gg + geom_point(alpha = 0.6, size = smallPoint_size, color = "black", stroke = 0.5)
+gg <- gg + scale_fill_manual(values = color_vec)
+gg <- gg + scale_shape_manual(values = shape_vec)
+#gg <- gg + geom_smooth(method = lm, se = F)
+gg <- gg + facet_wrap(~Good, ncol = 3,
+                      labeller = labeller(Good = facet_labels))
+#gg <- gg + geom_text_repel(color = "black", size = smallLabel_size)
+gg <- gg + theme(strip.background = element_blank(),
+                 strip.text.x = element_text(hjust = -0.01, size = facetTitle_size),
+                 legend.position = "bottom",
+                 legend.spacing.x = unit(0.25, 'cm'),
+                 legend.title = element_blank(),
+                 legend.text = element_text(size = legendText_size),
+                 axis.text = element_text(size = axisText_size),
+                 axis.title = element_text(size = axisTitle_size))
+gg <- gg + guides(fill = guide_legend(nrow = 3, byrow = T, override.aes = list(linetype = 0)),
+                  color = guide_legend(override.aes = list(linetype = 0)))
+gg <- shift_legend2(gg)
+gg <- ggplotify::as.ggplot(gg)
+
+
+
+
+
+# Look at food groups
+#unique(df_icp$Good)
+# all_goods <- unique(df_icp$Good)
+# df_icpOtherFood <- df_icp
+# u <- df_icpOtherFood$Good
+# df_icpOtherFood$Good[which(u == "1101190:Food products n.e.c. (Class)")] <- "Other food"
+# df_icpOtherFood$Good[grep("Oils and fats", u)] <- "Oils and fats"
+# df_icpOtherFood$Good[grep("Sugar, jam", u)] <- "Sugary and sweet"
+# df_icpOtherFood$Good[grep("Milk, cheese and eggs", u)] <- "Milk, cheese and eggs"
+# df_icpOtherFood$Good[grep("Fish and seafood", u)] <- "Fish and seafood"
+# df_icpOtherFood$Good[grep("Meat", u)] <- "Meat"
+# df_icpOtherFood$Good[grep("Vegetable", u)] <- "Bread, cereals, and vegetables"
+# df_icpOtherFood$Good[grep("Bread", u)] <- "Bread, cereals, and vegetables"
+# df_icpOtherFood$Good[grep("Fruit", u)] <- "Fruit"
+# df_icpOtherFood$Good[grep("1101100:FOOD", u)] <- "Food"
+# 
+# not_these <- all_goods[grep("[0-9]", all_goods)]
+# not_these <- c(not_these, "Food")
+# #unique(df_icpOtherFood$Element)
+# #this_element <- "Expenditure (as % of GDP)"
+# this_element <- "Expenditure per capita, market exchange rate-based (US$)"
+# df_plot <- subset(df_icpOtherFood, !(Good %in% not_these) &
+#                     Element == this_element &
+#                     Region != "Aggregated")
+# #colnames(df_plot)
+# df_plot$`GDP/capita (USD), logged` <- log(df_plot$`GDP per capita, market exchange rate based, US$`)
+# 
+# 
+# gg <- ggplot(df_plot, aes(x = `GDP/capita (USD), logged`,
+#                           y = `Expenditure, logged`,
+#                           #label = label_these,
+#                           group = Region, fill = Region, shape = Region))
+# gg <- gg + geom_point(alpha = 0.6, size = smallPoint_size, color = "black", stroke = 0.5)
+# gg <- gg + scale_fill_manual(values = color_vec)
+# gg <- gg + scale_shape_manual(values = shape_vec)
+# #gg <- gg + geom_smooth(method = lm, se = F)
+# gg <- gg + facet_wrap(~Good, ncol = 4)#,
+#                       #labeller = labeller(Good = facet_labels))
+# #gg <- gg + geom_text_repel(color = "black", size = smallLabel_size)
+# gg <- gg + theme(strip.background = element_blank(),
+#                  strip.text.x = element_text(hjust = -0.01, size = facetTitle_size),
+#                  #legend.direction = "vertical",
+#                  #legend.spacing.y = unit(1, 'cm'),
+#                  legend.title = element_blank(),
+#                  legend.text = element_text(size = legendText_size),
+#                  axis.text = element_text(size = axisText_size),
+#                  axis.title = element_text(size = axisTitle_size))
+# gg <- gg + guides(fill = guide_legend(#nrow = 2,
+#   override.aes = list(linetype = 0)),
+#   color = guide_legend(override.aes = list(linetype = 0)))
+# gg
+
+```
+
 
 However, no such contrdiction in fact arises since $C^*$ does not represent income or budget ($B$), but rather _optimal expenditure_. Optimal expenditure is defined as
 
@@ -481,14 +681,73 @@ C^* = Py^* h / \lambda
 \label{eq:cStar}
 \end{equation}
 
-In either case, equations \ref{eq:inputDem2} and \ref{eq:YdEnvCompact} clearly demonstrate that $C^*$ is a function of basal yield, prices, the budget shadow price, input elasticities, and control variables together with their respective elasticities, in which income $B$ plays no part. As such, $C^*$ may be greater or less than income. To be clear, then, equation \ref{eq:optExpElasInpDem} says that the income elsticity of _optimal expenditure_, _not of income_, is equal to $1$.
+In either case, it is straightforward to see that $C^*$ is a function of basal yield, prices, the budget shadow price, input elasticities, and control variables together with their respective elasticities, in which income $B$ plays no part. $C^*$ is therefore something very different from $B$, and may be greater or less than $B$.
+<!-- equations \ref{eq:inputDem2} and \ref{eq:YdEnvCompact} clearly demonstrate that -->
 <!-- More generally, the forgoing sections demonstrate that, under Axioms 1 and 2, optimal yield, input demand, and expenditure are all invariant under changes in $B$. -->
 
-Moreover, the empirically observed relation between expenditures and income can be explained by Axiom 1
-...Axiom 1 implies that demand does change with income.
+To be clear, then, equation \ref{eq:optExpElasInpDem} says that the income elsticity of _optimal expenditure_, _not of income_, is equal to $1$. A relationship between demand $x_v^*$ and budget $B$ does not follow from Axioms 2 and 3. However, the empirical consumer expenditure laws observed in Figure \ref can be derived from Axiom 1 alone.
 
-...proof
+_Proof:_
 
+The net change in utility given a change in expenditure on good $x_v$ is the change in utility resulting from the acquisition of the good minus the change in utility resulting from the corresponding depletion of the budget. This may be formally expressed as follows. 
+
+\begin{equation}
+\frac{\partial \ln(U)}{\partial (w_v x_v)} = \frac{\partial \ln(U)}{\partial x_v} - \frac{\partial \ln(U)}{\partial B}
+\end{equation}
+
+Applying the first order condition for a maximum ($\frac{\partial \ln(U)}{\partial (w_v x_v)} = 0$) and rearranging,
+<!-- Assuming that a consumer will part with money ($B$) for a good $x_v$ only such that the decrease in utility resulting from the loss of money is offset by the increase in utility resulting from the acquisition of the good, then -->
+
+\begin{equation}
+\frac{\partial \ln(U)}{\partial x_v} = \frac{\partial \ln(U)}{\partial B}
+\end{equation}
+
+By Axiom 1 (equation \ref), this can be rewritten
+
+\begin{equation}
+\alpha_B \frac{d \ln(B)}{d B} = \alpha_v \frac{d \ln(x_v)}{d x_v}
+\label{eq:margUtilAssump}
+\end{equation}
+
+But note that
+
+\begin{equation}
+\frac{d \ln(B)}{d B} = \frac{d \ln(B)}{d (w_v x_v)}
+\end{equation}
+
+And so the previous equation can again be rewritten,
+
+\begin{equation}
+\begin{split}
+\alpha_B \frac{d \ln(B)}{d (w_v x_v)} &= \alpha_v \frac{d \ln(x_v)}{dx_v} \\
+\frac{\alpha_B}{w_v} \frac{d \ln(B)}{d x_v} &= \alpha_v \frac{d \ln(x_v)}{dx_v}
+\end{split}
+\label{eq:margUtilAssump}
+\end{equation}
+
+Integrating both sides then gives
+
+\begin{equation}
+\begin{split}
+\frac{\alpha_B}{w_v} \int \frac{\partial \ln(B)}{\partial x_v} \: dx_v &= \alpha_v \int \frac{d \ln(x_v)}{d x_v} \: dx_v \\
+\alpha_B (\ln(B) + k_B)  &= \alpha_v (\ln(x_v) + k_v)
+\end{split}
+\end{equation}
+
+Where $k_B$ and $k_v$ are constants of integration. This can then be rearranged into the familiar double log expression seen in Figure \ref{fig:otherLaws}.
+
+\begin{equation}
+\ln(x_v) = m_v \ln(B) + b_v
+\label{eq:generalLaw}
+\end{equation}
+
+Where the income elasticity of good $x_v$ (i.e. slope) $m_v$ and y intercept $b_v$ are defined
+
+\begin{equation}
+m_v = \frac{\alpha_B}{\alpha_v}, \:\:\: b_v = \frac{\alpha_B}{\alpha_v} k_B - k_v
+\label{eq:incomElast}
+\end{equation}
+<!-- The double log consumer expenditure laws thus follow from Axiom 1 and the consumer's conservation of utility condition (equation \ref{eq:condEqualU}). Bennett's law may likewise be derived if income $B$ is constrained to refer to the consumer's food budget, and goods are limited to food items. -->
 
 ### Marginal cost
 
@@ -517,7 +776,7 @@ Note that, applying the handy relation in equation \ref{eq:lambdaHandy}, the net
 
 ## Consumer utility and demand
 
-The Axioms from which supply side behavior is deriveed also apply to the demand side. This means that the consumer utility, utility envelope, and demand equations take the same form as the producer yield, yield envelope, and input demand equations, respectively.^["Consumer" here can refer to individual people or to demand side firms (mills, factories, etc.). Likewise, consumer utility can refer either to the utility of individual people, or to mill or factory yield.]
+The Axioms from which the equations of supply side behavior are derived also apply to the demand side. This means that the consumer utility, utility envelope, and demand equations take the same form as the producer yield, yield envelope, and input demand equations, respectively.^["Consumer" here can refer to individual people or to demand side firms (mills, factories, etc.). Likewise, consumer utility can refer either to the utility of individual people, or to mill or factory yield.]
 
 Consumer utility (or yield, in the case of mills, factories, etc.) is therefore just the demand side analogue of the farm yield envelope derived in equation \ref{eq:YdEnvCompact}.
 
@@ -1184,7 +1443,7 @@ The price elasticity of aggregate demand is then
 \label{eq:PelasDemAgg}
 \end{equation}
 
-Which is the same as the price elasticity of demand at the level of individual consumers, derived in equation \ref{eq:PelasDem}. It follows that the aggregate demand curve is likewise convex ($\frac{\partial \ln(x_D^*)}{\partial \ln(P)} < -1$) so long as $0 < \varepsilon < \alpha_D$, and concave ($\frac{\partial \ln(x_D^*)}{\partial \ln(P)} < -1$) over $\alpha_D < \varepsilon < 1 - h_D + \alpha_D$. Like the consumer demand curve, the aggregate demand curve approaches, but never reaches, perfect inelasticity as $\varepsilon$ approaches its upper bound $1 - h_D + \alpha_D$.
+Which is the same as the price elasticity of demand at the level of individual consumers, derived in equation \ref{eq:PelasDem}. It follows that the aggregate demand curve is likewise elastic ($\frac{\partial \ln(x_D^*)}{\partial \ln(P)} < -1$) so long as $0 < \varepsilon < \alpha_D$, and concave ($\frac{\partial \ln(x_D^*)}{\partial \ln(P)} < -1$) over $\alpha_D < \varepsilon < 1 - h_D + \alpha_D$. Like the consumer demand curve, the aggregate demand curve approaches, but never reaches, perfect inelasticity as $\varepsilon$ approaches its upper bound $1 - h_D + \alpha_D$.
 
 The aggregate demand curve is a power law. This becomes clearer if $Q_D$ is written more compactly as follows.
 
