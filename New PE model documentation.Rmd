@@ -2,15 +2,15 @@
 title: "DEPEMap: An axiomatic, distributionally explicit partial equilibrium model with endogenous adoption rate"
 subtitle: |
   | "(Working Paper)"
-author:
-  - name: Benjamin Schiek, Senior Research Associate
-    email: b.schiek@cgiar.org
-    affiliation: Alliance Bioversity-CIAT
-    corresponding: b.schiek@cgiar.org
-email: b.schiek@cgiar.org
-address:
-  - code: Alliance Bioversity-CIAT
-    address: Alliance Bioversity-CIAT, Km 17 Recta Cali-Palmira, Valle del Cauca, Colombia, CP 763537
+author: Benjamin Schiek, Senior Research Associate, Bioversity-CIAT Alliance
+#  - name: Benjamin Schiek, Senior Research Associate
+#     email: b.schiek@cgiar.org
+#     affiliation: Alliance Bioversity-CIAT
+#     corresponding: b.schiek@cgiar.org
+# email: b.schiek@cgiar.org
+# address:
+#   - code: Alliance Bioversity-CIAT
+#     address: Alliance Bioversity-CIAT, Km 17 Recta Cali-Palmira, Valle del Cauca, Colombia, CP 763537
 date: "`r Sys.Date()`"
 abstract: |
   This is the abstract.
@@ -22,7 +22,6 @@ header-includes:
   - \usepackage{setspace}\doublespacing
   - \usepackage{float}
   - \floatplacement{figure}{H}
-numbersections: true
 output: 
   pdf_document:
     fig_caption: true
@@ -155,7 +154,7 @@ where $\boldsymbol{\alpha}$ is the vector of input elasticities corresponding to
 
 Equation \ref{eq:cobbDoug} is well-known to economists as the Cobb-Douglas form. As mentioned above, this result depends on a definition of small increase as a marginal increase. Other forms result from other definitions of small increase. If small increase is defined as a percentage increase, for example, a functional form involving Lambert's W function results (left as an exercise for the reader). The Cobb-Douglas function is selected from among these two choices on empirical grounds. (The Cobb-Douglas function is famous for how well it fits economic data across many contexts and scales.)
 
-In an actual analysis, exogenously given control variables ($k_i$) are usually included in the model. Equation \ref{eq:cobbDoug} is thus henceforth rewritten as follows.
+In an actual analysis, exogenously given control variables ($k_i$) are usually included in the model. These typically include demographic variables such as age, education, household size, as well as agroclimatic variables such as temperature, precipitation, soil attributes, and so forth. In some cases the $k_i$ might also include cell phone coverage, distance to input and/or output markets, distance to nearest paved road, and so forth. It really just depends on what data is available. Analysis is said to be "ceteris paribus" when these variables are held constant at a particular value across the population. Equation \ref{eq:cobbDoug} is thus henceforth rewritten as follows.
 
 \begin{equation}
 y = y_0 \prod_i x_i^{\alpha_i} \prod_i k_i^{\kappa_i}
@@ -166,8 +165,7 @@ where the $\kappa_i$ are the control variable elasticities of yield. Note that, 
 
 In equation \ref{eq:cobbDoug2}, the shorthand $y_0 = e^{\alpha_0}$ has also been introduced. The scale factor $y_0$ is the yield when inputs $\mathbf{x}$ are set to 1 and the control variables $\mathbf{k}$ are also set to 1. It may thus be interpreted as the "unit input yield" or "unit input ceteris paribus yield", to be more precise. "Basal yield" is henceforth used as a shorthand.
 
-Many economists prefer to call $y_0$ the "total factor productivity" (TFP). This is because $y_0$ equals, in some sense, the "yield per unit all inputs" when it is isolated on one side of the equation. However, the presence of control variables complicates this interpretation. Moreover, TFP implies bizarre and rather useless units of measurement. For example, if the inputs $x_i$ are labor and pesticide, while the control variables $k_i$ are rainfall, temperature, and farmer age, then the TFP $y_0$ has units of kg hectare$^{-1}$ manhour$^{-1}$ liter$^{-1}$ millimeter$^{-1}$ degree Celsius$^{-1}$ years$^{-1}$, each of which is raised to various exponents (the respective elasticities $\alpha_i$ and $\kappa_i$).
-[A more accurate name would be the "technology adjusted total factor productivity"]
+Many economists prefer to call $y_0$ the "total factor productivity" (TFP). This is because $y_0$ equals, in some sense, the "yield per unit all inputs" when it is isolated on one side of the equation. However, the presence of control variables complicates this interpretation. Moreover, TFP implies bizarre and rather useless units of measurement. For example, if the inputs $x_i$ are labor and pesticide, while the control variables $k_i$ are rainfall, temperature, and farmer age, then the TFP $y_0$ has units of kg hectare$^{-1}$ manhour$^{-1}$ liter$^{-1}$ millimeter$^{-1}$ degree Celsius$^{-1}$ years$^{-1}$, each of which is raised to various exponents (the respective elasticities $\alpha_i$ and $\kappa_i$). Because of the exponents, a more accurate name for TFP would be the "technology adjusted total factor productivity".
 
 Nonetheless, a very mature literature has developed around TFP, and the reader is encouraged to continue thinking of $y_0$ in terms of TFP if that is what they are most comfortable with. The "basal yield" interpretation is merely provided here as an alternative for those of us who wrestle with the idea of TFP or are not yet familiar with it.
 <!-- exogenously given control variables like age, soil quality, or climate variables. -->
@@ -179,7 +177,7 @@ Equation \ref{eq:cobbDoug2} captures yield response to inputs and control variab
 The assumption that farmers want to maximize their net benefit subject to a budget constraint (Axiom 2) implies that farmers apply inputs such that revenue is maximized, given a budget constraint. The problem of finding the optimal input quantities that achieve this goal can be formalized as follows.
 
 \begin{equation}
-\max_{\mathbf{x}} Py \:\:\: s.t. C \leq B
+\max_{\mathbf{x}} Py \:\:\: s.t. \:\:\: C \leq B
 \end{equation}
 
 where $P$ is the output price, $B$ is the farmer's budget, $C$ is the cost function, defined
@@ -215,7 +213,7 @@ Where the $\mathbf{0}$ indicates a vector of zeroes equal to the length of $\mat
 \mathbf{x}^* = P y^* / \lambda D(\mathbf{w})^{-1} \boldsymbol{\alpha}
 \end{equation}
 
-Which, alternatively, can also be written
+Or, alternatively,
 
 \begin{equation}
 x_v^* = \frac{P y^* \alpha_v}{\lambda w_v}
@@ -225,13 +223,13 @@ x_v^* = \frac{P y^* \alpha_v}{\lambda w_v}
 The optimal yield, or yield envelope, or economic yield, $y^*$ is then found by evaluating $y$ at $\mathbf{x}^*$.
 
 \begin{equation}
-y^* = y(\mathbf{x}^*; y_0, \boldsymbol{\alpha}, \mathbf{k}, \boldsymbol{\kappa}) = y_0 \prod_i (\frac{P y^* \alpha_i}{\lambda w_i} )^{\alpha_i} \prod_i k_i^{\kappa_i}
+y^* = y(\mathbf{x}^*; y_0, \boldsymbol{\alpha}, \mathbf{k}, \boldsymbol{\kappa}) = y_0 \prod_i \left(\frac{P y^* \alpha_i}{\lambda w_i} \right)^{\alpha_i} \prod_i k_i^{\kappa_i}
 \end{equation}
 
-Taking logs,
+Taking logs and factoring out $\ln (P y^*/\lambda)$,
 
 \begin{equation}
-\ln(y^*) = \alpha_0 + \sum_i \alpha_i (\ln(\frac{P y^*}{\lambda})) + \sum_i \alpha_i \ln(\frac{\alpha_i}{w_i})) + \sum_i \kappa_i \ln(k_i) 
+\ln(y^*) = \alpha_0 + \ln \left(\frac{P y^*}{\lambda} \right) \sum_i \alpha_i + \sum_i \alpha_i \ln \left(\frac{\alpha_i}{w_i} \right) + \sum_i \kappa_i \ln(k_i) 
 \end{equation}
 
 But note that, by Euler's homogenous function theorem,
@@ -243,14 +241,14 @@ But note that, by Euler's homogenous function theorem,
 where $h$ is the degree of homogeneity of $y$. Hence the previous equation can be rewritten
 
 \begin{equation}
-\ln(y^*) = \alpha_0 + h (\ln(\frac{P y^*}{\lambda})) + \sum_i \alpha_i \ln(\frac{\alpha_i}{w_i})) + \sum_i \kappa_i \ln(k_i) 
+\ln(y^*) = \alpha_0 + h \ln \left(\frac{P y^*}{\lambda} \right) + \sum_i \alpha_i \ln \left(\frac{\alpha_i}{w_i} \right) + \sum_i \kappa_i \ln(k_i) 
 \label{eq:eulerInvokd}
 \end{equation}
 
 Solving for $\ln(y^*)$,
 
 \begin{equation}
-\ln(y^*) = \frac{1}{1 - h} (\alpha_0 + h \ln(\frac{P}{\lambda})) + \sum_i \alpha_i \ln(\frac{\alpha_i}{w_i})) + \sum_i \kappa_i \ln(k_i) 
+\ln(y^*) = \frac{1}{1 - h} \left(\alpha_0 + h \ln \left(\frac{P}{\lambda} \right) + \sum_i \alpha_i \ln \left(\frac{\alpha_i}{w_i} \right) + \sum_i \kappa_i \ln(k_i) \right)
 \end{equation}
 
 And taking the exponential function of this then gives the yield envelope.
@@ -268,7 +266,7 @@ Economic yield is thus a function of:
 
 3) The input elasticities of yield $\boldsymbol{\alpha}$ (i.e. the technology)
 
-4) The control variables $\mathbf{k}$ (demographic, agroclimatic, and market access (and possibly security)) [typically contain demographic variables such as age and education, as well as agroclimatic variables such as soil quality, temperature, solar radiation, and precipitation. These variables can vary considerably across a farm population. Analysis is said to be "ceteris paribus" when these variables are held constant at a particular value across the population.]
+4) The control variables $\mathbf{k}$
 
 5) Their control variable elasticities of yield $\boldsymbol{\kappa}$
 
@@ -277,7 +275,7 @@ Economic yield is thus a function of:
 To reduce notational clutter, the yield envelope is henceforth rewritten as follows.
 
 \begin{equation}
-y^* =  \left(y_0  \left(\frac{P}{\lambda} \right)^h \frac{\beta_x \beta_k}{\beta_w} \right)^{\frac{1}{1 - h}}
+y^* = \left(y_0 \left(\frac{P}{\lambda} \right)^h \frac{\beta_x \beta_k}{\beta_w} \right)^{\frac{1}{1 - h}}
 \label{eq:YdEnvCompact}
 \end{equation}
 
@@ -286,9 +284,9 @@ Where the following shorthands have been introduced:
 
 \begin{equation}
 \begin{split}
-\beta_w &= \prod_i w_i^{-\alpha_i} \\
-\beta_x &= \prod_i \alpha_i^{\alpha_i} \\
-\beta_k &= \prod_i \k_i^{\kappa_i}
+\beta_w &= \prod_i {w_i}^{\alpha_i} \\
+\beta_x &= \prod_i {\alpha_i}^{\alpha_i} \\
+\beta_k &= \prod_i {k_i}^{\kappa_i}
 \end{split}
 \end{equation}
 
@@ -311,7 +309,7 @@ Where Axiom 3 (upward sloping supply curves) requires that $\frac{\partial \ln(y
 h \in (0, 1)
 \end{equation}
 
-Farms are thus limited to decreasing returns to scale, as the yield envelope is undefined at constant returns to scale, and increasing returns to scale ($h > 1$) imply a negatively sloped supply curve, in violation of Axiom 3.
+Farms are thus limited to decreasing returns to scale, since increasing returns to scale ($h > 1$) imply a negatively sloped supply curve, in violation of Axiom 3, and the yield envelope is undefined at constant returns to scale ($h = 1$).
 
 In section \ref{sec:PDfunP}, circumstances are explored under which increasing returns to scale are possible. However, these circumstances generally apply to mills and factories, and not to farms.
 
@@ -324,7 +322,7 @@ The domain of $h$ derived above in turn implies the following bounds on the pric
 Note, in passing, that the input price elasticity of yield likewise bears the expected sign only under decreasing returns to scale.
 
 \begin{equation}
-\frac{\partial \ln(y^*)}{\partial \ln(w_i)} = \frac{-\alpha_i}{1 - h}
+\frac{\partial \ln(y^*)}{\partial \ln(w_i)} = \frac{-\alpha_v}{1 - h}
 \end{equation}
 
 With domain
@@ -357,27 +355,27 @@ This is important information. This means that (insofar as Axioms 1-3 are true) 
 Using equation \ref{eq:YdEnvCompact} to substitute for $y^*$ in input demand (equation \ref{eq:inputDem1}) gives the following expression for input demand as a function of basal yield, prices, input elasticities, the budget shadow price, and control variables together with their respective elasticities.
 
 \begin{equation}
-x_v^* = \frac{\alpha_v}{w_v}(y_0 P \lambda^{-1} \beta_w^{-1} \beta_x \beta_k)^{\frac{1}{1 - h}}
+x_v^* = \frac{\alpha_v}{w_v} \left( y_0 \frac{P \beta_x \beta_k}{\lambda \beta_w} \right)^{\frac{1}{1 - h}}
 \label{eq:inputDem2}
 \end{equation}
 
-Note that input demand is undefined at $h = 1$. The own price elasticity of input demand is
+Note that input demand, like optimal yield, is undefined at $h = 1$. The own price elasticity of input demand is
 
 \begin{equation}
 \begin{split}
-\frac{\partial log(x_v^*)}{\partial log(w_v)} &= - 1 - \frac{1}{1 - h} \frac{\partial \ln(\beta_w)}{\partial \ln(w_v)} \\
-\frac{\partial log(x_v^*)}{\partial log(w_v)} &= \frac{-\alpha_v}{1 - h} - 1
+\frac{\partial \ln(x_v^*)}{\partial \ln(w_v)} &= - 1 - \frac{1}{1 - h} \frac{\partial \ln(\beta_w)}{\partial \ln(w_v)} \\
+&= \frac{-\alpha_v}{1 - h} - 1
 \end{split}
 \label{eq:ownPriceElas}
 \end{equation}
 
-Where Axiom 4 (negatively sloped demand curves) requires $\frac{\partial log(x_v^*)}{\partial log(w_v)} < 0 \:;\:\:\forall v$, thus imposing the following domain on $h$.
+Where Axiom 4 (negatively sloped demand curves) requires $\frac{\partial \ln(x_v^*)}{\partial \ln(w_v)} < 0$ ($(\forall v$), thus imposing the following domain on $h$.
 
 \begin{equation}
 h \in (-\infty, 1 + \underline{\alpha}) \:\:; \:\:\: \underline{\alpha} = \min(\boldsymbol{\alpha})
 \end{equation}
 
-Considering that $\underline{\alpha} > 0$, the effective domain of $h$ satisfying both Axioms 3 and 4 is
+Considering that $\underline{\alpha} > 0$, the effective domain of $h$ satisfying both Axioms 3 and 4 (upward sloping supply curves and downward sloping demand curves) is
 
 \begin{equation}
 h \in (0, 1)
@@ -391,15 +389,17 @@ The effective domain of $h$ in turn implies the following bounds on the own pric
 
 The input demand curve is thus always elastic, such that the increase in farm level demand resulting from a decrease in the input price is always more than proportionate to the fall in price.
 
-Note that the cross price and output price elasticities of input demand also bear the expected sign under the effective domain of $h$.
+Note that the cross price elasticity of input demand also bears the expected sign under the effective domain of $h$,
 
 \begin{equation}
-\frac{\partial log(x_v^*)}{\partial log(w_{j \neq v})} = \frac{-\alpha_j}{1 - h}
+\frac{\partial \ln(x_v^*)}{\partial \ln(w_{j \neq v})} = \frac{-\alpha_j}{1 - h}
 \label{eq:CrossPriceElas}
 \end{equation}
 
+As does the output price elasticity of input demand,
+
 \begin{equation}
-\frac{\partial log(x_v^*)}{\partial log(P)} = \frac{1}{1 - h}
+\frac{\partial \ln(x_v^*)}{\partial \ln(P)} = \frac{1}{1 - h}
 \end{equation}
 
 Equation \ref{eq:inputDem2} implies that the input demand curve^["Input demand curve" is used as a shorthand for the "optimal input level as a function of its price, with all other variables held constant".] is a power law. This is more evident when expressed in the following compact form.
@@ -418,7 +418,7 @@ And $\eta(w_v, x_v^*)$ is the own price elasticity of input demand, derived in e
 
 ### Deriving the domains of the budget shadow price, optimal yield, and optimal input level
 
-Dotting the first order conditions (equations \ref{eq:eqFOC}) through by $\ref{\mathbf{x}}$ and rearranging gives the following formula for the farm budget shadow price.
+Dotting the first order conditions (equations \ref{eq:eqFOC}) through by $\mathbf{x}$ and rearranging gives the following formula for the farm budget shadow price.
 
 \begin{equation}
 \lambda = \frac{P y^*}{C^*} h
@@ -437,16 +437,18 @@ Assuming that farms only enter production if their expected revenue is greater t
 This, in turn, implies the following upper bound on optimal yield.
 
 \begin{equation}
-y^* <  (y_0 r (h^{-h} \beta_x \beta_k))^{\frac{1}{1 - h}}
+y^* <  \left(y_0 \left(\frac{P}{h} \right)^h \frac{\beta_x \beta_k}{\beta_w} \right)^{\frac{1}{1 - h}}
 \label{eq:ydUpBound}
 \end{equation}
 
-Note, in passing, that the notion of an upper bound on economic yields agrees with empirical observations. Pingali [], for example, observes that even the best rice yields in India are typically 80% of yields achieved at experimental stations.
+Note, in passing, that the notion of an upper bound on economic yields agrees with empirical observation [@herdt1988increasing; @pingali2001cereal]. In Pingali's words:
+
+>"The best yields obtained on experiment stations are often used as the indicator of technology potential. Experiment stations are often located on the best lands within a region and have reliable irrigation water supplies. Agronomic yield potential determined on experiment stations, with no physical, biological, or economic constraints, is the maximum achievable yield.... When the objective of the experiment is changed from maximizing yields to maximizing profits, the yields obtained by experiment station researchers drop significantly..." [@pingali2001cereal]
 
 The lower bound on $\lambda$ likewise implies the following upper bound on input demand.
 
 \begin{equation}
-x_v^* < \frac{\alpha_v}{w_v} \left(y_0 P h^{-1} \frac{\beta_x \beta_k}{\beta_w} \right)
+x_v^* < \frac{\alpha_v}{w_v} \left(y_0 \frac{P \beta_x \beta_k}{h \beta_w} \right)
 \label{eq:inputUpBound}
 \end{equation}
 
@@ -463,13 +465,13 @@ x_v^* = \frac{C^* \alpha_v}{h w_v}
 By which it follows that
 
 \begin{equation}
-\frac{\ln(x_v^*)}{\ln(C^*)} = 1
+\frac{\partial \ln(x_v^*)}{\partial \ln(C^*)} = 1
 \label{eq:optExpElasInpDem}
 \end{equation}
 
 Most economists interpret this as meaning that the income elasticity of demand is $1$. If this is true, then the Cobb-Douglas model contradicts well documented empirical laws, particularly Engel's law, that clearly indicate changing demand for different items in the consumer's basket as income changes. (See Figure \ref{fig:otherLaws}.)
 
-```{r Fig10, fig.show = "hold", fig.width = 5, fig.height=6, fig.align="center", fig.cap="\\label{fig:otherLaws}A log-linear relation exists between demand and GDP per capita for all major consumer good categories. World Bank ICP 2017 data for 152 countries. GDP is at the market exchange rate, current prices.", echo = FALSE}
+```{r Fig10, fig.show = "hold", fig.width = 5, fig.height=6, fig.align="center", fig.cap="\\label{fig:otherLaws}A log-log relation exists between demand and GDP per capita for all major consumer good categories. World Bank International Comparison Program 2017 data for 152 countries. GDP is at the market exchange rate, current prices.", echo = FALSE}
 
 #===========================================================================
 # Create Engel's law graphic for next chunk, also get slope and N for text.
@@ -512,7 +514,7 @@ df_icpOther$Good[grep("HEALTH", df_icpOther$Good)] <- "Health"
 not_these <- all_goods[grep("[0-9]", all_goods)]
 not_these <- c(not_these, "Communication", "Purchase of vehicles",
                "Furnishings, hh equip., &\nroutine hh maintenance",
-               "Machinery and equipment", "Construction")
+               "Machinery and equipment", "Construction", "Transport")
 #not_these <- c(not_these, "Food")
 this_element <- "Expenditure per capita, market exchange rate-based (US$)"
 # this_element <- "Expenditure (as % of GDP)"
@@ -685,7 +687,7 @@ In either case, it is straightforward to see that $C^*$ is a function of basal y
 <!-- equations \ref{eq:inputDem2} and \ref{eq:YdEnvCompact} clearly demonstrate that -->
 <!-- More generally, the forgoing sections demonstrate that, under Axioms 1 and 2, optimal yield, input demand, and expenditure are all invariant under changes in $B$. -->
 
-To be clear, then, equation \ref{eq:optExpElasInpDem} says that the income elsticity of _optimal expenditure_, _not of income_, is equal to $1$. A relationship between demand $x_v^*$ and budget $B$ does not follow from Axioms 2 and 3. However, the empirical consumer expenditure laws observed in Figure \ref can be derived from Axiom 1 alone.
+To be clear, then, equation \ref{eq:optExpElasInpDem} says that the income elsticity of _optimal expenditure_, _not of income_, is equal to $1$. A relationship between demand $x_v^*$ and budget $B$ does not follow from Axioms 2 and 3. However, the empirical consumer expenditure laws observed in Figure \ref{fig:otherLaws} can be derived from Axiom 1 alone.
 
 _Proof:_
 
@@ -695,32 +697,32 @@ The net change in utility given a change in expenditure on good $x_v$ is the cha
 \frac{\partial \ln(U)}{\partial (w_v x_v)} = \frac{\partial \ln(U)}{\partial x_v} - \frac{\partial \ln(U)}{\partial B}
 \end{equation}
 
-Applying the first order condition for a maximum ($\frac{\partial \ln(U)}{\partial (w_v x_v)} = 0$) and rearranging,
+Applying the first order condition for a maximum ($\partial \ln(U) / \partial (w_v x_v) = 0$) and rearranging,
 <!-- Assuming that a consumer will part with money ($B$) for a good $x_v$ only such that the decrease in utility resulting from the loss of money is offset by the increase in utility resulting from the acquisition of the good, then -->
 
 \begin{equation}
 \frac{\partial \ln(U)}{\partial x_v} = \frac{\partial \ln(U)}{\partial B}
 \end{equation}
 
-By Axiom 1 (equation \ref), this can be rewritten
+By Axiom 1 (equation \ref{eq:dimUtilDefine}), this can be rewritten
 
 \begin{equation}
 \alpha_B \frac{d \ln(B)}{d B} = \alpha_v \frac{d \ln(x_v)}{d x_v}
 \label{eq:margUtilAssump}
 \end{equation}
 
-But note that
+But note that, assuming expenditures on other goods or inputs are held constant,
 
 \begin{equation}
-\frac{d \ln(B)}{d B} = \frac{d \ln(B)}{d (w_v x_v)}
+\frac{d \ln(B)}{d B} = \frac{\partial \ln(B)}{\partial (w_v x_v)}
 \end{equation}
 
 And so the previous equation can again be rewritten,
 
 \begin{equation}
 \begin{split}
-\alpha_B \frac{d \ln(B)}{d (w_v x_v)} &= \alpha_v \frac{d \ln(x_v)}{dx_v} \\
-\frac{\alpha_B}{w_v} \frac{d \ln(B)}{d x_v} &= \alpha_v \frac{d \ln(x_v)}{dx_v}
+\alpha_B \frac{\partial \ln(B)}{\partial (w_v x_v)} &= \alpha_v \frac{d \ln(x_v)}{dx_v} \\
+\frac{\alpha_B}{w_v} \frac{\partial \ln(B)}{\partial x_v} &= \alpha_v \frac{d \ln(x_v)}{dx_v}
 \end{split}
 \label{eq:margUtilAssump}
 \end{equation}
@@ -729,8 +731,8 @@ Integrating both sides then gives
 
 \begin{equation}
 \begin{split}
-\frac{\alpha_B}{w_v} \int \frac{\partial \ln(B)}{\partial x_v} \: dx_v &= \alpha_v \int \frac{d \ln(x_v)}{d x_v} \: dx_v \\
-\alpha_B (\ln(B) + k_B)  &= \alpha_v (\ln(x_v) + k_v)
+\frac{\alpha_B}{w_v} \int \frac{d \ln(B)}{d x_v} \: dx_v &= \alpha_v \int \frac{d \ln(x_v)}{d x_v} \: dx_v \\
+\frac{\alpha_B}{w_B} (\ln(B) + k_B)  &= \alpha_v (\ln(x_v) + k_v)
 \end{split}
 \end{equation}
 
@@ -744,7 +746,7 @@ Where $k_B$ and $k_v$ are constants of integration. This can then be rearranged 
 Where the income elasticity of good $x_v$ (i.e. slope) $m_v$ and y intercept $b_v$ are defined
 
 \begin{equation}
-m_v = \frac{\alpha_B}{\alpha_v}, \:\:\: b_v = \frac{\alpha_B}{\alpha_v} k_B - k_v
+m_v = \frac{\alpha_B}{w_v \alpha_v}, \:\:\: b_v = \frac{\alpha_B}{w_v\alpha_v} k_B - k_v
 \label{eq:incomElast}
 \end{equation}
 <!-- The double log consumer expenditure laws thus follow from Axiom 1 and the consumer's conservation of utility condition (equation \ref{eq:condEqualU}). Bennett's law may likewise be derived if income $B$ is constrained to refer to the consumer's food budget, and goods are limited to food items. -->
@@ -764,7 +766,7 @@ Under Axioms 1 and 2, then, the marginal cost of output is constant with respect
 The optimized objective function or "net benefit envelope" $\mathcal{L}^*$ is just the objective function $\mathcal{L}$ evaluated at the optimal yield $y^*$.
 
 \begin{equation}
-\mathcal{L}^* = \mathcal{L} \bigr_{y = y^*} = P y^* - \lambda (C^* - B)
+\mathcal{L}^* = \mathcal{L} \bigr|_{y = y^*} = P y^* - \lambda (C^* - B)
 \end{equation}
 
 Note that, applying the handy relation in equation \ref{eq:lambdaHandy}, the net benefit envelope can be rewritten without the optimal expenditure term $C^*$.
@@ -781,7 +783,7 @@ The Axioms from which the equations of supply side behavior are derived also app
 Consumer utility (or yield, in the case of mills, factories, etc.) is therefore just the demand side analogue of the farm yield envelope derived in equation \ref{eq:YdEnvCompact}.
 
 \begin{equation}
-y_D^* = \left(y_0^D \left( \frac{P_D}{\lambda_D} \right)^h_D \frac{\beta_x^D \beta_k^D}{\beta_w^D} \right)^{\frac{1}{1 - h_D}}
+y_D^* = \left(y_0^D \left( \frac{P_D}{\lambda_D} \right)^{h_D} \frac{\beta_x^D \beta_k^D}{\beta_w^D} \right)^{\frac{1}{1 - h_D}}
 \end{equation}
 
 Where $y_D^*$, $y_0^D$, $P_D$, $\lambda_D$, $h_D$, $\beta_x^D$, $\beta_k^D$, and $\beta_w^D$, are the respective demand side analogues of $y^*$, $y_0$, $P$, $\lambda$, $h$, $\beta_x$, $\beta_k$, and $\beta_w$.
@@ -797,7 +799,7 @@ x_v^{D*} &= \frac{P_D y_D^* \alpha_v^D}{\lambda_D P} \\
 
 Where $w_v^D$ and $\alpha_v^D$ are the respective demand side analogues of $w_v$ and $\alpha_v$.
 
-But note that the consumer's "input price" $w_v^D$ is just the producer's output price $P$. Substituting $P$ for $w_v^D$ and factoring out $P$, then, optimal consumer yield and demand can be rewritten in a way that clarifies the role of price $P$.
+But note that the consumer's input price $w_v^D$ is just the producer's output price $P$. Substituting $P$ for $w_v^D$ and factoring out $P$, then, optimal consumer yield and demand can be rewritten in a way that clarifies the role of farm output price $P$.
 
 \begin{equation}
 y_D^* = P^{\frac{-\alpha_D}{1 - h_D}} \left(y_0^D \left( \frac{P_D}{\lambda_D} \right)^h_D \frac{\beta_x^D \beta_k^D}{\tilde{\beta}_w^D} \right)^{\frac{1}{1 - h_D}}
@@ -805,11 +807,11 @@ y_D^* = P^{\frac{-\alpha_D}{1 - h_D}} \left(y_0^D \left( \frac{P_D}{\lambda_D} \
 \end{equation}
 
 \begin{equation}
-x_D^* = \alpha_D P^{\frac{-\alpha_D}{1 - h_D} - 1} \left(y_0^D \frac{P_D}{\lambda_D} \frac{\beta_x^D \beta_k^D}{\tilde{\beta}_w^D} \left)^{\frac{1}{1 - h_D}}
+x_D^* = \alpha_D P^{\frac{-\alpha_D}{1 - h_D} - 1} \left(y_0^D \frac{P_D}{\lambda_D} \frac{\beta_x^D \beta_k^D}{\tilde{\beta}_w^D} \right)^{\frac{1}{1 - h_D}}
 \label{eq:inputDemDEM0}
 \end{equation}
 
-Where, to reduce notational clutter, the index $v$ has been dropped such that $x_v^{D*}$ is replaced with $x_D^*$ and $\alpha_v^D$ is replaced with $\alpha_D$; and where $\tilde{\beta}_w^D &= P^{-\alpha_D}\beta_w^D$.
+Where, to reduce notational clutter, the index $v$ has been dropped such that $x_v^{D*}$ is replaced with $x_D^*$ and $\alpha_v^D$ is replaced with $\alpha_D$; and where $\tilde{\beta}_w^D = P^{-\alpha_D}\beta_w^D$.
 
 The consumer's price elasticity of demand then follows as
 
@@ -855,11 +857,11 @@ Equation \ref{eq:PDasFunOfP} is an ansatz, and not a result derived from the Axi
 Using equation \ref{eq:PDasFunOfP} to substitute for $P$ and factoring out $P_D$ gives the following modified form of consumer yield.
 
 \begin{equation}
-y_D^* = P_D^{\frac{h_D - \alpha_D / \varepsilon}{1 - h_D}} \left(y_0^D b^{\alpha_D / \varepsilon} \fraC{\beta_k^D \beta_x^D}{\lambda_D^h_D \tilde{\beta}_w^D} \right)^{\frac{1}{1 - h_D}}
+y_D^* = P_D^{\frac{h_D - \alpha_D / \varepsilon}{1 - h_D}} \left(y_0^D b^{\alpha_D / \varepsilon} \frac{\beta_k^D \beta_x^D}{\lambda_D^{h_D} \tilde{\beta}_w^D} \right)^{\frac{1}{1 - h_D}}
 \label{eq:consYdEnv}
 \end{equation}
 
-(If there is no relation between $P$ and $P_D$, then the original consumer yield and demand expressions in equations \ref{eq:consYdEnv} and \ref{eq:inputDemDEM0} are recovered by setting $b = P_D$ and $\varepsilon = 0$.)
+(If there is no relation between $P$ and $P_D$, then the original consumer yield and demand expressions in equations \ref{eq:consYdEnv0} and \ref{eq:inputDemDEM0} are recovered by setting $b = P_D$ and $\varepsilon = 0$.)
 
 Using equation \ref{eq:PDasFunOfP} to substitute for $P_D$ and factoring out $P$ then gives the following modified version of consumer demand $x_D^*$.
 
@@ -875,21 +877,21 @@ The consumer's output price ($P_D$) elasticity of yield then follows as
 \label{eq:PDelasydD}
 \end{equation}
 
-And the consumer's farm output price ($P$) elasticity of demand then follows as
+And the consumer's feedstock (farm output) price ($P$) elasticity of demand then follows as
 
 \begin{equation}
 \frac{\partial \ln(x_D*)}{\partial \ln(P)} = \frac{\varepsilon - \alpha_D}{1 - h_D} - 1
 \label{eq:PelasDem}
 \end{equation}
 
-It follows, then, that Axioms 3 and 4 impose the following domain on $\varepsilon$.
+By which it can be seen that Axioms 3 and 4 impose the following domain on $\varepsilon$.
 
 \begin{equation}
 \varepsilon \in (\alpha_D / h_D, 1 + \alpha_D - h_D)
 \label{eq:domEpsilon}
 \end{equation}
 
-Considering that $h_D = \sum_i \alpha_i^D$ and $\alpha_i^D > 0\:;\:\: \forall i$, the lower bound $\alpha_D / h_D$ is always greater than $0$ and less than $1$. Note, moreover, that $\alpha_D - h_D < 0$, and so the upper bound is also less than $1$.
+Considering that $h_D = \sum_i \alpha_i^D$ and $\alpha_i^D > 0$ for all $i$, the lower bound $\alpha_D / h_D$ is always greater than $0$ and less than $1$. Note, moreover, that $\alpha_D - h_D < 0$, and so the upper bound is also less than $1$.
 
 Is the upper bound always greater than the lower bound? Supposing it is, then,
 
@@ -913,7 +915,7 @@ h_D \in (-\infty, \min(1 + \underline{\alpha}_D, 1 - \varepsilon + \alpha_D))
 Where $\underline{\alpha}_D$ is the smallest of the consumer's input elasticities of utility. The upper bound on the righthand side of this expression can be simplified considering the upper bound of $\varepsilon$ derived in expression \ref{eq:domEpsilon}, and the lower bound placed on $\underline{\alpha}_D$ by equation \ref{eq:PelasDem} and Axiom 4. That is to say, evaluating $\min(1 + \underline{\alpha}_D, 1 - \varepsilon + \alpha_D)$ at $\max(\varepsilon)$, gives
 
 \begin{equation}
-\min(1 + \underline{\alpha}_D, 1 - \varepsilon + \alpha_D) \bigr|_{\varepsilon = \max(\varepsilon) = \min(1 + \underline{\alpha}_D, h_D)}
+\min(1 + \underline{\alpha}_D, 1 - \varepsilon + \alpha_D) \bigr|_{\varepsilon = \max(\varepsilon)} = \min(1 + \underline{\alpha}_D, h_D)
 \end{equation}
 
 But, by equation \ref{eq:PelasDem} and Axiom 4,
@@ -924,7 +926,7 @@ But, by equation \ref{eq:PelasDem} and Axiom 4,
 -\underline{\alpha}_D &< 1 - h_D \\
 1 + \underline{\alpha}_D &< h_D
 \end{split}
-\end{split}
+\end{equation}
 
 Hence,
 
@@ -964,9 +966,9 @@ h_D \in
 \end{cases}
 \end{equation}
 
-Under Axiom 6, then, increasing returns to scale are possible if $\varepsilon < \alpha_D$. Note that, as a general rule, Axiom 5 applies to mills and factories, but not to farms. Farms are generally not at liberty to raise their output price in response to a higher input price, especially not in the developing world. An important asymmetry is thereby introduced between the supply and demand side of the primary sector, whereby producers are limited to decreasing returns to scale while consumers may attain increasing returns to scale if the condition $\varepsilon < \alpha_D$ is met.
+Under Axiom 6, then, increasing returns to scale are possible if $\varepsilon < \alpha_D$. Note that, as a general rule, Axiom 6 applies to mills and factories, but not to farms. Farms are generally not at liberty to raise their output price in response to a higher input price, especially not in the developing world. An important asymmetry is thereby introduced between the supply and demand side of the primary sector, whereby producers are limited to decreasing returns to scale while consumers may attain increasing returns to scale if the condition $\varepsilon < \alpha_D$ is met.
 
-The effective domain of $h_D$ in turn imposes the following domains on the consumer's output price elasticity of supply and the consumer's farm output price elasticity of demand, respectively.
+The effective domain of $h_D$ in turn imposes the following domains on the consumer's output price elasticity of supply and the consumer's feedstock (farm output) price elasticity of demand, respectively.
 
 \begin{equation}
 \frac{\partial \ln(y_D^*)}{\partial \ln(P_D)} \in
@@ -1028,7 +1030,7 @@ The last two inequalities are the demand side analogues of the results derived i
 The demand side net benefit envelope is the optimized demand side objective function, that is, the consumer's objective function evaluated at $x_D^*$.
 
 \begin{equation}
-\mathcal{L}_D^* = \mathcal{L_D} \bigr_{x_D = x_D^*} = P_D y_D^* - \lambda_D (C_D^* - B_D)
+\mathcal{L}_D^* = \mathcal{L_D} \bigr|_{x_D = x_D^*} = P_D y_D^* - \lambda_D (C_D^* - B_D)
 \end{equation}
 
 As in equation \ref{eq:NBenv}, the demand side analogue of the handy relation in equation \ref{eq:lambdaHandy} can be applied to rewrite this without the optimal expenditure term $C_D^*$.
@@ -1055,7 +1057,7 @@ By Axiom 2, it is assumed that a farm adopts a given new technology only if the 
 
 \begin{equation}
 \begin{split}
-\frac{\partial \mathcal{L}^*}{\partial \ln(y_0)} > 0 \\
+\frac{\partial \mathcal{L}^*}{\partial \ln(y_0)} &> 0 \\
 \frac{\partial \mathcal{L}^*}{\partial \ln(y_i)} &> 0
 \label{eq:adoptCondBasic}
 \end{split}
@@ -1065,7 +1067,7 @@ Below, these two conditions are explored in more detail.
 
 ### Technology change as a change in basal yield
 
-In most impact assessment studies, technology change comes in the form of a new cultivar with improved germplasm, and/or a package of new management practices, which do not act upon any single input in particular, but generally raise the basal yield. Many such studies specify a Cobb-Douglas yield function and report a statistically significant dummy variable that equals 1 on adopting farms and 0 otherwise. The dummy variable coefficient may then be interpreted as the increase in yield resulting from technology adoption.]
+In most impact assessment studies, technology change comes in the form of a new cultivar with improved germplasm, and/or a package of new management practices, which do not act upon any single input in particular, but generally raise the basal yield. Many such studies specify a Cobb-Douglas yield function and report a statistically significant dummy variable that equals 1 on adopting farms and 0 otherwise. The dummy variable coefficient may then be interpreted as the increase in yield resulting from technology adoption.
 
 The marginal change in farm net benefit given a $1$% increase basal yield is expressed as follows.
 
@@ -1079,7 +1081,7 @@ The marginal change in farm net benefit given a $1$% increase basal yield is exp
 Where
 
 \begin{equation}
-\frac{\partial \ln(y^*)}{\partial \ln(y_0)} &= \frac{1}{1 - h} \left(1 + h \frac{\partial \ln(P)}{\partial \ln(y_0)} - \boldsymbol{\alpha} \cdot \frac{\partial \ln(\mathbf{w})}{\partial \ln(y_0)} \right)
+\frac{\partial \ln(y^*)}{\partial \ln(y_0)} = \frac{1}{1 - h} \left(1 + h \frac{\partial \ln(P)}{\partial \ln(y_0)} - \boldsymbol{\alpha} \cdot \frac{\partial \ln(\mathbf{w})}{\partial \ln(y_0)} \right)
 \label{eq:dLnYstardLny0}
 \end{equation}
 
@@ -1097,7 +1099,7 @@ Applying the adoption condition (inequality \ref{eq:adoptCondBasic}) and rearran
 
 \begin{equation}
 \begin{split}
-1 &> \boldsymbol{\alpha} \cdot \frac{\partial \ln(\mathbf{w})}{\partial \ln(y_0)} - \frac{\partial \ln(P)}{\partial \ln(y_0)}
+1 &> \boldsymbol{\alpha} \cdot \frac{\partial \ln(\mathbf{w})}{\partial \ln(y_0)} - \frac{\partial \ln(P)}{\partial \ln(y_0)} \\
 \partial \ln(y_0) &> \boldsymbol{\alpha} \cdot \partial \ln(\mathbf{w}) - \partial \ln(P)
 \end{split}
 \label{eq:ydAdoptCondy0}
@@ -1106,7 +1108,7 @@ Applying the adoption condition (inequality \ref{eq:adoptCondBasic}) and rearran
 This condition says that a farm stands to increase its net benefit through adoption of basal yield enhancing technology only if the percentage increase in basal yield is greater than the corresponding percentage increase in input prices (scaled by their respective input elasticities) minus the corresponding percentage change in output price.
 <!-- More compactly, it says that the percentage increase in basal yield must be greater than the absolute value of the corresponding percentage decrease in the technology adjusted output-input price ratio ($r$). -->
 
-Here it is important to keep in mind that the release and uptake of yield enhancing technology tends to boost supply, which in turn (by Axiom 3) lowers the output price $P$. At the same time, uptake of the new technology usually implies increased use of (i.e. demand for) inputs, which (again by Axiom 3) drives up input prices. Also, the price of improved seeds (an input) is typically higher than the price of the status quo seed variety.
+Here it is important to keep in mind that the release and uptake of yield enhancing technology tends to boost supply, which in turn (by Axiom 3) lowers the output price $P$. At the same time, uptake of the new technology usually implies increased use of (i.e. demand for) inputs, which (by Axiom 4) drives up input prices. Also, the price of improved seeds (an input) is typically higher than the price of the status quo seed variety.
 
 Hence, the general expectation is
 
@@ -1131,13 +1133,13 @@ Since $y_0$ and $\boldsymbol{\alpha}$ are population level parameters (they do n
 <!-- Impact assessment studies that assume unique prices while also reporting an adoption rate between 0% and 100% possibly stand in violation of one or more of Axioms 1-3. -->
 <!-- In fact, input and output prices often vary considerably within a given farm population, especially in the developing world.  and this is reflected in adoption rates falling somewhere between 0% and 100%. -->
 
-Note from equation \ref{eq:dLnYstardLny0} that the output expansion condition $\frac{\partial \ln(y^*)}{\partial \ln(y_0)} > 0$ implies
+Do adopting farms always find it in their best economic interest to increase output? Note from equation \ref{eq:dLnYstardLny0} that the output expansion condition $\frac{\partial \ln(y^*)}{\partial \ln(y_0)} > 0$ implies
 
 \begin{equation}
-\partial \ln(y_0) &> \boldsymbol{\alpha} \cdot \partial \ln(\mathbf{w}) - h \partial \ln(P)
+\partial \ln(y_0) > \boldsymbol{\alpha} \cdot \partial \ln(\mathbf{w}) - h \partial \ln(P)
 \end{equation}
 
-Considering that $0 < h < 1$, it follows that all adopting farms increase their output.
+Considering the domain $h \in(0, 1)$ (derived in section \ref{sec:degHomog}, above), it follows that all adopting farms increase their output.
 
 ### Technology change as a change in input elasticity \label{sec:techChangeAi}
 
@@ -1167,7 +1169,7 @@ Where
 \begin{equation}
 \begin{split}
 \frac{\partial \ln(y^*)}{\partial \alpha_i} &= \frac{\ln(y^*)}{1 - h} + \frac{1}{1 - h} \left(\ln \left(\frac{P}{\lambda} \right) + h \frac{\partial \ln(P)}{\partial \alpha_i} - \boldsymbol{\alpha} \cdot \frac{\partial \ln(\mathbf{w})}{\partial \alpha_i} - \ln(w_i) + \ln(\alpha_i) + 1 \right) \\
-&= \frac{1}{1 - h} \left( \ln(y^*) + \ln \left(\frac{P}{\lambda} \right) + \left( \ln(y^*) + \ln \left(\frac{\alpha_i}{w_i} + h \frac{\partial \ln(P)}{\partial \alpha_i} - \boldsymbol{\alpha} \cdot \frac{\partial \ln(\mathbf{w})}{\partial \alpha_i} \right) \right)
+&= \frac{1}{1 - h} \left( \ln(y^*) + \ln \left(\frac{P}{\lambda} \right) + \ln \left(\frac{\alpha_i}{w_i} \right) + h \frac{\partial \ln(P)}{\partial \alpha_i} - \boldsymbol{\alpha} \cdot \frac{\partial \ln(\mathbf{w})}{\partial \alpha_i} + 1\right)
 \end{split}
 \end{equation}
 
@@ -1243,12 +1245,12 @@ If $y^*_y < y^*_{\mathcal{L}}$, then all adopting farms find it in their best ec
 
 Which is generally true given the domain of $h$ derived from Axioms 1-3 in section \ref{sec:degHomog}, and since it is generally expected that $\frac{\partial \ln(P)}{\partial \alpha_i} < 0$.
 
-Under circumstances of an exogenously imposed, involuntary increase in one of the input elasticities of yield, condition \ref{eq:ydIncCondai} implies that farms with baseline yields less than $y^*_y$ would choose to reduce ouput. Condition \ref{eq:adoptCondai} likewise implies a reduction in net benefit for farms with baseline yiedls less than $y^*_{\mathcal{L}}$. Farms with baseline yields between $y^*_y$ and $y^*_{\mathcal{L}}$, meanwhile, would suffer a decrease in net benefit but choose to increase output.
+Under circumstances of an exogenously imposed, involuntary increase in one of the input elasticities of yield, condition \ref{eq:ydIncCondai} implies that farms with baseline yields less than $y^*_y$ would choose to reduce ouput. Condition \ref{eq:adoptCondai} likewise implies a reduction in net benefit for farms with baseline yields less than $y^*_{\mathcal{L}}$. Farms with baseline yields between $y^*_y$ and $y^*_{\mathcal{L}}$, meanwhile, would suffer a decrease in net benefit but choose to increase output.
 <!-- Note that, in some analyses, technology change may not be voluntary. A study may examine, for example, the possibility of increased fertilizer efficiency resulting from a deterioration extension services. In such cases, the net benefit of both  -->
 
 ### Estimation of the technology adoption rate
 
-Estimation of the technology adoption rate hinges upon whether the technology is basal yield or input enhancing, and hence upon the corresponding assumed density function (Axiom 4).
+Estimation of the technology adoption rate hinges upon whether the technology is basal yield or input enhancing, and hence upon the corresponding assumed density function (Axiom 7).
 
 In the case of basal yield enhancing technology, inequality \ref{eq:ydAdoptCondy0} implies the following adoption rate. 
 
@@ -1293,7 +1295,7 @@ F(\tau) = \int_{0}^{\tau} f(y^*) dy^*
 
 ### The demand side impact of supply side technology change 
 
-As a general rule, demand side technology is left unaltered by a change in farm technology.^[Although there are important exceptions. Small granule cassava simluaneously reduces farm basal yield and increases bioethanol factory efficiency.] However, new farm technology does have an indirect impact on demand side net benefit $\mathcal{L}_D^*$ through its influence on the farm output price. For basal yield enhancing technology, the change in consumer net benefit works as follows.
+As a general rule, demand side technology is left unaltered by a change in farm technology.^[Although there are important exceptions. Small granule cassava simluaneously reduces farm basal yield and increases bioethanol factory efficiency.] However, new farm technology does have an indirect impact on demand side net benefit $\mathcal{L}_D^*$ through its influence on the farm output price. For basal yield enhancing technology, the change in consumer net benefit works out as follows.
 
 \begin{equation}
 \begin{split}
@@ -1339,7 +1341,7 @@ Where
 \begin{equation}
 \begin{split}
 \chi &= \lambda^{\frac{-h}{1 - h}} \\
-\bar{chi} &= h^{\frac{-h}{1 - h}} \\
+\bar{\chi} &= h^{\frac{-h}{1 - h}} \\
 \mu_k &= \int_{-\infty}^{\infty} \beta_k^{\frac{1}{1 - h}} f(\beta_k) d \beta_k = E \left(\beta_k^{\frac{1}{1 - h}} \right)
 \end{split}
 \end{equation}
@@ -1394,13 +1396,14 @@ If the new technology comes in the form of an increase in one of the input elast
 
 #### Aggregating supply over varying prices
 
-Equations \ref{eq:QSeqP} and \ref{eq:QSeqPcompact} refer to the aggregate supply for a given set of output and input prices $\{P, \mathbf{w}}$. As discussed above, output and input prices can vary considerably within a farm population (i.e., for a given technology $y_0$, $\boldsymbol{\alpha}$), especially in the developing world. To evaluate aggregate supply across all prices, then, it is necessary to integrate the last equation over the density of $r$, giving
+Equations \ref{eq:QSeqP} and \ref{eq:QSeqPcompact} refer to the aggregate supply for a given set of output and input prices $\{P, \mathbf{w}\}$. As discussed above, output and input prices can vary considerably within a farm population (i.e., for a given technology $y_0$, $\boldsymbol{\alpha}$), especially in the developing world. To evaluate aggregate supply across all prices, then, it is necessary to integrate the last equation over the density of $r$, giving
 
 \begin{equation}
 Q_S = N_S (y_0 \beta_x)^{\frac{1}{1 - h}} \mu_r \mu_k \int_{0}^{\bar{\chi}} \chi f(\chi) d\chi
 \end{equation}
 
 Where
+
 \begin{equation}
 \mu_r = \int_0^{\infty} r^{\frac{1}{1 - h}} g(r) dr = E \left(r^{\frac{1}{1 - h}} \right)
 \end{equation}
@@ -1411,11 +1414,11 @@ Where
 
 Aggregate demand, is, by definition, the consumer demand envelope (equation \ref{eq:inputDemDEM}) integrated over its density $f_D \left(x_D^* \right)$.
 
-\begin{eqution}
-Q_D = \int_0^{\bar{x_D}^*} x_d^* N_D f_D \left(x_d^* \right) d x_d^*
+\begin{equation}
+Q_D = \int_0^{\bar{x}_D^*} x_D^* N_D f_D \left(x_D^* \right) d x_D^*
 \end{equation}
 
-Where the density is scaled by $N_D$, the number of consumers in the demand side population, and $\bar{x_D}^*$ is the upper bound on any individual consumer's demand (inequality \ref{eq:inputUpBoundDEM}).
+Where the density is scaled by $N_D$, the number of consumers in the demand side population, and $\bar{x}_D^*$ is the upper bound on any individual consumer's demand (inequality \ref{eq:inputUpBoundDEM}).
 
 Using equation \ref{eq:inputDemDEM} to substitute for $x_D^*$, and factoring out constants, $Q_D$ can be rewritten as follows.
 
@@ -1430,7 +1433,7 @@ Where
 \begin{split}
 \chi_D &= \lambda_D^{\frac{-1}{1 - h_D}} \\
 \bar{\chi}_D &= h_D^{\frac{-1}{1 - h_D}} \\
-\mu_k^D &= \int_0^{\infty} \beta_k^D^{\frac{1}{1 - h_D}} f_D(\beta_k^D) d \beta_k^D = E \left( \beta_k^D^{\frac{1}{1 - h_D}} \right)
+\mu_k^D &= \int_0^{\infty} {\beta_k^D}^{\frac{1}{1 - h_D}} f_D(\beta_k^D) d \beta_k^D = E \left( {\beta_k^D}^{\frac{1}{1 - h_D}} \right)
 \end{split}
 \end{equation}
 
@@ -1443,7 +1446,7 @@ The price elasticity of aggregate demand is then
 \label{eq:PelasDemAgg}
 \end{equation}
 
-Which is the same as the price elasticity of demand at the level of individual consumers, derived in equation \ref{eq:PelasDem}. It follows that the aggregate demand curve is likewise elastic ($\frac{\partial \ln(x_D^*)}{\partial \ln(P)} < -1$) so long as $0 < \varepsilon < \alpha_D$, and concave ($\frac{\partial \ln(x_D^*)}{\partial \ln(P)} < -1$) over $\alpha_D < \varepsilon < 1 - h_D + \alpha_D$. Like the consumer demand curve, the aggregate demand curve approaches, but never reaches, perfect inelasticity as $\varepsilon$ approaches its upper bound $1 - h_D + \alpha_D$.
+Which is the same as the price elasticity of demand at the level of individual consumers, derived in equation \ref{eq:PelasDem}. It follows that the aggregate demand curve is likewise elastic ($\frac{\partial \ln(x_D^*)}{\partial \ln(P)} < -1$) so long as $0 < \varepsilon < \alpha_D$, and inelastic ($\frac{\partial \ln(x_D^*)}{\partial \ln(P)} < -1$) over $\alpha_D < \varepsilon < 1 - h_D + \alpha_D$. Like the consumer demand curve, the aggregate demand curve approaches, but never reaches, perfect inelasticity as $\varepsilon$ approaches its upper bound $1 - h_D + \alpha_D$.
 
 The aggregate demand curve is a power law. This becomes clearer if $Q_D$ is written more compactly as follows.
 
@@ -1455,7 +1458,7 @@ Q_D = \theta_D P^{\eta(P, Q_D)}
 Where
 
 \begin{equation}
-\theta_D = N_D (\alpha_D)^{\frac{\varepsilon - \alpha_D}{1 - h_D} + 1} \left(\frac{y_0^D b \tilde{\beta}_x^D}{\tilde{\beta}_w^} \right)^{\frac{1}{1 - h_D}} \mu_k^D
+\theta_D = N_D (\alpha_D)^{\frac{\varepsilon - \alpha_D}{1 - h_D} + 1} \left(\frac{y_0^D b \tilde{\beta}_x^D}{\tilde{\beta}_w^D} \right)^{\frac{1}{1 - h_D}} \mu_k^D
 \end{equation}
 
 And where the exponent $\eta(P, Q_D)$ is the price elasticity of demand (equation \ref{eq:PelasDemAgg}).
@@ -1502,7 +1505,7 @@ The percentage change in equilibrium supply given a $1$% increase in basal yield
 \end{split}
 \end{equation}
 
-By Axioms 1-3, $\eta_S > 0$, $\eta_D < 0$, and $0 < h < 1$. The change in equilibrium supply given release of basal yield enhancing technology is thus positive ($\frac{\partial \ln(Q_e)}{\partial \ln(y_0)} > 0$) so long as
+By Axioms 1-4, $\eta_S > 0$, $\eta_D < 0$, and $0 < h < 1$. The change in equilibrium supply given release of basal yield enhancing technology is thus positive ($\frac{\partial \ln(Q_e)}{\partial \ln(y_0)} > 0$) so long as
 
 \begin{equation}
 \partial \ln(y_0) > \boldsymbol{\alpha} \cdot \partial \ln(\mathbf{w})
@@ -1573,7 +1576,7 @@ Where the derivative $\frac{\partial \ln(\theta_S)}{\partial \alpha_i}$ works ou
 
 \begin{equation}
 \begin{split}
-\frac{\partial \ln(\theta_S)}{\partial \alpha_i} &= \frac{1}{1 - h} \left[1 - \boldsymbol{\alpha} \cdot \frac{\partial \mathbf{w}}{\partial \alpha_i} + \ln(\frac{\alpha_i}{w_i}) + \ln(\theta_S) - \ln(\mu_k) - \ln(F(\bar{\chi})) \right] + \frac{\partial \ln(\mu_k)}{\partial \alpha_i} + \frac{\ln(F(\bar{chi}))}{\partial \alpha_i}
+\frac{\partial \ln(\theta_S)}{\partial \alpha_i} &= \frac{1}{1 - h} \left[1 - \boldsymbol{\alpha} \cdot \frac{\partial \mathbf{w}}{\partial \alpha_i} + \ln(\frac{\alpha_i}{w_i}) + \ln(\theta_S) - \ln(\mu_k) - \ln(F(\bar{\chi})) \right] + \frac{\partial \ln(\mu_k)}{\partial \alpha_i} + \frac{\ln(F(\bar{\chi}))}{\partial \alpha_i}
 \label{eq:dLnThetaSdai}
 \end{split}
 \end{equation}
@@ -1624,7 +1627,7 @@ Where $\rho_q$ is the percentage change in basal or partial yield, as the case m
 \psi^S = \rho_0 \int \frac{\partial \mathcal{L}^*}{\partial \ln(y_0)} v \left(\frac{\partial \mathcal{L}^*}{\partial \ln(y_0)} \right) d \left( \frac{\partial \mathcal{L}^*}{\partial \ln(y_0)} \right)
 \end{equation}
 
-Recalling the expression for $\frac{\partial \ln(\mathcal{L}^*)}{\partial \ln(y_0)}$ derived in equation \ref\ref{eq:prodNBy0}, this can be rewritten
+Recalling the expression for $\frac{\partial \ln(\mathcal{L}^*)}{\partial \ln(y_0)}$ derived in equation \ref{eq:prodNBy0}, this can be rewritten
 
 \begin{equation}
 \begin{split}
@@ -1656,14 +1659,16 @@ Using equation \ref{eq:dLnPedLny0} to substitute for $\frac{\partial \ln(P_e)}{\
 For a given basal yield enhancing technology, the aggregate change in demand side net benefit $\psi^D$ is derived through an analogous set of steps. By definition, the aggregate change in demand side net benefit is the change in consumer level net benefit integrated over its density.
 
 \begin{equation}
-\psi^D &= \rho_0^D \int \frac{\partial \ln(\mathcal{L}_D^*)}{\partial \ln(y_0)} \mathcal{L}_D^* v_D \left( \frac{\partial \ln(\mathcal{L}_D^*)}{\partial \ln(y_0)} \mathcal{L}_D^* \right) d \left( \frac{\partial \ln(\mathcal{L}_D^*)}{\partial \ln(y_0)} \mathcal{L}_D^* \right)
+\psi^D = \rho_0^D \int \frac{\partial \ln(\mathcal{L}_D^*)}{\partial \ln(y_0)} \mathcal{L}_D^* v_D \left( \frac{\partial \ln(\mathcal{L}_D^*)}{\partial \ln(y_0)} \mathcal{L}_D^* \right) d \left( \frac{\partial \ln(\mathcal{L}_D^*)}{\partial \ln(y_0)} \mathcal{L}_D^* \right)
 \end{equation}
 
 But $\frac{\partial \ln(\mathcal{L}_D^*)}{\partial \ln(y_0)} \mathcal{L}_D^* = \frac{\partial \mathcal{L}_D^*}{\partial \ln(y_0)}$, and so, recalling the expression for $\frac{\partial \mathcal{L}_D^*}{\partial \ln(y_0)}$ derived in equation \ref{eq:consNBy0}, the integral can be rewritten
 
 \begin{equation}
+\begin{split}
 \psi^D &= \rho_0^D (\varepsilon - \alpha_D) P_D \frac{\partial \ln(P)}{\partial \ln(y_0)} \int y_D^* f_D(y_D^*) d y_D^* \\
 &= (\varepsilon - \alpha_D) P_D Q^D \frac{\partial \ln(P)}{\partial \ln(y_0)}
+\end{split}
 \end{equation}
 
 Where the law of the unconscious statistician has been invoked to replace $v \left( \frac{\partial \ln(\mathcal{L}_D^*)}{\partial \ln(y_0)} \mathcal{L}_D^* \right) d \left( \frac{\partial \ln(\mathcal{L}_D^*)}{\partial \ln(y_0)} \mathcal{L}_D^* \right)$ with $f(y_D^*) d y_D^*$.
@@ -1724,10 +1729,11 @@ For an individual consumer, this is expressed mathematically as follows.
 
 
 \begin{equation}
-\omega^D = \mathcal{L}_D^*(P_{max}) - \mathcal{L}_D^*(P_e)
+\omega^D = \mathcal{L}_D^* (P_{max}) - \mathcal{L}_D^*(P_e)
 \end{equation}
 
-Given the form of $\mathcal{L}_D^*$ derived from Axioms 1 and 2 in equation \ref{eq:NBenvDem}, $P_max = \infty$, and $\mathcal{L}_D^* = $
+Given the form of $\mathcal{L}_D^*$ derived from Axioms 1 and 2 in equation \ref{eq:NBenvDem}, $P_{max} = \infty$, and
+<!-- $\mathcal{L}_D^* = $ -->
 
 \begin{equation}
 \mathcal{L}_D^* = (1 - h_D) P^{\frac{\varepsilon - \alpha_D}{1 - h_D}} \left(y_0^D b \frac{\beta_x^D \beta_k^D}{\tilde{\beta}_w^D \lambda^{h_D}} \right) + \lambda_D B_D
