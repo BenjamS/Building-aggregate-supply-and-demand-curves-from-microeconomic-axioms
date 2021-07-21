@@ -445,7 +445,7 @@ y^* <  \left(y_0 \left(\frac{P}{h} \right)^h \frac{\beta_x \beta_k}{\beta_w} \ri
 
 Note, in passing, that the notion of an upper bound on economic yields agrees with empirical observation [@herdt1988increasing; @pingali2001cereal]. In Pingali and Heisey's words:
 
->"The best yields obtained on experiment stations are often used as the indicator of technology potential. Experiment stations are often located on the best lands within a region and have reliable irrigation water supplies. Agronomic yield potential determined on experiment stations, with no physical, biological, or economic constraints, is the maximum achievable yield.... When the objective of the experiment is changed from maximizing yields to maximizing profits, the yields obtained by experiment station researchers drop significantly..." [@pingali2001cereal]
+>"The best yields obtained on experiment stations are often used as the indicator of technology potential. Experiment stations are often located on the best lands within a region and have reliable irrigation water supplies. Agronomic yield potential determined on experiment stations, with no physical, biological, or economic constraints, is the maximum achievable yield.... When the objective of the experiment is changed from maximizing yields to maximizing profits, the yields obtained by experiment station researchers drop significantly..." [@pingali2001cereal].
 
 The lower bound on $\lambda$ likewise implies the following upper bound on input demand.
 
@@ -1120,11 +1120,12 @@ Hence, the general expectation is
 \frac{\partial \ln(P)}{\partial \ln(y_0)} &< 0 \\
 \frac{\partial \ln(\mathbf{w})}{\partial \ln(y_0)} &> 0
 \end{split}
+\label{eq:expectedPwChange}
 \end{equation}
 
 Note that the adoption condition in inequality \ref{eq:ydAdoptCondy0} closely resembles the "price/productivity tightrope" formulated by Lipton:
 
->"New science usually raises farm supply of outputs and demand for inputs. That makes outputs cheaper and inputs more expensive; hence the ratio of farm output prices to input prices falls. Do small and poor farmers gain? If, and only if, this science-induced fall in their relative farm prices is slower than the science-induced rise in their conversion ratio of physical inputs into physical outputs (that is, TFP)." [@lipton2005family]
+>"New science usually raises farm supply of outputs and demand for inputs. That makes outputs cheaper and inputs more expensive; hence the ratio of farm output prices to input prices falls. Do small and poor farmers gain? If, and only if, this science-induced fall in their relative farm prices is slower than the science-induced rise in their conversion ratio of physical inputs into physical outputs (that is, TFP)" [@lipton2005family].
 
 (Where "TFP" refers to the basal yield, $y_0$.)
 
@@ -1133,8 +1134,36 @@ The one substantive difference between Lipton's condition and the condition deri
 <!-- In contrast to the adoption condition derived in the previous section (inequality \ref{eq:ydAdoptCond}), the technology adjusted price/productivity tightrope implies that, for given prices and technology ($y_0$ and $\boldsymbol{\alpha}$), either all farms or no farms adopt.  -->
 
 Since $y_0$ and $\boldsymbol{\alpha}$ are population level parameters (they do not vary from farm to farm), the technology adjusted price/productivity tightrope implies that, for a given set of prices $\{P, \mathbf{w} \}$, all farms in the given population will either adopt or not adopt. In other words, the adoption rate of basal yield enhancing technology must be either 0% or 100% if prices are the same for all farms (i.e., if Jevons' "law of indifference" holds). Conversely, it follows that adoption rates between 0% and 100% imply that prices vary within the farm population.
+
+Evidence from Kenya suggests that prices may vary considerably from district to district (Figure \ref{fig:pricesVary}). Prices may even vary considerably from village to village [@kirimi2011farm].
 <!-- Impact assessment studies that assume unique prices while also reporting an adoption rate between 0% and 100% possibly stand in violation of one or more of Axioms 1-3. -->
 <!-- In fact, input and output prices often vary considerably within a given farm population, especially in the developing world.  and this is reflected in adoption rates falling somewhere between 0% and 100%. -->
+
+```{r, fig.show = 'hold', fig.width=6, fig.height=4, fig.align='center', fig.cap="\\label{fig:pricesVary}Maize and input prices by district in Kenya, 2007 USAID Tegemeo Agricultural Monitoring and Policy Analysis Project data.", echo = F}
+# Get Kenya price data
+this_folder <- "C:/Users/bensc/OneDrive/Documents/Data/Tegemeo Data/"
+this_file <- "Kenya Tegemeo all bean maize input prices long.csv"
+this_filepath <- paste0(this_folder, this_file)
+df_price <- read.csv(this_filepath, stringsAsFactors = F)
+ind_rm <- grep("bean|day", df_price$Item)
+df_price <- df_price[-ind_rm, ]
+df_price$Item <- gsub(" \\(KES/kg\\)", "", df_price$Item)
+df_price$Item <- gsub("fert", "fertilizer", df_price$Item)
+df_price$Item <- gsub("synth", "synthetic", df_price$Item)
+df_price$Item[which(df_price$Item == "maize seed price")] <- "non-hybrid maize seed price"
+colnames(df_price)[ncol(df_price)] <- "KES / kg"
+df_price <- subset(df_price, Item != "wage (KES/hour)")
+#---------------------------------------------------------------------------
+# Check variations in prices across districts
+library(tidyverse)
+gg <- ggplot(df_price, aes(x = District, y = `KES / kg`))
+gg <- gg + geom_bar(stat = "identity")# + coord_flip()
+gg <- gg + facet_wrap(~Item, ncol = 2, scales = "free_y")
+gg <- gg + theme(axis.title.x = element_blank(),
+                 axis.text.x = element_text(angle = 60, hjust = 1))
+#gg <- gg + coord_flip()
+gg
+```
 
 Do adopting farms always find it in their best economic interest to increase output? Note from equation \ref{eq:dLnYstardLny0} that the output expansion condition $\frac{\partial \ln(y^*)}{\partial \ln(y_0)} > 0$ implies
 
@@ -1154,7 +1183,6 @@ The marginal change in net benefit given a $1$% increase in one of the partial y
 \begin{split}
 \frac{\partial \mathcal{L}^*}{\partial \ln(y_v)} &= \frac{\partial \mathcal{L}^*}{\partial \alpha_v} \\
 &= (1 - h) \left(y^* \frac{\partial P}{\partial \alpha_i} + P \frac{\partial y^*}{\partial \alpha_v} \right) + P y^* \frac{\partial}{\partial \alpha_v} (1 - h) \\
-&= P y^* \left(\frac{\partial \ln(y^*)}{\partial \alpha_v} + \frac{\partial \ln(P)}{\partial \alpha_v} - 1 \right) \\
 &= (1 - h) P y^* \left(\frac{\partial \ln(y^*)}{\partial \alpha_v} + \frac{\partial \ln(P)}{\partial \alpha_v} - \frac{1}{1 - h} \right)
 \label{eq:dLdai}
 \end{split}
@@ -1196,10 +1224,12 @@ Substituting this expression for $\frac{\partial \ln(y^*)}{\partial \alpha_v}$ i
 
 \begin{equation}
 \begin{split}
-\frac{\partial \mathcal{L}^*}{\partial \ln(y_v)} &= (1 - h) Py^* \left[ \frac{1}{1 - h} \left( \frac{1}{h} (\ln(y^*) - \ln(y_0) - \ln(\beta)) + \ln \left( \frac{\alpha_v}{w_v} \right) + h \frac{\partial \ln(P)}{\partial \alpha_v} - \boldsymbol{\alpha} \cdot \frac{\partial \ln(\mathbf{w})}{\partial \alpha_v} + 1 \right) + \frac{\partial \ln(P)}{\partial \alpha_v} - \frac{1}{1 - h} \right] \\
+\frac{\partial \mathcal{L}^*}{\partial \ln(y_v)} &= \frac{\partial \mathcal{L}^*}{\partial \alpha_v} \\
+&= (1 - h) Py^* \left[ \frac{1}{1 - h} \left( \frac{1}{h} (\ln(y^*) - \ln(y_0) - \ln(\beta)) + \ln \left( \frac{\alpha_v}{w_v} \right) + h \frac{\partial \ln(P)}{\partial \alpha_v} - \boldsymbol{\alpha} \cdot \frac{\partial \ln(\mathbf{w})}{\partial \alpha_v} + 1 \right) + \frac{\partial \ln(P)}{\partial \alpha_v} - \frac{1}{1 - h} \right] \\
 &= Py^* \left[ \frac{1}{h} (\ln(y^*) - \ln(y_0) - \ln(\beta)) + \ln \left( \frac{\alpha_v}{w_v} \right) + h \frac{\partial \ln(P)}{\partial \alpha_v} - \boldsymbol{\alpha} \cdot \frac{\partial \ln(\mathbf{w})}{\partial \alpha_v} + (1 - h) \frac{\partial \ln(P)}{\partial \alpha_v} \right] \\
 &= Py^* \left[ \frac{1}{h} (\ln(y^*) - \ln(y_0) - \ln(\beta)) + \ln \left(\frac{\alpha_v}{w_v} \right) + \frac{\partial \ln(P)}{\partial \alpha_v} - \boldsymbol{\alpha} \cdot \frac{\partial \ln(\mathbf{w})}{\partial \alpha_v} \right]
 \end{split}
+\label{eq:dlnLstardlnav}
 \end{equation}
 
 The adoption condition $\frac{\partial \mathcal{L}^*}{\partial \ln(y_v)} > 0$ then implies
@@ -1252,7 +1282,7 @@ If $y^*_y < y^*_{\mathcal{L}}$, then all adopting farms find it in their best ec
 \frac{\partial \ln(P)}{\partial \alpha_v} < \frac{1}{1 - h}
 \end{equation}
 
-Which is generally true given the domain of $h$ derived from Axioms 1-3 in section \ref{sec:degHomog}, and since it is generally expected that $\frac{\partial \ln(P)}{\partial \alpha_v} < 0$.
+Which is generally true given the domain of $h$ derived from Axioms 1-3 in section \ref{sec:degHomog}, and since it is generally expected that $\frac{\partial \ln(P)}{\partial \alpha_v} < 0$ (recall expression \ref{eq:expectedPwChange}).
 
 Under circumstances of an exogenously imposed, involuntary increase in one of the input elasticities of yield, condition \ref{eq:ydIncCondai} implies that farms with baseline yields less than $y^*_y$ would choose to reduce ouput. Condition \ref{eq:adoptCondai} likewise implies a reduction in net benefit for farms with baseline yields less than $y^*_{\mathcal{L}}$. Farms with baseline yields between $y^*_y$ and $y^*_{\mathcal{L}}$, meanwhile, would suffer a decrease in net benefit but choose to increase output.
 <!-- Note that, in some analyses, technology change may not be voluntary. A study may examine, for example, the possibility of increased fertilizer efficiency resulting from a deterioration extension services. In such cases, the net benefit of both  -->
@@ -1275,11 +1305,14 @@ For input enhancing technology, the change in consumer net benefit works out as 
 
 \begin{equation}
 \begin{split}
-\frac{\partial \mathcal{L}_D^*}{\partial \alpha_i} &= \frac{\partial \mathcal{L}_D^*}{\partial \ln(P)} \frac{\partial \ln(P)}{\partial \alpha_i} \\
-&=
+\frac{\partial \mathcal{L}_D^*}{\partial \alpha_v} &= (1 - h_D) P_D y_D^* \left( \frac{\partial \ln(y_D^*)}{\partial \alpha_v}  + \frac{\partial \ln(P_D)}{\partial \alpha_v}\right) \\
+&= (1 - h_D) P_D y_D^* \left(\frac{h_D \varepsilon - \alpha_D}{1 - h_D} \frac{\partial \ln(P)}{\partial \alpha_v}  + \varepsilon \frac{\partial \ln(P)}{\partial \alpha_v}\right) \\
+&= (\varepsilon - \alpha_D) P_D y_D^* \frac{\partial \ln(P)}{\partial \alpha_v}
 \end{split}
-\label{eq:consNBai}
+\label{eq:consNByv}
 \end{equation}
+
+Considering the expectation that $\frac{\partial \ln(P)}{\partial \alpha_v} < 0$, this means that consumer net benefit resulting from input enhancing technology is positive only if $\varepsilon < \alpha_D$.
 
 # Aggregate supply and demand
 
@@ -1360,7 +1393,15 @@ If the new technology comes in the form of an increase in one of the input elast
 
 ### Aggregating supply over varying prices
 
-Equations \ref{eq:QSeqP} and \ref{eq:QSeqPcompact} refer to the aggregate supply for a given set of output and input prices $\{P, \mathbf{w}\}$. As discussed above, output and input prices can vary considerably within a farm population (i.e., for a given technology $y_0$, $\boldsymbol{\alpha}$), especially in the developing world. To evaluate aggregate supply across all prices, then, it is necessary to integrate the last equation over the density of $r$, giving
+Equations \ref{eq:QSeqP} and \ref{eq:QSeqPcompact} refer to the aggregate supply for a given set of output and input prices $\{P, \mathbf{w}\}$. As discussed above, output and input prices can vary considerably within a farm population (i.e., for a given technology $\{y_0, \boldsymbol{\alpha} \}$), especially in the developing world.
+
+To evaluate aggregate supply across all prices, then, it is necessary to integrate aggregate supply over the density of input and output prices. This can be done by defining a new variable $r$^[This may be thought of as the "technology adjusted output-input price ratio".],
+
+\begin{equation}
+r = \frac{P^h}{\prod_i w_i^{\alpha_i}}
+\end{equation}
+
+and integrating equation \ref{eq:QSeqP} over the density of $r$, giving
 
 \begin{equation}
 Q_S = N_S (y_0 \beta_x)^{\frac{1}{1 - h}} \mu_r \mu_k \int_{0}^{\bar{\chi}} \chi f(\chi) d\chi
@@ -1369,10 +1410,10 @@ Q_S = N_S (y_0 \beta_x)^{\frac{1}{1 - h}} \mu_r \mu_k \int_{0}^{\bar{\chi}} \chi
 Where
 
 \begin{equation}
-\mu_r = \int_0^{\infty} r^{\frac{1}{1 - h}} g(r) dr = E \left(r^{\frac{1}{1 - h}} \right)
+\mu_r = \int_0^{\infty} r^{\frac{1}{1 - h}} q(r) dr = E \left(r^{\frac{1}{1 - h}} \right)
 \end{equation}
-<!-- In order to evaluate $Q_S$, it is necessary to settle upon a specific density function. For the purpose of exposition, the lognormal density is assumed. -->
-<!-- Note that the adoption yield threshold is same at equilib price as at any other price -->
+
+And $q()$ is the assumed density function of $r$ (Axiom 7).
 
 ## Aggregate demand
 
@@ -1429,11 +1470,19 @@ And where the exponent $\eta(P, Q_D)$ is the price elasticity of demand (equatio
 
 ### Aggregating demand over varying prices
 
-Equation \ref{eq:QDcompact} gives the aggregate demand for a given farm output price $P$. As discussed in previous sections, output price can vary considerably within the farm population. To aggregate demand across all prices, then, it is necessary to integrate the last equation over the price density.
+Equations \ref{eq:QD} and \ref{eq:QDcompact} give the aggregate demand for a given farm output price $P$. As discussed in previous sections, output price can vary considerably within the farm population, especially in the developing world. To aggregate demand across all prices, then, it is necessary to integrate equation \ref{eq:QD} over the price density.
 
 \begin{equation}
 Q_D = N_D \left(\alpha_D \right)^{\frac{\alpha_D}{1 - h_D} + 1} (y_0^D P_D \tilde{\beta}_w^{D - 1} \beta_x^D)^{\frac{1}{1 - h_D}} \mu_P \mu_k^D \int_0^{\bar{\chi}_D} \chi_D f_D \left(\chi_D \right) d \chi_D
 \end{equation}
+
+Where
+
+\begin{equation}
+\mu_P = \int_0^{\infty} P^{\eta(P, Q_D)} u(P) dP = E \left(P^{\eta(P, Q_D)} \right)
+\end{equation}
+
+And where $u()$ is the assumed density function of $P$ (Axiom 8).
 
 # Equilibrium price and quantity
 
@@ -1493,12 +1542,12 @@ The changes in equilibrium quantity and price are thus always positive and negat
 
 ## The impact of input enhancing technology on equilibrium price and quantity
 
-The percentage change in equilibrium supply per $1$% increase in partial yield $y_i$ is defined as follows.
+The percentage change in equilibrium supply per $1$% increase in partial yield $y_v$ is defined as follows.
 
 \begin{equation}
 \begin{split}
-\frac{\partial \ln(Q_e)}{\partial \ln(y_i)} &= \frac{\partial \ln(Q_e)}{\partial \alpha_i} \\
-&= \ln(\theta_S) \frac{\partial}{\partial \alpha_i} \left( \frac{\eta_D}{\eta_D - \eta_S} \right) + \frac{\eta_D}{\eta_D - \eta_S} \frac{\partial \ln(\theta_S)}{\partial \alpha_i} - \ln(\theta_D) \frac{\partial}{\partial \alpha_i} \left( \frac{\eta_S}{\eta_D - \eta_S} \right)
+\frac{\partial \ln(Q_e)}{\partial \ln(y_v)} &= \frac{\partial \ln(Q_e)}{\partial \alpha_v} \\
+&= \ln(\theta_S) \frac{\partial}{\partial \alpha_v} \left( \frac{\eta_D}{\eta_D - \eta_S} \right) + \frac{\eta_D}{\eta_D - \eta_S} \frac{\partial \ln(\theta_S)}{\partial \alpha_v} - \ln(\theta_D) \frac{\partial}{\partial \alpha_v} \left( \frac{\eta_S}{\eta_D - \eta_S} \right)
 \end{split}
 \label{eq:dLnQedai}
 \end{equation}
@@ -1511,6 +1560,8 @@ Where
 &= \frac{\eta_D}{(\eta_D - \eta_S)^2 (1 - h)^2}
 \end{split}
 \end{equation}
+
+And
 
 \begin{equation}
 \frac{\partial}{\partial \alpha_v} \left( \frac{\eta_S}{\eta_D - \eta_S} \right) = \frac{\partial}{\partial \alpha_v} \left( \frac{\eta_D}{\eta_D - \eta_S} \right)
@@ -1538,7 +1589,7 @@ Where the derivative $\frac{\partial \ln(\theta_S)}{\partial \alpha_v}$ works ou
 
 \begin{equation}
 \begin{split}
-\frac{\partial \ln(\theta_S)}{\partial \alpha_v} &= \frac{1}{1 - h} \left[1 - \boldsymbol{\alpha} \cdot \frac{\partial \mathbf{w}}{\partial \alpha_v} + \ln(\frac{\alpha_v}{w_v}) + \ln(\theta_S) - \ln(\mu_k) - \ln(F(\bar{\chi})) \right] + \frac{\partial \ln(\mu_k)}{\partial \alpha_v} + \frac{\ln(F(\bar{\chi}))}{\partial \alpha_v}
+\frac{\partial \ln(\theta_S)}{\partial \alpha_v} &= \frac{1}{1 - h} \left[1 - \boldsymbol{\alpha} \cdot \frac{\partial \mathbf{w}}{\partial \alpha_v} + \ln \left( \frac{\alpha_v}{w_v} \right) + \ln(\theta_S) - \ln(\mu_k) - \ln(F(\bar{\chi})) \right] + \frac{\partial \ln(\mu_k)}{\partial \alpha_v} + \frac{\ln(F(\bar{\chi}))}{\partial \alpha_v}
 \label{eq:dLnThetaSdai}
 \end{split}
 \end{equation}
@@ -1556,7 +1607,7 @@ The percentage change in equilibrium price given a $1$% increase in the partial 
 \frac{\partial \ln(P_e)}{\partial \ln(y_v)} &= \frac{\partial \ln(P_e)}{\partial \alpha_v} \\
 &= \frac{1}{\eta_D - \eta_S} \left( \frac{\ln(P_e)}{(1 - h)^2} + \frac{\partial \ln(\theta_S)}{\partial \alpha_v} \right) \\
 &= \frac{1}{\eta_D} \frac{\partial \ln(Q_e)}{\partial \alpha_v}
-\label{eq:dLnPedai}
+\label{eq:dLnPedav}
 \end{split}
 \end{equation}
 
@@ -1564,44 +1615,40 @@ By which it follows that the change in equilibrium price under release and volun
 
 Under circumstances of an involuntary increase in the input elasticity, on the other hand, inequality \ref{eq:QePoscondAi} implies that equilibrium supply may decrease while the equilibrium price rises.
 
-## Estimation of the technology adoption rate at equilibrium
+## Estimation of the technology adoption rate
 
-Estimation of the technology adoption rate hinges upon whether the technology is basal yield or input enhancing, and hence upon the corresponding assumed density function (Axiom 7).
+Estimation of the technology adoption rate hinges upon whether the technology is basal yield or input enhancing, and upon the corresponding assumed density function.
 
-In the case of basal yield enhancing technology,
+In the case of basal yield enhancing technology, the adoption condition derived in inequality \ref{eq:ydAdoptCondy0} (the technology adjusted price/productivity tightrope) implies the following adoption rate.
 
 \begin{equation}
-\frac{\partial \mathcal{L}^*}{\partial \ln(y_0)} \bigr|_{P = P_e} = Py^* \left( \frac{\partial \ln(P_e)}{\partial \ln(y_0)} - \boldsymbol{\alpha} \cdot \frac{\partial \ln(\mathbf{w})}{\partial \ln(y_0) + 1} \right) > 0
+a = \int_0^{\partial \ln(y_0)} \omega(\boldsymbol{\alpha} \cdot \partial \ln(\mathbf{w}) - \partial \ln(P) ) \: d(\boldsymbol{\alpha} \cdot \partial \ln(\mathbf{w}) - \partial \ln(P))
 \end{equation}
 
-Using equation \ref{eq:dLnPedLny0} to substitute for $\frac{\partial \ln(P_e)}{\partial \ln(y_0)}$, this can be rewritten as follows.
+Where $\omega()$ is the assumed density function of $\boldsymbol{\alpha} \cdot \partial \ln(\mathbf{w}) - \partial \ln(P)$ (Axiom 9). For practical purposes, $\partial \ln(y_0)$, $\partial \ln(\mathbf{w})$, and $\partial \ln(P)$ may be interpreted as the percentage change in the basal yield $y_0$, the percentage change in input prices $\mathbf{w}$ dotted by their input elasticities $\boldsymbol{\alpha}$, and the percentage change in the farm output price $P$, respectively, under release of the new technology.
 
-\begin{equation}
-\frac{\partial \mathcal{L}^*}{\partial \ln(y_0)} \bigr|_{P = P_e} = Py^*\left(\frac{u}{(\eta_D - \eta_S) (1 - h)} + u \right) \:\:\:; \:\: u = 1 - \boldsymbol{\alpha} \cdot \frac{\partial \ln(\mathbf{w})}{\partial \ln(y_0)} \end{equation}
-
-Applying the adoption condition $\frac{\partial \mathcal{L}^*}{\partial \ln(y_0)} \bigr|_{P = P_e} > 0$ and simplifying,
+This provides a way to estimate the adoption rate at different farm output prices leading up to the new equilibrium price $P_e$. The adoption rate at the new equilibrium can be found by using equation \ref{eq:dLnPedLny0} to evaluate inequality \ref{eq:ydAdoptCondy0} at $P_e$, resulting in the following condition.
 
 \begin{equation}
 \begin{split}
+\frac{\partial \ln(P_e)}{\partial \ln(y_0)} - \boldsymbol{\alpha} \cdot \frac{\partial \ln(\mathbf{w})}{\partial \ln(y_0) + 1} &> 0 \\
 \frac{1}{(\eta_D - \eta_S)(1 - h)} &> -1 \\
 \frac{1}{1 - h} &< -(\eta_D - \eta_S) \\
 \frac{-1 + h}{1 - h} &> \eta_D \\
 -1 &> \eta_D
 \end{split}
+\label{eq:adoptCondy0atPe}
 \end{equation}
 
-The domain of $\eta_D$ defined in \ref{eq:domainEtaD} then implies the following adoption rate
-<!-- inequality \ref{eq:ydAdoptCondy0} implies the following adoption rate.  -->
-
-at equilibrium
+The domain of $\eta_D$ derived in equation \ref{eq:domainEtaD} then implies the following adoption rate at the new equilibrium.
 
 \begin{equation}
-a = \frac{\int_{-infty}^{-1} g(\eta_D) d \eta_D}{\int_{-infty}^{\varepsilon - 1} g(\eta_D) d \eta_D}
+a = \int_{-\infty}^{-1} \: g(\eta_D) d \eta_D
 \end{equation}
 
-Adoption only possible when $\varepsilon < \alpha_D$.
+Where $g()$ is the assumed density function of $\eta_D$ (Axiom 10).
 
-Where $g(\eta_D)$ is the assumed density of $\eta_D$.
+Note that conditions \ref{eq:adoptCondy0atPe} and \ref{eq:domainEtaD} imply an adoption rate of zero if all consumers have $\varepsilon > \alpha_D$.
 
 In the case of input enhancing technology, inequality \ref{eq:adoptCondai} implies the following adoption rate.
 
@@ -1609,10 +1656,10 @@ In the case of input enhancing technology, inequality \ref{eq:adoptCondai} impli
 a = \frac{\int_{\underline{y}^*}^{\bar{y}^*} f(y^*) dy^*}{\int_{0}^{\bar{y}^*} f(y^*) dy^*}
 \end{equation}
 
-Where $f(y^*)$ is the assumed density of $y^*$. More compactly,
+Where $f(y^*)$ is the assumed density of $y^*$ (Axiom 11). More compactly,
 
 \begin{equation}
-a = \frac{F(\bar{y}^*) - F(\underline{y^*_{\mathcal{L}}})}{F(\bar{y}^*)}
+a = \frac{F(\bar{y}^*) - F(\underline{y^*}_{\mathcal{L}})}{F(\bar{y}^*)}
 \end{equation}
 
 Where $F(\tau)$ is the cumulative distribution function corresponding to $f(y^*)$.
@@ -1647,7 +1694,7 @@ Again, impacts vary considerably depending upon whether the technology change is
 
 For a given basal yield enhancing technology, the aggregate change in producer net benefit $\psi^S$ is, by definition, the change in farm level net benefit integrated over its density.
 
-The change in farm level net benefit due to basal yield enhancing technology is just the percentage increase in the basal yield times the percentage change in net benefit per $1$% change in the basal or partial yield, times the baseline net benefit. Mathematically, this may be expressed as follows.
+The change in farm level net benefit due to basal yield enhancing technology is just the percentage increase in the basal yield times the percentage change in net benefit per $1$% change in the basal yield, times the baseline net benefit. Mathematically, this may be expressed as follows.
 
 \begin{equation}
 \begin{split}
@@ -1656,22 +1703,22 @@ The change in farm level net benefit due to basal yield enhancing technology is 
 \end{split}
 \end{equation}
 
-Where $\rho_q$ is the percentage change in basal or partial yield, as the case may be. The aggregate change is thus
+Where $\rho_0$ is the percentage change in basal yield. The aggregate change is thus
 
 \begin{equation}
-\psi^S = \rho_0 \int \frac{\partial \mathcal{L}^*}{\partial \ln(y_0)} v \left(\frac{\partial \mathcal{L}^*}{\partial \ln(y_0)} \right) d \left( \frac{\partial \mathcal{L}^*}{\partial \ln(y_0)} \right)
+\psi^S = \rho_0 \int \frac{\partial \mathcal{L}^*}{\partial \ln(y_0)} \nu \left(\frac{\partial \mathcal{L}^*}{\partial \ln(y_0)} \right) d \left( \frac{\partial \mathcal{L}^*}{\partial \ln(y_0)} \right)
 \end{equation}
 
 Recalling the expression for $\frac{\partial \ln(\mathcal{L}^*)}{\partial \ln(y_0)}$ derived in equation \ref{eq:prodNBy0}, this can be rewritten
 
 \begin{equation}
 \begin{split}
-\psi^S &= \rho_0 \left( 1 - \boldsymbol{\alpha} \cdot \frac{\partial \ln(\mathbf{w})}{\partial \ln(y_0)} + \frac{\partial \ln(P)}{\partial \ln(y_0)} \right) P \int y^* f(y^*) d y^* \\
-&= \left( 1 - \boldsymbol{\alpha} \cdot \frac{\partial \ln(\mathbf{w})}{\partial \ln(y_0)} + \frac{\partial \ln(P)}{\partial \ln(y_0)} \right) P Q
+\psi^S &= \rho_0 \left( 1 - \boldsymbol{\alpha} \cdot \frac{\partial \ln(\mathbf{w})}{\partial \ln(y_0)} + \frac{\partial \ln(P)}{\partial \ln(y_0)} \right) P N_S \int y^* f(y^*) d y^* \\
+&= \left( 1 - \boldsymbol{\alpha} \cdot \frac{\partial \ln(\mathbf{w})}{\partial \ln(y_0)} + \frac{\partial \ln(P)}{\partial \ln(y_0)} \right) P Q_S
 \end{split}
 \end{equation}
 
-Where the law of the unconscious statistician has been invoked to replace $v \left( \frac{\partial \mathcal{L}^*}{\partial \ln(y_0)} \right) d \left( \frac{\partial \mathcal{L}^*}{\partial \ln(y_0)} \right)$ with $f(y^*) d y^*$.
+Where the law of the unconscious statistician has been invoked to replace $\nu \left( \frac{\partial \mathcal{L}^*}{\partial \ln(y_0)} \right) d \left( \frac{\partial \mathcal{L}^*}{\partial \ln(y_0)} \right)$ with $N_S f(y^*) d y^*$.
 
 At equlibrium, this becomes
 
@@ -1679,7 +1726,7 @@ At equlibrium, this becomes
 \psi_e^S = \rho_0 \left( 1 - \boldsymbol{\alpha} \cdot \frac{\partial \ln(\mathbf{w})}{\partial \ln(y_0)} + \frac{\partial \ln(P_e)}{\partial \ln(y_0)} \right) P_e Q_e
 \end{equation}
 
-Using equation \ref{eq:dLnPedLny0} to substitute for $\frac{\partial \ln(P_e)}{\partial \ln(y_0)}$, this becomes
+Using equation \ref{eq:dLnPedLny0} to substitute for $\frac{\partial \ln(P_e)}{\partial \ln(y_0)}$, this can be rewritten as follows.
 
 \begin{equation}
 \begin{split}
@@ -1691,60 +1738,182 @@ Using equation \ref{eq:dLnPedLny0} to substitute for $\frac{\partial \ln(P_e)}{\
 
 ## Aggregate change in demand side net benefit, basal yield enhancing technology
 
-For a given basal yield enhancing technology, the aggregate change in demand side net benefit $\psi^D$ is derived through an analogous set of steps. By definition, the aggregate change in demand side net benefit is the change in consumer level net benefit integrated over its density.
+The aggregate change in demand side net benefit due to basal yield enhancing technology $\psi^D$ is derived through an analogous set of steps. By definition, the aggregate change in demand side net benefit is the change in consumer level net benefit integrated over its density.
 
 \begin{equation}
-\psi^D = \rho_0^D \int \frac{\partial \ln(\mathcal{L}_D^*)}{\partial \ln(y_0)} \mathcal{L}_D^* v_D \left( \frac{\partial \ln(\mathcal{L}_D^*)}{\partial \ln(y_0)} \mathcal{L}_D^* \right) d \left( \frac{\partial \ln(\mathcal{L}_D^*)}{\partial \ln(y_0)} \mathcal{L}_D^* \right)
+\psi^D = \rho_0 \int \frac{\partial \ln(\mathcal{L}_D^*)}{\partial \ln(y_0)} \mathcal{L}_D^* \nu_D \left( \frac{\partial \ln(\mathcal{L}_D^*)}{\partial \ln(y_0)} \mathcal{L}_D^* \right) d \left( \frac{\partial \ln(\mathcal{L}_D^*)}{\partial \ln(y_0)} \mathcal{L}_D^* \right)
 \end{equation}
 
 But $\frac{\partial \ln(\mathcal{L}_D^*)}{\partial \ln(y_0)} \mathcal{L}_D^* = \frac{\partial \mathcal{L}_D^*}{\partial \ln(y_0)}$, and so, recalling the expression for $\frac{\partial \mathcal{L}_D^*}{\partial \ln(y_0)}$ derived in equation \ref{eq:consNBy0}, the integral can be rewritten
 
 \begin{equation}
 \begin{split}
-\psi^D &= \rho_0^D (\varepsilon - \alpha_D) P_D \frac{\partial \ln(P)}{\partial \ln(y_0)} \int y_D^* f_D(y_D^*) d y_D^* \\
+\psi^D &= \rho_0 (\varepsilon - \alpha_D) P_D \frac{\partial \ln(P)}{\partial \ln(y_0)} N_D \int y_D^* f_D(y_D^*) d y_D^* \\
 &= (\varepsilon - \alpha_D) P_D Q^D \frac{\partial \ln(P)}{\partial \ln(y_0)}
 \end{split}
 \end{equation}
 
-Where the law of the unconscious statistician has been invoked to replace $v \left( \frac{\partial \ln(\mathcal{L}_D^*)}{\partial \ln(y_0)} \mathcal{L}_D^* \right) d \left( \frac{\partial \ln(\mathcal{L}_D^*)}{\partial \ln(y_0)} \mathcal{L}_D^* \right)$ with $f(y_D^*) d y_D^*$.
+Where the law of the unconscious statistician has been invoked to replace $\nu_D \left( \frac{\partial \ln(\mathcal{L}_D^*)}{\partial \ln(y_0)} \mathcal{L}_D^* \right) d \left( \frac{\partial \ln(\mathcal{L}_D^*)}{\partial \ln(y_0)} \mathcal{L}_D^* \right)$ with $N_D f(y_D^*) d y_D^*$.
 
-Here it is important to distinguish $Q^D$, the demand side output, from $Q_D$, the demand curve. When the consumers are mills or factories, $Q^D$ has an interpretation in concrete terms of aggregate output of flour, starch, bioethanol, etc., as the case may be. When the consumers are people, $Q^D$ must be interpreted in more abstract terms of aggregate utility.
+Here it is important to distinguish $Q^D$, the demand side output, from $Q_D$, the demand curve. When the consumers are mills or factories, $Q^D$ has an interpretation in concrete terms of aggregate output of flour, starch, bioethanol, etc., as the case may be. When the consumers are people, $Q^D$ must be interpreted in terms of aggregate labor, or still more abstract terms of aggregate utility.
 
 At equilibrium,
 
 \begin{equation}
 \begin{split}
-\psi_e^D &= \rho_0^D (\varepsilon -\alpha_D) P_D Q^D \frac{\partial \ln(P_e)}{\partial \ln(y_0)} \\
-&= \rho_0^D \frac{\varepsilon - \alpha_D}{(\eta_D - \eta_S) (1 - h)} P_D Q^D \left( 1 - \boldsymbol{\alpha} \cdot \frac{\partial \ln(\mathbf{w})}{\partial \ln(y_0)} \right) P_D Q^D
+\psi_e^D &= \rho_0 (\varepsilon -\alpha_D) P_D Q^D \frac{\partial \ln(P_e)}{\partial \ln(y_0)} \\
+&= \rho_0 \frac{\varepsilon - \alpha_D}{(\eta_D - \eta_S) (1 - h)} P_D Q^D \left( 1 - \boldsymbol{\alpha} \cdot \frac{\partial \ln(\mathbf{w})}{\partial \ln(y_0)} \right) P_D Q^D
 \end{split}
 \end{equation}
 
-## Aggregate net change in net benefit, basal yield enhancing technology
+## Total change in welfare, basal yield enhancing technology
 
-Adding $\psi_e^S$ and $\psi_e^D$ together gives the total aggregate change in net benefit. 
+Adding $\psi_e^S$ and $\psi_e^D$ together gives the equilibrium total aggregate change in net benefit due to release and voluntary uptake of the new basal yield enhancing technology.
 
 \begin{equation}
 \begin{split}
 \psi_e &= \psi_e^S + \psi_e^D \\
-&= \frac{\varepsilon -\alpha_D }{\eta_D - \eta_S} \left( 1 - \boldsymbol{\alpha} \cdot \frac{\partial \ln(\mathbf{w})}{\partial \ln(y_0)} \right) \left(\rho_0 \frac{P_e Q_e}{1 - h_D} + \rho_0^D \frac{P_D Q^D}{1 - h} \right)
+&= \frac{\varepsilon -\alpha_D }{\eta_D - \eta_S} \rho_0 \left( 1 - \boldsymbol{\alpha} \cdot \frac{\partial \ln(\mathbf{w})}{\partial \ln(y_0)} \right) \left( \frac{P_e Q_e}{1 - h_D} + \frac{P_D Q^D}{1 - h} \right)
 \end{split}
 \end{equation}
 
 Dividing $\psi_e^S$ and $\psi_e^D$ by $\psi_e$ gives the respective shares of net benefit.
 
 \begin{equation}
-\frac{\psi_e^S}{\psi_e^D} = \frac{(1 - h) \rho_0 P_e Q_e}{(1 - h) \rho_0 P_e Q_e + (1 - h_D) \rho_0^D P_D Q^D}
+\frac{\psi_e^S}{\psi_e^D} = \frac{(1 - h) P_e Q_e}{(1 - h) P_e Q_e + (1 - h_D) P_D Q^D}
 \end{equation}
 
 \begin{equation}
-\frac{\psi_e^D}{\psi_e^D} = \frac{(1 - h_D) \rho_0^D P_D Q^D}{(1 - h) \rho_0 P_e Q_e + (1 - h_D) \rho_0^D P_D Q^D}
+\frac{\psi_e^D}{\psi_e^D} = \frac{(1 - h_D) \rho_0 P_D Q^D}{(1 - h) \rho_0 P_e Q_e + (1 - h_D) \rho_0 P_D Q^D}
 \end{equation}
 
 ## Aggregate change in producer net benefit, input enhancing technology
 
+For a given input enhancing technology, the aggregate change in producer net benefit $\psi^S$ is, by definition, the change in farm level net benefit integrated over its density.
+
+The change in farm level net benefit due to input enhancing technology is just the percentage increase in the partial yield times the percentage change in net benefit per $1$% change in the partial yield, times the baseline net benefit. Mathematically, this may be expressed as follows.
+
+\begin{equation}
+\begin{split}
+\text{Change in Net Benefit} &= \rho_v \frac{\partial \ln(\mathcal{L}^*)}{\partial \ln(y_0)} \mathcal{L}^* \\
+&= \rho_v \frac{\partial \mathcal{L}^*}{\partial \ln(y_0)}
+\end{split}
+\end{equation}
+
+Where $\rho_v$ is the percentage change in partial yield. The aggregate change is thus
+
+\begin{equation}
+\psi^S = \rho_v \int \frac{\partial \mathcal{L}^*}{\partial \ln(y_v)} \nu \left(\frac{\partial \mathcal{L}^*}{\partial \ln(y_v)} \right) d \left( \frac{\partial \mathcal{L}^*}{\partial \ln(y_v)} \right)
+\end{equation}
+
+Recalling the expression for $\frac{\partial \ln(\mathcal{L}^*)}{\partial \ln(y_v)}$ derived in equation \ref{eq:dLdai}, this can be rewritten as follows.
+
+\begin{equation}
+\psi^S = \rho_v (1 - h) P \int \left[ y^* \left( \frac{\partial \ln(P)}{\partial \alpha_v} - \frac{1}{1 - h} \right) + \frac{\partial y^*}{\partial \alpha_v} \right] N_S f(y^*) dy^*
+\end{equation}
+
+Where the law of the unconscious statistician has been invoked to replace $\nu \left( \frac{\partial \mathcal{L}^*}{\partial \ln(y_v)} \right) d \left( \frac{\partial \mathcal{L}^*}{\partial \ln(y_v)} \right)$ with $N_S f(y^*) d y^*$.
+
+This further simplifies to
+
+\begin{equation}
+\begin{split}
+\psi^S &= \rho_v (1 - h) P \left[ \left( \frac{\partial \ln(P)}{\partial \alpha_v} - \frac{1}{1 - h} \right) \int y^* f(y^*) \: dy^* + \int \frac{\partial y^*}{\partial \alpha_v} f(y^*) \: dy^* \right] \\
+&= \rho_v (1 - h) \left[ \left( \frac{\partial \ln(P)}{\partial \alpha_v} - \frac{1}{1 - h} \right) P Q_S + P N_S \int \frac{\partial y^*}{\partial \alpha_v} f(y^*) \: dy^* \right]
+\end{split}
+\label{eq:psiSyv0}
+\end{equation}
+
+The last integral in this expression works out as follows.
+
+\begin{equation}
+\begin{split}
+N_S \int \frac{\partial y^*}{\partial \alpha_v} f(y^*) \: dy^* &= \frac{1}{1 - h} \left[ \frac{N_S}{h} \int y^* \ln(y^*) f(y^*) dy^* - k N_S \int y^* f(y^*) \: dy^* \right] \\
+&= \frac{1}{1 - h} \left[ \frac{N_S}{h} E(y^* \ln(y^*)) - k Q_S \right]
+\end{split}
+\label{eq:lastInt}
+\end{equation}
+
+Where
+
+\begin{equation}
+k = \frac{1}{h} (\ln(y_0) + \ln(\beta)) - \ln \left( \frac{\alpha_v}{w_v} \right) - h \frac{\partial \ln(P)}{\partial \alpha_v} - \boldsymbol{\alpha} \cdot \frac{\partial \ln(\mathbf{w})}{\partial \alpha_v} - 1
+\end{equation}
+
+Substituting equation \ref{eq:lastInt} into equation \ref{eq:psiSyv0} and simplifying, $\psi^S$ works out as follows.
+
+\begin{equation}
+\begin{split}
+\psi^S &= \rho_v \left[ (1 - h) \frac{\partial \ln (P)}{\partial \alpha_v} P Q_S + P \left( \frac{N_S}{h} E(y^* \ln(y^*)) - k Q_S \right) \right] \\
+&= \rho_v \left[ \left( (1 - h) \frac{\partial \ln(P)}{\partial \alpha_v} - 1 - k \right) P Q_S + \frac{N_S}{h} P E(y^* \ln(y^*)) \right] \\
+&= \rho_v \left[ \left( \ln \left( \frac{\alpha_v}{w_v} \right) - \frac{1}{h} (\ln(y_0) + \ln(\beta)) + \frac{\partial \ln(P)}{\partial \alpha_v} - \boldsymbol{\alpha} \cdot \frac{\partial \ln(\mathbf{w})}{\partial \alpha_v} \right) P Q_S + \frac{N_S}{h} P E(y^* \ln(y^*)) \right]
+\end{split}
+\end{equation}
+
+At equlibrium, this becomes
+
+\begin{equation}
+\psi_e^S = \rho_v \left[ \left( \ln \left( \frac{\alpha_v}{w_v} \right) - \frac{1}{h} (\ln(y_0) + \ln(\beta)) + \frac{\partial \ln(P_e)}{\partial \alpha_v} - \boldsymbol{\alpha} \cdot \frac{\partial \ln(\mathbf{w})}{\partial \alpha_v} \right) P_e Q_e + \frac{N_S}{h} P_e E(y^* \bigr|_{P_e} \ln(y^* \bigr|_{P_e})) \right]
+\end{equation}
+
+Using equation \ref{eq:dLnPedav} to substitute for $\frac{\partial \ln(P_e)}{\partial \alpha_v}$, this can be rewritten as follows.
+
+\begin{equation}
+\psi_e^S = \rho_v \left[ \left( \ln \left( \frac{\alpha_v}{w_v} \right) - \frac{1}{h} (\ln(y_0) + \ln(\beta)) + \frac{1}{\eta_D - \eta_S} \left( \frac{\ln(P_e)}{(1 - h)^2} +\frac{\partial \ln(\theta_S)}{\partial \alpha_v} \right) - \boldsymbol{\alpha} \cdot \frac{\partial \ln(\mathbf{w})}{\partial \alpha_v} \right) P_e Q_e + \frac{N_S}{h} P_e E(y^* \bigr|_{P_e} \ln(y^* \bigr|_{P_e})) \right]
+\end{equation}
+
 ## Aggregate change in demand side net benefit, input enhancing technology
 
-## Aggregate net change in net benefit, input enhancing technology
+By definition, the aggregate change in demand side net benefit resulting from input enhancing technology is the change in consumer level net benefit integrated over its density.
+
+\begin{equation}
+\psi^D = \rho_v \int \frac{\partial \ln(\mathcal{L}_D^*)}{\partial \ln(y_v)} \mathcal{L}_D^* \nu_D \left( \frac{\partial \ln(\mathcal{L}_D^*)}{\partial \ln(y_v)} \mathcal{L}_D^* \right) d \left( \frac{\partial \ln(\mathcal{L}_D^*)}{\partial \ln(y_v)} \mathcal{L}_D^* \right)
+\end{equation}
+
+But $\frac{\partial \ln(\mathcal{L}_D^*)}{\partial \ln(y_v)} \mathcal{L}_D^* = \frac{\partial \mathcal{L}_D^*}{\partial \ln(y_v)}$, and so, recalling the expression for $\frac{\partial \mathcal{L}_D^*}{\partial \ln(y_v)}$ derived in equation \ref{eq:consNByv}, the integral can be rewritten
+
+\begin{equation}
+\begin{split}
+\psi^D &= \rho_v \int \frac{\partial \mathcal{L}_D^*}{\partial \ln(y_v)} \: d \left( \frac{\partial \mathcal{L}_D^*}{\partial \ln(y_v)} \right)\\
+&= \rho_v (\varepsilon - \alpha_D) \frac{\partial \ln(P)}{\partial \alpha_v} P_D Q^D
+\end{split}
+\end{equation}
+
+The demand side impact at the new equilibrium can be found by combining this equation with equation \ref{eq:dLnPedav}.
+
+\begin{equation}
+\begin{split}
+\psi_e^D &= \rho_v (\varepsilon - \alpha_D) \frac{\partial \ln(P_e)}{\partial \alpha_v} P_e Q_e \\
+&= \rho_v \frac{\varepsilon - \alpha_D}{\eta_D - \eta_S} \left( \frac{\ln(P_e)}{(1 - h)^2} +\frac{\partial \ln(\theta_S)}{\partial \alpha_v} \right) P_D Q^D
+\end{split}
+\end{equation}
+
+## Total change in welfare, input enhancing technology
+
+The equilibrium total aggregate change in net benefit due to release and voluntary uptake of the new input enhancing technology is found by adding $\psi_e^S$ and $\psi_e^D$, as defined in the previous two sections.
+
+\begin{equation}
+\begin{split}
+\psi_e &= \psi_e^S + \psi_e^D \\
+&= \rho_v \left[ \left( (\varepsilon - \alpha_D) P_D Q^D + P_e Q_e \right) \frac{\partial \ln(P_e)}{\partial \alpha_v} + t P_e Q_e + \frac{N_S}{h} P_e E(y^* \bigr|_{P_e} \ln(y^* \bigr|_{P_e})) \right]
+\end{split}
+\end{equation}
+
+Where $\frac{\partial \ln(P_e)}{\partial \alpha_v}$ is defined in equation \ref{eq:dLnPedav}, and
+
+\begin{equation}
+t = \ln \left( \frac{\alpha_v}{w_v} \right) - \frac{1}{h}(\ln(y_0) + \ln(\beta)) - \boldsymbol{\alpha} \cdot \frac{\partial \ln(\mathbf{w})}{\partial \alpha_v}
+\end{equation}
+
+Dividing $\psi_e^S$ and $\psi_e^D$ by $\psi_e$ gives the respective shares of net benefit.
+
+\begin{equation}
+\frac{\psi_e^S}{\psi_e} = \frac{\left( t + \frac{\partial \ln(P_e)}{\partial \alpha_v} \right) P_e Q_e + \frac{N_S}{h} P_e E(y^* \bigr|_{P_e} \ln(y^* \bigr|_{P_e}))}{\left( (\varepsilon - \alpha_D) P_D Q^D + P_e Q_e \right) \frac{\partial \ln(P_e)}{\partial \alpha_v} + t P_e Q_e + \frac{N_S}{h} P_e E(y^* \bigr|_{P_e} \ln(y^* \bigr|_{P_e}))}
+\end{equation}
+
+\begin{equation}
+\frac{\psi_e^D}{\psi_e} = \frac{(\varepsilon - \alpha_v) \frac{\partial \ln(P_e)}{\partial \alpha_v} P_D Q^D}{\left( (\varepsilon - \alpha_D) P_D Q^D + P_e Q_e \right) \frac{\partial \ln(P_e)}{\partial \alpha_v} + t P_e Q_e + \frac{N_S}{h} P_e E(y^* \bigr|_{P_e} \ln(y^* \bigr|_{P_e}))}
+\end{equation}
 
 ## Producer and consumer surplus: a problematic welfare measure
 
