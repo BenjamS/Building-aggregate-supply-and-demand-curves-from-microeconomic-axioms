@@ -1,7 +1,7 @@
 ---
 title: "DEPEMap: An axiomatic, distributionally explicit partial equilibrium model with endogenous adoption rate"
 subtitle: |
-  | "(Working Paper)"
+  | (Working Paper)
 author: Benjamin Schiek, Senior Research Associate, Bioversity-CIAT Alliance
 #  - name: Benjamin Schiek, Senior Research Associate
 #     email: b.schiek@cgiar.org
@@ -186,7 +186,7 @@ Equation \ref{eq:cobbDoug2} captures yield response to inputs and control variab
 The next step in the theoretical derivation of the partial equilibrium model is based on the assumption that farmers want to maximize their net benefit subject to a budget constraint. (Consumers and firms on the demand side are assumed to be similarly motivated, but the present section focuses on the supply side.)
 
 \begin{framed}
-   \textbf{Axiom 2} \\ Farms and firms maximize their net benefit subject to a budget constraint.
+   \textbf{Axiom 2} \\ Farms, as well as firms and consumers on the demand side, maximize their net benefit subject to a budget constraint.
 \end{framed}
 
 Axiom 2 implies that farmers apply inputs such that revenue is maximized, given a budget constraint. The problem of finding the optimal input quantities that achieve this goal can be formalized as follows.
@@ -366,11 +366,11 @@ t_S = \left(y_0 \frac{\beta_x \beta_k}{\lambda^h \beta_w} \right)^{\frac{1}{1 - 
 And $\eta(P, y^*)$ is the price elasticity of yield defined in equation \ref{eq:PelastYstar}.
 
 <!-- Both the scale parameter $t$ and exponent $\eta(P, y^*)$ depend critically upon the degree of homogeneity. -->
-The output price elasticity of yield implies that the farm supply curve is elastic for $h \in (1 / 2 , 1)$, and inelastic for $h \in (0, 1 / 2)$, and linear with slope $t \bigr|_{h = 1 / 2}$ when $h = 1 / 2$.
+The output price elasticity of yield implies that the farm supply curve is elastic for $h \in (1 / 2 , 1)$, and inelastic for $h \in (0, 1 / 2)$, and linear with slope $t_S \bigr|_{h = 1 / 2}$ when $h = 1 / 2$.
 
 This is important information. This means that (insofar as Axioms 1-3 are true) for a given increase in output price, the supply response in a population of farms with inefficient input elasticities (such that $h < 1 / 2$) will be less than proportionate to the increase in price. In a population of relatively input-efficient farms (such that $h > 1 / 2$), on the other hand, the supply response will be more than proportionate to the increase in price.
 
-The farm supply curve approaches perfect inelasticity as $h$ approaches $0$, and approaches perfect elasticity as $h$ approaches $1$. However, the scale factor $t$ approaches $0$ as $h$ approaches $0$, and tends toward infinity as $h$ approaches $1$, such that neither perfect elasticity nor inelasticity are ever reached; but rather farm supply is $0$ at $h = 0$ and infinite at $h = 1$.
+The farm supply curve approaches perfect inelasticity as $h$ approaches $0$, and approaches (but never reaches) perfect elasticity as $h$ approaches $1$. The scale factor $t_S$ approaches $0$ as $h$ approaches $0$, and tends toward infinity as $h$ approaches $1$.
 
 ## Input demand \label{sec:inDem}
 
@@ -463,7 +463,7 @@ Assuming that farms only enter production if their expected revenue is greater t
 \end{equation}
 
 \begin{framed}
-   \textbf{Axiom 5} \\ Farms and firms enter production only if their expected revenue is greater than their cost.
+   \textbf{Axiom 5} \\ Farms, as well as firms and consumers on the demand side, enter production only if their expected revenue is greater than their cost.
 \end{framed}
 
 This, in turn, implies the following upper bound on optimal yield.
@@ -1424,12 +1424,12 @@ Aggregate supply is then found by integrating eqaution \ref{eq:QSeqPcetPar} over
 \begin{split}
 Q_S &= \int_{0}^{\infty} \left[ N_S \left(y_0 \frac{\beta_x \beta_k}{\beta_w} P^h \right)^{\frac{1}{1 - h}} \int_{h}^{\infty} \lambda^{\frac{-h}{1 - h}} f_{\lambda}(\lambda) \: d \lambda \right] \: g_k(\beta_k^{\frac{1}{1 - h}}) d \beta_k^{\frac{1}{1 - h}} \\
 &= N_S \left(y_0 \frac{\beta_x}{\beta_w} P^h \right)^{\frac{1}{1 - h}} \int_{0}^{\infty} \beta_k^{\frac{1}{1 - h}} f_k(\beta_k) \: d \beta_k \int_{h}^{\infty} \lambda^{\frac{-h}{1 - h}} f_{\lambda}(\lambda) \: d \lambda \\
-&= N_S \left(y_0 \frac{\beta_x}{\beta_w} P^h \right)^{\frac{1}{1 - h}} \mu_k \int_{h}^{\infty} \lambda^{\frac{-h}{1 - h}} f_{\lambda}(\lambda) \: d \lambda
+&= N_S \left(y_0 \frac{\beta_x}{\beta_w} P^h \right)^{\frac{1}{1 - h}} \mu_{k*} \int_{h}^{\infty} \lambda^{\frac{-h}{1 - h}} f_{\lambda}(\lambda) \: d \lambda
 \end{split}
 \label{eq:QSeqP}
 \end{equation}
 
-Where $\mu_k = E(\beta_k^{\frac{1}{1 - h}})$; and where the law of the unconscious statistician has again been invoked to replace $g_k(\beta_k^{\frac{1}{1 - h}}) \: d \beta_k^{\frac{1}{1 - h}}$ with $f_k(\beta_k) \: d \beta_k$.
+Where $\mu_{k*} = E(\beta_k^{\frac{1}{1 - h}})$; and where the law of the unconscious statistician has again been invoked to replace $g_k(\beta_k^{\frac{1}{1 - h}}) \: d \beta_k^{\frac{1}{1 - h}}$ with $f_k(\beta_k) \: d \beta_k$.
 
 Evaluation of aggregate supply thus appears to require the introduction of two
 new Axioms: the density functions of $\lambda$ and $\beta_k$. However, note that $\lambda^{\frac{-h}{1 - h}}$ and $\beta_k^{\frac{1}{1 - h}}$ are proportionate to $y^*$. That is to say,
@@ -1455,21 +1455,19 @@ That is to say, the density functions of $\lambda^{\frac{-h}{1 - h}}$ and $\beta
 \begin{framed}
    \textbf{Axiom 7} \\ The economic yield density function, $f(y^*)$.
 \end{framed}
-
-This is something of a relief, as it is generally much easier, empirically speaking, to infer the density function $f(y^*)$ than it is to infer $g_{\lambda}(\lambda^{\frac{-h}{1 - h}})$ or $g_k(\beta_k^{\frac{1}{1 - h}})$.
-
-(In the derivation of the aggregate supply curve above, the density functions $g_{\lambda}(\lambda^{\frac{-h}{1 - h}})$ and $g_k(\beta_k^{\frac{1}{1 - h}})$ are subsequently replaced by density functions $f_{\lambda}(\lambda)$ and $f_k(\beta_k)$ via the law of the unconscious statistician.)
+<!-- This is something of a relief, as it is generally much easier, empirically speaking, to infer the density function $f(y^*)$ than it is to infer $g_{\lambda}(\lambda^{\frac{-h}{1 - h}})$ or $g_k(\beta_k^{\frac{1}{1 - h}})$. -->
+<!-- (In the derivation of the aggregate supply curve above, the density functions $g_{\lambda}(\lambda^{\frac{-h}{1 - h}})$ and $g_k(\beta_k^{\frac{1}{1 - h}})$ are subsequently replaced by density functions $f_{\lambda}(\lambda)$ and $f_k(\beta_k)$ via the law of the unconscious statistician.) -->
 
 In the developing world, economic yields often follow a right skewed distribution such as the lognormal distribution. If economic yield is lognormally distributed, then, by Hull's result^[See Appendix.], the last integral in equation \ref{eq:QSeqP} can be rewritten as follows.
 
 \begin{equation}
-\int_{h}^{\infty} \lambda^{\frac{-h}{1 - h}} f_{\lambda}(\lambda) \: d \lambda = \mu_{\lambda} \Phi(\bar{\gamma})
+\int_{h}^{\infty} \lambda^{\frac{-h}{1 - h}} f_{\lambda}(\lambda) \: d \lambda = \mu_{\ell} \Phi(\bar{\gamma})
 \end{equation}
 
 Where
 
 \begin{equation}
-\mu_{\lambda} = e^{\frac{-h}{1 - h} m_{\lambda} + \frac{1}{2} \frac{h^2}{(1 - h)^2} s_{\lambda}^2} \:\:;\:\:\: m_{\lambda} = E(\ln(\lambda)) \:, \:\: s_{\lambda}^2 = Var(\ln(\lambda))
+\mu_{\ell} = e^{\frac{-h}{1 - h} m_{\lambda} + \frac{1}{2} \frac{h^2}{(1 - h)^2} s_{\lambda}^2} \:\:;\:\:\: m_{\lambda} = E(\ln(\lambda)) \:, \:\: s_{\lambda}^2 = Var(\ln(\lambda))
 \end{equation}
 
 And
@@ -1484,22 +1482,39 @@ And where $\Phi(\bar{\gamma})$ is the standard cumulative normal distribution fu
 \Phi(\bar{\gamma}) = \frac{1}{\sqrt{2 \pi}} \int_{-\infty}^{\bar{\gamma}} e^{t^2/2} \: dt
 \end{equation}
 
-The aggregate supply curve may then be rewritten as follows.
+Note, moreover, that, assuming $y^*$ is lognormally distributed, $\mu_{\ell}$ and $\mu_{k*}$ reduce to more practical and instructive forms.
 
 \begin{equation}
-Q_S = N_S \left(y_0 \frac{\beta_x}{\beta_w} P^h \right)^{\frac{1}{1 - h}} \mu_k \mu_{\lambda} \Phi(\bar{\gamma})
-\label{eq:QSHull}
+\begin{split}
+\mu_{\ell} &= e^{\frac{h}{(1 - h)^2} \left( -(1 - h) m_{\lambda} + \frac{1}{2} h s_{\lambda}^2 \right)} \\
+&= e^{\frac{h^2}{(1 - h)^2} \left( m_{\lambda} + \frac{1}{2} s_{\lambda}^2 \right)} e^{\frac{-h}{(1 - h)^2} m_{\lambda}} \\
+&= \left( \frac{\mu_{\lambda}^h}{M_{\lambda}} \right)^{\frac{h}{(1 - h)^2}}
+\end{split}
 \end{equation}
 
-Where
+Where $\mu_{\lambda} = E(\lambda)$, and $M_{\lambda}$ is the median of $\lambda$.
 
 \begin{equation}
-\mu_k = e^{\frac{1}{1 - h} m_k + \frac{1}{2} \frac{1}{(1 - h)^2} s_k^2} \:\:;\:\:\: m_k = E(\ln(\beta_k)) \:, \:\: s_k^2 = Var(\ln(\beta_k))
+\begin{split}
+\mu_{k*} &= e^{\frac{1}{1 - h} m_k + \frac{1}{2} \frac{1}{(1 - h)^2} s_k^2} \:\:;\:\:\: m_k = E(\ln(\beta_k)) \:, \:\: s_k^2 = Var(\ln(\beta_k)) \\
+&= e^{\frac{1}{(1 - h)^2} \left( (1 - h) m_k + \frac{1}{2} s_k^2 \right) } \\
+&= e^{\frac{1}{(1 - h)^2} \left(m_k + \frac{1}{2} s_k^2 \right) } e^{\frac{-h}{(1 - h)^2} m_k} \\
+&= \left( \frac{\mu_k}{M_k^h} \right)^{\frac{1}{(1 - h)^2}}
+\end{split}
+\end{equation}
+
+Where $\mu_k = E(\beta_k)$, and $M_k$ is the median of $\beta_k$.
+
+Under the assumption of lognormally distributed economic yields, then, the aggregate supply curve may be rewritten as follows.
+
+\begin{equation}
+Q_S = N_S \left(y_0 \frac{\beta_x}{\beta_w} P^h \right)^{\frac{1}{1 - h}} \left( \frac{\mu_k}{M_k^h} \right)^{\frac{1}{(1 - h)^2}} \left( \frac{\mu_{\lambda}^h}{M_{\lambda}} \right)^{\frac{h}{(1 - h)^2}} \Phi(\bar{\gamma})
+\label{eq:QSHull}
 \end{equation}
 
 ### The output price elasticity of aggregate supply \label{sec:pElastQS}
 
-In section \ref{sec:degHomog} it was shown that the farm supply curve is a power law. The aggregate supply curve derived in equation \ref{eq:QSeqP} is also a power law or constant elasticity of supply curve. This becomes more evident if the equation is expressed in following compact form.
+In section \ref{sec:degHomog} it was shown that the farm supply curve is a power law. The aggregate supply curve derived in equation \ref{eq:QSeqP} is also a power law or constant elasticity of supply curve. This becomes more evident if the equation is expressed in the following compact form.
 
 \begin{equation}
 Q_S = \theta_S P^{\eta(P, Q_S)}
@@ -1509,7 +1524,7 @@ Q_S = \theta_S P^{\eta(P, Q_S)}
 Where
 
 \begin{equation}
-\theta_S = N_S \left(y_0 \frac{\beta_x}{\beta_w} \right)^{\frac{1}{1 - h}} \mu_k \int_{h}^{\infty} \lambda^{\frac{-h}{1 - h}} f_{\lambda}(\lambda) \: d \lambda
+\theta_S = N_S \left(y_0 \frac{\beta_x}{\beta_w} \right)^{\frac{1}{1 - h}} \mu_{k*} \int_{h}^{\infty} \lambda^{\frac{-h}{1 - h}} f_{\lambda}(\lambda) \: d \lambda
 \end{equation}
 
 And $\eta(P, Q_S)$ is the output price elasticity of aggregate supply.
@@ -1526,7 +1541,7 @@ Which is the same as the output price elasticity of supply at the farm level (eq
 
 This means that, for relatively input-efficient farm populations ($h > 1 / 2$), the aggregate supply response to an increase in output price is more than proportionate to the price increase; while, for relatively input-inefficient farm populations ($h < 1 / 2$), the aggregate supply response to an increase in output price is less than proportionate to the price increase.
 
-Like the farm supply curve, the aggregate supply curve approaches perfect inelasticity as $h$ approaches $0$, and approaches perfect elasticity as $h$ approaches $1$. However, $\theta_S$ approaches $0$ as $h$ approaches $0$, and tends toward infinity as $h$ approaches $1$, such that neither perfect elasticity nor inelasticity are ever reached; but rather aggregate supply is $0$ at $h = 0$ and infinite at $h = 1$.
+Like the farm supply curve, the aggregate supply curve approaches perfect inelasticity as $h$ approaches $0$, and approaches perfect elasticity as $h$ approaches $1$. The scale factor $\theta_S$ approaches $0$ as $h$ approaches $0$, and tends toward infinity as $h$ approaches $1$.
 
 ### Two debates settled
 
@@ -1558,7 +1573,7 @@ If the new technology comes in the form of an increase in one of the input elast
 <!-- This may be thought of as the "technology adjusted output-input price ratio". Integrating equation \ref{eq:QSeqP} over the density of $r$, giving -->
 
 <!-- \begin{equation} -->
-<!-- Q_S = N_S (y_0 \beta_x)^{\frac{1}{1 - h}} \mu_r \mu_k \int_{0}^{\bar{\chi}} \chi f_{\lambda}(\lambda) \: d\lambda -->
+<!-- Q_S = N_S (y_0 \beta_x)^{\frac{1}{1 - h}} \mu_r \mu_{k*} \int_{0}^{\bar{\chi}} \chi f_{\lambda}(\lambda) \: d\lambda -->
 <!-- \end{equation} -->
 
 <!-- Where -->
@@ -1602,12 +1617,12 @@ Aggregate demand is then found by integrating eqaution \ref{eq:QDcetPar} over th
 Q_D &= \int_0^{\infty} \left[ N_D \alpha_D P^{\frac{\varepsilon - \alpha_D}{1 - h_D} + 1} \left( y_0^D b \frac{ \beta_k^D \beta_x^D}{\tilde{\beta}_w^D} \right)^{\frac{1}{1 - h_D}} \int_0^{\infty} {\beta_k^D}^{\frac{1}{1 - h_D}} \int_{h_D}^{\infty} \lambda_D^{\frac{-h_D}{1 - h_D}} f_{\lambda}^D \left(\lambda_D \right) \: d \lambda_D \right] g_k^D \left( {\beta_k^D}^{\frac{1}{1 - h}} \right) \: d \left( {\beta_k^D}^{\frac{1}{1 - h_D}} \right) \\
 &= N_D \alpha_D P^{\frac{\varepsilon - \alpha_D}{1 - h_D} + 1} \left( y_0^D b \frac{ \beta_x^D}{\tilde{\beta}_w^D} \right)^{\frac{1}{1 - h_D}} \int_0^{\infty} {\beta_k^D}^{\frac{1}{1 - h_D}} g_k^D \left( {\beta_k^D}^{\frac{1}{1 - h_D}} \right) \: d \left( {\beta_k^D}^{\frac{1}{1 - h_D}} \right) \int_{h_D}^{\infty} \lambda_D^{\frac{-h_D}{1 - h_D}} f_{\lambda}^D \left(\lambda_D \right) \: d \lambda_D \\
 &= N_D \alpha_D P^{\frac{\varepsilon - \alpha_D}{1 - h_D} + 1} \left( y_0^D b \frac{ \beta_x^D}{\tilde{\beta}_w^D} \right)^{\frac{1}{1 - h_D}} \int_0^{\infty} {\beta_k^D}^{\frac{1}{1 - h_D}} f_k^D \left( \beta_k^D \right) \: d \beta_k^D \int_{h_D}^{\infty} \lambda_D^{\frac{-h_D}{1 - h_D}} f_{\lambda}^D \left(\lambda_D \right) \: d \lambda_D \\
-&= N_D \alpha_D P^{\frac{\varepsilon - \alpha_D}{1 - h_D} + 1} \left( y_0^D b \frac{ \beta_x^D}{\tilde{\beta}_w^D} \right)^{\frac{1}{1 - h_D}} \mu_k^D \int_{h_D}^{\infty} \lambda_D^{\frac{-h_D}{1 - h_D}} f_{\lambda}^D \left(\lambda_D \right) \: d \lambda_D
+&= N_D \alpha_D P^{\frac{\varepsilon - \alpha_D}{1 - h_D} + 1} \left( y_0^D b \frac{ \beta_x^D}{\tilde{\beta}_w^D} \right)^{\frac{1}{1 - h_D}} \mu_{k*}^D \int_{h_D}^{\infty} \lambda_D^{\frac{-h_D}{1 - h_D}} f_{\lambda}^D \left(\lambda_D \right) \: d \lambda_D
 \end{split}
 \label{eq:QD}
 \end{equation}
 
-Where $\mu_k^D = E({\beta_k^D}^{\frac{1}{1 - h_D}})$; and where the law of the unconscious statistician has again been invoked to replace $g_k^D({\beta_k^D}^{\frac{1}{1 - h_D}}) \: d {\beta_k^D}^{\frac{1}{1 - h_D}}$ with $f_k^D(\beta_k^D) \: d \beta_k^D$.
+Where $\mu_{k*}^D = E({\beta_k^D}^{\frac{1}{1 - h_D}})$; and where the law of the unconscious statistician has again been invoked to replace $g_k^D({\beta_k^D}^{\frac{1}{1 - h_D}}) \: d {\beta_k^D}^{\frac{1}{1 - h_D}}$ with $f_k^D(\beta_k^D) \: d \beta_k^D$.
 
 Noting that $\lambda_D^{\frac{-h_D}{1 - h_D}}$ and ${\beta_k^D}^{\frac{1}{1 - h_D}}$ are proportionate to $x_D^*$, the corresponding density functions are thus equal to the density function of $x_D^*$ up to a constant. Therefore, only one new Axiom is introduced in the derivation of the aggregate demand curve.
 
@@ -1621,13 +1636,13 @@ Noting that $\lambda_D^{\frac{-h_D}{1 - h_D}}$ and ${\beta_k^D}^{\frac{1}{1 - h_
 If consumer demand is lognormally distribution, then, by Hull's result^[See Appendix.], the last integral in equation \ref{eq:QD} can be rewritten as follows.
 
 \begin{equation}
-\int_{0}^{\bar{\chi}_D} \chi_D f_{\lambda}^D(\lambda_D) \: d \lambda_D = \mu_{\lambda}^D \Phi(\bar{\gamma}_D)
+\int_{h_D}^{\infty} \lambda_D^{\frac{-h_D}{1 - h_D}} f_{\lambda}^D \left(\lambda_D \right) \: d \lambda_D = \mu_{\ell}^D \Phi(\bar{\gamma}_D)
 \end{equation}
 
 Where
 
 \begin{equation}
-\mu_{\lambda}^D = e^{\frac{-h_D}{1 - h_D} m_{\lambda}^D + \frac{1}{2} \frac{h_D^2}{(1 - h_D)^2} {s_{\lambda}^D}^2} \:\:;\:\:\: m_{\lambda}^D = E(\ln(\lambda_D)) \:, \:\: {s_{\lambda}^D}^2 = Var(\ln(\lambda_D))
+\mu_{\ell}^D = e^{\frac{-h_D}{1 - h_D} m_{\lambda}^D + \frac{1}{2} \frac{h_D^2}{(1 - h_D)^2} {s_{\lambda}^D}^2} \:\:;\:\:\: m_{\lambda}^D = E(\ln(\lambda_D)) \:, \:\: {s_{\lambda}^D}^2 = Var(\ln(\lambda_D))
 \end{equation}
 
 And
@@ -1642,22 +1657,39 @@ And where $\Phi(\bar{\gamma}_D)$ is the standard cumulative normal distribution 
 \Phi(\bar{\gamma}_D) = \frac{1}{\sqrt{2 \pi}} \int_{-\infty}^{\bar{\gamma}_D} e^{t^2/2} \: dt
 \end{equation}
 
-The aggregate demand curve may then be rewritten as follows.
+Note, moreover, that, assuming $x_D^*$ is lognormally distributed, $\mu_{\ell}^D$ and $\mu_{k*}^D$ reduce to more practical and instructive forms.
 
 \begin{equation}
-Q_D = N_D \left( \frac{\alpha_D}{P} \right)^{\frac{\varepsilon - \alpha_D}{1 - h_D} + 1} \left( y_0^D b \frac{ \beta_x^D}{\tilde{\beta}_w^D} \right)^{\frac{1}{1 - h_D}} \mu_k^D \mu_{\lambda}^D \Phi(\bar{\gamma}_D)
-\label{eq:QDHull}
+\begin{split}
+\mu_{\ell}^D &= e^{\frac{h_D}{(1 - h_D)^2} \left( -(1 - h_D) m_{\lambda}^D + \frac{1}{2} h_D {s_{\lambda}^D}^2 \right)} \\
+&= e^{\frac{h_D^2}{(1 - h_D)^2} \left( m_{\lambda} + \frac{1}{2} {s_{\lambda}^D}^2 \right)} e^{\frac{-h_D}{(1 - h_D)^2} m_{\lambda}^D} \\
+&= \left( \frac{{\mu_{\lambda}^D}^{h_D}}{M_{\lambda}^D} \right)^{\frac{h_D}{(1 - h_D)^2}}
+\end{split}
 \end{equation}
 
-Where
+Where $\mu_{\lambda} = E(\lambda)$, and $M_{\lambda}$ is the median of $\lambda$.
 
 \begin{equation}
-\mu_k^D = e^{\frac{1}{1 - h} m_k^D + \frac{1}{2} \frac{1}{(1 - h)^2} {s_k^D}^2} \:\:;\:\:\: m_k^D = E(\ln(\beta_k^D)) \:, \:\: {s_k^D}^2 = Var(\ln(\beta_k^D))
+\begin{split}
+\mu_{k*}^D &= e^{\frac{1}{1 - h_D} m_k^D + \frac{1}{2} \frac{1}{(1 - h_D)^2} s_k^2} \:\:;\:\:\: m_k^D = E(\ln(\beta_k^D)) \:, \:\: {s_k^D}^2 = Var(\ln(\beta_k^D)) \\
+&= e^{\frac{1}{(1 - h_D)^2} \left((1 - h_D) m_k^D + \frac{1}{2} {s_k^D}^2 \right) } \\
+&= e^{\frac{1}{(1 - h_D)^2} \left(m_k^D + \frac{1}{2} {s_k^D}^2 \right) } e^{\frac{-h_D}{(1 - h_D)^2} m_k^D} \\
+&= \left( \frac{\mu_k^D}{{M_k^D}^h_D} \right)^{\frac{1}{(1 - h_D)^2}}
+\end{split}
+\end{equation}
+
+Where $\mu_k^D = E(\beta_k^D)$, and $M_k^D$ is the median of $\beta_k^D$.
+
+Under the assumption of lognormally distributed economic yields, then, the aggregate demand curve may be rewritten as follows.
+
+\begin{equation}
+Q_D = N_D \left( \frac{\alpha_D}{P} \right)^{\frac{\varepsilon - \alpha_D}{1 - h_D} + 1} \left( y_0^D b \frac{ \beta_x^D}{\tilde{\beta}_w^D} \right)^{\frac{1}{1 - h_D}} \left( \frac{\mu_k^D}{{M_k^D}^{h_D}} \right)^{\frac{1}{(1 - h_D)^2}} \left( \frac{{\mu_{\lambda}^D}^{h_D}}{M_{\lambda}^D} \right)^{\frac{h_D}{(1 - h_D)^2}} \Phi(\bar{\gamma}_D)
+\label{eq:QDHull}
 \end{equation}
 
 ### The output price elasticity of aggregate demand \label{sec:pElastQD}
 
-In section \ref{sec:consDem} it was shown that the consumer demand curve is a power law. The aggregate demand curve derived in equation \ref{eq:QD} is also a power law. This becomes more evident if the equation is expressed in following compact form.
+In section \ref{sec:consDem} it was shown that the consumer demand curve is a power law. The aggregate demand curve derived in equation \ref{eq:QD} is also a power law. This becomes more evident if the equation is expressed in the following compact form.
 
 \begin{equation}
 Q_D = \theta_D P^{\eta(P, Q_D)}
@@ -1667,7 +1699,7 @@ Q_D = \theta_D P^{\eta(P, Q_D)}
 Where
 
 \begin{equation}
-\theta_D = N_D (\alpha_D)^{\frac{\varepsilon - \alpha_D}{1 - h_D} + 1} \left(\frac{y_0^D b \beta_x^D}{\tilde{\beta}_w^D} \right)^{\frac{1}{1 - h_D}} \mu_k^D
+\theta_D = N_D (\alpha_D)^{\frac{\varepsilon - \alpha_D}{1 - h_D} + 1} \left(\frac{y_0^D b \beta_x^D}{\tilde{\beta}_w^D} \right)^{\frac{1}{1 - h_D}} \mu_{k*}^D
 \end{equation}
 
 And the exponent $\eta(P, Q_D)$ is the farm price elasticity of demand.
@@ -1681,38 +1713,17 @@ And the exponent $\eta(P, Q_D)$ is the farm price elasticity of demand.
 \end{equation}
 
 Which is the same as the price elasticity of demand at the level of individual consumers, derived in equation \ref{eq:PelasDem}. It follows that the aggregate demand curve is likewise elastic ($\frac{\partial \ln(x_D^*)}{\partial \ln(P)} < -1$) so long as $\varepsilon \in (0, \alpha_D)$, and inelastic ($\frac{\partial \ln(x_D^*)}{\partial \ln(P)} < -1$) over $\varepsilon \in (\alpha_D, 1 - h_D + \alpha_D)$. Like the consumer demand curve, the aggregate demand curve approaches, but never reaches, perfect inelasticity as $\varepsilon$ approaches its upper bound $1 - h_D + \alpha_D$.
-
-
 <!-- This means that, for relatively input-efficient farm populations ($h > 1 / 2$), the aggregate supply response to an increase in output price is more than proportionate to the price increase; while, for relatively input-inefficient farm populations ($h < 1 / 2$), the aggregate supply response to an increase in output price is less than proportionate to the price increase. -->
-
 <!-- Like the farm supply curve, the aggregate supply curve approaches perfect inelasticity as $h$ approaches $0$, and approaches perfect elasticity as $h$ approaches $1$. However, $\theta_S$ approaches $0$ as $h$ approaches $0$, and tends toward infinity as $h$ approaches $1$, such that neither perfect elasticity nor inelasticity are ever reached; but rather aggregate supply is $0$ at $h = 0$ and infinite at $h = 1$. -->
-
-
-
-
-
-
-
-
-
-
-
-
-
 <!-- ### Aggregating demand over varying prices -->
-
 <!-- Equations \ref{eq:QD} and \ref{eq:QDcompact} give the aggregate demand for a given farm output price $P$. As discussed in previous sections, output price can vary considerably within the farm population, especially in the developing world. To aggregate demand across all prices, then, it is necessary to integrate equation \ref{eq:QD} over the price density. -->
-
 <!-- \begin{equation} -->
-<!-- Q_D = N_D \left(\alpha_D \right)^{\frac{\alpha_D}{1 - h_D} + 1} (y_0^D P_D \tilde{\beta}_w^{D - 1} \beta_x^D)^{\frac{1}{1 - h_D}} \mu_P \mu_k^D \int_0^{\bar{\chi}_D} \chi_D f_D \left(\chi_D \right) d \chi_D -->
+<!-- Q_D = N_D \left(\alpha_D \right)^{\frac{\alpha_D}{1 - h_D} + 1} (y_0^D P_D \tilde{\beta}_w^{D - 1} \beta_x^D)^{\frac{1}{1 - h_D}} \mu_P \mu_{k*}^D \int_0^{\bar{\chi}_D} \chi_D f_D \left(\chi_D \right) d \chi_D -->
 <!-- \end{equation} -->
-
 <!-- Where -->
-
 <!-- \begin{equation} -->
 <!-- \mu_P = \int_0^{\infty} P^{\eta(P, Q_D)} u(P) dP = E \left(P^{\eta(P, Q_D)} \right) -->
 <!-- \end{equation} -->
-
 <!-- And where $u()$ is the assumed density function of $P$ (Axiom 8). -->
 
 # Equilibrium price and quantity
@@ -1820,12 +1831,12 @@ Where the derivative $\frac{\partial \ln(\theta_S)}{\partial \alpha_v}$ works ou
 
 \begin{equation}
 \begin{split}
-\frac{\partial \ln(\theta_S)}{\partial \alpha_v} &= \frac{1}{1 - h} \left( \frac{\partial \ln(\beta_x)}{ \partial \alpha_v} - \frac{\partial \ln(\beta_w)}{\partial \alpha_v} \right) + \frac{1}{(1 - h)^2} \ln \left( \frac{\beta_x}{\beta_w} \right) + \frac{\partial \ln(\mu_k)}{\partial \alpha_v} +\frac{\partial}{\partial \alpha_v} \ln \left( \int_h^{\infty} \lambda^{\frac{-h}{1 - h}} f_{\lambda}(\lambda) \: d \lambda \right) \\
-&= \frac{1}{1 - h} \left( 1 - \boldsymbol{\alpha} \cdot \frac{\partial \mathbf{w}}{\partial \alpha_v} + \ln \left( \frac{\alpha_v}{w_v} \right) \right) + \frac{1}{(1 - h)^2} \ln \left( \frac{\beta_x}{\beta_w} \right) + \frac{\partial \ln(\mu_k)}{\partial \alpha_v} + \frac{\partial \ln(u)}{\partial \alpha_v} 
+\frac{\partial \ln(\theta_S)}{\partial \alpha_v} &= \frac{1}{1 - h} \left( \frac{\partial \ln(\beta_x)}{ \partial \alpha_v} - \frac{\partial \ln(\beta_w)}{\partial \alpha_v} \right) + \frac{1}{(1 - h)^2} \ln \left( \frac{\beta_x}{\beta_w} \right) + \frac{\partial \ln(\mu_{k*})}{\partial \alpha_v} +\frac{\partial}{\partial \alpha_v} \ln \left( \int_h^{\infty} \lambda^{\frac{-h}{1 - h}} f_{\lambda}(\lambda) \: d \lambda \right) \\
+&= \frac{1}{1 - h} \left( 1 - \boldsymbol{\alpha} \cdot \frac{\partial \mathbf{w}}{\partial \alpha_v} + \ln \left( \frac{\alpha_v}{w_v} \right) \right) + \frac{1}{(1 - h)^2} \ln \left( \frac{\beta_x}{\beta_w} \right) + \frac{\partial \ln(\mu_{k*})}{\partial \alpha_v} + \frac{\partial \ln(u)}{\partial \alpha_v} 
 \end{split}
 \label{eq:dLnThetaSdai}
 \end{equation}
-<!-- &= \frac{1}{1 - h} \left[1 - \boldsymbol{\alpha} \cdot \frac{\partial \mathbf{w}}{\partial \alpha_v} + \ln \left( \frac{\alpha_v}{w_v} \right) + \ln(\theta_S) - \ln(\mu_k) - \ln(F(\bar{\chi})) \right] + \frac{\partial \ln(\mu_k)}{\partial \alpha_v} + \frac{\ln(F(\bar{\chi}))}{\partial \alpha_v} -->
+<!-- &= \frac{1}{1 - h} \left[1 - \boldsymbol{\alpha} \cdot \frac{\partial \mathbf{w}}{\partial \alpha_v} + \ln \left( \frac{\alpha_v}{w_v} \right) + \ln(\theta_S) - \ln(\mu_{k*}) - \ln(F(\bar{\chi})) \right] + \frac{\partial \ln(\mu_{k*})}{\partial \alpha_v} + \frac{\ln(F(\bar{\chi}))}{\partial \alpha_v} -->
 
 Where
 
@@ -1837,36 +1848,33 @@ And the last two terms work out as follows.
 
 \begin{equation}
 \begin{split}
-\frac{\partial \ln(\mu_k)}{\partial \alpha_v} &= \frac{1}{\mu_k} \int_0^{\infty} \frac{\partial}{\partial \alpha_v} \beta_k^{\frac{1}{1 - h}} f_k(\beta_k) \: d \beta_k \\
-&= \frac{1}{\mu_k (1 - h)} \int_0^{\infty} \frac{\partial}{\partial \alpha_v} \beta_k^{\frac{h}{1 - h}} f_k(\beta_k) \: d \beta_k \\
-&= \frac{1}{\mu_k (1 - h)} E(\beta_k^{\frac{h}{1 - h}}) \\
-&= \frac{1}{1 - h} \frac{\mu_{\partial k}}{\mu_k} \:\: ; \:\:\: \mu_{\partial k} = E(\beta_k^{\frac{h}{1 - h}})
+\frac{\partial \ln(\mu_{k*})}{\partial \alpha_v} &= \frac{1}{\mu_{k*}} \int_0^{\infty} \frac{\partial}{\partial \alpha_v} \beta_k^{\frac{1}{1 - h}} f_k(\beta_k) \: d \beta_k \\
+&= \frac{1}{\mu_{k*} (1 - h)} \int_0^{\infty} \beta_k^{\frac{h}{1 - h}} f_k(\beta_k) \: d \beta_k \\
+&= \frac{1}{\mu_{k*} (1 - h)} E(\beta_k^{\frac{h}{1 - h}}) \\
+&= \frac{1}{1 - h} \frac{\mu_{\partial k}}{\mu_{k*}} \:\: ; \:\:\: \mu_{\partial k} = E(\beta_k^{\frac{h}{1 - h}})
 \end{split}
 \end{equation}
 
 \begin{equation}
 \begin{split}
-\frac{\partial \ln(u)}{\partial \alpha_v} &= \frac{1}{u} \frac{\partial}{\partial \alpha_v} \ln \left( \int_h^{\infty} \lambda^{\frac{-h}{1 - h}} f_{\lambda}(\lambda) \: d \lambda \right) \\
-&= \frac{1}{u} \left( -h^{\frac{-h}{1 - h}} - \frac{h}{1 - h} \int_0^{\infty} \lambda^{\frac{-1}{1 - h}} f_{\lambda}(\lambda) \: d \lambda \right) \\
-&= -\frac{1}{u} \left( h^{\frac{-h}{1 - h}} + u_{\partial} \frac{h}{1 - h} \right) \:\:; \:\:\: u_{\partial} = \int_0^{\infty} \lambda^{\frac{-1}{1 - h}} f_{\lambda}(\lambda) \: d \lambda
+\frac{\partial \ln(u)}{\partial \alpha_v} &= \frac{1}{u} \frac{\partial}{\partial \alpha_v} \left( \int_h^{\infty} \lambda^{\frac{-h}{1 - h}} f_{\lambda}(\lambda) \: d \lambda \right) \\
+&= \frac{1}{u} \left( -h^{\frac{-h}{1 - h}} f_{\lambda}(h) - \frac{h}{1 - h} \int_h^{\infty} \lambda^{\frac{-1}{1 - h}} f_{\lambda}(\lambda) \: d \lambda \right) \\
+&= -\frac{1}{u} \left( h^{\frac{-h}{1 - h}} f_{\lambda}(h) + u_{\partial} \frac{h}{1 - h} \right) \:\:; \:\:\: u_{\partial} = \int_h^{\infty} \lambda^{\frac{-1}{1 - h}} f_{\lambda}(\lambda) \: d \lambda
 \end{split}
 \end{equation}
 
 If economic yields are lognormally distributed, then by Hull's result^[See the end of section \ref{sec:aggSupply}] this further reduces to
 
 \begin{equation}
-\frac{\partial \ln(u)}{\partial \alpha_v} = -\frac{1}{\mu_{\lambda} \Phi(\bar{\gamma})} \left( h^{\frac{-h}{1 - h}} + \mu_{\partial \lambda} \Phi(\bar{\gamma}_{\partial}) \frac{h}{1 - h} \right)
+\frac{\partial \ln(u)}{\partial \alpha_v} = -\frac{1}{\mu_{\ell} \Phi(\bar{\gamma})} \left( h^{\frac{-h}{1 - h}} + \mu_{\partial \lambda} \Phi \left(\bar{\gamma} - \frac{1}{1 - h} s_{\lambda} \right) \frac{h}{1 - h} \right)
 \end{equation}
 
 Where
 
 \begin{equation}
-\begin{split}
-\mu_{\partial \lambda} &= e^{\frac{-1}{1 - h} + \frac{1}{2} \frac{1}{(1 - h)^2} s_{\lambda}^2 } \\
-\bar{\gamma}_{\partial} &= -\frac{\ln(h) - m_{\lambda}}{s_{\lambda}} - frac{1}{1 - h} s_{\lambda} = \bar{\gamma} - frac{1}{1 - h} s_{\lambda} s_{\lambda}
-\end{split}
+\mu_{\partial \lambda} = e^{\frac{-1}{1 - h} m_{\lambda} + \frac{1}{2} \frac{1}{(1 - h)^2} s_{\lambda}^2 }
 \end{equation}
-
+<!-- \bar{\gamma}_{\partial} &= -\frac{\ln(h) - m_{\lambda}}{s_{\lambda}} - \frac{1}{1 - h} s_{\lambda} = \bar{\gamma} - \frac{1}{1 - h} s_{\lambda}  -->
 
 Without toiling through the considerable ambiguity of the derivative in equation \ref{eq:dLnThetaSdai}, it is already clear from the farm level analysis in section \ref{sec:techChangeAi} that, under Axioms 1-3, all adopting farms find it in their best economic interest to increase output given the new input enhancing technology. It follows, therefore, that $\frac{\partial \ln(Q_e)}{\partial \alpha_v} > 0$. Combining this knowledge with the aggregate expansion condition in inequality \ref{eq:QePoscondAi}, it follows, moreover, that
 
@@ -2201,42 +2209,56 @@ Dividing $\psi_e^S$ and $\psi_e^D$ by $\psi_e$ gives the respective shares of ne
 
 ## Producer and consumer surplus: a problematic welfare measure
 
-Many economists prefer to express benefits in terms of "consumer surplus" and "producer surplus". This approach is problematic for several reasons, some of which are elucidated by... []. Here, I limit the discussion to issues relevant to the .
+Many economists prefer to express benefits in terms of "consumer surplus" and "producer surplus", where consumer surplus is defined as "the level of benefit (utility) that consumers derive by being able to purchase a product for a price that is less than the maximum they would be willing to pay" [@Mahmood2016]; and producer surplus is, by analogy, the level of benefit that producers derive from selling their product for a price that is greater than the minimum they would be willing to accept.
+<!-- "[t]he excess of the price which he would be willing to pay rather than go without the thing, over that which he actually does pay, is the economic measure of this surplus satisfaction".[Marshall] -->
 
-Consumer surplus is defined as "the level of benefit (utility) that consumers derive by being able to purchase a product for a price that is less than the maximum they would be willing to pay" [new palgrave]. x has recently demonstrated that consumer surplus is proportionate to consumer welfare only under highly restrictive, unrealistic conditions [].
+The widespread acceptance of consumer (and producer) surplus as a standard welfare measure stands in stark contrast to the long history of controversy and ambiguity surrounding the method's theoretical foundations and empirical applicability.^[See, for example, [@foster1974ambiguity;@mishan1977plain;@dooley1983consumer;@svoboda2008history;@hausman1981exact;@johnson1985imprecision;@bacon1995measurement]] Here, I limit the discussion to explore the possibility of applying this method of welfare measure within the partial equilibrium model derived above.
 
-First of all, the definition of  assumes that consumers _always_ benefit by paying a price that is lower than some higher benchmark or maximum price. The only circumstance under which this would be unambiguously true is if the prices paid were somehow independent from the corresponding quantities purchased, such that the same quantity of a good could be acquired at different prices. But this is never true in any economic context. On the contrary, there exists a one-to-one correspondence between price and quantity called the demand curve, which implies a tradeoff between price and quantity. Lower prices come at the cost of lower quantities acquired, while higher quantities come at the cost of higher prices paid. To determine whether or not a change in price results in increased or decreased net benefit the 
-
-Given the demand model derived from Axioms 1-4 in equation \ref, moreover, the consumer's maximum price is infinity; and the level of net benefit corresponding to the maximum price (derived in equation \ref) is either infinity or 0, depending upon the relation between the farm price $P$ and output price $P_D$ (in particular, depending upon whether $\varepsilon$ is greater than or less than $alpha_D$).  
-
-The demand side net benefit envelope derived in equation. 
-
-For an individual consumer, this is expressed mathematically as follows.
-
-
-
+The maximum price a consumer is willing to pay for a product, rather than go without the product, is, presumably, no greater than the marginal net benefit of the product. The individual consumer surplus may thus be expressed mathematically as follows.
 
 \begin{equation}
-\omega^D = \mathcal{L}_D^* (P_{max}) - \mathcal{L}_D^*(P_e)
+cs = \frac{\partial \mathcal{L_D}^*}{\partial x_D^*} - P
 \end{equation}
 
-Given the form of $\mathcal{L}_D^*$ derived from Axioms 1 and 2 in equation \ref{eq:NBenvDem}, $P_{max} = \infty$, and
-<!-- $\mathcal{L}_D^* = $ -->
+Considering the consumer's net benefit envelope derived in equation \ref, this can be rewritten as follows.
 
 \begin{equation}
-\mathcal{L}_D^* = (1 - h_D) P^{\frac{\varepsilon - \alpha_D}{1 - h_D}} \left(y_0^D b \frac{\beta_x^D \beta_k^D}{\tilde{\beta}_w^D \lambda^{h_D}} \right) + \lambda_D B_D
+\begin{split}
+cs &= (1 - h_D) P_D \frac{\partial y_D^*}{\partial x_D^*} - P \\
+&= (1 - h_D) P_D \frac{y_D^*}{x_D^*} \alpha_D - P
+\end{split}
 \end{equation}
-<!-- \label{eq:NBenvDem} -->
 
+Using the consumer demand function derived in equation \ref to substitute for $x_D^*$, this reduces to
 
-By convention, consumer surplus is calculated as the area under the demand curve between infinity and the equilibrium price.
+\begin{equation}
+cs = P ((1 - h_D) P_D \lambda_D - 1 )
+\end{equation}
 
-Conversely, producer surplus is the level of benefit that producers derive by selling their product at a price that is higher than the minimum they would be willing to accept. By convention, producer surplus is calculated as the area between the equilibrium price and the supply curve.
+The individual consumer's surplus is thus positive so long as their returns to scale are decreasing ($h_D \in (0, 1)$). (Recall from section \ref that demand side increasing returns to scale are possible if $\varepsilon > \alpha_D$.)
 
-"[t]he excess of the price which he would be willing to pay rather than go without the thing, over that which he actually does pay, is the economic measure of this surplus satisfaction".[Marshall]
+Aggregate consumer surplus is then found by integrating individual consumer surplus over the scaled density of $\lambda_D$.
 
+\begin{equation}
+\begin{split}
+CS &= P \int_{h_D}^{\infty} ((1 - h_D) P_D \lambda_D - 1) N_{\lambda}^D f_{\lambda}^D (\lambda_D) \: d \lambda_D \\
+&= P N_{\lambda}^D \left[ (1 - h_D) P_D \int_{h_D}^{\infty} \lambda_D f_{\lambda}^D (\lambda_D) \: d \lambda_D - \int_{h_D}^{\infty} f_{\lambda}^D (\lambda_D) \: d \lambda_D  \right]
+\end{split}
+\end{equation}
 
-Producer surplus is defined as the area under the supply curve evaluated from zero up to the quantity offered at the equilibrium price.   the difference between the equilibrium price and the price 
+If demand side economic yield (or utility) is lognormally distributed, then so is $\lambda_D$; and by Hull's result^[See Appendix.] this can be rewritten as follows.
+
+\begin{equation}
+CS = P N_{\lambda}^D \left[ (1 - h_D) P_D \mu_{\lambda}^D \left(1 - \Phi \left( \frac{\ln(h_D) - m_{\lambda}^D }{s_{\lambda}^D} - s_{\lambda}^D \right) \right) -  \left(1 - \Phi \left( \frac{\ln(h_D) - m_{\lambda}^D }{s_{\lambda}^D} \right) \right) \right]
+\end{equation}
+
+Like the individual consumer's surplus, aggregate consumer surplus is positive so long as demand side returns to scale are decreasing.
+
+On the producer sidde...
+
+Awkward issue #2: Economists don't actually compute consumer surplus this way, but rather (almost by convention) as the area between the aggregate demand curve and the equilibrium price... If this rather arbitrary representation of consumer surplus were to be at all an accurate representation of cs, it would have to be integrated over the density of consumers at each price along the curve... This would result in substantially lower calculations of consumer surplus, as the highest prices at the top of the curve would be scaled by a very low consumer density.
+
+The areas under the demand and supply curves in fact correspond to no tangible, fungible value ever realized in the real world. If they did, then world GDP would be several orders of magnitude greater than it is.
 
 # Example application
 
