@@ -46,6 +46,8 @@ knitr::opts_chunk$set(echo = FALSE,
 
 -Incredulous results - donors now weary of the cavalier approach
 
+In contrast to the cavalier approach, here I take an axiomatic...
+
 there is evidence that donor patience with the cavalier approach has worn thin. Hurley et al. [-@hurley2014re; -@hurley2016returns] note a growing "disconnect" between donor funding levels and modeled AR4D rates of return. They concede that this is likely because donors have simply stopped believing the steady stream of ex-ante impact assessments reporting implausibly high estimates of returns---59.5% on average---to AR4D investments.
 
 >"Agricultural R&D spending by the United States Department of Agriculture and state agricultural experiment stations was $4.1 billion in 2000. With an annual rate of return equal to the average internal rate of return of 59.5 percent, such an investment would be worth $56.3 quintillion ($56.3 x 1018) in 2050---a value that is more than 2.3 million times the projected size of the global gross domestic product in 2050" [@hurley2016returns].
@@ -919,7 +921,7 @@ Equation \ref{eq:PDasFunOfP} is an ansatz, and not a result derived from the Axi
    \textbf{Axiom 6} \\ The demand side firm output price $P_D$ is often related to the supply side output price $P$ by the equation $P_D = b P^{\varepsilon}$. \\ (Where $b > 0$, and the domain of $\varepsilon$ is derived from Axioms 3 and 4 below.)
 \end{framed}
 
-Using equation \ref{eq:PDasFunOfP} to substitute for $P$ and factoring out $P_D$ gives the following modified form of consumer yield.
+Using equation \ref{eq:PDasFunOfP} to substitute for $P$ in equation \ref{eq:consYdEnv0} and factoring out $P_D$ gives the following modified form of consumer yield.
 
 \begin{equation}
 y_D^* = P_D^{\frac{h_D - \alpha_D / \varepsilon}{1 - h_D}} \left(y_0^D b^{\alpha_D / \varepsilon} \frac{\beta_k^D \beta_x^D}{\lambda_D^{h_D} \tilde{\beta}_w^D} \right)^{\frac{1}{1 - h_D}}
@@ -933,7 +935,18 @@ The consumer's output price ($P_D$) elasticity of yield then follows as
 \label{eq:PDelasydD}
 \end{equation}
 
-Using equation \ref{eq:PDasFunOfP} to substitute for $P_D$ and factoring out $P$ then gives the following modified version of consumer demand $x_D^*$.
+Axiom 3 (positively sloped supply curves) thus imposes the following upper/lower bound on $\varepsilon$, depending on whether demand side returns to scale are decreasing/increasing.
+
+\begin{equation}
+\varepsilon
+\begin{cases}
+< 1 + \alpha_D - h_D, & \text{if $h_D < 1$} \\
+> 1 + \alpha_D - h_D, & \text{if $h_D > 1$}
+\end{cases}
+\label{eq:ax3boundEps}
+\end{equation}
+
+Using equation \ref{eq:PDasFunOfP} to substitute for $P_D$ in equation \ref{eq:inputDemDEM0} and factoring out $P$ then gives the following modified version of consumer demand $x_D^*$.
 
 \begin{equation}
 x_D^* = \alpha_D P^{\frac{\varepsilon - \alpha_D}{1 - h_D} - 1} \left(y_0^D b \frac{\beta_x^D  \beta_k^D}{\lambda_D \tilde{\beta}_w^D} \right)^{\frac{1}{1 - h_D}}
@@ -948,7 +961,7 @@ In the compact power law formulation of consumer demand, the scale parameter $t_
 t_D = \alpha_D \left(y_0^D b \frac{\beta_x^D \beta_k^D}{\lambda_D \tilde{\beta}_w^D} \right)^{\frac{1}{1 - h_D}}
 \end{equation}
 
-And the farm price elasticity of demand $\eta(P, x_D^*)$ becomes
+And the farm output price ($P$) elasticity of demand $\eta(P, x_D^*)$ becomes
 
 \begin{equation}
 \begin{split}
@@ -958,16 +971,31 @@ And the farm price elasticity of demand $\eta(P, x_D^*)$ becomes
 \label{eq:PelasDem}
 \end{equation}
 
-By which it can be seen that Axioms 3 and 4 impose the following domain on $\varepsilon$.
+Axiom 4 (negatively sloped demand curves) thus imposes the following lower/upper bound on $\varepsilon$, depending on whether demand side returns to scale are decreasing/increasing.
 
 \begin{equation}
-\varepsilon \in (\alpha_D / h_D, 1 + \alpha_D - h_D)
+\varepsilon
+\begin{cases}
+> \alpha_D / h_D, & \text{if $h_D < 1$} \\
+< \alpha_D / h_D, & \text{if $h_D > 1$}
+\end{cases}
+\label{eq:ax4boundEps}
+\end{equation}
+
+Taken together, then, inequalities \ref{eq:ax3boundEps} and \ref{eq:ax4boundEps} impose the following domain on $\varepsilon$.
+
+\begin{equation}
+\varepsilon \in
+\begin{cases}
+(\alpha_D / h_D, 1 + \alpha_D - h_D), & \text{if $h_D \in (0, 1)$} \\
+(1 + \alpha_D - h_D, \alpha_D / h_D), & \text{if $h_D \in (1, \infty)$}
+\end{cases}
 \label{eq:domEpsilon}
 \end{equation}
 
-Considering that $h_D = \sum_i \alpha_i^D$ and $\alpha_i^D > 0$ for all $i$, the lower bound $\alpha_D / h_D$ is always greater than $0$ and less than $1$. Note, moreover, that $\alpha_D - h_D < 0$, and so the upper bound is also less than $1$.
+Considering that $h_D = \sum_i \alpha_i^D$ and $\alpha_v^D > 0$ for all $v$, the term $\alpha_D / h_D$ is always greater than $0$ and less than $1$. By the same token, $\alpha_D - h_D < 0$, and so the term $1 + \alpha_D - h_D$ is also less than $1$.
 
-Is the upper bound always greater than the lower bound? Supposing it is, then,
+Is the upper bound of $\varepsilon$ always greater than its lower bound? Supposing it is, then, for decreasing returns to scale ($h_D < 1$),
 
 \begin{equation}
 \begin{split}
@@ -978,14 +1006,67 @@ Is the upper bound always greater than the lower bound? Supposing it is, then,
 \end{split}
 \end{equation}
 
-Which was shown to be true in the previous paragraph. Thus the supposition that $\varepsilon$'s upper bound is always greater than its lower bound is true.
+And, for increasing returns to scale, ($h_D > 1$),
+
+\begin{equation}
+\begin{split}
+\alpha_D / h_D &> 1 + \alpha_D - h_D \\
+\alpha_D (1 / h_D - 1) &> 1 - h_D \\
+\alpha_D / h_D (1 - h_D) &> 1 - h_D \\
+\alpha_D / h_D &< 1
+\end{split}
+\end{equation}
+
+Which is true in both cases by the definition of $h_D$ as the sum of the $\alpha_i$. Therefore, the supposition that $\varepsilon$'s upper bound is always greater than its lower bound is true.
 
 ### Domain of demand side degree of homogeneity when consumer output price is a function of farm output price
 
-Under Axiom 4, the elasticity of demand in equation \ref{eq:PelasDem} requires that
+The domain of $\varepsilon$ derived above (inequality \ref{eq:domEpsilon}) implies the following bounds on $h_D$.
 
 \begin{equation}
-h_D \in (-\infty, \min(1 + \underline{\alpha}_D, 1 - \varepsilon + \alpha_D))
+h_D \in
+\begin{cases}
+(\alpha_D / \varepsilon, 1 - \varepsilon + \alpha_D), & \text{if $\varepsilon > \alpha_D$} \\
+(1 - \varepsilon + \alpha_D, \alpha_D / \varepsilon), & \text{if $\varepsilon < \alpha_D$}
+\end{cases}
+\end{equation}
+
+But note that Axiom 4 must hold true for all inputs, not just the primary input or feedstock $x_D^*$. Therefore,
+
+\begin{equation}
+h_D
+\begin{cases}
+< 1 + \underline{\alpha}_D, & \text{if $h_D < 1$} \\
+> 1 + \underline{\alpha}_D, & \text{if $h_D > 1$}
+\end{cases}
+\end{equation}
+
+Where $\underline{\alpha}_D$ is the smallest demand side input elasticity (typically smaller than $\alpha_D$).
+
+The first case is trivially true. Note also that inequality \ref{eq:ax4boundEps} implies that $h_D < 1 \rightarrow \varepsilon > \alpha_D$ and $h_D < 1 \rightarrow \varepsilon < \alpha_D$, so the bound on $h_D$ can be rewritten
+
+\begin{equation}
+h_D
+\begin{cases}
+< 1 + \underline{\alpha}_D, & \text{if $\varepsilon > \alpha_D$} \\
+> 1 + \underline{\alpha}_D, & \text{if $\varepsilon < \alpha_D$}
+\end{cases}
+\end{equation}
+
+
+
+
+
+
+
+
+
+
+
+Under Axiom 4, the elasticity of demand in equation \ref{eq:PelasDem} imposes the following domain on the demand side degree of homogeneity.
+
+\begin{equation}
+h_D \in (0, \min(1 + \underline{\alpha}_D, 1 - \varepsilon + \alpha_D))
 \end{equation}
 
 Where $\underline{\alpha}_D$ is the smallest of the consumer's input elasticities of utility. The upper bound on the righthand side of this expression can be simplified considering the upper bound of $\varepsilon$ derived in expression \ref{eq:domEpsilon}, and the lower bound placed on $\underline{\alpha}_D$ by equation \ref{eq:PelasDem} and Axiom 4. That is to say, evaluating $\min(1 + \underline{\alpha}_D, 1 - \varepsilon + \alpha_D)$ at $\max(\varepsilon)$, gives
@@ -1042,7 +1123,7 @@ h_D \in
 \end{cases}
 \end{equation}
 
-Under Axiom 6, then, increasing returns to scale are possible if $\varepsilon < \alpha_D$. Note that, as a general rule, Axiom 6 applies to mills and factories, but not to farms. Farms are generally not at liberty to raise their output price in response to a higher input price, especially not in the developing world. An important asymmetry is thereby introduced between the supply and demand side of the primary sector, whereby producers are limited to decreasing returns to scale while consumers may attain increasing returns to scale if the condition $\varepsilon < \alpha_D$ is met.
+Under Axiom 6, then, increasing returns to scale are possible if $\varepsilon < \alpha_D$. Note that, as a general rule, Axiom 6 applies to mills and factories, but not to farms. Farms are generally not at liberty to lower an input price in response to a decrease in their output price, especially not in the developing world. An important asymmetry is thereby introduced between the supply and demand side of the primary sector, whereby producers are limited to decreasing returns to scale while consumers may attain increasing returns to scale if the condition $\varepsilon < \alpha_D$ is met.
 
 ### Domain of price elasticities of consumer supply and demand when consumer output price is a function of farm output price
 
@@ -1699,7 +1780,7 @@ Q_D = \theta_D P^{\eta(P, Q_D)}
 Where
 
 \begin{equation}
-\theta_D = N_D (\alpha_D)^{\frac{\varepsilon - \alpha_D}{1 - h_D} + 1} \left(\frac{y_0^D b \beta_x^D}{\tilde{\beta}_w^D} \right)^{\frac{1}{1 - h_D}} \mu_{k*}^D
+\theta_D = N_D (\alpha_D)^{\frac{\varepsilon - \alpha_D}{1 - h_D} + 1} \left(y_0^D b \frac{\beta_x^D}{\tilde{\beta}_w^D} \right)^{\frac{1}{1 - h_D}} \mu_{k*}^D
 \end{equation}
 
 And the exponent $\eta(P, Q_D)$ is the farm price elasticity of demand.
@@ -2210,9 +2291,61 @@ Dividing $\psi_e^S$ and $\psi_e^D$ by $\psi_e$ gives the respective shares of ne
 ## Producer and consumer surplus: a problematic welfare measure
 
 Many economists prefer to express benefits in terms of "consumer surplus" and "producer surplus", where consumer surplus is defined as "the level of benefit (utility) that consumers derive by being able to purchase a product for a price that is less than the maximum they would be willing to pay" [@Mahmood2016]; and producer surplus is, by analogy, the level of benefit that producers derive from selling their product for a price that is greater than the minimum they would be willing to accept.
+
+The wide acceptance of consumer (and producer) surplus as a standard welfare measure stands in stark contrast to the long history of controversy and ambiguity surrounding the method's theoretical foundations and empirical applicability.^[See, for example, [@foster1974ambiguity;@mishan1977plain;@dooley1983consumer;@svoboda2008history;@hausman1981exact;@johnson1985imprecision;@bacon1995measurement]] Many of the key points of theoretical contention are not controversial in light of the partial equilibrium model derived in the preciding sections. Many critics took issue with the method's assumption that a given consumer's budget shadow price is constant, for example.  Much of the criticism has focused on 4 key assumptions underpinning the method: 1) utility is additive, 2) budgets, like any other good, follow the law of diminishing marginal returns, and the budget shadow price^[This is referred to as the "marginal utility of money" in the literature.] is constant for a given consumer, 3) changes in the price of the good in question have no effect on the prices of other goods in the consumer's basket, and 4) interpersonal comparisons of utility are possible [@dooley1983consumer].
+
+Assumptions 1 and 2 are not controversial in the context of the partial equilibrium model derived in the preceding sections. As discussed in section \ref ..., the mathematically trivial issue of additivity vanishes with a coordinate transformation. The consumer's budget is assumed to follow the law of diminishing marginal returns like any other commodity; and this assumption was used in section \ref... to derive the log-log form corresponding empirical consumer expenditure laws such as Engel's law. The budget shadow price $\lambda$ (or $\lambda_D$ on the demand side), meanwhile, is shown to be proportionate to each consumer's expected benefit-to-cost ratio (equation \ref...), and thus constant for a given consumer. Assumption 3 is ...prices... Assumption 4 interpersonal comparisons possible when the good is productively consumed, which is generally the case in resource poor farming communities in the developing world.
+
+However, within the theoretical framework derived above, the method remains a problematic welfare measure for reasons not yet enumerated in the literature. First of all, the calculation of an individual consumer's surplus as the area between the aggregate demand curve and equilibrium price hinges upon an identity between price and the consumer's marginal benefit. The reasoning is that price is equal to the consumer's marginal cost, and that net beneft maximization implies that marginal cost is equal to marginal benefit. However, this identity between marginal cost and marginal benefit holds only when no budget constraint is included in the consumer's net benefit maximization problem. When a budget constraint is included, as in Axiom 2, the identity no longer holds. Rather,
+
+\begin{equation}
+\begin{split}
+\frac{\partial R_D^*}{\partial \x_D^*} &= P_D \frac{y_D^*}{x_D^*} \alpha_D \\
+&= \lambda_D P
+\end{split}
+\end{equation}
+
+That is to say, when a budget constraint is included, the marginal benefit is proportionate to, but not equal to, price.
+
+Moreover, it is the net benefit ($\mathcal{L}_D^*$), not benefit, that really matters. An individual consumer's surplus can be positive even though the consumer is in fact experiencing a net benefit loss. A more informative welfare measure would thus be
+
+\begin{equation}
+\int_0^{x_D^e} \frac{\partial \mathcal{L}_D^*}{\partial \x_D^*} \: d x_D^* &= \int_{P_e}^{\infty} (1 - h_D) \lambda_D P \: dP
+\end{equation}
+
+
+
+Consumer surplus is typically calculated as the area between the aggregate demand curve and equilibrium price. Producer surplus is typically calculated as the area between the equilibrium price and the aggregate supply curve.
 <!-- "[t]he excess of the price which he would be willing to pay rather than go without the thing, over that which he actually does pay, is the economic measure of this surplus satisfaction".[Marshall] -->
 
-The widespread acceptance of consumer (and producer) surplus as a standard welfare measure stands in stark contrast to the long history of controversy and ambiguity surrounding the method's theoretical foundations and empirical applicability.^[See, for example, [@foster1974ambiguity;@mishan1977plain;@dooley1983consumer;@svoboda2008history;@hausman1981exact;@johnson1985imprecision;@bacon1995measurement]] Here, I limit the discussion to explore the possibility of applying this method of welfare measure within the partial equilibrium model derived above.
+ <!-- Here, I demonstrate that the concept is mathematically ill-posed as stated, and that the calculation of consumer surplus does not match its verbal definition. I end with an emphatic reminder that consumer and producer surplus do not correspond to a real, i.e. tangible, bankable value that is ever realized in the real world. -->
+
+The definition of consumer surplus quoted above makes no mention of the quantities of the "product" acquired at the equilibrium price and the maximum price the consumer would be willing to pay. The implication appears to be that the two quantities are the same at these two different prices. Marshall's earlier definition of consumer surplus as "[t]he excess of the price which he would be willing to pay rather than go without the thing, over that which he actually does pay" [Marshall], leaves no room for doubt: In the definition of consumer surplus, the quantities acquired at the equilibrium price and at the "maximum price the consumer is willing to pay" are the same.
+
+The notion that consumers are willing to pay different prices for the same quantity of a product, combined with the notion that there is a maximum price $P_{max}$ they are willing to pay for this quantity, effectively implies the following piecewise functional form for individual demand.
+
+\begin{equation}
+x_D^* = 
+\begin{cases}
+q, & \text{if $P_e \in (0, P_{max})$} \\
+0, & \text{if $P_e > P_{max}$}
+\end{cases}
+\label{eq:csDem}
+\end{equation}
+
+That is, the demand curves of individual consumers are perfectly elastic over the price range $(0, P_{max})$, such that consumers demand a particular quantity $q$ over this range, and demand zero quantity at prices above $P_{max}$. ($P_{max}$ and $q$ can vary from consumer to consumer.)
+
+This is a reasonable demand model in the case of products that can only be demanded in a particular quantity. The number of heavy machines demanded by a manufacturer is often determined by the number of such machines that can fit in their factory, for example. The owner of a car requiring a new alternator usually wants to buy just one replacement alternator, and is not coaxed into buying two or three by a reduction in the price of alternators.
+
+These are special cases, however, which are quite removed from the experience in agricultural markets.
+This is a far cry from the individual demand curve derived from Axioms 1 and 2 in equation \ref. Recall, moreover, that equation \ref implies that and individual's demand can approach, but never reach, perfect elasticity. This means that consumers demand different quantities of the product at different prices. Prices along the demand curve above the equilibrium price therefore cannot be interpreted as representing higher prices that the consumer is willing to pay for the quantity acquired at the eqilibrium price.
+
+Even supposing equation \ref{eq:csDem} is a reasonable demand function, the calculation of consumer's surplus as the area between the demand curve and the equilibrium price does not in fact equal the sum of all individual consumer surpluses. In order to achieve this result, the distance between the demand curve and the equilibrium price must be integrated over the density of consumers at each price along the curve.      method of calculating the sum of every individual's consumer surplus by  then the   Consumer surplus is typically calculated as the area between the demand curve and equilibrium price. This is based on the notion that prices on the demand curve above $P_e$ represent higher prices that consumers are willing to pay for the same quantity of the product acquired at the equilbrium price, rather than go without it. However, this notion is valid only if the demand curves of individual consumers are perfectly elastic over the price range $(0, P_{max})$, where $P_{max}$ is the maximum price the individual consumer is willing to pay  with $0$ demand      if the demand curves of individual consumers are not perfectly elastic, then prices   correspond to different quantities of the 
+
+<!-- There are two fundamental flaws with this notion. First of all, if prices on the demand curve above $P_e$ truly represent prices that consumers are willing to pay for the quantity of product acquired at the -->
+
+The definition of consumer surplus implies that the product in question is sold in a quantity  if it is to make any sense at all, implies a peculiar type of aggregate demand curve whereby individuals either buy or do not buy the product at the given price. The quantity purchased by each consumer is the same across all prices.  In other words, individual consumer demand curves are all perfectly elastic over a specific price domain $(0, P_{max})$. The aggregate quantity of the product sold at different prices thus changes based only on the number of consumers purchasing the product, not by the amount each consumer purchases at different prices.
+
 
 The maximum price a consumer is willing to pay for a product, rather than go without the product, is, presumably, no greater than the marginal net benefit of the product. The individual consumer surplus may thus be expressed mathematically as follows.
 
