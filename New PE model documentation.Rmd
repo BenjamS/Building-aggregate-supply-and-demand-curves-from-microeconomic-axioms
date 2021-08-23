@@ -2254,15 +2254,69 @@ Dividing $\psi_e^S$ and $\psi_e^D$ by $\psi_e$ gives the respective shares of ne
 \frac{\psi_e^D}{\psi_e} = \frac{(\varepsilon - \alpha_v) \frac{\partial \ln(P_e)}{\partial \alpha_v} P_D Q^D}{\left( (\varepsilon - \alpha_D) P_D Q^D + P_e Q_e \right) \frac{\partial \ln(P_e)}{\partial \alpha_v} + t P_e Q_e + \frac{N_S}{h} P_e E(y^* \bigr|_{P_e} \ln(y^* \bigr|_{P_e}))}
 \end{equation}
 
-## Producer and consumer surplus: a problematic welfare measure
+## "Economic surplus"
 
-Many economists prefer to express benefits in terms of "consumer surplus" and "producer surplus", where consumer surplus is defined as "the level of benefit (utility) that consumers derive by being able to purchase a product for a price that is less than the maximum they would be willing to pay" [@Mahmood2016]; and producer surplus is, by analogy, the level of benefit that producers derive from selling their product for a price that is greater than the minimum they would be willing to accept.
+Many economists prefer to express benefits in terms of something called "economic surplus", which is in turn composed of "consumer surplus" and "producer surplus". Consumer surplus is defined as "the level of benefit (utility) that consumers derive by being able to purchase a product for a price that is less than the maximum they would be willing to pay" [@Mahmood2016]; and producer surplus is, by analogy, the level of benefit that producers derive from selling their product for a price that is greater than the minimum they would be willing to accept.
 
-The wide acceptance of consumer (and producer) surplus as a standard welfare measure stands in stark contrast to the long history of controversy and ambiguity surrounding the method's theoretical foundations and empirical applicability.^[See, for example, [@foster1974ambiguity;@mishan1977plain;@dooley1983consumer;@svoboda2008history;@hausman1981exact;@johnson1985imprecision;@bacon1995measurement]] Many of the key points of theoretical contention are not controversial in light of the partial equilibrium model derived in the preciding sections. Many critics took issue with the method's assumption that a given consumer's budget shadow price is constant, for example.  Much of the criticism has focused on 4 key assumptions underpinning the method: 1) utility is additive, 2) budgets, like any other good, follow the law of diminishing marginal returns, and the budget shadow price^[This is referred to as the "marginal utility of money" in the literature.] is constant for a given consumer, 3) changes in the price of the good in question have no effect on the prices of other goods in the consumer's basket, and 4) interpersonal comparisons of utility are possible [@dooley1983consumer].
+### A problematic welfare measure
 
-Assumptions 1 and 2 are not controversial in the context of the partial equilibrium model derived in the preceding sections. As discussed in section \ref, the mathematically trivial issue of additivity vanishes with a coordinate transformation. The consumer's budget is assumed to follow the law of diminishing marginal returns like any other commodity; and this assumption was used in section \ref to derive the log-log form corresponding empirical consumer expenditure laws such as Engel's law. The budget shadow price $\lambda$ (or $\lambda_D$ on the demand side), meanwhile, is shown to be proportionate to each consumer's expected benefit-to-cost ratio (equation \ref), and thus constant for a given consumer. Assumption 3 is ...prices... Assumption 4 interpersonal comparisons possible when the good is productively consumed, which is generally the case in resource poor farming communities in the developing world.
+The widespread acceptance of economic surplus as a standard welfare measure stands in stark contrast to the long history of controversy and ambiguity surrounding the method's theoretical foundations and empirical applicability.^[See, for example, [@foster1974ambiguity;@mishan1977plain;@dooley1983consumer;@currie1971concept].] The concept is, in many respects, a perfect example of the hand-wavy mathiness identified by Von Neumann et al. and Romer (see Introduction) at the root of so much frustration with economic modeling. Here, again, "one is offered not proofs but mere assertions which are really no better than the same assertions given in literary form"; and "valuable surmises and inspiring anticipations of results" are confused with genuine results [@morgenstern1953theory].
 
-However, within the theoretical framework derived above, the method remains a problematic welfare measure for reasons not yet enumerated in the literature. First of all, the calculation of an individual consumer's surplus as the area between the aggregate demand curve and equilibrium price hinges upon an identity between price and the consumer's marginal benefit. The reasoning is that price is equal to the consumer's marginal cost, and that net beneft maximization implies that marginal cost is equal to marginal benefit. However, this identity between marginal cost and marginal benefit holds only when no budget constraint is included in the consumer's net benefit maximization problem. When a budget constraint is included, as in Axiom 2, the identity no longer holds. Rather,
+The method of calculating consumer surplus---as the area between the demand curve and the equilibrium price---is a case in point. This method was proposed by Depuit in 1844, and later advocated by Marshall in 1895, as a surmise without any theoretical justification [@currie1971concept; @burns1973note]. Most economists, even today, would probably struggle to explain the connection between Depuit's calculation and the verbal definition of consumer surplus given above. Nonetheless, Depuit's surmise persisted through more than a century of heated debate, unquestioned, while many other less critical aspects of consumer's surplus fell under intense scrutiny. Only in 1973 did a (seriously flawed) theoretical basis for Depuit's calculation appear in print [@burns1973note]. [flawed because lambda in the demand equation, thus integrating doesn't give the area under demand curve but rather the area under the demand curve times lambda, also an issue with linearly homogenous utility]
+
+[Furthermore, ]The disordered, piecemeal [(or cavalier, to put it charitably)] progression in the mathematical treatment of consumer's surplus generated considerable ambiguity surrounding the concept. In his critique, Samuelson remarks that "the Marshallian concept of consumer's surplus does not refer to any one thing, but to at least half a dozen interrelated expressions" [Samuelson in @burns1973note]. And Currie et al.'s extensive review of the debate finds that "Marshall's somewhat confusing presentation of this subject is open to more than one interpretation" [-@currie1971concept]. This confusion is precisely the sort of ambiguity that Von Neumann et al. another aspect of the frustration with economic modeling says renders mathematical tools useless Von Neumann et al.  "There is no point in using exact methods where there is no clarity in the concepts and issues to which they are to be applied" [@morgenstern1953theory].
+<!-- "the economic problems were not formulated clearly and are often stated in such vague terms as to make mathematical treatment _a priori_ appear hopeless because it is quite uncertain what the problems really are" [@morgenstern1953theory]. -->
+
+The upshot: After more than century of debate, the consensus among economists seems to be that the economic surplus measure of welfare is, at best, "useful as a heuristic device---so long as its limitations are understood" [Little in @currie1971concept]. (Empirically, Johnson [-@johnson1985imprecision] and Bacon [-@bacon1995measurementstudies] have shown these limitations to be quite severe.) The persistent use of the economic surplus measure in spite of its fundamental drawbacks is attributed to a dismal lack of "workable alternatives", and to the ever growing demand for welfare impact studies to inform policy decisions [@currie1971concept].
+<!-- The consensus seems to be that "[w]hile it is easy to raise objections to the use of the concept of economic surplus for providing answers for policy formulation, it is difficult to find any workable alternative" [@currie1971concept]. -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- Many of the key points of theoretical contention are not controversial in light of the partial equilibrium model derived in the preciding sections. Many critics took issue with the method's assumption that a given consumer's budget shadow price is constant, for example.  Much of the criticism has focused on 4 key assumptions underpinning the method: 1) utility is additive, 2) budgets, like any other good, follow the law of diminishing marginal returns, and the budget shadow price^[This is referred to as the "marginal utility of money" in the literature.] is constant for a given consumer, 3) changes in the price of the good in question have no effect on the prices of other goods in the consumer's basket, and 4) interpersonal comparisons of utility are possible [@dooley1983consumer]. Others have noted that empirical imprecision... -->
+
+<!-- Assumptions 1 and 2 are not controversial in the context of the partial equilibrium model derived in the preceding sections. As discussed in section \ref, the mathematically trivial issue of additivity vanishes with a coordinate transformation. The consumer's budget is assumed to follow the law of diminishing marginal returns like any other commodity; and this assumption was used in section \ref to derive the log-log form corresponding empirical consumer expenditure laws such as Engel's law. The budget shadow price $\lambda$ (or $\lambda_D$ on the demand side), meanwhile, is shown to be proportionate to each consumer's expected benefit-to-cost ratio (equation \ref), and thus constant for a given consumer. Assumption 3 is ...prices... Assumption 4 interpersonal comparisons possible when the good is productively consumed, which is generally the case in resource poor farming communities in the developing world. -->
+
+<!-- However, in the context of the partial equilibrium model derived in the preceding sections, there arise three issues not yet enumerated in the literature. -->
+
+To begin with, consider the typical method of calcuating an individual consumer's surplus as the area between the individual consumer's demand curve and the equilibrium price. For many practitioners, the connection between this calculation and the verbal definition of consumer's surplus above is less than intuitive. For Marshall [@], the connection went something like this:
+
++ a) Assuming consumers want to maximize net benefit, they spend such that their marginal benefit is equal to the price of the good; and so the marginal cost curve is equivalent to the consumer's marginal benefit curve. The individual's demand curve is therefore equivalent to their marginal benefit curve.
+
+\begin{equation}
+\max_{\mathbf{x}_D} \: U_D - C_D \:\: \rightarrow \:\: \frac{\partial U_D^*}{\partial x_D^*} = P
+\end{equation}
+
++ b) The difference between a point along the demand curve and the equilibrium price is thus equivalent to the difference between the marginal benefit of the good to the consumer and the equilibrium price. This difference may be called the individual's marginal consumer surplus ($cs$) at a given point along the curve.
+
+\begin{equation}
+\frac{\partial cs}{\partial x_D^*} = \frac{\partial U_D^*}{\partial x_D^*} - P
+\end{equation}
+
++ c) The individual's consumer surplus then follows as the integral of the marginal consumer surplus over the price domain, from zero to the equilibrium price, which is equivalent to the area between the individual's demand curve and the equilibrium price.
+
+
+
+
+The definition of consumer's surplus can be derived as follows. First consider that the difference between the marginal benefit of a good and its price may be expressed as follows.
+
+\begin{equation}
+\frac{\partial \text{cs}}{}
+\end{equation}
+
+
+  , which in turn is equal to marginal benefit under the assumption that the consumer wishes to maximize net benefit. Integrating the demand curve up to the equilibrium price is thus equivalent to integrating the marginal consumer surplus, which gives the consumer surplus.  However, this identity between marginal cost and marginal benefit holds only when no budget constraint is included in the consumer's net benefit maximization problem. When a budget constraint is included, as in Axiom 2, the identity no longer holds. Rather,
 
 \begin{equation}
 \begin{split}
