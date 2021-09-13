@@ -44,29 +44,40 @@ knitr::opts_chunk$set(echo = FALSE,
 
 # Introduction
 
--Incredulous results - donors now weary of the cavalier approach
+**Lack of confidence in ex-ante impact assessment tools.**
 
-In contrast to the cavalier approach, here I take an axiomatic...
+[@alston2000research]
+[@alston2000meta]
+[@pardey2016shifting]
+[@alston2001attribution]
+[@hurley2014re; @hurley2016returns]
 
-there is evidence that donor patience with the cavalier approach has worn thin. Hurley et al. [-@hurley2014re; -@hurley2016returns] note a growing "disconnect" between donor funding levels and modeled AR4D rates of return. They concede that this is likely because donors have simply stopped believing the steady stream of ex-ante impact assessments reporting implausibly high estimates of returns---59.5% on average---to AR4D investments.
+
+
+
+In a comprehensive review of... Alston et al. note an "apparent paradox" whereby "Support for international research is dwindling despite seemingly strong evidence that it pays off handsomely" [-@alston2000meta].
+
+<!-- "In recent years, a paradox has become apparent. On the one hand, we have an ever-expanding volume of what appears to be generally consistent evidence that rates of return to public agricultural R&D are high-high enough to justify past support and an even greater investment of public funds. On the other hand, we have seen in recent years in most countries, rich and poor alike, a marked slowdown, if not an actual decline, in public funding for agricultural R&D" [@alston2000meta]. -->
+
+
+Alston and Pardey observed  [-@alston2001attribution].
+
+Subsequently, proved prophetic ... Hurley et al. [-@hurley2014re; -@hurley2016returns] note a growing "disconnect" between donor funding levels and modeled rates of return to agricultural research. They concede that this is likely because donors have simply stopped believing the steady stream of ex-ante impact assessments reporting implausibly high estimates of returns---59.5% on average---to AR4D investments.
 
 >"Agricultural R&D spending by the United States Department of Agriculture and state agricultural experiment stations was $4.1 billion in 2000. With an annual rate of return equal to the average internal rate of return of 59.5 percent, such an investment would be worth $56.3 quintillion ($56.3 x 1018) in 2050---a value that is more than 2.3 million times the projected size of the global gross domestic product in 2050" [@hurley2016returns].
 
-Alston and Pardey made a similar observation many years earlier [-@alston2001attribution]. Hurley et al. [-@hurley2016returns] propose to correct for any methodological flaw in the modeling by replacing the internal rate of return (IRR) calculation with the more conservative "modified IRR".
+Hurley et al. [-@hurley2016returns] propose to correct for any methodological flaw in the modeling by replacing the internal rate of return (IRR) calculation with the more conservative "modified IRR". While this is may be an improvement over the cartoonishly exaggerated estimates of AR4D returns, it is a cosmetic change that leaves unaddressed the underlying theoretical or methodological issues responsible for the unrealistic impact estimates in the first place.
 
--Model is a collection of surmises based on preference rather than a theory derived from axioms (Von Neumann)
+...well known problems...a cavalier approach...a collection of preferences translated into mathematical equations, not a coherent theory derived from axioms...
 
-In 1944, John Von Neumann et al. observed that "part of the feeling of dissatisfaction with the mathematical treatment of economic theory derives largely from the fact that frequently one is offered not proofs but mere assertions which are really no better than the same assertions given in literary form" [@morgenstern1953theory].
-<!-- and from the fact that genuine results are often confused with "very valuable surmises and inspiring anticipations of results" -->
+Moreover, current methods shed no light on basic areas of confusion encountered again and again in strategic research discussions:
+<!-- In AR4D discussions there frequently arise questions or confusion regarding: -->
 
--Well known issues: homothetic pref or identical farms, pivot or shift, negative quantities,  
-
-there was considerable debate in the 1970s over whether the research-induced supply curve shift should be modeled as a parallel shift or a pivot [@alston1995science; @norton1981evaluating; @lindner1978supply]. The debate was further complicated by differing views as to whether supply should be modeled as a linear or a curved CE function. Without a theoretical framework to link parameter values and functional forms to real world conditions, the debate was ultimately inconclusive. The answers to the questions left unresolved by the debate have come down to us today as a matter of preference. In their highly influential book, _Science Under Scarcity_, Alston et al. indicate their preference for the linear parallel shift [-@alston1995science]; and AR4D partial equilibrium impact studies generally follow suit.
-
--experimental yields and economic yields
+-the difference betwen experimental yields versus economic yields
 -ambiguous benefits of increased efficiency --> Adoption rates less than 100%
 -tech backlogs, yield gaps
 -which centiles adopt (distributional question). The predominant PE model used for parsimonious ex-ante impact assessment of agricultural research offers no insight into this question. The model authors dismiss the distributional question as irrelevant to agricultural research.
+<!-- Currently available tools are inadequate to address these issues. -->
 
 "Research can have significant distributional implications, but this need not mean that research should be directed to pursue distributional objectives." [@alston1995science]
 
@@ -80,6 +91,9 @@ Pareto efficiency counts for very little in pro-poor development (Sen, 2001).
 
 "An economy can be optimal in this sense even when some people are rolling in luxury and others are near starvation as long as the starvers cannot be made better off without cutting into the pleasures of the rich. If preventing  the burning of Rome would have made Emperor Nero feel worse off, then letting him burn Rome would have been Pareto-optimal. In short, a society or an  economy can be Pareto-optimal and still be perfectly disgusting." [@sen2017collective]
 
+and characterized Pareto-optimality as "an extremely limited way of assessing social achievement" (Sen 1999).
+
+
 The new agricultural paradigm...engine of pro-poor growth [@byerlee2009agriculture]. Evidence now abounds that of high inequality and growth being co-dependent rather than mutually exclusive or unrelated objectives [@berg2017inequality].
 
 inconsistent with a long history of responding to the needs of resource-poor farmers (IR20, cassava, beans, etc., smallholder focus), and, more recently with new research perspectives that cast agriculture as a potential engine of pro-poor growth [@byerlee2009agriculture], and with studies showing that economic growth and equitability are two sides of the same coin [@berg2017inequality; @ostry2014redistribution; @berg2012makes]
@@ -89,7 +103,66 @@ In its very earliest days, in Mexico, the green revolution was unabashedly orien
 .	Recent studies confirm that labor intensive, inclusive growth is much more sustainable than capital intensive forms of growth (based, for eg., on natural resource rents); i.e. pro-poor and pro-growth are "two sides of the same coin" (Berg & Ostry, 2011; Berg, Ostry, & Zettelmeyer, 2012; Dabla-norris & Kochhar, 2015; Ostry, Berg, & Tsangarides, 2014). Agri-food systems are naturally labor-intensive sectors with high participation from lower income centiles, and thus uniquely suited to drive such pro-poor, sustainable growth.
 .	After a long period of "agricultural pessimism" and  "urban bias" which has viewed agriculture as the "handmaiden of industrialization", there is now talk of a "new agricultural paradigm" of sustainable, equitable growth (Byerlee, de Janvry, & Sadoulet, 2009; Byerlee, Diao, & Jackson, 2005; Lipton, 2006; von Braun, 2009).
 
-An initiative of the International Food  Policy  Research  Institute  (IFPRI)  in  the  early  2000s  called  "A  2020  Vision  for  Food,  Agriculture,  and  the  Environment"  was  instrumental  in  focusing  research  and  development  policy  attention  on  a  broad  approach  to  the  three  critical  issues  of  securing  future  world  food  needs,  reducing  hunger  and  poverty,  and  protecting  the  environment. It aimed at developing a shared vision and a consensus for taking action. The summary of an international consultation process identifies five priority areas for action:  i)  focus  on  inclusive  growth;  ii)  improve  access  to  assets  and  markets;  iii)  phase  in  social  protection;  iv)  accelerate  investments  in  health  and  nutrition  pro-grammes;  and  v)  include  the  excluded  (VON BRAUN  and  PANDYA-LORCH,  2007)
+An initiative of the International Food Policy Research Institute (IFPRI) in the early 2000s called "A 2020 Vision for Food, Agriculture, and the Environment" was instrumental in focusing research and development policy attention on a broad approach to the three critical issues of securing future world food needs, reducing hunger and poverty, and protecting the environment. It aimed at developing a shared vision and a consensus for taking action. The summary of an international consultation process identifies five priority areas for action: i) focus on inclusive growth; ii) improve access to assets and markets; iii) phase in social protection; iv) accelerate investments in health and nutrition pro-grammes; and v) include the excluded .  (VON BRAUN and PANDYA-LORCH, 2007)
+
+-Anchor ending of intro in Alston quote characterizing progress on the modeling front as next to impossible. The presentation here is essentially one long disagreement with this pessimistic assessment. Economic theory can tell us quite a lot about the nature of the research induced supply curve shift, among other things, if one only takes a moment to derive these results from the assumptions. [rather than assert them in one big petito principii.] What has been lacking is the patience to do so.
+
+**The math sloppiness question**
+
+lack of rigor, cavalier approach
+
+In 1944, Von Neumann and Morgenstern observed that "part of the feeling of dissatisfaction with the mathematical treatment of economic theory derives largely from the fact that frequently one is offered not proofs but mere assertions which are really no better than the same assertions given in literary form" [@morgenstern1953theory]. The authors go on to suggest there is a "scientifically unsound" inclination among economists to confuse these formalized literary assertions, including "very valuable surmises and inspiring anticipations of results", with proofs or otherwise rigorously derived theoretical results [@morgenstern1953theory]. More recently, Romer has similarly criticized the rise of "mathiness" in economic modeling.
+<!-- "There is no point in using exact methods where there is no clarity in the concepts and issues to which they are to be applied" [@morgenstern1953theory]. -->
+<!-- "the economic problems were not formulated clearly and are often stated in such vague terms as to make mathematical treatment _a priori_ appear hopeless because it is quite uncertain what the problems really are" [@morgenstern1953theory]. -->
+
+"[The style that I am calling mathiness lets academic politics masquerade as science.] Like mathematical theory, mathiness uses a mixture of words and symbols, but instead of making tight links, it leaves ample room for slippage between statements in the languages of words as opposed to symbols[, and between statements with theoretical as opposed to empirical content]". [@romer2015mathiness]
+
+The slippage ... to confuse results with assumptions (petitio principii), or, as in the case of the economic surplus model, to infuse a collection of contradictory and/or unfounded assertions with an air of rigor and coherence.
+
+The "Economic Surplus" model, pioneered by Gilriches [] and polished by Alston etc. [], may be considered a case in point. The model is not theoretically derived, but rather a collection of educated guesses or surmises translated into mathematical equations. Many of these surmises imply well documented contradictions of basic economic theory, and/or inconvenient ramifications vis-a-vis the supposed benefits of research and technology adoption []. The model has evolved into its present form not by force of logic, but as a matter of preference. For example, there was considerable debate in the 1970s over whether the research-induced supply curve shift should be modeled as a parallel shift or a pivot [@alston1995science; @norton1981evaluating; @lindner1978supply]. The debate was further complicated by differing views as to whether supply should be modeled as a linear or a curved function. Without a theoretical framework to link parameter values and functional forms to real world conditions, the debate was ultimately inconclusive. The answers to the questions left unresolved by the debate have come down to us today as a matter of preference. In their highly influential book, _Science Under Scarcity_, Alston et al. indicated their preference for the linear parallel shift [-@alston1995science]. This is a conspicuous choice, to put it mildly, considering that 1) it prefigures research impacts in the best possible light, and 2) by the authors' own admission, there are no theoretical or empirical grounds to justify this preference [@alston1995science; @alston2009economics]. AR4D partial equilibrium impact studies since then have generally follow suit.
+
+"There has been a great deal of discussion in the literature about the effects of different types of research-induced supply shifts on the size and distribution of research benefits, and rightly so. This choice in the  analysis is crucially important[, and by comparison, the choices about functional forms and elasticities pale into insignificance.] For example, given a linear supply function, total benefits from a parallel shift are almost twice the size of total benefits from a pivotal shift [(of equal size at the preresearch equilibrium)]. When supply shifts in parallel, producers  always benefit from research unless supply is perfectly elastic or demand is perfectly inelastic, and even in these extreme cases, producers are no worse off as a result of research. On the other hand, [as noted above,] with a pivotal shift, producers benefit only when demand is elastic; when demand is inelastic, producers necessarily lose from a pivotal supply shift...." [sci under scarcity]
+
+-[the other problems] There is also the issue of using supply curve functions that imply a positive intercept on the quantity axis,    In a footnote, Alston et al. acknowledge that.homothetic preferences. It can be added that.homothetic output. There is also the issue of applying a static model to long periods. Alston et al. find that the research period typically lasts 10-15 years, followed by a period of uptake and diffusion which can last 40 years. Ceteris paribus assumptions regarding GDP and population growth, among other things, over such long periods strain credibility. In a recent priority setting "control trial", Petsakos et al. (2018) compared output based on the static economic surplus model with output based on the dynamic IMPACT sector equilibrium model which accounts for changes in exogenous growth parameters, finding that the ceteris paribus assumptions of the economic surplus model led to output that overstated benefits by two orders of magnitude. / To recap the issues covered so far, this means that, in order to implement the economic surplus method in good conscience, conscientious researchers are effectively asked to accept the following premises:
+.	There are farmers who are willing to produce a certain quantity of their commodity for free
+.	Engel's Law is wrong (and perhaps Bennet's Law too)
+.	OR all farms in the population have equal net revenue
+.	Farm output is likewise homothetic
+.	OR all farms have equal operating budgets
+[.	GDP and population (among other things) remain static across the research and uptake time horizon]
++Also: the mysterious research induced supply curve shift "k"
+
+
+
+-This collection of formalized surmises, already problematic in its own right, is in turn rooted in a set of surmises with an even longer history of controversy known as consumer's and producer's surplus (or, collectively, economic surplus).
+
+-The fallacious equity-(Pareto) efficiency tradeoff shaping much of the assertions.
+
+-Incredulity-Incredulous results - donors now weary of the cavalier approach
+
+In contrast to the cavalier approach, here I take an axiomatic...
+
+there is evidence that donor patience with the cavalier approach has worn thin. 
+
+
+
+
+-Well known issues: homothetic pref or identical farms, pivot or shift, negative quantities,  
+
+
+
+
+On the nature of the research-induced supply curve shift-- "The matter has never been resolved satisfactorily" [alston sci under scarcity].
+
+"When  supply  shifts  in  parallel,  producers  always  benefit  from  research unless supply is perfectly elastic or demand is perfectly inelastic, and even in these extreme cases, producers are no worse off as a result of research. On the other hand, as noted above, with a pivotal shift, producers benefit only when demand is elastic; when demand is inelastic, producers necessarily lose from a pivotal supply shift (e.g., Lindner and Jarrett 1978)" [sci under scarcity].
+
+
+<!-- Many of these problems are well known to the method's advocates and community of practice. In particular, it is unclear whether research impacts are most accurately represented by a parallel shift in the supply curve or a pivot about the origin. A pivot raises the contentious issue of tradeoffs between producer and consumer welfare gains, including the possibility of welfare losses for producers. A parallel shift, on the other hand, entails no such controversy, but benefits are double what they are in the case of a pivot. Practitioners are advised to sidestep the distributional complexity of a supply curve pivot by assuming a parallel shift, but empirical evidence justifying this choice "has been elusive to date" (Alston, Pardey, James, & Andersen, 2009).  -->
+
+
+
+
+
 
 
 Axiom 1: the law of diminishing marginal returns
@@ -104,6 +177,330 @@ Axiom 9: The consumer percentage markup density function
 , consumer yield/utility, [technology adjusted price ratio]
 
 The meaning of consumer yield and technology adjusted price ratio become evident below.
+
+For some reason, the task of aggregation is viewed as a mathematically intractable.
+
+To precisely determine the supply curve shift
+"What  does  economic  theory  tell  us  about  the  nature  of these  shifts? Unfortunately,  not  very  much.  To  be  confident  about  this  aspect  of the problem would require either (a) precise econometric evidence or (b) detailed information on the effects on individual agents, details of industry structure including details on exit and entry of firms, and a complete theory of aggregation. This information is not available; assumptions are unavoidable" (Alston, Norton, & Pardey, 1995).
+
+(b) is sort of what I'm after here.
+
+"Unfortunately, economic theory is not informative about either the func-
+tional form of supply and demand or the functional form (parallel, pivotal, 
+proportional, or otherwise) of the research-induced supply shift. The indus-
+try curve is based on the aggregation of supply curves for individual firms. 
+Shifts in the industry curve depend on the effects of new technologies on the 
+marginal costs of existing firms and on entry and exit of firms. One would 
+need to examine the characteristics of individual firms that affect marginal 
+costs and technology adoption in order to predict which types of firms would 
+benefit from  a particular new  technology.  In  addition, with current techniques and typically available data, it is not possible to settle these questions econometrically. We might hope to obtain plausible estimates of elasticities at the data means, but definitive results concerning functional forms are unlikely and it is impossible to get statistical results that can be extrapolated to the price or quantity axes (i.e., the full length of the function) with any confidence. Thus, assumptions about the nature of the research-induced supply shift are unavoidable. Our conclusion is that it is important to be aware of the consequences of different assumptions" (Alston & Norton, 1995).
+
+
+
+
+"Decorative math" (Dietz Volrath) or, worse, "mathiness" instead of codifying tight links between one step of logic and the next, has been deployed to introduce logical "slippage" between links and between "." (2015). In the case of the  to confuse results with assumptions (petitio principii), or, as in the case of the economic surplus model, to infuse a collection of contradictory and/or unfounded assertions with an air of rigor and coherence.
+
+
+
+
+
+
+
+
+
+
+in search of the green revolution i.e. hype vs reality
+
+[CRITICAL FOR FINAL SECTION on what drives changes in production (a la Paarlberger's statement about increasing production of diamonds etc.):
+The decrease in grain stocks during the 1960s was due to a specific price policy with that specific aim. This ended with the Agricultural and Consumer Protection Act of 1973, after which stocks increased again. So, stocks never decreased due to a real physical incapacity of the world to feed itself. Cite "Langley et al USDA ERS cica 1984 Commodity Program Perspectives.pdf" in the USDA Data subfolder. Parallel to this, in India stocks and production fell because of a lack of price incentives in favor of industrialization. Also, use Ending Stocks, not Beginning Stocks.]
+
+Found an enthusiastic audience in Lyndon Johnson, who was eager to advance his Food for Peace program, and the fledgling USAID he had founded... the Foreign Assistance Program for FY 1968 passed the House by just 8 votes [@gaud1968green]....Under enormous pressure to make something of a sensation out of the 1967 harvest.  Johnson wanted to send a message to Congress "that there were people dying, that people were being hauled 
+away dead in trucks, and that they needed food" [@cullather2010hungry]. ...[@brass1986political]...FFP [@ahlberg2007machiavelli]... The "near famine" in Bihar...but then this doesn't serve as an argument in favor of GR because later there was a worse famine in Maharashtra when GR was in full swing [@dyson1992bihar]. As far back as 1951, President Truman viewed food aid as a "diplomatic weapon" against the spread of "Communism" [@mcmahon1987food].
+PL-480 passed in 1954, becomes "Food for Peace" in 1959 (all under Eisenhower), Kennedy then gave it a "philosophical and organizational overhaul" via executive order in the 1961 Foreign Assistance Act, by which USAID was created [@ahlberg2007machiavelli]
+
+
+
+If there were substance to these claims, then we should expect to see a trend of steadily declining food production and/or availability per capita, especially in former colonies such as India. Paddock has such a graph in his book "Famine 1975!" [Paddock (1967) in @trumbo1969critFamine].
+
+
+
+Also, the Bihar drought was called "unprecedented" [@dyson1992bihar], but in fact there were similar droughts during the El Nino events of 1918 and 1900 [@parthasarathy1994all],   The 1966 Bihar famine of food crisis disputed [@brass1986political; @cullather2010hungry; @dyson1992bihar]. The one fact is that there was a severe drought which resulted in lower staple grain production. Maharashtra drought of 1970-1973 70,000 excess deaths, while none in Bihar according to [@dyson1992bihar]. Cullather: "My project was soon complicated by recorded observations and experiences that refused to conform to this story" [@cullather2010hungry]. The President's report [@president1967world]. Johnson announced a "War on Hunger" in a special address to Congress on Feb. 10, 1966, in which he ordered the report [@johnson1966WarHunger]. In his 1967 State of the Union Address, Johnson called this the second most imporant..."Next to the pursuit of peace, the really greatest challenge to the human family is the race between food supply and population increase. That race tonight is being lost." [@johnson1967StateUnion].
+
+#https://www.livemint.com/Politics/1BowYWLsVzTEy22b32FPMI/How-an-American-with-a-knack-for-math-saved-India-from-famin.html
+#"How an American with a knack for Math saved India from Famine" 2015 (referring to Lester Brown, foreign policy aid to Orville Freeman, Johnson's Secretary of Agriculture)
+Brown predicted a 10 million ton grain production shortfall for 1965-6. Article says the shortfall ended up being 18 million (only 77 million mt harvested vs. demand of 95 million--FAO says about 80 million). But this does not account for stocks.
+Lester's account: 10 million mt of wheat, 1/5 of the US wheat harvest (but just 8% of total US wheat supply (production + stocks)), shipped to India in 1965 (600 ships total, about twice a day, sailing from Galveston and New Orleans, the largest shipment ever), "saving it" from famine. In order to pull off this unprecedented logistical feat, Freeman drew on logistical experts in USDA who had formerly served in the Army Quartermaster Corps in WWII [@brown2013breaking]. FAO says total India wheat imports (from all countries) in 1965 were 6.6 million mt, 7.8 in 1966, 7.5 in 1967.
+
+South Asian grain stocks could have covered about 13 of the 15 million mt production shortfall; curiously, there was no draw down of these stocks during any of the crisis years (Figure USDA).
+
+Immediately following independence from Great Britain, up to the eve of the green revolution, India pursued a policy of industrialization, during which her agriculture fell into a state of neglect and disrepair. Even so, per capita grain production did not stagnate, but grew during this period, even when taking into consideration the disastrous weather in 1951 and 1965-6 [@hatti1977impact].
+
+
+PL-480 wheat shipments to India were about 2-4 million mt, except during the crisis years 1965-1967 when they surged to about 7.5 million mt per year. 
+
+
+another facet of the claims to address: the ag frontier had expanded to its fullest extent (Paddock says something like this). In fact US gov had some 60 million has in reserve, and was paying farmers to plant less area... FAO land use data.
+
+India rain series 1873-1993 [@parthasarathy1994all]
+
+Famines [@davis2002late]:
+1876-1879
+India: 6.1-10.3 million
+China: 9.5-13 million
+Brazil: 0.5-1 million
+
+1896-1902
+India: 6.1-19 million
+China: 10 million
+Brazil: no data
+
+1918 El Nino event + Spanish Flu [@giese20101918]:
+Drought in India and 18 million deaths
+
+1943-1945 Bengal famine
+India: 3 million [@sen1981ingredients]
+
+
+
+Under East India Company rule (1770-1858), famines on the Indian subcontinent were "frequent and severe" [@dreze1991political]. By 1878, a British statistician counted 31 serious famines in 120 years of British rule (including East India Company rule) versus 17 famines in the previous two milennia [Walford (1878) in @davis2002late].
+
+If there were any substance to Neo-Malthusian scaremongering, then we should expect to see a trend of declining food production per capita, especially in former colonies like India. The data show the exact opposite. Food grain production per capita in India and Pakistan exhibits a trend of steady increase since the end of World War II up through the present 
+[@kurosaki1999agriculture].
+
+
+Most tellings of the green revolution consistently revolve around three central claims or plot points:
+
+1) In 1960, much of the world stood on the brink of famine.
+
+2) There was a dramatic increase in the production of key staple crops which averted said catastrophe.
+
+3) The dramatic increase in production of key staple crops is exclusively (or almost exclusively) attributable to crop genetic improvement.
+
+A fourth, ecological claim is sometimes added:
+
+4) The dramatic increase in yields has spared countless millions of hectares of forest and pristine wilderness from being brought into agricultural production.
+<!-- (Implies a fourth:  4) The green revolution was the "big bang" of crop genetic improvements.) -->
+
+In Khush's telling [@khush2001green], for example, we are told that 
+
+>"The 1960s was a decade of despair with regard to the world's ability to cope with the food-population balance, particularly in developing countries. Most of the lands suitable for agriculture in Asian countries had been cultivated while population growth rates were accelerating".
+
+Khush cites Paddock's Malthusian diatribe in support of this view:
+
+>"Ten years from now, parts of the underdeveloped world will be suffering from famine. In 15 years, the famines will be catastrophic, and revolutions and social turmoil and economic upheavals will sweep areas of Asia, Africa and Latin America" [Paddock (1967) in @khush2001green].
+
+Moving on to plot points 2 and 3, Khush then says:
+
+>"Fortunately, large-scale famines, and social and economic upheavals, were averted, thanks to the marked increase in cereal-grain yields in many developing countries that began in the late 1960s [plot point 2]. This phenomenon---known as the 'green revolution'---was due largely to the widespread adoption of technology that was developed to generate genetically improved varieties of crops with increased yields [plot point 3]" [@khush2001green].
+
+Such accounts from the literature are then reflected in popular media versions. In 2016, a BBC article entitled "IR8: The miracle rice that saved millions of lives", told us:
+
+>"It is thought that IR8 saved many millions of lives and transformed the lives of hundreds of millions of people.
+
+>"Back in the 1950s it was obvious that Asia, home to half the world's population, faced an impending food crisis.
+
+>"[Y]ou only needed to plot population growth against rice production to see that, within a few years, there would not be enough to go around.
+
+>"IR8 was so much better than traditional rice varieties that its use spread rapidly throughout Asia and output soared. Famine was averted.
+BBC News Dec. 1, 2016. https://www.bbc.com/news/world-asia-india-38156350
+
+<!-- >"Most farmers benefited from the increases in productivity and the vast increases in output drove down prices, which benefited consumers" -->
+Likewise with the other green revolution crop, wheat, one does not wander far before running into assertions such as the following:
+
+>"In 1968, Swaminathan's work caused [India's] wheat harvest to soar from 12 to 17 million tons" [Dan Gardner "The nation killing famine that never was" National Post 13/10/2010 https://dangardner.ca/mnt/volume_tor1_01/www/spark/dangardner.ca/web/article/beware-the-overconfident-expert]
+
+<!-- Monkombu Sambasivan Swaminathan -->
+<!-- "In 1968, Swaminathan’s work caused the country’s wheat harvest to soar from 12 to 17 million tons". http://webarchive.loc.gov/all/20101013131843/http://fullcomment.nationalpost.com/2010/10/13/dan-gardner-the-nation-killing-famine-that-never-was/#ixzz6U9q3QwPR -->
+For plot point 4, we turn to the father of the Green Revolution, Norman Borlaug:
+
+>"Had the global cereal yields of 1950 still prevailed in 1999, we would have needed nearly 1.8 billion ha of additional land of the same quality--instead of the 600 million that was used--to equal the current global harvest" [@borlaug2002green].
+
+The impression conveyed, then, is one of improved seed "causing" a tremendous increase in wheat and rice production, which saved a good portion of the world from starvation, and conserved countless hundreds of millions of hectares (\@ref(fig:greenRevNarrative)). There is no mincing of words over counterfactuals, attribution problems, or the role of policy and institutions. These narrators of the green revolution clearly intend to draw a direct line of causation from research to impacts.
+
+
+It is as Paarlberger said. We can create a surplus of anything if the incentives are in place. South Vietnam achieved record levels of rice production in the very midst of war and rampant corruption thanks to artificially high producer prices set by the government and underwritten by USAID [@logan1971deep]. Fertilizer use doubled, tractors, irrigation pumps and gasoline engines and gasoline all on government credit. Even the Viet Cong allowed U.S. Army personnel free passage through the Mekong Delta so long as they were bringing IR8 seed to the farmers [http://books.irri.org/RT_Supplement-IR8.pdf].^[Thomas Hargrove, later worked at CIAT in Colombia, kidnapped by the FARC, etc.] Honda rice.
+
+the Philippine Government asked the United States for an advance of $100 million on its 1970 payments (due it for our use of military bases) in order to "stave off the emergency" arising from threatened bankruptcy [@paddock1970green].
+
+early appraisals of the GR, good awareness of the equally as important role of the enabling environment: [@falcon1970green; @wharton1969green; @borlaug1969green; @pinstrup1985impact; @sen1970opportunities; @dalrymple1975measuring]
+
+"Simultaneously, while introducing the new varieties, [the scientists] must win the battle at top government policy levels for attractive grain prices, while assuring availability at reasonable prices of such inputs as fertilizer, insecticides, and water (pumps, motors, etc.)" [@borlaug1969green]. (p. 2)
+Green revolution proponents like to focus on production. A doubling of production in just a few years is certainly a feat. But across longer time frames, changes in production are a poor metric of performance since it becomes difficult to tease apart how much of the increase is due to improved technology and how much due to the ever increasing number of farmers and area converted into agricultural land. Green revolution scientists are surely aware of this obvious consideration, and yet they can often be caught taking credit for virtually all of the increase in food grain production since the 1960s. Here again is Khush, for example:
+
+>"It took almost 10,000 years for food grain production to reach 1 billion tons, in 1960, and only 40 years to reach 2 billion tons, in 2000. This unprecedented increase, which has been named the 'green revolution', resulted from the creation of genetically improved crop varieties, combined with the application of improved agronomic practices" [@khush2001green].
+
+Over the same period, the world's population also doubled (from about 3 billion to 6 billion). The corresponding doubling of agricultural output is thus, prima facie, no more "unprecedented" than agriculture itself. Scientists must present us with compeling evidence of the extent to which this increase is greater than it would have been without their technological interventions. They may not simply assume this to be true.
+
+gr in africa
+
+criticism, Gates quote [@dawson2016green].
+
+There's the AGRA launch paper, and then from the BMGF AGRA website:
+
+>"For the past 50 years, these farmers have been struggling to grow more and healthier food for their families and earn more income from their farms. They face significant challenges that have led to lower yields, including climate change, outdated seeds that are not adapted to withstand today’s pests and tough growing conditions, and a lack of access to new technologies and crop information. These farmers also lack access to finance, and because they live in rural areas, they have trouble getting modern seeds and fertilizers that are usually sold in the cities".
+
+https://www.gatesfoundation.org/Where-We-Work/Africa-Office/AGRA#{5A0565E0-2E48-472F-9DA6-8658B4B2FB93}
+
+Again, the problem is construed primarily as one of access to technology. (Access is about finance, infrastructure...)
+
+
+
+
+confusion over if/how tech benefits (small) farmers--or rather productivity increases due to tech vs increases due to economic factors
+
+Well, Evenson and Gollin found that:
+
+>"For all developing countries, MVs accounted for 21% of the growth in yields and about 17% of production growth in the early Green Revolution period [1961-1980]. Area expansion accounted for about 20% of the increases in production; the rest came from intensification of input use" [@evenson2003assessing]. Clarify that input use is actually the residual. Everson and Golling interpret it as input use, but it may also stand for the enabling environment. Input use itself is arguably a proxy for the enabling environment, given the hundreds of millions of dollars in subsidies that made their acquisition by farmers possible. 
+
+
+
+
+On the other hand, the father of the green revolution, Norman Borlaug, called the enabling environment "equally as important as" the scientific breakthroughs. Here is the full statement, from his 1970 Nobel Prize acceptance speech:
+
+>"[E]qually as important as the transfer of the new seed and new technology...was the introduction...of a crop-production campaign strategy. This strategy harnessed the high grain-yield potential of the new seed and new technology to sound governmental economic policy which would assure the farmer a fair price for his grain, the availability of the necessary inputs---seed, fertilizers, insecticides, weed killers, and machinery---and the credit with which to buy them. Collectively these inputs and strategy became the base from which the green revolution evolved" [@borlaug1972norman].
+
+Such things are not often heard today, and may even be considered controversial by some. But they were obvious to the key actors in the early days of the green revolution. USDA Chief Economist Don Paarlberg, in 1963:
+
+>"This is the inescapable fact---that a price artificially held above the competitive level will stimulate production, retard consumption and create a surplus.... It is the product of human institutions, not simply a consequence of rapid, technological advance. It may or may not be accompanied by a scientific revolution. We could create a surplus of diamonds or uranium or of avocadoes or rutabagas simply by setting the price above where the market would have it and foregoing [sic] cost production control. A surplus is not so much a result of technology as it is a result of intervention in the market." (Paarlberg 1963 [in @paddock1970green]).
+
+
+
+Such things are not often heard today, and may even be considered controversial by some. But they were obvious to the key actors in the early days of the green revolution. USDA Chief Economist Don Paarlberg, in 1963:
+
+>"This is the inescapable fact---that a price artificially held above the competitive level will stimulate production, retard consumption and create a surplus.... It is the product of human institutions, not simply a consequence of rapid, technological advance. It may or may not be accompanied by a scientific revolution. We could create a surplus of diamonds or uranium or of avocadoes or rutabagas simply by setting the price above where the market would have it and foregoing [sic] cost production control. A surplus is not so much a result of technology as it is a result of intervention in the market." (Paarlberg 1963 [in @paddock1970green]).
+
+In hearings on the Foreign Assistance Act of 1968, USAID Director William Gaud---the man who coined the term "green revolution"---was likewise at pains to assert the fundamental importance of the economic and institutional context:
+
+>"[W]e have to keep in mind, I think, that it is impossible for the agricultural sector of any country's economy to grow, unless the entire economy is growing. The farmers can't buy fertilizer, they can't buy pesticides, they can't buy herbicides, they can't buy new seeds, unless the economy of the country is strong enough, or unless they have the resources to import these inputs.
+
+>"At the same time, if the farmer produces more food, as we hope he will, there has to be an effective demand for that food at prices which are profitable for the farmer. By effective demand, I mean not that the people in a country must need more food, but that they must have the money to buy it. Their incomes must be high enough to buy it, and that means a healthy economy.
+
+>"By the same token, if you expect a farmer to grow more food, he has got to have something on which to spend the money he makes for growing and selling it. He has got to be able to buy consumer goods. He has got to be able to buy things he did not have before. He has got to have an incentive to increase his income, and this again means a healthy economy, across the board" [@HearingOnFAAct1968].
+
+The Chair of the Foregin Affairs Committee, Representative Thomas Morgan (D-PA), then engaged Gaud on this issue:
+
+>"In the past, members of this committee have found that there were cases where assistance was applied to agriculture under the foreign assistance program, but the operation was frustrated because the farmers in that particular country were discouraged by price structure, or by a system of taxation, or by the system of collecting the rents.
+
+>"These farmers really had no inducement to adopt improved methods, because they derived very little from their increased production.
+
+>"Now we are financing this year the construction of fertilizer plants, and we plan to finance the shipment of millions of dollars worth of fertilizer. What measures do we take to determine in particular countries...whether these farmers will be ready to increase production?
+
+>"Can you cite any cases where reforms in price structure or tax structure have actually occurred in any particular country where we have financed major programs?" [@HearingOnFAAct1968]
+
+To which Gaud responded:
+
+>"Yes, sir; I can cite several cases offhand. The Philipines, for example. I think it is generally agreed that one of the most important factors in the Philippines was a change in price policies in favor of the farmer.... All observers of the Philippine situation gave this change primary credit for providing the incentive to the Philippine farmer to grow more rice.
+
+>"In Chile, there is a somewhat comparable situation. You have got problems of land tenure, and you have problems of pricing. We are making loans, agricultural sector loans to Chile, to help the Chilean Government achieve reforms which will give the farmer a greater incentive.
+
+>"In India, we have been using our Public Law 480 and our fertilizer loans, and also giving technical assistance, in an effort to achieve changes in agricultural policy. One, the allocation of greater resources to the Government to agriculture rather than to industry. Two, a change in the pricing system, so that a greater incentive is provided to the producer. Three, agricultural credit, so that the farmer will be able to buy the fertilizer..." [@HearingOnFAAct1968].
+
+Maybe mention vietnam/hargrove here too.
+
+A few days after his congressional testimony, Gaud gave the famous speech wherein he coined the term "green revolution"; and wherein he affirmed once more:
+
+>"To the farmer, the new seeds and fertilizer represent an untried and expensive investment. The high yields of IR-8 [rice] depend on a combination of intensive labor and materials which makes it four times as costly to grow as ordinary rice. Only when the farmer sees that the added investment will increase his profit will he give them a try....
+
+>"The higher investments required by the new agriculture also make farm credit essential. In the Philippines, many of the IR-8 rice kits have been distributed on credit extended by private rural banks receiving A.I.D. support. Similarly, Turkish farmers now get high-yield seed on credit. And to get seed on credit, they must also take the necessary amount of fertilizer on credit.
+
+>"Farmers are responding to these new opportunities. In Pakistan where they have never before paid a premium for seeds, they are now doing so. They want the high-yield varieties. There have been reports of seed riots in India. At times the demand for fertilizer in India has been strong enough to create a black market" [@gaud1968green].
+
+
+
+[@morris2007fertilizer; @lipton2005family; @lipton2010policy]
+
+>"[L]arge increases in staple food productivity would do little to cut mass dollar poverty if they were confined to large-scale farms, using tractors and combines but few workers, and selling at government-boosted prices that the underemployed and near-landless poor cannot afford.
+
+>"The Green Revolution not only increased the supply of locally available staples but also the demand for farm labor, wage-rates, and thus the work-based income of the dollar-poor. The lesson for future crop science policy is clear. When choosing among research paths, a high employment share in extra science-induced farm income should normally be seen as a gain. For countries where the dollar-poor lose out if the demand for farm labor declines, aid-backed farm research should not support better combines, herbicides, mechanical transplanters-or varieties whose advantages depend on these-unless the results can beshown to be cost-effective ways to cut poverty" [@lipton2005family].
+
+Confusion on this point: "When food production rises through...increases in land and labor productivity, the rural poor gain" [@toenniessen2008building]. (AGRA launch paper)
+
+Such a narrative invariably prefigures policy recommendations towards "more funding for more research for more productivity" (as in for eg. [@jayne2010principal; @lipton2005family; pardey2013public]. Low adoption rates and yield gaps, meanwhile, are prefigured as a sort of mystery that is outside the purview of scientific responsibility to explain—and/or evidence of the need for more funding for more genetic gain ().
+Always conclude more money for more crop genetic improvement research (the "bread and butter" of the CGIAR) [@renkow2010impacts].[@jayne2010principal; @lipton2005family; pardey2013public]
+
+"[W]e believe it is reasonable to conclude that while NRM and policy research in the CGIAR remains under-evaluated, CGI research has nonetheless produced substantially larger net benefits. Given these uncertainties and the very strong record of positive impact attributable to CGI, it would appear that the CGIAR's port-folio of research allocations has become overly skewed toward NRM and policy research over time. Thus, a move toward restoring somewhat the share of resources allocated to CGI would seem warranted. In fact, this seems to be happening as the Bill and Melinda Gates Foundation have sharply stepped up their funding of CGIAR research, mostly in the area of CGI" [@renkow2010impacts].
+
+The key phrase here is "the very strong record of positive impact attributable to CGI". Serious grounds for doubt.
+
+>"Underlying all this is the need to reverse the recent downgrading of economic analysis in some CG institutions (and, even more important, to remedy its near absence from some key ones in NARSs) and to redirect such skills away from ex post complaining about research results toward direct involvement, alongside natural scientists, in research-planning choices" [@lipton2010policy].
+
+The aim of research is multi-dimensional. Genetic gain (i.e. yield growth) cannot be the "holy grail" of research, as it has been and continues to be. Conway proposes four dimensions: Productivity (genetic gain), Stability ("the degree to which productivity remains constant in spite of normal, small-scale fluctuations in environment variables, such as climate, or in the economic conditions of the market."), Resilience ("the ability of a system to maintain its productivity when subject to stressor shock.") [@conway2007doubly].
+
+Asking scientists to expand their purview beyond the lab and field trials is just to say: (is consistent with emerging holistic views on agricultural innovation as a system)
+>"[P]roduction and exchange of (technical) knowledge are not the only prerequisites for innovation. Several additional factors play a key role, such as policy, legislation, infrastructure, funding, and market developments" [@klerkx2012evolution].
+
+>"[A]gricultural innovation is not an inherently good and value free process, but normatively laden and driven by different worldviews and visions. Correspondingly, different development directions exist, each with its own winners and losers" [@klerkx2012evolution].
+
+For example, big capital intensive farm or small labor intensive farm? Consumer or producer support? These fall roughly into two camps, SAI AEI [@mockshell2018beyond]. We have examples of both in places like Brazil [@rada2019agricultural; @rocha2012small]. These tradeoffs are never discussed in AR4D communities....SDGs, IFPRI 2020 Vision, PRSPs, etc. A shift in attitude that places smallholder livelihoods at the center (cue the Gates AGRA quote); a “new agricultural paradigm” (Byerlee 2009) arising from the ashes of the anti-poor Reagan-Thatcherite "Structural Adjustment" nihilism of the 1980s and 1990s [@easterly2000effect;@easterly2005national;@eicher1998international].
+
+[@morris2007fertilizer; @lipton2005family; @lipton2010policy]
+
+
+land sparing issue
+
+Pingali revises this upward [-@pingali2012green] says 30% increase in area under cereal cultivation in developing countries between 1962 and 2012.
+
+Borlaug once remarked that the green revolution had saved 1.8 billion hectares     FAOSTAT in fact shows nearly a 100% increase.---possibly due in part to a redefinition at FAO of "developing countries" between now and the time Pingali wrote his paper (8 years ago).
+
+"Had the global cereal yields of 1950 still prevailed in 1999, we would have needed nearly 1.8 billion ha of additional land of the same quality – instead of the 600 million that was used – to equal the current global harvest" [@borlaug2002green]. He then revised this downward to 1.2 billion vs. 600 million [@borlaug2007feeding].
+
+17.9 to 26.7 million hectares more [@stevenson2013green]
+
+Gollin says only a 3%-5% increase in cropland under the No-green revolution counterfactual [@evenson2003assessing].
+
+>"[The] Green Revolution...has doubled global food production on only 10% additional land area over the past 30 years or so" [@may2007theoretical].
+
+>"Although populations had more than doubled [in developing countries from 1962 to 2012], the production of cereal crops tripled during this period, with only a 30% increase in land area cultivated" [@pingali2012green].
+
+
+(99757069 - 50490961) / 50490961
+
+"Between 1960 and 2000, yields for all de-veloping countries rose 208% for wheat,109% for rice, 157% for maize, 78% forpotatoes, and 36% for cassava", says Pingali [-@pingali2012green], citing a 2003-2004 FAO annual report [@fao2003stateFoodAg]. The "Developing Countries" category is no longer maintained by FAO, but a query for the "Least Developed Countries" indicates that...
+
+
+Title: "The Green Revolution Arrives in Africa"
+From the abstract:
+>"The Green Revolution that brought advances in crop genetics to Asia and Latin America completely bypassed the African continent. Africa's smallholder farmers finally joined the movement in 2006, when the Bill and Melinda Gates Foundation joined the Rockefeller Foundation to create the Alliance for a Green Revolution in Africa" [@blaustein2008green].
+
+Oh really? Well, in fact there was a green revolution in Africa prior to the revolutions in Asia and Latin America [@eicher1995zimbabwe].
+
+"For Africa,... the limiting factor...is not the genetic yield potential of the crops currently being grown. The problem is that so little of their genetic yield potential is realized due to poor soils and crop losses" [@blaustein2008green].
+
+The Malthusian outlook implies a _noblesse oblige_ mindset.... What are we going to do with all these additional people? But additional human beings are assets, not liabilities. Additional human beings means more brains and brawn, more teachers, more human capital, more partners... We must look at our new companions as assets, not liabilities. as partners in our project to live sustainably on planet Earth.
+
+>"(i) the IARC should take aleading role in developing improved varieties such as the MV1 and MV2 types;(ii) the varietal research collaboration between IARC and NARS should be strengthenedand intensified; (iii) the NARS should play an active role in developing location-specificvarieties such as the MV3; and (iv) the application of fertilizer, be it chemical ororganic, must be increased to realize yield potential of MV" [@otsuka2006rice]. 
+
+Twelve years later, a more qualified version: "Much of the success was caused by the combination of high rates of investment in crop research, infrastructure, and market development and appropriate policy support that took place during the...Green Revolution" [@pingali2012green].
+
+"In many developing countries of Asia and Latin America, the genetic improvement of staple food crops, combined with complementary agronomic practices, supportive policies, and strengthened institutions, enabled overall food production to keep pace with population growth while both more than doubled" [@toenniessen2008building].
+
+So now in this version a certain lip service is paid to the enabling environment, but the authors of this narrative clearly intend to leave the reader with the impression that the breeding science is the single driving force behind this increase.
+
+policy/enabling environment
+
+Rodrik observed that "the function that good institutions fulfil (about which we have a fairly good idea) do not map into unique forms (about which we know a lot less)"
+
+[Pet 2: During the green revolution in Asia, "good policy and institutions" meant, evidently, a) massive government credit, subsidy, and price control programs, b) an eagerness to achieve self-sufficiency in rice production as a matter of national security, c) a dictatorial legal environment in which governments could easily assert their will over the objections of private sector actors (fertilizer companies) who lost out, and d) a fledgling USAID under congressional pressure to do something spectacular or lose funding, and hence eager to underwrite the otherwise fiscally unsustainable public programs. In today’s prevailing intellectual winds, of course, (a)-(d) are very nearly the exact hallmarks of bad policy and institutions. They were attractive at the time because they resonated with a conventional wisdom in which cold war fears of communist insurrection featured prominently, together with a Keynesian appetite for heavy-handed government intervention in the marketplace.
+
+It involves taking up positions on a range of hotly debated issues. Does good policy mean public sector involvement? For which income percentiles? Does it come with trade liberalization? Does it mean removing safety nets? Is there a role for indigenous cooperative mechanisms and other forms of social capital? What is the relation between economic growth and poverty? The "correct" answers to these questions, to paraphrase Foucault, are "a thing of this world" ().
+
+
+malthusian scaremongering malthusian pall
+
+even relatively recently: "By the year 2020, there will be about an extra 1.5 billion mouths to feed. If the proportion of the population of the developing countries deprived of an adequate diet remains the same, the number undernourished 20 years from now could be well over one billion" [@conway1999food]. In fact it is at 820 million, down about 30 million from the 2000 level.
+
+
+who are the stakeholders?
+
+Stakeholder representation scientists, research director, government policymakers, highly influenceable by agribusiness. "i.e. the research directors, agricultural research boards, or other policymakers who are the 'clients' for the work" (Alston & Norton, 1995) "Typically, the preferences of research system directors, agriculture or finance ministry officials, or agricultural research system boards or councils, are deemed the most relevant in this regard" (Norton et al., 1992). Politically weighted average of vested interests, where the voice of the smallholders-who are the ostensible beneficiaries of the research-is given the smallest weight. 
+
+
+Pingali CIMMYT yield gap paper "Farmer's maximize profit, not yields."
+
+(In Philippines masagana 99) Smith found that the increase in production was mostly due to an increase in planted area, not an increase in yield [-@smith1989palay].
+
+
+[Ingrid Palmer 1972, United Nations Research Institute for Social Development (UNRISD) Report No. 5.; UNRISD studies on the "green revolution" No. 72.9.]
 
 # Derivation of the yield function from Axiom 1 (diminishing marginal returns)
 
@@ -307,11 +704,13 @@ Where the following shorthands have been introduced:
 \end{split}
 \end{equation}
 
-The steps followed above more or less align with the standard derivation of the Cobb-Douglas yield envelope found in textbooks, with the important exception of the invocation of Euler's homogenous function theorem in equation \ref{eq:eulerInvokd}. By invoking Euler's theorem, the yield degree of homogeneity $h$ is made explicit in the yield envelope; and this lays bare some interesting critical properties.
+The steps followed above more or less align with the standard derivation of the Cobb-Douglas yield envelope found in textbooks, with the important exception of the invocation of Euler's homogenous function theorem in equation \ref{eq:eulerInvokd}.
+
+Note that the cost minimization problem gives the same result...
 
 ## The degree of homogeneity and output price elasticity of yield \label{sec:degHomog}
 
-Note, first of all, that the yield envelope is undefined at $h = 1$. The theory constructed so far from Axioms 1 and 2 thus contradicts the deeply entrenched surmise among economists, going back to Solow [-@solow1957technical], that yield functions are homogeneous of degree 1.
+By invoking Euler's theorem in the derivation of the yield envelope above, the yield degree of homogeneity $h$ is made explicit in the yield envelope; and this lays bare some interesting critical properties. Note, first of all, that the yield envelope is undefined at $h = 1$. The theory constructed so far from Axioms 1 and 2 thus contradicts the deeply entrenched surmise among economists, going back to Solow [-@solow1957technical], that yield functions are homogeneous of degree 1.
 
 The appearance of $h$ in the yield envelope also offers an instructive expression for the output price elasticity of yield,
 
@@ -2262,19 +2661,24 @@ Many economists prefer to express benefits in terms of something called "economi
 
 The widespread acceptance of economic surplus as a standard welfare measure stands in stark contrast to the long history of controversy and ambiguity surrounding the method's theoretical foundations and empirical applicability.^[See, for example, [@foster1974ambiguity;@mishan1977plain;@dooley1983consumer;@currie1971concept].] The concept is, in many respects, a perfect example of the hand-wavy mathiness identified by Von Neumann et al. and Romer (see Introduction) at the root of so much frustration with economic modeling. Here, again, "one is offered not proofs but mere assertions which are really no better than the same assertions given in literary form"; and "valuable surmises and inspiring anticipations of results" are confused with genuine results [@morgenstern1953theory].
 
-The method of calculating consumer surplus---as the area between the demand curve and the equilibrium price---is a case in point. This method was proposed by Depuit in 1844, and later advocated by Marshall in 1895, as a surmise without any theoretical justification [@currie1971concept; @burns1973note]. Most economists, even today, would probably struggle to explain the connection between Depuit's calculation and the verbal definition of consumer surplus given above. Nonetheless, Depuit's surmise persisted through more than a century of heated debate, unquestioned, while many other less critical aspects of consumer's surplus fell under intense scrutiny. Only in 1973 did a (seriously flawed) theoretical basis for Depuit's calculation appear in print [@burns1973note]. [flawed because lambda in the demand equation, thus integrating doesn't give the area under demand curve but rather the area under the demand curve times lambda, also an issue with linearly homogenous utility]
+The method of calculating consumer surplus---as the area between the demand curve and the equilibrium price---is a case in point. This method was proposed by Depuit in 1844 as a surmise without any mathematical justification [@currie1971concept; @burns1973note]. Much later, Marshall offered a more verbose and belabored verbal argument, which he ammended several times over the course of twenty years, and which likewise falls far short of a theoretical justification _more mathematico_. Most economists, even today, would probably struggle to explain the connection between Depuit's calculation (more commonly known as the "Marshallian triangle") and the verbal definition of consumer surplus given above. Nonetheless, Depuit's surmise persisted through more than a century of heated debate, more or less unquestioned, while many other, less critical aspects of consumer's surplus fell under intense scrutiny. Only in the early 1970s did mathematically rigorous attempts to explain the connection between the Marshallian triangle and the verbal definition of consumer's surplus begin to appear in print [@burns1973note]. And even these theoretical derivations are seriously flawed in light of the axiomatic derivation pursued in the previous sections, as will become evident below in the course of the derivation of consumer and producer surplus from the axiomatically derived theoretical framework described in the previous sections.   [Burns' explanation flawed because lambda in the demand equation, thus integrating doesn't give the area under demand curve but rather the area under the demand curve times lambda, also an issue with linearly homogenous utility]
 
 [Furthermore, ]The disordered, piecemeal [(or cavalier, to put it charitably)] progression in the mathematical treatment of consumer's surplus generated considerable ambiguity surrounding the concept. In his critique, Samuelson remarks that "the Marshallian concept of consumer's surplus does not refer to any one thing, but to at least half a dozen interrelated expressions" [Samuelson in @burns1973note]. And Currie et al.'s extensive review of the debate finds that "Marshall's somewhat confusing presentation of this subject is open to more than one interpretation" [-@currie1971concept]. This confusion is precisely the sort of ambiguity that Von Neumann et al. another aspect of the frustration with economic modeling says renders mathematical tools useless Von Neumann et al.  "There is no point in using exact methods where there is no clarity in the concepts and issues to which they are to be applied" [@morgenstern1953theory].
 <!-- "the economic problems were not formulated clearly and are often stated in such vague terms as to make mathematical treatment _a priori_ appear hopeless because it is quite uncertain what the problems really are" [@morgenstern1953theory]. -->
 
-The upshot: After more than century of debate, the consensus among economists seems to be that the economic surplus measure of welfare is, at best, "useful as a heuristic device---so long as its limitations are understood" [Little in @currie1971concept]. (Empirically, Johnson [-@johnson1985imprecision] and Bacon [-@bacon1995measurementstudies] have shown these limitations to be quite severe.) The persistent use of the economic surplus measure in spite of its fundamental drawbacks is attributed to a dismal lack of "workable alternatives", and to the ever growing demand for welfare impact studies to inform policy decisions [@currie1971concept].
+The upshot: After more than century of debate, the consensus among economists seems to be that the economic surplus measure of welfare is, at best, "useful as a heuristic device---so long as its limitations are understood" [Little in @currie1971concept].^[Empirical studies have shown these limitations to be quite severe. See, for example, Johnson [-@johnson1985imprecision] and Bacon [-@bacon1995measurementstudies].] The continued popularity of the method in spite of its fundamental drawbacks is attributed to the ever growing demand for welfare impact studies to inform policy decisions, on the one hand, and to a dismal lack of "workable alternatives" to meet this demand, on the other [@currie1971concept].
 <!-- The consensus seems to be that "[w]hile it is easy to raise objections to the use of the concept of economic surplus for providing answers for policy formulation, it is difficult to find any workable alternative" [@currie1971concept]. -->
 
+The approach proposed in the sections above is intended as a workable alternative. It is a straightforward, natural [outgrowth of the PE theory] ...
 
+Nonetheless because CS and PS is such a big things deeply entrenched, below I show how it works in the framework of the PE model derived above...
 
+dPSdlny0 < 0 if demand inelastic (as it always is under Axiom 6)
+dPSdlny0 > 0 if demand elastic (as it always is if P_D independent of P)
 
+This agrees with early criticism of the Economic Surplus method (particularly Lindner and Jarret [-@lindner1978supply]).
 
-
+"When  supply  shifts  in  parallel,  producers  always  benefit  from  research unless supply is perfectly elastic or demand is perfectly inelastic, and even in these extreme cases, producers are no worse off as a result of research. On the other hand, as noted above, with a pivotal shift, producers benefit only when demand is elastic; when demand is inelastic, producers necessarily lose from a pivotal supply shift (e.g., Lindner and Jarrett 1978)" [@alston1995science].
 
 
 
