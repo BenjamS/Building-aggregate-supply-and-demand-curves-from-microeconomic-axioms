@@ -1186,6 +1186,14 @@ m_v = \frac{\alpha_B}{w_v \alpha_v}, \:\:\: b_v = \frac{\alpha_B}{w_v\alpha_v} k
 
 $\blacksquare$
 
+[Also they don't like Cobb-Douglas (log-log) model because they think it ignores dependencies between inputs. This untrue because the log-log model is homogenous. By the definition of homogeneous fn the cross effects are implicitly included. I.e.,
+
+\begin{equation}
+\nabla^2 f \mathbf{x} (h - 1) = h \nabla f
+\end{equation
+
+]
+
 ## Marginal cost
 
 From equation \ref{eq:cStar} it follows that the marginal cost of output is
