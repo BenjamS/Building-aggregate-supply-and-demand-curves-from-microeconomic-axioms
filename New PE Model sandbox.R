@@ -113,6 +113,7 @@ if(length(indRm) != 0){
 }
 #----------------------------------------------------------------------------
 mod2Vars <- c("dist", "yield (kg/acre)", "Cstar", "acres",
+              #input_vars[7],
               bin_vars[-c(2:3)], demog_vars[2], clim_vars[c(2, 3)])
 df_mod2 <- df_mod[, mod2Vars]
 mod1Vars <- c("dist", "yield (kg/acre)", "acres",
@@ -131,7 +132,7 @@ mod1 <- lm(`yield (kg/acre)`~., df_mod1[, -not_these])
 summary(mod1)
 sum(mod1$residuals^2)
 plot(mod1$fitted.values, mod1$residuals)
-#car::vif(mod2)
+#car::vif(mod1)
 #intersect(mod_vars, colnames(df))
 #----------------------------------------------------------------------------
 # Any NAs omitted? Where are they?
