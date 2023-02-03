@@ -933,7 +933,14 @@ hist(h)
 # and that seed might better not be considered an input
 #---
 Cstar <- exp(df_mod1$Cstar)
-Cstar[which(Cstar == 1)] <- 0
+yStar <- exp(df_mod1$`yield (kg/acre)`)
+# Cstar, yStar, and CtildeStar are lognormally distributed
+CtildeStar <- Cstar / yStar
+hist(log(CtildeStar), breaks = 25)
+hist(log(Cstar), breaks = 25)
+hist(log(yStar), breaks = 25)
+#Cstar[which(Cstar == 1)] <- 0
+hist(log(Cstar / exp(df_mod1$`yield (kg/acre)`)))
 #ratio <- aVec[which(names(aVec) == "`seed (kg/acre)`")] / h * Cstar / df_mod1$`seed (KES/acre)`
 #ratio <- aVec[which(names(aVec) == "`manure (kg/acre)`")] / h * Cstar / df_mod1$`manure (KES/acre)`
 ratio <- aVec[which(names(aVec) == "`Total NPK fert (kg/acre)`")] / h * Cstar / df_mod1$`Total NPK fert (KES/acre)`
@@ -978,11 +985,12 @@ ratio <- df_mod1$`dap (KES/acre)` * aVec[which(names(aVec) == "`harvesting fam l
 hist(log(ratio))
 #---------------------------------------------------------------------
 # Can deduce the implied modal (most likely) family wage
-lratio <- log(ratio)
-indRm <- unique(c(which(is.infinite(lratio)), which(is.nan(lratio))))
-lratio <- lratio[-indRm]
-mWgFam <- mean(lratio, na.rm = T)
-sWgFam <- sd(lratio, na.rm = T)
+wgFamMale <- ratio
+lwgFamMale <- log(wgFamMale)
+indRm <- unique(c(which(is.infinite(lwgFamMale)), which(is.nan(lwgFamMale))))
+lwgFamMale <- lwgFamMale[-indRm]
+mWgFam <- mean(lwgFamMale, na.rm = T)
+sWgFam <- sd(lwgFamMale, na.rm = T)
 meanWgFamMaleImp <- exp(mWgFam + sWgFam^2 / 2)
 modeWgFamMaleImp <- exp(mWgFam - sWgFam^2)
 # Modal fam adult male harvesting wage is ~73 KES/hour,
@@ -1013,17 +1021,21 @@ hist(df_mod1$acres - log(Astar))
 hist(df_mod1$acres)
 #(1 + mod2$coefficients["acres"]) / mod2$coefficients["Cstar"]
 #------------------------------------------------------------------------
-lwMat <- as.matrix(log(df_mod[, priceVars]))
-for(i in 1:ncol(lwMat)){
-  indInf <- which(is.infinite(lwMat[, i]))
-  print(length(indInf))
-  if(length(indInf) != 0){
-  lwMat[indInf, i] <- 0
-  }
-}
+lwMat <- df_mod1[, priceVars] %>% 
+  mutate_all(~replace(., is.nan(.), NA)) %>%
+  as.matrix()
+lwMat[, ncol(lwMat)] <- wgFamMale
+lwMat[is.infinite(lwMat)] <- 0
+lwMat[is.nan(lwMat)] <- 0
+colnames(lwMat)
+names(aVec)
+colnamesOrdered <- gsub("`", "", names(aVec))
+colnamesOrdered <- gsub("kg/acre", "KES/kg", colnamesOrdered)
+colnamesOrdered <- gsub("fam lab male \\(pers-hrs/acre\\)", "\\(KES/hour\\)", colnamesOrdered)
+lwMat <- lwMat[, colnamesOrdered]
 
 betaW <- exp(lwMat %*% aVec)
-hist(betaW)
+hist(log(betaW), breaks = 25)
 alogaVec <- aVec * log(aVec)
 betaA <- exp(inputMat %*% alogaVec)
 hist(betaA)
@@ -1037,11 +1049,11 @@ a0 <- mod1$coefficients[1]
 y0 <- exp(a0)
 EyStar <- y0 * beta * (Cstar / h)^h
 #EyStar <- (y0 * beta * (CtildeStar / h)^h)^(1 / (1-h))
-yStar <- exp(df_mod$`yield (kg/acre)`)
-hist(log(EyStar/yStar), breaks = 20)
-ERstar <- EyStar * df_mod$P
+yStar <- exp(df_mod1$`yield (kg/acre)`)
+hist(log(EyStar/yStar), breaks = 25)
+ERstar <- EyStar * df_mod1$P
 hist(log(ERstar / Cstar))
-lambdaCstarP <- y0 * beta * df_mod$P * (Cstar / h)^(h - 1)
+lambdaCstarP <- y0 * beta * df_mod1$P * (Cstar / h)^(h - 1)
 lambdaRhoC <- ERstar / Cstar * h
 hist(log(lambdaCstarP))
 hist(log(lambdaRhoC))
@@ -1056,7 +1068,7 @@ length(lambdaCstarP[lambdaCstarP > h]) / length(lambdaCstarP)
 # plot(df_mod$Cstar, df_mod$`dap (kg/acre)`)
 # plot(df_mod$Cstar, df_mod$`CAN (26:0:0) (kg/acre)`)
 # plot(df_mod$Cstar, df_mod$`UREA (46:0:0) (kg/acre)`)
-df_look <- df_mod[, c("Cstar", input_vars[-c(1)])]
+df_look <- df_mod1[, c("Cstar", input_vars[-c(1, 3:4)])]
 colnames(df_look)[1] <- "lCstar"
 gathercols <- colnames(df_look)[-c(1)]
 df_plot <- df_look %>% gather_("type", "lVal", gathercols) %>%
@@ -1091,7 +1103,7 @@ gg <- ggplot(df_plot, aes(x = lCstar, y = lVal))
 #gg <- gg + geom_histogram()
 gg <- gg + geom_point()
 #gg <- gg + geom_smooth(method = "lm")
-gg <- gg + geom_abline(slope = 1, intercept = 0, color = "coral")
+gg <- gg + geom_abline(slope = 1, intercept = -5, color = "coral")
 gg <- gg + facet_wrap(~type)#, scales = "free")
 #gg <- gg + facet_grid(Type~dist)#, scales = "free_y")
 gg
