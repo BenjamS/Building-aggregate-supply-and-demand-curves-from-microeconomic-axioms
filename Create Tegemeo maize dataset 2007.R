@@ -335,15 +335,32 @@ df_labor$wgLabCost <- df_labor$lab_wg * df_labor$`Wage (KES/hour)`
 df_labWgCost <- df_labor[, keep_cols] %>% spread(activity, lab_wg)
 df_labWgCost[is.na(df_labWgCost)] <- 0
 df_labWgCost$`Total wage labor` <- rowSums(df_labWgCost[, -c(1:2)])
-colnames(df_labWgCost)[-c(1:2)] <- paste(colnames(df_labWgCost)[-c(1:2)], "cost (KES)")
+# Get non-lpcost wage labor
+indLabNonLandPrep <- which(colnames(df_labWgCost) %in% c("transport",
+                                                         "harvesting",
+                                                         "storage",
+                                                         "irrigation",
+                                                         "security",
+                                                         "stooking",
+                                                         "shelling",
+                                                         "bagging",
+                                                         "drying",
+                                                         "dusting (post harvest)"))
+df_labWgCost$`Non-land prep wage labor` <- rowSums(df_labWgCost[, indLabNonLandPrep])
+colnames(df_labWgCost)[-c(1:2)] <- paste(colnames(df_labWgCost)[-c(1:2)], "(KES)")
 #---
 # Get wage for each labor activity averaged over hh in a given district
-keep_cols <- c("dist", "activity", "Wage (KES/hour)")
-df_laborPrice <- df_labor[, keep_cols]
-df_laborPrice <- df_laborPrice %>% group_by(dist, activity) %>% summarise(meanWageDist = mean(`Wage (KES/hour)`, na.rm = T))
-df_laborPrice <- df_laborPrice[-which(is.nan(df_laborPrice$meanWageDist)), ]
+keep_cols <- c("dist", "hhid", "activity", "Wage (KES/hour)")
+df_labWgHhAct <- df_labor[, keep_cols]
+df_labWgHh <- df_labWgHhAct %>% spread(activity, `Wage (KES/hour)`) %>%
+  as.data.frame()
+colnames(df_labWgHh)[-c(1, 2)] <- paste(colnames(df_labWgHh)[-c(1, 2)], "(KES/hour)")
+df_labWgDistAct <- df_labWgHhAct %>% group_by(dist, activity) %>% 
+  summarise(meanWageDist = mean(`Wage (KES/hour)`, na.rm = T)) %>%
+  as.data.frame()
+df_labWgDistAct <- df_labWgDistAct[-which(is.nan(df_labWgDistAct$meanWageDist)), ]
 #---
-ggplot(df_laborPrice,aes(x=dist,y=meanWageDist))+geom_bar(stat="identity")+coord_flip()+facet_wrap(~activity)
+ggplot(df_labWgDistAct,aes(x=dist,y=meanWageDist))+geom_bar(stat="identity")+coord_flip()+facet_wrap(~activity)
 #---
 # # Implied labor cost for family labor (experimental)
 # famLabType <- c("lab_fam_fem", "lab_fam_male",
@@ -357,8 +374,8 @@ ggplot(df_laborPrice,aes(x=dist,y=meanWageDist))+geom_bar(stat="identity")+coord
 #   df_labFemCost <- df_labFemCost[, keep_cols] %>% spread(activity, approxImpliedLabCostFem)
 #   
 # }
-df_laborPrice <- df_laborPrice %>% group_by(dist) %>%
-  summarise(meanWageDist = mean(meanWageDist, na.rm = T)) %>%
+df_labWgDist <- df_labWgHhAct %>% group_by(dist) %>%
+  summarise(meanWageDist = mean(`Wage (KES/hour)`, na.rm = T)) %>%
   as.data.frame()
 #-------------------------------------------------------------------------
 # # Set apart labor wage
@@ -506,17 +523,20 @@ df_pest$mcrop[grep("maize", df_pest$mcrop)] <- "maize"
 #                           "km to synth fert mkt")
 # df_km[is.na(df_km)] <- 0
 #----------------------------------------------------------------------------
-unique(df_pest$punit)
+# unique(df_pest$punit)
+# lookCols <- c("hhid", "dist", "mcrop", "inputype", "numpur", "inputpr", "punit")
+# #setdiff(lookCols, colnames(df_pest))
+# df_look <- df_pest[, lookCols]
 # Convert all units to kg
 df_pest$kgpur <- df_pest$numpur
-df_pest$kgpur[which(df_pest$punit == "gram")] <- df_pest$kgpur[which(df_pest$punit == "gram")] / 100
+df_pest$kgpur[which(df_pest$punit == "gram")] <- df_pest$kgpur[which(df_pest$punit == "gram")] / 1000
 df_pest$kgpur[which(df_pest$punit == "gorogoro")] <- df_pest$kgpur[which(df_pest$punit == "gorogoro")] * 2
 df_pest$kgpur[which(df_pest$punit == "90 kg bag")] <- df_pest$kgpur[which(df_pest$punit == "90 kg bag")] * 90
 df_pest$kgpur[which(df_pest$punit == "litre")] <- df_pest$kgpur[which(df_pest$punit == "litre")]
 df_pest$kgpur[which(df_pest$punit == "kg")] <- df_pest$kgpur[which(df_pest$punit == "kg")]
 # Convert prices to per kg
 df_pest$inputprkg <- df_pest$inputpr
-df_pest$inputprkg[which(df_pest$punit == "gram")] <- df_pest$inputprkg[which(df_pest$punit == "gram")] / 100
+df_pest$inputprkg[which(df_pest$punit == "gram")] <- df_pest$inputprkg[which(df_pest$punit == "gram")] * 1000
 df_pest$inputprkg[which(df_pest$punit == "gorogoro")] <- df_pest$inputprkg[which(df_pest$punit == "gorogoro")] * 2
 df_pest$inputprkg[which(df_pest$punit == "90 kg bag")] <- df_pest$inputprkg[which(df_pest$punit == "90 kg bag")] * 90
 df_pest$inputprkg[which(df_pest$punit == "litre")] <- df_pest$inputprkg[which(df_pest$punit == "litre")]
@@ -529,20 +549,9 @@ df_pest <- df_pest[-ind_error, ]
 # Some hhid bought same input but in different punit and/or inputprkg
 # Have to aggregate (add) these now that everything is in kg
 # Might also have to aggregate due to green and dry maize being combined
-# First get mean district P&D chem price data set sorted out
-#---
-# P&D chem price
-keep_cols <- c("hhid", "mcrop", "dist", "inputype", "inputprkg")
-df_pestPrice <- df_pest[, keep_cols] %>%
-  group_by(dist, mcrop, inputype) %>%
-  summarise(inputprkg = mean(inputprkg, na.rm = T))
-df_look <- subset(df_pestPrice, mcrop = "maize")
-ggplot(df_look, aes(x=dist,y=inputprkg))+geom_bar(stat="identity")+coord_flip()+facet_wrap(~inputype, scales = "free")
-df_pestPrice <- df_pestPrice %>% spread(inputype, inputprkg)
-colnames(df_pestPrice)[-1] <- c("crop", paste(colnames(df_pestPrice)[-c(1:2)], "mean dist price (KES/kg)"))
 #---
 # P&D chem cost
-keep_cols <- c("hhid", "dist", "mcrop", "inputype", "kgpur", "inputprkg")
+keep_cols <- c("hhid", "dist", "mcrop", "inputype", "kgpur", "inputprkg", "punit")
 df_pestCost <- df_pest[, keep_cols]
 df_pestCost$PnDchemCost <- df_pestCost$kgpur * df_pestCost$inputprkg
 df_pestCost <- df_pestCost %>% group_by(dist, hhid, mcrop, inputype) %>%
@@ -552,7 +561,7 @@ df_pestCost <- df_pestCost %>% spread(inputype, PnDchemCost)
 df_pestCost$kgpur <- NULL
 df_pestCost$inputprkg <- NULL
 df_pestCost$`Total P&D chem` <- rowSums(df_pestCost[, -c(1:3)], na.rm = T)
-colnames(df_pestCost)[-c(1:2)] <- c("crop", paste(colnames(df_pestCost)[-c(1:3)], "cost (KES)"))
+colnames(df_pestCost)[-c(1:2)] <- c("crop", paste(colnames(df_pestCost)[-c(1:3)], "(KES)"))
 df_pestCost[is.na(df_pestCost)] <- 0
 # One duplicate hhid but it is because the farm applies P&D chems
 # to both maize and beans (So no worries)
@@ -561,6 +570,7 @@ df_pestCost[is.na(df_pestCost)] <- 0
 # indDup <- which(duplicated(df_pestCost$hhid))
 # indDup <- c((indDup - 1), indDup)
 # View(df_pestCost[indDup, ])
+hist(log(df_pestCost$`Total P&D chem (KES)`))
 #---
 # P&D chem qty
 keep_cols <- c("hhid", "dist", "mcrop", "inputype", "kgpur")
@@ -570,12 +580,61 @@ df_pestQty <- df_pestQty %>% group_by(dist, hhid, mcrop, inputype) %>%
   as.data.frame()
 df_pestQty <- df_pestQty %>% spread(inputype, kgpur)
 df_pestQty$`Total P&D chem` <- rowSums(df_pestQty[, -c(1:3)], na.rm = T)
-colnames(df_pestQty)[-c(1:2)] <- c("crop", paste(colnames(df_pestQty)[-c(1:3)], "qty (kg)"))
+colnames(df_pestQty)[-c(1:2)] <- c("crop", paste(colnames(df_pestQty)[-c(1:3)], "(kg)"))
 df_pestQty[is.na(df_pestQty)] <- 0
 # Same duplicate hhid as for df_pestCost
 # indDup <- which(duplicated(df_pestQty$hhid))
 # indDup <- c((indDup - 1), indDup)
 # View(df_pestQty[indDup, ])
+#---
+df_pestPriceHh <- df_pestCost
+df_pestPriceHh[, -c(1:3)] <- df_pestPriceHh[, -c(1:3)] / df_pestQty[, -c(1:3)]
+for(i in 4:ncol(df_pestPriceHh)){
+  df_pestPriceHh[which(is.nan(df_pestPriceHh[, i])) , i] <- NA
+}
+colnames(df_pestPriceHh)[-c(1:3)] <- gsub("KES", "KES/kg", colnames(df_pestPriceHh)[-c(1:3)])
+# hist(log(df_pestPriceHh$`Pesticide (KES/kg)`))
+# hist(log(df_pestPriceHh$`Insecticide (KES/kg)`))
+# hist(log(df_pestPriceHh$`Herbicide (KES/kg)`))
+hist(log(df_pestPriceHh$`Total P&D chem (KES/kg)`))
+indLook <- which(log(df_pestPriceHh$`Total P&D chem (KES/kg)`) < 0)
+df_pestPriceDist <- df_pestPriceHh %>% group_by(dist, crop) %>%
+  summarise_all(mean, na.rm = T) %>% as.data.frame()
+colnames(df_pestPriceDist)[-c(1:3)] <- gsub("KES", "KES/kg", colnames(df_pestPriceDist)[-c(1:3)])
+#---
+# P&D chem "price" (marg cost) at hhid level
+keep_cols <- c("hhid", "mcrop", "dist", "inputype", "inputprkg")
+df_pestPriceHh <- df_pest[, keep_cols] %>%
+  group_by(dist, hhid, mcrop, inputype) %>%
+  summarise(inputprkg = mean(inputprkg, na.rm = T)) %>%
+  as.data.frame()
+df_pestPriceHh <- df_pestPriceHh %>% spread(inputype, inputprkg)
+df_pestPriceHh$`Total P&D chem` <- df_pestCost$`Total P&D chem (KES)` / df_pestQty$`Total P&D chem (kg)`
+colnames(df_pestPriceHh)[-c(1, 2)] <- c("crop", paste(colnames(df_pestPriceHh)[-c(1:3)], "(KES/kg)"))
+# df_look <- subset(df_pestPriceHh, crop = "maize") %>% 
+#   gather(type, price, `Fungicide (KES/kg)`:`Total P&D chem (KES/kg)`) %>%
+#   as.data.frame()
+# ggplot(df_look,aes(x=price))+geom_histogram(stat="count")+facet_wrap(~type, scales = "free")
+hist(log(df_pestPriceHh$`Pesticide (KES/kg)`))
+hist(log(df_pestPriceHh$`Insecticide (KES/kg)`))
+hist(log(df_pestPriceHh$`Total P&D chem (KES/kg)`))
+# Mean P&D chem price at dist level
+# Judging by the histograms immediately above, price is lognormally distributed
+# So calculate mean as exp(m + s^2/2) because the arithmetic mean will be misleading.
+df_pestPriceDist <- df_pestPriceHh %>%
+  gather(type, price, `Fungicide (KES/kg)`:`Total P&D chem (KES/kg)`) %>%
+  as.data.frame()
+df_pestPriceDist$lprice <- log(df_pestPriceDist$price)
+df_pestPriceDist <- df_pestPriceDist %>% group_by(dist, crop, type) %>%
+  summarise(m = mean(lprice, na.rm = T),
+            s = sd(lprice, na.rm = T)) %>% as.data.frame()
+df_pestPriceDist$mu <- exp(df_pestPriceDist$m + df_pestPriceDist$s^2 / 2)
+df_pestPriceDist$s <- NULL
+df_pestPriceDist$m <- NULL
+df_pestPriceDist <- df_pestPriceDist %>% spread(type, mu)
+# %>% mutate_all(~replace(., is.nan(.), NA))
+# df_look <- subset(df_pestPriceDist, mcrop = "maize")
+# ggplot(df_look, aes(x=dist,y=`Total P&D chem (KES/kg)`))+geom_bar(stat="identity")+coord_flip()
 #---------------------------------------------------------------------------
 # Get demographic vars
 this_filepath <- paste0(this_folder, "ae_hhsize_07.dta")
@@ -651,11 +710,11 @@ ggplot(df_cropPrice, aes(x=dist,y=`crop price (KES/kg)`))+geom_bar(stat="identit
 # df_fertPrice <- df_fertPrice %>% spread(inputype, pfert)
 # colnames(df_fertPrice)[-c(1)] <- paste(colnames(df_fertPrice)[-c(1)], "price (KES/kg)")
 #===========================================================================
+#===========================================================================
+#===========================================================================
 # Put it all together
 list_df <- list(df_yield, df_labQty, df_pestQty, df_clim, df_demog,
-                df_labWgCost, df_pestCost)#, df_km)#,
-                # df_cropPrice, df_fertPrice, df_pestPrice, 
-                # df_seedPrice, df_laborPrice)
+                df_labWgCost, df_pestCost, df_labWgHh, df_pestPriceHh)#, df_km)
 df <- plyr::join_all(list_df)
 colnames(df) <- gsub("_", ": ", colnames(df))
 colnames(df) <- gsub(" /", "/", colnames(df))
@@ -676,25 +735,24 @@ df$gend <- as.numeric(df$gend)
 # df$`seed (kg/acre)` <- df$seedkg / df$acres
 # df$`Wage labor (man days/acre)` <- df$`Wage labor (man days)` / df$acres
 # df$`Adult family labor (man hours/acre)` <- df$`Adult family labor (man hours)` / df$acres
-df$`Rain anomaly` <- df$main07 - df$qwetpre
+df$`Rain anomaly` <- df$main07 / df$qwetpre
 costVars <- grep("KES/acre", colnames(df))
 colnames(df)[costVars]
 df$Cstar <- df$`Total synth fert (KES/acre)` + 
-  df$`Total organic fert (KES/acre)` +
+  #df$`Total organic fert (KES/acre)` +
+  #df$`manure (KES/acre)` +
   df$`seed (KES/acre)` +
   df$lpcost +
-#  df$`Total wage labor cost (KES/acre)` +
-  df$`Total P&D chem cost (KES/acre)`
+  #df$`Non-land prep wage labor (KES/acre)` +
+  df$`Total P&D chem (KES/acre)`
 df <- merge(df, df_cropPrice, by = c("crop", "dist"))
 df$Rstar <- df$`yield (kg/acre)` * df$`crop price (KES/kg)`
 #---
 df_look <- subset(df, crop == "maize")
 #df_look <- subset(df_yield, crop == "maize")
-plot(log(df_look$`seed (kg/acre)`), log(df_look$`yield (kg/acre)`))
+#plot(log(df_look$`seed (kg/acre)`), log(df_look$`yield (kg/acre)`))
 hist(log(df_look$Cstar))
 hist(log(df_look$Rstar / df_look$Cstar))
-# nrow(df_yield)
-# nrow(df)
 #===========================================================================
 # Test it out
 #colnames(df)
@@ -710,33 +768,32 @@ input_vars <- c(#"Total fam lab child (pers-hrs/acre)",
               #"1st weeding fam lab child (pers-hrs/acre)",
                #"2nd weeding fam lab fem (pers-hrs/acre)",
                #"2nd weeding fam lab adult (pers-hrs/acre)",
-               #"1st weeding fam lab fem (pers-hrs/acre)",
-              # "1st weeding fam lab adult (pers-hrs/acre)",
-               #"1st weeding fam lab male (pers-hrs/acre)",
+              #"1st weeding fam lab fem (pers-hrs/acre)",
+              #"1st weeding fam lab adult (pers-hrs/acre)",
+              "1st weeding fam lab male (pers-hrs/acre)",
                 #"1st weeding wage labor (pers-hrs/acre)",
                 #"2nd weeding wage labor (pers-hrs/acre)",
                # "1st ploughing fam lab child (pers-hrs/acre)",
-              # "1st ploughing fam lab adult (pers-hrs/acre)",
+              #"1st ploughing fam lab adult (pers-hrs/acre)",
                # "1st ploughing fam lab fem (pers-hrs/acre)",
                #"1st ploughing fam lab male (pers-hrs/acre)",
-               # "1st ploughing wage labor (pers-hrs/acre)",
-              # "shelling fam lab adult (pers-hrs/acre)",
+                #"1st ploughing wage labor (pers-hrs/acre)",
+              #"shelling fam lab adult (pers-hrs/acre)",
               #"shelling fam lab fem (pers-hrs/acre)",
                 #"shelling fam lab male (pers-hrs/acre)",
               #"shelling fam lab child (pers-hrs/acre)",
               # "shelling wage labor (pers-hrs/acre)",
-              #  "harvesting fam lab male (pers-hrs/acre)",
-              #"harvesting fam lab adult (pers-hrs/acre)",
+              "harvesting fam lab male (pers-hrs/acre)",
+              #"harvesting fam lab adult (pers-hrs/acre)", *
               #"harvesting fam lab fem (pers-hrs/acre)",
             #"harvesting fam lab child (pers-hrs/acre)",
               #"harvesting wage labor (pers-hrs/acre)",
-              #"planting fam lab adult (pers-hrs/acre)",
-              #  "planting fam lab fem (pers-hrs/acre)",
-               # "planting fam lab male (pers-hrs/acre)",
+            #  "planting fam lab adult (pers-hrs/acre)",
+               # "planting fam lab fem (pers-hrs/acre)",
+                #"planting fam lab male (pers-hrs/acre)",
               "planting fam lab child (pers-hrs/acre)",
                #"planting wage labor (pers-hrs/acre)",
                 #"Total synth. fert. (kg/acre)",
-              #"manure (KES/acre)",
                 "seed (kg/acre)",
               "Total CAN fert (kg/acre)",      
               "Total NPK fert (kg/acre)",  
@@ -747,15 +804,15 @@ input_vars <- c(#"Total fam lab child (pers-hrs/acre)",
                 # "NPK (23:23:23) (kg/acre)",
                 # "NPK (23:23:0) (kg/acre)",
               #"NPK (17:17:0) (kg/acre)",
-               "manure (kg/acre)"#,
-              #"compost (kg/acre)"
-              # "mavuno-basal (kg/acre)",
-              #"foliar feed (kg/acre)"
+               #"manure (kg/acre)",
+              #"compost (kg/acre)",
+              #"mavuno-basal (kg/acre)",
+              #"foliar feed (kg/acre)",
                # "Fungicide qty (kg/acre)",
                # "Herbicide qty (kg/acre)",
                # "Insecticide qty (kg/acre)",
                # "Pesticide qty (kg/acre)"
-              #"Total P&D chem qty (kg/acre)"
+              "Total P&D chem (kg/acre)"
               )
 demog_vars <- c(#"age",
                 "aehh07"#,
@@ -782,7 +839,7 @@ bin_vars <- c("adopter", #"gend",
               "landprep: oxen",
               "landprep: tractor")
 #----------------------------------------------------------------------------
-costVars <- c("Cstar", "seed (KES/acre)",
+costVars <- c("Cstar", #"seed (KES/acre)",
               "dap (KES/acre)",
               #"UREA (46:0:0) (KES/acre)",
               "Total CAN fert (KES/acre)",
@@ -791,8 +848,12 @@ costVars <- c("Cstar", "seed (KES/acre)",
               #"NPK (23:23:23) (KES/acre)",
               #"NPK (23:23:0) (KES/acre)",
               "Total UREA fert (KES/acre)",
-              "manure (KES/acre)")
+              #"manure (KES/acre)",
+              "Total P&D chem (KES/acre)"
+              )
 priceVars <- gsub("acre", "kg", costVars[-1])
+priceVars <- c(priceVars, "harvesting (KES/hour)")
+#----------------------------------------------------------------------------
 mod_vars <- c("dist", "crop", "yield (kg/acre)", "acres",
               input_vars, bin_vars,
               demog_vars, clim_vars,
@@ -800,8 +861,10 @@ mod_vars <- c("dist", "crop", "yield (kg/acre)", "acres",
 setdiff(mod_vars, colnames(df))
 #----------------------------------------------------------------------------
 df_mod <- subset(df[, mod_vars], crop == "maize" &
-                   #dist != "Kakamega" &
+                   Cstar > 0 &
+                   acres > 0 &
                    `yield (kg/acre)` > 1)
+df_mod <- df_mod[-which(is.na(df_mod$`Rain anomaly`)), ]
 df_mod$crop <- NULL
 #df_mod$dist <- NULL
 colnames(df_mod)[which(colnames(df_mod) == "crop price (KES/kg)")] <- "P"
@@ -830,9 +893,14 @@ summary(mod1)
 sum(mod1$residuals^2)
 plot(mod1$fitted.values, mod1$residuals)
 #car::vif(mod1)
+#View(df_mod1[which(mod1$residuals < -2), ])
+coefsNeg <- mod1$coefficients[which(mod1$coefficients < 0)]
+coefsNegNames <- gsub("`", "", names(coefsNeg))
+inputsNegCoef <- coefsNegNames[which(coefsNegNames %in% input_vars)]
+inputsPosCoef <- setdiff(input_vars, inputsNegCoef)
 #----------------------------------------------------------------------------
-mod2Vars <- c("dist", "yield (kg/acre)", "Cstar", "acres",
-              input_vars[1], bin_vars, demog_vars, clim_vars)
+mod2Vars <- c("dist", "yield (kg/acre)", "Cstar", "acres", "seed (kg/acre)",
+              inputsNegCoef[-1], bin_vars, demog_vars, clim_vars)
 df_mod2 <- df_mod[, mod2Vars]
 not_these <- which(colnames(df_mod2) %in% c("dist", costVars[-1]))
 mod2 <- lm(`yield (kg/acre)`~., df_mod2[, -not_these])
@@ -840,78 +908,120 @@ summary(mod2)
 sum(mod2$residuals^2)
 plot(mod2$fitted.values, mod1$residuals)
 #car::vif(mod2)
+#View(df_mod2[which(mod2$residuals < -1.5), ])
 #----------------------------------------------------------------------------
-coefs <- names(mod1$coefficients)
-coefs <- gsub("`", "", coefs)
-aVec <- mod1$coefficients[which(coefs %in% input_vars)]
-aVec <- aVec[-c(1)]
+# Model validation tests
+#----------------------------------------------------------------------------
+coefsNames <- gsub("`", "", names(mod1$coefficients))
+aVec <- mod1$coefficients[which(coefsNames %in% inputsPosCoef)]
+# If seed coef removed, calculation of h based on model 1 input coefs
+# matches estimation of h in model 2 
+rmSeed <- which(names(aVec) == "`seed (kg/acre)`")
+aVec <- aVec[-rmSeed]
 h <- sum(aVec)
-aVec / h
-inputMat <- as.matrix(df_mod1[, input_vars[input_vars %in% colnames(df_mod1)]])
-inputMat <- inputMat[, -c(1)]
+#aVec / h
+inputMat <- as.matrix(df_mod1[, inputsPosCoef[-2]]) # (if removing seed coef)
+#inputMat <- as.matrix(df_mod1[, inputsPosCoef])
 inputMat[inputMat != 0] <- 1
 h <-  inputMat %*% aVec
 hist(h)
-# z<-mod1$coefficients[which(!(coefs %in% bin_vars))]; z<-z[-1]
-# hz <- sum(z)
-# inputMatz <- as.matrix(df_mod1[, gsub("`", "", names(z))])
-# inputMatz[inputMatz != 0] <- 1
-# hz <-  inputMatz %*% z
-# hist(hz)
-hist(aVec[2] / h)
-hist(aVec[1] / h, breaks = 20)
-hist(aVec[6] / h, breaks = 20)
+#---
+# Validation test 1 using cost shares vs. tech shares
+# (Theory predicts that input cost_i / total input cost = alpha_i / h)
+# (So the following ratios should = 1, or log(ratio) = 0)
+# Encouraging results, make sure Cstar only includes inputs used in model,
+# and that seed might better not be considered an input
+#---
 Cstar <- exp(df_mod1$Cstar)
 Cstar[which(Cstar == 1)] <- 0
-ratio <- aVec[1] / h * Cstar / df_mod1$`seed (KES/acre)`
-ratio <- aVec[6] / h * Cstar / df_mod1$`manure (KES/acre)`
-# ratio <- aVec[6] / h * Cstar / df_mod1$`NPK (23:23:0) (KES/acre)`
-# ratio <- aVec[5] / h * Cstar / df_mod1$`NPK (23:23:23) (KES/acre)`
-ratio <- aVec[3] / h * Cstar / df_mod1$`Total NPK fert (KES/acre)`
-ratio <- aVec[2] / h * Cstar / df_mod1$`Total CAN fert (KES/acre)`
-#ratio <- aVec[5] / h * Cstar / df_mod1$`CAN (26:0:0) (KES/acre)`
-ratio <- aVec[4] / h * Cstar / df_mod1$`Total UREA fert (KES/acre)`
-ratio <- aVec[5] / h * Cstar / df_mod1$`dap (KES/acre)`
-#mean(ratio[-which(is.infinite(ratio))])
+#ratio <- aVec[which(names(aVec) == "`seed (kg/acre)`")] / h * Cstar / df_mod1$`seed (KES/acre)`
+#ratio <- aVec[which(names(aVec) == "`manure (kg/acre)`")] / h * Cstar / df_mod1$`manure (KES/acre)`
+ratio <- aVec[which(names(aVec) == "`Total NPK fert (kg/acre)`")] / h * Cstar / df_mod1$`Total NPK fert (KES/acre)`
+ratio <- aVec[which(names(aVec) == "`Total CAN fert (kg/acre)`")] / h * Cstar / df_mod1$`Total CAN fert (KES/acre)`
+ratio <- aVec[which(names(aVec) == "`Total UREA fert (kg/acre)`")] / h * Cstar / df_mod1$`Total UREA fert (KES/acre)`
+ratio <- aVec[which(names(aVec) == "`dap (kg/acre)`")] / h * Cstar / df_mod1$`dap (KES/acre)`
+ratio <- aVec[which(names(aVec) == "`Total P&D chem (kg/acre)`")] / h * Cstar / df_mod1$`Total P&D chem (KES/acre)`
 hist(log(ratio))
 #---
-# ratio <- df_mod1$`Total CAN fert (KES/acre)` * aVec[1] / (df_mod1$`seed (KES/acre)` * aVec[2])
-# ratio <- df_mod1$`Total CAN fert (KES/acre)` * aVec[6] / (df_mod1$`manure (KES/acre)` * aVec[2])
-#ratio <- df_mod1$`seed (KES/acre)` * aVec[6] / (df_mod1$`manure (KES/acre)` * aVec[1])
-#ratio <- df_mod1$`seed (KES/acre)` * aVec[5] / (df_mod1$`dap (KES/acre)` * aVec[1])
-ratio <- df_mod1$`Total CAN fert (KES/acre)` * aVec[3] / (df_mod1$`Total NPK fert (KES/acre)` * aVec[2])
-ratio <- df_mod1$`Total CAN fert (KES/acre)` * aVec[4] / (df_mod1$`Total UREA fert (KES/acre)` * aVec[2])
-ratio <- df_mod1$`Total CAN fert (KES/acre)` * aVec[5] / (df_mod1$`dap (KES/acre)` * aVec[2])
-ratio <- df_mod1$`Total UREA fert (KES/acre)` * aVec[5] / (df_mod1$`dap (KES/acre)` * aVec[4])
-ratio <- df_mod1$`Total NPK fert (KES/acre)` * aVec[5] / (df_mod1$`dap (KES/acre)` * aVec[3])
-# ratio <- df_mod1$`NPK (23:23:0) (KES/acre)` * aVec[7] / (df_mod1$`manure (KES/acre)` * aVec[6])
+# Validation test 2 based only on input costs and tech coeffs
+# (Theory says input cost_i / alpha_i = input cost_j / alpha_j)
+# (So the following ratios should = 1, or log(ratio) = 0)
+# More encouraging results!
+# Ratios involving seed continue to diverge from theory,
+# maybe b/c the seed cost is incomplete,
+# maybe farmers have ways of getting it for free
+# maybe b/c seed cost is not really a management variable
+# Note this way of validating opens the door to deducing family labor wage
+#---
+ratio <- df_mod1$`Total CAN fert (KES/acre)` * 
+  aVec[which(names(aVec) == "`Total NPK fert (kg/acre)`")] / (df_mod1$`Total NPK fert (KES/acre)` * aVec[which(names(aVec) == "`Total CAN fert (kg/acre)`")])
+ratio <- df_mod1$`Total CAN fert (KES/acre)` *
+  aVec[which(names(aVec) == "`Total UREA fert (kg/acre)`")] / (df_mod1$`Total UREA fert (KES/acre)` * aVec[which(names(aVec) == "`Total CAN fert (kg/acre)`")])
+ratio <- df_mod1$`Total CAN fert (KES/acre)` *
+  aVec[which(names(aVec) == "`dap (kg/acre)`")] / (df_mod1$`dap (KES/acre)` * aVec[which(names(aVec) == "`Total CAN fert (kg/acre)`")])
+ratio <- df_mod1$`Total UREA fert (KES/acre)` *
+  aVec[which(names(aVec) == "`dap (kg/acre)`")] / (df_mod1$`dap (KES/acre)` * aVec[which(names(aVec) == "`Total UREA fert (kg/acre)`")])
+#ratio <- df_mod1$`seed (KES/acre)` * aVec[which(names(aVec) == "`dap (kg/acre)`")] / (df_mod1$`dap (KES/acre)` * aVec[which(names(aVec) == "`seed (kg/acre)`")])
+ratio <- df_mod1$`Total NPK fert (KES/acre)` *
+  aVec[which(names(aVec) == "`dap (kg/acre)`")] / (df_mod1$`dap (KES/acre)` * aVec[which(names(aVec) == "`Total NPK fert (kg/acre)`")])
+ratio <- df_mod1$`Total NPK fert (KES/acre)` *
+  aVec[which(names(aVec) == "`Total P&D chem (kg/acre)`")] / (df_mod1$`Total P&D chem (KES/acre)` * aVec[which(names(aVec) == "`Total NPK fert (kg/acre)`")])
+ratio <- df_mod1$`Total CAN fert (KES/acre)` *
+  aVec[which(names(aVec) == "`Total P&D chem (kg/acre)`")] / (df_mod1$`Total P&D chem (KES/acre)` * aVec[which(names(aVec) == "`Total CAN fert (kg/acre)`")])
+ratio <- df_mod1$`Total P&D chem (kg/acre)` *
+  aVec[which(names(aVec) == "`dap (kg/acre)`")] / (df_mod1$`dap (kg/acre)` * aVec[which(names(aVec) == "`Total P&D chem (kg/acre)`")])
+# Fam labor is in qty terms, not cost terms, but exhibits stable ratio values
+ratio <- df_mod1$`Total CAN fert (KES/acre)` * aVec[which(names(aVec) == "`harvesting fam lab male (pers-hrs/acre)`")] / (df_mod1$`harvesting fam lab male (pers-hrs/acre)` * aVec[which(names(aVec) == "`Total CAN fert (kg/acre)`")])
+ratio <- df_mod1$`Total NPK fert (KES/acre)` * aVec[which(names(aVec) == "`harvesting fam lab male (pers-hrs/acre)`")] / (df_mod1$`harvesting fam lab male (pers-hrs/acre)` * aVec[which(names(aVec) == "`Total NPK fert (kg/acre)`")])
+ratio <- df_mod1$`Total UREA fert (KES/acre)` * aVec[which(names(aVec) == "`harvesting fam lab male (pers-hrs/acre)`")] / (df_mod1$`harvesting fam lab male (pers-hrs/acre)` * aVec[which(names(aVec) == "`Total UREA fert (kg/acre)`")])
+ratio <- df_mod1$`dap (KES/acre)` * aVec[which(names(aVec) == "`harvesting fam lab male (pers-hrs/acre)`")] / (df_mod1$`harvesting fam lab male (pers-hrs/acre)` * aVec[which(names(aVec) == "`dap (kg/acre)`")])
 hist(log(ratio))
-y <- df_mod1$`Total CAN fert (KES/acre)` / aVec[2]
-x <- df_mod1$`dap (KES/acre)` / aVec[5]
-y <- df_mod1$`dap (KES/acre)` / aVec[5]
-x <- df_mod1$`Total UREA fert (KES/acre)` / aVec[4]
+#---------------------------------------------------------------------
+# Can deduce the implied modal (most likely) family wage
+lratio <- log(ratio)
+indRm <- unique(c(which(is.infinite(lratio)), which(is.nan(lratio))))
+lratio <- lratio[-indRm]
+mWgFam <- mean(lratio, na.rm = T)
+sWgFam <- sd(lratio, na.rm = T)
+meanWgFamMaleImp <- exp(mWgFam + sWgFam^2 / 2)
+modeWgFamMaleImp <- exp(mWgFam - sWgFam^2)
+# Modal fam adult male harvesting wage is ~73 KES/hour,
+# with some in the tail >> 120.
+# Much higher than the dist avg wage of 7-15 KES/hour
+# A basis for developing a labor theory of surplus value?
+#---------------------------------------------------------------------
+y <- df_mod1$`Total CAN fert (KES/acre)` / aVec[which(names(aVec) == "`Total CAN fert (kg/acre)`")]
+x <- df_mod1$`dap (KES/acre)` / aVec[which(names(aVec) == "`dap (kg/acre)`")]
+y <- df_mod1$`Total NPK fert (KES/acre)` / aVec[which(names(aVec) == "`Total NPK fert (kg/acre)`")]
+x <- df_mod1$`Total P&D chem (KES/acre)` / aVec[which(names(aVec) == "`Total P&D chem (kg/acre)`")]
+hist(log(df_mod1$`Total P&D chem (KES/acre)`))
 plot(log(x), log(y))
 dfx <- data.frame(lx = log(x), ly = log(y))
 dfx <- dfx[-which(is.infinite(dfx$lx)),]
 dfx <- dfx[-which(is.infinite(dfx$ly)),]
 summary(lm(ly~lx, dfx))
 #---
-a0 <- mod1$coefficients[1]
-y0 <- exp(a0)
-kVec <- mod1$coefficients[-which(coefs %in% input_vars[-c(1)])]
+kVec <- mod1$coefficients[-which(coefsNames %in% input_vars[-c(1, 3:4)])]
 kVec <- kVec[-1]
 #---
 # Optimal farm size
 # (Optimal area allocated to maize)
 Astar <- (1 + kVec["acres"]) / h
-hist(Astar)
+hist(log(Astar))
 hist(log(exp(df_mod1$acres) - Astar)) #nice
 hist(df_mod1$acres - log(Astar))
 hist(df_mod1$acres)
 #(1 + mod2$coefficients["acres"]) / mod2$coefficients["Cstar"]
 #------------------------------------------------------------------------
 lwMat <- as.matrix(log(df_mod[, priceVars]))
-lwMat[is.infinite(lwMat)] <- 0
+for(i in 1:ncol(lwMat)){
+  indInf <- which(is.infinite(lwMat[, i]))
+  print(length(indInf))
+  if(length(indInf) != 0){
+  lwMat[indInf, i] <- 0
+  }
+}
+
 betaW <- exp(lwMat %*% aVec)
 hist(betaW)
 alogaVec <- aVec * log(aVec)
@@ -923,6 +1033,8 @@ betaK <- exp(lkMat %*% kVec)
 hist(betaK)
 beta <- betaA * betaK / betaW
 hist(log(beta))
+a0 <- mod1$coefficients[1]
+y0 <- exp(a0)
 EyStar <- y0 * beta * (Cstar / h)^h
 #EyStar <- (y0 * beta * (CtildeStar / h)^h)^(1 / (1-h))
 yStar <- exp(df_mod$`yield (kg/acre)`)
@@ -944,7 +1056,6 @@ length(lambdaCstarP[lambdaCstarP > h]) / length(lambdaCstarP)
 # plot(df_mod$Cstar, df_mod$`dap (kg/acre)`)
 # plot(df_mod$Cstar, df_mod$`CAN (26:0:0) (kg/acre)`)
 # plot(df_mod$Cstar, df_mod$`UREA (46:0:0) (kg/acre)`)
-
 df_look <- df_mod[, c("Cstar", input_vars[-c(1)])]
 colnames(df_look)[1] <- "lCstar"
 gathercols <- colnames(df_look)[-c(1)]
@@ -971,19 +1082,29 @@ for(i in 1:length(typeVec)){
   slope[i] <- coefficients(mod)[2]
 }
 names(slope) <- typeVec
+names(yInt) <- typeVec
 slope
+
 #df_plot$div <- df_plot$Cstar / df_plot$Val
 #gg <- ggplot(df_plot, aes(x = div))
 gg <- ggplot(df_plot, aes(x = lCstar, y = lVal))
 #gg <- gg + geom_histogram()
 gg <- gg + geom_point()
-gg <- gg + geom_smooth(method = "lm")
+#gg <- gg + geom_smooth(method = "lm")
+gg <- gg + geom_abline(slope = 1, intercept = 0, color = "coral")
 gg <- gg + facet_wrap(~type)#, scales = "free")
 #gg <- gg + facet_grid(Type~dist)#, scales = "free_y")
 gg
 # df_hist <- subset(df_plot, type == "CAN (26:0:0) (kg/acre)" &
 #                     abs(div) < 10)
 # hist(df_hist$div, breaks = 20)
+thisType <- "manure (kg/acre)"
+thisType <- "manure (kg/acre)"
+df_plot2 <- subset(df_plot, type == thisType)
+gg <- ggplot(df_plot2, aes(x = lCstar, y = lVal))
+gg <- gg + geom_point()
+gg <- gg + geom_abline(slope = 1, intercept = 0, color = "coral")
+gg
 #-------------------------------------------------------------
 
 #===========================================================================
