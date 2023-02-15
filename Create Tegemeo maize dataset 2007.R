@@ -1064,20 +1064,43 @@ length(lambdaCstarP[lambdaCstarP > h]) / length(lambdaCstarP)
 #=======================================================================
 # Aggregate supply curve - national level
 #-----------------------------------------------------------------------
+# First convert yield equation to production equation
+kVecQs <- kVec
+kVecQs["acres"] <- kVecQs["acres"] + 1
+betaKQs <- exp(lkMat %*% kVecQs)
+hist(log(betaKQs))
+betaQs <- betaA * betaKQs / betaW
+hist(log(betaQs))
+#hist(log(beta))
 # First get mean price jump from county level monthly price data (downloaded from GIEWS-FPMA)
 this_filepath <- "D:/OneDrive - CGIAR/Documents 1/CIAT 2/A theory of aggregate supply and demand/Nakuru Eldoret monthly maize price.csv"
 dfPTt <- read.csv(this_filepath, stringsAsFactors = F)
 colnames(dfPTt)[2:3] <- c("Eldoret", "Nakuru")
+dfPTt <- as.data.frame(apply(dfPTt, 2, rev))
+dfPTt[,2:3] <- as.data.frame(apply(dfPTt[,2:3], 2, as.numeric))
+for(i in 1:14){
+  thisDate <- paste0("7/1/", as.character(2007 + i))
+  ind <- grep(thisDate, dfPTt$Date)
+  ind <- ind:(ind + 13)
+  diffLnP <- diff(log(dfPTt$Nakuru[ind]))
+  thisDf <- dfPTt[ind, c(1, 3)]
+  thisDf$diffLnP <- c(NA, diffLnP)
+  #hist(diffLnP)
+  #print(thisDf)
+  print(mean(diffLnP, na.rm = T))
+  print(sd(diffLnP, na.rm = T))
+  
+}
 dfPTt$diffLnP <- c(NA, diff(log(dfPTt$Nakuru)))
 hist(dfPTt$diffLnP, breaks = 20)
 sP <- sd(dfPTt$diffLnP, na.rm = T)
 mDlnP <- mean(dfPTt$diffLnP, na.rm = T)
 mP <- mDlnP + sP^2 / 2
 #-----------------------------------------------------------------------
-hist(log(beta), breaks = 25)
-mBeta <- mean(log(beta), na.rm = T)
-sBeta <- sd(log(beta), na.rm = T)
-muBeta <- exp(mBeta + sBeta^2 / 2)
+hist(log(betaQs), breaks = 25)
+mBetaQs <- mean(log(betaQs), na.rm = T)
+sBetaQs <- sd(log(betaQs), na.rm = T)
+muBetaQs <- exp(mBetaQs + sBetaQs^2 / 2)
 hist(log(CtildeStar), breaks = 25)
 mCtildeStar <- mean(log(CtildeStar), na.rm = T)
 sCtildeStar <- sd(log(CtildeStar), na.rm = T)
@@ -1090,31 +1113,37 @@ muCtildeStarEta <- exp(eta * mCtildeStar + eta^2 * sCtildeStar^2 / 2)
 mLambda <- mean(log(lambdaCstarP), na.rm = T)
 sLambda <- sd(log(lambdaCstarP), na.rm = T)
 muLambdaEta <- exp(eta * mLambda + eta^2 * sLambda^2 / 2)
-Nf <- 3*10^6
+Nf <- 1.6*10^6
 P0 <- seq(0.1, 15, length.out = 40)
 #mP <- 0.035
 Tt <- 5
 #sP <- sCtildeStar / sqrt(Tt)
 z <- (log(muCtildeStarEta / P0^eta) - (eta * mP - eta^2 * sP^2 / 2) * Tt) / (eta * sP * sqrt(Tt))
-Qs <- Nf * y0 * muBeta * (P0 * exp(mP * Tt))^eta / muLambdaEta * (1 - pnorm(z))
-plot(P0, Qs)
+Qs <- Nf * (y0 * muBetaQs)^(1 / (1 - h)) * (P0 * exp(mP * Tt))^eta / muLambdaEta * (1 - pnorm(z))
+plot(P0, Qs / 1000)
 #-----------------------------------------------------------------------
 # Elasticity - agrees with Abodi et al. 2021 estimate of 0.462
 etaAg <- eta + dnorm(z) / (1 - pnorm(z)) * 1 / (sP * sqrt(Tt))
 plot(P0, etaAg)
+P0actual <- 12
+zActual <- (log(muCtildeStarEta / P0actual^eta) - (eta * mP - eta^2 * sP^2 / 2) * Tt) / (eta * sP * sqrt(Tt))
+QsActual <- Nf * (y0 * muBetaQs)^(1 / (1 - h)) * (P0actual * exp(mP * Tt))^eta / muLambdaEta * (1 - pnorm(zActual))
+QsActual / 1000
+etaAgActual <- eta + dnorm(zActual) / (1 - pnorm(zActual)) * 1 / (sP * sqrt(Tt))
+etaAgActual
 #-----------------------------------------------------------------------
 # Aggregate supply - county (dist) level
 dfQs <- data.frame(dist = df_mod1$dist,
-                   beta,
+                   betaQs,
                    CtildeStar,
                    lambdaCstarP,
                    PTt = df_mod1$P
                    )
 dfQs <- subset(dfQs, dist == "Nakuru")
-hist(log(dfQs$beta))
-mBeta <- mean(log(dfQs$beta), na.rm = T)
-sBeta <- sd(log(dfQs$beta), na.rm = T)
-muBeta <- exp(mBeta + sBeta^2 / 2)
+hist(log(dfQs$betaQs))
+mBetaQs <- mean(log(dfQs$betaQs), na.rm = T)
+sBetaQs <- sd(log(dfQs$betaQs), na.rm = T)
+muBetaQs <- exp(mBetaQs + sBetaQs^2 / 2)
 hist(log(dfQs$CtildeStar))
 mCtildeStar <- mean(log(dfQs$CtildeStar), na.rm = T)
 sCtildeStar <- sd(log(dfQs$CtildeStar), na.rm = T)
@@ -1126,20 +1155,25 @@ mLambda <- mean(log(dfQs$lambdaCstarP), na.rm = T)
 sLambda <- sd(log(dfQs$lambdaCstarP), na.rm = T)
 muLambdaEta <- exp(eta * mLambda + eta^2 * sLambda^2 / 2)
 Nf <- 3 * 10^5
-sP <- sCtildeStar / sqrt(Tt)
-mP <- 0.035
-P0 <- seq(1, 35, length.out = 40)
+# sP <- sCtildeStar / sqrt(Tt)
+# mP <- 0.035
+P0 <- seq(1, 15, length.out = 40)
 z <- (log(muCtildeStarEta / P0^eta) - (eta * mP - eta^2 * sP^2 / 2) * Tt) / (eta * sP * sqrt(Tt))
-Qs <- Nf * y0 * muBeta * (P0 * exp(mP * Tt))^eta / muLambdaEta * (1 - pnorm(z))
-plot(P0, Qs)
+Qs <- Nf * (y0 * muBetaQs)^(1 / (1 - h)) * (P0 * exp(mP * Tt))^eta / muLambdaEta * (1 - pnorm(z))
+plot(P0, Qs / 1000)
 #-----------------------------------------------------------------------
 # Elasticity - county level
 etaAg <- eta + dnorm(z) / (1 - pnorm(z)) * 1 / (sP * sqrt(Tt))
 plot(P0[P0 > 8], etaAg[P0 > 8])
 #-----------------
+P0actual <- 32
+zActual <- (log(muCtildeStarEta / P0actual^eta) - (eta * mP - eta^2 * sP^2 / 2) * Tt) / (eta * sP * sqrt(Tt))
+QsActual <- Nf * y0 * muBetaQs * (P0actual * exp(mP * Tt))^eta / muLambdaEta * (1 - pnorm(zActual))
+QsActual / 1000
+#-----------------
 # gg plot
-Pactual <- 32
-df_plotQs <- data.frame(val = Qs, P0)
+Pactual <- 10
+df_plotQs <- data.frame(val = Qs / 1000, P0)
 df_plotQs$type <- "Qs"
 df_plotEta <- data.frame(val = etaAg, P0)
 df_plotEta$type <- "Elast"
