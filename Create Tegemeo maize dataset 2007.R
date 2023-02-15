@@ -7,7 +7,7 @@ de_factorizer <- function(this_df){
   return(this_df)
 }
 #---------------------------------------------------------------------------
-this_folder <- "D:/OneDrive - CGIAR/Documents 1/CIAT 2/FnM Initiative/New PE Model/Tegemeo Data/data needed for 2007/"
+this_folder <- "D:/OneDrive - CGIAR/Documents 1/CIAT 2/A theory of aggregate supply and demand/New PE Model/Tegemeo Data/data needed for 2007/"
 #this_folder <- "C:/Users/bensc/OneDrive/Documents/Data/Tegemeo Data/data needed for 2007/"
 list.files(this_folder)
 #---------------------------------------------------------------------------
@@ -654,7 +654,7 @@ rm(df_hhsize)
 #---------------------------------------------------------------------------
 # Get climate variables
 # this_folder97 <- "C:/Users/bensc/OneDrive/Documents/Data/Tegemeo Data/data needed for 1997/"
-this_folder97 <- "D:/OneDrive - CGIAR/Documents 1/CIAT 2/FnM Initiative/New PE Model/Tegemeo Data/data needed for 1997/"
+this_folder97 <- "D:/OneDrive - CGIAR/Documents 1/CIAT 2/A theory of aggregate supply and demand/New PE Model/Tegemeo Data/data needed for 1997/"
 this_filepath <- paste0(this_folder97, "climate.dta")
 df_clim <- read.dta(this_filepath)
 df_clim <- de_factorizer(df_clim)
@@ -1021,12 +1021,13 @@ hist(df_mod1$acres - log(Astar))
 hist(df_mod1$acres)
 #(1 + mod2$coefficients["acres"]) / mod2$coefficients["Cstar"]
 #------------------------------------------------------------------------
-lwMat <- df_mod1[, priceVars] %>% 
-  mutate_all(~replace(., is.nan(.), NA)) %>%
+lwMat <- log(df_mod1[, priceVars]) %>%
+  #mutate_all(~replace(., is.nan(.), 0)) %>%
   as.matrix()
-lwMat[, ncol(lwMat)] <- wgFamMale
+lwMat[, ncol(lwMat)] <- log(wgFamMale)
 lwMat[is.infinite(lwMat)] <- 0
 lwMat[is.nan(lwMat)] <- 0
+lwMat[is.na(lwMat)] <- 0
 colnames(lwMat)
 names(aVec)
 colnamesOrdered <- gsub("`", "", names(aVec))
@@ -1035,7 +1036,7 @@ colnamesOrdered <- gsub("fam lab male \\(pers-hrs/acre\\)", "\\(KES/hour\\)", co
 lwMat <- lwMat[, colnamesOrdered]
 
 betaW <- exp(lwMat %*% aVec)
-hist(log(betaW), breaks = 25)
+hist(log(betaW))
 alogaVec <- aVec * log(aVec)
 betaA <- exp(inputMat %*% alogaVec)
 hist(betaA)
@@ -1050,7 +1051,7 @@ y0 <- exp(a0)
 EyStar <- y0 * beta * (Cstar / h)^h
 #EyStar <- (y0 * beta * (CtildeStar / h)^h)^(1 / (1-h))
 yStar <- exp(df_mod1$`yield (kg/acre)`)
-hist(log(EyStar/yStar), breaks = 25)
+hist(log(EyStar/yStar), breaks = 15) #Nice
 ERstar <- EyStar * df_mod1$P
 hist(log(ERstar / Cstar))
 lambdaCstarP <- y0 * beta * df_mod1$P * (Cstar / h)^(h - 1)
@@ -1060,6 +1061,99 @@ hist(log(lambdaRhoC))
 #hist(log(ERstar / Cstar * 1 / lambdaCstarP))
 # How many are rational
 length(lambdaCstarP[lambdaCstarP > h]) / length(lambdaCstarP)
+#=======================================================================
+# Aggregate supply curve - national level
+#-----------------------------------------------------------------------
+# First get mean price jump from county level monthly price data (downloaded from GIEWS-FPMA)
+this_filepath <- "D:/OneDrive - CGIAR/Documents 1/CIAT 2/A theory of aggregate supply and demand/Nakuru Eldoret monthly maize price.csv"
+dfPTt <- read.csv(this_filepath, stringsAsFactors = F)
+colnames(dfPTt)[2:3] <- c("Eldoret", "Nakuru")
+dfPTt$diffLnP <- c(NA, diff(log(dfPTt$Nakuru)))
+hist(dfPTt$diffLnP, breaks = 20)
+sP <- sd(dfPTt$diffLnP, na.rm = T)
+mDlnP <- mean(dfPTt$diffLnP, na.rm = T)
+mP <- mDlnP + sP^2 / 2
+#-----------------------------------------------------------------------
+hist(log(beta), breaks = 25)
+mBeta <- mean(log(beta), na.rm = T)
+sBeta <- sd(log(beta), na.rm = T)
+muBeta <- exp(mBeta + sBeta^2 / 2)
+hist(log(CtildeStar), breaks = 25)
+mCtildeStar <- mean(log(CtildeStar), na.rm = T)
+sCtildeStar <- sd(log(CtildeStar), na.rm = T)
+h <- mod2$coefficients["Cstar"]
+eta <- h / (1 - h)
+muCtildeStarEta <- exp(eta * mCtildeStar + eta^2 * sCtildeStar^2 / 2)
+# indRm <- which(is.infinite(log(lambdaCstarP)))
+# mLambda <- mean(log(lambdaCstarP[-indRm]), na.rm = T)
+# sLambda <- sd(log(lambdaCstarP[-indRm]), na.rm = T)
+mLambda <- mean(log(lambdaCstarP), na.rm = T)
+sLambda <- sd(log(lambdaCstarP), na.rm = T)
+muLambdaEta <- exp(eta * mLambda + eta^2 * sLambda^2 / 2)
+Nf <- 3*10^6
+P0 <- seq(0.1, 15, length.out = 40)
+#mP <- 0.035
+Tt <- 5
+#sP <- sCtildeStar / sqrt(Tt)
+z <- (log(muCtildeStarEta / P0^eta) - (eta * mP - eta^2 * sP^2 / 2) * Tt) / (eta * sP * sqrt(Tt))
+Qs <- Nf * y0 * muBeta * (P0 * exp(mP * Tt))^eta / muLambdaEta * (1 - pnorm(z))
+plot(P0, Qs)
+#-----------------------------------------------------------------------
+# Elasticity - agrees with Abodi et al. 2021 estimate of 0.462
+etaAg <- eta + dnorm(z) / (1 - pnorm(z)) * 1 / (sP * sqrt(Tt))
+plot(P0, etaAg)
+#-----------------------------------------------------------------------
+# Aggregate supply - county (dist) level
+dfQs <- data.frame(dist = df_mod1$dist,
+                   beta,
+                   CtildeStar,
+                   lambdaCstarP,
+                   PTt = df_mod1$P
+                   )
+dfQs <- subset(dfQs, dist == "Nakuru")
+hist(log(dfQs$beta))
+mBeta <- mean(log(dfQs$beta), na.rm = T)
+sBeta <- sd(log(dfQs$beta), na.rm = T)
+muBeta <- exp(mBeta + sBeta^2 / 2)
+hist(log(dfQs$CtildeStar))
+mCtildeStar <- mean(log(dfQs$CtildeStar), na.rm = T)
+sCtildeStar <- sd(log(dfQs$CtildeStar), na.rm = T)
+muCtildeStarEta <- exp(eta * mCtildeStar + eta^2 * sCtildeStar^2 / 2)
+# indRm <- which(is.infinite(log(lambdaCstarP)))
+# mLambda <- mean(log(lambdaCstarP[-indRm]), na.rm = T)
+# sLambda <- sd(log(lambdaCstarP[-indRm]), na.rm = T)
+mLambda <- mean(log(dfQs$lambdaCstarP), na.rm = T)
+sLambda <- sd(log(dfQs$lambdaCstarP), na.rm = T)
+muLambdaEta <- exp(eta * mLambda + eta^2 * sLambda^2 / 2)
+Nf <- 3 * 10^5
+sP <- sCtildeStar / sqrt(Tt)
+mP <- 0.035
+P0 <- seq(1, 35, length.out = 40)
+z <- (log(muCtildeStarEta / P0^eta) - (eta * mP - eta^2 * sP^2 / 2) * Tt) / (eta * sP * sqrt(Tt))
+Qs <- Nf * y0 * muBeta * (P0 * exp(mP * Tt))^eta / muLambdaEta * (1 - pnorm(z))
+plot(P0, Qs)
+#-----------------------------------------------------------------------
+# Elasticity - county level
+etaAg <- eta + dnorm(z) / (1 - pnorm(z)) * 1 / (sP * sqrt(Tt))
+plot(P0[P0 > 8], etaAg[P0 > 8])
+#-----------------
+# gg plot
+Pactual <- 32
+df_plotQs <- data.frame(val = Qs, P0)
+df_plotQs$type <- "Qs"
+df_plotEta <- data.frame(val = etaAg, P0)
+df_plotEta$type <- "Elast"
+df_plot <- as.data.frame(rbind(df_plotQs, df_plotEta))
+gg <- ggplot(df_plotQs, aes(x = P0, y = val))
+gg <- gg + geom_line()
+gg <- gg + geom_vline(xintercept = Pactual)
+#gg <- gg + facet_wrap(~type, ncol = 1, scales = "free_y")
+gg
+#-----
+# Compare to county level production data
+this_filepath <- "D:/OneDrive - CGIAR/Documents 1/CIAT 2/A theory of aggregate supply and demand/Kenya county maize production 2012-16.csv"
+dfQsReal <- read.csv(this_filepath, stringsAsFactors = F)
+#=======================================================================
 #-----------------------------------------------------------------------
 # Looking at expenditure shares w.r.t. total expenditure
 # hist(df_mod$`seed (KES/acre)` - df_mod$Cstar)
