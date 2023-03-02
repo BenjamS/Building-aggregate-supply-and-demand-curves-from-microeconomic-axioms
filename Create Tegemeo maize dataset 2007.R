@@ -770,7 +770,7 @@ input_vars <- c(#"Total fam lab child (pers-hrs/acre)",
                #"2nd weeding fam lab adult (pers-hrs/acre)",
               #"1st weeding fam lab fem (pers-hrs/acre)",
               #"1st weeding fam lab adult (pers-hrs/acre)",
-              "1st weeding fam lab male (pers-hrs/acre)",
+              #"1st weeding fam lab male (pers-hrs/acre)", *
                 #"1st weeding wage labor (pers-hrs/acre)",
                 #"2nd weeding wage labor (pers-hrs/acre)",
                # "1st ploughing fam lab child (pers-hrs/acre)",
@@ -783,7 +783,7 @@ input_vars <- c(#"Total fam lab child (pers-hrs/acre)",
                 #"shelling fam lab male (pers-hrs/acre)",
               #"shelling fam lab child (pers-hrs/acre)",
               # "shelling wage labor (pers-hrs/acre)",
-              "harvesting fam lab male (pers-hrs/acre)",
+              #"harvesting fam lab male (pers-hrs/acre)", #**
               #"harvesting fam lab adult (pers-hrs/acre)", *
               #"harvesting fam lab fem (pers-hrs/acre)",
             #"harvesting fam lab child (pers-hrs/acre)",
@@ -900,7 +900,7 @@ inputsNegCoef <- coefsNegNames[which(coefsNegNames %in% input_vars)]
 inputsPosCoef <- setdiff(input_vars, inputsNegCoef)
 #----------------------------------------------------------------------------
 mod2Vars <- c("dist", "yield (kg/acre)", "Cstar", "acres", "seed (kg/acre)",
-              inputsNegCoef[-1], bin_vars, demog_vars, clim_vars)
+              inputsNegCoef, bin_vars, demog_vars, clim_vars)
 df_mod2 <- df_mod[, mod2Vars]
 not_these <- which(colnames(df_mod2) %in% c("dist", costVars[-1]))
 mod2 <- lm(`yield (kg/acre)`~., df_mod2[, -not_these])
@@ -916,15 +916,23 @@ coefsNames <- gsub("`", "", names(mod1$coefficients))
 aVec <- mod1$coefficients[which(coefsNames %in% inputsPosCoef)]
 # If seed coef removed, calculation of h based on model 1 input coefs
 # matches estimation of h in model 2 
-rmSeed <- which(names(aVec) == "`seed (kg/acre)`")
-aVec <- aVec[-rmSeed]
-h <- sum(aVec)
+rmThese <- which(names(aVec) == "`seed (kg/acre)`")#%in% c("`seed (kg/acre)`", "`harvesting fam lab male (pers-hrs/acre)`"))
+aVec <- aVec[-rmThese]
+hFull <- sum(aVec)
 #aVec / h
-inputMat <- as.matrix(df_mod1[, inputsPosCoef[-2]]) # (if removing seed coef)
+inputMat <- as.matrix(df_mod1[, inputsPosCoef[-c(1)]]) # (if removing seed coef)
 #inputMat <- as.matrix(df_mod1[, inputsPosCoef])
 inputMat[inputMat != 0] <- 1
 h <-  inputMat %*% aVec
 hist(h)
+ind_h0 <- which(h == 0)
+hist(df_mod1$`yield (kg/acre)`[ind_h0])
+unique(df_mod1$dist[ind_h0])
+hist(df_mod1$`seed (kg/acre)`[ind_h0])
+hist(df_mod1$aehh07[ind_h0])
+#plot(mod1$fitted.values[ind_h0], mod1$residuals[ind_h0])
+View(df_mod1[ind_h0, ])
+h[ind_h0] <- 0.02
 #---
 # Validation test 1 using cost shares vs. tech shares
 # (Theory predicts that input cost_i / total input cost = alpha_i / h)
@@ -935,12 +943,12 @@ hist(h)
 Cstar <- exp(df_mod1$Cstar)
 yStar <- exp(df_mod1$`yield (kg/acre)`)
 # Cstar, yStar, and CtildeStar are lognormally distributed
-CtildeStar <- Cstar / yStar
-hist(log(CtildeStar), breaks = 25)
+CtildeStarEff <- Cstar / yStar
+hist(log(CtildeStarEff), breaks = 25)
 hist(log(Cstar), breaks = 25)
 hist(log(yStar), breaks = 25)
 #Cstar[which(Cstar == 1)] <- 0
-hist(log(Cstar / exp(df_mod1$`yield (kg/acre)`)))
+hist(log(Cstar / yStar))
 #ratio <- aVec[which(names(aVec) == "`seed (kg/acre)`")] / h * Cstar / df_mod1$`seed (KES/acre)`
 #ratio <- aVec[which(names(aVec) == "`manure (kg/acre)`")] / h * Cstar / df_mod1$`manure (KES/acre)`
 ratio <- aVec[which(names(aVec) == "`Total NPK fert (kg/acre)`")] / h * Cstar / df_mod1$`Total NPK fert (KES/acre)`
@@ -977,22 +985,22 @@ ratio <- df_mod1$`Total CAN fert (KES/acre)` *
   aVec[which(names(aVec) == "`Total P&D chem (kg/acre)`")] / (df_mod1$`Total P&D chem (KES/acre)` * aVec[which(names(aVec) == "`Total CAN fert (kg/acre)`")])
 ratio <- df_mod1$`Total P&D chem (kg/acre)` *
   aVec[which(names(aVec) == "`dap (kg/acre)`")] / (df_mod1$`dap (kg/acre)` * aVec[which(names(aVec) == "`Total P&D chem (kg/acre)`")])
-# Fam labor is in qty terms, not cost terms, but exhibits stable ratio values
-ratio <- df_mod1$`Total CAN fert (KES/acre)` * aVec[which(names(aVec) == "`harvesting fam lab male (pers-hrs/acre)`")] / (df_mod1$`harvesting fam lab male (pers-hrs/acre)` * aVec[which(names(aVec) == "`Total CAN fert (kg/acre)`")])
-ratio <- df_mod1$`Total NPK fert (KES/acre)` * aVec[which(names(aVec) == "`harvesting fam lab male (pers-hrs/acre)`")] / (df_mod1$`harvesting fam lab male (pers-hrs/acre)` * aVec[which(names(aVec) == "`Total NPK fert (kg/acre)`")])
-ratio <- df_mod1$`Total UREA fert (KES/acre)` * aVec[which(names(aVec) == "`harvesting fam lab male (pers-hrs/acre)`")] / (df_mod1$`harvesting fam lab male (pers-hrs/acre)` * aVec[which(names(aVec) == "`Total UREA fert (kg/acre)`")])
-ratio <- df_mod1$`dap (KES/acre)` * aVec[which(names(aVec) == "`harvesting fam lab male (pers-hrs/acre)`")] / (df_mod1$`harvesting fam lab male (pers-hrs/acre)` * aVec[which(names(aVec) == "`dap (kg/acre)`")])
+# # Fam labor is in qty terms, not cost terms, but exhibits stable ratio values
+# ratio <- df_mod1$`Total CAN fert (KES/acre)` * aVec[which(names(aVec) == "`harvesting fam lab male (pers-hrs/acre)`")] / (df_mod1$`harvesting fam lab male (pers-hrs/acre)` * aVec[which(names(aVec) == "`Total CAN fert (kg/acre)`")])
+# ratio <- df_mod1$`Total NPK fert (KES/acre)` * aVec[which(names(aVec) == "`harvesting fam lab male (pers-hrs/acre)`")] / (df_mod1$`harvesting fam lab male (pers-hrs/acre)` * aVec[which(names(aVec) == "`Total NPK fert (kg/acre)`")])
+# ratio <- df_mod1$`Total UREA fert (KES/acre)` * aVec[which(names(aVec) == "`harvesting fam lab male (pers-hrs/acre)`")] / (df_mod1$`harvesting fam lab male (pers-hrs/acre)` * aVec[which(names(aVec) == "`Total UREA fert (kg/acre)`")])
+# ratio <- df_mod1$`dap (KES/acre)` * aVec[which(names(aVec) == "`harvesting fam lab male (pers-hrs/acre)`")] / (df_mod1$`harvesting fam lab male (pers-hrs/acre)` * aVec[which(names(aVec) == "`dap (kg/acre)`")])
 hist(log(ratio))
 #---------------------------------------------------------------------
 # Can deduce the implied modal (most likely) family wage
-wgFamMale <- ratio
-lwgFamMale <- log(wgFamMale)
-indRm <- unique(c(which(is.infinite(lwgFamMale)), which(is.nan(lwgFamMale))))
-lwgFamMale <- lwgFamMale[-indRm]
-mWgFam <- mean(lwgFamMale, na.rm = T)
-sWgFam <- sd(lwgFamMale, na.rm = T)
-meanWgFamMaleImp <- exp(mWgFam + sWgFam^2 / 2)
-modeWgFamMaleImp <- exp(mWgFam - sWgFam^2)
+# wgFamMale <- ratio
+# lwgFamMale <- log(wgFamMale)
+# indRm <- unique(c(which(is.infinite(lwgFamMale)), which(is.nan(lwgFamMale))))
+# lwgFamMale <- lwgFamMale[-indRm]
+# mWgFam <- mean(lwgFamMale, na.rm = T)
+# sWgFam <- sd(lwgFamMale, na.rm = T)
+# meanWgFamMaleImp <- exp(mWgFam + sWgFam^2 / 2)
+# modeWgFamMaleImp <- exp(mWgFam - sWgFam^2)
 # Modal fam adult male harvesting wage is ~73 KES/hour,
 # with some in the tail >> 120.
 # Much higher than the dist avg wage of 7-15 KES/hour
@@ -1009,7 +1017,10 @@ dfx <- dfx[-which(is.infinite(dfx$lx)),]
 dfx <- dfx[-which(is.infinite(dfx$ly)),]
 summary(lm(ly~lx, dfx))
 #---
-kVec <- mod1$coefficients[-which(coefsNames %in% input_vars[-c(1, 3:4)])]
+indKvars <- which(!(coefsNames %in% input_vars[3:7]))
+coefsNames[indKvars]
+#kVec <- mod1$coefficients[-which(coefsNames %in% input_vars[-c(1, 3:4)])]
+kVec <- mod1$coefficients[indKvars]
 kVec <- kVec[-1]
 #---
 # Optimal farm size
@@ -1021,10 +1032,10 @@ hist(df_mod1$acres - log(Astar))
 hist(df_mod1$acres)
 #(1 + mod2$coefficients["acres"]) / mod2$coefficients["Cstar"]
 #------------------------------------------------------------------------
-lwMat <- log(df_mod1[, priceVars]) %>%
+lwMat <- log(df_mod1[, priceVars[-length(priceVars)]]) %>%
   #mutate_all(~replace(., is.nan(.), 0)) %>%
   as.matrix()
-lwMat[, ncol(lwMat)] <- log(wgFamMale)
+# lwMat[, ncol(lwMat)] <- log(wgFamMale)
 lwMat[is.infinite(lwMat)] <- 0
 lwMat[is.nan(lwMat)] <- 0
 lwMat[is.na(lwMat)] <- 0
@@ -1050,21 +1061,41 @@ a0 <- mod1$coefficients[1]
 y0 <- exp(a0)
 EyStar <- y0 * beta * (Cstar / h)^h
 #EyStar <- (y0 * beta * (CtildeStar / h)^h)^(1 / (1-h))
-yStar <- exp(df_mod1$`yield (kg/acre)`)
+#yStar <- exp(df_mod1$`yield (kg/acre)`)
 hist(log(EyStar/yStar), breaks = 15) #Nice
 ERstar <- EyStar * df_mod1$P
 hist(log(ERstar / Cstar))
+# Revealed lambda calculated based on parameters observable ex-ante (at planting time)
 lambdaCstarP <- y0 * beta * df_mod1$P * (Cstar / h)^(h - 1)
 lambdaRhoC <- ERstar / Cstar * h
 hist(log(lambdaCstarP))
 hist(log(lambdaRhoC))
-#hist(log(ERstar / Cstar * 1 / lambdaCstarP))
+sd(log(lambdaCstarP))
+sd(log(lambdaRhoC))
+mean(log(lambdaCstarP))
+sLambdaTrunc <- sd(log(lambdaCstarP))
+mLambdaTrunc <- mean(log(lambdaCstarP))
+exp(mLambdaTrunc + sLambdaTrunc^2 / 2)
+exp(mLambdaTrunc - sLambdaTrunc^2)
 # How many are rational
 length(lambdaCstarP[lambdaCstarP > h]) / length(lambdaCstarP)
+CtildeStar <- df_mod1$P / lambdaCstarP * h
+#CtildeStar2 <- Cstar / EyStar
+hist(log(CtildeStar))
+#hist(log(CtildeStar2 / CtildeStar))
+#hist(log(CtildeStar / CtildeStarEff))
+# Mean and sd of farmer's expected marginal cost of production
+mCtildeStarTrunc <- mean(log(CtildeStar))
+sCtildeStarTrunc <- sd(log(CtildeStar))
+exp(mCtildeStarTrunc + sCtildeStarTrunc^2 / 2)
+# Mean and sd of their actual marginal cost of production
+mCtildeStarEffTrunc <- mean(log(CtildeStarEff))
+sCtildeStarEffTrunc <- sd(log(CtildeStarEff))
+exp(mCtildeStarEffTrunc + sCtildeStarEffTrunc^2 / 2)
 #=======================================================================
-# Aggregate supply curve - national level
+# Aggregate supply curve
 #-----------------------------------------------------------------------
-# First convert yield equation to production equation
+# First convert yield params to production params
 kVecQs <- kVec
 kVecQs["acres"] <- kVecQs["acres"] + 1
 betaKQs <- exp(lkMat %*% kVecQs)
@@ -1072,17 +1103,114 @@ hist(log(betaKQs))
 betaQs <- betaA * betaKQs / betaW
 hist(log(betaQs))
 #hist(log(beta))
-# First get mean price jump from county level monthly price data (downloaded from GIEWS-FPMA)
+dfQs <- data.frame(dist = df_mod1$dist,
+                   P = df_mod1$P,
+                   h, betaQs, CtildeStar, CtildeStarEff,
+                   Cstar, lambda = lambdaCstarP,
+                   EyStar)
+
+hist(subset(df_mod1, dist == "Uasin Gishu")$`Total NPK fert (KES/kg)`)
+hist(subset(df_mod1, dist == "Uasin Gishu")$`Total CAN fert (KES/kg)`)
+hist(subset(dfQs, dist == "Uasin Gishu")$h)
+
+#-----
+# Define root function
+rootFnUp <- function(xIn, xUp, sXtrunc, mXtrunc){
+  sX <- xIn[1]
+  mX <- xIn[2]
+  zUp <- (log(xUp) - mX) / sX
+  probTerm <- dnorm(zUp) / pnorm(zUp)
+  slack_s <- sXtrunc^2 - sX^2 * (1 - zUp * probTerm - probTerm^2)
+  slack_m <- mXtrunc - mX + sX * probTerm
+  outVec <- c(slack_s, slack_m)
+  return(outVec)
+}
+#-----
+# Select large subsample with same output price
+EPTvec <- unique(df_mod1$P)
+for(i in 1:length(EPTvec)){
+  ind <- which(df_mod1$P == EPTvec[i])
+  print(EPTvec[i])
+  print(length(ind))
+}
+
+thisEPT <- EPTvec[9]
+ind <- which(dfQs$P == thisEPT)
+thisEPT <- 13
+hist(log(CtildeStar[ind]))
+hist(h[ind])
+this_dfQs <- dfQs[ind, ]
+unique(this_dfQs$dist)
+unique(df_mod1$dist[ind])
+# Define h gonna use and get corresponding elasticities
+#hCoef <- mod2$coefficients["Cstar"]
+#hConst <- mean(this_dfQs$h)
+etaD <- 1 / (1 - this_dfQs$h)
+eta <- this_dfQs$h / (1 - this_dfQs$h)
+#hist(eta)
+# Calculate stats (truncated) with elasticities involved
+mBetaQsEtaD <- mean(etaD * log(this_dfQs$betaQs))
+sBetaQsEtaD <- sd(etaD * log(this_dfQs$betaQs))
+muBetaQsEtaD <- exp(mBetaQsEtaD + sBetaQsEtaD^2 / 2)
+sCtildeStarEtaTrunc <- sd(eta * log(this_dfQs$CtildeStar))
+mCtildeStarEtaTrunc <- mean(eta * log(this_dfQs$CtildeStar))
+sCtildeStarTrunc <- sd(log(this_dfQs$CtildeStar))
+mCtildeStarTrunc <- mean(log(this_dfQs$CtildeStar))
+exp(mCtildeStarTrunc + sCtildeStarTrunc^2 / 2)
+mLambdaEtaInvTrunc <- mean(-eta * log(this_dfQs$lambda))
+sLambdaEtaInvTrunc <- sd(-eta * log(this_dfQs$lambda))
+mLambdaTrunc <- mean(log(this_dfQs$lambda))
+sLambdaTrunc <- sd(log(this_dfQs$lambda))
+exp(mLambdaTrunc + sLambdaTrunc^2 / 2)
+# Calculate necessary params for full, not truncated, population
+exp(mCtildeStarTrunc + sCtildeStarTrunc^2 / 2)
+xIn <- c(sCtildeStarEtaTrunc, mCtildeStarEtaTrunc)
+sol <- nleqslv::nleqslv(xIn, rootFnUp, jac = NULL,
+                        xUp = thisEPT,
+                        sXtrunc = sCtildeStarEtaTrunc,
+                        mXtrunc = mCtildeStarEtaTrunc)
+sol
+sCtildeStarEta <- sol$x[1]
+mCtildeStarEta <- sol$x[2]
+muCtildeStarEta <- exp(mCtildeStarEta + sCtildeStarEta^2 / 2)
+#-----------------------------
+# rootFnLo <- function(xIn, xLo, sXtrunc, mXtrunc){
+#   sX <- xIn[1]
+#   mX <- xIn[2]
+#   zLo <- (log(xLo) - mX) / sX
+#   probTerm <- dnorm(zLo) / pnorm(-zLo)
+#   slack_s <- sXtrunc^2 - sX^2 * (1 + zLo * probTerm - probTerm^2)
+#   slack_m <- mXtrunc - mX - sX * probTerm
+#   outVec <- c(slack_s, slack_m)
+#   return(outVec)
+# }
+# xIn <- c(sLambdaEtaInvTrunc, mLambdaEtaInvTrunc)
+# thisH <- mean(h)
+# sol <- nleqslv::nleqslv(xIn, rootFnLo, jac = NULL,
+#                         xLo = thisH,
+#                         sXtrunc = sLambdaEtaInvTrunc,
+#                         mXtrunc = mLambdaEtaInvTrunc)
+# sol
+# sLambda <- sol$x[1]
+# mLambda <- sol$x[2]
+# muLambda <- exp(mLambda + sLambda^2 / 2)
+# exp(mLambda + sLambda^2 / 2)
+#-----------------------------
+sLambdaEtaInv <- sCtildeStarEta
+mLambdaEtaInv <- mCtildeStarEta - mean(eta) * log(thisEPT) - mean(eta * log(this_dfQs$h))
+muLambdaEtaInv <- exp(mLambdaEtaInv + sLambdaEtaInv^2 / 2)
+# Get mean price jump from county level monthly price data (downloaded from GIEWS-FPMA)
 this_filepath <- "D:/OneDrive - CGIAR/Documents 1/CIAT 2/A theory of aggregate supply and demand/Nakuru Eldoret monthly maize price.csv"
 dfPTt <- read.csv(this_filepath, stringsAsFactors = F)
 colnames(dfPTt)[2:3] <- c("Eldoret", "Nakuru")
 dfPTt <- as.data.frame(apply(dfPTt, 2, rev))
 dfPTt[,2:3] <- as.data.frame(apply(dfPTt[,2:3], 2, as.numeric))
-for(i in 1:14){
-  thisDate <- paste0("7/1/", as.character(2007 + i))
+for(i in 1:16){
+  thisDate <- paste0("7/1/", as.character(2005 + i))
   ind <- grep(thisDate, dfPTt$Date)
   ind <- ind:(ind + 13)
-  diffLnP <- diff(log(dfPTt$Nakuru[ind]))
+  #diffLnP <- diff(log(dfPTt$Nakuru[ind]))
+  diffLnP <- diff(log(dfPTt$Eldoret[ind]))
   thisDf <- dfPTt[ind, c(1, 3)]
   thisDf$diffLnP <- c(NA, diffLnP)
   #hist(diffLnP)
@@ -1096,98 +1224,167 @@ hist(dfPTt$diffLnP, breaks = 20)
 sP <- sd(dfPTt$diffLnP, na.rm = T)
 mDlnP <- mean(dfPTt$diffLnP, na.rm = T)
 mP <- mDlnP + sP^2 / 2
+mP <- 0.3
+sP <- 0.12
+#--------
+#dfPTt$Eldoret
 #-----------------------------------------------------------------------
-hist(log(betaQs), breaks = 25)
-mBetaQs <- mean(log(betaQs), na.rm = T)
-sBetaQs <- sd(log(betaQs), na.rm = T)
-muBetaQs <- exp(mBetaQs + sBetaQs^2 / 2)
-hist(log(CtildeStar), breaks = 25)
-mCtildeStar <- mean(log(CtildeStar), na.rm = T)
-sCtildeStar <- sd(log(CtildeStar), na.rm = T)
-h <- mod2$coefficients["Cstar"]
-eta <- h / (1 - h)
-muCtildeStarEta <- exp(eta * mCtildeStar + eta^2 * sCtildeStar^2 / 2)
-# indRm <- which(is.infinite(log(lambdaCstarP)))
-# mLambda <- mean(log(lambdaCstarP[-indRm]), na.rm = T)
-# sLambda <- sd(log(lambdaCstarP[-indRm]), na.rm = T)
-mLambda <- mean(log(lambdaCstarP), na.rm = T)
-sLambda <- sd(log(lambdaCstarP), na.rm = T)
-muLambdaEta <- exp(eta * mLambda + eta^2 * sLambda^2 / 2)
-Nf <- 1.6*10^6
-P0 <- seq(0.1, 15, length.out = 40)
-#mP <- 0.035
-Tt <- 5
-#sP <- sCtildeStar / sqrt(Tt)
-z <- (log(muCtildeStarEta / P0^eta) - (eta * mP - eta^2 * sP^2 / 2) * Tt) / (eta * sP * sqrt(Tt))
-Qs <- Nf * (y0 * muBetaQs)^(1 / (1 - h)) * (P0 * exp(mP * Tt))^eta / muLambdaEta * (1 - pnorm(z))
+Nf <- 2 * 10^5
+P0 <- seq(0.1, 20, length.out = 40)
+Tt <- 6
+#Tt <- (sCtildeStar / sP)^2
+sCtildeStar / (sP * sqrt(Tt))
+sCtildeStarEta / (mean(eta) * sP)
+sCtildeStar / sP
+mCtildeStar / mP
+#z <- (log(muCtildeStarEta / P0^eta) - (eta * mP * Tt - eta^2 * sLambda^2 / 2)) / (eta * sLambda)
+z <- (log(muCtildeStarEta / P0^mean(eta)) - (mean(eta) * mP * Tt - sCtildeStarEta^2 / 2)) / (sCtildeStarEta)
+#z <- (-eta * log(h) + eta * mLambda) / (eta * sLambda) - eta * sLambda
+Qs <- Nf * y0^mean(etaD) * muBetaQsEtaD * (P0 * exp(mP * Tt))^mean(eta) * muLambdaEtaInv * (1 - pnorm(z))
 plot(P0, Qs / 1000)
 #-----------------------------------------------------------------------
 # Elasticity - agrees with Abodi et al. 2021 estimate of 0.462
-etaAg <- eta + dnorm(z) / (1 - pnorm(z)) * 1 / (sP * sqrt(Tt))
+#etaAg <- eta + dnorm(z) / (1 - pnorm(z)) * 1 / (sP * sqrt(Tt))
+sLambda <- sCtildeStar
+etaAg <- mean(eta) + dnorm(z) / (1 - pnorm(z)) * 1 / (sLambda)
 plot(P0, etaAg)
-P0actual <- 12
-zActual <- (log(muCtildeStarEta / P0actual^eta) - (eta * mP - eta^2 * sP^2 / 2) * Tt) / (eta * sP * sqrt(Tt))
-QsActual <- Nf * (y0 * muBetaQs)^(1 / (1 - h)) * (P0actual * exp(mP * Tt))^eta / muLambdaEta * (1 - pnorm(zActual))
-QsActual / 1000
-etaAgActual <- eta + dnorm(zActual) / (1 - pnorm(zActual)) * 1 / (sP * sqrt(Tt))
-etaAgActual
-#-----------------------------------------------------------------------
-# Aggregate supply - county (dist) level
-dfQs <- data.frame(dist = df_mod1$dist,
-                   betaQs,
-                   CtildeStar,
-                   lambdaCstarP,
-                   PTt = df_mod1$P
-                   )
-dfQs <- subset(dfQs, dist == "Nakuru")
-hist(log(dfQs$betaQs))
-mBetaQs <- mean(log(dfQs$betaQs), na.rm = T)
-sBetaQs <- sd(log(dfQs$betaQs), na.rm = T)
-muBetaQs <- exp(mBetaQs + sBetaQs^2 / 2)
-hist(log(dfQs$CtildeStar))
-mCtildeStar <- mean(log(dfQs$CtildeStar), na.rm = T)
-sCtildeStar <- sd(log(dfQs$CtildeStar), na.rm = T)
-muCtildeStarEta <- exp(eta * mCtildeStar + eta^2 * sCtildeStar^2 / 2)
-# indRm <- which(is.infinite(log(lambdaCstarP)))
-# mLambda <- mean(log(lambdaCstarP[-indRm]), na.rm = T)
-# sLambda <- sd(log(lambdaCstarP[-indRm]), na.rm = T)
-mLambda <- mean(log(dfQs$lambdaCstarP), na.rm = T)
-sLambda <- sd(log(dfQs$lambdaCstarP), na.rm = T)
-muLambdaEta <- exp(eta * mLambda + eta^2 * sLambda^2 / 2)
-Nf <- 3 * 10^5
-# sP <- sCtildeStar / sqrt(Tt)
-# mP <- 0.035
-P0 <- seq(1, 15, length.out = 40)
-z <- (log(muCtildeStarEta / P0^eta) - (eta * mP - eta^2 * sP^2 / 2) * Tt) / (eta * sP * sqrt(Tt))
-Qs <- Nf * (y0 * muBetaQs)^(1 / (1 - h)) * (P0 * exp(mP * Tt))^eta / muLambdaEta * (1 - pnorm(z))
-plot(P0, Qs / 1000)
-#-----------------------------------------------------------------------
-# Elasticity - county level
-etaAg <- eta + dnorm(z) / (1 - pnorm(z)) * 1 / (sP * sqrt(Tt))
-plot(P0[P0 > 8], etaAg[P0 > 8])
-#-----------------
-P0actual <- 32
-zActual <- (log(muCtildeStarEta / P0actual^eta) - (eta * mP - eta^2 * sP^2 / 2) * Tt) / (eta * sP * sqrt(Tt))
-QsActual <- Nf * y0 * muBetaQs * (P0actual * exp(mP * Tt))^eta / muLambdaEta * (1 - pnorm(zActual))
-QsActual / 1000
-#-----------------
-# gg plot
-Pactual <- 10
-df_plotQs <- data.frame(val = Qs / 1000, P0)
-df_plotQs$type <- "Qs"
-df_plotEta <- data.frame(val = etaAg, P0)
-df_plotEta$type <- "Elast"
-df_plot <- as.data.frame(rbind(df_plotQs, df_plotEta))
-gg <- ggplot(df_plotQs, aes(x = P0, y = val))
-gg <- gg + geom_line()
-gg <- gg + geom_vline(xintercept = Pactual)
-#gg <- gg + facet_wrap(~type, ncol = 1, scales = "free_y")
-gg
+# P0actual <- 12
+# zActual <- (log(muCtildeStarEta / P0actual^eta) - (eta * mP - eta^2 * sP^2 / 2) * Tt) / (eta * sP * sqrt(Tt))
+# QsActual <- Nf * y0^(1 / (1 - h))  * muBetaQsEta * (P0actual * exp(mP * Tt))^eta * muLambdaEtam1 * (1 - pnorm(zActual))
+# QsActual / 1000
+# etaAgActual <- eta + dnorm(zActual) / (1 - pnorm(zActual)) * 1 / (sLambda)
+# etaAgActual
+# #-----------------------------------------------------------------------
+# # Aggregate supply - county (dist) level
+# dfQs <- data.frame(dist = df_mod1$dist,
+#                    betaQs,
+#                    CtildeStar,
+#                    Cstar,
+#                    lambdaCstarP,
+#                    PTt = df_mod1$P,
+#                    h
+#                    )
+# dfQs <- subset(dfQs, dist == "Nakuru")
+# hist((dfQs$h))
+# thisH <- mean(dfQs$h)
+# eta <- thisH / (1 - thisH)
+# etaD <- 1 / (1 - thisH)
+# hist(log(dfQs$betaQs))
+# mBetaQs <- mean(log(dfQs$betaQs), na.rm = T)
+# sBetaQs <- sd(log(dfQs$betaQs), na.rm = T)
+# muBetaQsEtaD <- exp(etaD * mBetaQs + etaD^2 * sBetaQs^2 / 2)
+# hist(log(dfQs$lambdaCstarP))
+# mLambdaTrunc <- mean(log(dfQs$lambdaCstarP), na.rm = T)
+# sLambdaTrunc <- sd(log(dfQs$lambdaCstarP), na.rm = T)
+# #muLambdaTruncEtam1 <- exp(-eta * mLambdaTrunc + eta^2 * sLambdaTrunc^2 / 2)
+# hist(log(dfQs$CtildeStar))
+# hist(log(dfQs$Cstar), breaks = 20)
+# #---
+# mP <- 0.02
+# Tt <- 6
+# P0 <- 9
+# EPT <- P0 * exp(mP * Tt)
+# #thisH <- 0.12#h
+# #--
+# muLambda <- exp(mLambda + sLambda^2 / 2)
+# muLambdaEtam1 <- exp(-eta * mLambda + eta^2 * sLambda^2 / 2)
+# #---
+# # #mCtildeStarTrunc <- mean(log(dfQs$CtildeStar), na.rm = T)
+# # mCtildeStarTrunc <- log(EPT) - mLambdaTrunc + log(h)
+# # sCtildeStarTrunc <- sLambdaTrunc#sd(log(dfQs$CtildeStar), na.rm = T)
+# # # indRm <- which(is.infinite(log(lambdaCstarP)))
+# # # mLambda <- mean(log(lambdaCstarP[-indRm]), na.rm = T)
+# # # sLambda <- sd(log(lambdaCstarP[-indRm]), na.rm = T)
+# Nf <- 3 * 10^5
+# sCtildeStar^2 / sP^2
+# # sLambda^2 / sP^2
+# P0 <- seq(1, 25, length.out = 40)
+# z <- (log(muCtildeStarEta / P0^eta) - (eta * mP * Tt - eta^2 * sCtildeStar^2 / 2)) / (eta * sCtildeStar)
+# #z <- (log(muCtildeStarEta / P0^eta) - (eta * mP * Tt - eta^2 * sP^2 / 2 * Tt)) / (eta * sP * sqrt(Tt))
+# Qs <- Nf * y0^etaD * muBetaQsEtaD * (P0 * exp(mP * Tt))^eta * muLambdaEtam1 * (1 - pnorm(z))
+# plot(P0, Qs / 1000)
+# #-----------------------------------------------------------------------
+# # Elasticity - county level
+# etaAg <- eta + dnorm(z) / (1 - pnorm(z)) * 1 / (sCtildeStar)
+# plot(P0, etaAg)
+# #plot(P0[P0 > 8], etaAg[P0 > 8])
+# #-----------------
+# sCstar <- sd(log(Cstar))
+# sCstar / sLambda #almost same
+# mCstar <- mean(log(Cstar))
+# muCstar <- exp(mCstar + sCstar^2 / 2)
+# #-----------------
+# # gg plot
+# Pactual <- 10
+# df_plotQs <- data.frame(val = Qs / 1000, P0)
+# df_plotQs$type <- "Qs"
+# df_plotEta <- data.frame(val = etaAg, P0)
+# df_plotEta$type <- "Elast"
+# df_plot <- as.data.frame(rbind(df_plotQs, df_plotEta))
+# gg <- ggplot(df_plotQs, aes(x = P0, y = val))
+# gg <- gg + geom_line()
+# gg <- gg + geom_vline(xintercept = Pactual)
+# #gg <- gg + facet_wrap(~type, ncol = 1, scales = "free_y")
+# gg
 #-----
 # Compare to county level production data
 this_filepath <- "D:/OneDrive - CGIAR/Documents 1/CIAT 2/A theory of aggregate supply and demand/Kenya county maize production 2012-16.csv"
 dfQsReal <- read.csv(this_filepath, stringsAsFactors = F)
 #=======================================================================
+n <- 100
+Amp <- CtildeStar
+hist(log(Amp))
+mAmp <- mean(log(Amp))
+sAmp <- sd(log(Amp))
+#Amp <- seq((mAmp - 2 * sAmp), (mAmp + 2 * sAmp), length.out = n)
+Amp <- seq(0.1, 20, length.out = n)
+Freq <- 1 / (sAmp * Amp) * dnorm(log(Amp), mean = mAmp, sd = sAmp)
+df_plot <- data.frame(PSD = Amp / Freq, Freq)
+gg <- ggplot(df_plot, aes(x = Freq, y = PSD))
+gg <- gg + scale_x_log10() + scale_y_log10()
+gg <- gg + geom_point()
+gg
+
+X <- Amp
+NumUniquePts <- n / 2 + 1
+ind_left <- 1:NumUniquePts
+# multiply the left half of the spectrum so the power spectral density
+# is inversely proportional to the frequency by factor f^a, i.e. the
+# amplitudes are inversely proportional to f^(a/2)
+#X[ind_left] <- X[ind_left] * ind_left^(a / 2)
+# prepare a right half of the spectrum - a copy of the left one,
+# except the DC component and Nyquist frequency - they are unique
+ind_right <- seq(n / 2, 2, -1)
+X[(NumUniquePts + 1):n] <- Re(X[ind_right]) - 1i * Im(X[ind_right]);
+# IFFT
+y <- pracma::ifft(X)
+# prepare output vector y
+y <- Re(y[1:n])
+# normalise?
+if(normalize == T){
+  y <- y / max(abs(y))
+}
+  xplot <- 1:n
+  dfplot <- data.frame(output = y, sequence = xplot)
+  gg1 <- ggplot(dfplot, aes(x = output)) + geom_density()
+  gg2 <- ggplot(dfplot, aes(x = sequence, y = output)) + geom_line()
+  #grid.arrange(gg1, gg2, ncol = 1)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 #-----------------------------------------------------------------------
 # Looking at expenditure shares w.r.t. total expenditure
 # hist(df_mod$`seed (KES/acre)` - df_mod$Cstar)
