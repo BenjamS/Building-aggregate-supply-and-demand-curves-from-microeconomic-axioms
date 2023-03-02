@@ -2992,16 +2992,181 @@ Research question: How much of the non-adopting maize farm population in Kenya c
 
 # Appendix
 
-## Hull's result
+Proof of equation ...
 
-This is a slightly modified version of the "key result" derived by Hull in the appendix to chapter 15 of his book "Options, futures, and other derivatives" (9th edition) [-@hull9thEdition].
-
-Hull's result may be stated as follows.
-
-If $u$ is a random variable with lognormal density function $f(u)$, then the definite integral of $u f(u)$ over a specific domain $(\underline{u}, \bar{u})$, where $\underline{u}$ is the lower and $\bar{u}$ the upper bound of the domain (and where at least one of the bounds is finite), may be expressed as follows.
+Given a lognormally distributed random variable $u$, such that $\ln(u)$ is normally distributed with mean $\nu$ and variance $\omega^2$, then the expected value of $u$ is
+<!-- Where $p(q)$ is the probability density function of the random variable $q$. If $\ln(q)$ is normally distributed with mean $\nu$ and variance $\omega^2$, then -->
 
 \begin{equation}
-\int_{\underline{u}}^{\bar{u}} u f(u) \: du = \mu_u (\Phi(\bar{z}) - \Phi(\underline{z}))
+E[u] = e^{\nu + \frac{\omega^2}{2}}
+\label{eq:muU}
+\end{equation}
+
+And the probability density function of $u$ is
+
+\begin{equation}
+f(u) = \frac{1}{u \omega} \phi \left(\frac{\ln(u) - \nu}{\omega} \right)
+\end{equation}
+
+Where $\phi()$ is the standard normal probability density function.
+
+Now, introducing a change of variables,
+
+\begin{equation}
+p = \frac{\ln(u) - \nu}{\omega}
+\label{eq:subThis1}
+\end{equation}
+
+Such that
+
+\begin{equation}
+\frac{dp}{du} = \frac{1}{u \omega}\: \rightarrow \: d u = u \omega dp
+\label{eq:subThis2}
+\end{equation}
+
+Then
+
+\begin{equation}
+\begin{split}
+\int_0^{\bar{u}} u f(u) \: du &= \int_0^{\frac{\ln(\bar{u}) - \nu}{\omega}} e^{\omega p + \nu} \phi(p) \: dp  \\
+&= \int_0^{\frac{\ln(\bar{u}) - \nu}{\omega}} e^{\omega p + \nu} \frac{1}{\sqrt{2 \pi}} e^{\frac{p^2}{2}} \: dp \\
+&= \frac{1}{\sqrt{2 \pi}} \int_0^{\frac{\ln(\bar{u}) - \nu}{\omega}} e^{p \omega + \nu -\frac{p^2}{2}} \: dp \\
+&= \frac{1}{\sqrt{2 \pi}} \int_0^{\frac{\ln(\bar{u}) - \nu}{\omega}} e^{-1 / 2 (p^2 - 2 p \omega - 2 \nu)} \: dp \\
+&= \frac{1}{\sqrt{2 \pi}} \int_0^{\frac{\ln(\bar{u}) - \nu}{\omega}} e^{-\frac{(p - \omega)^2}{2} + \nu + \frac{\omega^2}{2}} \: dp \\
+&= \frac{1}{\sqrt{2 \pi}} \int_0^{\frac{\ln(\bar{u}) - \nu}{\omega}} e^{-\frac{(p - \omega)^2}{2}} e^{\nu + \frac{\omega^2}{2}} \: dp \\
+&= e^{\nu + \frac{\omega^2}{2}} \frac{1}{\sqrt{2 \pi}} \int_0^{\frac{\ln(\bar{u}) - \nu}{\omega}} e^{-\frac{(p - \omega)^2}{2}} \: dp \\
+&= \frac{E[u]}{\sqrt{2 \pi}} \int_0^{\frac{\ln(\bar{u}) - \nu}{\omega}} e^{-\frac{(p - \omega)^2}{2}} \: dp \\
+&= \frac{E[u]} \int_0^{\frac{\ln(\bar{u}) - \nu}{\omega}} \phi(p - \omega) \: dp \\
+&= \frac{E[u]} \Phi \left(\frac{\ln(\bar{u}) - \nu}{\omega} - \omega \right)
+\end{split}
+\end{equation}
+
+Finally, rearranging equation \ref{eq:muU} into an expression for $\nu$
+
+\begin{equation}
+\nu = \ln(E[u]) - \frac{\omega^2}{2}
+\end{equation}
+
+And substituting this in for $\nu$ in the previous expression gives
+
+\begin{equation}
+\begin{split}
+\int_0^{\bar{u}} u f(u) \: du &= \frac{E[u]} \Phi \left(\frac{\ln(\bar{u}) - \ln(E[u]) + \frac{\omega^2}{2} }{\omega} - \omega \right) \\
+&= \frac{E[u]} \Phi \left(\frac{\ln \left(\frac{\bar{u}}{E[u]} \right) - \frac{\omega^2}{2} }{\omega} \right)
+\end{split}
+\end{equation}
+
+Since $\ln(\lambda)$ is normally distributed with mean $m_{\lambda}$ and variance $s_{\lambda}^2$, then $\ln(\lambda^{-\theta})$ is also normally distributed with mean $-\theta m_{\lambda}$ and variance $\theta^2 s_{\lambda}^2$. Since $\ln(\lambda^{-\theta})$ is normally distributed, \lambda^{-\theta} may be substituted for $u$, such that $\nu = -\theta m_{\lambda}$, $\omega^2 = \theta^2 s_{\lambda}^2$, and $\bar{u} = h^{-\theta}$, giving the following expression.
+
+\begin{equation}
+\int_0^{h^{-\theta}} \lambda^{-\theta} f(\lambda^{-\theta}) \: d \lambda^{-\theta} = E[\lambda^{-\theta}] \Phi \left(\frac{\ln \left(\frac{h^{-\theta}}{E[\lambda^{-\theta}]} \right) - \theta^2 \frac{s_{\lambda}^2}{2}}{\theta s_lambda} \right)
+\end{equation}
+
+Moreover, since $\lambda = E[b(T)]\bigr_{t = 0} h$, this can be rewritten
+
+\begin{equation}
+\int_0^{h^{-\theta}} \lambda^{-\theta} f(\lambda^{-\theta}) \: d \lambda^{-\theta} = h^{-\theta} E[E[b(T)]\bigr|_{t = 0}] \Phi \left(\frac{\ln \left(\frac{1}{E[E[b(T)]\bigr|_{t = 0}^{-\theta}]} \right) - \theta^2 \frac{s_{Eb(T)}^2}{2}}{\theta s_{Eb(T)}} \right)
+\end{equation}
+
+Where $s_{Eb(T)}^2 = Var[\ln(E[b(T)]\bigr|_{t = 0})]$.
+
+Finally, by Rubini's theorem,
+
+\begin{equation}
+E[E[b(T)]\bigr|_{t = 0}] = E[E[b(T)]]\bigr|_{t = 0}
+\end{equation}
+
+Or, introducing the more compact notation $\mu_b(T) = E[b(T)]$,
+
+\begin{equation}
+E[E[b(T)]\bigr|_{t = 0}] = E[\mu_b(T)]\bigr|_{t = 0} \end{equation}
+\end{equation}
+
+And
+
+\begin{equation}
+s_{Eb(T)}^2 = Var[\ln(\mu_b(T))]\bigr|_{t = 0}
+\end{equation}
+
+Moreover, assuming $b(t)$ follows a geometric Brownian motion, then
+
+\begin{equation}
+E[\mu_b(T)]\bigr|_{t = 0} = \mu_b(0) e^{m_{\mu} T}
+\end{equation}
+
+Where 
+
+\begin{equation}
+m_{\mu} = E\left[\frac{\Delta \mu(T)}{\mu(T) \Delta t} \right]
+\end{equation}
+
+For an instantaneous (in practice, judiciously small) time step $\Delta t$. (For a reference on geometric Brownian motion, See Hull [-@].)
+
+The mean and variance of the log "return" of $\mu_b(t)$ over period $T$, meanwhile, are
+
+\begin{equation}
+\begin{split}
+E \left[ \ln \left( \frac{\mu_b(T)}{\mu_b(0)} \right) \right] &= \left(m_{\mu} - \frac{s_{Eb}^2}{2} \right) T \\
+Var \left[ \ln \left( \frac{\mu_b(T)}{\mu_b(0)} \right) \right] &= Var[\ln(\mu_b(T))]\bigr|_{t = 0} = s_{\mu}^2 T
+\end{split}
+\end{equation}
+
+Where
+
+\begin{equation}
+s_{\mu} = Var\left[\frac{\Delta \mu(T)}{\mu(T) \Delta t} \right]
+\end{equation}
+
+
+And it follows that
+
+\begin{equation}
+s_{Eb(T)} = s_{\mu}^2 T
+\end{equation}
+
+
+
+
+
+...so can be rewritten
+
+\begin{equation}
+\begin{split}
+\int_0^{h^{-\theta}} \lambda^{-\theta} f(\lambda^{-\theta}) \: d \lambda^{-\theta} &= h^{-\theta} E[\mu[b(T)]]\bigr|_{t = 0} \Phi \left(\frac{\ln \left(\frac{1}{E[\mu_b(T)]\bigr|_{t = 0}^{-\theta}]} \right) - \theta^2 \frac{s_{Eb(T)}^2}{2}}{\theta s_{Eb(T)}} \right) \\
+&= h^{-\theta} E[\mu[b(T)]]\bigr|_{t = 0} \Phi \left(\frac{\ln \left(\frac{1}{E[\mu_b(T)]\bigr|_{t = 0}^{-\theta}]} \right) - \theta^2 \frac{s_{Eb(T)}^2}{2}}{\theta s_{Eb(T)}} \right)
+\end{split}
+\end{equation}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+\begin{equation}
+\int_0^{h^{-\theta}} \lambda^{-\theta} f(\lambda^{-\theta}) \: d \lambda^{-\theta} = h^{-\theta} E[E[b(T)]\bigr|_{t = 0}] \Phi \left(\frac{\ln \left(\frac{1}{E[\mu_b(T)]\bigr|_{t = 0}^{-\theta}]} \right) - \theta^2 \frac{s_{Eb(T)}^2}{2}}{\theta s_{Eb(T)}} \right)
+\end{equation}
+
+
+
+
+## Lemma
+
+If $u$ is a random variable with lognormal density function $f(u)$, then
+
+\begin{equation}
+\int_{0}^{\bar{u}} u f(u) \: du = \mu_u \Phi(\bar{\nu}) - \Phi(\underline{\nu})
 \label{eq:hullsResult}
 \end{equation}
 
@@ -3011,34 +3176,35 @@ Where $\mu_u$ is the mean of $u$, defined
 \mu_u = e^{m_u + s_u^2 / 2} \:\:;\:\:\: m_u = E(\ln(u)), \:\: s_u^2 = Var(\ln(u))
 \end{equation}
 
-And where $\Phi(t)$ is the standard normal cumulative distribution function, defined
+And where $\Phi(\zeta)$ is the standard normal cumulative distribution function, defined
 
 \begin{equation}
-\Phi(\tau) = \frac{1}{\sqrt{2 \pi}} \int_{-\infty}^{\tau} e^{-t^2 / 2} \: dt
+\Phi(Z) = \frac{1}{\sqrt{2 \pi}} \int_{-\infty}^{Z} e^{-\zeta^2 / 2} \: d\zeta
 \end{equation}
 
-And where $\bar{z}$ and $\underline{z}$ are defined as follows.
+And where $\bar{\nu}$ is defined as follows.
 
 \begin{equation}
-\begin{split}
-\bar{z} &= \frac{\ln(\bar{u}) - m_u}{s_u} - s_u \\
-\underline{z} &= \frac{\ln(\underline{u}) - m_u}{s_u} - s_u
-\end{split}
+\bar{\nu} = \frac{\ln \left(\frac{\bar{u}}{E[u]} \right) - \frac{s_u^2}{2}}{s_u}
 \end{equation}
+<!-- \begin{equation} -->
+<!-- \bar{\nu} = \frac{\ln(\bar{u}) - m_u}{s_u} - s_u -->
+<!-- \end{equation} -->
 
 _Proof:_
 
-Let $t$ be defined
+
+Let $v$ be defined
 
 \begin{equation}
-t = \frac{\ln(u) - m_u}{s_u}
+v = \frac{\ln(u) - m_u}{s_u}
 \label{eq:subThis1}
 \end{equation}
 
 Then
 
 \begin{equation}
-\frac{dt}{d \ln(u)} = \frac{1}{s_u}\: \rightarrow \: d \ln(u) = s_u dt
+\frac{dv}{d \ln(u)} = \frac{1}{s_u}\: \rightarrow \: d \ln(u) = s_u dv
 \label{eq:subThis2}
 \end{equation}
 
@@ -3072,6 +3238,23 @@ Or, more compactly written,
 \begin{equation}
 \int_{\underline{u}}^{\bar{u}} u f(u) \: du = \mu_u (\Phi(\bar{z}) - \Phi(\underline{z}))
 \end{equation}
+
+
+Proof Lemma 1.2
+
+Note that \ref{eq:muXT} can be rearranged into an expression for $\nu$.
+
+\begin{equation}
+\nu = \ln(E[q]) - \omega^2 / 2
+\end{equation}
+
+Substituting this for $\nu$ in the definition gives
+
+\begin{equation}
+E[\max(q - C, 0)] = E[q] \Phi \left(\frac{\ln \left( \frac{E[q]}{C} \right) + \frac{\omega^2}{2}}{\omega} \right) - C \Phi \left(-\frac{\ln \left( \frac{E[q]}{C} \right) - \frac{\omega^2}{2}}{\omega} \right)
+\end{equation}
+
+$\blacksquare$
 
 $\blacksquare$
 
