@@ -1,0 +1,855 @@
+---
+title: A theoretical derivation of the aggregate supply curve, accounting for for farm entry and exit
+# author: "Benjamin Schiek"
+# date: "`r Sys.Date()`"
+abstract: |
+  The functional form of aggregate supply is typically specified in order to facilitate calculations, with little thought given to its theoretical basis. This results in theoretical contradictions which call into question the results of the analysis. Here we derive a closed form aggregate agricultural supply and demand functions from microeconomic axioms and the assumption of lognormally distributed yields. The resulting functional form is highly instructive and agrees well with other aspects of theory... indicates that farm market participation is proportionate to the probability that the producer harvest price will be greater than the farm population's mean marginal cost of production. Allows for analysis of price and technology impacts at specific centiles. The elasticity The functional form opens a new vista on supply elasticity...decomposed into yield and farm participation terms. An aggregate farm input demand curve is also derived, followed by an aggregate farm commodity demand curve. The supply curve is fit to Kenya maize data. Food policy implications are discussed.
+
+header-includes:
+  - \usepackage{geometry}
+  - \geometry{top=1in,left=1in,bottom=1in,right=1in}
+  - \usepackage{framed}
+  - \usepackage{setspace}\doublespacing
+  - \usepackage{float}
+  - \floatplacement{figure}{H}
+  - \usepackage{amsmath}
+  - m_umberwithin{equation}{section}
+
+
+output:
+  pdf_document:
+   fig_caption: true
+   number_sections: true
+   #latex_engine: xelatex
+# mainfont: Times Roman
+
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+#Introduction
+
+# Derivation of the yield function from Axiom 1 (diminishing marginal returns)
+
+Throughout much of written history, astute observers have noticed that the usefulness of increments in the quantity of an input (in the case of producer yield functions) or good or service (in the case of consumer utility functions) is inversely proportional to amount of the input or good or service already acquired [@kauder1953genesis]. In 1738, Daniel Bernoulli put it this way:
+
+>\singlespacing "In the absence of the unusual, the utility resulting from any small increase in wealth will be inversely proportionate to the quantity of goods previously possessed" [@bernoulli1954exposition].
+
+\doublespacing
+
+Today, this is known as the "law of diminishing marginal returns".
+
+\begin{framed}
+   \textbf{Axiom 1} \\ The law of diminishing marginal returns.
+\end{framed}
+
+Formalization of Bernoulli's verbal statement of the law of diminishing marginal returns depends upon how one defines "small increase". If "small increase" means a marginal increase, then Bernoulli's statement can be written down as follows.^[Bernoulli himself could not have had "marginal increase" in mind per se, as calculus had not yet been invented.]
+
+\begin{equation}
+\frac{\partial \ln(y)}{\partial x} \sim \frac{1}{x}
+\label{eq:dimUtilDefine}
+\end{equation}
+
+Where, to be clear, the term $\partial \ln(y) / \partial x$ is the percentage change in utility given a marginal increase in the quantity of good $x$, and "$\sim 1 / x$", means "inversely proportionate to the quantity of good $x$ already acquired". An expression $y(x)$ for the yield of good $x$ can then be obtained by integrating Bernoulli's statement.
+
+\begin{equation}
+\begin{split}
+\int \frac{\partial \ln(y)}{\partial x} \: dx &= \int \alpha \frac{d \ln(x)}{dx} \: dx \\
+\ln(y(x))  &= \alpha \ln(x) + k \\
+y(x) &= e^k x^{\alpha}
+\end{split}
+\label{eq:integrate_lny}
+\end{equation}
+
+Where the proportionality constant $\alpha = \partial \ln(y)/ \partial \ln(x)$ is the input elasticity of yield, i.e., the percentage change in yield given a $1$ percent increase in input $x$.
+
+In the multivariate case, an expression $y(\mathbf{x})$ for yield as a function of a vector of $n$ goods $\mathbf{x} = [x_1,x_2,...,x_n]$ can be obtained as follows.
+
+\begin{equation}
+\int \nabla_{\mathbf{x}} \ln(y) \cdot d \mathbf{x} = \int D(\boldsymbol{\alpha}) \nabla_{\mathbf{x}} \ln(\mathbf{x}) \cdot d \mathbf{x}
+\end{equation}
+
+\begin{equation}
+\begin{split}
+\ln(y(\mathbf{x})) &= \boldsymbol{\alpha} \cdot \ln(\mathbf{x}) + \alpha_0 \\
+y &= e^{\alpha_0} \prod_i x_i^{\alpha_i}
+\end{split}
+\label{eq:cobbDoug}
+\end{equation}
+
+where $\boldsymbol{\alpha}$ is the vector of input elasticities corresponding to each $x_i$, the notation $D(\boldsymbol{\alpha})$ indicates a diagonal matrix with the elements of $\boldsymbol{\alpha}$ along its diagonal, and
+
+\begin{equation}
+\nabla_{\mathbf{x}} \ln(y) = \left[ \begin{matrix} \frac{\partial \ln(y)}{\partial x_1} \\
+\frac{\partial \ln(y)}{\partial x_2} \\
+\vdots \\
+\frac{\partial \ln(y)}{\partial x_n}
+\end{matrix} \right]
+\end{equation}
+
+Equation \ref{eq:cobbDoug} is well-known to economists as the Cobb-Douglas form. As mentioned above, this result depends on a definition of small increase as a marginal increase. Other forms result from other definitions of small increase. If small increase is defined as a percentage increase, for example, a functional form involving Lambert's W function results (left as an exercise for the reader). The Cobb-Douglas function is selected from among these two choices on empirical grounds. (The Cobb-Douglas function is famous for how well it fits economic data across many contexts and scales.)
+
+[Some object to the Cobb-Douglas (log-log) model because they think it ignores dependencies between inputs [ref?]. This untrue because the log-log model is homogenous. By the definition of homogeneous fn the cross effects are implicitly included. I.e.,
+
+\begin{equation}
+\nabla^2 f \mathbf{x} (h - 1) = h \nabla f
+\end{equation}
+]
+
+In an actual analysis, exogenously given control variables ($k_i$) are usually included in the model. These typically include demographic variables such as age, education, household size, as well as agroclimatic variables such as temperature, precipitation, soil attributes, and so forth. In some cases the $k_i$ might also include cell phone coverage, distance to input and/or output markets, distance to nearest paved road, and so forth. It really just depends on what data is available. Analysis is said to be "ceteris paribus" when these variables are held constant at a particular value across the population. Equation \ref{eq:cobbDoug} is thus henceforth rewritten as follows.
+
+\begin{equation}
+y = y_0 \prod_i x_i^{\alpha_i} \prod_i k_i^{\kappa_i}
+\label{eq:cobbDoug2}
+\end{equation}
+
+where the $\kappa_i$ are the control variable elasticities of yield. Note that, by Axiom 2, the input elasticities $\alpha_i$ must be positive. (Farmers will not apply an input if it reduces yield.) But the control variable elasticities $\kappa_i$ may be positive or negative.
+
+Address Antle's objection? Look to Just and Pope
+
+In equation \ref{eq:cobbDoug2}, the shorthand $y_0 = e^{\alpha_0}$ has also been introduced. The scale factor $y_0$ is the yield when inputs $\mathbf{x}$ are set to 1 and the control variables $\mathbf{k}$ are also set to 1. It may thus be interpreted as the "unit input yield" or "unit input ceteris paribus yield", to be more precise. "Basal yield" is henceforth used as a shorthand.
+
+Many economists prefer to call $y_0$ the "total factor productivity" (TFP). This is because $y_0$ equals, in some sense, the "yield per unit all inputs" when it is isolated on one side of the equation. However, the presence of control variables complicates this interpretation. Moreover, TFP implies bizarre and rather useless units of measurement. For example, if the inputs $x_i$ are labor and pesticide, while the control variables $k_i$ are rainfall, temperature, and farmer age, then the TFP $y_0$ has units of kg hectare$^{-1}$ manhour$^{-1}$ liter$^{-1}$ millimeter$^{-1}$ degree Celsius$^{-1}$ years$^{-1}$, each of which is raised to various exponents (the respective elasticities $\alpha_i$ and $\kappa_i$). Because of the exponents, a more accurate name for TFP would be the "technology adjusted total factor productivity".
+
+Nonetheless, a very mature literature has developed around TFP, and the reader is encouraged to continue thinking of $y_0$ in terms of TFP if that is what they are most comfortable with. The "basal yield" interpretation is merely provided here as an alternative for those of us who wrestle with the idea of TFP or are not yet familiar with it.
+<!-- exogenously given control variables like age, soil quality, or climate variables. -->
+
+<!-- TFP vis-à-vis dimensional analysis -->
+<!-- The (in)famous residual -->
+<!-- “The rate of growth of total factor productivity is defined as the difference between the rate of growth of real product and the rate of growth of real factor input” (Jorgenson & Griliches, 1967). This definition violates dimensional analysis. -->
+<!-- Given a yield function -->
+<!-- y=Kx_1^(α_1 ) x_2^(α_2 )…x_n^(α_n )	(1) -->
+
+
+
+<!-- "TFP"=K=y/(x_1^(α_1 ) x_2^(α_2 )…x_n^(α_n ) )	(2) -->
+
+
+<!-- There are two problems with this expression from the point of view of dimensional analysis. First of all, the units in which “TFP” is expressed are impossible to make sense of. Say n=4, with x_1 standing for labor, x_2 for machinery, x_3 for fertilizer, and x_4 for pesticide. Then TFP has units of production per unit -->
+<!-- area (man hour)^(α_1 ) (machine hour)^(α_2 )  (weight)^(α_3 )  (volume)^(α_4 )	(3) -->
+
+
+<!-- The second, more serious, problem is that these units will always vary from one data set to another. Even if the variables x_1,x_2,…,x_n are the same across studies, and are expressed in the same units, the units in which the “residual” K is expressed will nonetheless vary because the estimated parameters α_i vary. It is therefore impossible to make meaningful comparisons of K across data sets. -->
+<!-- On the other hand, it is possible to make meaningful comparisons of the residual in another sense. Define the parameter K as follows: -->
+<!-- K=k/(x ̃_1^(α_1 ) x ̃_2^(α_2 )…x ̃_n^(α_n ) )	(3) -->
+
+
+<!-- Where the x ̃_i are arbitrarily chosen reference values. Then the yield equation becomes: -->
+
+<!-- y=ku_1^(α_1 ) u_2^(α_2 )… u_n^(α_n )  ;  u_i=x_i/x ̃_i 	(3) -->
+
+
+<!-- It now becomes clear what the units of k are. Each x ̃_i has the same units as its respective x_i. This means that all of the u_i^(α_i ) terms on the right hand side of the equation are dimensionless. Therefore, the units of k must agree with the units of whatever is on the left hand side, which happens to be yield.  -->
+<!-- k=y/(u_1^(α_1 ) u_2^(α_2 )… u_n^(α_n ) )	(5) -->
+
+
+<!-- When interpreted in this way, it is now possible to make meaningful comparisons of the residual across data sets (if the reference values x ̃_i are harmonized across the data sets). However, the residual now has units of productivity with respect to land only, and not with respect to any other factor, much less the “total factor”. -->
+<!-- Conclusion -->
+<!-- Above I have shown that TFP (equation 2) is measured in units which 1) are virtually impossible to make sense of, and 2) cannot be compared across data sets. I have shown that it is possible to express the residual in straightforward units that are comparable across data sets, but that these are units of land productivity only. The residual may be interpreted as TFP only at the cost of nonsensical units and cross-study incompatibility. A residual with sensible units and comparability, on the other hand, comes at the cost of expressibility only in units of a single factor’s productivity—land in the case of farms, widget factories in the case of firms. -->
+
+
+
+# Derivation of the yield envelope from Axiom 2 (net benefit maximization)
+
+[The Cobb-Douglas function is frequently eschewed for a perceived lack of theoretical basis... It has persisted because of its strong empirical fit across contexts. It essentially an empirical law, like Engel's Law or Bennet's Law...]
+
+Equation \ref{eq:cobbDoug2} captures yield response to inputs and control variables in accordance with Axiom 1, the law of diminishing marginal returns.
+
+The next step in the theoretical derivation of the partial equilibrium model is based on the assumption that farmers want to maximize their net benefit subject to a budget constraint. (Consumers and firms on the demand side are assumed to be similarly motivated, but the present section focuses on the supply side.)
+
+\begin{framed}
+   \textbf{Axiom 2} \\ Farms, as well as firms and consumers on the demand side, maximize their net benefit subject to a budget constraint.
+\end{framed}
+
+Axiom 2 implies that farmers apply inputs such that revenue is maximized, given a budget constraint. The problem of finding the optimal input quantities that achieve this goal can be formalized as follows.
+
+\begin{equation}
+\max_{\mathbf{x}} Py \:\:\: s.t. \:\:\: C \leq B
+\end{equation}
+
+where $P$ is the output price, $B$ is the farmer's budget, $C$ is the cost function, defined
+
+\begin{equation}
+C = \mathbf{w} \cdot \mathbf{x}
+\end{equation}
+
+and $\mathbf{w}$ is the vector of input prices corresponding to each input in $\mathbf{x}$.
+
+The Lagrangian is then
+
+\begin{equation}
+\mathcal{L} = Py - \lambda (C - B)
+\end{equation}
+
+Where $\lambda$ is the farm budget shadow price, that is, the marginal benefit to the farm of a marginal increase in budget.
+
+\begin{equation}
+\frac{\partial \mathcal{L}}{\partial B} = \lambda
+\end{equation}
+
+The first order conditions for a maximum work out to:
+
+\begin{equation}
+\nabla_{\mathbf{x}} \mathcal{L} = Py D(\mathbf{x})^{-1} \boldsymbol{\alpha} - \lambda \mathbf{x} = \mathbf{0}
+\label{eq:eqFOC}
+\end{equation}
+
+Where the $\mathbf{0}$ indicates a vector of zeroes equal to the length of $\mathbf{x}$. This is then solved for the optimal input levels $\mathbf{x}^*$.
+
+\begin{equation}
+\mathbf{x}^* = P y^* / \lambda D(\mathbf{w})^{-1} \boldsymbol{\alpha}
+\end{equation}
+
+Or, alternatively,
+
+\begin{equation}
+x_v^* = \frac{P y^* \alpha_v}{\lambda w_v}
+\label{eq:inputDem1}
+\end{equation}
+
+The optimal yield, or yield envelope, or economic yield, $y^*$ is then found by evaluating $y$ at $\mathbf{x}^*$.
+
+\begin{equation}
+y^* = y(\mathbf{x}^*; y_0, \boldsymbol{\alpha}, \mathbf{k}, \boldsymbol{\kappa}) = y_0 \prod_i \left(\frac{P y^* \alpha_i}{\lambda w_i} \right)^{\alpha_i} \prod_i k_i^{\kappa_i}
+\end{equation}
+
+Taking logs and factoring out $\ln (P y^*/\lambda)$,
+
+\begin{equation}
+\ln(y^*) = \alpha_0 + \ln \left(\frac{P y^*}{\lambda} \right) \sum_i \alpha_i + \sum_i \alpha_i \ln \left(\frac{\alpha_i}{w_i} \right) + \sum_i \kappa_i \ln(k_i) 
+\end{equation}
+
+But note that, by Euler's homogenous function theorem,
+
+\begin{equation}
+\sum_i \alpha_i = h
+\end{equation}
+
+where $h$ is the degree of homogeneity of $y$. Hence the previous equation can be rewritten
+
+\begin{equation}
+\ln(y^*) = \alpha_0 + h \ln \left(\frac{P y^*}{\lambda} \right) + \sum_i \alpha_i \ln \left(\frac{\alpha_i}{w_i} \right) + \sum_i \kappa_i \ln(k_i) 
+\label{eq:eulerInvokd}
+\end{equation}
+
+Solving for $\ln(y^*)$,
+
+\begin{equation}
+\ln(y^*) = \frac{1}{1 - h} \left(\alpha_0 + h \ln \left(\frac{P}{\lambda} \right) + \sum_i \alpha_i \ln \left(\frac{\alpha_i}{w_i} \right) + \sum_i \kappa_i \ln(k_i) \right)
+\end{equation}
+
+And taking the exponential function of this then gives the yield envelope.
+
+\begin{equation}
+y^* =  \left(y_0 \left(\frac{P}{\lambda}\right)^h \prod_i \left(\frac{\alpha_i}{w_i}\right)^{\alpha_i} \prod_i k_i^{\kappa_i} \right)^{\frac{1}{1 - h}}
+\label{eq:YdEnv1}
+\end{equation}
+
+Economic yield is thus a function of:
+
+1) Input prices $\mathbf{w}$
+
+2) The output price $P$
+
+3) The input elasticities of yield $\boldsymbol{\alpha}$ (i.e. the technology)
+
+4) The control variables $\mathbf{k}$
+
+5) Their control variable elasticities of yield $\boldsymbol{\kappa}$
+
+6) The farm budget shadow price $\lambda$
+
+To reduce notational clutter, the yield envelope is henceforth rewritten as follows.
+
+\begin{equation}
+y^* = \left(y_0 \left(\frac{P}{\lambda} \right)^h \frac{\beta_x \beta_k}{\beta_w} \right)^{\frac{1}{1 - h}}
+\label{eq:YdEnvCompact}
+\end{equation}
+
+Where the following shorthands have been introduced:
+<!-- r &= \frac{P^h}{\beta_w} \:\:\:; \:\: \beta_w = \prod_i w_i^{\alpha_i} \\ -->
+
+\begin{equation}
+\begin{split}
+\beta_w &= \prod_i {w_i}^{\alpha_i} \\
+\beta_x &= \prod_i {\alpha_i}^{\alpha_i} \\
+\beta_k &= \prod_i {k_i}^{\kappa_i}
+\end{split}
+\end{equation}
+
+The steps followed above more or less align with the standard derivation of the Cobb-Douglas yield envelope found in textbooks, with the important exception of the invocation of Euler's homogeneous function theorem in equation \ref{eq:eulerInvokd}.
+
+Note that the cost minimization problem gives the same result...
+
+## The degree of homogeneity and output price elasticity of yield \label{sec:degHomog}
+
+[The costStar^h  formulation of yield envelope]
+
+[Put "certain useful elasticities/expressions" here maybe]
+
+By invoking Euler's theorem in the derivation of the yield envelope above, the yield degree of homogeneity $h$ is made explicit in the yield envelope; and this lays bare some interesting critical properties. Note, first of all, that the yield envelope is undefined at $h = 1$. The theory constructed so far from Axioms 1 and 2 thus contradicts the deeply entrenched surmise among economists, going back to Solow [-@solow1957technical], that yield functions are homogeneous of degree 1.
+
+The appearance of $h$ in the yield envelope also offers an instructive expression for the output price elasticity of yield,
+
+\begin{equation}
+\frac{\partial \ln(y^*)}{\partial \ln(P)} = \frac{h}{1 - h}
+\label{eq:PelastYstar}
+\end{equation}
+
+Here another Axiom comes into play.
+
+\begin{framed}
+   \textbf{Axiom 3} \\ Supply curves are positively sloped. $\left( \frac{\partial \ln(y^*)}{\partial \ln(P)} > 0 \right)$ \\
+\end{framed}
+
+From equation \ref{eq:PelastYstar}, it is clear that Axiom 3 imposes the following domain on $h$.
+
+\begin{equation}
+h \in (0, 1)
+\end{equation}
+
+Farms are thus limited to decreasing returns to scale, since increasing returns to scale ($h > 1$) imply a negatively sloped supply curve, in violation of Axiom 3, and since the yield envelope is undefined at constant returns to scale ($h = 1$).
+
+In section \ref{sec:PDfunP}, circumstances are explored under which increasing returns to scale are possible. However, these circumstances generally apply to firms---mills and factories, for example---and not to farms.
+
+The domain of $h$ derived above in turn implies the following bounds on the price elasticity of yield.
+
+\begin{equation}
+\frac{\partial \ln(y^*)}{\partial \ln(P)} \in (0, \infty)
+\end{equation}
+<!-- Note, in passing, that the input price elasticity of yield likewise bears the expected sign only under decreasing returns to scale. -->
+
+<!-- \begin{equation} -->
+<!-- \frac{\partial \ln(y^*)}{\partial \ln(w_i)} = \frac{-\alpha_v}{1 - h} -->
+<!-- \end{equation} -->
+
+<!-- With domain -->
+
+<!-- \begin{equation} -->
+<!-- \frac{\partial \ln(y^*)}{\partial \ln(w_v)} \in (-\infty, -\alpha_v) -->
+<!-- \end{equation} -->
+
+The yield envelope derived in equation \ref{eq:YdEnvCompact} implies that the farm supply curve^["Farm supply curve" is used as a shorthand for the "yield envelope as a function of price $P$, with all other variables held constant".] is a power law---or, in economics jargon, a constant elasticity of supply curve. This becomes more evident if the yield envelope is rewritten in the following compact form.
+
+\begin{equation}
+y^* = t_S P^{\eta(P, y^*)}
+\end{equation}
+
+Where
+
+\begin{equation}
+t_S = \left(y_0 \frac{\beta_x \beta_k}{\lambda^h \beta_w} \right)^{\frac{1}{1 - h}}
+\end{equation}
+
+And $\eta(P, y^*)$ is the price elasticity of yield defined in equation \ref{eq:PelastYstar}.
+
+<!-- Both the scale parameter $t$ and exponent $\eta(P, y^*)$ depend critically upon the degree of homogeneity. -->
+The output price elasticity of yield implies that the farm supply curve is elastic for $h \in (1 / 2 , 1)$, and inelastic for $h \in (0, 1 / 2)$, and linear with slope $t_S \bigr|_{h = 1 / 2}$ when $h = 1 / 2$.
+
+This is important information. This means that (insofar as Axioms 1-3 are true) for a given increase in output price, the supply response in a population of farms with inefficient input elasticities (such that $h < 1 / 2$) will be less than proportionate to the increase in price. In a population of relatively input-efficient farms (such that $h > 1 / 2$), on the other hand, the supply response will be more than proportionate to the increase in price.
+
+The farm supply curve approaches perfect inelasticity as $h$ approaches $0$, and approaches (but never reaches) perfect elasticity as $h$ approaches $1$. The scale factor $t_S$ approaches $0$ as $h$ approaches $0$, and tends toward infinity as $h$ approaches $1$.
+
+## Input demand \label{sec:inDem}
+
+Using equation \ref{eq:YdEnvCompact} to substitute for $y^*$ in input demand (equation \ref{eq:inputDem1}) gives the following expression for input demand as a function of basal yield, prices, input elasticities, the budget shadow price, and control variables together with their respective elasticities.
+
+\begin{equation}
+x_v^* = \frac{\alpha_v}{w_v} \left( y_0 \frac{P \beta_x \beta_k}{\lambda \beta_w} \right)^{\frac{1}{1 - h}}
+\label{eq:inputDem2}
+\end{equation}
+
+Note that input demand, like optimal yield, is undefined at $h = 1$. The own price elasticity of input demand is
+
+\begin{equation}
+\begin{split}
+\frac{\partial \ln(x_v^*)}{\partial \ln(w_v)} &= - 1 - \frac{1}{1 - h} \frac{\partial \ln(\beta_w)}{\partial \ln(w_v)} \\
+&= \frac{-\alpha_v}{1 - h} - 1
+\end{split}
+\label{eq:ownPriceElas}
+\end{equation}
+
+Here another Axiom comes into play.
+
+\begin{framed}
+   \textbf{Axiom 4} \\ Demand curves are negatively sloped. $\left( \frac{\partial \ln(x_v^*)}{\partial \ln(w_v)} < 0 \:\: \forall v \right)$
+\end{framed}
+
+From equation \ref{eq:ownPriceElas}, it is clear that Axiom 4 imposes the following domain on $h$.
+
+\begin{equation}
+h \in (-\infty, 1 + \underline{\alpha}) \:\:; \:\:\: \underline{\alpha} = \min(\boldsymbol{\alpha})
+\end{equation}
+
+Considering that $\underline{\alpha} > 0$, the effective domain of $h$ satisfying both Axioms 3 and 4 (upward sloping supply curves and downward sloping demand curves) is
+
+\begin{equation}
+h \in (0, 1)
+\end{equation}
+
+The effective domain of $h$ in turn implies the following bounds on the own price elasticity of input demand.
+
+\begin{equation}
+\frac{\partial \ln(x_v^*)}{\partial \ln(w_v)} \in (\infty, -1)
+\end{equation}
+
+The input demand curve is thus always elastic, such that the increase in farm level demand resulting from a decrease in the input price is always more than proportionate to the fall in price.
+
+Note that the cross price elasticity of input demand also bears the expected sign under the effective domain of $h$,
+
+\begin{equation}
+\frac{\partial \ln(x_v^*)}{\partial \ln(w_{j \neq v})} = \frac{-\alpha_j}{1 - h}
+\label{eq:CrossPriceElas}
+\end{equation}
+
+As does the output price elasticity of input demand,
+
+\begin{equation}
+\frac{\partial \ln(x_v^*)}{\partial \ln(P)} = \frac{1}{1 - h}
+\end{equation}
+
+Equation \ref{eq:inputDem2} implies that the input demand curve^["Input demand curve" is used as a shorthand for the "optimal input level as a function of its price, with all other variables held constant".] is a power law. This is more evident when expressed in the following compact form.
+
+\begin{equation}
+x_v^* = z w_v^{\eta(w_v, x_v^*)}
+\end{equation}
+
+Where
+
+\begin{equation}
+z = \left(y_0 \frac{\beta_x \beta_k}{\lambda^h \tilde{\beta}_w} \right)^{\frac{1}{1 - h}} \:\:;\:\:\: \tilde{\beta}_w = w_v^{-\alpha_v}\beta_w
+\end{equation}
+
+And $\eta(w_v, x_v^*)$ is the own price elasticity of input demand, derived in equation \ref{eq:ownPriceElas}.
+
+## Domains of the budget shadow price, economic yield, and input demand
+
+Dotting the first order conditions (equations \ref{eq:eqFOC}) through by $\mathbf{x}$ and rearranging gives the following formula for the farm budget shadow price.
+
+\begin{equation}
+\lambda = \frac{P y^*}{C^*} h
+\label{eq:lambdaHandy}
+\end{equation}
+
+That is, a farm's budget shadow price is equal to its revenue to cost ratio, scaled by the degree of homogeneity.
+
+Assuming that farms only enter production if their expected revenue is greater than their cost (Axiom 5), then the following lower bound on $\lambda$ may be readily deduced.
+
+\begin{equation}
+\lambda > h
+\label{eq:lamLoBound}
+\end{equation}
+
+\begin{framed}
+   \textbf{Axiom 5} \\ Farms, as well as firms and consumers on the demand side, enter production only if their expected revenue is greater than their cost.
+\end{framed}
+
+This, in turn, implies the following upper bound on optimal yield.
+
+\begin{equation}
+y^* <  \left(y_0 \left(\frac{P}{h} \right)^h \frac{\beta_x \beta_k}{\beta_w} \right)^{\frac{1}{1 - h}}
+\label{eq:ydUpBound}
+\end{equation}
+
+Note, in passing, that the notion of an upper bound on economic yields agrees with empirical observation [@herdt1988increasing; @pingali2001cereal]. In Pingali and Heisey's words:
+
+>\singlespacing "The best yields obtained on experiment stations are often used as the indicator of technology potential. Experiment stations are often located on the best lands within a region and have reliable irrigation water supplies. Agronomic yield potential determined on experiment stations, with no physical, biological, or economic constraints, is the maximum achievable yield.... When the objective of the experiment is changed from maximizing yields to maximizing profits, the yields obtained by experiment station researchers drop significantly..." [-@pingali2001cereal].
+
+\doublespacing
+The lower bound on $\lambda$ likewise implies the following upper bound on input demand.
+
+\begin{equation}
+x_v^* < \frac{\alpha_v}{w_v} \left(y_0 \frac{P \beta_x \beta_k}{h \beta_w} \right)
+\label{eq:inputUpBound}
+\end{equation}
+
+Recall that the upper bound on optimal expenditure is not derived but assumed as Axiom 5: $C^* < Py^*$.
+
+
+
+
+
+## Marginal cost
+
+From equation \ref{eq:cStar} it follows that the marginal cost of output is
+
+\begin{equation}
+\frac{\partial C^*}{\partial y^*} = \frac{P h}{\lambda} = \frac{C^*}{y^*}
+\end{equation}
+
+Under Axioms 1 and 2, then, the marginal cost of output is constant with respect to output. This agrees with empirical evidence [@lavoie2014post]. It also contradicts the theory of the firm presented in most microeconomic textbooks, which assumes (with no evidentiary basis) increasing marginal cost as output rises.
+
+## The farm net benefit envelope
+
+The optimized objective function or "net benefit envelope" $\mathcal{L}^*$ is just the objective function $\mathcal{L}$ evaluated at the optimal yield $y^*$.
+
+\begin{equation}
+\mathcal{L}^* = \mathcal{L} \bigr|_{y = y^*} = P y^* - \lambda (C^* - B)
+\end{equation}
+
+Note that, applying the handy relation in equation \ref{eq:lambdaHandy}, the net benefit envelope can be rewritten without the optimal expenditure term $C^*$.
+
+\begin{equation}
+\mathcal{L}^* = (1 - h) P y^* + \lambda B
+\label{eq:NBenv}
+\end{equation}
+
+
+
+
+
+
+
+
+
+## Aggregate supply \label{sec:aggSupply}
+
+Farm production $q^*$ is, of course, just farm yield envelope times farm area. If area is one of the control variables in the yield envelope, then $q^*$ is given by adding $1$ to the fitted exponent (call this $\kappa_a$) on area.
+
+\begin{equation}
+\begin{split}
+q^* &= A y^* \\
+&= y_0 \hat{\beta}^{\eta(D)} \left(\frac{E[P(T)]\bigr|_{t = 0}}{\lambda}\right)^{\eta(E[P(T)]\bigr|_{t = 0})}
+\end{split}
+\end{equation}
+
+Where
+
+\begin{equation}
+\begin{split}
+\hat{\beta} &= \frac{\beta_x \hat{\beta_k}}{\beta_w} \\
+\hat{\beta_k} &= A \beta_k = A^{\kappa_a + 1} \prod_{i \neq a}^{n_k} k_i^{\kappa_i}
+\end{split}
+\end{equation}
+
+And maximum economic production for given $A$, assuming farms only enter production if their expected revenue is greater than their cost (recall equation \ref{eq:ydUpBound}), is
+
+\begin{equation}
+\begin{split}
+\bar{q}^* &= A \bar{y}^* \\
+&= y_0 \hat{\beta}^{\eta(D)} \left(\frac{E[P(T)]\bigr|_{t = 0}}{h}\right)^{\eta(E[P(T)]\bigr|_{t = 0})}
+\end{split}
+\end{equation}
+
+By definition, expected aggregate supply at or around the time of planting must be the definite integral of expected farm production over its density, from $0$ to maximum expected economic farm production $\bar{q}^*$.
+
+\begin{equation}
+Q_S = \int_{0}^{\bar{q}^*} q^* \rho(q^*) \: dq^*
+\end{equation}
+
+Where the farm density $\rho(q^*)$ function is defined such that
+
+\begin{equation}
+\rho(q^*) = \int_{0}^{\infty} \rho(q^*) \: dq^* = N_f
+\end{equation}
+
+Where $N_f$ is the number of farms in the population. The farm density may thus be rewritten in terms of a probability density function $f(q^*)$ as follows.
+
+\begin{equation}
+\rho(q^*) = N_f f(q^*)
+\end{equation}
+
+Supply can also of course be defined in terms of an integral of farm yield over its density.
+
+\begin{equation}
+Q_S = \int_{0}^{\bar{y}^*} y^* \rho(y^*) \: dq^*
+\end{equation}
+
+Where the yield density is defined such that
+
+\begin{equation}
+\rho(y^*) = \int_{0}^{\infty} \rho(y^*) \: dy^* = N_a
+\end{equation}
+
+Where $N_a$ is the number of acres (or whatever the unit of area is) in the population.
+
+The latter expression may be more suitable when dealing with remote sensing data. The former is more suitable when dealing with farm survey data, as here.
+
+\begin{equation}
+\begin{split}
+E[Q_S(T)]\bigr|_{t = 0} &= N_f \int_{0}^{\bar{q}^*} q^* f(q^*) \: dq^* \\
+&= N_f y_0^{\eta(D)} E[\hat{\beta}^{\eta(D)}] E[P(T)]\bigr|_{t = 0}^{\eta(P)} \int_{0}^{h^{-\eta(P)}} \lambda^{-\eta(P)} f(q^*) \: dq^*
+\end{split}
+\label{eq:QSeq}
+\end{equation}
+
+By the law of the unconscious statistician, the integral in the expression above can be rewritten
+
+\begin{equation}
+\int_{0}^{h^{-\eta(P)}} \lambda^{-\eta(P)} f(q^*) \: dq^* = \int_{0}^{h^{-\eta(P)}} \lambda^{-\eta(P)} f(\lambda^{-\eta(P)}) \: d \lambda^{-\eta(P)}
+\end{equation}
+
+The definition of the density function is another Axiom... lognormal density....because it is a good approximation to the data and also for theoretical reasons that will now become clear...
+
+Because yield is assumed to be lognormally distributed, then so is $\lambda$; and the Lemma given in the Appendix applies, giving
+<!-- Since $\ln(\lambda)$ is normally distributed with mean $m_{\lambda}$ and variance $s_{\lambda}^2$, then $\ln(\lambda^{-\eta})$ is also normally distributed with mean $-\eta m_{\lambda}$ and variance $\eta^2 s_{\lambda}^2$. Since $\ln(\lambda^{-\eta})$ is normally distributed, $\lambda^{-\eta}$ may be substituted for $u$, such that $m_u = -\eta m_{\lambda}$, $s_u^2 = \eta^2 s_{\lambda}^2$, and $\bar{u} = h^{-\eta}$, giving the following expression. -->
+
+\begin{equation}
+\int_0^{h^{-\eta}} \lambda^{-\eta} f(\lambda^{-\eta}) \: d \lambda^{-\eta} = E[\lambda^{-\eta}] \Phi \left(\frac{\ln \left(\frac{h^{-\eta}}{E[\lambda^{-\eta}]} \right) - \eta^2 \frac{s_{\lambda}^2}{2}}{\eta s_{\lambda}} \right)
+\label{eq:phiLambda}
+\end{equation}
+
+Where $m_{\lambda} = E[\ln(\lambda)]$ and $s_{\lambda}^2 = Var[\ln(\lambda)]$.
+
+But recall that $\lambda = h E[b(T)]\bigr|_{t = 0}$; and so
+
+\begin{equation}
+s_{\lambda}^2 = Var[\ln(E[b(T)]\bigr|_{t = 0})]
+\end{equation}
+
+\begin{equation}
+E[\lambda] = h E[E[b(T)]\bigr|_{t = 0}]
+\end{equation}
+
+And note that, by Rubini's theorem,
+
+\begin{equation}
+E[E[b(T)]\bigr|_{t = 0}] = E[E[b(T)]]\bigr|_{t = 0}
+\end{equation}
+
+Or, introducing the more compact notation $\mu_b(T) = E[b(T)]$,
+
+\begin{equation}
+E[E[b(T)]\bigr|_{t = 0}] = E[\mu_b(T)]\bigr|_{t = 0} \end{equation}
+\end{equation}
+
+That is, the population mean of the expected value of $b(T)$ is equal to the expected value of the population mean of $b(T)$.
+
+Likewise,
+
+\begin{equation}
+s_{\lambda}^2 = Var[\ln(\mu_b(T))]\bigr|_{t = 0}
+\end{equation}
+
+Moreover, assuming $b(t)$ follows a geometric Brownian motion, then
+
+\begin{equation}
+\begin{split}
+E[\mu_b(T)]\bigr|_{t = 0} &= \mu_b(0) e^{m_{\mu} T} \\
+Var[\ln(\mu_b(T))]\bigr|_{t = 0} &= s_{\mu}^2 T
+\end{split}
+\end{equation}
+
+Where 
+
+\begin{equation}
+\begin{split}
+m_{\mu} &= E\left[\frac{\Delta \mu(T)}{\mu(T) \Delta t} \right] \\
+s_{\mu}^2 &= Var\left[\frac{\Delta \mu(T)}{\mu(T) \Delta t} \right]
+\end{split}
+\end{equation}
+
+For an instantaneous (in practice, judiciously small) time step $\Delta t$. (For a full introduction to geometric Brownian motion, see Hull [-@].) Therefore, $E[\lambda]$ may be expressed
+
+\begin{equation}
+\begin{split}
+E[\lambda] &= h E[\mu_b(T)]\bigr|_{t = 0} \\
+&= h \mu_b(0) e^{m_{\mu} T}
+\end{split}
+\end{equation}
+
+And $E[\lambda^{-\eta}]$ may be expressed
+
+\begin{equation}
+\begin{split}
+E[\lambda^{-\eta}] &= (h E[\mu_b(T)]\bigr|_{t = 0})^{-\eta} \\
+&= h^{-\eta} \mu_b(0)^{-\eta} e^{-\eta m_{\mu} T}
+\end{split}
+\end{equation}
+
+Substituting this into equation \ref{eq:phiLambda} gives
+
+\begin{equation}
+\begin{split}
+\int_0^{h^{-\eta}} \lambda^{-\eta} f(\lambda^{-\eta}) \: d \lambda^{-\eta} &= h^{-\eta} \mu_b(0)^{-\eta} e^{-\eta m_{\mu} T} \Phi \left(\frac{\ln (\mu_b(0)^{\eta}) + \eta m_{\mu}T - \eta^2 \frac{s_{\mu}^2}{2}T}{\eta s_{\mu} \sqrt{T}} \right) \\
+&= h^{-\eta} \mu_b(0)^{-\eta} e^{-\eta m_{\mu} T} \Phi \left(- \frac{\ln (\mu_b(0)^{-\eta}) - \left(\eta m_{\mu} - \eta^2 \frac{s_{\mu}^2}{2} \right) T}{\eta s_{\mu} \sqrt{T}} \right)
+\end{split}
+\end{equation}
+
+Or, more compactly,
+
+\begin{equation}
+h^{-\eta} \mu_b(0)^{-\eta} e^{-\eta m_{\mu} T}(1 - \Phi(z))
+\label{eq:termFinal}
+\end{equation}
+
+Where
+
+\begin{equation}
+z = \frac{\ln (\mu_b(0)^{-\eta}) - \left(\eta m_{\mu} - \eta^2 \frac{s_{\mu}^2}{2} \right) T}{\eta s_{\mu} \sqrt{T}}
+\end{equation}
+
+is the standard score of $\eta \ln(\mu_b(T)/\mu_b(0))$ evaluated at $\mu_b(T) = 1$. $\Phi(z)$ is therefore the probability that the population mean of the farm marginal revenue to cost ratio---i.e. $\mu_b(0)$---will fall below $1$ by the time of harvest and sale. It follows, then, that $1 - \Phi(z)$ is the probability that the mean farm marginal revenue to cost ratio will remain greater than $1$ by the time of sale.
+
+\begin{equation}
+\begin{split}
+1 - \Phi(z) &= \text{Prob}(\mu_b(T) > 1) \\
+&= \text{Prob}( P(T) > \mu_{\tilde{C}}(T)) \:\:;\:\:\: \mu_{\tilde{C}} = E[\tilde{C}]
+\end{split}
+\end{equation}
+
+By Axiom 2(?), $b(0) > 1$ on all farms. The bet a farmer makes ex-ante is that $b(T) > 1$. The term $1 - \Phi(z)$ is a measure of the riskiness of this bet.
+
+Substituting equation \ref{eq:termFinal} in for the integral in equation \ref{eq:QSeq} then gives the final form of the aggregate supply curve.
+
+\begin{equation}
+E[Q_S(T)]\bigr|_{t = 0} = N_f y_0^{\theta} E[\hat{\beta}^{\theta}] E[P(T)]\bigr|_{t = 0}^{\eta} h^{-\eta} \mu_b(0)^{-\eta} e^{-\eta m_{\mu} T}(1 - \Phi(z))
+\label{eq:QSFin}
+\end{equation}
+
+(E[P(T)]\bigr|_{t = 0} = P(0)e^{m_P T})
+
+
+...repeat for the cost form of yield
+
+
+
+
+
+
+
+
+
+
+
+
+
+\begin{equation}
+\int_{0}^{h^{-\eta(P)}} \lambda^{-\eta(P)} f(\lambda^{-\eta(P)}) \: d \lambda^{-\eta(P)} = E[\lambda^{-\eta(P)}] (1 - \Phi(z))
+\end{equation}
+
+Where
+
+\begin{equation}
+z = \frac{\ln\left( \left( \frac{\mu_{\tilde{C}}(0)}{P(0)} \right)^{\eta(D)} \right) - \left(\eta(D) m_{\lambda} - \eta(D)^2 \frac{s_{\lambda}^2}{2} \right)T}{s_{\lambda} \sqrt{T}}
+\end{equation}
+
+The term $1 - \Phi(z)$ may thus be interpreted as the probability, at planting time, that the elasticity adjusted output price at time of harvest and sale $P(T)^{\eta(P)}$ will be greater than the corresponding elasticity adjusted mean marginal cost of production $\mu_{\tilde{C}}(T)^{\eta(D)}$.
+
+\begin{equation}
+1 - \Phi(z) = \text{Prob}(P(T)^{\eta(D)} > \mu_{\tilde{C}}(T)^{\eta(D)})
+\end{equation}
+
+There are two sources of uncertainty. Price risk ...Marginal cost of production is a function of input quantities purchased, input prices, and yield. Input prices and quantities are not a source of risk here as all major expenditures have been made and are known by the time of planting, when the evaluation is made. This leaves agroclimatic risk surrounding yield as the major source of uncertainty surrounding the ultimate value of marginal cost of production.
+<!-- The effect of $\eta(D)$ in this equation is to regulate the rate at which the condition $P(T)^{\eta(D)} > \mu_{\tilde{C}}(T)^{\eta(D)}$ is met (or fails) with changes in either $P(T)$ or $\mu_{\tilde{C}}(T)$. To see this, it may be helpful to rewrite the condition in terms of a "marginal benefit-cost" ratio $r$. -->
+<!-- \begin{equation} -->
+<!-- 1 - \Phi(z) = \text{Prob}(r^{\eta(D)} > 1) \:\:;\:\:\: r = P(T) / \mu_{\tilde{C}}(T) -->
+<!-- \end{equation} -->
+<!-- As $\eta(D)$ is lower, $r^{\eta(D)}$ changes less when $r$ changes. As $\eta(D)$ is higher, movements of $r^{\eta(D)}$ become more pronounced in response to changes in $r$. -->
+
+
+
+
+# References {-}
+
+<div id="refs"></div>
+
+\pagebreak
+
+# Appendix
+
+Proof of equation ...
+
+Given a lognormally distributed random variable $u$, such that $\ln(u)$ is normally distributed with mean $m_u$ and variance $s_u^2$, then the expected value of $u$ is
+<!-- Where $p(q)$ is the probability density function of the random variable $q$. If $\ln(q)$ is normally distributed with mean $m_u$ and variance $s_u^2$, then -->
+
+\begin{equation}
+E[u] = e^{m_u + \frac{s_u^2}{2}}
+\label{eq:muU}
+\end{equation}
+
+And the probability density function of $u$ is
+
+\begin{equation}
+f(u) = \frac{1}{u s_u} \phi \left(\frac{\ln(u) - m_u}{s_u} \right)
+\end{equation}
+
+Where $\phi()$ is the standard normal probability density function.
+
+Now, introducing a change of variables,
+
+\begin{equation}
+p = \frac{\ln(u) - m_u}{s_u}
+\label{eq:subThis1}
+\end{equation}
+
+Such that
+
+\begin{equation}
+\frac{dp}{du} = \frac{1}{u s_u}\: \rightarrow \: d u = u s_u dp
+\label{eq:subThis2}
+\end{equation}
+
+Then
+
+\begin{equation}
+\begin{split}
+\int_0^{\bar{u}} u f(u) \: du &= \int_0^{\frac{\ln(\bar{u}) - m_u}{s_u}} e^{s_u p + m_u} \phi(p) \: dp  \\
+&= \int_0^{\frac{\ln(\bar{u}) - m_u}{s_u}} e^{s_u p + m_u} \frac{1}{\sqrt{2 \pi}} e^{\frac{p^2}{2}} \: dp \\
+&= \frac{1}{\sqrt{2 \pi}} \int_0^{\frac{\ln(\bar{u}) - m_u}{s_u}} e^{p s_u + m_u -\frac{p^2}{2}} \: dp \\
+&= \frac{1}{\sqrt{2 \pi}} \int_0^{\frac{\ln(\bar{u}) - m_u}{s_u}} e^{-1 / 2 (p^2 - 2 p s_u - 2 m_u)} \: dp \\
+&= \frac{1}{\sqrt{2 \pi}} \int_0^{\frac{\ln(\bar{u}) - m_u}{s_u}} e^{-\frac{(p - s_u)^2}{2} + m_u + \frac{s_u^2}{2}} \: dp \\
+&= \frac{1}{\sqrt{2 \pi}} \int_0^{\frac{\ln(\bar{u}) - m_u}{s_u}} e^{-\frac{(p - s_u)^2}{2}} e^{m_u + \frac{s_u^2}{2}} \: dp \\
+&= e^{m_u + \frac{s_u^2}{2}} \frac{1}{\sqrt{2 \pi}} \int_0^{\frac{\ln(\bar{u}) - m_u}{s_u}} e^{-\frac{(p - s_u)^2}{2}} \: dp \\
+&= \frac{E[u]}{\sqrt{2 \pi}} \int_0^{\frac{\ln(\bar{u}) - m_u}{s_u}} e^{-\frac{(p - s_u)^2}{2}} \: dp \\
+&= \frac{E[u]} \int_0^{\frac{\ln(\bar{u}) - m_u}{s_u}} \phi(p - s_u) \: dp \\
+&= \frac{E[u]} \Phi \left(\frac{\ln(\bar{u}) - m_u}{s_u} - s_u \right)
+\end{split}
+\end{equation}
+
+Finally, rearranging equation \ref{eq:muU} into an expression for $m_u$
+
+\begin{equation}
+m_u = \ln(E[u]) - \frac{s_u^2}{2}
+\end{equation}
+
+And substituting this in for $m_u$ in the previous expression gives
+
+\begin{equation}
+\begin{split}
+\int_0^{\bar{u}} u f(u) \: du &= \frac{E[u]} \Phi \left(\frac{\ln(\bar{u}) - \ln(E[u]) + \frac{s_u^2}{2} }{s_u} - s_u \right) \\
+&= \frac{E[u]} \Phi \left(\frac{\ln \left(\frac{\bar{u}}{E[u]} \right) - \frac{s_u^2}{2} }{s_u} \right)
+\end{split}
+\end{equation}
+
+\blacksquare
+
+
+
+
+
+<!-- <!-- this can be rewritten --> -->
+<!-- <!-- \begin{equation} --> -->
+<!-- <!-- \int_0^{h^{-\theta}} \lambda^{-\theta} f(\lambda^{-\theta}) \: d \lambda^{-\theta} = h^{-\theta} E[E[b(T)]\bigr|_{t = 0}] \Phi \left(\frac{\ln \left(\frac{1}{E[E[b(T)]\bigr|_{t = 0}^{-\theta}]} \right) - \theta^2 \frac{\omega^2}{2}}{\theta \omega} \right) --> -->
+<!-- <!-- \label{eq:refEq} --> -->
+<!-- <!-- \end{equation} --> -->
+<!-- <!-- Where $\omega^2 = Var[\ln(E[b(T)]\bigr|_{t = 0})]$. --> -->
+
+
+<!--  Equation \ref{eq:refEq} may now be rewritten -->
+
+<!-- \begin{equation} -->
+<!-- \begin{split} -->
+<!-- \int_0^{h^{-\theta}} \lambda^{-\theta} f(\lambda^{-\theta}) \: d \lambda^{-\theta} &= h^{-\theta} E[\mu_b(T)^{-\theta}]\bigr|_{t = 0} \Phi \left(\frac{\ln \left(\frac{1}{E[\mu_b(T)]\bigr|_{t = 0}^{-\theta}} \right) - \theta^2 \frac{s_{\mu}^2}{2} T}{\theta s_{\mu} T} \right) \\ -->
+<!-- &= h^{-\theta} \mu_b(0)^{-\theta} e^{-\theta m_{\mu} T} \Phi \left(\frac{\ln \left(\frac{1}{\mu_b(0)^{-\theta}} \right) - \theta m_{\mu}T - \theta^2 \frac{s_{\mu}^2}{2} T}{\theta s_{\mu} T} \right) \\ -->
+<!-- &= h^{-\theta} \mu_b(0)^{-\theta} e^{-\theta m_{\mu} T} \Phi \left( -\frac{\ln \left(\frac{1}{\mu_b(0)^{-\theta}} \right) - \left(\theta m_{\mu} - \theta^2 \frac{s_{\mu}^2}{2}\right) T}{\theta s_{\mu} T} \right) -->
+<!-- \end{split} -->
+<!-- \end{equation} -->
+
+
+
+
+<!-- The mean and variance of the log fractional change (or "return") of $\mu_b(t)$ over period $T$, meanwhile, are -->
+
+<!-- \begin{equation} -->
+<!-- \begin{split} -->
+<!-- E \left[ \ln \left( \frac{\mu_b(T)}{\mu_b(0)} \right) \right] &= \left(m_{\mu} - \frac{s_{Eb}^2}{2} \right) T \\ -->
+<!-- Var \left[ \ln \left( \frac{\mu_b(T)}{\mu_b(0)} \right) \right] &= Var[\ln(\mu_b(T))]\bigr|_{t = 0} = s_{\mu}^2 T -->
+<!-- \end{split} -->
+<!-- \end{equation} -->
+
+<!-- By which it follows that the -->
+
+
