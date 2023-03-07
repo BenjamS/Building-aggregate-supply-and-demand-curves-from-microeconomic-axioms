@@ -31,9 +31,12 @@ knitr::opts_chunk$set(echo = TRUE)
 
 #Introduction
 
+...
+
 # Derivation of the yield function from Axiom 1 (diminishing marginal returns)
 
-Throughout much of written history, astute observers have noticed that the usefulness of increments in the quantity of an input (in the case of producer yield functions) or good or service (in the case of consumer utility functions) is inversely proportional to amount of the input or good or service already acquired [@kauder1953genesis]. In 1738, Daniel Bernoulli put it this way:
+Throughout much of written history, astute observers have noticed that the usefulness of increments in the quantity of a good is inversely proportional to amount of the input or good or service already acquired [@kauder1953genesis]. In 1738, Daniel Bernoulli put it this way:
+<!-- an input (in the case of producer yield functions) or good or service (in the case of consumer utility functions) -->
 
 >\singlespacing "In the absence of the unusual, the utility resulting from any small increase in wealth will be inversely proportionate to the quantity of goods previously possessed" [@bernoulli1954exposition].
 
@@ -74,7 +77,7 @@ In the multivariate case, an expression $y(\mathbf{x})$ for yield as a function 
 \begin{equation}
 \begin{split}
 \ln(y(\mathbf{x})) &= \boldsymbol{\alpha} \cdot \ln(\mathbf{x}) + \alpha_0 \\
-y &= e^{\alpha_0} \prod_i x_i^{\alpha_i}
+y &= e^{\alpha_0} \prod_{i = 1}^{n} x_i^{\alpha_i}
 \end{split}
 \label{eq:cobbDoug}
 \end{equation}
@@ -89,31 +92,44 @@ where $\boldsymbol{\alpha}$ is the vector of input elasticities corresponding to
 \end{matrix} \right]
 \end{equation}
 
-Equation \ref{eq:cobbDoug} is well-known to economists as the Cobb-Douglas form. As mentioned above, this result depends on a definition of small increase as a marginal increase. Other forms result from other definitions of small increase. If small increase is defined as a percentage increase, for example, a functional form involving Lambert's W function results (left as an exercise for the reader). The Cobb-Douglas function is selected from among these two choices on empirical grounds. (The Cobb-Douglas function is famous for how well it fits economic data across many contexts and scales.)
+It is straightforward to see that equation \ref{eq:cobbDoug2} is a homogeneous function with degree of homogeneity $h$ equal to $\sum_i \alpha_i$, and is thus also homothetic. It is also straightforward to demonstrate monotonicity and concavity. There is no need, then, to impose these as additional assumptions. They follow from the assumption of diminishing marginal returns.
 
-[Some object to the Cobb-Douglas (log-log) model because they think it ignores dependencies between inputs [ref?]. This untrue because the log-log model is homogenous. By the definition of homogeneous fn the cross effects are implicitly included. I.e.,
-
-\begin{equation}
-\nabla^2 f \mathbf{x} (h - 1) = h \nabla f
-\end{equation}
-]
-
-In an actual analysis, exogenously given control variables ($k_i$) are usually included in the model. These typically include demographic variables such as age, education, household size, as well as agroclimatic variables such as temperature, precipitation, soil attributes, and so forth. In some cases the $k_i$ might also include cell phone coverage, distance to input and/or output markets, distance to nearest paved road, and so forth. It really just depends on what data is available. Analysis is said to be "ceteris paribus" when these variables are held constant at a particular value across the population. Equation \ref{eq:cobbDoug} is thus henceforth rewritten as follows.
+In an actual analysis, exogenously given control variables ($k_i$) are usually included in the model. These typically include demographic variables such as age, education, gender, household size, as well as agroclimatic variables such as temperature, rainfall, soil conditions, and so forth. (Analysis is said to be "ceteris paribus" when these variables are held constant at a particular value across the population.) Equation \ref{eq:cobbDoug} is thus henceforth rewritten as follows.
 
 \begin{equation}
-y = y_0 \prod_i x_i^{\alpha_i} \prod_i k_i^{\kappa_i}
+y = y_0 \prod_{i = 1}^{n_k} k_i^{\kappa_i} \prod_{i = 1}^{n_x} x_i^{\alpha_i} \:\:;\:\:\: y_0 = e^{\alpha_0}
 \label{eq:cobbDoug2}
 \end{equation}
 
-where the $\kappa_i$ are the control variable elasticities of yield. Note that, by Axiom 2, the input elasticities $\alpha_i$ must be positive. (Farmers will not apply an input if it reduces yield.) But the control variable elasticities $\kappa_i$ may be positive or negative.
+Where the $\kappa_i$ are the control variable elasticities of yield. These are non-discretionary and may thus take positive or negative values. The input elasticities $\alpha_i$, on the other hand, which correspond to discretionary management variables, are generally positive. However, there may arise cases where a variable does not fall neatly into either the management or control category. In the empirical analysis presented farther below, for example, the coefficient on child family labor takes a negative value. Labor is generally considered a discretionary management variable; but family labor, and especially child family labor, might, in some cases, better be considered a control variable, indicative of hard constraints beyond the farmers' discretion. For purposes of economic analysis, the degree of homogeneity is calculated only over the production elasticities corresponding to management variables ($h = \sum_i \alpha_i$, omitting the $\kappa_i$).
 
-Address Antle's objection? Look to Just and Pope
+Interpretation of the constant $y_0$ is as difficult as one wants to make it. In the usual (for Economists) interpretation, it is the total factor productivity, understood to represent the "yield per unit all inputs". A more accurate description is the "yield per unit all input _and_ control variables, each of which is raised to a different power".
+
+For those who have trouble interpreting units of volume^alpha_1 * kg^\alpha_2 * manhours^\alpha_3 * rainfall^alpha_4 * years^etc. * degrees Celcius^etc. * num. people in household^etc....
+
+\begin{equation}
+y_0 \prod_{i = 1}^{n_k} k_i^{\kappa_i}
+\end{equation}
+
+
+Equation \ref{eq:cobbDoug2} is, of course, the well-known Cobb-Douglas form. Outside of economics, it would simply be referred to as a (multivariate) power law. Such forms are often good models of observed processes across a wide range of research contexts and disciplines. In Economics, the Cobb-Douglas form was widely used from the 1920s to 1950s on the basis of its good empirical fit, but fell into disrepute thereafter for its perceived lack a theoretical basis. Capalbo and Antle [-@capalbo2015agricultural] offer a succinct introduction to this vast discussion. The forgoing derivation of the Cobb-Douglas form from Axiom 1 in some measure redresses the lack of a theoretical basis. Other perceived shortcomings of the form are addressed in the Discussion.
+
+
+
+
+
+
+
+
+
+
+
 
 In equation \ref{eq:cobbDoug2}, the shorthand $y_0 = e^{\alpha_0}$ has also been introduced. The scale factor $y_0$ is the yield when inputs $\mathbf{x}$ are set to 1 and the control variables $\mathbf{k}$ are also set to 1. It may thus be interpreted as the "unit input yield" or "unit input ceteris paribus yield", to be more precise. "Basal yield" is henceforth used as a shorthand.
 
 Many economists prefer to call $y_0$ the "total factor productivity" (TFP). This is because $y_0$ equals, in some sense, the "yield per unit all inputs" when it is isolated on one side of the equation. However, the presence of control variables complicates this interpretation. Moreover, TFP implies bizarre and rather useless units of measurement. For example, if the inputs $x_i$ are labor and pesticide, while the control variables $k_i$ are rainfall, temperature, and farmer age, then the TFP $y_0$ has units of kg hectare$^{-1}$ manhour$^{-1}$ liter$^{-1}$ millimeter$^{-1}$ degree Celsius$^{-1}$ years$^{-1}$, each of which is raised to various exponents (the respective elasticities $\alpha_i$ and $\kappa_i$). Because of the exponents, a more accurate name for TFP would be the "technology adjusted total factor productivity".
 
-Nonetheless, a very mature literature has developed around TFP, and the reader is encouraged to continue thinking of $y_0$ in terms of TFP if that is what they are most comfortable with. The "basal yield" interpretation is merely provided here as an alternative for those of us who wrestle with the idea of TFP or are not yet familiar with it.
+<!-- Nonetheless, a very mature literature has developed around TFP, and the reader is encouraged to continue thinking of $y_0$ in terms of TFP if that is what they are most comfortable with. The "basal yield" interpretation is merely provided here as an alternative for those of us who wrestle with the idea of TFP or are not yet familiar with it. -->
 <!-- exogenously given control variables like age, soil quality, or climate variables. -->
 
 <!-- TFP vis-à-vis dimensional analysis -->
@@ -148,12 +164,12 @@ Nonetheless, a very mature literature has developed around TFP, and the reader i
 <!-- When interpreted in this way, it is now possible to make meaningful comparisons of the residual across data sets (if the reference values x ̃_i are harmonized across the data sets). However, the residual now has units of productivity with respect to land only, and not with respect to any other factor, much less the “total factor”. -->
 <!-- Conclusion -->
 <!-- Above I have shown that TFP (equation 2) is measured in units which 1) are virtually impossible to make sense of, and 2) cannot be compared across data sets. I have shown that it is possible to express the residual in straightforward units that are comparable across data sets, but that these are units of land productivity only. The residual may be interpreted as TFP only at the cost of nonsensical units and cross-study incompatibility. A residual with sensible units and comparability, on the other hand, comes at the cost of expressibility only in units of a single factor’s productivity—land in the case of farms, widget factories in the case of firms. -->
-
-
+<!-- As mentioned above, this result depends on a definition of small increase as a marginal increase. Other forms result from other definitions of small increase. If small increase is defined as a percentage increase, for example, a functional form involving Lambert's W function results (left as an exercise for the reader). The Cobb-Douglas function is selected from among these two choices on empirical grounds. (The Cobb-Douglas function is famous for how well it fits economic data across many contexts and scales.) -->
 
 # Derivation of the yield envelope from Axiom 2 (net benefit maximization)
 
-[The Cobb-Douglas function is frequently eschewed for a perceived lack of theoretical basis... It has persisted because of its strong empirical fit across contexts. It essentially an empirical law, like Engel's Law or Bennet's Law...]
+...pardon the remedial...
+
 
 Equation \ref{eq:cobbDoug2} captures yield response to inputs and control variables in accordance with Axiom 1, the law of diminishing marginal returns.
 
@@ -279,7 +295,8 @@ Where the following shorthands have been introduced:
 \end{split}
 \end{equation}
 
-The steps followed above more or less align with the standard derivation of the Cobb-Douglas yield envelope found in textbooks, with the important exception of the invocation of Euler's homogeneous function theorem in equation \ref{eq:eulerInvokd}.
+The steps followed above more or less align with the standard derivation of the Cobb-Douglas yield envelope found in textbooks (for e.g. Heathfield and Wibe [-@heathfield1987introduction]), with the important exception of the invocation of Euler's homogeneous function theorem in equation \ref{eq:eulerInvokd}.
+
 
 Note that the cost minimization problem gives the same result...
 
@@ -701,6 +718,8 @@ E[Q_S(T)]\bigr|_{t = 0} = N_f y_0^{\theta} E[\hat{\beta}^{\theta}] E[P(T)]\bigr|
 
 (E[P(T)]\bigr|_{t = 0} = P(0)e^{m_P T})
 
+and so participation is proportional to the risk of the bet
+
 
 ...repeat for the cost form of yield
 
@@ -739,6 +758,60 @@ There are two sources of uncertainty. Price risk ...Marginal cost of production 
 <!-- \end{equation} -->
 <!-- As $\eta(D)$ is lower, $r^{\eta(D)}$ changes less when $r$ changes. As $\eta(D)$ is higher, movements of $r^{\eta(D)}$ become more pronounced in response to changes in $r$. -->
 
+# Discussion
+
+In defense of CobbDoug
+[Mention the good empirical fit and validation tests (input demand, optimal area, etc.) as arguments in favor of C-D]
+
+Translog is so "flexible" that it ends up being restrictive from an economic standpoint---not homogeneous, monotonicity and concavity, global concavity requires negative semidefinite matrix of parameters, enforcement of which "destroys the flexibility of the form" and restricts the price elasticities in undesired way (from "Estimating a Derived Demand System from a Translog Cost Function"). Jorgenson etc. have to then devise ways to make it less flexible, in order to impose constant returns to scale, for eg.
+
+However, it does not directly address---not in an obvious way---the most enduring objections to the form: its perceived conflict with evidence and intuitions regarding 1) input substitution, 2) production elasticities, and 3) factor demand elasticities. A complete response to these objections is beyond the scope of the work at hand. Nonetheless, a minimal response is sketched out below in the hopes of retaining the attention of the many vigorous critics of Cobb-Douglas who might otherwise read no further.
+
+Enduring objection 1 is that the Cobb-Douglas function implies a unitary elasticity of input substitution, whereas intuition and evidence clearly suggest otherwise. Arrow et al. [-@arrow1961capital] set the tone in their seminal article:
+
+>"Technological alternatives are numerous and flexible in some sectors, limited in others; and uniform substitutability is most unlikely. The difference in elasticities is confirmed by direct observation of capital-labor proportions, which show much more variation among countries in some sectors than in others".
+
+However, the authors here are objecting not to unitary elasticity of substitution, but rather "uniform substitutability". The measure of substitutability of one input for another in a two factor model $y(x_1, x_2)$ given an output target is not the elasticity of substitution, but rather the marginal rate of substitution, $dx_1/dx_2$. And the phrase "uniform substitutability" followed closely by the word "elasticities" may reasonably be interpreted as $d\ln(x_1)/\ln(dx_2) = 1$. (Hundreds of subsequent authors espousing this objection appear to mean this, at any rate.) It is straightforward to show that the two factor Cobb-Douglas model does not imply this. On the contrary, it implies
+
+\begin{equation}
+\frac{d \ln(x_1)}{d\ln(x_2)} = -\frac{\alpha_2}{\alpha_1}
+\end{equation}
+
+And thus agrees with Arrow et al.'s observations regarding the unlikelihood of "uniform substitutability".
+
+At the same time, it is true that the two factor Cobb-Douglas model implies a unitary elasticity of substitution. But the elasticity of substitution is not a measure of factor substitutability. It is a measure of how factor proportions change with substitutability. A unitary elasticity of substitution thus means that a $1\%$ change in substitutability ($dx_1/dx_2$) results in a $1\%$ change in the ratio $x_1/x_2$. In plain English: a change in substitutability of $x_1$ for $x_2$ results in a proportionate change in the substitution of $x_1$ for $x_2$. One may conjecture without controversy that most farm managers would consider this an eminently reasonable characterization of management decision-making.
+
+Enduring objection 2 is that the Cobb-Douglas production elasticities $\alpha_i$ are constant, whereas intuition suggests that production elasticities are functions of inputs, and should thus vary with input use. To lift this "restriction", the translog production function was introduced, with production elasticities defined as Cobb-Douglas functions of the inputs.
+
+While the Cobb-Douglas production elasticities are indeed constant, it is fallacious to then conclude from this that they are not functions of the inputs. On the contrary, by Euler's theorem it is straightforward to show that
+
+\begin{equation}
+\alpha_i = \left(\frac{h - 1}{h} \right)  \frac{x_i}{y} \sum_{j}^{n} \frac{\partial^2 y}{\partial x_i \partial x_j} x_j
+\end{equation}
+
+And, moreover,
+
+\begin{equation}
+\frac{\partial^2 y}{\partial x_i \partial x_j} = \frac{1}{h - 2}  \sum_{k}^{n} \frac{\partial}{ \partial x_i} \frac{\partial y}{\partial x_j \partial x_k} x_k
+\end{equation}
+
+And, so on for any order $\mathcal{\ell}}$ of differentiation, ad infinitum,
+
+\begin{equation}
+\frac{\partial^{\ell} y}{\partial x_i^{\ell}} = \frac{1}{h - \ell + 1}  \sum_{j}^{n} \frac{\partial^{\ell + 1} y}{\partial x_i^{\ell + 1} \partial x_j} x_j
+\end{equation}
+
+That is to say, for $h \neq 1$, the Cobb-Douglas production elasticities are not just functions of all inputs, but also of the $2^{nd}$, $3^{rd}$, $\dots$,$\infty^{th}$ order variation of production with respect to inputs, as well as the interactions of these implied in the successive orders of cross derivatives. That all this complex interaction should add up to a constant is a sign not of oversimplification, then, but of mathematical serendipity stemming from Axiom 1. The translog function, meanwhile, is not derived from any first principle and is not even a homogeneous function. Which, then, is the more restrictive model?
+
+It may be added that the economic principle of net-benefit maximization (cost minimization) implies that optimal input quantities are functions of prices and control variables, and are thus constant. In this sense, the translog production elasticities are also constant.
+
+The same riposte applies to enduring objection 3, namely, that the Cobb-Douglas input demand elasticities are constant, whereas intuition and evidence indicate that input demand elasticities vary with input use. Again, it is true that Cobb-Douglas demand elasticities are constant. But, again, this does not mean that they are not functions of inputs. On the assumption that producers maximize their net benefit (or minimize cost), the Cobb-Douglas input demand own and cross price elasticities follows as
+
+\begin{equation}
+
+\end{equation}
+
+The input own and cross price demand elasticities are thus functions of price and technology. Because optimal input use is also a function of price, these elasticities may be written as functions of input use, if so desired. Conversely, the Hicks-Allen partial elasticities derived using the translog model may be written in terms of prices, if so desired.
 
 
 
