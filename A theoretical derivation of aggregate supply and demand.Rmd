@@ -31,7 +31,56 @@ knitr::opts_chunk$set(echo = TRUE)
 
 #Introduction
 
+In agricultural ex-ante impact assessments, the aggregate supply curve is usually not derived from theory, but rather specified for the purpose of facilitating calculations of producer and consumer surplus, with little or no thought is given to the theoretical underpinnings implied by the choice of functional form.
+
+It is still customary to specify a linear aggregate supply curve, for example, with no discussion of the highly unlikely shape of the farm production density function that is implied by that functional form. That is to say, if the aggregate supply $Q$ of a farm population with production function $q$ and production density $\rho(q)$ may be defined
+
+\begin{equation}
+Q = \int_{\underline{q}}^{\bar{q}} q \rho(q) \: dq
+\end{equation}
+
+Then a linear aggregate supply curve implies a uniform distribution of $q$. Empirically speaking, one may say without controversy that farm production density is never uniform, but rather tapers off to zero at low and high values of $q$, resulting in a bell or skewed bell shaped function.
+
+aware of market entry and exit, which in turn implies the truncation $\underline{q},\: \bar{q}$---but from above or below, or both?
+
+<!-- The elasticity of  -->
+
+<!-- \begin{equation} -->
+<!-- \frac{\partial \ln(Q)}{\partial \ln(P)} Q = \frac{P}{Q} c -->
+<!-- \end{equation} -->
+
+
+In the name of expedience...theoretical niceties be damned...well...
+The default alternative is a power law form ...constant elasticity of substitution...the difference between can be substantial...no means of explaining the difference, and thus no criteria by which to defend one form. The exercise boils down to "because I say so".
+
+
+
+We derive the following aggregate supply curve accounting for entry
+
 ...
+
+
+
+by the axioms:
+
+1) Diminishing marginal returns
+
+2) Farms maximize their expected net benefit subject to a budget constraint
+
+3) Supply curves slope upwards
+
+4) Demand curves slope downwards
+
+5) Farms enter production only if it increases their expected net benefit
+
+6) Farm production is lognormally distributed
+
+...a bit of a remedial feel at times, patience, as there are some surprises at the end...in particular, the impossibility of constant returns to scale. These decisions are obviously in conflict with known theory (entry and exit of firms), to facilitate calculation of economic surplus...but the choice of functional form affects these calculations, and the cavalier specification of the curves means they can offer no explanation of why the results of one specification should be trusted over another. ...paraphrase romer? "because I say so" ["If the author can make up an imaginary variable, "because I say so" seemslike a pretty convincing answer to any question about its properties."]
+
+
+uniform distribution to get linear aggregate supply curve
+
+
 
 # Derivation of the yield function from Axiom 1 (diminishing marginal returns)
 
@@ -97,70 +146,47 @@ It is straightforward to see that equation \ref{eq:cobbDoug2} is a homogeneous f
 In an actual analysis, exogenously given control variables ($k_i$) are usually included in the model. These typically include demographic variables such as age, education, gender, household size, as well as agroclimatic variables such as temperature, rainfall, soil conditions, and so forth. (Analysis is said to be "ceteris paribus" when these variables are held constant at a particular value across the population.) Equation \ref{eq:cobbDoug} is thus henceforth rewritten as follows.
 
 \begin{equation}
-y = y_0 \prod_{i = 1}^{n_k} k_i^{\kappa_i} \prod_{i = 1}^{n_x} x_i^{\alpha_i} \:\:;\:\:\: y_0 = e^{\alpha_0}
+y = g_0 \prod_{i = 1}^{n_k} k_i^{\kappa_i} \prod_{i = 1}^{n_x} x_i^{\alpha_i} \:\:;\:\:\: g_0 = e^{\alpha_0}
 \label{eq:cobbDoug2}
 \end{equation}
 
 Where the $\kappa_i$ are the control variable elasticities of yield. These are non-discretionary and may thus take positive or negative values. The input elasticities $\alpha_i$, on the other hand, which correspond to discretionary management variables, are generally positive. However, there may arise cases where a variable does not fall neatly into either the management or control category. In the empirical analysis presented farther below, for example, the coefficient on child family labor takes a negative value. Labor is generally considered a discretionary management variable; but family labor, and especially child family labor, might, in some cases, better be considered a control variable, indicative of hard constraints beyond the farmers' discretion. For purposes of economic analysis, the degree of homogeneity is calculated only over the production elasticities corresponding to management variables ($h = \sum_i \alpha_i$, omitting the $\kappa_i$).
 
-Interpretation of the constant $y_0$ is as difficult as one wants to make it. In the usual (for Economists) interpretation, it is the total factor productivity, understood to represent the "yield per unit all inputs". A more accurate description is the "yield per unit all input _and_ control variables, each of which is raised to a different power".
-
-For those who have trouble interpreting units of volume^alpha_1 * kg^\alpha_2 * manhours^\alpha_3 * rainfall^alpha_4 * years^etc. * degrees Celcius^etc. * num. people in household^etc....
+Interpretation of the constant $g_0$ is as difficult as we want to make it. It is usually called the total factor productivity, and understood to represent the yield per unit "all inputs"---although a more accurate description would be yield per unit "all input and control variables, raised to various powers". For those not yet comfortable working in units of $kgs. \: acres^{-1} \: liters^{-\alpha_{pest}} \: kgs.^{-\alpha_{fert}} \: manhours^{-\alpha_{labor}} \: mm.^{-\alpha_{rain}}\: degrees^{-\alpha_{temp}} \: years^{-\alpha_{age}} \: num. \: people^{-\alpha_{HHsize}} \: etc.^{-\alpha_{etc.}}$, an alternative approach is to arbitrarily define $g_0$ in terms of another parameter that is expressed in intelligible units, and to work with this instead. For example, $g_0$ may be defined in terms of another parameter $y_0$ and fixed reference values $\tilde{k}_i$, $\tilde{x}_i$ that have the same units as the corresponding management and control variables $x_i$ and $k_i$.
 
 \begin{equation}
-y_0 \prod_{i = 1}^{n_k} k_i^{\kappa_i}
+g_0 = y_0 \prod_{i = 1}^{n_k} \tilde{k}_i^{-\kappa_i} \prod_{i = 1}^{n_x} \tilde{x}_i^{-\alpha_i}
 \end{equation}
 
+Such that the yield function may be rewritten
 
-Equation \ref{eq:cobbDoug2} is, of course, the well-known Cobb-Douglas form. Outside of economics, it would simply be referred to as a (multivariate) power law. Such forms are often good models of observed processes across a wide range of research contexts and disciplines. In Economics, the Cobb-Douglas form was widely used from the 1920s to 1950s on the basis of its good empirical fit, but fell into disrepute thereafter for its perceived lack a theoretical basis. Capalbo and Antle [-@capalbo2015agricultural] offer a succinct introduction to this vast discussion. The forgoing derivation of the Cobb-Douglas form from Axiom 1 in some measure redresses the lack of a theoretical basis. Other perceived shortcomings of the form are addressed in the Discussion.
+\begin{equation}
+y = y_0 \prod_{i = 1}^{n_k} \left( \frac{k_i}{\tilde{k}_i} \right)^{\kappa_i} \prod_{i = 1}^{n_x} \left( \frac{x_i}{\tilde{x}_i} \right)^{\alpha_i}
+\label{eq:cobbDoug3}
+\end{equation}
 
+Because the terms in parentheses are dimensionless, $y_0$ must have the same units as $y$; and $y_0$ may be interpreted as the value of $y$ when all management and control variables equal their reference values. In the empirical study included here, for example, the reference values are set equal to the sample means, such that $y_0$ is the value of $y$ evaluated at the sample means of the input and control variables.
 
-
-
-
-
-
-
-
-
-
-
-In equation \ref{eq:cobbDoug2}, the shorthand $y_0 = e^{\alpha_0}$ has also been introduced. The scale factor $y_0$ is the yield when inputs $\mathbf{x}$ are set to 1 and the control variables $\mathbf{k}$ are also set to 1. It may thus be interpreted as the "unit input yield" or "unit input ceteris paribus yield", to be more precise. "Basal yield" is henceforth used as a shorthand.
-
-Many economists prefer to call $y_0$ the "total factor productivity" (TFP). This is because $y_0$ equals, in some sense, the "yield per unit all inputs" when it is isolated on one side of the equation. However, the presence of control variables complicates this interpretation. Moreover, TFP implies bizarre and rather useless units of measurement. For example, if the inputs $x_i$ are labor and pesticide, while the control variables $k_i$ are rainfall, temperature, and farmer age, then the TFP $y_0$ has units of kg hectare$^{-1}$ manhour$^{-1}$ liter$^{-1}$ millimeter$^{-1}$ degree Celsius$^{-1}$ years$^{-1}$, each of which is raised to various exponents (the respective elasticities $\alpha_i$ and $\kappa_i$). Because of the exponents, a more accurate name for TFP would be the "technology adjusted total factor productivity".
-
+Equation \ref{eq:cobbDoug3} is, of course, the Cobb-Douglas form. Outside of Economics, it would simply be referred to as a (multivariate) power law. Such forms are often good models of observed processes across a wide range of research contexts and disciplines. In Economics, the Cobb-Douglas form was widely used from the 1920s to 1950s on the basis of its good empirical fit, but fell into disrepute thereafter for its perceived lack a theoretical basis. Capalbo and Antle [-@capalbo2015agricultural] offer a succinct introduction to this vast discussion. The forgoing derivation of the Cobb-Douglas form from Axiom 1 in some measure redresses the lack of a theoretical basis. Other perceived shortcomings of the form are addressed in the Discussion.
+<!-- In equation \ref{eq:cobbDoug2}, the shorthand $y_0 = e^{\alpha_0}$ has also been introduced. The scale factor $y_0$ is the yield when inputs $\mathbf{x}$ are set to 1 and the control variables $\mathbf{k}$ are also set to 1. It may thus be interpreted as the "unit input yield" or "unit input ceteris paribus yield", to be more precise. "Basal yield" is henceforth used as a shorthand. -->
+<!-- Many economists prefer to call $y_0$ the "total factor productivity" (TFP). This is because $y_0$ equals, in some sense, the "yield per unit all inputs" when it is isolated on one side of the equation. However, the presence of control variables complicates this interpretation. Moreover, TFP implies bizarre and rather useless units of measurement. For example, if the inputs $x_i$ are labor and pesticide, while the control variables $k_i$ are rainfall, temperature, and farmer age, then the TFP $y_0$ has units of kg hectare$^{-1}$ manhour$^{-1}$ liter$^{-1}$ millimeter$^{-1}$ degree Celsius$^{-1}$ years$^{-1}$, each of which is raised to various exponents (the respective elasticities $\alpha_i$ and $\kappa_i$). Because of the exponents, a more accurate name for TFP would be the "technology adjusted total factor productivity". -->
 <!-- Nonetheless, a very mature literature has developed around TFP, and the reader is encouraged to continue thinking of $y_0$ in terms of TFP if that is what they are most comfortable with. The "basal yield" interpretation is merely provided here as an alternative for those of us who wrestle with the idea of TFP or are not yet familiar with it. -->
 <!-- exogenously given control variables like age, soil quality, or climate variables. -->
-
 <!-- TFP vis-à-vis dimensional analysis -->
 <!-- The (in)famous residual -->
 <!-- “The rate of growth of total factor productivity is defined as the difference between the rate of growth of real product and the rate of growth of real factor input” (Jorgenson & Griliches, 1967). This definition violates dimensional analysis. -->
 <!-- Given a yield function -->
 <!-- y=Kx_1^(α_1 ) x_2^(α_2 )…x_n^(α_n )	(1) -->
-
-
-
 <!-- "TFP"=K=y/(x_1^(α_1 ) x_2^(α_2 )…x_n^(α_n ) )	(2) -->
-
-
 <!-- There are two problems with this expression from the point of view of dimensional analysis. First of all, the units in which “TFP” is expressed are impossible to make sense of. Say n=4, with x_1 standing for labor, x_2 for machinery, x_3 for fertilizer, and x_4 for pesticide. Then TFP has units of production per unit -->
 <!-- area (man hour)^(α_1 ) (machine hour)^(α_2 )  (weight)^(α_3 )  (volume)^(α_4 )	(3) -->
-
-
 <!-- The second, more serious, problem is that these units will always vary from one data set to another. Even if the variables x_1,x_2,…,x_n are the same across studies, and are expressed in the same units, the units in which the “residual” K is expressed will nonetheless vary because the estimated parameters α_i vary. It is therefore impossible to make meaningful comparisons of K across data sets. -->
 <!-- On the other hand, it is possible to make meaningful comparisons of the residual in another sense. Define the parameter K as follows: -->
 <!-- K=k/(x ̃_1^(α_1 ) x ̃_2^(α_2 )…x ̃_n^(α_n ) )	(3) -->
-
-
 <!-- Where the x ̃_i are arbitrarily chosen reference values. Then the yield equation becomes: -->
-
 <!-- y=ku_1^(α_1 ) u_2^(α_2 )… u_n^(α_n )  ;  u_i=x_i/x ̃_i 	(3) -->
-
-
 <!-- It now becomes clear what the units of k are. Each x ̃_i has the same units as its respective x_i. This means that all of the u_i^(α_i ) terms on the right hand side of the equation are dimensionless. Therefore, the units of k must agree with the units of whatever is on the left hand side, which happens to be yield.  -->
 <!-- k=y/(u_1^(α_1 ) u_2^(α_2 )… u_n^(α_n ) )	(5) -->
-
-
 <!-- When interpreted in this way, it is now possible to make meaningful comparisons of the residual across data sets (if the reference values x ̃_i are harmonized across the data sets). However, the residual now has units of productivity with respect to land only, and not with respect to any other factor, much less the “total factor”. -->
 <!-- Conclusion -->
 <!-- Above I have shown that TFP (equation 2) is measured in units which 1) are virtually impossible to make sense of, and 2) cannot be compared across data sets. I have shown that it is possible to express the residual in straightforward units that are comparable across data sets, but that these are units of land productivity only. The residual may be interpreted as TFP only at the cost of nonsensical units and cross-study incompatibility. A residual with sensible units and comparability, on the other hand, comes at the cost of expressibility only in units of a single factor’s productivity—land in the case of farms, widget factories in the case of firms. -->
@@ -297,6 +323,7 @@ Where the following shorthands have been introduced:
 
 The steps followed above more or less align with the standard derivation of the Cobb-Douglas yield envelope found in textbooks (for e.g. Heathfield and Wibe [-@heathfield1987introduction]), with the important exception of the invocation of Euler's homogeneous function theorem in equation \ref{eq:eulerInvokd}.
 
+The alternative form in terms of cost... the "yield-input isometry"
 
 Note that the cost minimization problem gives the same result...
 
@@ -306,7 +333,7 @@ Note that the cost minimization problem gives the same result...
 
 [Put "certain useful elasticities/expressions" here maybe]
 
-By invoking Euler's theorem in the derivation of the yield envelope above, the yield degree of homogeneity $h$ is made explicit in the yield envelope; and this lays bare some interesting critical properties. Note, first of all, that the yield envelope is undefined at $h = 1$. The theory constructed so far from Axioms 1 and 2 thus contradicts the deeply entrenched surmise among economists, going back to Solow [-@solow1957technical], that yield functions are homogeneous of degree 1.
+By invoking Euler's theorem in the derivation of the yield envelope above, the yield degree of homogeneity $h$ is made explicit in the yield envelope; and this lays bare some interesting critical properties. Note, first of all, that the yield envelope is undefined at $h = 1$. The theory constructed so far from Axioms 1 and 2 thus contradicts the deeply entrenched surmise among economists, going back at least to Hicks [-@hicks1963theory], and later cemented into place by Solow [-@solow1957technical], that yield functions are homogeneous of degree 1.
 
 The appearance of $h$ in the yield envelope also offers an instructive expression for the output price elasticity of yield,
 
