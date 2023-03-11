@@ -31,41 +31,45 @@ knitr::opts_chunk$set(echo = TRUE)
 
 #Introduction
 
-In agricultural ex-ante impact assessments, the aggregate supply curve is usually not derived from theory, but rather specified for the purpose of facilitating calculations of producer and consumer surplus, with little or no thought is given to the theoretical underpinnings implied by the choice of functional form.
+In agricultural ex-ante impact assessments of new technology, aggregate supply and demand curves are often specified primarily for the purpose of facilitating certain calculations (usually of producer and consumer surplus), with secondary consideration given to the plausibility of the theoretical underpinnings implied by the choice of functional form.
 
-It is still customary to specify a linear aggregate supply curve, for example, with no discussion of the highly unlikely shape of the farm production density function that is implied by that functional form. That is to say, if the aggregate supply $Q$ of a farm population with production function $q$ and production density $\rho(q)$ may be defined
+This often results in awkward model artifacts---such as the possibility of negative production quantities and/or of farms producing for free, in the case of linear supply functions---which requires us to interpret the model as a local approximation to the "true" function, with validity thereby restricted to a small domain of convergence around the starting equilibrium point.
 
-\begin{equation}
-Q = \int_{\underline{q}}^{\bar{q}} q \rho(q) \: dq
-\end{equation}
+More importantly, such models, by construction, lack a theoretical framework to guide the interpretation of abstract model parameters in terms of real world parameters---i.e. prices, technology, agroclimatic conditions, etc.---and vice versa. ...Wd be nice to consider a range of scenarios covering a range of potential input price increases versus technology shocks, but this not possible ... not clear why adoption rate takes a certain value... or how the shock affects the entry and exit of farms... nor how the shock affects the aggregate...  nor which centiles adopt...The representation of exogenous shocks to real world parameters in terms of model parameters thus largely boils down to a matter of modeler fiat. Insofar as modeling results hinge upon the parameterization of shocks, the conclusions of the impact assessment are, in this measure, also by fiat; and the whole process is thereby reduced to an exercise in petitio principii. This obviously complicates subsequent defense of the modeling results, especially if the modelers and/or their source of funding have a vested interest in the results.
 
-Then a linear aggregate supply curve implies a uniform distribution of $q$. Empirically speaking, one may say without controversy that farm production density is never uniform, but rather tapers off to zero at low and high values of $q$, resulting in a bell or skewed bell shaped function.
+Lipton says... . 
 
-aware of market entry and exit, which in turn implies the truncation $\underline{q},\: \bar{q}$---but from above or below, or both?
+the mapping defaults to the subjective preferences of the modeler, which in turn prefigures the results of the impact assessment.  ...arbitrarily set by modeler...in the name of expedience, then, petitio principii. an assumed result dressed up in mathematical symbols. [In lit review: The most famous example is whether an improved variety does a shift or pivot of the supply curve. Results depend critically on this choice...conflict of interest.] Counterveiling changes in prices...Lipton.
 
-<!-- The elasticity of  -->
+The pursuit of expedience then accumulates numerous complications which call into wuestion whether the expedience gain is outweighed by the many complications called forth in this pursuit....would it not be better to just sit down and work through a theoretical derivation of the aggregate curve from a set of axioms? Or at least try and see what happens?
 
-<!-- \begin{equation} -->
-<!-- \frac{\partial \ln(Q)}{\partial \ln(P)} Q = \frac{P}{Q} c -->
-<!-- \end{equation} -->
+The results of ex-ante impact assessments depend critically on these arbitrary mappings. introduces awkward artifacts, 
+
+... no account of farm entry and exit...Also ... The standard response to such commentary---that the specified forms are meant as local approximations---only serves to increase the theoretical opacity. anything goes then.... They may also introduce contradictions of microeconomic axioms. ... 
 
 
-In the name of expedience...theoretical niceties be damned...well...
-The default alternative is a power law form ...constant elasticity of substitution...the difference between can be substantial...no means of explaining the difference, and thus no criteria by which to defend one form. The exercise boils down to "because I say so".
+The results of the modeling exercise may  ...matter of preference...
+
+ ...conflict of interest...
 
 
-
-We derive the following aggregate supply curve accounting for entry
-
-...
+You may say so what. Well, it is well documented that  there is growing evidence that donors have stopped believing ex-ante impact assessments.
 
 
+The results of assessments can depend critically upon the choice of functional form...difficult to defend the choice of one form over another, and thus the results themselves. ...at a time when it is now widely recognized that hundreds of ex-ante impact assessments have 
 
-by the axioms:
+While such forms are expedient for certain calculations, it also 
+
+...and no explicit modeling of farm entry and exit...
+...distinguishing between real results and artifacts of the model.
+...local approximation...
+Without a theoretical framework to map model parameter values and functional forms to real world variables and situations, it may then be challenging to defend the results, or to justify one functional form over another. Results of ex-ante impact assessments depend critically upon the choice of functional form.
+
+Here we present a theoretical derivation of an aggregate supply curve from the following Axioms:
 
 1) Diminishing marginal returns
 
-2) Farms maximize their expected net benefit subject to a budget constraint
+2) Farms maximize their expected net benefit subject to a budget constraint (also known as cost-minimization)
 
 3) Supply curves slope upwards
 
@@ -75,10 +79,77 @@ by the axioms:
 
 6) Farm production is lognormally distributed
 
+The resulting form accounts for farm entry and exit...transparent mapping between parameters and concrete real world variables... proportional to probability that price will remain above ...
+
+can also address questions of how the same result might be achieved through interventions of other variables (Ethiopia bean an example), so as to compare which impact pathway is cheapest
+
+
+[in Discussion: the starting Axioms are to be experimented with. Other sets of Axioms might yield the same or different results.]
+
+-Can't then justify decision of one form over another...important as results depend critically on choice of form......producer surplus either increases or declines...  the justification boils down to "because I say so".
+
+-contradict theory [have to be constant returns to scale but also upward sloping demand curves...]
+
+-if somewhere along the way there are corollaries which seem wrong, the offending corollary can be traced back to specific axioms, as opposed to a shrug of the shoulders.
+
+-here we derive an aggregate supply curve from 6 Axioms... First, the farm production derived from Axioms 1-4. Then the aggregate curve follows from introducing Axioms 5-6.
+
+benefits of derived aggregate supply curve:
+
+-Agrees with Lipton's adoption criterion
+
+-all parameters have a clear interpretation in terms of concrete, measurable vars
+
+-Can examine questions of employment, tech induced shift,...
+
+-elasticity decomposed into employment and tech components
+
+-result: axioms 1+2 -> production is undefined at h=1, constant returns to scale not possible. axioms 1+2+3 -> only decreasing returns to scale possible.
+
+-illustrative application using Kenya maize data
+
+
+
+# Literature review
+
+In 1944, Von Neumann and Morgenstern observed that "part of the feeling of dissatisfaction with the mathematical treatment of economic theory derives largely from the fact that frequently one is offered not proofs but mere assertions which are really no better than the same assertions given in literary form" [@morgenstern1953theory]. The authors go on to suggest there is a "scientifically unsound" inclination among economists to confuse these formalized literary assertions, including "very valuable surmises and inspiring anticipations of results", with proofs or otherwise rigorously derived theoretical results [@morgenstern1953theory]. More recently, Romer has similarly criticized the rise of "mathiness" in economic modeling.
+<!-- "There is no point in using exact methods where there is no clarity in the concepts and issues to which they are to be applied" [@morgenstern1953theory]. -->
+<!-- "the economic problems were not formulated clearly and are often stated in such vague terms as to make mathematical treatment _a priori_ appear hopeless because it is quite uncertain what the problems really are" [@morgenstern1953theory]. -->
+
+"[The style that I am calling mathiness lets academic politics masquerade as science.] Like mathematical theory, mathiness uses a mixture of words and symbols, but instead of making tight links, it leaves ample room for slippage between statements in the languages of words as opposed to symbols[, and between statements with theoretical as opposed to empirical content]". [@romer2015mathiness]
+
+The slippage ... to confuse results with assumptions (petitio principii), or, as in the case of the economic surplus model, to infuse a collection of contradictory and/or unfounded assertions with an air of rigor and coherence.
+
+Specification of the aggregate supply curve may be considered a case in point. The model is not theoretically derived, but rather a collection of educated guesses or surmises translated into mathematical equations. Many of these surmises imply well documented contradictions of basic economic theory, and/or inconvenient ramifications vis-a-vis the supposed benefits of research and technology adoption []. The model has evolved into its present form not by force of logic, but as a matter of preference. For example, there was considerable debate in the 1970s over whether the research-induced supply curve shift should be modeled as a parallel shift or a pivot [@alston1995science; @norton1981evaluating; @lindner1978supply]. The debate was further complicated by differing views as to whether supply should be modeled as a linear or a curved function. Without a theoretical framework to link parameter values and functional forms to real world conditions, the debate was ultimately inconclusive. The answers to the questions left unresolved by the debate have come down to us today as a matter of preference. In their highly influential book, _Science Under Scarcity_, Alston et al. indicated their preference for the linear parallel shift [-@alston1995science]. This is a conspicuous choice, to put it mildly, considering that 1) it prefigures research impacts in the best possible light, and 2) by the authors' own admission, there are no theoretical or empirical grounds to justify this preference [@alston1995science; @alston2009economics]. AR4D partial equilibrium impact studies since then have generally follow suit.
+
+...The current sense is that this is somehow impossible. The verdict:
+
+"What does economic theory tell us about the nature of these shifts? Unfortunately, not very much. To be confident about this aspect of the problem would require either (a) precise econometric evidence or (b) detailed information on the effects on individual agents, details of industry structure including details on exit and entry of firms, and a complete theory of aggregation. This information is not available; assumptions are unavoidable" (Alston, Norton, & Pardey, 1995).
+
+In this article, we effectively provide (b)..."effects on individual agents" is a matter of farm level modeling, and "industry structure including details on exit and entry of firms" is a matter of Axiom 5.  show that economic theory can tell us a great deal more than these guys suspected...an optimistic view of what theory can tell us about the aggregate supply response to exogenous shocks.
+
+
+<!-- You have to ask what sort of farm production fn and density function result in a linear form for the aggregate curve... -->
+<!-- It is still customary to specify a linear aggregate supply curve, for example, with no discussion of the highly unlikely shape of the farm production density function that is implied by that functional form. That is to say, if the aggregate supply $Q$ of a farm population with production function $q$ and production density $\rho(q)$ may be defined -->
+
+<!-- \begin{equation} -->
+<!-- Q = \int_{\underline{q}}^{\bar{q}} q \rho(q) \: dq -->
+<!-- \end{equation} -->
+
+<!-- Then a linear aggregate supply curve implies a uniform distribution of $q$. Empirically speaking, one may say without controversy that farm production density is never uniform, but rather tapers off to zero at low and high values of $q$, resulting in a bell or skewed bell shaped function. -->
+
+<!-- aware of market entry and exit, which in turn implies the truncation $\underline{q},\: \bar{q}$---but from above or below, or both? -->
+
+<!-- The elasticity of  -->
+
+<!-- \begin{equation} -->
+<!-- \frac{\partial \ln(Q)}{\partial \ln(P)} Q = \frac{P}{Q} c -->
+<!-- \end{equation} -->
+
+
+
 ...a bit of a remedial feel at times, patience, as there are some surprises at the end...in particular, the impossibility of constant returns to scale. These decisions are obviously in conflict with known theory (entry and exit of firms), to facilitate calculation of economic surplus...but the choice of functional form affects these calculations, and the cavalier specification of the curves means they can offer no explanation of why the results of one specification should be trusted over another. ...paraphrase romer? "because I say so" ["If the author can make up an imaginary variable, "because I say so" seemslike a pretty convincing answer to any question about its properties."]
 
-
-uniform distribution to get linear aggregate supply curve
 
 
 
