@@ -1,5 +1,5 @@
 ---
-title: A theoretical derivation of the aggregate supply curve, accounting for for farm entry and exit
+title: A theoretical derivation of the aggregate supply curve, accounting for farm entry and exit
 # author: "Benjamin Schiek"
 # date: "`r Sys.Date()`"
 abstract: |
@@ -31,41 +31,46 @@ knitr::opts_chunk$set(echo = TRUE)
 
 #Introduction
 
-In agricultural ex-ante impact assessments of new technology, aggregate supply and demand curves are often specified primarily for the purpose of facilitating certain calculations (usually of producer and consumer surplus), with secondary consideration given to the plausibility of the theoretical underpinnings implied by the choice of functional form.
+In ex-ante impact assessments of exogenous changes in agricultural technology and agroclimatic conditions, aggregate supply and demand curves are often specified primarily for the purpose of facilitating certain calculations (usually of producer and consumer surplus), with secondary consideration given to the plausibility of the theoretical underpinnings implied by the choice of functional form. The resulting models are then, by construction, theoretically opaque.
 
-This often results in awkward model artifacts---such as the possibility of negative production quantities and/or of farms producing for free, in the case of linear supply functions---which requires us to interpret the model as a local approximation to the "true" function, with validity thereby restricted to a small domain of convergence around the starting equilibrium point.
+In particular, it is unclear whether they are consistent with microeconomic principles regarding homogeneity, convexity/concavity, and profit maximization; and it is unclear what shape of farm production density function is implied by the model. That is to say, if aggregate supply $Q$ may be defined as the definite integral of farm production function $q^*$ times the production density $\rho(q^*)$ over the domain of profitable production $(\underline{q}^*, \bar{q}^*)$,
 
-More importantly, such models, by construction, lack a theoretical framework to guide the interpretation of abstract model parameters in terms of real world parameters---i.e. prices, technology, agroclimatic conditions, etc.---and vice versa. ...Wd be nice to consider a range of scenarios covering a range of potential input price increases versus technology shocks, but this not possible ... not clear why adoption rate takes a certain value... or how the shock affects the entry and exit of farms... nor how the shock affects the aggregate...  nor which centiles adopt...The representation of exogenous shocks to real world parameters in terms of model parameters thus largely boils down to a matter of modeler fiat. Insofar as modeling results hinge upon the parameterization of shocks, the conclusions of the impact assessment are, in this measure, also by fiat; and the whole process is thereby reduced to an exercise in petitio principii. This obviously complicates subsequent defense of the modeling results, especially if the modelers and/or their source of funding have a vested interest in the results.
+\begin{equation}
+Q(P) = \int_{\underline{q}^*}^{\bar{q}^*} q^* \rho(q^*) \: dq^*
+\end{equation}
 
-Lipton says... . 
+Then it is not readily apparent from most expedient specifications of $Q$ what the functions $q^*$ and $\rho(q^*)$ are, nor whether they are plausible vis-a-vis microeconomic theory and empirical evidence. 
 
-the mapping defaults to the subjective preferences of the modeler, which in turn prefigures the results of the impact assessment.  ...arbitrarily set by modeler...in the name of expedience, then, petitio principii. an assumed result dressed up in mathematical symbols. [In lit review: The most famous example is whether an improved variety does a shift or pivot of the supply curve. Results depend critically on this choice...conflict of interest.] Counterveiling changes in prices...Lipton.
+Critically, expedient specifications of $Q$ also gloss over farm entry and exit---i.e. the domain of profitable production $(\underline{q}^*, \bar{q}^*)$---such that it is not possible to decompose changes in aggregate supply into yield and area (farm entry/exit) components.
 
-The pursuit of expedience then accumulates numerous complications which call into wuestion whether the expedience gain is outweighed by the many complications called forth in this pursuit....would it not be better to just sit down and work through a theoretical derivation of the aggregate curve from a set of axioms? Or at least try and see what happens?
+Expedient forms also tend to introduce awkward model artifacts---such as the possibility of negative supply quantities and/or of farms producing for free, in the case of linear supply functions---which effectively reduce the model to a local approximation of some inscrutable global function, with validity restricted to a small domain of convergence around the starting equilibrium point. The parameterization of such models is highly abstract, moreover, with no clear mapping to concrete, measurable, real world parameters---i.e. prices, technology, agroclimatic conditions, demographic variables, and so on. The representation of exogenous shocks in terms of such abstract parameters is thus largely a matter of modeler fiat. Insofar as the modeling results hinge upon this parameterization, they too are prefigured by modeler fiat. The impact "assessment" is thus more accurately an impact _assertion_ dressed up in mathematical language, i.e. in this measure, reduced to an exercise in petitio principii.
+<!-- -contradict theory [have to be constant returns to scale but also upward sloping demand curves...] -->
 
-The results of ex-ante impact assessments depend critically on these arbitrary mappings. introduces awkward artifacts, 
-
-... no account of farm entry and exit...Also ... The standard response to such commentary---that the specified forms are meant as local approximations---only serves to increase the theoretical opacity. anything goes then.... They may also introduce contradictions of microeconomic axioms. ... 
-
-
-The results of the modeling exercise may  ...matter of preference...
-
- ...conflict of interest...
+This, in turn, complicates the defense of modeling results. Without any theoretical framework by which to map the real world to model parameters, the parameterization of exogenous shocks effectively defaults to modeler fiat.  That is, the "assessment" is reduced to an _assertion_ dressed up in mathematical symbols. The     cannot be decomposed into specific components---a technology effect versus a price effect---
+...distinguish between impact, model artifact, modeler fiat.
+, and cannot be decomposed into technology and price components. 
 
 
-You may say so what. Well, it is well documented that  there is growing evidence that donors have stopped believing ex-ante impact assessments.
+ 
+
+In the name of expedience, then, many methodological headaches are accumulated. At some point the headaches outweigh the expedience   Difficult to defend and impossible to account for farm entry and exit. disentangle impact from model artifact...difficult to tell whether the result is due to exogenous shock, or to artifacts of the model  ...
 
 
-The results of assessments can depend critically upon the choice of functional form...difficult to defend the choice of one form over another, and thus the results themselves. ...at a time when it is now widely recognized that hundreds of ex-ante impact assessments have 
+One is free to argue that the expedient approach is not intended to be so rigorous... for purposes of stakeholder discussions don't need to get so complex...Well, just saw above how the pursuit of expedience quickly lands the modeler in a great deal of methodological complexity. And This is at odds with the available evidence. After decades of exorbitant ex-ante impact assessments, there is evidence that donors have stopped believing them (references in Literature review below). And this correlates with a global decline in funding for agricultural research. There is a market out there unmet demand out there for transparent modeling, both by stakeholders interested in a clearer picture of potential impacts, and by modelers frustrated with the theoretical opacity of current methods.
 
-While such forms are expedient for certain calculations, it also 
+focus on the aggregate supply curve...although the 
+aim here is to replace theoretical opacity with transparency...introduce a model where model results can be traced back to concrete variables and axioms, and not to modeler fiat.
 
-...and no explicit modeling of farm entry and exit...
-...distinguishing between real results and artifacts of the model.
-...local approximation...
-Without a theoretical framework to map model parameter values and functional forms to real world variables and situations, it may then be challenging to defend the results, or to justify one functional form over another. Results of ex-ante impact assessments depend critically upon the choice of functional form.
 
-Here we present a theoretical derivation of an aggregate supply curve from the following Axioms:
+
+
+
+
+
+
+
+
+The aggregate supply curve is derived from the following Axioms:
 
 1) Diminishing marginal returns
 
@@ -80,15 +85,6 @@ Here we present a theoretical derivation of an aggregate supply curve from the f
 6) Farm production is lognormally distributed
 
 The resulting form accounts for farm entry and exit...transparent mapping between parameters and concrete real world variables... proportional to probability that price will remain above ...
-
-can also address questions of how the same result might be achieved through interventions of other variables (Ethiopia bean an example), so as to compare which impact pathway is cheapest
-
-
-[in Discussion: the starting Axioms are to be experimented with. Other sets of Axioms might yield the same or different results.]
-
--Can't then justify decision of one form over another...important as results depend critically on choice of form......producer surplus either increases or declines...  the justification boils down to "because I say so".
-
--contradict theory [have to be constant returns to scale but also upward sloping demand curves...]
 
 -if somewhere along the way there are corollaries which seem wrong, the offending corollary can be traced back to specific axioms, as opposed to a shrug of the shoulders.
 
@@ -107,6 +103,28 @@ benefits of derived aggregate supply curve:
 -result: axioms 1+2 -> production is undefined at h=1, constant returns to scale not possible. axioms 1+2+3 -> only decreasing returns to scale possible.
 
 -illustrative application using Kenya maize data
+
+
+
+-----------------------------------
+
+
+When there is a [...Wd be nice to consider a range of scenarios covering a range of potential input price increases versus technology shocks, but this not possible ... not clear why adoption rate takes a certain value... or how the shock affects the entry and exit of farms... nor how the shock affects the aggregate...  nor which centiles adopt...] The representation of exogenous shocks to real world parameters in terms of model parameters thus largely boils down to a matter of modeler fiat. Insofar as modeling results hinge upon the parameterization of shocks, the conclusions of the impact assessment are, in this measure, also by fiat; and the whole process is thereby reduced to an exercise in petitio principii. This obviously complicates subsequent defense of the modeling results, especially if the modelers and/or their source of funding have a vested interest in the results.
+
+Lipton says... .
+
+>\singlespacing "New science usually raises farm supply of outputs and demand for inputs. That makes outputs cheaper and inputs more expensive; hence the ratio of farm output prices to input prices falls. Do small and poor farmers gain? If, and only if, this science-induced fall in their relative farm prices is slower than the science-induced rise in their conversion ratio of physical inputs into physical outputs (that is, TFP)" [-@lipton2005family].
+
+
+the mapping defaults to the subjective preferences of the modeler, which in turn prefigures the results of the impact assessment.  ...arbitrarily set by modeler...in the name of expedience, then, petitio principii. an assumed result dressed up in mathematical symbols. [In lit review: The most famous example is whether an improved variety does a shift or pivot of the supply curve. Results depend critically on this choice...conflict of interest.] Counterveiling changes in prices...Lipton.
+
+You may say so what. Well, it is well documented that  there is growing evidence that donors have stopped believing ex-ante impact assessments.
+
+in Discussion: the starting Axioms are to be experimented with. Other sets of Axioms might yield the same or different results.
+
+can also address questions of how the same result might be achieved through interventions of other variables (Ethiopia bean an example), so as to compare which impact pathway is cheapest
+
+
 
 
 
