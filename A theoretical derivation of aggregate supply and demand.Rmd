@@ -46,12 +46,11 @@ The parameterization of expedient specifications also tends to be highly abstrac
 <!-- [, while adding more layers of methodological wrangling/theoretical opacity.] -->
 <!-- [which in turn invites misuse and abuse of the model, and otherwise complicates the defense of any modeling results.] -->
 <!-- [the mathematical expression no different from the same statement in literary form] -->
+<!-- [Meanwhile, the growing disparity between current research funding levels and the levels that would seem to be justified by expediently specified ex-ante impact assessments suggests that donors have stopped taking the results of such models seriously...] -->
 
-One may argue that this is the whole point of expedient specifications of aggregate supply and demand: A degree of explanatory power is deliberately sacrificed in exchange for computational expedience; and the degree of explanatory power retained is sufficient for most modeling purposes. And the hundreds of published ex-ante impact assessments of new agricultural technologies that specify linear aggregate supply and demand curves would seem to support this opinion, prima facie.
+To be fair, this is, in some sense, the whole point of expedient specifications of aggregate supply and demand: A degree of explanatory power is deliberately sacrificed in exchange for computational expedience. And, judging by the thousands of published ex-ante impact assessments of agricultural research that specify linear aggregate supply and demand functions, the modicum of explanatory power retained by such specifications appears, prima facie, to be sufficient for most modeling purposes. However, the mere number of publications may be a misleading indicator of sufficiency. It may reflect, rather, the computational ease of the model, and/or the absence of viable alternatives. Levels of funding for agricultural research have steadily declined from what would be justified by such assessments, indicating that many donors have stopped believing them [@hurley2014re; @hurley2016returns].  This indicates increasingly insufficient ...in terms of providing credible impact assessments.
 
-On the contrary, there is growing evidence that ...less and less sufficient for most purposes, i.e. for convincing donors of roi... for some practitioners, the numerous methodological headaches incurred in the pursuit of expedience, outlined above (and reviewed in more detail below), outweigh any gain in computational expedience. The preponderance of expediently specified impact assessments are due to the lack options with more explanatory power.  Moreover, there is a growing disparity between actual agricultural research funding levels and the levels of funding that would seem to be justified by said ex-ante impact assessments, which points to growing donor skepticism towards such assessments [hurley, ifpri]. 
-
-
+There is thus a demand for transparent models...
 
 Here we derive an aggregate supply curve from the following Axioms:
 
@@ -157,20 +156,7 @@ When there is a [...Wd be nice to consider a range of scenarios covering a range
 
 [The response to the growing impatience is the cosmetic approach---MIRR]
 
-Also agrees with Lipton...
 
-Lipton says... .
-
->\singlespacing "New science usually raises farm supply of outputs and demand for inputs. That makes outputs cheaper and inputs more expensive; hence the ratio of farm output prices to input prices falls. Do small and poor farmers gain? If, and only if, this science-induced fall in their relative farm prices is slower than the science-induced rise in their conversion ratio of physical inputs into physical outputs (that is, TFP)" [-@lipton2005family].
-
-
-the mapping defaults to the subjective preferences of the modeler, which in turn prefigures the results of the impact assessment.  ...arbitrarily set by modeler...in the name of expedience, then, petitio principii. an assumed result dressed up in mathematical symbols. [In lit review: The most famous example is whether an improved variety does a shift or pivot of the supply curve. Results depend critically on this choice...conflict of interest.] Counterveiling changes in prices...Lipton.
-
-You may say so what. Well, it is well documented that  there is growing evidence that donors have stopped believing ex-ante impact assessments.
-
-in Discussion: the starting Axioms are to be experimented with. Other sets of Axioms might yield the same or different results.
-
-can also address questions of how the same result might be achieved through interventions of other variables (Ethiopia bean an example), so as to compare which impact pathway is cheapest
 
 
 
@@ -966,6 +952,24 @@ The same riposte applies to enduring objection 3, namely, that the Cobb-Douglas 
 
 The input own and cross price demand elasticities are thus functions of price and technology. Because optimal input use is also a function of price, these elasticities may be written as functions of input use, if so desired. Conversely, the Hicks-Allen partial elasticities derived using the translog model may be written in terms of prices, if so desired.
 
+how to implement in minimum data contexts...
+
+Also agrees with Lipton...
+
+Lipton says... .
+
+>\singlespacing "New science usually raises farm supply of outputs and demand for inputs. That makes outputs cheaper and inputs more expensive; hence the ratio of farm output prices to input prices falls. Do small and poor farmers gain? If, and only if, this science-induced fall in their relative farm prices is slower than the science-induced rise in their conversion ratio of physical inputs into physical outputs (that is, TFP)" [-@lipton2005family].
+
+the mapping defaults to the subjective preferences of the modeler, which in turn prefigures the results of the impact assessment.  ...arbitrarily set by modeler...in the name of expedience, then, petitio principii. an assumed result dressed up in mathematical symbols. [In lit review: The most famous example is whether an improved variety does a shift or pivot of the supply curve. Results depend critically on this choice...conflict of interest.] Counterveiling changes in prices...Lipton.
+
+in Discussion: the starting Axioms are to be experimented with. Other sets of Axioms might yield the same or different results.
+
+...the numerous methodological headaches incurred in the pursuit of expedience, outlined above (and reviewed in more detail below), outweigh any gain in computational expedience. [What good is computational expedience if it is not even clear what is being calculated, what its connection to reality is]
+
+can also address questions of how the same result might be achieved through interventions of other variables (Ethiopia bean an example), so as to compare which impact pathway is cheapest
+
+
+sketch out extension to aggregate demand and PE analysis
 
 
 # References {-}
