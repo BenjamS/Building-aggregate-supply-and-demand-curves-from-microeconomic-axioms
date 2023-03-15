@@ -31,7 +31,7 @@ knitr::opts_chunk$set(echo = TRUE)
 
 #Introduction
 
-In ex-ante impact assessments of exogenous changes in agricultural technology and agroclimatic conditions, aggregate supply curves are often specified primarily for the purpose of facilitating certain calculations (usually of producer and consumer surplus), with secondary consideration given to the plausibility of the theoretical underpinnings implied by the choice of functional form. The resulting models are then, by construction, theoretically opaque.
+In ex-ante impact assessments of exogenous changes in agricultural technology and agroclimatic conditions, aggregate supply curves are often specified primarily for the purpose of facilitating certain calculations (usually of economic surplus, deadweight loss, and the like), with secondary consideration given to the plausibility of the theoretical underpinnings implied by the choice of functional form. The resulting models are then, by construction, theoretically opaque.
 
 In particular, it is unclear whether they are consistent with microeconomic principles regarding homogeneity, convexity/concavity, and profit maximization; and it is unclear what shape of farm production density function is implied by the model. That is to say, if aggregate supply $Q$ may be defined as the definite integral of farm production function $q^*$ times the production density $\rho(q^*)$ over the domain of profitable production $(\underline{q}^*, \bar{q}^*)$,
 
@@ -40,13 +40,17 @@ Q(P) = \int_{\underline{q}^*}^{\bar{q}^*} q^* \rho(q^*) \: dq^*
 \label{eq:sup1}
 \end{equation}
 
-Then it is not readily apparent from expedient specifications of $Q$ what the functions $q^*$ and $\rho(q^*)$ are, nor whether they are plausible vis-a-vis microeconomic theory and empirical evidence. Critically, expedient specifications of $Q$ also gloss over farm entry and exit---i.e. the domain of profitable production $(\underline{q}^*, \bar{q}^*)$---such that it is not possible to decompose changes in aggregate supply into yield and area or employment (farm entry/exit) components.
+then it is not readily apparent from expedient specifications of $Q$ what the functions $q^*$ and $\rho(q^*)$ are, nor whether they are plausible vis-a-vis microeconomic theory and empirical evidence. Critically, expedient specifications of $Q$ also gloss over farm entry and exit---i.e. the domain of profitable production $(\underline{q}^*, \bar{q}^*)$---such that it is not possible to decompose changes in aggregate supply into yield and area or employment (farm entry/exit) components.
 
-The parameterization of expedient specifications also tends to be highly abstract, with no clear mapping to the relevant measurable, real world phenomena---i.e. technology, input prices, agroclimatic conditions, demographic variables, etc.---leaving very little basis upon which to assess the plausibility of different parameterizations of a given exogenous shock. Some expedient forms also introduce awkward artifacts---such as the possibility of negative supply quantities and/or of farms producing for free, in the case of the linear aggregate supply curve---which further limit the model's explanatory power.
+The parameterization of expedient specifications also tends to be highly abstract, with no clear mapping to the relevant measurable, real world phenomena---i.e. technology, input prices, agroclimatic conditions, demographic variables, etc. This leaves very little basis upon which to assess the plausibility of different parameterizations of a given exogenous shock, or to attribute modeled impacts to the exogenous shock with confidence (the attribution problem) [mention attrib prob here with refs if going short form]. Some expedient forms also introduce awkward artifacts---such as the possibility of negative supply quantities and/or of farms producing for free, in the case of the linear aggregate supply curve---which further limit or complicate the model's explanatory power. [add extra bit about local approximation if going short form]
 <!-- [, while adding more layers of methodological wrangling/theoretical opacity.] -->
 <!-- [which in turn invites misuse and abuse of the model, and otherwise complicates the defense of any modeling results.] -->
+<!-- [the mathematical expression no different from the same statement in literary form] -->
 
-Of course, expedient models are built for expedience, not explanatory power. However, the question arises as to whether the numerous methodological headaches outlined above (and treated in more detail in the literature review below), that are accumulated in the pursuit of expedience, outweigh the expedience gained in terms of tractable . This is a question that must be ...each modeler, case by case. ...currently no other option. for those willing to trade ease of economic surplus calculations for greater theoretical transparency. ...AND evidence that donors have grown impatient with the theoretical opacity of expedient forms...
+One may argue that this is the whole point of expedient specifications of aggregate supply and demand: A degree of explanatory power is deliberately sacrificed in exchange for computational expedience; and the degree of explanatory power retained is sufficient for most modeling purposes. And the hundreds of published ex-ante impact assessments of new agricultural technologies that specify linear aggregate supply and demand curves would seem to support this opinion, prima facie.
+
+On the contrary, there is growing evidence that ...less and less sufficient for most purposes, i.e. for convincing donors of roi... for some practitioners, the numerous methodological headaches incurred in the pursuit of expedience, outlined above (and reviewed in more detail below), outweigh any gain in computational expedience. The preponderance of expediently specified impact assessments are due to the lack options with more explanatory power.  Moreover, there is a growing disparity between actual agricultural research funding levels and the levels of funding that would seem to be justified by said ex-ante impact assessments, which points to growing donor skepticism towards such assessments [hurley, ifpri]. 
+
 
 
 Here we derive an aggregate supply curve from the following Axioms:
@@ -199,13 +203,6 @@ Finally, the parameterization of such forms tends to be highly abstract, with no
 <!-- \frac{\partial \ln(Q)}{\partial \ln(P)} Q = \frac{P}{Q} c -->
 <!-- \end{equation} -->
 
-
-
-...a bit of a remedial feel at times, patience, as there are some surprises at the end...in particular, the impossibility of constant returns to scale. These decisions are obviously in conflict with known theory (entry and exit of firms), to facilitate calculation of economic surplus...but the choice of functional form affects these calculations, and the cavalier specification of the curves means they can offer no explanation of why the results of one specification should be trusted over another. ...paraphrase romer? "because I say so" ["If the author can make up an imaginary variable, "because I say so" seemslike a pretty convincing answer to any question about its properties."]
-
-
-
-
 # Derivation of the yield function from Axiom 1 (diminishing marginal returns)
 
 Throughout much of written history, astute observers have noticed that the usefulness of increments in the quantity of a good is inversely proportional to amount of the input or good or service already acquired [@kauder1953genesis]. In 1738, Daniel Bernoulli put it this way:
@@ -276,7 +273,12 @@ y = g_0 \prod_{i = 1}^{n_k} k_i^{\kappa_i} \prod_{i = 1}^{n_x} x_i^{\alpha_i} \:
 
 Where the $\kappa_i$ are the control variable elasticities of yield. These are non-discretionary and may thus take positive or negative values. The input elasticities $\alpha_i$, on the other hand, which correspond to discretionary management variables, are generally positive. However, there may arise cases where a variable does not fall neatly into either the management or control category. In the empirical analysis presented farther below, for example, the coefficient on child family labor takes a negative value. Labor is generally considered a discretionary management variable; but family labor, and especially child family labor, might, in some cases, better be considered a control variable, indicative of hard constraints beyond the farmers' discretion. For purposes of economic analysis, the degree of homogeneity is calculated only over the production elasticities corresponding to management variables ($h = \sum_i \alpha_i$, omitting the $\kappa_i$).
 
-Interpretation of the constant $g_0$ is as difficult as we want to make it. It is usually called the total factor productivity, and understood to represent the yield per unit "all inputs"---although a more accurate description would be yield per unit "all input and control variables, raised to various powers". For those not yet comfortable working in units of $kgs. \: acres^{-1} \: liters^{-\alpha_{pest}} \: kgs.^{-\alpha_{fert}} \: manhours^{-\alpha_{labor}} \: mm.^{-\alpha_{rain}}\: degrees^{-\alpha_{temp}} \: years^{-\alpha_{age}} \: num. \: people^{-\alpha_{HHsize}} \: etc.^{-\alpha_{etc.}}$, an alternative approach is to arbitrarily define $g_0$ in terms of another parameter that is expressed in intelligible units, and to work with this instead. For example, $g_0$ may be defined in terms of another parameter $y_0$ and fixed reference values $\tilde{k}_i$, $\tilde{x}_i$ that have the same units as the corresponding management and control variables $x_i$ and $k_i$.
+Interpretation of the constant $g_0$ is as difficult as we want to make it. It is usually called the total factor productivity, and understood to represent the yield per unit "all inputs"---although a more accurate description would be yield per unit "all input and control variables, raised to various powers". For those not yet comfortable working in units of, say,
+
+$$
+kgs. \: acres^{-1} \: liters^{-\alpha_{pest}} \: kgs.^{-\alpha_{fert}} \: manhours^{-\alpha_{labor}} \: mm.^{-\alpha_{rain}}\: degrees^{-\alpha_{temp}} \: years^{-\alpha_{age}} \: num. \: people^{-\alpha_{HHsize}}
+$$
+an alternative approach is to arbitrarily define $g_0$ in terms of another parameter that is expressed in intelligible units, and to work with this instead. For example, $g_0$ may be defined in terms of another parameter $y_0$ and fixed reference values $\tilde{k}_i$, $\tilde{x}_i$ that have the same units as the corresponding management and control variables $x_i$ and $k_i$.
 
 \begin{equation}
 g_0 = y_0 \prod_{i = 1}^{n_k} \tilde{k}_i^{-\kappa_i} \prod_{i = 1}^{n_x} \tilde{x}_i^{-\alpha_i}
