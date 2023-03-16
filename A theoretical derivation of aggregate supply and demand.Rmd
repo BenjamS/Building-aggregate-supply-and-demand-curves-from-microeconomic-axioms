@@ -40,9 +40,9 @@ Q(P) = \int_{\underline{q}^*}^{\bar{q}^*} q^* \rho(q^*) \: dq^*
 \label{eq:sup1}
 \end{equation}
 
-then it is not readily apparent from expedient specifications of $Q$ what the functions $q^*$ and $\rho(q^*)$ are, nor whether they are plausible vis-a-vis microeconomic theory and empirical evidence. Critically, expedient specifications of $Q$ also gloss over farm entry and exit---i.e. the domain of profitable production $(\underline{q}^*, \bar{q}^*)$---such that it is not possible to decompose changes in aggregate supply into yield and area or employment (farm entry/exit) components.
+then it is not readily apparent from expedient specifications of $Q$ what the functions $q^*$ and $\rho(q^*)$ are, nor whether they are plausible vis-a-vis microeconomic theory and empirical evidence. Critically, expedient specifications of $Q$ also gloss over farm entry and exit---i.e. the domain of profitable production $(\underline{q}^*, \bar{q}^*)$---such that it is not possible to decompose changes in aggregate supply into yield and employment (farm entry/exit) components.
 
-The parameterization of expedient specifications also tends to be highly abstract, with no clear mapping to the relevant measurable, real world phenomena---i.e. technology, input prices, agroclimatic conditions, demographic variables, etc. This leaves very little basis upon which to assess the plausibility of different parameterizations of a given exogenous shock, or to attribute modeled impacts to the exogenous shock with confidence (the attribution problem) [mention attrib prob here with refs if going short form]. Some expedient forms also introduce awkward artifacts---such as the possibility of negative supply quantities and/or of farms producing for free, in the case of the linear aggregate supply curve---which further limit or complicate the model's explanatory power. [add extra bit about local approximation if going short form]
+The parameterization of expedient specifications also tends to be highly abstract, with no clear mapping to the relevant measurable, real world phenomena---i.e. technology, input prices, agroclimatic conditions, demographic variables, etc. This leaves very little basis upon which to assess the plausibility of different parameterizations of a given exogenous shock, or to attribute modeled impacts to the exogenous shock with confidence (the attribution problem) [mention attrib prob here with refs if going short form]. Some expedient forms also introduce awkward artifacts---such as the possibility of negative supply quantities and/or of farms producing for free, in the case of the linear aggregate supply curve---which further limit the model's explanatory power. [add extra bit about local approximation if going short form]
 <!-- [, while adding more layers of methodological wrangling/theoretical opacity.] -->
 <!-- [which in turn invites misuse and abuse of the model, and otherwise complicates the defense of any modeling results.] -->
 <!-- [the mathematical expression no different from the same statement in literary form] -->
@@ -172,6 +172,9 @@ Expedient specifications also tend to introduce awkward model artifacts. The par
 
 Finally, the parameterization of such forms tends to be highly abstract, with no clear mapping to the relevant measurable, real world phenomena---i.e. technology, input prices, agroclimatic conditions, demographic variables, and so on. This leaves very little basis upon which to assess the plausibility of a given parameterization of exogenous shocks. How should a 10% increase in total factor productivity be represented in terms of a change in, say, $a$ and $\eta$? The answer effectively boils down to modeler fiat, which in turn invites misuse and abuse of the model, and otherwise complicates the defense of any modeling results.
 
+[preclude constant returns to scale, directly contradicting the conventional wisdom handed down by Hicks [-@hicks1963theory] and Solow [-@solow1957technical]. ...also constant marginal cost...This agrees with empirical evidence [@lavoie2014post]. It also contradicts the theory of the firm presented in most microeconomic textbooks, which assumes (with no evidentiary basis) increasing marginal cost as output rises.]
+
+
 <!-- You have to ask what sort of farm production fn and density function result in a linear form for the aggregate curve... -->
 <!-- It is still customary to specify a linear aggregate supply curve, for example, with no discussion of the highly unlikely shape of the farm production density function that is implied by that functional form. That is to say, if the aggregate supply $Q$ of a farm population with production function $q$ and production density $\rho(q)$ may be defined -->
 
@@ -189,7 +192,9 @@ Finally, the parameterization of such forms tends to be highly abstract, with no
 <!-- \frac{\partial \ln(Q)}{\partial \ln(P)} Q = \frac{P}{Q} c -->
 <!-- \end{equation} -->
 
-# Derivation of the yield function from Axiom 1 (diminishing marginal returns)
+# Methodology
+
+## Derivation of the farm production function from Axioms 1-3
 
 Throughout much of written history, astute observers have noticed that the usefulness of increments in the quantity of a good is inversely proportional to amount of the input or good or service already acquired [@kauder1953genesis]. In 1738, Daniel Bernoulli put it this way:
 <!-- an input (in the case of producer yield functions) or good or service (in the case of consumer utility functions) -->
@@ -259,7 +264,7 @@ y = g_0 \prod_{i = 1}^{n_k} k_i^{\kappa_i} \prod_{i = 1}^{n_x} x_i^{\alpha_i} \:
 
 Where the $\kappa_i$ are the control variable elasticities of yield. These are non-discretionary and may thus take positive or negative values. The input elasticities $\alpha_i$, on the other hand, which correspond to discretionary management variables, are generally positive. However, there may arise cases where a variable does not fall neatly into either the management or control category. In the empirical analysis presented farther below, for example, the coefficient on child family labor takes a negative value. Labor is generally considered a discretionary management variable; but family labor, and especially child family labor, might, in some cases, better be considered a control variable, indicative of hard constraints beyond the farmers' discretion. For purposes of economic analysis, the degree of homogeneity is calculated only over the production elasticities corresponding to management variables ($h = \sum_i \alpha_i$, omitting the $\kappa_i$).
 
-Interpretation of the constant $g_0$ is as difficult as we want to make it. It is usually called the total factor productivity, and understood to represent the yield per unit "all inputs"---although a more accurate description would be yield per unit "all input and control variables, raised to various powers". For those not yet comfortable working in units of, say,
+Interpretation of the constant $g_0$ is as difficult as one wants to make it. It is, of course, usually called the "total factor productivity", and understood to represent the yield per unit "all inputs"---although a more accurate description would be yield per unit "all input and control variables, raised to various powers". For those not yet comfortable working in units of, say,
 
 $$
 kgs. \: acres^{-1} \: liters^{-\alpha_{pest}} \: kgs.^{-\alpha_{fert}} \: manhours^{-\alpha_{labor}} \: mm.^{-\alpha_{rain}}\: degrees^{-\alpha_{temp}} \: years^{-\alpha_{age}} \: num. \: people^{-\alpha_{HHsize}}
@@ -279,7 +284,7 @@ y = y_0 \prod_{i = 1}^{n_k} \left( \frac{k_i}{\tilde{k}_i} \right)^{\kappa_i} \p
 
 Because the terms in parentheses are dimensionless, $y_0$ must have the same units as $y$; and $y_0$ may be interpreted as the value of $y$ when all management and control variables equal their reference values. In the empirical study included here, for example, the reference values are set equal to the sample means, such that $y_0$ is the value of $y$ evaluated at the sample means of the input and control variables.
 
-Equation \ref{eq:cobbDoug3} is, of course, the Cobb-Douglas form. Outside of Economics, it would simply be referred to as a (multivariate) power law. Such forms are often good models of observed processes across a wide range of research contexts and disciplines. In Economics, the Cobb-Douglas form was widely used from the 1920s to 1950s on the basis of its good empirical fit, but fell into disrepute thereafter for its perceived lack a theoretical basis. Capalbo and Antle [-@capalbo2015agricultural] offer a succinct introduction to this vast discussion. The forgoing derivation of the Cobb-Douglas form from Axiom 1 in some measure redresses the lack of a theoretical basis. Other perceived shortcomings of the form are addressed in the Discussion.
+Equation \ref{eq:cobbDoug3} is, of course, the Cobb-Douglas form. Outside of Economics, it would simply be referred to as a (multivariate) power law. Such forms are often good models of observed processes across a wide range of research contexts and disciplines. In Economics, the Cobb-Douglas form was widely used from the 1920s to 1950s on the basis of its good empirical fit, but fell into disrepute thereafter for its perceived lack a theoretical basis. Capalbo and Antle [-@capalbo2015agricultural] offer a succinct introduction to this vast discussion. The forgoing derivation of the Cobb-Douglas form from Axiom 1 in some measure redresses the lack of a theoretical basis. Other perceived shortcomings of the form are briefly addressed in the Discussion.
 <!-- In equation \ref{eq:cobbDoug2}, the shorthand $y_0 = e^{\alpha_0}$ has also been introduced. The scale factor $y_0$ is the yield when inputs $\mathbf{x}$ are set to 1 and the control variables $\mathbf{k}$ are also set to 1. It may thus be interpreted as the "unit input yield" or "unit input ceteris paribus yield", to be more precise. "Basal yield" is henceforth used as a shorthand. -->
 <!-- Many economists prefer to call $y_0$ the "total factor productivity" (TFP). This is because $y_0$ equals, in some sense, the "yield per unit all inputs" when it is isolated on one side of the equation. However, the presence of control variables complicates this interpretation. Moreover, TFP implies bizarre and rather useless units of measurement. For example, if the inputs $x_i$ are labor and pesticide, while the control variables $k_i$ are rainfall, temperature, and farmer age, then the TFP $y_0$ has units of kg hectare$^{-1}$ manhour$^{-1}$ liter$^{-1}$ millimeter$^{-1}$ degree Celsius$^{-1}$ years$^{-1}$, each of which is raised to various exponents (the respective elasticities $\alpha_i$ and $\kappa_i$). Because of the exponents, a more accurate name for TFP would be the "technology adjusted total factor productivity". -->
 <!-- Nonetheless, a very mature literature has developed around TFP, and the reader is encouraged to continue thinking of $y_0$ in terms of TFP if that is what they are most comfortable with. The "basal yield" interpretation is merely provided here as an alternative for those of us who wrestle with the idea of TFP or are not yet familiar with it. -->
@@ -303,282 +308,111 @@ Equation \ref{eq:cobbDoug3} is, of course, the Cobb-Douglas form. Outside of Eco
 <!-- Conclusion -->
 <!-- Above I have shown that TFP (equation 2) is measured in units which 1) are virtually impossible to make sense of, and 2) cannot be compared across data sets. I have shown that it is possible to express the residual in straightforward units that are comparable across data sets, but that these are units of land productivity only. The residual may be interpreted as TFP only at the cost of nonsensical units and cross-study incompatibility. A residual with sensible units and comparability, on the other hand, comes at the cost of expressibility only in units of a single factor’s productivity—land in the case of farms, widget factories in the case of firms. -->
 <!-- As mentioned above, this result depends on a definition of small increase as a marginal increase. Other forms result from other definitions of small increase. If small increase is defined as a percentage increase, for example, a functional form involving Lambert's W function results (left as an exercise for the reader). The Cobb-Douglas function is selected from among these two choices on empirical grounds. (The Cobb-Douglas function is famous for how well it fits economic data across many contexts and scales.) -->
+<!-- [# Derivation of the yield envelope from Axiom 2 (net benefit maximization)] -->
 
-# Derivation of the yield envelope from Axiom 2 (net benefit maximization)
+The farm level yield model $y^*$ is then obtained by introducing Axiom 2.
+<!-- \begin{framed} -->
+<!--    \textbf{Axiom 2} \\ Farms apply inputs so as to maximize their net benefit subject to a budget constraint. -->
+<!-- \end{framed} -->
 
-...pardon the remedial...
-
-
-Equation \ref{eq:cobbDoug2} captures yield response to inputs and control variables in accordance with Axiom 1, the law of diminishing marginal returns.
-
-The next step in the theoretical derivation of the partial equilibrium model is based on the assumption that farmers want to maximize their net benefit subject to a budget constraint. (Consumers and firms on the demand side are assumed to be similarly motivated, but the present section focuses on the supply side.)
-
-\begin{framed}
-   \textbf{Axiom 2} \\ Farms, as well as firms and consumers on the demand side, maximize their net benefit subject to a budget constraint.
-\end{framed}
-
-Axiom 2 implies that farmers apply inputs such that revenue is maximized, given a budget constraint. The problem of finding the optimal input quantities that achieve this goal can be formalized as follows.
+Formally, Axiom 2 may be written
 
 \begin{equation}
-\max_{\mathbf{x}} Py \:\:\: s.t. \:\:\: C \leq B
+y^* = y(\mathbf{x}^*; g_0, \mathbf{k}, \boldsymbol{\alpha}, \boldsymbol{\kappa}) \:;\:\: x^* = \text{argmax}_{\mathbf{x}}(P y - \lambda(C - B))
 \end{equation}
 
-where $P$ is the output price, $B$ is the farmer's budget, $C$ is the cost function, defined
+Where $P$ is the output price, $B$ is the farm budget, $C$ is the cost function, defined
 
 \begin{equation}
-C = \mathbf{w} \cdot \mathbf{x}
+C = \mathbf{w} ' \mathbf{x}
 \end{equation}
 
-and $\mathbf{w}$ is the vector of input prices corresponding to each input in $\mathbf{x}$.
+and $\mathbf{w}$ is the vector of input prices corresponding to each element in the input vector $\mathbf{x}$.
 
-The Lagrangian is then
-
-\begin{equation}
-\mathcal{L} = Py - \lambda (C - B)
-\end{equation}
-
-Where $\lambda$ is the farm budget shadow price, that is, the marginal benefit to the farm of a marginal increase in budget.
+The solution for a given input $x_j^*$ works out to
 
 \begin{equation}
-\frac{\partial \mathcal{L}}{\partial B} = \lambda
-\end{equation}
-
-The first order conditions for a maximum work out to:
-
-\begin{equation}
-\nabla_{\mathbf{x}} \mathcal{L} = Py D(\mathbf{x})^{-1} \boldsymbol{\alpha} - \lambda \mathbf{x} = \mathbf{0}
-\label{eq:eqFOC}
-\end{equation}
-
-Where the $\mathbf{0}$ indicates a vector of zeroes equal to the length of $\mathbf{x}$. This is then solved for the optimal input levels $\mathbf{x}^*$.
-
-\begin{equation}
-\mathbf{x}^* = P y^* / \lambda D(\mathbf{w})^{-1} \boldsymbol{\alpha}
-\end{equation}
-
-Or, alternatively,
-
-\begin{equation}
-x_v^* = \frac{P y^* \alpha_v}{\lambda w_v}
+x_j^* = \frac{P y^* \alpha_j}{\lambda w_j}
 \label{eq:inputDem1}
 \end{equation}
 
-The optimal yield, or yield envelope, or economic yield, $y^*$ is then found by evaluating $y$ at $\mathbf{x}^*$.
+With optimal yield then following as
 
 \begin{equation}
-y^* = y(\mathbf{x}^*; y_0, \boldsymbol{\alpha}, \mathbf{k}, \boldsymbol{\kappa}) = y_0 \prod_i \left(\frac{P y^* \alpha_i}{\lambda w_i} \right)^{\alpha_i} \prod_i k_i^{\kappa_i}
-\end{equation}
-
-Taking logs and factoring out $\ln (P y^*/\lambda)$,
-
-\begin{equation}
-\ln(y^*) = \alpha_0 + \ln \left(\frac{P y^*}{\lambda} \right) \sum_i \alpha_i + \sum_i \alpha_i \ln \left(\frac{\alpha_i}{w_i} \right) + \sum_i \kappa_i \ln(k_i) 
-\end{equation}
-
-But note that, by Euler's homogenous function theorem,
-
-\begin{equation}
-\sum_i \alpha_i = h
-\end{equation}
-
-where $h$ is the degree of homogeneity of $y$. Hence the previous equation can be rewritten
-
-\begin{equation}
-\ln(y^*) = \alpha_0 + h \ln \left(\frac{P y^*}{\lambda} \right) + \sum_i \alpha_i \ln \left(\frac{\alpha_i}{w_i} \right) + \sum_i \kappa_i \ln(k_i) 
-\label{eq:eulerInvokd}
-\end{equation}
-
-Solving for $\ln(y^*)$,
-
-\begin{equation}
-\ln(y^*) = \frac{1}{1 - h} \left(\alpha_0 + h \ln \left(\frac{P}{\lambda} \right) + \sum_i \alpha_i \ln \left(\frac{\alpha_i}{w_i} \right) + \sum_i \kappa_i \ln(k_i) \right)
-\end{equation}
-
-And taking the exponential function of this then gives the yield envelope.
-
-\begin{equation}
-y^* =  \left(y_0 \left(\frac{P}{\lambda}\right)^h \prod_i \left(\frac{\alpha_i}{w_i}\right)^{\alpha_i} \prod_i k_i^{\kappa_i} \right)^{\frac{1}{1 - h}}
+y^* =  \left(y_0 \prod_i \left(\frac{\alpha_i}{w_i}\right)^{\alpha_i} \prod_i k_i^{\kappa_i} \right)^{\frac{1}{1 - h}} \left(\frac{P}{\lambda}\right)^{\frac{h}{1 - h}}
 \label{eq:YdEnv1}
 \end{equation}
 
-Economic yield is thus a function of:
+Details of the derivation are omitted, as they can be found in any standard, rudimentary treatment of production functions (for e.g., see Heathfield and Wibe [-@heathfield1987introduction]). The second order conditions, likewise omitted, indicate that net benefit is maximized only over the domain $h \in (0, 1)$. Axioms 1 and 2, as formalized above, are thus inconsistent with either constant or increasing returns to scale.
 
-1) Input prices $\mathbf{w}$
-
-2) The output price $P$
-
-3) The input elasticities of yield $\boldsymbol{\alpha}$ (i.e. the technology)
-
-4) The control variables $\mathbf{k}$
-
-5) Their control variable elasticities of yield $\boldsymbol{\kappa}$
-
-6) The farm budget shadow price $\lambda$
-
-To reduce notational clutter, the yield envelope is henceforth rewritten as follows.
+To reduce notational clutter, $y^*$ is henceforth rewritten as follows.
 
 \begin{equation}
-y^* = \left(y_0 \left(\frac{P}{\lambda} \right)^h \frac{\beta_x \beta_k}{\beta_w} \right)^{\frac{1}{1 - h}}
+y^* = (g_0 \beta)^{\frac{1}{1 - h}} \left( \frac{P}{\lambda} \right)^{\frac{h}{1 - h}}
 \label{eq:YdEnvCompact}
 \end{equation}
 
-Where the following shorthands have been introduced:
-<!-- r &= \frac{P^h}{\beta_w} \:\:\:; \:\: \beta_w = \prod_i w_i^{\alpha_i} \\ -->
+Where
 
 \begin{equation}
 \begin{split}
+\beta &= \frac{\beta_x \beta_k}{\beta_w}
 \beta_w &= \prod_i {w_i}^{\alpha_i} \\
 \beta_x &= \prod_i {\alpha_i}^{\alpha_i} \\
 \beta_k &= \prod_i {k_i}^{\kappa_i}
 \end{split}
 \end{equation}
 
-The steps followed above more or less align with the standard derivation of the Cobb-Douglas yield envelope found in textbooks (for e.g. Heathfield and Wibe [-@heathfield1987introduction]), with the important exception of the invocation of Euler's homogeneous function theorem in equation \ref{eq:eulerInvokd}.
-
-The alternative form in terms of cost... the "yield-input isometry"
-
-Note that the cost minimization problem gives the same result...
-
-## The degree of homogeneity and output price elasticity of yield \label{sec:degHomog}
-
-[The costStar^h  formulation of yield envelope]
-
-[Put "certain useful elasticities/expressions" here maybe]
-
-By invoking Euler's theorem in the derivation of the yield envelope above, the yield degree of homogeneity $h$ is made explicit in the yield envelope; and this lays bare some interesting critical properties. Note, first of all, that the yield envelope is undefined at $h = 1$. The theory constructed so far from Axioms 1 and 2 thus contradicts the deeply entrenched surmise among economists, going back at least to Hicks [-@hicks1963theory], and later cemented into place by Solow [-@solow1957technical], that yield functions are homogeneous of degree 1.
-
-The appearance of $h$ in the yield envelope also offers an instructive expression for the output price elasticity of yield,
+...the farm output price elasticity of yield.
 
 \begin{equation}
 \frac{\partial \ln(y^*)}{\partial \ln(P)} = \frac{h}{1 - h}
 \label{eq:PelastYstar}
 \end{equation}
 
-Here another Axiom comes into play.
-
-\begin{framed}
-   \textbf{Axiom 3} \\ Supply curves are positively sloped. $\left( \frac{\partial \ln(y^*)}{\partial \ln(P)} > 0 \right)$ \\
-\end{framed}
-
-From equation \ref{eq:PelastYstar}, it is clear that Axiom 3 imposes the following domain on $h$.
-
-\begin{equation}
-h \in (0, 1)
-\end{equation}
-
-Farms are thus limited to decreasing returns to scale, since increasing returns to scale ($h > 1$) imply a negatively sloped supply curve, in violation of Axiom 3, and since the yield envelope is undefined at constant returns to scale ($h = 1$).
-
-In section \ref{sec:PDfunP}, circumstances are explored under which increasing returns to scale are possible. However, these circumstances generally apply to firms---mills and factories, for example---and not to farms.
-
-The domain of $h$ derived above in turn implies the following bounds on the price elasticity of yield.
+Textbook treatments do not always point out...
 
 \begin{equation}
 \frac{\partial \ln(y^*)}{\partial \ln(P)} \in (0, \infty)
 \end{equation}
-<!-- Note, in passing, that the input price elasticity of yield likewise bears the expected sign only under decreasing returns to scale. -->
 
-<!-- \begin{equation} -->
-<!-- \frac{\partial \ln(y^*)}{\partial \ln(w_i)} = \frac{-\alpha_v}{1 - h} -->
-<!-- \end{equation} -->
-
-<!-- With domain -->
-
-<!-- \begin{equation} -->
-<!-- \frac{\partial \ln(y^*)}{\partial \ln(w_v)} \in (-\infty, -\alpha_v) -->
-<!-- \end{equation} -->
-
-The yield envelope derived in equation \ref{eq:YdEnvCompact} implies that the farm supply curve^["Farm supply curve" is used as a shorthand for the "yield envelope as a function of price $P$, with all other variables held constant".] is a power law---or, in economics jargon, a constant elasticity of supply curve. This becomes more evident if the yield envelope is rewritten in the following compact form.
-
-\begin{equation}
-y^* = t_S P^{\eta(P, y^*)}
-\end{equation}
-
-Where
-
-\begin{equation}
-t_S = \left(y_0 \frac{\beta_x \beta_k}{\lambda^h \beta_w} \right)^{\frac{1}{1 - h}}
-\end{equation}
-
-And $\eta(P, y^*)$ is the price elasticity of yield defined in equation \ref{eq:PelastYstar}.
-
-<!-- Both the scale parameter $t$ and exponent $\eta(P, y^*)$ depend critically upon the degree of homogeneity. -->
-The output price elasticity of yield implies that the farm supply curve is elastic for $h \in (1 / 2 , 1)$, and inelastic for $h \in (0, 1 / 2)$, and linear with slope $t_S \bigr|_{h = 1 / 2}$ when $h = 1 / 2$.
-
-This is important information. This means that (insofar as Axioms 1-3 are true) for a given increase in output price, the supply response in a population of farms with inefficient input elasticities (such that $h < 1 / 2$) will be less than proportionate to the increase in price. In a population of relatively input-efficient farms (such that $h > 1 / 2$), on the other hand, the supply response will be more than proportionate to the increase in price.
-
-The farm supply curve approaches perfect inelasticity as $h$ approaches $0$, and approaches (but never reaches) perfect elasticity as $h$ approaches $1$. The scale factor $t_S$ approaches $0$ as $h$ approaches $0$, and tends toward infinity as $h$ approaches $1$.
-
-## Input demand \label{sec:inDem}
-
-Using equation \ref{eq:YdEnvCompact} to substitute for $y^*$ in input demand (equation \ref{eq:inputDem1}) gives the following expression for input demand as a function of basal yield, prices, input elasticities, the budget shadow price, and control variables together with their respective elasticities.
-
-\begin{equation}
-x_v^* = \frac{\alpha_v}{w_v} \left( y_0 \frac{P \beta_x \beta_k}{\lambda \beta_w} \right)^{\frac{1}{1 - h}}
-\label{eq:inputDem2}
-\end{equation}
-
-Note that input demand, like optimal yield, is undefined at $h = 1$. The own price elasticity of input demand is
-
-\begin{equation}
-\begin{split}
-\frac{\partial \ln(x_v^*)}{\partial \ln(w_v)} &= - 1 - \frac{1}{1 - h} \frac{\partial \ln(\beta_w)}{\partial \ln(w_v)} \\
-&= \frac{-\alpha_v}{1 - h} - 1
-\end{split}
-\label{eq:ownPriceElas}
-\end{equation}
-
-Here another Axiom comes into play.
-
-\begin{framed}
-   \textbf{Axiom 4} \\ Demand curves are negatively sloped. $\left( \frac{\partial \ln(x_v^*)}{\partial \ln(w_v)} < 0 \:\: \forall v \right)$
-\end{framed}
-
-From equation \ref{eq:ownPriceElas}, it is clear that Axiom 4 imposes the following domain on $h$.
-
-\begin{equation}
-h \in (-\infty, 1 + \underline{\alpha}) \:\:; \:\:\: \underline{\alpha} = \min(\boldsymbol{\alpha})
-\end{equation}
-
-Considering that $\underline{\alpha} > 0$, the effective domain of $h$ satisfying both Axioms 3 and 4 (upward sloping supply curves and downward sloping demand curves) is
+which in turn implies strictly decreasing returns to scale.
 
 \begin{equation}
 h \in (0, 1)
 \end{equation}
 
-The effective domain of $h$ in turn implies the following bounds on the own price elasticity of input demand.
+Positively sloped supply curves also require decreasing returns to scale.
+
+...some instructive, compact expressions which do not appear or are glossed over in the standard treatments. For example, the farm budget shadow price $\lambda$ can be written
 
 \begin{equation}
-\frac{\partial \ln(x_v^*)}{\partial \ln(w_v)} \in (\infty, -1)
+\lambda = \frac{R^*}{C^*} h \:\:;\:\:\: C^* = \mathbf{w} ' \mathbf{x}^* \:\:\: R^* = P y^*
+\label{eq:lambda}
 \end{equation}
 
-The input demand curve is thus always elastic, such that the increase in farm level demand resulting from a decrease in the input price is always more than proportionate to the fall in price.
-
-Note that the cross price elasticity of input demand also bears the expected sign under the effective domain of $h$,
+which, when combined with Equation \ref{eq:inputDem1}, then gives
 
 \begin{equation}
-\frac{\partial \ln(x_v^*)}{\partial \ln(w_{j \neq v})} = \frac{-\alpha_j}{1 - h}
-\label{eq:CrossPriceElas}
+\frac{x_j^* w_j}{C^*} = \frac{\alpha_j}{h}
 \end{equation}
 
-As does the output price elasticity of input demand,
+which tells us that rational cost shares equal their respective "technology shares".
+
+Combining Equations \ref{eq:lambda} and \ref{eq:YdEnvCompact} gives an alternative expression for $y^*$,
 
 \begin{equation}
-\frac{\partial \ln(x_v^*)}{\partial \ln(P)} = \frac{1}{1 - h}
+y^* = y_0 \beta \left( \frac{C^*}{h} \right)^h
 \end{equation}
 
-Equation \ref{eq:inputDem2} implies that the input demand curve^["Input demand curve" is used as a shorthand for the "optimal input level as a function of its price, with all other variables held constant".] is a power law. This is more evident when expressed in the following compact form.
+which in turn gives an alternative expression for $h$
 
 \begin{equation}
-x_v^* = z w_v^{\eta(w_v, x_v^*)}
+\frac{\partial \ln(y^*)}{\partial \ln(C^*)} = h
 \end{equation}
 
-Where
+...isometry with axiom 1?...
 
-\begin{equation}
-z = \left(y_0 \frac{\beta_x \beta_k}{\lambda^h \tilde{\beta}_w} \right)^{\frac{1}{1 - h}} \:\:;\:\:\: \tilde{\beta}_w = w_v^{-\alpha_v}\beta_w
-\end{equation}
-
-And $\eta(w_v, x_v^*)$ is the own price elasticity of input demand, derived in equation \ref{eq:ownPriceElas}.
 
 ## Domains of the budget shadow price, economic yield, and input demand
 
@@ -636,29 +470,6 @@ From equation \ref{eq:cStar} it follows that the marginal cost of output is
 \end{equation}
 
 Under Axioms 1 and 2, then, the marginal cost of output is constant with respect to output. This agrees with empirical evidence [@lavoie2014post]. It also contradicts the theory of the firm presented in most microeconomic textbooks, which assumes (with no evidentiary basis) increasing marginal cost as output rises.
-
-## The farm net benefit envelope
-
-The optimized objective function or "net benefit envelope" $\mathcal{L}^*$ is just the objective function $\mathcal{L}$ evaluated at the optimal yield $y^*$.
-
-\begin{equation}
-\mathcal{L}^* = \mathcal{L} \bigr|_{y = y^*} = P y^* - \lambda (C^* - B)
-\end{equation}
-
-Note that, applying the handy relation in equation \ref{eq:lambdaHandy}, the net benefit envelope can be rewritten without the optimal expenditure term $C^*$.
-
-\begin{equation}
-\mathcal{L}^* = (1 - h) P y^* + \lambda B
-\label{eq:NBenv}
-\end{equation}
-
-
-
-
-
-
-
-
 
 ## Aggregate supply \label{sec:aggSupply}
 
@@ -1083,3 +894,245 @@ And substituting this in for $m_u$ in the previous expression gives
 <!-- By which it follows that the -->
 
 
+<!-- Taking logs and factoring out $\ln (P y^*/\lambda)$, -->
+
+<!-- \begin{equation} -->
+<!-- \ln(y^*) = \alpha_0 + \ln \left(\frac{P y^*}{\lambda} \right) \sum_i \alpha_i + \sum_i \alpha_i \ln \left(\frac{\alpha_i}{w_i} \right) + \sum_i \kappa_i \ln(k_i) -->
+<!-- \end{equation} -->
+
+<!-- But note that, by Euler's homogenous function theorem, -->
+
+<!-- \begin{equation} -->
+<!-- \sum_i \alpha_i = h -->
+<!-- \end{equation} -->
+
+<!-- where $h$ is the degree of homogeneity of $y$. -->
+
+<!-- \begin{equation} -->
+<!-- y^* =  \left(y_0 \left(\frac{P}{\lambda}\right)^h \prod_i \left(\frac{\alpha_i}{w_i}\right)^{\alpha_i} \prod_i k_i^{\kappa_i} \right)^{\frac{1}{1 - h}} -->
+<!-- \label{eq:YdEnv1} -->
+<!-- \end{equation} -->
+
+
+
+
+
+<!-- The Lagrangian is then -->
+
+<!-- \begin{equation} -->
+<!-- \mathcal{L} = Py - \lambda (C - B) -->
+<!-- \end{equation} -->
+
+<!-- Where $\lambda$ is the farm budget shadow price, that is, the marginal benefit to the farm of a marginal increase in budget. -->
+
+<!-- \begin{equation} -->
+<!-- \frac{\partial \mathcal{L}}{\partial B} = \lambda -->
+<!-- \end{equation} -->
+
+<!-- The first order conditions for a maximum work out to: -->
+
+<!-- \begin{equation} -->
+<!-- \nabla_{\mathbf{x}} \mathcal{L} = Py D(\mathbf{x})^{-1} \boldsymbol{\alpha} - \lambda \mathbf{x} = \mathbf{0} -->
+<!-- \label{eq:eqFOC} -->
+<!-- \end{equation} -->
+
+<!-- Where the $\mathbf{0}$ indicates a vector of zeroes equal to the length of $\mathbf{x}$. This is then solved for the optimal input levels $\mathbf{x}^*$. -->
+
+<!-- \begin{equation} -->
+<!-- \mathbf{x}^* = P y^* / \lambda D(\mathbf{w})^{-1} \boldsymbol{\alpha} -->
+<!-- \end{equation} -->
+
+<!-- Or, alternatively, -->
+
+<!-- \begin{equation} -->
+<!-- x_v^* = \frac{P y^* \alpha_v}{\lambda w_v} -->
+<!-- \label{eq:inputDem1} -->
+<!-- \end{equation} -->
+
+<!-- The optimal yield, or yield envelope, or economic yield, $y^*$ is then found by evaluating $y$ at $\mathbf{x}^*$. -->
+
+<!-- \begin{equation} -->
+<!-- y^* = y(\mathbf{x}^*; y_0, \boldsymbol{\alpha}, \mathbf{k}, \boldsymbol{\kappa}) = y_0 \prod_i \left(\frac{P y^* \alpha_i}{\lambda w_i} \right)^{\alpha_i} \prod_i k_i^{\kappa_i} -->
+<!-- \end{equation} -->
+
+<!-- Taking logs and factoring out $\ln (P y^*/\lambda)$, -->
+
+<!-- \begin{equation} -->
+<!-- \ln(y^*) = \alpha_0 + \ln \left(\frac{P y^*}{\lambda} \right) \sum_i \alpha_i + \sum_i \alpha_i \ln \left(\frac{\alpha_i}{w_i} \right) + \sum_i \kappa_i \ln(k_i)  -->
+<!-- \end{equation} -->
+
+<!-- But note that, by Euler's homogenous function theorem, -->
+
+<!-- \begin{equation} -->
+<!-- \sum_i \alpha_i = h -->
+<!-- \end{equation} -->
+
+<!-- where $h$ is the degree of homogeneity of $y$. Hence the previous equation can be rewritten -->
+
+<!-- \begin{equation} -->
+<!-- \ln(y^*) = \alpha_0 + h \ln \left(\frac{P y^*}{\lambda} \right) + \sum_i \alpha_i \ln \left(\frac{\alpha_i}{w_i} \right) + \sum_i \kappa_i \ln(k_i)  -->
+<!-- \label{eq:eulerInvokd} -->
+<!-- \end{equation} -->
+
+<!-- Solving for $\ln(y^*)$, -->
+
+<!-- \begin{equation} -->
+<!-- \ln(y^*) = \frac{1}{1 - h} \left(\alpha_0 + h \ln \left(\frac{P}{\lambda} \right) + \sum_i \alpha_i \ln \left(\frac{\alpha_i}{w_i} \right) + \sum_i \kappa_i \ln(k_i) \right) -->
+<!-- \end{equation} -->
+
+<!-- And taking the exponential function of this then gives the yield envelope. -->
+
+<!-- \begin{equation} -->
+<!-- y^* =  \left(y_0 \left(\frac{P}{\lambda}\right)^h \prod_i \left(\frac{\alpha_i}{w_i}\right)^{\alpha_i} \prod_i k_i^{\kappa_i} \right)^{\frac{1}{1 - h}} -->
+<!-- \label{eq:YdEnv1} -->
+<!-- \end{equation} -->
+
+<!-- Economic yield is thus a function of: -->
+
+<!-- 1) Input prices $\mathbf{w}$ -->
+
+<!-- 2) The output price $P$ -->
+
+<!-- 3) The input elasticities of yield $\boldsymbol{\alpha}$ (i.e. the technology) -->
+
+<!-- 4) The control variables $\mathbf{k}$ -->
+
+<!-- 5) Their control variable elasticities of yield $\boldsymbol{\kappa}$ -->
+
+<!-- 6) The farm budget shadow price $\lambda$ -->
+<!-- The steps followed above more or less align with the standard derivation of the Cobb-Douglas yield envelope found in textbooks , with the important exception of the invocation of Euler's homogeneous function theorem in equation \ref{eq:eulerInvokd}. -->
+
+
+
+<!-- \begin{equation} -->
+<!-- \frac{\partial \ln(y^*)}{\partial \ln(w_i)} = \frac{-\alpha_v}{1 - h} -->
+<!-- \end{equation} -->
+
+<!-- With domain -->
+
+<!-- \begin{equation} -->
+<!-- \frac{\partial \ln(y^*)}{\partial \ln(w_v)} \in (-\infty, -\alpha_v) -->
+<!-- \end{equation} -->
+
+<!-- The yield envelope derived in equation \ref{eq:YdEnvCompact} implies that the farm supply curve^["Farm supply curve" is used as a shorthand for the "yield envelope as a function of price $P$, with all other variables held constant".] is a power law---or, in economics jargon, a constant elasticity of supply curve. This becomes more evident if the yield envelope is rewritten in the following compact form. -->
+
+<!-- \begin{equation} -->
+<!-- y^* = t_S P^{\eta(P, y^*)} -->
+<!-- \end{equation} -->
+
+<!-- Where -->
+
+<!-- \begin{equation} -->
+<!-- t_S = \left(y_0 \frac{\beta_x \beta_k}{\lambda^h \beta_w} \right)^{\frac{1}{1 - h}} -->
+<!-- \end{equation} -->
+
+<!-- And $\eta(P, y^*)$ is the price elasticity of yield defined in equation \ref{eq:PelastYstar}. -->
+
+<!-- <!-- Both the scale parameter $t$ and exponent $\eta(P, y^*)$ depend critically upon the degree of homogeneity. --> -->
+<!-- The output price elasticity of yield implies that the farm supply curve is elastic for $h \in (1 / 2 , 1)$, and inelastic for $h \in (0, 1 / 2)$, and linear with slope $t_S \bigr|_{h = 1 / 2}$ when $h = 1 / 2$. -->
+
+<!-- This is important information. This means that (insofar as Axioms 1-3 are true) for a given increase in output price, the supply response in a population of farms with inefficient input elasticities (such that $h < 1 / 2$) will be less than proportionate to the increase in price. In a population of relatively input-efficient farms (such that $h > 1 / 2$), on the other hand, the supply response will be more than proportionate to the increase in price. -->
+
+<!-- The farm supply curve approaches perfect inelasticity as $h$ approaches $0$, and approaches (but never reaches) perfect elasticity as $h$ approaches $1$. The scale factor $t_S$ approaches $0$ as $h$ approaches $0$, and tends toward infinity as $h$ approaches $1$. -->
+
+
+
+<!-- ## The degree of homogeneity and output price elasticity of yield \label{sec:degHomog} -->
+
+<!-- [The costStar^h  formulation of yield envelope] -->
+
+<!-- [Put "certain useful elasticities/expressions" here maybe] -->
+
+<!-- By invoking Euler's theorem in the derivation of the yield envelope above, the yield degree of homogeneity $h$ is made explicit in the yield envelope; and this lays bare some interesting critical properties. Note, first of all, that the yield envelope is undefined at $h = 1$. The theory constructed so far from Axioms 1 and 2 thus contradicts the deeply entrenched surmise among economists, going back at least to Hicks [-@hicks1963theory], and later cemented into place by Solow [-@solow1957technical], that yield functions are homogeneous of degree 1. -->
+
+<!-- In section \ref{sec:PDfunP}, circumstances are explored under which increasing returns to scale are possible. However, these circumstances generally apply to firms---mills and factories, for example---and not to farms. -->
+
+<!-- The domain of $h$ derived above in turn implies the following bounds on the price elasticity of yield. -->
+<!-- <!-- Note, in passing, that the input price elasticity of yield likewise bears the expected sign only under decreasing returns to scale. -->
+
+<!-- ## Input demand \label{sec:inDem} -->
+
+<!-- Using equation \ref{eq:YdEnvCompact} to substitute for $y^*$ in input demand (equation \ref{eq:inputDem1}) gives the following expression for input demand as a function of basal yield, prices, input elasticities, the budget shadow price, and control variables together with their respective elasticities. -->
+
+<!-- \begin{equation} -->
+<!-- x_v^* = \frac{\alpha_v}{w_v} \left( y_0 \frac{P \beta_x \beta_k}{\lambda \beta_w} \right)^{\frac{1}{1 - h}} -->
+<!-- \label{eq:inputDem2} -->
+<!-- \end{equation} -->
+
+<!-- Note that input demand, like optimal yield, is undefined at $h = 1$. The own price elasticity of input demand is -->
+
+<!-- \begin{equation} -->
+<!-- \begin{split} -->
+<!-- \frac{\partial \ln(x_v^*)}{\partial \ln(w_v)} &= - 1 - \frac{1}{1 - h} \frac{\partial \ln(\beta_w)}{\partial \ln(w_v)} \\ -->
+<!-- &= \frac{-\alpha_v}{1 - h} - 1 -->
+<!-- \end{split} -->
+<!-- \label{eq:ownPriceElas} -->
+<!-- \end{equation} -->
+
+<!-- Here another Axiom comes into play. -->
+
+<!-- \begin{framed} -->
+<!--    \textbf{Axiom 4} \\ Demand curves are negatively sloped. $\left( \frac{\partial \ln(x_v^*)}{\partial \ln(w_v)} < 0 \:\: \forall v \right)$ -->
+<!-- \end{framed} -->
+
+<!-- From equation \ref{eq:ownPriceElas}, it is clear that Axiom 4 imposes the following domain on $h$. -->
+
+<!-- \begin{equation} -->
+<!-- h \in (-\infty, 1 + \underline{\alpha}) \:\:; \:\:\: \underline{\alpha} = \min(\boldsymbol{\alpha}) -->
+<!-- \end{equation} -->
+
+<!-- Considering that $\underline{\alpha} > 0$, the effective domain of $h$ satisfying both Axioms 3 and 4 (upward sloping supply curves and downward sloping demand curves) is -->
+
+<!-- \begin{equation} -->
+<!-- h \in (0, 1) -->
+<!-- \end{equation} -->
+
+<!-- The effective domain of $h$ in turn implies the following bounds on the own price elasticity of input demand. -->
+
+<!-- \begin{equation} -->
+<!-- \frac{\partial \ln(x_v^*)}{\partial \ln(w_v)} \in (\infty, -1) -->
+<!-- \end{equation} -->
+
+<!-- The input demand curve is thus always elastic, such that the increase in farm level demand resulting from a decrease in the input price is always more than proportionate to the fall in price. -->
+
+<!-- Note that the cross price elasticity of input demand also bears the expected sign under the effective domain of $h$, -->
+
+<!-- \begin{equation} -->
+<!-- \frac{\partial \ln(x_v^*)}{\partial \ln(w_{j \neq v})} = \frac{-\alpha_j}{1 - h} -->
+<!-- \label{eq:CrossPriceElas} -->
+<!-- \end{equation} -->
+
+<!-- As does the output price elasticity of input demand, -->
+
+<!-- \begin{equation} -->
+<!-- \frac{\partial \ln(x_v^*)}{\partial \ln(P)} = \frac{1}{1 - h} -->
+<!-- \end{equation} -->
+
+<!-- Equation \ref{eq:inputDem2} implies that the input demand curve^["Input demand curve" is used as a shorthand for the "optimal input level as a function of its price, with all other variables held constant".] is a power law. This is more evident when expressed in the following compact form. -->
+
+<!-- \begin{equation} -->
+<!-- x_v^* = z w_v^{\eta(w_v, x_v^*)} -->
+<!-- \end{equation} -->
+
+<!-- Where -->
+
+<!-- \begin{equation} -->
+<!-- z = \left(y_0 \frac{\beta_x \beta_k}{\lambda^h \tilde{\beta}_w} \right)^{\frac{1}{1 - h}} \:\:;\:\:\: \tilde{\beta}_w = w_v^{-\alpha_v}\beta_w -->
+<!-- \end{equation} -->
+
+<!-- And $\eta(w_v, x_v^*)$ is the own price elasticity of input demand, derived in equation \ref{eq:ownPriceElas}. -->
+
+## The farm net benefit envelope
+
+The optimized objective function or "net benefit envelope" $\mathcal{L}^*$ is just the objective function $\mathcal{L}$ evaluated at the optimal yield $y^*$.
+
+\begin{equation}
+\mathcal{L}^* = \mathcal{L} \bigr|_{y = y^*} = P y^* - \lambda (C^* - B)
+\end{equation}
+
+Note that, applying the handy relation in equation \ref{eq:lambdaHandy}, the net benefit envelope can be rewritten without the optimal expenditure term $C^*$.
+
+\begin{equation}
+\mathcal{L}^* = (1 - h) P y^* + \lambda B
+\label{eq:NBenv}
+\end{equation}
