@@ -42,37 +42,47 @@ Q(P) = \int_{\underline{q}^*}^{\bar{q}^*} q^* \rho(q^*) \: dq^*
 
 then it is not readily apparent from expedient specifications of $Q$ what the functions $q^*$ and $\rho(q^*)$ are, nor whether they are plausible vis-a-vis microeconomic theory and empirical evidence. Critically, expedient specifications of $Q$ also gloss over farm entry and exit---i.e. the domain of profitable production $(\underline{q}^*, \bar{q}^*)$---such that it is not possible to decompose changes in aggregate supply into yield and employment (farm entry/exit) components.
 
-The parameterization of expedient specifications also tends to be highly abstract, with no clear mapping to the relevant measurable, real world phenomena---i.e. technology, input prices, agroclimatic conditions, demographic variables, etc. This leaves very little basis upon which to assess the plausibility of different parameterizations of a given exogenous shock, or to attribute modeled impacts to the exogenous shock with confidence (the attribution problem) [mention attrib prob here with refs if going short form]. Some expedient forms also introduce awkward artifacts---such as the possibility of negative supply quantities and/or of farms producing for free, in the case of the linear aggregate supply curve---which further limit the model's explanatory power. [add extra bit about local approximation if going short form]
+The parameterization of expedient specifications also tends to be highly abstract, with no clear mapping to the relevant measurable, real world phenomena---i.e. technology, input prices, agroclimatic conditions, demographic variables, etc. This leaves very little basis upon which to assess the plausibility of different parameterizations of a given exogenous shock, or to attribute modeled impacts to the exogenous shock with confidence (the attribution problem). Some expedient forms also introduce awkward artifacts---such as the possibility of negative supply quantities and/or of farms producing for free, in the case of the linear aggregate supply curve---which further limit the model's explanatory power.
+[...holding multiple axioms without knowing if they perhaps contradict each other...]
 <!-- [, while adding more layers of methodological wrangling/theoretical opacity.] -->
 <!-- [which in turn invites misuse and abuse of the model, and otherwise complicates the defense of any modeling results.] -->
 <!-- [the mathematical expression no different from the same statement in literary form] -->
 <!-- [Meanwhile, the growing disparity between current research funding levels and the levels that would seem to be justified by expediently specified ex-ante impact assessments suggests that donors have stopped taking the results of such models seriously...] -->
 
-To be fair, this is, in some sense, the whole point of expedient specifications of aggregate supply and demand: A degree of explanatory power is deliberately sacrificed in exchange for computational expedience. And, judging by the thousands of published ex-ante impact assessments of agricultural research that specify linear aggregate supply and demand functions, the modicum of explanatory power retained by such specifications appears, prima facie, to be sufficient for most modeling purposes. However, the mere number of publications may be a misleading indicator of sufficiency. It may reflect, rather, the computational ease of the model, and/or the absence of viable alternatives. Levels of funding for agricultural research have steadily declined from what would be justified by such assessments, indicating that many donors have stopped believing them [@hurley2014re; @hurley2016returns].  This indicates increasingly insufficient ...in terms of providing credible impact assessments.
+To be fair, this is, in some sense, the whole point of expedient specifications of aggregate supply and demand: A degree of explanatory power is deliberately sacrificed in exchange for computational expedience. And the thousands of published ex-ante impact assessments of agricultural research that specify linear aggregate supply and demand functions might seem to suggest that the modicum of explanatory power retained by such specifications is sufficient for most modeling purposes.
 
-There is thus a demand for transparent models...
+However, popularity is a misleading indicator in this regard. It might merely reflect the low cost of implementing the model, and/or the lack of comparably low cost alternatives. Self-interest might also play a role, as the opacity of such models is known to invite misuse and abuse in the form of overstated net benefits [@alston2001attribution; @hurley2014re]. Hurley et al. [@hurley2014re; @hurley2016returns] note a growing "disconnect" between the level of funding for agricultural research and the level of funding that would be justified by such impact assessments, and conclude that donors have stopped believing them.
 
-Here we derive an aggregate supply curve from the following Axioms:
+This is a more telling indicator suggesting that expedient specifications are insufficient for most purposes---i.e. for the purposes of producing accurate, unbiased, credible ex-ante impact assessments. Or, at the very least, it points to a growing, unmet demand for more transparency and plausibility in ex-ante impact assessment.
+
+To meet this demand, below we derive an aggregate supply curve from four Axioms. The derived curve explicitly accounts for farm entry/exit, such that supply response to shocks can be decomposed into yield and participation components. The parameters of the curve have a straightforward interpretation in terms of concrete, measurable phenomena, such that exogenous shocks may be modeled precisely and transparently. The farm participation term is surprisingly instructive, as it is proportionate to the probability that output price will be greater than marginal cost at the time of sale.
+
+-Agrees with Lipton's adoption criterion
+
+The four Axioms are:
 
 1) Diminishing marginal returns
 
-2) Farms maximize their expected net benefit subject to a budget constraint (also known as cost-minimization)
+2) Farms maximize their expected net benefit subject to a budget constraint
+<!-- 3) Supply curves slope upwards -->
+<!-- 4) Demand curves slope downwards -->
 
-3) Supply curves slope upwards
+3) Farms enter production only if it increases their expected net benefit
 
-4) Demand curves slope downwards
+4) Farm production is lognormally distributed
 
-5) Farms enter production only if it increases their expected net benefit
+5) The ratio of output price to marginal cost follows a geometric Brownian motion
 
-6) Farm production is lognormally distributed
+Four other desirable properties---a farm profit function convex in output price, a homogeneous (and thus homothetic) farm production function, upward sloping farm supply curves, and downward sloping farm input demand curves---follow as corollaries, and thus do not have to be imposed as additional Axioms. On the other hand, two somewhat controversial properties also follow: strictly decreasing returns to scale and constant marginal cost. (The latter is well supported empirically [@lavoie2014post], but is still eschewed in the textbooks.)
 
-The derived curve explicitly accounts for farm entry/exit, such that supply response to shocks can be decomposed into yield and area components. The parameters of the curve have a straightforward interpretation in terms of concrete, measurable phenomena, such that exogenous shocks may be modeled precisely and transparently.
+Regardless of one's view on returns to scale and marginal cost curves, the fact that it is possible to disagree with specific theoretical implications, and to trace disagreement back to specific offending Axioms, is a key strength of the derived curve relative to the expediently specified curve. The expedient method, by contrast, does not allow us to know whether we agree with their premises, because there is little clarity as to what those premises are in the first place. admit scrutiny of its premises, which precludes any possibility of knowing whether they are offensive or not.
+
+...The model is of a comparable cost ...  The price paid in tractability is minimal. 
 
 At the end of the derivation, we walk through an illustrative application of the derived curve based on Kenya maize farm data.
 
+In the Discussion...Extensions to aggregate demand/PE analysis...application in min data contexts.
 
-
--Agrees with Lipton's adoption criterion
 
 -all parameters have a clear interpretation in terms of concrete, measurable vars
 
@@ -413,6 +423,7 @@ which in turn gives an alternative expression for $h$
 
 ...isometry with axiom 1?...
 
+...have to get the population mean/sd from the truncated mean/sd...
 
 ## Domains of the budget shadow price, economic yield, and input demand
 
@@ -709,6 +720,8 @@ There are two sources of uncertainty. Price risk ...Marginal cost of production 
 <!-- As $\eta(D)$ is lower, $r^{\eta(D)}$ changes less when $r$ changes. As $\eta(D)$ is higher, movements of $r^{\eta(D)}$ become more pronounced in response to changes in $r$. -->
 
 # Discussion
+
+...Axioms can be formalized differently...intensive versus extensive diminishing marginal returns... or a risk constraint can be introduced in addition to the budget constraint in Axiom 2.  More than a specific functional form, an axiomatic approach... rules are made to be refined and ammended... the aim is to come up with a set of Axioms that generate a game that is worth the candle...
 
 In defense of CobbDoug
 [Mention the good empirical fit and validation tests (input demand, optimal area, etc.) as arguments in favor of C-D]
