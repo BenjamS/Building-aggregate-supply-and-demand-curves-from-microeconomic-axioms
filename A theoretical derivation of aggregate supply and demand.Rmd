@@ -41,9 +41,10 @@ Q(P) = \int_{\underline{q}^*}^{\bar{q}^*} q^* \rho(q^*) \: dq^*
 \end{equation}
 
 then it is not readily apparent from expedient specifications of $Q$ what the functions $q^*$ and $\rho(q^*)$ are, nor whether they are plausible vis-a-vis microeconomic theory and empirical evidence. Critically, expedient specifications of $Q$ also gloss over farm entry and exit---i.e. the domain of profitable production $(\underline{q}^*, \bar{q}^*)$---such that it is not possible to decompose changes in aggregate supply into yield and employment (farm entry/exit) components.
-
-The parameterization of expedient specifications also tends to be highly abstract, with no clear mapping to the relevant measurable, real world phenomena---i.e. technology, input prices, agroclimatic conditions, demographic variables, etc. This leaves very little basis upon which to assess the plausibility of different parameterizations of a given exogenous shock, or to attribute modeled impacts to the exogenous shock with confidence (the attribution problem). Some expedient forms also introduce awkward artifacts---such as the possibility of negative supply quantities and/or of farms producing for free, in the case of the linear aggregate supply curve---which further limit the model's explanatory power.
 [...holding multiple axioms without knowing if they perhaps contradict each other...]
+
+Expedient functional forms are also empirically opaque, in the sense that the parameterization of such forms is highly abstract, with no clear mapping to the relevant measurable, real world phenomena---i.e. technology, input prices, agroclimatic conditions, demographic variables, etc. This leaves very little basis upon which to assess the plausibility of different parameterizations of a given exogenous shock, or to attribute modeled impacts to the exogenous shock with confidence (the attribution problem). Some expedient forms also introduce awkward artifacts---such as the possibility of negative supply quantities and/or of farms producing for free, in the case of the linear aggregate supply curve---which further limit the model's explanatory power.
+adoption
 <!-- [, while adding more layers of methodological wrangling/theoretical opacity.] -->
 <!-- [which in turn invites misuse and abuse of the model, and otherwise complicates the defense of any modeling results.] -->
 <!-- [the mathematical expression no different from the same statement in literary form] -->
@@ -55,11 +56,9 @@ However, popularity is a misleading indicator in this regard. It might merely re
 
 This is a more telling indicator suggesting that expedient specifications are insufficient for most purposes---i.e. for the purposes of producing accurate, unbiased, credible ex-ante impact assessments. Or, at the very least, it points to a growing, unmet demand for more transparency and plausibility in ex-ante impact assessment.
 
-To meet this demand, below we derive an aggregate supply curve from four Axioms. The derived curve explicitly accounts for farm entry/exit, such that supply response to shocks can be decomposed into yield and participation components. The parameters of the curve have a straightforward interpretation in terms of concrete, measurable phenomena, such that exogenous shocks may be modeled precisely and transparently. The farm participation term is surprisingly instructive, as it is proportionate to the probability that output price will be greater than marginal cost at the time of sale.
+To meet this demand, below we derive an aggregate supply curve from five Axioms. The derived curve explicitly accounts for farm entry/exit, such that supply response to shocks can be decomposed into yield and participation components. The term in the function regulating farm entry/exit is surprisingly instructive, as it is proportionate to the probability that output price will be greater than marginal cost at the time of sale. The curve is empirically transparent, i.e. its parameters have a straightforward interpretation in terms of concrete, measurable phenomena, such that exogenous shocks may be modeled precisely and transparently.
 
--Agrees with Lipton's adoption criterion
-
-The four Axioms are:
+The five Axioms are:
 
 1) Diminishing marginal returns
 
@@ -73,66 +72,17 @@ The four Axioms are:
 
 5) The ratio of output price to marginal cost follows a geometric Brownian motion
 
-Four other desirable properties---a farm profit function convex in output price, a homogeneous (and thus homothetic) farm production function, upward sloping farm supply curves, and downward sloping farm input demand curves---follow as corollaries, and thus do not have to be imposed as additional Axioms. On the other hand, two somewhat controversial properties also follow: strictly decreasing returns to scale and constant marginal cost. (The latter is well supported empirically [@lavoie2014post], but is still eschewed in the textbooks.)
+Four other desirable properties---a farm profit function convex in output price, a homogeneous (and thus homothetic) farm production function, upward sloping farm supply curves, and downward sloping farm input demand curves---follow as corollaries, and thus do not have to be imposed as additional Axioms. [The form also agrees with Lipton's theory of technology adoption.]
 
-Regardless of one's view on returns to scale and marginal cost curves, the fact that it is possible to disagree with specific theoretical implications, and to trace disagreement back to specific offending Axioms, is a key strength of the derived curve relative to the expediently specified curve. The expedient method, by contrast, does not allow us to know whether we agree with their premises, because there is little clarity as to what those premises are in the first place. admit scrutiny of its premises, which precludes any possibility of knowing whether they are offensive or not.
+On the other hand, two somewhat controversial corollaries also follow: strictly decreasing returns to scale and constant marginal cost. (The latter is well supported empirically [@lavoie2014post], but is still eschewed in the textbooks.) Regardless of one's view on returns to scale and marginal cost curves, the very fact that it is possible to disagree with specific corollaries, and to trace the disagreement back to specific Axioms, underscores the theoretic transparency of the derived curve. The theoretic opacity of the expedient approach, by contrast, it is not even possible to know if one agrees or disagrees with the premises, since there is little clarity as to what those premises are in the first place. [Moreover, note that the Axioms themselves are not controversial. If they result in a controversial corollary, then this is invitation to reflect upon whether trying to have their cake and eat it too]
+<!-- limits the possibility of knowing whether the implied farm production function is homogeneous, much less the degree of homogeneity or shape of the marginal cost curve. In general, it  -->
 
-...The model is of a comparable cost ...  The price paid in tractability is minimal. 
-
-At the end of the derivation, we walk through an illustrative application of the derived curve based on Kenya maize farm data.
-
-In the Discussion...Extensions to aggregate demand/PE analysis...application in min data contexts.
-
-
--all parameters have a clear interpretation in terms of concrete, measurable vars
-
--Can examine questions of employment, tech induced shift,...
-
--elasticity decomposed into employment and tech components
-
--result: axioms 1+2 -> production is undefined at h=1, constant returns to scale not possible. axioms 1+2+3 -> only decreasing returns to scale possible.
-
--sketch out extension to aggregate demand curves and PE analysis
-
-
-
-
-...expedient forms are considered unavoidable because...characterize the alternative, a theoretical derivation, as an impossible task [a fool's errand?]...
- 
-
-In the name of expedience, then, many methodological headaches are accumulated. At some point the headaches outweigh the expedience   Difficult to defend and impossible to account for farm entry and exit. disentangle impact from model artifact...difficult to tell whether the result is due to exogenous shock, or to artifacts of the model  ...
-
-
-One is free to argue that the expedient approach is not intended to be so rigorous... for purposes of stakeholder discussions don't need to get so complex...Well, just saw above how the pursuit of expedience quickly lands the modeler in a great deal of methodological complexity. And This is at odds with the available evidence. After decades of exorbitant ex-ante impact assessments, there is evidence that donors have stopped believing them (references in Literature review below). And this correlates with a global decline in funding for agricultural research. There is a market out there unmet demand out there for transparent modeling, both by stakeholders interested in a clearer picture of potential impacts, and by modelers frustrated with the theoretical opacity of current methods.
-
-focus on the aggregate supply curve...although the 
-aim here is to replace theoretical opacity with transparency...introduce a model where model results can be traced back to concrete variables and axioms, and not to modeler fiat.
-
-
-
-
-
-
-
-
-
-
-
-The resulting form accounts for farm entry and exit...transparent mapping between parameters and concrete real world variables... proportional to probability that price will remain above ...
-
--if somewhere along the way there are corollaries which seem wrong, the offending corollary can be traced back to specific axioms, as opposed to a shrug of the shoulders.
-
--here we derive an aggregate supply curve from 6 Axioms... First, the farm production derived from Axioms 1-4. Then the aggregate curve follows from introducing Axioms 5-6.
-
-benefits of derived aggregate supply curve:
-
-
--illustrative application using Kenya maize data
-
-
+The gain in transparency and explanatory power comes at little cost to tractability... computation of economic surplus...  While the derived functional form is considerably more sophisticated than expedient forms, it remains highly tractable, and may be implemented at low cost. Unlike expedient forms, the derived curve generates testable hypotheses regarding farm level economic behavior. The curve is estimated on Kenya maize farm data, and hypotheses are tested. Extensions to aggregate demand and partial equilibrium analysis, and application in min data contexts, are briefly addressed in the Discussion.
 
 -----------------------------------
 
+<!-- ...expedient forms are considered unavoidable because...characterize the alternative, a theoretical derivation, as an impossible task [a fool's errand?]... -->
+<!--  In the name of expedience, then, many methodological headaches are accumulated. At some point the headaches outweigh the expedience   Difficult to defend and impossible to account for farm entry and exit. disentangle impact from model artifact...difficult to tell whether the result is due to exogenous shock, or to artifacts of the model  ... -->
 
 # Literature review
 
@@ -144,7 +94,7 @@ In 1944, Von Neumann and Morgenstern observed that "part of the feeling of dissa
 
 The slippage ... to confuse results with assumptions (petitio principii), or, as in the case of the economic surplus model, to infuse a collection of contradictory and/or unfounded assertions with an air of rigor and coherence.
 
-Specification of the aggregate supply curve may be considered a case in point. The model is not theoretically derived, but rather a collection of educated guesses or surmises translated into mathematical equations. Many of these surmises imply well documented contradictions of basic economic theory, and/or inconvenient ramifications vis-a-vis the supposed benefits of research and technology adoption []. The model has evolved into its present form not by force of logic, but as a matter of preference. For example, there was considerable debate in the 1970s over whether the research-induced supply curve shift should be modeled as a parallel shift or a pivot [@alston1995science; @norton1981evaluating; @lindner1978supply]. The debate was further complicated by differing views as to whether supply should be modeled as a linear or a curved function. Without a theoretical framework to link parameter values and functional forms to real world conditions, the debate was ultimately inconclusive. The answers to the questions left unresolved by the debate have come down to us today as a matter of preference. In their highly influential book, _Science Under Scarcity_, Alston et al. indicated their preference for the linear parallel shift [-@alston1995science]. This is a conspicuous choice, to put it mildly, considering that 1) it prefigures research impacts in the best possible light, and 2) by the authors' own admission, there are no theoretical or empirical grounds to justify this preference [@alston1995science; @alston2009economics]. AR4D partial equilibrium impact studies since then have generally follow suit.
+Specification of the aggregate supply curve may be considered a case in point. The model is not theoretically derived, but rather a collection of educated guesses or surmises translated into mathematical equations. Many of these surmises imply well documented contradictions of basic economic theory, and/or inconvenient ramifications vis-a-vis the supposed benefits of research and technology adoption []. The model has evolved into its present form not by force of logic, but as a matter of preference. For example, there was considerable debate in the 1970s over whether the research-induced supply curve shift should be modeled as a parallel shift or a pivot [@alston1995science; @norton1981evaluating; @lindner1978supply]. The debate was further complicated by differing views as to whether supply should be modeled as a linear or a curved function. Modeling results depend critically upon these choices. A curved specification   Without a theoretical framework to link parameter values and functional forms to real world conditions, the debate was ultimately inconclusive. The answers to the questions left unresolved by the debate have come down to us today as a matter of preference. In their highly influential book, _Science Under Scarcity_, Alston et al. indicated their preference for the linear parallel shift [-@alston1995science]. This is a conspicuous choice, to put it mildly, considering that 1) it prefigures research impacts in the best possible light, and 2) by the authors' own admission, there are no theoretical or empirical grounds to justify this preference [@alston1995science; @alston2009economics]. AR4D partial equilibrium impact studies since then have generally follow suit.
 
 ...The current sense is that this is somehow impossible. The verdict:
 
@@ -212,21 +162,20 @@ Throughout much of written history, astute observers have noticed that the usefu
 >\singlespacing "In the absence of the unusual, the utility resulting from any small increase in wealth will be inversely proportionate to the quantity of goods previously possessed" [@bernoulli1954exposition].
 
 \doublespacing
+<!-- Today, this is known as the "law of diminishing marginal returns". -->
+<!-- \begin{framed} -->
+<!--    \textbf{Axiom 1} \\ The law of diminishing marginal returns. -->
+<!-- \end{framed} -->
+<!-- Formalization of Bernoulli's verbal statement of the law of diminishing marginal returns depends upon how one defines "small increase". If "small increase" means a marginal increase, then Bernoulli's statement can be written down as follows.^[Bernoulli himself could not have had "marginal increase" in mind per se, as calculus had not yet been invented.] -->
 
-Today, this is known as the "law of diminishing marginal returns".
-
-\begin{framed}
-   \textbf{Axiom 1} \\ The law of diminishing marginal returns.
-\end{framed}
-
-Formalization of Bernoulli's verbal statement of the law of diminishing marginal returns depends upon how one defines "small increase". If "small increase" means a marginal increase, then Bernoulli's statement can be written down as follows.^[Bernoulli himself could not have had "marginal increase" in mind per se, as calculus had not yet been invented.]
+Today, this is known as the "law of diminishing marginal returns". Bernoulli's statement is a consumer side formulation of the law. It can also has a producer side formulation: "In the absence of the unusual, the yield increase resulting from any small increase in a given input will be inversely proportionate to the quantity of the input already applied." With the aid of calculus (which was not available to Bernoulli), this may be formalized as follows.
 
 \begin{equation}
 \frac{\partial \ln(y)}{\partial x} \sim \frac{1}{x}
 \label{eq:dimUtilDefine}
 \end{equation}
 
-Where, to be clear, the term $\partial \ln(y) / \partial x$ is the percentage change in utility given a marginal increase in the quantity of good $x$, and "$\sim 1 / x$", means "inversely proportionate to the quantity of good $x$ already acquired". An expression $y(x)$ for the yield of good $x$ can then be obtained by integrating Bernoulli's statement.
+Where, to be clear, the term $\partial \ln(y) / \partial x$ is the [percentage change in yield?] change in total yield given a marginal increase in the quantity of good $x$, and "$\sim 1 / x$", means "inversely proportionate to the quantity of good $x$ already acquired". An expression $y(x)$ for the yield of good $x$ can then be obtained by integrating Bernoulli's statement.
 
 \begin{equation}
 \begin{split}
@@ -263,16 +212,17 @@ where $\boldsymbol{\alpha}$ is the vector of input elasticities corresponding to
 \end{matrix} \right]
 \end{equation}
 
-It is straightforward to see that equation \ref{eq:cobbDoug2} is a homogeneous function with degree of homogeneity $h$ equal to $\sum_i \alpha_i$, and is thus also homothetic. It is also straightforward to demonstrate monotonicity and concavity. There is no need, then, to impose these as additional assumptions. They follow from the assumption of diminishing marginal returns.
+It is straightforward to see that equation \ref{eq:cobbDoug2} is a convex, homogeneous (and thus also homothetic) function with degree of homogeneity $h$ equal to $\sum_i \alpha_i$. There is no need, then, to impose these properties as additional Axioms. They follow from the Axiom of diminishing marginal returns.
 
-In an actual analysis, exogenously given control variables ($k_i$) are usually included in the model. These typically include demographic variables such as age, education, gender, household size, as well as agroclimatic variables such as temperature, rainfall, soil conditions, and so forth. (Analysis is said to be "ceteris paribus" when these variables are held constant at a particular value across the population.) Equation \ref{eq:cobbDoug} is thus henceforth rewritten as follows.
+Empirical analysis involves exogenously given control variables ($k_i$), typically including demographic variables such as age, education, gender, household size, as well as agroclimatic variables such as temperature, rainfall, soil conditions, and so forth. Equation \ref{eq:cobbDoug} is thus henceforth rewritten as follows.
+<!-- (Analysis is said to be "ceteris paribus" when these variables are held constant at a particular value across the population.) -->
 
 \begin{equation}
 y = g_0 \prod_{i = 1}^{n_k} k_i^{\kappa_i} \prod_{i = 1}^{n_x} x_i^{\alpha_i} \:\:;\:\:\: g_0 = e^{\alpha_0}
 \label{eq:cobbDoug2}
 \end{equation}
 
-Where the $\kappa_i$ are the control variable elasticities of yield. These are non-discretionary and may thus take positive or negative values. The input elasticities $\alpha_i$, on the other hand, which correspond to discretionary management variables, are generally positive. However, there may arise cases where a variable does not fall neatly into either the management or control category. In the empirical analysis presented farther below, for example, the coefficient on child family labor takes a negative value. Labor is generally considered a discretionary management variable; but family labor, and especially child family labor, might, in some cases, better be considered a control variable, indicative of hard constraints beyond the farmers' discretion. For purposes of economic analysis, the degree of homogeneity is calculated only over the production elasticities corresponding to management variables ($h = \sum_i \alpha_i$, omitting the $\kappa_i$).
+Where the $\kappa_i$ are the control variable elasticities of yield. Because the control variables $k_i$ are non-discretionary, the corresponding elasticities $\kappa_i$ may take positive or negative values. The input elasticities $\alpha_i$, on the other hand, which correspond to discretionary management variables, are generally positive. However, there may arise cases where a variable does not fall neatly into either the management or control category. In the empirical analysis presented farther below, for example, the coefficient on child family labor takes a negative value. Labor is generally considered a discretionary management variable; but family labor, and especially child family labor, might, in some cases, better be considered a control variable, indicative of hard constraints beyond the farmers' discretion. For purposes of economic analysis, the degree of homogeneity is calculated only over the production elasticities corresponding to management variables ($h = \sum_i \alpha_i$, omitting the $\kappa_i$).
 
 Interpretation of the constant $g_0$ is as difficult as one wants to make it. It is, of course, usually called the "total factor productivity", and understood to represent the yield per unit "all inputs"---although a more accurate description would be yield per unit "all input and control variables, raised to various powers". For those not yet comfortable working in units of, say,
 
@@ -339,21 +289,58 @@ C = \mathbf{w} ' \mathbf{x}
 
 and $\mathbf{w}$ is the vector of input prices corresponding to each element in the input vector $\mathbf{x}$.
 
-The solution for a given input $x_j^*$ works out to
+The Lagrangian is then
+
+\begin{equation}
+\mathcal{L} = Py - \lambda (C - B)
+\end{equation}
+
+Where $\lambda$ is the farm budget shadow price, that is, the marginal benefit to the farm of a marginal increase in budget.
+
+\begin{equation}
+\frac{\partial \mathcal{L}}{\partial B} = \lambda
+\end{equation}
+
+The budget shadow price is an implicit measure of how each farm values cash for expenditures on farm inputs, and plays a central role in the aggregation step farther below.
+
+Standard textbook treatments of Cobb-Douglas firm behavior focus on profit maximization without a budget constraint, and limit consideration to the two factor case. It is not readily apparent how the treatment extends to  therefore necessary to take a moment here to extend the textbook treatment to the more general case at hand. The first order conditions for a maximum of $\mathcal{L}$ are
+
+\begin{equation}
+\begin{split}
+\nabla_{\mathbf{x}} \mathcal{L} &= P \nabla_{\mathbf{x}} y - \lambda \mathbf{w} = \mathbf{0} \\
+&= Py D(\mathbf{x})^{-1} \boldsymbol{\alpha} - \lambda \mathbf{w} = \mathbf{0}
+\end{split}
+\label{eq:eqFOC}
+\end{equation}
+
+Where the $\mathbf{0}$ indicates a vector of zeroes equal to the length of $\mathbf{x}$.
+
+And the second order condition for a maximum is
+
+\begin{equation}
+\begin{split}
+\mathbf{x} ' \nabla_{\mathbf{x}}^2 \mathcal{L} \mathbf{x} &= P \mathbf{x} ' \nabla_{\mathbf{x}}^2 y \mathbf{x} ' < 0 \\
+&= P h (h - 1) < 0
+\end{split}
+\label{eq:eqSOC}
+\end{equation}
+
+Where Euler's Theorem has been invoked in the second line of the condition. It follows that Axiom 2 requires $0 < h < 1$, i.e. diminishing returns to scale. Constant returns to scale ($h = 1$) imply the break-even point, while increasing returns to scale ($h > 1$) imply a loss.
+
+The first order conditions may be solved for optimal input $x_j^*$ as follows.
 
 \begin{equation}
 x_j^* = \frac{P y^* \alpha_j}{\lambda w_j}
 \label{eq:inputDem1}
 \end{equation}
 
-With optimal yield then following as
+Optimal yield $y^*$ then follows as the unoptimized yield evaluated at the optimal input levels $x_j^*$. This works out to
 
 \begin{equation}
 y^* =  \left(y_0 \prod_i \left(\frac{\alpha_i}{w_i}\right)^{\alpha_i} \prod_i k_i^{\kappa_i} \right)^{\frac{1}{1 - h}} \left(\frac{P}{\lambda}\right)^{\frac{h}{1 - h}}
 \label{eq:YdEnv1}
 \end{equation}
-
-Details of the derivation are omitted, as they can be found in any standard, rudimentary treatment of production functions (for e.g., see Heathfield and Wibe [-@heathfield1987introduction]). The second order conditions, likewise omitted, indicate that net benefit is maximized only over the domain $h \in (0, 1)$. Axioms 1 and 2, as formalized above, are thus inconsistent with either constant or increasing returns to scale.
+<!-- Heathfield and Wibe [-@heathfield1987introduction] -->
 
 To reduce notational clutter, $y^*$ is henceforth rewritten as follows.
 
@@ -373,55 +360,72 @@ Where
 \end{split}
 \end{equation}
 
-...the farm output price elasticity of yield.
+Dotting the first order conditions in Equation \ref{eq:eqFOC} through by $\mathbf{x}$ results in a handy expression for the budget shadow price.
+
+\begin{equation}
+\lambda = \frac{R^*}{C^*} h \:\:;\:\:\: C^* = \mathbf{w} ' \mathbf{x}^* \:\:\: R^* = P y^*
+\label{eq:lambda}
+\end{equation}
+<!-- when combined with Equation \ref{eq:inputDem1}, then gives -->
+<!-- \begin{equation} -->
+<!-- \frac{x_j^* w_j}{C^*} = \frac{\alpha_j}{h} -->
+<!-- \end{equation} -->
+<!-- which tells us that rational cost shares equal their respective "technology shares". -->
+
+which, when combined with \ref{eq:YdEnvCompact}, gives an instructive alternative expression for $y^*$,
+
+\begin{equation}
+y^* = y_0 \beta \left( \frac{C^*}{h} \right)^h
+\end{equation}
+
+The degree of homogeneity $h$ is thus also the scale elasticity of yield ($\partial \ln(y^*) / \partial \ln(C^*) = h$) as noted in the textbooks. But note also the similarity to Equation \ref{eq:integrate_lny}. And note that
+
+\begin{equation}
+\frac{\partial \ln(y^*)}{\partial C^*} \sim \frac{1}{C^*}
+\end{equation}
+
+Which is congruent to Axiom 1.
+<!-- That is to say, the expression for $y^*$ resulting from Axiom 2 is congruent to Axiom 1. And note the similarity to Equation . Axiom 2 thus results in an expression that recovers Axiom 1. [Axiom 1-2 isometry?...Axiom 2 "recovers" Axiom 1?] -->
+
+### Important corollaries
+
+farm output price elasticity of yield.
 
 \begin{equation}
 \frac{\partial \ln(y^*)}{\partial \ln(P)} = \frac{h}{1 - h}
 \label{eq:PelastYstar}
 \end{equation}
 
-Textbook treatments do not always point out...
+Because $0 < h < 1$, the farm supply curve is always positively sloped. [might mention elasticity critical point at h = 1/2] Increasing returns to scale imply negatively sloped supply curve.
+
+Combining Equations \ref{eq:inputDem1} and \ref{eq:YdEnvCompact} gives an alternate expression for input demand.
 
 \begin{equation}
-\frac{\partial \ln(y^*)}{\partial \ln(P)} \in (0, \infty)
+x_j^* = \frac{\alpha_j}{w_j} \left( y_0 \beta \frac{P}{\lambda} \right)^{frac{1}{1 - h}}
+\label{eq:inputDem2}
 \end{equation}
 
-which in turn implies strictly decreasing returns to scale.
+thus the own and cross input price elasticities of demand are, respectively,
 
 \begin{equation}
-h \in (0, 1)
+\begin{split}
+\frac{\partial \ln(x_j^*)}{\partial \ln(w_j)} &= - 1 - \frac{1}{1 - h} \frac{\partial \ln(\beta_w)}{\partial \ln(w_v)} \\
+&= \frac{-\alpha_v}{1 - h} - 1
+\end{split}
+\label{eq:ownPriceElas}
 \end{equation}
 
-Positively sloped supply curves also require decreasing returns to scale.
-
-...some instructive, compact expressions which do not appear or are glossed over in the standard treatments. For example, the farm budget shadow price $\lambda$ can be written
+And
 
 \begin{equation}
-\lambda = \frac{R^*}{C^*} h \:\:;\:\:\: C^* = \mathbf{w} ' \mathbf{x}^* \:\:\: R^* = P y^*
-\label{eq:lambda}
+\frac{\partial \ln(x_j^*)}{\partial \ln(w_{\ell \neq j})} = \frac{-\alpha_{\ell}}{1 - h}
+\label{eq:CrossPriceElas}
 \end{equation}
 
-which, when combined with Equation \ref{eq:inputDem1}, then gives
+whereby it is clear that the domain $0 < h < 1$ implies negatively sloped own and cross price demand curves, and increasing returns to scale would imply positively sloped own and cross price demand curves.
 
-\begin{equation}
-\frac{x_j^* w_j}{C^*} = \frac{\alpha_j}{h}
-\end{equation}
+Positively sloped supply curves and negatively sloped demand curves thus follow from Axioms 1 and 2, and do not need to be imposed as additional Axioms.
 
-which tells us that rational cost shares equal their respective "technology shares".
-
-Combining Equations \ref{eq:lambda} and \ref{eq:YdEnvCompact} gives an alternative expression for $y^*$,
-
-\begin{equation}
-y^* = y_0 \beta \left( \frac{C^*}{h} \right)^h
-\end{equation}
-
-which in turn gives an alternative expression for $h$
-
-\begin{equation}
-\frac{\partial \ln(y^*)}{\partial \ln(C^*)} = h
-\end{equation}
-
-...isometry with axiom 1?...
 
 ...have to get the population mean/sd from the truncated mean/sd...
 
@@ -721,7 +725,7 @@ There are two sources of uncertainty. Price risk ...Marginal cost of production 
 
 # Discussion
 
-...Axioms can be formalized differently...intensive versus extensive diminishing marginal returns... or a risk constraint can be introduced in addition to the budget constraint in Axiom 2.  More than a specific functional form, an axiomatic approach... rules are made to be refined and ammended... the aim is to come up with a set of Axioms that generate a game that is worth the candle...
+...Axioms can be formalized differently...intensive versus extensive diminishing marginal returns... or a risk constraint can be introduced in addition to the budget constraint in Axiom 2.  More than a specific functional form, an axiomatic approach... rules are made to be refined and ammended... the aim is to come up with a set of Axioms that generate a game that is worth the candle... Axioms should be formulated so as to minimize Axioms and maximize corollaries, i.e. maximize the number of Axioms that are explained by the original Axioms  and must not contradict each other.
 
 In defense of CobbDoug
 [Mention the good empirical fit and validation tests (input demand, optimal area, etc.) as arguments in favor of C-D]
@@ -1074,13 +1078,6 @@ And substituting this in for $m_u$ in the previous expression gives
 
 <!-- Note that input demand, like optimal yield, is undefined at $h = 1$. The own price elasticity of input demand is -->
 
-<!-- \begin{equation} -->
-<!-- \begin{split} -->
-<!-- \frac{\partial \ln(x_v^*)}{\partial \ln(w_v)} &= - 1 - \frac{1}{1 - h} \frac{\partial \ln(\beta_w)}{\partial \ln(w_v)} \\ -->
-<!-- &= \frac{-\alpha_v}{1 - h} - 1 -->
-<!-- \end{split} -->
-<!-- \label{eq:ownPriceElas} -->
-<!-- \end{equation} -->
 
 <!-- Here another Axiom comes into play. -->
 
@@ -1110,10 +1107,6 @@ And substituting this in for $m_u$ in the previous expression gives
 
 <!-- Note that the cross price elasticity of input demand also bears the expected sign under the effective domain of $h$, -->
 
-<!-- \begin{equation} -->
-<!-- \frac{\partial \ln(x_v^*)}{\partial \ln(w_{j \neq v})} = \frac{-\alpha_j}{1 - h} -->
-<!-- \label{eq:CrossPriceElas} -->
-<!-- \end{equation} -->
 
 <!-- As does the output price elasticity of input demand, -->
 
