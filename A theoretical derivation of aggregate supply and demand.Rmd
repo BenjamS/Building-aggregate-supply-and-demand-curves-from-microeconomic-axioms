@@ -43,7 +43,7 @@ Q(P) = \int_{\underline{q}^*}^{\bar{q}^*} q^* \rho(q^*) \: dq^*
 then it is not readily apparent from expedient specifications of $Q$ what the functions $q^*$ and $\rho(q^*)$ are, nor whether they are plausible vis-a-vis microeconomic theory and empirical evidence. Critically, expedient specifications of $Q$ also gloss over farm entry and exit---i.e. the domain of profitable production $(\underline{q}^*, \bar{q}^*)$---such that it is not possible to decompose changes in aggregate supply into yield and employment (farm entry/exit) components.
 [...holding multiple axioms without knowing if they perhaps contradict each other...]
 
-Expedient functional forms are also empirically opaque, in the sense that the parameterization of such forms is highly abstract, with no clear mapping to the relevant measurable, real world phenomena---i.e. technology, input prices, agroclimatic conditions, demographic variables, etc. This leaves very little basis upon which to assess the plausibility of different parameterizations of a given exogenous shock, or to attribute modeled impacts to the exogenous shock with confidence (the attribution problem). Some expedient forms also introduce awkward artifacts---such as the possibility of negative supply quantities and/or of farms producing for free, in the case of the linear aggregate supply curve---which further limit the model's explanatory power.
+Expedient functional forms are also empirically opaque, in the sense that the parameterization of such forms is highly abstract, with no clear mapping to the relevant measurable, real world phenomena---i.e. technology, input prices, agroclimatic conditions, demographic variables, etc. This leaves very little basis upon which to assess the plausibility of different parameterizations of a given exogenous shock, or to attribute modeled impacts to the exogenous shock with confidence (the attribution problem). Some expedient forms also introduce awkward artifacts---such as the possibility of negative supply quantities and/or of farms producing for free, in the case of the linear aggregate supply curve---which further limit the model's explanatory power. [This, in turn, complicates the defense of any modeling results, especially when the modeler or their source of funding have a vested interest in said results.. as it boils down to modeler fiat not to any verifiable presmises]
 adoption
 <!-- [, while adding more layers of methodological wrangling/theoretical opacity.] -->
 <!-- [which in turn invites misuse and abuse of the model, and otherwise complicates the defense of any modeling results.] -->
@@ -300,10 +300,9 @@ Where $\lambda$ is the farm budget shadow price, that is, the marginal benefit t
 \begin{equation}
 \frac{\partial \mathcal{L}}{\partial B} = \lambda
 \end{equation}
+<!-- The budget shadow price is an implicit measure of how each farm values cash for expenditures on farm inputs, and plays a central role in the aggregation step farther below. -->
 
-The budget shadow price is an implicit measure of how each farm values cash for expenditures on farm inputs, and plays a central role in the aggregation step farther below.
-
-Standard textbook treatments of Cobb-Douglas firm behavior focus on profit maximization without a budget constraint, and limit consideration to the two factor case. It is not readily apparent how the treatment extends to  therefore necessary to take a moment here to extend the textbook treatment to the more general case at hand. The first order conditions for a maximum of $\mathcal{L}$ are
+Standard textbook treatments of the first and second order conditions for Cobb-Douglas profit maximization are generally limited to the two input case (capital and labor) for the purpose of isoquant analysis, and omit the budget constraint. It is therefore necessary to take a moment to examine theses conditions for the more general case, and specific aims, at hand. The first order conditions for a maximum of $\mathcal{L}$ are
 
 \begin{equation}
 \begin{split}
@@ -327,7 +326,7 @@ And the second order condition for a maximum is
 
 Where Euler's Theorem has been invoked in the second line of the condition. It follows that Axiom 2 requires $0 < h < 1$, i.e. diminishing returns to scale. Constant returns to scale ($h = 1$) imply the break-even point, while increasing returns to scale ($h > 1$) imply a loss.
 
-The first order conditions may be solved for optimal input $x_j^*$ as follows.
+The first order conditions may be solved for input demand $x_j^*$ as follows.
 
 \begin{equation}
 x_j^* = \frac{P y^* \alpha_j}{\lambda w_j}
@@ -372,40 +371,49 @@ Dotting the first order conditions in Equation \ref{eq:eqFOC} through by $\mathb
 <!-- \end{equation} -->
 <!-- which tells us that rational cost shares equal their respective "technology shares". -->
 
-which, when combined with \ref{eq:YdEnvCompact}, gives an instructive alternative expression for $y^*$,
+which, when combined with \ref{eq:YdEnvCompact}, gives an instructive, alternative expression for $y^*$,
 
 \begin{equation}
 y^* = y_0 \beta \left( \frac{C^*}{h} \right)^h
+\label{eq:yStarC}
 \end{equation}
 
-The degree of homogeneity $h$ is thus also the scale elasticity of yield ($\partial \ln(y^*) / \partial \ln(C^*) = h$) as noted in the textbooks. But note also the similarity to Equation \ref{eq:integrate_lny}. And note that
+The degree of homogeneity $h$ is thus also the scale elasticity of yield ($d \ln(y^*) / d \ln(C^*) = h$) as noted in the textbooks. This form is particularly useful for estimation, as the fitted coefficient on the $\ln(C^*)$ term may be interpreted as $h$. Note also the similarity to Equation \ref{eq:integrate_lny}. And note that
 
 \begin{equation}
 \frac{\partial \ln(y^*)}{\partial C^*} \sim \frac{1}{C^*}
 \end{equation}
 
-Which is congruent to Axiom 1.
-<!-- That is to say, the expression for $y^*$ resulting from Axiom 2 is congruent to Axiom 1. And note the similarity to Equation . Axiom 2 thus results in an expression that recovers Axiom 1. [Axiom 1-2 isometry?...Axiom 2 "recovers" Axiom 1?] -->
+which is congruent to Axiom 1. The question arises, then, whether Axiom 2 requires axiom status, or whether it is implied by Axiom 1. But this is a question for pure logicians. Pending clarification, we continue to call it an Axiom.
 
-### Important corollaries
-
-farm output price elasticity of yield.
+The farm marginal cost readily follows from the scale elasticity of yield by combining it with the budget shadow price expression in Equation \ref{eq:lambda}.
 
 \begin{equation}
-\frac{\partial \ln(y^*)}{\partial \ln(P)} = \frac{h}{1 - h}
+\frac{dC^*}{dy^*} = \frac{P}{\lambda}
+\end{equation}
+
+Axioms 1 and 2 thus imply constant marginal cost.
+<!-- When Axiom 2 is added to Axiom 1, then, Axiom 1 can be proven within the axiomatic system, up to scaling. -->
+<!-- This comes in handy when considering the output $y^*$ as an input in some other productive process. Likewise, the optimal inputs $x_j^*$ may be considered the results of profit maximization. -->
+<!-- That is to say, the expression for $y^*$ resulting from Axiom 2 is congruent to Axiom 1. And note the similarity to Equation . Axiom 2 thus results in an expression that recovers Axiom 1. [Axiom 1-2 isometry?...Axiom 2 "recovers" Axiom 1?] -->
+
+From Equation \ref{eq:YdEnvCompact} and the domain of $h$, it follows that farm supply curves are positively sloped.
+
+\begin{equation}
+\frac{\partial \ln(y^*)}{\partial \ln(P)} = \frac{h}{1 - h} > 0
 \label{eq:PelastYstar}
 \end{equation}
 
-Because $0 < h < 1$, the farm supply curve is always positively sloped. [might mention elasticity critical point at h = 1/2] Increasing returns to scale imply negatively sloped supply curve.
+Note, in passing, that supply is elastic for $h \in (1 / 2 , 1)$, inelastic for $h \in (0, 1 / 2)$, and linear when $h = 1 / 2$. And note that increasing returns to scale would imply negatively sloped supply curves.
 
-Combining Equations \ref{eq:inputDem1} and \ref{eq:YdEnvCompact} gives an alternate expression for input demand.
+The domain of $h$ required by Axiom 2 also implies strictly downward sloping input demand curves. To see this, combine Equations \ref{eq:inputDem1} and \ref{eq:YdEnvCompact} to obtain an alternate expression for input demand.
 
 \begin{equation}
 x_j^* = \frac{\alpha_j}{w_j} \left( y_0 \beta \frac{P}{\lambda} \right)^{frac{1}{1 - h}}
 \label{eq:inputDem2}
 \end{equation}
 
-thus the own and cross input price elasticities of demand are, respectively,
+The own and cross input price elasticities of input demand are, then, respectively,
 
 \begin{equation}
 \begin{split}
@@ -422,12 +430,10 @@ And
 \label{eq:CrossPriceElas}
 \end{equation}
 
-whereby it is clear that the domain $0 < h < 1$ implies negatively sloped own and cross price demand curves, and increasing returns to scale would imply positively sloped own and cross price demand curves.
-
-Positively sloped supply curves and negatively sloped demand curves thus follow from Axioms 1 and 2, and do not need to be imposed as additional Axioms.
-
-
-...have to get the population mean/sd from the truncated mean/sd...
+whereby it is clear that the domain of $h$ implies negatively sloped own and cross price demand curves. It follows, moreover, that input demand is strictly elastic in own price. For cross price input demand curves, demand is elastic if $h \in (1 - \alpha_{\ell}, 1)$, inelastic if $h \in (0, 1 - \alpha_{\ell})$, and linear if $h = 1 - \alpha_{\ell}$. Note that increasing returns to scale would imply strictly upward sloping cross price demand curves, and the possibility of upward sloping own price demand curves.
+<!-- In the case of cross price demand curves, this implies that all inputs are complements, not substitutes. -->
+<!-- Positively sloped supply curves and negatively sloped demand curves thus follow from Axioms 1 and 2, and do not need to be imposed as additional Axioms. -->
+[...optimal farm size...]
 
 ## Domains of the budget shadow price, economic yield, and input demand
 
@@ -672,7 +678,7 @@ is the standard score of $\eta \ln(\mu_b(T)/\mu_b(0))$ evaluated at $\mu_b(T) = 
 \end{split}
 \end{equation}
 
-By Axiom 2(?), $b(0) > 1$ on all farms. The bet a farmer makes ex-ante is that $b(T) > 1$. The term $1 - \Phi(z)$ is a measure of the riskiness of this bet.
+By Axiom 3(?), $b(0) > 1$ on all farms. The bet a farmer makes ex-ante is that $b(T) > 1$. The term $1 - \Phi(z)$ is a measure of the riskiness of this bet.
 
 Substituting equation \ref{eq:termFinal} in for the integral in equation \ref{eq:QSeq} then gives the final form of the aggregate supply curve.
 
@@ -688,7 +694,7 @@ and so participation is proportional to the risk of the bet
 
 ...repeat for the cost form of yield
 
-
+...have to get the population mean/sd from the truncated mean/sd...
 
 
 
