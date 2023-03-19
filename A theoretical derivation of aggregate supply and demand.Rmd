@@ -134,23 +134,11 @@ Finally, the parameterization of such forms tends to be highly abstract, with no
 
 [preclude constant returns to scale, directly contradicting the conventional wisdom handed down by Hicks [-@hicks1963theory] and Solow [-@solow1957technical]. ...also constant marginal cost...This agrees with empirical evidence [@lavoie2014post]. It also contradicts the theory of the firm presented in most microeconomic textbooks, which assumes (with no evidentiary basis) increasing marginal cost as output rises.]
 
+Note, in passing, that the notion of an upper bound on economic yields agrees with empirical observation [@herdt1988increasing; @pingali2001cereal]. In Pingali and Heisey's words:
 
-<!-- You have to ask what sort of farm production fn and density function result in a linear form for the aggregate curve... -->
-<!-- It is still customary to specify a linear aggregate supply curve, for example, with no discussion of the highly unlikely shape of the farm production density function that is implied by that functional form. That is to say, if the aggregate supply $Q$ of a farm population with production function $q$ and production density $\rho(q)$ may be defined -->
+>\singlespacing "The best yields obtained on experiment stations are often used as the indicator of technology potential. Experiment stations are often located on the best lands within a region and have reliable irrigation water supplies. Agronomic yield potential determined on experiment stations, with no physical, biological, or economic constraints, is the maximum achievable yield.... When the objective of the experiment is changed from maximizing yields to maximizing profits, the yields obtained by experiment station researchers drop significantly..." [-@pingali2001cereal].
 
-<!-- \begin{equation} -->
-<!-- Q = \int_{\underline{q}}^{\bar{q}} q \rho(q) \: dq -->
-<!-- \end{equation} -->
-
-<!-- Then a linear aggregate supply curve implies a uniform distribution of $q$. Empirically speaking, one may say without controversy that farm production density is never uniform, but rather tapers off to zero at low and high values of $q$, resulting in a bell or skewed bell shaped function. -->
-
-<!-- aware of market entry and exit, which in turn implies the truncation $\underline{q},\: \bar{q}$---but from above or below, or both? -->
-
-<!-- The elasticity of  -->
-
-<!-- \begin{equation} -->
-<!-- \frac{\partial \ln(Q)}{\partial \ln(P)} Q = \frac{P}{Q} c -->
-<!-- \end{equation} -->
+\doublespacing
 
 # Methodology
 
@@ -245,30 +233,6 @@ y = y_0 \prod_{i = 1}^{n_k} \left( \frac{k_i}{\tilde{k}_i} \right)^{\kappa_i} \p
 Because the terms in parentheses are dimensionless, $y_0$ must have the same units as $y$; and $y_0$ may be interpreted as the value of $y$ when all management and control variables equal their reference values. In the empirical study included here, for example, the reference values are set equal to the sample means, such that $y_0$ is the value of $y$ evaluated at the sample means of the input and control variables.
 
 Equation \ref{eq:cobbDoug3} is, of course, the Cobb-Douglas form. Outside of Economics, it would simply be referred to as a (multivariate) power law. Such forms are often good models of observed processes across a wide range of research contexts and disciplines. In Economics, the Cobb-Douglas form was widely used from the 1920s to 1950s on the basis of its good empirical fit, but fell into disrepute thereafter for its perceived lack a theoretical basis. Capalbo and Antle [-@capalbo2015agricultural] offer a succinct introduction to this vast discussion. The forgoing derivation of the Cobb-Douglas form from Axiom 1 in some measure redresses the lack of a theoretical basis. Other perceived shortcomings of the form are briefly addressed in the Discussion.
-<!-- In equation \ref{eq:cobbDoug2}, the shorthand $y_0 = e^{\alpha_0}$ has also been introduced. The scale factor $y_0$ is the yield when inputs $\mathbf{x}$ are set to 1 and the control variables $\mathbf{k}$ are also set to 1. It may thus be interpreted as the "unit input yield" or "unit input ceteris paribus yield", to be more precise. "Basal yield" is henceforth used as a shorthand. -->
-<!-- Many economists prefer to call $y_0$ the "total factor productivity" (TFP). This is because $y_0$ equals, in some sense, the "yield per unit all inputs" when it is isolated on one side of the equation. However, the presence of control variables complicates this interpretation. Moreover, TFP implies bizarre and rather useless units of measurement. For example, if the inputs $x_i$ are labor and pesticide, while the control variables $k_i$ are rainfall, temperature, and farmer age, then the TFP $y_0$ has units of kg hectare$^{-1}$ manhour$^{-1}$ liter$^{-1}$ millimeter$^{-1}$ degree Celsius$^{-1}$ years$^{-1}$, each of which is raised to various exponents (the respective elasticities $\alpha_i$ and $\kappa_i$). Because of the exponents, a more accurate name for TFP would be the "technology adjusted total factor productivity". -->
-<!-- Nonetheless, a very mature literature has developed around TFP, and the reader is encouraged to continue thinking of $y_0$ in terms of TFP if that is what they are most comfortable with. The "basal yield" interpretation is merely provided here as an alternative for those of us who wrestle with the idea of TFP or are not yet familiar with it. -->
-<!-- exogenously given control variables like age, soil quality, or climate variables. -->
-<!-- TFP vis-à-vis dimensional analysis -->
-<!-- The (in)famous residual -->
-<!-- “The rate of growth of total factor productivity is defined as the difference between the rate of growth of real product and the rate of growth of real factor input” (Jorgenson & Griliches, 1967). This definition violates dimensional analysis. -->
-<!-- Given a yield function -->
-<!-- y=Kx_1^(α_1 ) x_2^(α_2 )…x_n^(α_n )	(1) -->
-<!-- "TFP"=K=y/(x_1^(α_1 ) x_2^(α_2 )…x_n^(α_n ) )	(2) -->
-<!-- There are two problems with this expression from the point of view of dimensional analysis. First of all, the units in which “TFP” is expressed are impossible to make sense of. Say n=4, with x_1 standing for labor, x_2 for machinery, x_3 for fertilizer, and x_4 for pesticide. Then TFP has units of production per unit -->
-<!-- area (man hour)^(α_1 ) (machine hour)^(α_2 )  (weight)^(α_3 )  (volume)^(α_4 )	(3) -->
-<!-- The second, more serious, problem is that these units will always vary from one data set to another. Even if the variables x_1,x_2,…,x_n are the same across studies, and are expressed in the same units, the units in which the “residual” K is expressed will nonetheless vary because the estimated parameters α_i vary. It is therefore impossible to make meaningful comparisons of K across data sets. -->
-<!-- On the other hand, it is possible to make meaningful comparisons of the residual in another sense. Define the parameter K as follows: -->
-<!-- K=k/(x ̃_1^(α_1 ) x ̃_2^(α_2 )…x ̃_n^(α_n ) )	(3) -->
-<!-- Where the x ̃_i are arbitrarily chosen reference values. Then the yield equation becomes: -->
-<!-- y=ku_1^(α_1 ) u_2^(α_2 )… u_n^(α_n )  ;  u_i=x_i/x ̃_i 	(3) -->
-<!-- It now becomes clear what the units of k are. Each x ̃_i has the same units as its respective x_i. This means that all of the u_i^(α_i ) terms on the right hand side of the equation are dimensionless. Therefore, the units of k must agree with the units of whatever is on the left hand side, which happens to be yield.  -->
-<!-- k=y/(u_1^(α_1 ) u_2^(α_2 )… u_n^(α_n ) )	(5) -->
-<!-- When interpreted in this way, it is now possible to make meaningful comparisons of the residual across data sets (if the reference values x ̃_i are harmonized across the data sets). However, the residual now has units of productivity with respect to land only, and not with respect to any other factor, much less the “total factor”. -->
-<!-- Conclusion -->
-<!-- Above I have shown that TFP (equation 2) is measured in units which 1) are virtually impossible to make sense of, and 2) cannot be compared across data sets. I have shown that it is possible to express the residual in straightforward units that are comparable across data sets, but that these are units of land productivity only. The residual may be interpreted as TFP only at the cost of nonsensical units and cross-study incompatibility. A residual with sensible units and comparability, on the other hand, comes at the cost of expressibility only in units of a single factor’s productivity—land in the case of farms, widget factories in the case of firms. -->
-<!-- As mentioned above, this result depends on a definition of small increase as a marginal increase. Other forms result from other definitions of small increase. If small increase is defined as a percentage increase, for example, a functional form involving Lambert's W function results (left as an exercise for the reader). The Cobb-Douglas function is selected from among these two choices on empirical grounds. (The Cobb-Douglas function is famous for how well it fits economic data across many contexts and scales.) -->
-<!-- [# Derivation of the yield envelope from Axiom 2 (net benefit maximization)] -->
 
 The farm level yield model $y^*$ is then obtained by introducing Axiom 2.
 <!-- \begin{framed} -->
@@ -433,68 +397,56 @@ And
 whereby it is clear that the domain of $h$ implies negatively sloped own and cross price demand curves. It follows, moreover, that input demand is strictly elastic in own price. For cross price input demand curves, demand is elastic if $h \in (1 - \alpha_{\ell}, 1)$, inelastic if $h \in (0, 1 - \alpha_{\ell})$, and linear if $h = 1 - \alpha_{\ell}$. Note that increasing returns to scale would imply strictly upward sloping cross price demand curves, and the possibility of upward sloping own price demand curves.
 <!-- In the case of cross price demand curves, this implies that all inputs are complements, not substitutes. -->
 <!-- Positively sloped supply curves and negatively sloped demand curves thus follow from Axioms 1 and 2, and do not need to be imposed as additional Axioms. -->
-[...optimal farm size...]
+[...optimal farm size...?]
 
-## Domains of the budget shadow price, economic yield, and input demand
-
-Dotting the first order conditions (equations \ref{eq:eqFOC}) through by $\mathbf{x}$ and rearranging gives the following formula for the farm budget shadow price.
+Assuming that farms do not enter production unless they expect to make a profit (Axiom 3), then, by Equation \ref{eq:lambda}, $\lambda > h$. This, in turn, implies the following upper bound on $y^*$.
 
 \begin{equation}
-\lambda = \frac{P y^*}{C^*} h
-\label{eq:lambdaHandy}
-\end{equation}
-
-That is, a farm's budget shadow price is equal to its revenue to cost ratio, scaled by the degree of homogeneity.
-
-Assuming that farms only enter production if their expected revenue is greater than their cost (Axiom 5), then the following lower bound on $\lambda$ may be readily deduced.
-
-\begin{equation}
-\lambda > h
-\label{eq:lamLoBound}
-\end{equation}
-
-\begin{framed}
-   \textbf{Axiom 5} \\ Farms, as well as firms and consumers on the demand side, enter production only if their expected revenue is greater than their cost.
-\end{framed}
-
-This, in turn, implies the following upper bound on optimal yield.
-
-\begin{equation}
-y^* <  \left(y_0 \left(\frac{P}{h} \right)^h \frac{\beta_x \beta_k}{\beta_w} \right)^{\frac{1}{1 - h}}
+y^* <  (y_0 \beta)^{\frac{1}{1 - h}}  \left(\frac{P}{h} \right)^{\frac{h}{1 - h}}
 \label{eq:ydUpBound}
 \end{equation}
 
-Note, in passing, that the notion of an upper bound on economic yields agrees with empirical observation [@herdt1988increasing; @pingali2001cereal]. In Pingali and Heisey's words:
-
->\singlespacing "The best yields obtained on experiment stations are often used as the indicator of technology potential. Experiment stations are often located on the best lands within a region and have reliable irrigation water supplies. Agronomic yield potential determined on experiment stations, with no physical, biological, or economic constraints, is the maximum achievable yield.... When the objective of the experiment is changed from maximizing yields to maximizing profits, the yields obtained by experiment station researchers drop significantly..." [-@pingali2001cereal].
-
-\doublespacing
-The lower bound on $\lambda$ likewise implies the following upper bound on input demand.
-
-\begin{equation}
-x_v^* < \frac{\alpha_v}{w_v} \left(y_0 \frac{P \beta_x \beta_k}{h \beta_w} \right)
-\label{eq:inputUpBound}
-\end{equation}
-
-Recall that the upper bound on optimal expenditure is not derived but assumed as Axiom 5: $C^* < Py^*$.
-
-
-
-
-
-## Marginal cost
-
-From equation \ref{eq:cStar} it follows that the marginal cost of output is
-
-\begin{equation}
-\frac{\partial C^*}{\partial y^*} = \frac{P h}{\lambda} = \frac{C^*}{y^*}
-\end{equation}
-
-Under Axioms 1 and 2, then, the marginal cost of output is constant with respect to output. This agrees with empirical evidence [@lavoie2014post]. It also contradicts the theory of the firm presented in most microeconomic textbooks, which assumes (with no evidentiary basis) increasing marginal cost as output rises.
-
 ## Aggregate supply \label{sec:aggSupply}
 
-Farm production $q^*$ is, of course, just farm yield envelope times farm area. If area is one of the control variables in the yield envelope, then $q^*$ is given by adding $1$ to the fitted exponent (call this $\kappa_a$) on area.
+Yield and output price are, of course, stochastic variables. Henceforth it is necessary to introduce more precision in their treatment as such. Yield and output price In the absence of forward contracts, output price $P$ is likewise unknown at the time of planting. The farmer makes planting decisions based on input prices, the yield they _expect_ to achieve, and the price they _expect_ their product to fetch in the market at harvest.
+
+
+That is to say, $\lambda$ is more properly defined
+
+\begin{equation}
+\lambda = \frac{E[]}{}
+\end{equation}
+
+  
+
+Necessary to be more precise in language...P is expected price at time of sale, as evaluated at the time of planting (the time of expenditures on farm inputs). This is henceforth written as
+
+\begin{equation}
+E[P(T)]\bigr|_{t = 0}
+\end{equation}
+
+
+assuming $b(t)$ follows a geometric Brownian motion, then
+
+\begin{equation}
+\begin{split}
+E[\mu_b(T)]\bigr|_{t = 0} &= \mu_b(0) e^{m_{\mu} T} \\
+Var[\ln(\mu_b(T))]\bigr|_{t = 0} &= s_{\mu}^2 T
+\end{split}
+\end{equation}
+
+Where 
+
+\begin{equation}
+\begin{split}
+m_{\mu} &= E\left[\frac{\Delta \mu(T)}{\mu(T) \Delta t} \right] \\
+s_{\mu}^2 &= Var\left[\frac{\Delta \mu(T)}{\mu(T) \Delta t} \right]
+\end{split}
+\end{equation}
+
+For an instantaneous (in practice, judiciously small) time step $\Delta t$. (For a full introduction to geometric Brownian motion, see Hull [-@].) Therefore, $E[\lambda]$ may be expressed
+
+Farm production $q^*$ is, of course, just farm yield envelope times farm area. Often, area is one of the control variables in $\beta_k$. In this case, $q^*$ is given by adding $1$ to the fitted exponent (call this $\kappa_a$) on area.
 
 \begin{equation}
 \begin{split}
@@ -539,7 +491,7 @@ Where $N_f$ is the number of farms in the population. The farm density may thus 
 \rho(q^*) = N_f f(q^*)
 \end{equation}
 
-Supply can also of course be defined in terms of an integral of farm yield over its density.
+Of course, supply can also be defined in terms of an integral of farm yield over its density.
 
 \begin{equation}
 Q_S = \int_{0}^{\bar{y}^*} y^* \rho(y^*) \: dq^*
@@ -569,7 +521,8 @@ By the law of the unconscious statistician, the integral in the expression above
 \int_{0}^{h^{-\eta(P)}} \lambda^{-\eta(P)} f(q^*) \: dq^* = \int_{0}^{h^{-\eta(P)}} \lambda^{-\eta(P)} f(\lambda^{-\eta(P)}) \: d \lambda^{-\eta(P)}
 \end{equation}
 
-The definition of the density function is another Axiom... lognormal density....because it is a good approximation to the data and also for theoretical reasons that will now become clear...
+Now Axiom 4 comes into play: yield is assumed to be lognormally distributed.
+<!-- The definition of the density function is another Axiom... lognormal density....because it is a good approximation to the data and also for theoretical reasons that will now become clear... -->
 
 Because yield is assumed to be lognormally distributed, then so is $\lambda$; and the Lemma given in the Appendix applies, giving
 <!-- Since $\ln(\lambda)$ is normally distributed with mean $m_{\lambda}$ and variance $s_{\lambda}^2$, then $\ln(\lambda^{-\eta})$ is also normally distributed with mean $-\eta m_{\lambda}$ and variance $\eta^2 s_{\lambda}^2$. Since $\ln(\lambda^{-\eta})$ is normally distributed, $\lambda^{-\eta}$ may be substituted for $u$, such that $m_u = -\eta m_{\lambda}$, $s_u^2 = \eta^2 s_{\lambda}^2$, and $\bar{u} = h^{-\eta}$, giving the following expression. -->
@@ -611,25 +564,7 @@ Likewise,
 s_{\lambda}^2 = Var[\ln(\mu_b(T))]\bigr|_{t = 0}
 \end{equation}
 
-Moreover, assuming $b(t)$ follows a geometric Brownian motion, then
-
-\begin{equation}
-\begin{split}
-E[\mu_b(T)]\bigr|_{t = 0} &= \mu_b(0) e^{m_{\mu} T} \\
-Var[\ln(\mu_b(T))]\bigr|_{t = 0} &= s_{\mu}^2 T
-\end{split}
-\end{equation}
-
-Where 
-
-\begin{equation}
-\begin{split}
-m_{\mu} &= E\left[\frac{\Delta \mu(T)}{\mu(T) \Delta t} \right] \\
-s_{\mu}^2 &= Var\left[\frac{\Delta \mu(T)}{\mu(T) \Delta t} \right]
-\end{split}
-\end{equation}
-
-For an instantaneous (in practice, judiciously small) time step $\Delta t$. (For a full introduction to geometric Brownian motion, see Hull [-@].) Therefore, $E[\lambda]$ may be expressed
+Moreover, Because b(t) is assumed to follow a geometric Brownian motion,... Therefore, $E[\lambda]$ may be expressed
 
 \begin{equation}
 \begin{split}
@@ -731,6 +666,20 @@ There are two sources of uncertainty. Price risk ...Marginal cost of production 
 
 # Discussion
 
+
+...this form allows one to look at questions of the value of storage...forward contracts...for e.g. as policy instruments implemented in tandem with new technology...questions of how to optimize the enabling environment to maximize impact of new technology...
+
+...treatment of aggregate demand...
+...upper bound on $x_j^*$,
+
+\begin{equation}
+x_j^* < \frac{\alpha_j}{w_j} \left(y_0 \frac{P}{h} \right)
+\label{eq:inputUpBound}
+\end{equation}
+
+
+...negatively sloped cross price demand curves implies that all inputs are complements, not substitutes...makes sense, can't substitute CAN for dap or labor or pesticide
+
 ...Axioms can be formalized differently...intensive versus extensive diminishing marginal returns... or a risk constraint can be introduced in addition to the budget constraint in Axiom 2.  More than a specific functional form, an axiomatic approach... rules are made to be refined and ammended... the aim is to come up with a set of Axioms that generate a game that is worth the candle... Axioms should be formulated so as to minimize Axioms and maximize corollaries, i.e. maximize the number of Axioms that are explained by the original Axioms  and must not contradict each other.
 
 In defense of CobbDoug
@@ -803,7 +752,7 @@ in Discussion: the starting Axioms are to be experimented with. Other sets of Ax
 can also address questions of how the same result might be achieved through interventions of other variables (Ethiopia bean an example), so as to compare which impact pathway is cheapest
 
 
-sketch out extension to aggregate demand and PE analysis
+sketch out extension to aggregate demand and PE analysis...computing Econ Surplus, change in net benefit as alternative to ES
 
 
 # References {-}
@@ -1133,6 +1082,33 @@ And substituting this in for $m_u$ in the previous expression gives
 <!-- \end{equation} -->
 
 <!-- And $\eta(w_v, x_v^*)$ is the own price elasticity of input demand, derived in equation \ref{eq:ownPriceElas}. -->
+
+<!-- In equation \ref{eq:cobbDoug2}, the shorthand $y_0 = e^{\alpha_0}$ has also been introduced. The scale factor $y_0$ is the yield when inputs $\mathbf{x}$ are set to 1 and the control variables $\mathbf{k}$ are also set to 1. It may thus be interpreted as the "unit input yield" or "unit input ceteris paribus yield", to be more precise. "Basal yield" is henceforth used as a shorthand. -->
+<!-- Many economists prefer to call $y_0$ the "total factor productivity" (TFP). This is because $y_0$ equals, in some sense, the "yield per unit all inputs" when it is isolated on one side of the equation. However, the presence of control variables complicates this interpretation. Moreover, TFP implies bizarre and rather useless units of measurement. For example, if the inputs $x_i$ are labor and pesticide, while the control variables $k_i$ are rainfall, temperature, and farmer age, then the TFP $y_0$ has units of kg hectare$^{-1}$ manhour$^{-1}$ liter$^{-1}$ millimeter$^{-1}$ degree Celsius$^{-1}$ years$^{-1}$, each of which is raised to various exponents (the respective elasticities $\alpha_i$ and $\kappa_i$). Because of the exponents, a more accurate name for TFP would be the "technology adjusted total factor productivity". -->
+<!-- Nonetheless, a very mature literature has developed around TFP, and the reader is encouraged to continue thinking of $y_0$ in terms of TFP if that is what they are most comfortable with. The "basal yield" interpretation is merely provided here as an alternative for those of us who wrestle with the idea of TFP or are not yet familiar with it. -->
+<!-- exogenously given control variables like age, soil quality, or climate variables. -->
+<!-- TFP vis-à-vis dimensional analysis -->
+<!-- The (in)famous residual -->
+<!-- “The rate of growth of total factor productivity is defined as the difference between the rate of growth of real product and the rate of growth of real factor input” (Jorgenson & Griliches, 1967). This definition violates dimensional analysis. -->
+<!-- Given a yield function -->
+<!-- y=Kx_1^(α_1 ) x_2^(α_2 )…x_n^(α_n )	(1) -->
+<!-- "TFP"=K=y/(x_1^(α_1 ) x_2^(α_2 )…x_n^(α_n ) )	(2) -->
+<!-- There are two problems with this expression from the point of view of dimensional analysis. First of all, the units in which “TFP” is expressed are impossible to make sense of. Say n=4, with x_1 standing for labor, x_2 for machinery, x_3 for fertilizer, and x_4 for pesticide. Then TFP has units of production per unit -->
+<!-- area (man hour)^(α_1 ) (machine hour)^(α_2 )  (weight)^(α_3 )  (volume)^(α_4 )	(3) -->
+<!-- The second, more serious, problem is that these units will always vary from one data set to another. Even if the variables x_1,x_2,…,x_n are the same across studies, and are expressed in the same units, the units in which the “residual” K is expressed will nonetheless vary because the estimated parameters α_i vary. It is therefore impossible to make meaningful comparisons of K across data sets. -->
+<!-- On the other hand, it is possible to make meaningful comparisons of the residual in another sense. Define the parameter K as follows: -->
+<!-- K=k/(x ̃_1^(α_1 ) x ̃_2^(α_2 )…x ̃_n^(α_n ) )	(3) -->
+<!-- Where the x ̃_i are arbitrarily chosen reference values. Then the yield equation becomes: -->
+<!-- y=ku_1^(α_1 ) u_2^(α_2 )… u_n^(α_n )  ;  u_i=x_i/x ̃_i 	(3) -->
+<!-- It now becomes clear what the units of k are. Each x ̃_i has the same units as its respective x_i. This means that all of the u_i^(α_i ) terms on the right hand side of the equation are dimensionless. Therefore, the units of k must agree with the units of whatever is on the left hand side, which happens to be yield.  -->
+<!-- k=y/(u_1^(α_1 ) u_2^(α_2 )… u_n^(α_n ) )	(5) -->
+<!-- When interpreted in this way, it is now possible to make meaningful comparisons of the residual across data sets (if the reference values x ̃_i are harmonized across the data sets). However, the residual now has units of productivity with respect to land only, and not with respect to any other factor, much less the “total factor”. -->
+<!-- Conclusion -->
+<!-- Above I have shown that TFP (equation 2) is measured in units which 1) are virtually impossible to make sense of, and 2) cannot be compared across data sets. I have shown that it is possible to express the residual in straightforward units that are comparable across data sets, but that these are units of land productivity only. The residual may be interpreted as TFP only at the cost of nonsensical units and cross-study incompatibility. A residual with sensible units and comparability, on the other hand, comes at the cost of expressibility only in units of a single factor’s productivity—land in the case of farms, widget factories in the case of firms. -->
+<!-- As mentioned above, this result depends on a definition of small increase as a marginal increase. Other forms result from other definitions of small increase. If small increase is defined as a percentage increase, for example, a functional form involving Lambert's W function results (left as an exercise for the reader). The Cobb-Douglas function is selected from among these two choices on empirical grounds. (The Cobb-Douglas function is famous for how well it fits economic data across many contexts and scales.) -->
+<!-- [# Derivation of the yield envelope from Axiom 2 (net benefit maximization)] -->
+
+
 
 ## The farm net benefit envelope
 
