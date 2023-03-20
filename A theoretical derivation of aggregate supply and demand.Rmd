@@ -4,7 +4,6 @@ title: A theoretical derivation of the aggregate supply curve, accounting for fa
 # date: "`r Sys.Date()`"
 abstract: |
   The functional form of aggregate supply is typically specified in order to facilitate calculations, with little thought given to its theoretical basis. This results in theoretical contradictions which call into question the results of the analysis. Here we derive a closed form aggregate agricultural supply and demand functions from microeconomic axioms and the assumption of lognormally distributed yields. The resulting functional form is highly instructive and agrees well with other aspects of theory... indicates that farm market participation is proportionate to the probability that the producer harvest price will be greater than the farm population's mean marginal cost of production. Allows for analysis of price and technology impacts at specific centiles. The elasticity The functional form opens a new vista on supply elasticity...decomposed into yield and farm participation terms. An aggregate farm input demand curve is also derived, followed by an aggregate farm commodity demand curve. The supply curve is fit to Kenya maize data. Food policy implications are discussed.
-
 header-includes:
   - \usepackage{geometry}
   - \geometry{top=1in,left=1in,bottom=1in,right=1in}
@@ -13,16 +12,13 @@ header-includes:
   - \usepackage{float}
   - \floatplacement{figure}{H}
   - \usepackage{amsmath}
-  - m_umberwithin{equation}{section}
-
-
+  - \numberwithin{equation}{section}
 output:
   pdf_document:
    fig_caption: true
    number_sections: true
    #latex_engine: xelatex
 # mainfont: Times Roman
-
 ---
 
 ```{r setup, include=FALSE}
@@ -56,7 +52,7 @@ However, popularity is a misleading indicator in this regard. It might merely re
 
 This is a more telling indicator suggesting that expedient specifications are insufficient for most purposes---i.e. for the purposes of producing accurate, unbiased, credible ex-ante impact assessments. Or, at the very least, it points to a growing, unmet demand for more transparency and plausibility in ex-ante impact assessment.
 
-To meet this demand, below we derive an aggregate supply curve from five Axioms. The derived curve explicitly accounts for farm entry/exit, such that supply response to shocks can be decomposed into yield and participation components. The term in the function regulating farm entry/exit is surprisingly instructive, as it is proportionate to the probability that output price will be greater than marginal cost at the time of sale. The curve is empirically transparent, i.e. its parameters have a straightforward interpretation in terms of concrete, measurable phenomena, such that exogenous shocks may be modeled precisely and transparently.
+[MIRR] To meet this demand, below we derive an aggregate supply curve from five Axioms. The derived curve explicitly accounts for farm entry/exit, such that supply response to shocks can be decomposed into yield and participation components. The term in the function regulating farm entry/exit is surprisingly instructive, as it is proportionate to the probability that output price will be greater than marginal cost at the time of sale. The curve is empirically transparent, i.e. its parameters have a straightforward interpretation in terms of concrete, measurable phenomena, such that exogenous shocks may be modeled precisely and transparently.
 
 The five Axioms are:
 
@@ -79,7 +75,7 @@ On the other hand, two somewhat controversial corollaries also follow: strictly 
 
 The gain in transparency and explanatory power comes at little cost to tractability... computation of economic surplus...  While the derived functional form is considerably more sophisticated than expedient forms, it remains highly tractable, and may be implemented at low cost. Unlike expedient forms, the derived curve generates testable hypotheses regarding farm level economic behavior. The curve is estimated on Kenya maize farm data, and hypotheses are tested. Extensions to aggregate demand and partial equilibrium analysis, and application in min data contexts, are briefly addressed in the Discussion.
 
------------------------------------
+<!-- ----------------------------------- -->
 
 <!-- ...expedient forms are considered unavoidable because...characterize the alternative, a theoretical derivation, as an impossible task [a fool's errand?]... -->
 <!--  In the name of expedience, then, many methodological headaches are accumulated. At some point the headaches outweigh the expedience   Difficult to defend and impossible to account for farm entry and exit. disentangle impact from model artifact...difficult to tell whether the result is due to exogenous shock, or to artifacts of the model  ... -->
@@ -115,30 +111,20 @@ This, in turn, complicates the defense of modeling results. Without any theoreti
 When there is a [...Wd be nice to consider a range of scenarios covering a range of potential input price increases versus technology shocks, but this not possible ... not clear why adoption rate takes a certain value... or how the shock affects the entry and exit of farms... nor how the shock affects the aggregate...  nor which centiles adopt...] The representation of exogenous shocks to real world parameters in terms of model parameters thus largely boils down to a matter of modeler fiat. Insofar as modeling results hinge upon the parameterization of shocks, the conclusions of the impact assessment are, in this measure, also by fiat; and the whole process is thereby reduced to an exercise in petitio principii. This obviously complicates subsequent defense of the modeling results, especially if the modelers and/or their source of funding have a vested interest in the results.
 
 [The response to the growing impatience is the cosmetic approach---MIRR]
-
-
-
-
-
-The constant elasticity of supply curve, for example,
-
-\begin{equation}
-Q = a P^{\eta}
-\end{equation}
-
-conflates yield and employment response to price changes in one parameter, $\eta$.
+<!-- The constant elasticity of supply curve, for example, -->
+<!-- \begin{equation} -->
+<!-- Q = a P^{\eta} -->
+<!-- \end{equation} -->
+<!-- conflates yield and employment response to price changes in one parameter, $\eta$. -->
 
 Expedient specifications also tend to introduce awkward model artifacts. The parameter $\eta$, for example, implies that yield and employment responses offset each other such that $\eta$ is always constant. The linear aggregate supply curve, on the other hand, implies the possibility of negative supply quantities and/or of farms producing for free. This either requires redefinition of the curve as a piecewise function---which further complicates interpretation in terms of Equation \ref{eq:sup1}---or compels us to regard the function as a local approximation to an inscrutable global function, with validity restricted to a small domain of convergence around the starting equilibrium point.
 
 Finally, the parameterization of such forms tends to be highly abstract, with no clear mapping to the relevant measurable, real world phenomena---i.e. technology, input prices, agroclimatic conditions, demographic variables, and so on. This leaves very little basis upon which to assess the plausibility of a given parameterization of exogenous shocks. How should a 10% increase in total factor productivity be represented in terms of a change in, say, $a$ and $\eta$? The answer effectively boils down to modeler fiat, which in turn invites misuse and abuse of the model, and otherwise complicates the defense of any modeling results.
 
 [preclude constant returns to scale, directly contradicting the conventional wisdom handed down by Hicks [-@hicks1963theory] and Solow [-@solow1957technical]. ...also constant marginal cost...This agrees with empirical evidence [@lavoie2014post]. It also contradicts the theory of the firm presented in most microeconomic textbooks, which assumes (with no evidentiary basis) increasing marginal cost as output rises.]
-
-Note, in passing, that the notion of an upper bound on economic yields agrees with empirical observation [@herdt1988increasing; @pingali2001cereal]. In Pingali and Heisey's words:
-
->\singlespacing "The best yields obtained on experiment stations are often used as the indicator of technology potential. Experiment stations are often located on the best lands within a region and have reliable irrigation water supplies. Agronomic yield potential determined on experiment stations, with no physical, biological, or economic constraints, is the maximum achievable yield.... When the objective of the experiment is changed from maximizing yields to maximizing profits, the yields obtained by experiment station researchers drop significantly..." [-@pingali2001cereal].
-
-\doublespacing
+<!-- Note, in passing, that the notion of an upper bound on economic yields agrees with empirical observation [@herdt1988increasing; @pingali2001cereal]. In Pingali and Heisey's words: -->
+<!-- >\singlespacing "The best yields obtained on experiment stations are often used as the indicator of technology potential. Experiment stations are often located on the best lands within a region and have reliable irrigation water supplies. Agronomic yield potential determined on experiment stations, with no physical, biological, or economic constraints, is the maximum achievable yield.... When the objective of the experiment is changed from maximizing yields to maximizing profits, the yields obtained by experiment station researchers drop significantly..." [-@pingali2001cereal]. -->
+<!-- \doublespacing -->
 
 # Methodology
 
@@ -232,7 +218,7 @@ y = y_0 \prod_{i = 1}^{n_k} \left( \frac{k_i}{\tilde{k}_i} \right)^{\kappa_i} \p
 
 Because the terms in parentheses are dimensionless, $y_0$ must have the same units as $y$; and $y_0$ may be interpreted as the value of $y$ when all management and control variables equal their reference values. In the empirical study included here, for example, the reference values are set equal to the sample means, such that $y_0$ is the value of $y$ evaluated at the sample means of the input and control variables.
 
-Equation \ref{eq:cobbDoug3} is, of course, the Cobb-Douglas form. Outside of Economics, it would simply be referred to as a (multivariate) power law. Such forms are often good models of observed processes across a wide range of research contexts and disciplines. In Economics, the Cobb-Douglas form was widely used from the 1920s to 1950s on the basis of its good empirical fit, but fell into disrepute thereafter for its perceived lack a theoretical basis. Capalbo and Antle [-@capalbo2015agricultural] offer a succinct introduction to this vast discussion. The forgoing derivation of the Cobb-Douglas form from Axiom 1 in some measure redresses the lack of a theoretical basis. Other perceived shortcomings of the form are briefly addressed in the Discussion.
+Equation \ref{eq:cobbDoug3} is, of course, the Cobb-Douglas form. Outside of Economics, it would simply be referred to as a (multivariate) power law. Such forms are often good models of observed processes across a wide range of research contexts and disciplines. In Economics, the Cobb-Douglas form was widely used from the 1920s to 1950s on the basis of its good empirical fit, but fell into disrepute thereafter for its perceived lack a theoretical basis. Capalbo and Antle [-@capalbo2015agricultural] offer a succinct introduction to this vast discussion. The forgoing derivation of the Cobb-Douglas form from Axiom 1 in some measure redresses the lack of a theoretical basis. [Other perceived shortcomings of the form are briefly addressed in the Discussion. if there is enough space!] [Or: In the course of the derivation below, a number of theoretical strengths are brought to light---underrepresented or overlooked by textbook treatments---that cast doubt on the bad reputation as a "restrictive" model]
 
 The farm level yield model $y^*$ is then obtained by introducing Axiom 2.
 <!-- \begin{framed} -->
@@ -316,7 +302,7 @@ Where
 
 \begin{equation}
 \begin{split}
-\beta &= \frac{\beta_x \beta_k}{\beta_w}
+\beta &= \frac{\beta_x \beta_k}{\beta_w} \\
 \beta_w &= \prod_i {w_i}^{\alpha_i} \\
 \beta_x &= \prod_i {\alpha_i}^{\alpha_i} \\
 \beta_k &= \prod_i {k_i}^{\kappa_i}
@@ -350,13 +336,17 @@ The degree of homogeneity $h$ is thus also the scale elasticity of yield ($d \ln
 
 which is congruent to Axiom 1. The question arises, then, whether Axiom 2 requires axiom status, or whether it is implied by Axiom 1. But this is a question for pure logicians. Pending clarification, we continue to call it an Axiom.
 
+### Some important/underrepresented corollaries
+
+Because the C-D fn has fallen into such disrepute, it is worthwhile to take a moment to point out some attractive corollaries that are underrepresented in the textbook treatments. [and one new one -lipton]
+
 The farm marginal cost readily follows from the scale elasticity of yield by combining it with the budget shadow price expression in Equation \ref{eq:lambda}.
 
 \begin{equation}
 \frac{dC^*}{dy^*} = \frac{P}{\lambda}
 \end{equation}
 
-Axioms 1 and 2 thus imply constant marginal cost.
+Axioms 1 and 2 thus imply constant marginal cost. As mentioned in the introduction, this is well supported empirically [].
 <!-- When Axiom 2 is added to Axiom 1, then, Axiom 1 can be proven within the axiomatic system, up to scaling. -->
 <!-- This comes in handy when considering the output $y^*$ as an input in some other productive process. Likewise, the optimal inputs $x_j^*$ may be considered the results of profit maximization. -->
 <!-- That is to say, the expression for $y^*$ resulting from Axiom 2 is congruent to Axiom 1. And note the similarity to Equation . Axiom 2 thus results in an expression that recovers Axiom 1. [Axiom 1-2 isometry?...Axiom 2 "recovers" Axiom 1?] -->
@@ -373,7 +363,7 @@ Note, in passing, that supply is elastic for $h \in (1 / 2 , 1)$, inelastic for 
 The domain of $h$ required by Axiom 2 also implies strictly downward sloping input demand curves. To see this, combine Equations \ref{eq:inputDem1} and \ref{eq:YdEnvCompact} to obtain an alternate expression for input demand.
 
 \begin{equation}
-x_j^* = \frac{\alpha_j}{w_j} \left( y_0 \beta \frac{P}{\lambda} \right)^{frac{1}{1 - h}}
+x_j^* = \frac{\alpha_j}{w_j} \left( y_0 \beta \frac{P}{\lambda} \right)^{\frac{1}{1 - h}}
 \label{eq:inputDem2}
 \end{equation}
 
@@ -381,8 +371,8 @@ The own and cross input price elasticities of input demand are, then, respective
 
 \begin{equation}
 \begin{split}
-\frac{\partial \ln(x_j^*)}{\partial \ln(w_j)} &= - 1 - \frac{1}{1 - h} \frac{\partial \ln(\beta_w)}{\partial \ln(w_v)} \\
-&= \frac{-\alpha_v}{1 - h} - 1
+\frac{\partial \ln(x_j^*)}{\partial \ln(w_j)} &= - 1 - \frac{1}{1 - h} \frac{\partial \ln(\beta_w)}{\partial \ln(w_j)} \\
+&= \frac{-\alpha_j}{1 - h} - 1
 \end{split}
 \label{eq:ownPriceElas}
 \end{equation}
@@ -397,33 +387,26 @@ And
 whereby it is clear that the domain of $h$ implies negatively sloped own and cross price demand curves. It follows, moreover, that input demand is strictly elastic in own price. For cross price input demand curves, demand is elastic if $h \in (1 - \alpha_{\ell}, 1)$, inelastic if $h \in (0, 1 - \alpha_{\ell})$, and linear if $h = 1 - \alpha_{\ell}$. Note that increasing returns to scale would imply strictly upward sloping cross price demand curves, and the possibility of upward sloping own price demand curves.
 <!-- In the case of cross price demand curves, this implies that all inputs are complements, not substitutes. -->
 <!-- Positively sloped supply curves and negatively sloped demand curves thus follow from Axioms 1 and 2, and do not need to be imposed as additional Axioms. -->
+[...recovers Lipton's theory of adoption...]
 [...optimal farm size...?]
-
-Assuming that farms do not enter production unless they expect to make a profit (Axiom 3), then, by Equation \ref{eq:lambda}, $\lambda > h$. This, in turn, implies the following upper bound on $y^*$.
-
-\begin{equation}
-y^* <  (y_0 \beta)^{\frac{1}{1 - h}}  \left(\frac{P}{h} \right)^{\frac{h}{1 - h}}
-\label{eq:ydUpBound}
-\end{equation}
 
 ## Aggregate supply \label{sec:aggSupply}
 
+get into the gBm nitty gritty
 Yield and output price are, of course, stochastic variables. Henceforth it is necessary to introduce more precision in their treatment as such. Yield and output price In the absence of forward contracts, output price $P$ is likewise unknown at the time of planting. The farmer makes planting decisions based on input prices, the yield they _expect_ to achieve, and the price they _expect_ their product to fetch in the market at harvest.
 
 
 That is to say, $\lambda$ is more properly defined
 
-\begin{equation}
-\lambda = \frac{E[]}{}
-\end{equation}
-
-  
+<!-- \begin{equation} -->
+<!-- \lambda = \frac{E[]}{} -->
+<!-- \end{equation} -->
 
 Necessary to be more precise in language...P is expected price at time of sale, as evaluated at the time of planting (the time of expenditures on farm inputs). This is henceforth written as
 
-\begin{equation}
-E[P(T)]\bigr|_{t = 0}
-\end{equation}
+<!-- \begin{equation} -->
+<!-- E[P(T)]\bigr|_{t = 0} -->
+<!-- \end{equation} -->
 
 
 assuming $b(t)$ follows a geometric Brownian motion, then
@@ -462,6 +445,14 @@ Where
 \hat{\beta} &= \frac{\beta_x \hat{\beta_k}}{\beta_w} \\
 \hat{\beta_k} &= A \beta_k = A^{\kappa_a + 1} \prod_{i \neq a}^{n_k} k_i^{\kappa_i}
 \end{split}
+\end{equation}
+
+
+Assuming that farms do not enter production unless they expect to make a profit (Axiom 3), then, by Equation \ref{eq:lambda}, $\lambda > h$. This, in turn, implies the following upper bound on $y^*$.
+
+\begin{equation}
+y^* <  (y_0 \beta)^{\frac{1}{1 - h}}  \left(\frac{P}{h} \right)^{\frac{h}{1 - h}}
+\label{eq:ydUpBound}
 \end{equation}
 
 And maximum economic production for given $A$, assuming farms only enter production if their expected revenue is greater than their cost (recall equation \ref{eq:ydUpBound}), is
@@ -622,7 +613,7 @@ E[Q_S(T)]\bigr|_{t = 0} = N_f y_0^{\theta} E[\hat{\beta}^{\theta}] E[P(T)]\bigr|
 \label{eq:QSFin}
 \end{equation}
 
-(E[P(T)]\bigr|_{t = 0} = P(0)e^{m_P T})
+<!-- (E[P(T)]\bigr|_{t = 0} = P(0)e^{m_P T}) -->
 
 and so participation is proportional to the risk of the bet
 
@@ -664,8 +655,12 @@ There are two sources of uncertainty. Price risk ...Marginal cost of production 
 <!-- \end{equation} -->
 <!-- As $\eta(D)$ is lower, $r^{\eta(D)}$ changes less when $r$ changes. As $\eta(D)$ is higher, movements of $r^{\eta(D)}$ become more pronounced in response to changes in $r$. -->
 
-# Discussion
+# Illustrative use case
 
+
+
+
+# Discussion
 
 ...this form allows one to look at questions of the value of storage...forward contracts...for e.g. as policy instruments implemented in tandem with new technology...questions of how to optimize the enabling environment to maximize impact of new technology...
 
@@ -717,7 +712,7 @@ And, moreover,
 \frac{\partial^2 y}{\partial x_i \partial x_j} = \frac{1}{h - 2}  \sum_{k}^{n} \frac{\partial}{ \partial x_i} \frac{\partial y}{\partial x_j \partial x_k} x_k
 \end{equation}
 
-And, so on for any order $\mathcal{\ell}}$ of differentiation, ad infinitum,
+And, so on for any order $\mathcal{\ell}$ of differentiation, ad infinitum,
 
 \begin{equation}
 \frac{\partial^{\ell} y}{\partial x_i^{\ell}} = \frac{1}{h - \ell + 1}  \sum_{j}^{n} \frac{\partial^{\ell + 1} y}{\partial x_i^{\ell + 1} \partial x_j} x_j
@@ -730,7 +725,6 @@ It may be added that the economic principle of net-benefit maximization (cost mi
 The same riposte applies to enduring objection 3, namely, that the Cobb-Douglas input demand elasticities are constant, whereas intuition and evidence indicate that input demand elasticities vary with input use. Again, it is true that Cobb-Douglas demand elasticities are constant. But, again, this does not mean that they are not functions of inputs. On the assumption that producers maximize their net benefit (or minimize cost), the Cobb-Douglas input demand own and cross price elasticities follows as
 
 \begin{equation}
-
 \end{equation}
 
 The input own and cross price demand elasticities are thus functions of price and technology. Because optimal input use is also a function of price, these elasticities may be written as functions of input use, if so desired. Conversely, the Hicks-Allen partial elasticities derived using the translog model may be written in terms of prices, if so desired.
@@ -827,7 +821,7 @@ And substituting this in for $m_u$ in the previous expression gives
 \end{split}
 \end{equation}
 
-\blacksquare
+<!-- \blacksquare -->
 
 
 
@@ -1110,17 +1104,17 @@ And substituting this in for $m_u$ in the previous expression gives
 
 
 
-## The farm net benefit envelope
+<!-- ## The farm net benefit envelope -->
 
-The optimized objective function or "net benefit envelope" $\mathcal{L}^*$ is just the objective function $\mathcal{L}$ evaluated at the optimal yield $y^*$.
+<!-- The optimized objective function or "net benefit envelope" $\mathcal{L}^*$ is just the objective function $\mathcal{L}$ evaluated at the optimal yield $y^*$. -->
 
-\begin{equation}
-\mathcal{L}^* = \mathcal{L} \bigr|_{y = y^*} = P y^* - \lambda (C^* - B)
-\end{equation}
+<!-- \begin{equation} -->
+<!-- \mathcal{L}^* = \mathcal{L} \bigr|_{y = y^*} = P y^* - \lambda (C^* - B) -->
+<!-- \end{equation} -->
 
-Note that, applying the handy relation in equation \ref{eq:lambdaHandy}, the net benefit envelope can be rewritten without the optimal expenditure term $C^*$.
+<!-- Note that, applying the handy relation in equation \ref{eq:lambdaHandy}, the net benefit envelope can be rewritten without the optimal expenditure term $C^*$. -->
 
-\begin{equation}
-\mathcal{L}^* = (1 - h) P y^* + \lambda B
-\label{eq:NBenv}
-\end{equation}
+<!-- \begin{equation} -->
+<!-- \mathcal{L}^* = (1 - h) P y^* + \lambda B -->
+<!-- \label{eq:NBenv} -->
+<!-- \end{equation} -->
