@@ -23,6 +23,19 @@ output:
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
+
+library(tidyverse)
+library(patchwork)
+
+labelSize <- 2.5
+smallLabelSize <- 2
+titleSize <- 8
+subtitleSize <- 7
+legendTextSize <- 6
+axisTextSize <- 6
+axisTitleSize <- 7
+facetTitleSize <- 7
+
 ```
 
 #Introduction
@@ -68,12 +81,14 @@ The five Axioms are:
 
 5) The ratio of output price to marginal cost follows a geometric Brownian motion
 
-Four other desirable properties---a homogeneous (and thus homothetic) farm production function concave in inputs, upward sloping farm supply curves, and downward sloping farm input demand curves---follow as corollaries, and thus do not have to be imposed as additional Axioms. [The form also agrees with Lipton's theory of technology adoption.]
+Four other desirable properties---a farm production function that is homogeneous (and thus homothetic) and concave in inputs, upward sloping farm supply curves, and downward sloping farm input demand curves---follow as corollaries, and thus do not have to be imposed as additional Axioms. [The form also agrees with Lipton's theory of technology adoption.]
 
 On the other hand, two somewhat controversial corollaries also follow: strictly decreasing returns to scale and constant marginal cost. (The latter is well supported empirically [@lavoie2014post], but is still eschewed in the textbooks.) Regardless of one's view on returns to scale and marginal cost curves, the very fact that it is possible to disagree with specific corollaries, and to trace the disagreement back to specific Axioms, underscores the theoretic transparency of the derived curve. The theoretic opacity of the expedient approach, by contrast, it is not even possible to know if one agrees or disagrees with the premises, since there is little clarity as to what those premises are in the first place. [Moreover, note that the Axioms themselves are not controversial. If they result in a controversial corollary, then this is invitation to reflect upon whether trying to have their cake and eat it too]
 <!-- limits the possibility of knowing whether the implied farm production function is homogeneous, much less the degree of homogeneity or shape of the marginal cost curve. In general, it  -->
 
 The gain in transparency and explanatory power comes at little cost to tractability... computation of economic surplus...  While the derived functional form is considerably more sophisticated than expedient forms, it remains highly tractable, and may be implemented at low cost. Unlike expedient forms, the derived curve generates testable hypotheses regarding farm level economic behavior. The curve is estimated on Kenya maize farm data, and hypotheses are tested. Extensions to aggregate demand and partial equilibrium analysis, and application in min data contexts, are briefly addressed in the Discussion.
+
+explicitly accounts for price risk and agroclimatic uncertainty, allowing explicit analysis of the role of futures markets and marketing board policy, in enhancing technological impact....the trade board debate... ...comparative analysis of multiple impact pathways to achieve the same result (ETH bean example)
 
 <!-- ----------------------------------- -->
 
@@ -128,7 +143,7 @@ Finally, the parameterization of such forms tends to be highly abstract, with no
 
 # Methodology
 
-## Derivation of the farm production function from Axioms 1-3
+## Derivation of the farm production function from Axioms 1 and 2
 
 Throughout much of written history, astute observers have noticed that the usefulness of increments in the quantity of a good is inversely proportional to amount of the input or good or service already acquired [@kauder1953genesis]. In 1738, Daniel Bernoulli put it this way:
 <!-- an input (in the case of producer yield functions) or good or service (in the case of consumer utility functions) -->
@@ -291,7 +306,7 @@ y^* =  \left(y_0 \prod_i \left(\frac{\alpha_i}{w_i}\right)^{\alpha_i} \prod_i k_
 \end{equation}
 <!-- Heathfield and Wibe [-@heathfield1987introduction] -->
 
-To reduce notational clutter, $y^*$ is henceforth rewritten as follows.
+This is the optimized yield function, or yield envelope, henceforth simply referred to as the farm yield. To reduce notational clutter, $y^*$ is rewritten as follows.
 
 \begin{equation}
 y^* = (g_0 \beta)^{\frac{1}{1 - h}} \left( \frac{P}{\lambda} \right)^{\frac{h}{1 - h}}
@@ -390,23 +405,143 @@ whereby it is clear that the domain of $h$ implies negatively sloped own and cro
 [...recovers Lipton's theory of adoption...]
 [...optimal farm size...?]
 
-## Aggregate supply \label{sec:aggSupply}
+## Derivation of aggregate supply from Axioms 3-5 \label{sec:aggSupply}
+
+Farm production $q^*$ is, of course, just farm yield times farm area.
 
 get into the gBm nitty gritty
-Yield and output price are, of course, stochastic variables. Henceforth it is necessary to introduce more precision in their treatment as such. Yield and output price In the absence of forward contracts, output price $P$ is likewise unknown at the time of planting. The farmer makes planting decisions based on input prices, the yield they _expect_ to achieve, and the price they _expect_ their product to fetch in the market at harvest.
+Henceforth it is necessary to be more specific in the treatment of yield $y^*$ and output price $P$. Absent a forward contract, the output price is a stochastic variable whose value at the time of harvest $(t = T)$ is unknown to the farmer at the time of planting and input expenditures $(t = 0)$. Likewise, yield is a stochastic variable, as it is dependent upon numerous stochastic agroclimatic processes, and is unknown to the farmer at the time of planting and input expenditure decision $C^*$. Wherever $P$ and $y^*$ appear in the equations above, then, what we really mean to say is $E[P(T)]\bigr|_{t = 0}$ and $E[y^*(T)]\bigr|_{t = 0}$. That is, say, farmers make their expenditure decisions at planting time $t = 0$ based on what they expect the values of $y^*$ and $P$ to be at harvest ($t = T$), as evaluated at planting time.
+
+The farm shadow price $\lambda$ is thus more accurately written
+
+\begin{equation}
+\lambda = \frac{E[P(T)]\bigr|_{t = 0} E[y^*(T)]\bigr|_{t = 0}}{C^*} h \label{eq:lambda2}
+\end{equation}
 
 
-That is to say, $\lambda$ is more properly defined
-
+<!-- The optimal input level (Equation \ref{eq:inputDem1}) is thus more accurately represented as -->
 <!-- \begin{equation} -->
-<!-- \lambda = \frac{E[]}{} -->
+<!-- x_j^* = \frac{E[P(T)]\bigr|_{t = 0} E[y^*(T)]\bigr|_{t = 0} \alpha_j}{\lambda w_j} -->
+<!-- \label{eq:inputDem2} -->
 <!-- \end{equation} -->
 
-Necessary to be more precise in language...P is expected price at time of sale, as evaluated at the time of planting (the time of expenditures on farm inputs). This is henceforth written as
 
-<!-- \begin{equation} -->
-<!-- E[P(T)]\bigr|_{t = 0} -->
-<!-- \end{equation} -->
+The farmer makes planting and input expenditure decisions based on input prices, the yield they _expect_ to achieve, and the price they _expect_ their product to fetch in the market at harvest.
+
+
+```{r}
+
+thisFolder <- "D:/OneDrive - CGIAR/Documents 1/CIAT 2/A theory of aggregate supply and demand/"
+thisFile <- "South Africa corn future price.csv"
+thisFilePath <- paste0(thisFolder, thisFile)
+df_raw <- read.csv(thisFilePath, stringsAsFactors = F)
+keepCols <- c("DATE", "YELLOW")
+df_raw <- df_raw[, keepCols]
+colnames(df_raw) <- c("Date", "Price")
+df_raw$Date <- as.Date(df_raw$Date, "%m/%d/%Y")
+df <- subset(df_raw, Date > "2017-06-30" &
+               Date < "2018-06-30")
+df$`Log return` <- c(NA, diff(log(df$Price)))
+colnames(df)[2] <- "ZAR / kg."
+gg <- ggplot(df, aes(x = Date, y = `ZAR / kg.`))
+gg <- gg + geom_line()
+gg <- gg + theme_bw()
+gg <- gg + theme(axis.title.x = element_blank(),
+                 axis.title.y = element_text(size = axisTitleSize),
+                 axis.text = element_text(size = axisTextSize))
+gg_sa <- gg
+df_sa <- df
+df_sa$`ZAR / kg.` <- NULL
+df_sa$Place <- "South Africa"
+# gg <- ggplot(df, aes(x = `Log return`))
+# gg <- gg + geom_histogram(color = 4, fill = "white", bins = 15)
+# gg
+# mm <- mean(df$`Log daily return`, na.rm = T)
+# s <- sd(df$`Log daily return`, na.rm = T)
+# print(mm)
+# print(s)
+#-----------------------------------------------------------------
+thisFile <- "US corn future price.csv"
+thisFilePath <- paste0(thisFolder, thisFile)
+df_raw <- read.csv(thisFilePath, stringsAsFactors = F)
+keepCols <- c("date", "adjusted")
+df_raw <- df_raw[, keepCols]
+colnames(df_raw) <- c("Date", "Price")
+df_raw$Date <- as.Date(df_raw$Date, "%Y-%m-%d")
+df <- subset(df_raw, Date > "2017-09-01" &
+               Date < "2018-09-01")
+df$Price <- df$Price / 100
+df$`Log return` <- c(NA, diff(log(df$Price)))
+colnames(df)[2] <- "USD / bushel"
+gg <- ggplot(df, aes(x = Date, y = `USD / bushel`))
+gg <- gg + geom_line()
+gg <- gg + theme_bw()
+gg <- gg + theme(axis.title = element_text(size = axisTitleSize),
+                 axis.text = element_text(size = axisTextSize))
+gg_us <- gg
+df_us <- df
+df_us$`USD / bushel` <- NULL
+df_us$Place <- "USA"
+# gg <- ggplot(df, aes(x = `Log daily return`))
+# gg <- gg + geom_histogram(color = 4, fill = "white", bins = 15)
+# gg
+# mm <- mean(df$`Log daily return`, na.rm = T)
+# s <- sd(df$`Log daily return`, na.rm = T)
+# print(mm)
+# print(s)
+#---------------------------------------------------------------
+thisFile <- "Nakuru Eldoret monthly maize price.csv"
+thisFilePath <- paste0(thisFolder, thisFile)
+df_raw <- read.csv(thisFilePath, stringsAsFactors = F)
+keepCols <- c(1, 2)
+df_raw <- df_raw[, keepCols]
+df_raw <- as.data.frame(apply(df_raw, 2, rev))
+colnames(df_raw) <- c("Date", "Price")
+df_raw$Price <- as.numeric(df_raw$Price)
+df_raw$Date <- as.Date(df_raw$Date, "%m/%d/%Y")
+df <- subset(df_raw, Date > "2008-04-01" &
+               Date < "2019-08-01")
+df$`Log return` <- c(NA, diff(log(df$Price)))
+colnames(df)[2] <- "KES / kg."
+gg <- ggplot(df, aes(x = Date, y = `KES / kg.`))
+gg <- gg + geom_line()
+gg <- gg + theme_bw()
+gg <- gg + theme(axis.title.x = element_blank(),
+                 axis.title.y = element_text(size = axisTitleSize),
+                 axis.text = element_text(size = axisTextSize))
+gg_ky <- gg
+df_ky <- df
+df_ky$`KES / kg.` <- NULL
+df_ky$Place <- "Kenya"
+# gg <- ggplot(df, aes(x = `Log return`))
+# gg <- gg + geom_histogram(color = 4, fill = "white", bins = 20)
+# gg
+# mm <- mean(df$`Log daily return`, na.rm = T)
+# s <- sd(df$`Log daily return`, na.rm = T)
+# print(mm)
+# print(s)
+#---------------------------------------------------------------
+df_hist <- as.data.frame(do.call(rbind, list(df_sa, df_us, df_ky)))
+gg <- ggplot(df_hist, aes(x = `Log return`))
+gg <- gg + geom_histogram(color = 4, fill = "white", bins = 20)
+gg <- gg + facet_wrap(~Place, ncol = 1, scales = "free")
+gg <- gg + theme_bw()
+gg <- gg + theme(axis.title.y = element_blank(),
+                 axis.title.x = element_text(size = axisTitleSize),
+                 axis.text = element_text(size = axisTextSize),
+                 strip.background = element_rect(fill = "white"),
+                 strip.text = element_text(size = facetTitleSize))
+gg_hist <- gg
+#---------------------------------------------------------------
+# library(patchwork)
+design <- c("AAD
+            BBD
+            CCD")
+wrap_plots(A = gg_ky, B = gg_sa, C = gg_us, D = gg_hist, design = design)
+
+
+```
+
 
 
 assuming $b(t)$ follows a geometric Brownian motion, then
@@ -429,23 +564,23 @@ s_{\mu}^2 &= Var\left[\frac{\Delta \mu(T)}{\mu(T) \Delta t} \right]
 
 For an instantaneous (in practice, judiciously small) time step $\Delta t$. (For a full introduction to geometric Brownian motion, see Hull [-@].) Therefore, $E[\lambda]$ may be expressed
 
-Farm production $q^*$ is, of course, just farm yield envelope times farm area. Often, area is one of the control variables in $\beta_k$. In this case, $q^*$ is given by adding $1$ to the fitted exponent (call this $\kappa_a$) on area.
+<!-- Farm production $q^*$ is, of course, just farm yield envelope times farm area. Often, area is one of the control variables in $\beta_k$. In this case, $q^*$ is given by adding $1$ to the fitted exponent (call this $\kappa_a$) on area. -->
 
-\begin{equation}
-\begin{split}
-q^* &= A y^* \\
-&= y_0 \hat{\beta}^{\eta(D)} \left(\frac{E[P(T)]\bigr|_{t = 0}}{\lambda}\right)^{\eta(E[P(T)]\bigr|_{t = 0})}
-\end{split}
-\end{equation}
+<!-- \begin{equation} -->
+<!-- \begin{split} -->
+<!-- q^* &= A y^* \\ -->
+<!-- &= y_0 \hat{\beta}^{\eta(D)} \left(\frac{E[P(T)]\bigr|_{t = 0}}{\lambda}\right)^{\eta(E[P(T)]\bigr|_{t = 0})} -->
+<!-- \end{split} -->
+<!-- \end{equation} -->
 
-Where
+<!-- Where -->
 
-\begin{equation}
-\begin{split}
-\hat{\beta} &= \frac{\beta_x \hat{\beta_k}}{\beta_w} \\
-\hat{\beta_k} &= A \beta_k = A^{\kappa_a + 1} \prod_{i \neq a}^{n_k} k_i^{\kappa_i}
-\end{split}
-\end{equation}
+<!-- \begin{equation} -->
+<!-- \begin{split} -->
+<!-- \hat{\beta} &= \frac{\beta_x \hat{\beta_k}}{\beta_w} \\ -->
+<!-- \hat{\beta_k} &= A \beta_k = A^{\kappa_a + 1} \prod_{i \neq a}^{n_k} k_i^{\kappa_i} -->
+<!-- \end{split} -->
+<!-- \end{equation} -->
 
 
 Assuming that farms do not enter production unless they expect to make a profit (Axiom 3), then, by Equation \ref{eq:lambda}, $\lambda > h$. This, in turn, implies the following upper bound on $y^*$.
