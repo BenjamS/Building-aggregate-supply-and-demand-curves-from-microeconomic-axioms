@@ -68,7 +68,7 @@ The five Axioms are:
 
 5) The ratio of output price to marginal cost follows a geometric Brownian motion
 
-Four other desirable properties---a farm profit function convex in output price, a homogeneous (and thus homothetic) farm production function, upward sloping farm supply curves, and downward sloping farm input demand curves---follow as corollaries, and thus do not have to be imposed as additional Axioms. [The form also agrees with Lipton's theory of technology adoption.]
+Four other desirable properties---a homogeneous (and thus homothetic) farm production function concave in inputs, upward sloping farm supply curves, and downward sloping farm input demand curves---follow as corollaries, and thus do not have to be imposed as additional Axioms. [The form also agrees with Lipton's theory of technology adoption.]
 
 On the other hand, two somewhat controversial corollaries also follow: strictly decreasing returns to scale and constant marginal cost. (The latter is well supported empirically [@lavoie2014post], but is still eschewed in the textbooks.) Regardless of one's view on returns to scale and marginal cost curves, the very fact that it is possible to disagree with specific corollaries, and to trace the disagreement back to specific Axioms, underscores the theoretic transparency of the derived curve. The theoretic opacity of the expedient approach, by contrast, it is not even possible to know if one agrees or disagrees with the premises, since there is little clarity as to what those premises are in the first place. [Moreover, note that the Axioms themselves are not controversial. If they result in a controversial corollary, then this is invitation to reflect upon whether trying to have their cake and eat it too]
 <!-- limits the possibility of knowing whether the implied farm production function is homogeneous, much less the degree of homogeneity or shape of the marginal cost curve. In general, it  -->
@@ -186,7 +186,7 @@ where $\boldsymbol{\alpha}$ is the vector of input elasticities corresponding to
 \end{matrix} \right]
 \end{equation}
 
-It is straightforward to see that equation \ref{eq:cobbDoug2} is a convex, homogeneous (and thus also homothetic) function with degree of homogeneity $h$ equal to $\sum_i \alpha_i$. There is no need, then, to impose these properties as additional Axioms. They follow from the Axiom of diminishing marginal returns.
+It is straightforward to see that equation \ref{eq:cobbDoug2} is a homogeneous (and thus also homothetic) function with degree of homogeneity $h$ equal to $\sum_i \alpha_i$. There is no need, then, to impose homogeneity as an additional Axiom. It follows from the Axiom of diminishing marginal returns.
 
 Empirical analysis involves exogenously given control variables ($k_i$), typically including demographic variables such as age, education, gender, household size, as well as agroclimatic variables such as temperature, rainfall, soil conditions, and so forth. Equation \ref{eq:cobbDoug} is thus henceforth rewritten as follows.
 <!-- (Analysis is said to be "ceteris paribus" when these variables are held constant at a particular value across the population.) -->
@@ -274,7 +274,7 @@ And the second order condition for a maximum is
 \label{eq:eqSOC}
 \end{equation}
 
-Where Euler's Theorem has been invoked in the second line of the condition. It follows that Axiom 2 requires $0 < h < 1$, i.e. diminishing returns to scale. Constant returns to scale ($h = 1$) imply the break-even point, while increasing returns to scale ($h > 1$) imply a loss.
+Where Euler's Theorem has been invoked in the second line of the condition. It follows that Axiom 2 requires $0 < h < 1$, i.e. diminishing returns to scale. Constant returns to scale ($h = 1$) imply the break-even point, while increasing returns to scale ($h > 1$) imply a loss. The farm yield function is thus globally concave in inputs. Constant and increasing returns, on the other hand, would imply global linearity and convexity, respectively. 
 
 The first order conditions may be solved for input demand $x_j^*$ as follows.
 
