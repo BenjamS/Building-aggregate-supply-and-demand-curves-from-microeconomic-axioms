@@ -75,11 +75,12 @@ The five Axioms are:
 <!-- 3) Supply curves slope upwards -->
 <!-- 4) Demand curves slope downwards -->
 
-3) Farms enter production only if it increases their expected net benefit
+3) Output price and yield follow independent geometric Brownian motions
 
-4) Farm production is lognormally distributed
+4) Farms enter production only if it increases their expected net benefit
 
-5) The ratio of output price to marginal cost follows a geometric Brownian motion
+5) Farm production is lognormally distributed
+
 
 Four other desirable properties---a farm production function that is homogeneous (and thus homothetic) and concave in inputs, upward sloping farm supply curves, and downward sloping farm input demand curves---follow as corollaries, and thus do not have to be imposed as additional Axioms. [The form also agrees with Lipton's theory of technology adoption.]
 
@@ -353,27 +354,44 @@ which is congruent to Axiom 1. The question arises, then, whether Axiom 2 requir
 
 ### Some important/underrepresented corollaries
 
-Because the C-D fn has fallen into such disrepute, it is worthwhile to take a moment to point out some attractive corollaries that are underrepresented in the textbook treatments. [and one new one -lipton]
+Because the C-D fn has fallen into such disrepute, it is worthwhile to take a moment to highlight some attractive corollaries that are underrepresented in the textbook treatments. [and one new one -lipton]
 
 The farm marginal cost readily follows from the scale elasticity of yield by combining it with the budget shadow price expression in Equation \ref{eq:lambda}.
 
 \begin{equation}
 \frac{dC^*}{dy^*} = \frac{P}{\lambda}
+\label{eq:margCost1}
 \end{equation}
 
-Axioms 1 and 2 thus imply constant marginal cost. As mentioned in the introduction, this is well supported empirically [].
-<!-- When Axiom 2 is added to Axiom 1, then, Axiom 1 can be proven within the axiomatic system, up to scaling. -->
-<!-- This comes in handy when considering the output $y^*$ as an input in some other productive process. Likewise, the optimal inputs $x_j^*$ may be considered the results of profit maximization. -->
-<!-- That is to say, the expression for $y^*$ resulting from Axiom 2 is congruent to Axiom 1. And note the similarity to Equation . Axiom 2 thus results in an expression that recovers Axiom 1. [Axiom 1-2 isometry?...Axiom 2 "recovers" Axiom 1?] -->
+Axioms 1 and 2 thus imply constant marginal cost. (As mentioned in the introduction, this is well supported empirically [].) Since $P = d R^* / d y^*$, this can be rearranged into another instructive expression for $\lambda$.
 
-From Equation \ref{eq:YdEnvCompact} and the domain of $h$, it follows that farm supply curves are positively sloped.
+\begin{equation}
+\lambda = \frac{dR^* / dy^*}{dC^* / dy^*} = \frac{dR^*}{dC^*}
+\label{eq:lambda2}
+\end{equation}
+
+Letting $C^{\#}$ denote the "average cost of production" (i.e., the cost per unit output), moreover, then
+
+\begin{equation}
+\lambda = \frac{C^{\#}}{h}
+\label{eq:lambda3}
+\end{equation}
+
+And the marginal cost and average cost are thus related as follows.
+
+\begin{equation}
+\frac{dC^*}{dy^*} h = C^{\#}
+\label{eq:lambda3}
+\end{equation}
+
+Turning to supply and demand curves, From Equation \ref{eq:YdEnvCompact} and the domain of $h$, it follows that farm supply curves are positively sloped.
 
 \begin{equation}
 \frac{\partial \ln(y^*)}{\partial \ln(P)} = \frac{h}{1 - h} > 0
 \label{eq:PelastYstar}
 \end{equation}
 
-Note, in passing, that supply is elastic for $h \in (1 / 2 , 1)$, inelastic for $h \in (0, 1 / 2)$, and linear when $h = 1 / 2$. And note that increasing returns to scale would imply negatively sloped supply curves.
+Note, in passing, that farm supply is elastic for $h \in (1 / 2 , 1)$, inelastic for $h \in (0, 1 / 2)$, and linear when $h = 1 / 2$. And note that increasing returns to scale would imply negatively sloped supply curves.
 
 The domain of $h$ required by Axiom 2 also implies strictly downward sloping input demand curves. To see this, combine Equations \ref{eq:inputDem1} and \ref{eq:YdEnvCompact} to obtain an alternate expression for input demand.
 
@@ -407,29 +425,40 @@ whereby it is clear that the domain of $h$ implies negatively sloped own and cro
 
 ## Derivation of aggregate supply from Axioms 3-5 \label{sec:aggSupply}
 
-Farm production $q^*$ is, of course, just farm yield times farm area.
-
-get into the gBm nitty gritty
-Henceforth it is necessary to be more specific in the treatment of yield $y^*$ and output price $P$. Absent a forward contract, the output price is a stochastic variable whose value at the time of harvest $(t = T)$ is unknown to the farmer at the time of planting and input expenditures $(t = 0)$. Likewise, yield is a stochastic variable, as it is dependent upon numerous stochastic agroclimatic processes, and is unknown to the farmer at the time of planting and input expenditure decision $C^*$. Wherever $P$ and $y^*$ appear in the equations above, then, what we really mean to say is $E[P(T)]\bigr|_{t = 0}$ and $E[y^*(T)]\bigr|_{t = 0}$. That is, say, farmers make their expenditure decisions at planting time $t = 0$ based on what they expect the values of $y^*$ and $P$ to be at harvest ($t = T$), as evaluated at planting time.
+Henceforth it is necessary to be more specific in the treatment of yield $y^*$ and output price $P$. Absent a forward contract, the output price is a stochastic variable whose value at the time of harvest $(t = T)$ is unknown to the farmer at the time of planting and input expenditures $(t = 0)$. Likewise, yield is dependent upon numerous stochastic agroclimatic processes, and is unknown to the farmer at the time of planting and input expenditure decision $C^*$. Wherever $P$ and $y^*$ appear in the equations above, then, what we really mean to say is $E[P(T)]\bigr|_{t = 0}$ and $E[y^*(T)]\bigr|_{t = 0}$. That is, farmers make their input expenditure decisions at planting time ($t = 0$) based on what they expect the values of $y^*$ and $P$ to be at harvest ($t = T$).
 
 The farm shadow price $\lambda$ is thus more accurately written
 
 \begin{equation}
-\lambda = \frac{E[P(T)]\bigr|_{t = 0} E[y^*(T)]\bigr|_{t = 0}}{C^*} h \label{eq:lambda2}
+\lambda = \frac{E[P(T)]\bigr|_{t = 0} E[y^*(T)]\bigr|_{t = 0}}{C^*} h = \left[ \frac{P(T)]}{C^{\#}} \right]\Bigr|_{t = 0} h
+\label{eq:lambda4}
 \end{equation}
-
-
-<!-- The optimal input level (Equation \ref{eq:inputDem1}) is thus more accurately represented as -->
+<!-- And the optimal input level (Equation \ref{eq:inputDem1}) is thus more accurately represented as -->
 <!-- \begin{equation} -->
 <!-- x_j^* = \frac{E[P(T)]\bigr|_{t = 0} E[y^*(T)]\bigr|_{t = 0} \alpha_j}{\lambda w_j} -->
 <!-- \label{eq:inputDem2} -->
 <!-- \end{equation} -->
 
+The stochastic behavior of prices often follows a geometric Brownian motion. That is to say, changes in $P$ over a small time interval $\Delta t$ ($\Delta P = P(t + \Delta t) - P(t)$) are often accurately modeled by
 
-The farmer makes planting and input expenditure decisions based on input prices, the yield they _expect_ to achieve, and the price they _expect_ their product to fetch in the market at harvest.
+\begin{equation}
+\Delta P = \Delta P(t) m_p \Detla t - P(t) s_p \epsilon \sqrt{\Delta t}
+\end{equation}
 
+Where $\epsilon$ is a normally distributed random variable with mean $0$ and variance $1$, such that the arithmetic return $\Delta P / P$ is normally distributed with mean and variance
 
-```{r}
+\begin{equation}
+\begin{split}
+E \left[\frac{\Delta P(T)}{P(T)} \right] &= m_{p} \Delta t  \\
+Var \left[\frac{\Delta P(T)}{P(T)} \right] &= s_{p}^2 \Delta t
+\end{split}
+\end{equation}
+
+(For a reference, see Hull [].)
+
+Technically, $\Delta t$ is an instantaneous time interval, and hence $m_p$ is the expected instantaneous growth rate. In practice, it is often acceptable to treat $\Delta t$ as a finitely small, but judicious, time step. As a rule of thumb, $\Delta t$ should be as small as the resolution of the data will allow, while also ensuring that changes in $P$ still occur in every time step.
+
+```{r Fig1, fig.show = "hold", fig.width = 5, fig.height=3, fig.align="center", fig.cap="\\label{fig:gBmEgs}(Left) Maize price time series from (top to bottom) Eldoret market, Kenya (downloaded using the FAO Food Price Monitoring and Analysis Tool), Johannesburg Stock Exchange, South Africa, and the Chicago Board of Trade, USA. The Kenya series is monthly, while the South African and US series are daily. (Right) The corresponding log returns exhibit a normal distribution, typical of geometric Brownian motion.", echo = FALSE}
 
 thisFolder <- "D:/OneDrive - CGIAR/Documents 1/CIAT 2/A theory of aggregate supply and demand/"
 thisFile <- "South Africa corn future price.csv"
@@ -542,27 +571,32 @@ wrap_plots(A = gg_ky, B = gg_sa, C = gg_us, D = gg_hist, design = design)
 
 ```
 
-
-
-assuming $b(t)$ follows a geometric Brownian motion, then
+The log return of a geometric Browning motion is defined over finite time intervals $\ln(P(T) / P(\hat{t}))$ for some starting time $\hat{t}<T$, and is also normally distributed, with mean and variance
 
 \begin{equation}
 \begin{split}
-E[\mu_b(T)]\bigr|_{t = 0} &= \mu_b(0) e^{m_{\mu} T} \\
-Var[\ln(\mu_b(T))]\bigr|_{t = 0} &= s_{\mu}^2 T
+E \left[\ln \left( \frac{P(T)}{P(\hat{t})} \right) \right] &= \left(m_{p} - \frac{s_p^2}{2} \right) T \\
+Var \left[\ln \left( \frac{P(T)}{P(\hat{t})} \right) \right] &= s_{p}^2 T
 \end{split}
 \end{equation}
 
-Where 
+Examples of maize prices following a geometric Brownian motion are given from different parts of the world in Figure \ref{fig:gBmEgs}. 
+
+Geometric Brownian motion is also known to approximate the time evolution of certain [atmospheric processes] weather variables such as temperature, solar radiation, and humidity, which in turn drive yield. Assuming yield ($y^*$) follows a geometric Brownian motion, then average cost ($C^{\#}$) must also, by definition, follow a geometric Brownian motion.
+
+Introducing the notation $b(t)$ to stand for the ratio $P(T) / C^{\#}(T)$
+
+, then the ratio inside the brackets must also follow a geometric Brownian motion. Denoting this ratio $b(t)$, the instantaneous arithmetic returns $\Delta b / b$ are thus normally distributed with mean and variance
 
 \begin{equation}
 \begin{split}
-m_{\mu} &= E\left[\frac{\Delta \mu(T)}{\mu(T) \Delta t} \right] \\
-s_{\mu}^2 &= Var\left[\frac{\Delta \mu(T)}{\mu(T) \Delta t} \right]
+E \left[\frac{\Delta b}{b} \right] &= m_b \Delta t  = (m_p - m_y + \ln(C^*)) \Delta t \:\:;\:\:\: m_y = E \left[\frac{\Delta y^*}{y^*} \right] \\
+Var \left[\frac{\Delta b}{b} \right] &= (s_p^2 + s_y^2)  \Delta t
 \end{split}
 \end{equation}
 
-For an instantaneous (in practice, judiciously small) time step $\Delta t$. (For a full introduction to geometric Brownian motion, see Hull [-@].) Therefore, $E[\lambda]$ may be expressed
+
+Farm production $q^*$ is, of course, just farm yield times farm area.
 
 <!-- Farm production $q^*$ is, of course, just farm yield envelope times farm area. Often, area is one of the control variables in $\beta_k$. In this case, $q^*$ is given by adding $1$ to the fitted exponent (call this $\kappa_a$) on area. -->
 
@@ -583,10 +617,10 @@ For an instantaneous (in practice, judiciously small) time step $\Delta t$. (For
 <!-- \end{equation} -->
 
 
-Assuming that farms do not enter production unless they expect to make a profit (Axiom 3), then, by Equation \ref{eq:lambda}, $\lambda > h$. This, in turn, implies the following upper bound on $y^*$.
+Assuming that farms do not enter production unless they expect to make a profit (Axiom 4), then, by Equation \ref{eq:lambda}, $\lambda > h$. This, in turn, implies the following upper bound on $y^*$.
 
 \begin{equation}
-y^* <  (y_0 \beta)^{\frac{1}{1 - h}}  \left(\frac{P}{h} \right)^{\frac{h}{1 - h}}
+E[y^*]\bigr|_{t = 0} < (g_0 \beta)^{\eta / h}  \left(\frac{P}{h} \right)^{\eta}
 \label{eq:ydUpBound}
 \end{equation}
 
@@ -796,6 +830,10 @@ There are two sources of uncertainty. Price risk ...Marginal cost of production 
 
 
 # Discussion
+
+...here focused on the motivating context, but the method is applicable in CGE models etc. anywhere a model of aggregate supply is required...
+
+
 
 ...this form allows one to look at questions of the value of storage...forward contracts...for e.g. as policy instruments implemented in tandem with new technology...questions of how to optimize the enabling environment to maximize impact of new technology...
 
