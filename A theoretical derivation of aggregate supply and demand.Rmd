@@ -1,5 +1,5 @@
 ---
-title: A theoretical derivation of the aggregate supply curve, accounting for farm entry and exit
+title: A theoretical derivation of the aggregate supply curve accounting for farm entry and exit
 # author: "Benjamin Schiek"
 # date: "`r Sys.Date()`"
 abstract: |
@@ -22,7 +22,11 @@ output:
 ---
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
+knitr::opts_chunk$set(echo = FALSE,
+                      message = FALSE,
+                      warning = FALSE,
+                      dev = c("png", "tiff"),
+                      dpi = 300)
 
 library(tidyverse)
 library(patchwork)
@@ -38,7 +42,7 @@ facetTitleSize <- 7
 
 ```
 
-#Introduction
+# Introduction
 
 In ex-ante impact assessments of exogenous changes in agricultural technology and agroclimatic conditions, aggregate supply curves are often specified primarily for the purpose of facilitating certain calculations (usually of economic surplus, deadweight loss, and the like), with secondary consideration given to the plausibility of the theoretical underpinnings implied by the choice of functional form. The resulting models are then, by construction, theoretically opaque.
 
@@ -77,9 +81,9 @@ The five Axioms are:
 
 3) Output price and yield follow independent geometric Brownian motions
 
-4) Farms enter production only if it increases their expected net benefit
+4) Farms enter production only if they expect to make positive profit
 
-5) Farm production is lognormally distributed
+5) Farm yield is lognormally distributed
 
 
 Four other desirable properties---a farm production function that is homogeneous (and thus homothetic) and concave in inputs, upward sloping farm supply curves, and downward sloping farm input demand curves---follow as corollaries, and thus do not have to be imposed as additional Axioms. [The form also agrees with Lipton's theory of technology adoption.]
@@ -232,7 +236,7 @@ y = y_0 \prod_{i = 1}^{n_k} \left( \frac{k_i}{\tilde{k}_i} \right)^{\kappa_i} \p
 \label{eq:cobbDoug3}
 \end{equation}
 
-Because the terms in parentheses are dimensionless, $y_0$ must have the same units as $y$; and $y_0$ may be interpreted as the value of $y$ when all management and control variables equal their reference values. In the empirical study included here, for example, the reference values are set equal to the sample means, such that $y_0$ is the value of $y$ evaluated at the sample means of the input and control variables.
+Because the ratios in parentheses are dimensionless, $y_0$ must have the same units as $y$; and $y_0$ may be interpreted as the value of $y$ when all management and control variables equal their reference values. In the empirical study included here, for example, the reference values are set equal to the sample means, such that $y_0$ is the value of $y$ evaluated at the sample means of the input and control variables.
 
 Equation \ref{eq:cobbDoug3} is, of course, the Cobb-Douglas form. Outside of Economics, it would simply be referred to as a (multivariate) power law. Such forms are often good models of observed processes across a wide range of research contexts and disciplines. In Economics, the Cobb-Douglas form was widely used from the 1920s to 1950s on the basis of its good empirical fit, but fell into disrepute thereafter for its perceived lack a theoretical basis. Capalbo and Antle [-@capalbo2015agricultural] offer a succinct introduction to this vast discussion. The forgoing derivation of the Cobb-Douglas form from Axiom 1 in some measure redresses the lack of a theoretical basis. [Other perceived shortcomings of the form are briefly addressed in the Discussion. if there is enough space!] [Or: In the course of the derivation below, a number of theoretical strengths are brought to light---underrepresented or overlooked by textbook treatments---that cast doubt on the bad reputation as a "restrictive" model]
 
@@ -423,14 +427,28 @@ whereby it is clear that the domain of $h$ implies negatively sloped own and cro
 [...recovers Lipton's theory of adoption...]
 [...optimal farm size...?]
 
-## Derivation of aggregate supply from Axioms 3-5 \label{sec:aggSupply}
+<!-- ### Domain of profitable production (Axiom 3) and restatement of aggregate supply -->
+<!-- It is now possible to define in detail the domain of profitable production $(\underline{q}^*, \bar{q}^*)$ appearing in the aggregate supply integral (Equation \ref{eq:sup1}). -->
 
-Henceforth it is necessary to be more specific in the treatment of yield $y^*$ and output price $P$. Absent a forward contract, the output price is a stochastic variable whose value at the time of harvest $(t = T)$ is unknown to the farmer at the time of planting and input expenditures $(t = 0)$. Likewise, yield is dependent upon numerous stochastic agroclimatic processes, and is unknown to the farmer at the time of planting and input expenditure decision $C^*$. Wherever $P$ and $y^*$ appear in the equations above, then, what we really mean to say is $E[P(T)]\bigr|_{t = 0}$ and $E[y^*(T)]\bigr|_{t = 0}$. That is, farmers make their input expenditure decisions at planting time ($t = 0$) based on what they expect the values of $y^*$ and $P$ to be at harvest ($t = T$).
-
-The farm shadow price $\lambda$ is thus more accurately written
+Assuming that farms do not enter production unless they expect to make a profit (Axiom 3) is tantamount to assuming that $C^{\#} < P$. By Equation \ref{eq:lambda3}, then, Axiom 3 introduces the bound $\lambda > h$. This, in turn, imposes the following upper bound on expected yield.
 
 \begin{equation}
-\lambda = \frac{E[P(T)]\bigr|_{t = 0} E[y^*(T)]\bigr|_{t = 0}}{C^*} h = \left[ \frac{P(T)]}{C^{\#}} \right]\Bigr|_{t = 0} h
+y^* < (g_0 \beta)^{\eta / h}  \left(\frac{P}{h} \right)^{\eta} \:\:;\:\:\: \eta = \frac{h}{1 - h}
+\label{eq:ydUpBound}
+\end{equation}
+
+(No lower bound is imposed by Axiom 3, and so the lower bound of $y^*$ just defaults to the physical lower bound $y^* > 0$.)
+
+## Derivation of aggregate supply from Axioms 4-5 \label{sec:aggSupply}
+
+### Geometric Brownian motion of prices and weather (Axiom 4)
+
+Henceforth it is necessary to be more specific in the treatment of yield $y^*$ and output price $P$ as stochastic variables. Absent a forward contract, the output price at the time of harvest and sale $(t = T)$ is unknown to the farmer at the time of planting and input expenditures $(t = 0)$. Likewise, yield is largely dependent upon numerous stochastic meteorological processes occurring between planting and harvest---particularly temperature, solar radiation, and humidity---which are unknown to the farmer at the time of planting. Wherever $P$ and $y^*$ appear in the equations above, then, what is really meant is $E[P(T)]\bigr|_{t = 0}$ and $E[y^*(T)]\bigr|_{t = 0}$. That is, farmers make their management decisions at planting time ($t = 0$) based on what they expect the values of $y^*$ and $P$ to be at harvest ($t = T$).
+
+The farm budget shadow price $\lambda$ is thus more accurately written
+
+\begin{equation}
+\lambda = h \frac{E[P(T)]\bigr|_{t = 0} E[y^*(T)]\bigr|_{t = 0}}{C^*} = h E\left[ \frac{P(T)]}{C^{\#}} \right]\Bigr|_{t = 0}
 \label{eq:lambda4}
 \end{equation}
 <!-- And the optimal input level (Equation \ref{eq:inputDem1}) is thus more accurately represented as -->
@@ -438,11 +456,12 @@ The farm shadow price $\lambda$ is thus more accurately written
 <!-- x_j^* = \frac{E[P(T)]\bigr|_{t = 0} E[y^*(T)]\bigr|_{t = 0} \alpha_j}{\lambda w_j} -->
 <!-- \label{eq:inputDem2} -->
 <!-- \end{equation} -->
+[Not necessary to specify y(t) process as C^{\#} based entirely on P(t) (by the lambda equation)]
 
-The stochastic behavior of prices often follows a geometric Brownian motion. That is to say, changes in $P$ over a small time interval $\Delta t$ ($\Delta P = P(t + \Delta t) - P(t)$) are often accurately modeled by
+The question remains as to what kind of stochastic process $y^*(t)$ and $P(t)$ follow. Prices generally follow a geometric Brownian motion. That is to say, changes in $P$ over a small time interval $\Delta t$ ($\Delta P = P(t + \Delta t) - P(t)$) are often accurately modeled by
 
 \begin{equation}
-\Delta P = \Delta P(t) m_p \Detla t - P(t) s_p \epsilon \sqrt{\Delta t}
+\Delta P = \Delta P(t) m_p \Delta t - P(t) s_p \epsilon \sqrt{\Delta t}
 \end{equation}
 
 Where $\epsilon$ is a normally distributed random variable with mean $0$ and variance $1$, such that the arithmetic return $\Delta P / P$ is normally distributed with mean and variance
@@ -454,11 +473,11 @@ Var \left[\frac{\Delta P(T)}{P(T)} \right] &= s_{p}^2 \Delta t
 \end{split}
 \end{equation}
 
-(For a reference, see Hull [].)
+(For a reference, see Hull [-@hull9thEdition].)
 
-Technically, $\Delta t$ is an instantaneous time interval, and hence $m_p$ is the expected instantaneous growth rate. In practice, it is often acceptable to treat $\Delta t$ as a finitely small, but judicious, time step. As a rule of thumb, $\Delta t$ should be as small as the resolution of the data will allow, while also ensuring that changes in $P$ still occur in every time step.
+Technically, $\Delta t$ is an instantaneous time interval, and hence $m_p$ is the expected instantaneous growth rate. In practice, it is often acceptable to treat $\Delta t$ as a finitely small, but judicious, time step. As a rule of thumb, $\Delta t$ should be as small as the resolution of the data will allow, while also ensuring a finite sample path with no jumps.
 
-```{r Fig1, fig.show = "hold", fig.width = 5, fig.height=3, fig.align="center", fig.cap="\\label{fig:gBmEgs}(Left) Maize price time series from (top to bottom) Eldoret market, Kenya (downloaded using the FAO Food Price Monitoring and Analysis Tool), Johannesburg Stock Exchange, South Africa, and the Chicago Board of Trade, USA. The Kenya series is monthly, while the South African and US series are daily. (Right) The corresponding log returns exhibit a normal distribution, typical of geometric Brownian motion.", echo = FALSE}
+```{r Fig1, fig.show = "hold", fig.width = 5, fig.height=3, fig.align="center", fig.cap="\\label{fig:gBmEgs}(Left) Maize price time series from (top to bottom) Eldoret market, Kenya (downloaded using the FAO Food Price Monitoring and Analysis Tool), Johannesburg Stock Exchange, South Africa, and the Chicago Board of Trade, USA. The Kenya series is monthly, while the South African and US series are daily. (Right) The corresponding daily log returns (monthly log returns in the case of Kenya) exhibit the normal distribution typical of geometric Brownian motion.", echo = FALSE}
 
 thisFolder <- "D:/OneDrive - CGIAR/Documents 1/CIAT 2/A theory of aggregate supply and demand/"
 thisFile <- "South Africa corn future price.csv"
@@ -580,66 +599,30 @@ Var \left[\ln \left( \frac{P(T)}{P(\hat{t})} \right) \right] &= s_{p}^2 T
 \end{split}
 \end{equation}
 
-Examples of maize prices following a geometric Brownian motion are given from different parts of the world in Figure \ref{fig:gBmEgs}. 
+Examples of maize prices following a geometric Brownian motion are given from different parts of the world in Figure \ref{fig:gBmEgs}.
 
-Geometric Brownian motion is also known to approximate the time evolution of certain [atmospheric processes] weather variables such as temperature, solar radiation, and humidity, which in turn drive yield. Assuming yield ($y^*$) follows a geometric Brownian motion, then average cost ($C^{\#}$) must also, by definition, follow a geometric Brownian motion.
+<!-- [atmospheric processes] -->
+The modeling of stochastic meteorological processes is slightly less straightforward. Weather derivatives are increasingly priced based on    Geometric Brownian motion is also known to approximate the time evolution of certain meteorological variables such as temperature, solar radiation, and humidity, which, together with management decisions, drive production. Axiom 4 is the assumption that production and output price follow independent geometric Brownian motions.
 
-Introducing the notation $b(t)$ to stand for the ratio $P(T) / C^{\#}(T)$
-
-, then the ratio inside the brackets must also follow a geometric Brownian motion. Denoting this ratio $b(t)$, the instantaneous arithmetic returns $\Delta b / b$ are thus normally distributed with mean and variance
-
-\begin{equation}
-\begin{split}
-E \left[\frac{\Delta b}{b} \right] &= m_b \Delta t  = (m_p - m_y + \ln(C^*)) \Delta t \:\:;\:\:\: m_y = E \left[\frac{\Delta y^*}{y^*} \right] \\
-Var \left[\frac{\Delta b}{b} \right] &= (s_p^2 + s_y^2)  \Delta t
-\end{split}
-\end{equation}
-
-
-Farm production $q^*$ is, of course, just farm yield times farm area.
-
-<!-- Farm production $q^*$ is, of course, just farm yield envelope times farm area. Often, area is one of the control variables in $\beta_k$. In this case, $q^*$ is given by adding $1$ to the fitted exponent (call this $\kappa_a$) on area. -->
-
+<!-- Letting $b(T)$ stand for the ratio $P(T) / C^{\#}(T)$, this means that the log return $\ln(b(T) / b(\hat{t}))$ is normally distributed with mean and variance -->
 <!-- \begin{equation} -->
 <!-- \begin{split} -->
-<!-- q^* &= A y^* \\ -->
-<!-- &= y_0 \hat{\beta}^{\eta(D)} \left(\frac{E[P(T)]\bigr|_{t = 0}}{\lambda}\right)^{\eta(E[P(T)]\bigr|_{t = 0})} -->
+<!-- E \left[\ln \left( \frac{b(T)}{b(\hat{t})} \right) \right] &= \left(m_b - \frac{s_b^2}{2} \right) T \\ -->
+<!-- Var \left[\ln \left( \frac{b(T)}{b(\hat{t})} \right) \right] &= b_{p}^2 T -->
 <!-- \end{split} -->
 <!-- \end{equation} -->
-
-<!-- Where -->
-
+<!-- Where  -->
 <!-- \begin{equation} -->
 <!-- \begin{split} -->
-<!-- \hat{\beta} &= \frac{\beta_x \hat{\beta_k}}{\beta_w} \\ -->
-<!-- \hat{\beta_k} &= A \beta_k = A^{\kappa_a + 1} \prod_{i \neq a}^{n_k} k_i^{\kappa_i} -->
+<!-- m_b &= m_p - m_y + \ln(C^*) \:\:;\:\:\: m_y = E\left[ \frac{\Delta y^*}{y^* \Delta t} \right]\\ -->
+<!-- s_b^2 &= s_p^2 + s_y^2 \:\:;\:\:\: s_y^2 = Var\left[ \frac{\Delta y^*}{y^* \Delta t} \right] -->
 <!-- \end{split} -->
 <!-- \end{equation} -->
 
 
-Assuming that farms do not enter production unless they expect to make a profit (Axiom 4), then, by Equation \ref{eq:lambda}, $\lambda > h$. This, in turn, implies the following upper bound on $y^*$.
+### Aggregation from farm to population level based on Axiom 5
 
-\begin{equation}
-E[y^*]\bigr|_{t = 0} < (g_0 \beta)^{\eta / h}  \left(\frac{P}{h} \right)^{\eta}
-\label{eq:ydUpBound}
-\end{equation}
-
-And maximum economic production for given $A$, assuming farms only enter production if their expected revenue is greater than their cost (recall equation \ref{eq:ydUpBound}), is
-
-\begin{equation}
-\begin{split}
-\bar{q}^* &= A \bar{y}^* \\
-&= y_0 \hat{\beta}^{\eta(D)} \left(\frac{E[P(T)]\bigr|_{t = 0}}{h}\right)^{\eta(E[P(T)]\bigr|_{t = 0})}
-\end{split}
-\end{equation}
-
-By definition, expected aggregate supply at or around the time of planting must be the definite integral of expected farm production over its density, from $0$ to maximum expected economic farm production $\bar{q}^*$.
-
-\begin{equation}
-Q_S = \int_{0}^{\bar{q}^*} q^* \rho(q^*) \: dq^*
-\end{equation}
-
-Where the farm density $\rho(q^*)$ function is defined such that
+The farm density function $\rho(q^*)$ in Equation \ref{eq:sup1} is defined such that
 
 \begin{equation}
 \rho(q^*) = \int_{0}^{\infty} \rho(q^*) \: dq^* = N_f
@@ -650,6 +633,111 @@ Where $N_f$ is the number of farms in the population. The farm density may thus 
 \begin{equation}
 \rho(q^*) = N_f f(q^*)
 \end{equation}
+
+Aggregate supply can now be specified in greater detail.
+
+<!-- \begin{equation} -->
+<!-- \begin{split} -->
+<!-- E[Q(T)]\bigr|_{t = 0} &= N_f \int_{0}^{\bar{q}^*} q^* f(q^*) \: dq^* \\ -->
+<!-- &= \theta E[P(T)]\bigr|_{t = 0}^{\eta} \int_{0}^{h^{-\eta}} \lambda^{-\eta} f(q^*) \: dq^* \:\:;\:\:\: \theta = N_f E[A] (g_0 E[\beta])^{\eta / h} -->
+<!-- \end{split} -->
+<!-- \label{eq:sup2} -->
+<!-- \end{equation} -->
+
+<!-- By the law of the unconscious statistician, the integral in the expression above can be rewritten -->
+
+<!-- \begin{equation} -->
+<!-- \int_{0}^{h^{-\eta}} \lambda^{-\eta} f(q^*) \: dq^* = \int_{0}^{h^{-\eta}} \lambda^{-\eta} f(\lambda^{-\eta}) \: d \lambda^{-\eta} -->
+<!-- \end{equation} -->
+
+Assuming production is lognormally distributed (Axiom 5), then
+
+\begin{equation}
+\begin{split}
+E[Q(T)]\bigr|_{t = 0} &= N_f \int_0^{E[\bar{q}^*(T)]|_{t = 0}} E[q^*(T)]|_{t = 0} f(E[q^*(T)]|_{t = 0})  \: d E[q^*(T)]|_{t = 0} \\
+&= N_f E[E[q^*(T)]\bigr|_{t = 0}] \Phi \left(\frac{\ln\left(\frac{E[\bar{q}^*(T)]|_{t = 0}}{E[E[q^*(T)]|_{t = 0}]}\right) - \frac{s_{EqT0}^2}{2}}{s_{EqT0}} \right) \:\:;\:\:\: s_{EqT0}^2 = Var[E[q^*(T)]\bigr|_{t = 0}]
+\end{split}
+\end{equation}
+
+(See Appendix for details.)
+
+By Rubini's theorem, $E[E[q^*(T)]\bigr|_{t = 0}] = E[\tilde{q}(T)]\bigr|_{t = 0}$, where the shorthand $\tilde{q}^*(T) = E[q^*(T)]$ has been introduced. That is, the population mean of the expected value of $q^*(T)$ is equal to the expected value of the population mean of $q^*(T)$. Aggregate supply can therefore be rewritten
+<!-- \begin{equation} -->
+<!-- E[E[b(T)]\bigr|_{t = 0}] = E[E[b(T)]]\bigr|_{t = 0} -->
+<!-- \end{equation} -->
+<!-- Or, introducing the more compact notation $\mu_b(T) = E[b(T)]$, -->
+<!-- \begin{equation} -->
+<!-- E[E[b(T)]\bigr|_{t = 0}] = E[\mu_b(T)]\bigr|_{t = 0} -->
+<!-- \end{equation} -->
+<!-- That is, the population mean of the expected value of $b(T)$ is equal to the expected value of the population mean of $b(T)$. -->
+
+\begin{equation}
+\begin{split}
+E[Q(T)]\bigr|_{t = 0} &= N_f E[\tilde{q}^*(T)]\bigr|_{t = 0} \Phi \left(\frac{\ln \left( \frac{E[\bar{q}^*(T)]}{E[\tilde{q}^*(T)]|_{t = 0}} \right) - \frac{s_{\tilde{q}}^2}{2} T}{s_{\tilde{q}} \sqrt{T}} \right) \:\:;\:\:\: s_{\tilde{q}}^2 T = Var \left[ \ln \left( \frac{\tilde{q}^*(T)}{\tilde{q}^*(0)} \right) \right] \\
+&= N_f E[\tilde{q}^*(T)]\bigr|_{t = 0} \Phi \left(\frac{\ln \left( \frac{E[P(T)]\bigr|_{t = 0}^{\eta}}{E[\tilde{C}^{\#}(T)]|_{t = 0}^{\eta}} \right) - \eta^2 \frac{s_{\tilde{c}}^2}{2} T}{\eta s_{\tilde{c}} \sqrt{T}} \right) \:\:;\:\:\: s_{\tilde{C}}^2 T = Var \left[ \ln \left( \frac{\tilde{C}^{\#}(T)}{\tilde{C}^{\#}(0)} \right) \right]
+\end{split}
+\end{equation}
+
+Since the definition of $\lambda$ (Equation \ref{eq:lambda4}) generally implies $P(t) = \lambda / h \: C^{\#}(t)$, it is straightforward to show by Ito's lemma that $s_{\tilde{c}} = s_p$. Recalling, moreover, that $E[P(T)]\bigr|_{t = 0} = P(0) e^{m_p T}$, aggregate supply may again be rewritten
+
+\begin{equation}
+\begin{split}
+E[Q(T)]\bigr|_{t = 0} &= N_f E[\tilde{q}^*(T)]\bigr|_{t = 0} \Phi \left(\frac{\ln \left( \frac{P(0)^{\eta}}{E[\tilde{C}^{\#}(T)]|_{t = 0}^{\eta}} \right) + \left( \eta m_p - \eta^2 \frac{s_p^2}{2} \right) T}{\eta s_p \sqrt{T} \right) \:\:;\:\:\: s_p^2 T = Var \left[ \ln \left( \frac{P(T)}{P(0)} \right) \right] \\
+&= N_f E[\tilde{q}^*(T)]\bigr|_{t = 0} \Phi \left( -\frac{\ln \left( \frac{E[\tilde{C}^{\#}(T)]|_{t = 0}^{\eta}}{P(0)^{\eta}} \right) - \left( \eta m_p - \eta^2 \frac{s_p^2}{2} \right) T}{\eta s_p \sqrt{T} \right)
+\end{split}
+\end{equation}
+
+Or, more compactly,
+
+\begin{equation}
+E[Q(T)]\bigr|_{t = 0} = N_f E[\tilde{q}^*(T)]\bigr|_{t = 0} (1 - \Phi(z)) \:\:;\:\:\: z = \frac{\ln \left( \frac{E[\tilde{C}^{\#}(T)]|_{t = 0}^{\eta}}{P(0)^{\eta}} \right) - \left( \eta m_p - \eta^2 \frac{s_p^2}{2} \right) T}{\eta s_p \sqrt{T}
+\label{eq:sup2}
+\end{equation}
+
+Now, note that $z$ is the standard score of the log return $\ln(P(T)^{\eta} / P(0)^{\eta} )$ evaluated at $P(T) = E[\tilde{C}^{\#}(T)]\bigr|_{t = 0}$. Therefore, $\Phi(z)$ may be interpreted as the probability that the output price at planting time $P(0)$ will fall to the mean farm's expected cost per unit output $E[\tilde{C}^{\#}]\bigr|_{t = 0}$ by harvest and sale. That is,
+
+\begin{equation}
+\Phi(z) = \text{Prob}(P(T) \leq E[\tilde{C}^{\#}(T)]\bigr|_{t = 0})
+\end{equation}
+
+And $1 - \Phi(z)$ may be roughly interpreted as the probability that the output price will remain above this level.
+
+\begin{equation}
+1 - \Phi(z) = \text{Prob}(P(T) > E[\tilde{C}^{\#}(T)]\bigr|_{t = 0})
+\end{equation}
+<!-- The qualifier "roughly" must be added because of the exponent $\eta$.  -->
+
+The price elasticity of aggregate supply is then
+
+\begin{equation}
+\frac{\partial \ln(Q)}{\partial \ln(E[P(T)]\bigr|_{t = 0})} = \eta + \frac{\phi(-z)}{\Phi(-z)} \frac{1}{s_p \sqrt{T}}
+\end{equation}
+
+Recall that $\eta$ is just the farm level output price elasticity of supply. The output price elasticity of aggregate supply is thus the farm level elasticity plus the effect of farm entry/exit in response to price movements. Aggregate supply is inelastic/elastic if 
+
+\begin{equation}
+\eta </> 1 - \frac{\phi(-z)}{\Phi(-z)} \frac{1}{s_p \sqrt{T}}
+\end{equation}
+
+Note that elasticity is inversely proportionate to the price risk ($s_p \sqrt{T}$). The effect of price risk on supply can be examined more explicitly as follows.
+
+\begin{equation}
+\frac{\partial \ln(Q)}{\partial (s_p \sqrt{T})} = -\eta \frac{\phi(-z)}{\Phi(-z)} \left( \frac{1}{\eta^2 s_p^2 T} \ln \left( \frac{E[P(T)]\bigr|_{t = 0}}{E[\tilde{C}^{\#}(T)]\bigr|_{t = 0}} \right)  + \frac{1}{2} \right)
+\end{equation}
+
+# Illustrative use case
+
+## Data and estimation
+
+## Parameterization of the aggregate supply curve
+
+...have to get the population mean/sd from the truncated mean/sd...
+
+
+
+# Discussion
+
+The participation term, does it mean employment? ...
 
 Of course, supply can also be defined in terms of an integral of farm yield over its density.
 
@@ -667,169 +755,7 @@ Where $N_a$ is the number of acres (or whatever the unit of area is) in the popu
 
 The latter expression may be more suitable when dealing with remote sensing data. The former is more suitable when dealing with farm survey data, as here.
 
-\begin{equation}
-\begin{split}
-E[Q_S(T)]\bigr|_{t = 0} &= N_f \int_{0}^{\bar{q}^*} q^* f(q^*) \: dq^* \\
-&= N_f y_0^{\eta(D)} E[\hat{\beta}^{\eta(D)}] E[P(T)]\bigr|_{t = 0}^{\eta(P)} \int_{0}^{h^{-\eta(P)}} \lambda^{-\eta(P)} f(q^*) \: dq^*
-\end{split}
-\label{eq:QSeq}
-\end{equation}
-
-By the law of the unconscious statistician, the integral in the expression above can be rewritten
-
-\begin{equation}
-\int_{0}^{h^{-\eta(P)}} \lambda^{-\eta(P)} f(q^*) \: dq^* = \int_{0}^{h^{-\eta(P)}} \lambda^{-\eta(P)} f(\lambda^{-\eta(P)}) \: d \lambda^{-\eta(P)}
-\end{equation}
-
-Now Axiom 4 comes into play: yield is assumed to be lognormally distributed.
-<!-- The definition of the density function is another Axiom... lognormal density....because it is a good approximation to the data and also for theoretical reasons that will now become clear... -->
-
-Because yield is assumed to be lognormally distributed, then so is $\lambda$; and the Lemma given in the Appendix applies, giving
-<!-- Since $\ln(\lambda)$ is normally distributed with mean $m_{\lambda}$ and variance $s_{\lambda}^2$, then $\ln(\lambda^{-\eta})$ is also normally distributed with mean $-\eta m_{\lambda}$ and variance $\eta^2 s_{\lambda}^2$. Since $\ln(\lambda^{-\eta})$ is normally distributed, $\lambda^{-\eta}$ may be substituted for $u$, such that $m_u = -\eta m_{\lambda}$, $s_u^2 = \eta^2 s_{\lambda}^2$, and $\bar{u} = h^{-\eta}$, giving the following expression. -->
-
-\begin{equation}
-\int_0^{h^{-\eta}} \lambda^{-\eta} f(\lambda^{-\eta}) \: d \lambda^{-\eta} = E[\lambda^{-\eta}] \Phi \left(\frac{\ln \left(\frac{h^{-\eta}}{E[\lambda^{-\eta}]} \right) - \eta^2 \frac{s_{\lambda}^2}{2}}{\eta s_{\lambda}} \right)
-\label{eq:phiLambda}
-\end{equation}
-
-Where $m_{\lambda} = E[\ln(\lambda)]$ and $s_{\lambda}^2 = Var[\ln(\lambda)]$.
-
-But recall that $\lambda = h E[b(T)]\bigr|_{t = 0}$; and so
-
-\begin{equation}
-s_{\lambda}^2 = Var[\ln(E[b(T)]\bigr|_{t = 0})]
-\end{equation}
-
-\begin{equation}
-E[\lambda] = h E[E[b(T)]\bigr|_{t = 0}]
-\end{equation}
-
-And note that, by Rubini's theorem,
-
-\begin{equation}
-E[E[b(T)]\bigr|_{t = 0}] = E[E[b(T)]]\bigr|_{t = 0}
-\end{equation}
-
-Or, introducing the more compact notation $\mu_b(T) = E[b(T)]$,
-
-\begin{equation}
-E[E[b(T)]\bigr|_{t = 0}] = E[\mu_b(T)]\bigr|_{t = 0} \end{equation}
-\end{equation}
-
-That is, the population mean of the expected value of $b(T)$ is equal to the expected value of the population mean of $b(T)$.
-
-Likewise,
-
-\begin{equation}
-s_{\lambda}^2 = Var[\ln(\mu_b(T))]\bigr|_{t = 0}
-\end{equation}
-
-Moreover, Because b(t) is assumed to follow a geometric Brownian motion,... Therefore, $E[\lambda]$ may be expressed
-
-\begin{equation}
-\begin{split}
-E[\lambda] &= h E[\mu_b(T)]\bigr|_{t = 0} \\
-&= h \mu_b(0) e^{m_{\mu} T}
-\end{split}
-\end{equation}
-
-And $E[\lambda^{-\eta}]$ may be expressed
-
-\begin{equation}
-\begin{split}
-E[\lambda^{-\eta}] &= (h E[\mu_b(T)]\bigr|_{t = 0})^{-\eta} \\
-&= h^{-\eta} \mu_b(0)^{-\eta} e^{-\eta m_{\mu} T}
-\end{split}
-\end{equation}
-
-Substituting this into equation \ref{eq:phiLambda} gives
-
-\begin{equation}
-\begin{split}
-\int_0^{h^{-\eta}} \lambda^{-\eta} f(\lambda^{-\eta}) \: d \lambda^{-\eta} &= h^{-\eta} \mu_b(0)^{-\eta} e^{-\eta m_{\mu} T} \Phi \left(\frac{\ln (\mu_b(0)^{\eta}) + \eta m_{\mu}T - \eta^2 \frac{s_{\mu}^2}{2}T}{\eta s_{\mu} \sqrt{T}} \right) \\
-&= h^{-\eta} \mu_b(0)^{-\eta} e^{-\eta m_{\mu} T} \Phi \left(- \frac{\ln (\mu_b(0)^{-\eta}) - \left(\eta m_{\mu} - \eta^2 \frac{s_{\mu}^2}{2} \right) T}{\eta s_{\mu} \sqrt{T}} \right)
-\end{split}
-\end{equation}
-
-Or, more compactly,
-
-\begin{equation}
-h^{-\eta} \mu_b(0)^{-\eta} e^{-\eta m_{\mu} T}(1 - \Phi(z))
-\label{eq:termFinal}
-\end{equation}
-
-Where
-
-\begin{equation}
-z = \frac{\ln (\mu_b(0)^{-\eta}) - \left(\eta m_{\mu} - \eta^2 \frac{s_{\mu}^2}{2} \right) T}{\eta s_{\mu} \sqrt{T}}
-\end{equation}
-
-is the standard score of $\eta \ln(\mu_b(T)/\mu_b(0))$ evaluated at $\mu_b(T) = 1$. $\Phi(z)$ is therefore the probability that the population mean of the farm marginal revenue to cost ratio---i.e. $\mu_b(0)$---will fall below $1$ by the time of harvest and sale. It follows, then, that $1 - \Phi(z)$ is the probability that the mean farm marginal revenue to cost ratio will remain greater than $1$ by the time of sale.
-
-\begin{equation}
-\begin{split}
-1 - \Phi(z) &= \text{Prob}(\mu_b(T) > 1) \\
-&= \text{Prob}( P(T) > \mu_{\tilde{C}}(T)) \:\:;\:\:\: \mu_{\tilde{C}} = E[\tilde{C}]
-\end{split}
-\end{equation}
-
-By Axiom 3(?), $b(0) > 1$ on all farms. The bet a farmer makes ex-ante is that $b(T) > 1$. The term $1 - \Phi(z)$ is a measure of the riskiness of this bet.
-
-Substituting equation \ref{eq:termFinal} in for the integral in equation \ref{eq:QSeq} then gives the final form of the aggregate supply curve.
-
-\begin{equation}
-E[Q_S(T)]\bigr|_{t = 0} = N_f y_0^{\theta} E[\hat{\beta}^{\theta}] E[P(T)]\bigr|_{t = 0}^{\eta} h^{-\eta} \mu_b(0)^{-\eta} e^{-\eta m_{\mu} T}(1 - \Phi(z))
-\label{eq:QSFin}
-\end{equation}
-
-<!-- (E[P(T)]\bigr|_{t = 0} = P(0)e^{m_P T}) -->
-
-and so participation is proportional to the risk of the bet
-
-
-...repeat for the cost form of yield
-
-...have to get the population mean/sd from the truncated mean/sd...
-
-
-
-
-
-
-
-
-
-
-
-\begin{equation}
-\int_{0}^{h^{-\eta(P)}} \lambda^{-\eta(P)} f(\lambda^{-\eta(P)}) \: d \lambda^{-\eta(P)} = E[\lambda^{-\eta(P)}] (1 - \Phi(z))
-\end{equation}
-
-Where
-
-\begin{equation}
-z = \frac{\ln\left( \left( \frac{\mu_{\tilde{C}}(0)}{P(0)} \right)^{\eta(D)} \right) - \left(\eta(D) m_{\lambda} - \eta(D)^2 \frac{s_{\lambda}^2}{2} \right)T}{s_{\lambda} \sqrt{T}}
-\end{equation}
-
-The term $1 - \Phi(z)$ may thus be interpreted as the probability, at planting time, that the elasticity adjusted output price at time of harvest and sale $P(T)^{\eta(P)}$ will be greater than the corresponding elasticity adjusted mean marginal cost of production $\mu_{\tilde{C}}(T)^{\eta(D)}$.
-
-\begin{equation}
-1 - \Phi(z) = \text{Prob}(P(T)^{\eta(D)} > \mu_{\tilde{C}}(T)^{\eta(D)})
-\end{equation}
-
-There are two sources of uncertainty. Price risk ...Marginal cost of production is a function of input quantities purchased, input prices, and yield. Input prices and quantities are not a source of risk here as all major expenditures have been made and are known by the time of planting, when the evaluation is made. This leaves agroclimatic risk surrounding yield as the major source of uncertainty surrounding the ultimate value of marginal cost of production.
-<!-- The effect of $\eta(D)$ in this equation is to regulate the rate at which the condition $P(T)^{\eta(D)} > \mu_{\tilde{C}}(T)^{\eta(D)}$ is met (or fails) with changes in either $P(T)$ or $\mu_{\tilde{C}}(T)$. To see this, it may be helpful to rewrite the condition in terms of a "marginal benefit-cost" ratio $r$. -->
-<!-- \begin{equation} -->
-<!-- 1 - \Phi(z) = \text{Prob}(r^{\eta(D)} > 1) \:\:;\:\:\: r = P(T) / \mu_{\tilde{C}}(T) -->
-<!-- \end{equation} -->
-<!-- As $\eta(D)$ is lower, $r^{\eta(D)}$ changes less when $r$ changes. As $\eta(D)$ is higher, movements of $r^{\eta(D)}$ become more pronounced in response to changes in $r$. -->
-
-# Illustrative use case
-
-
-
-
-# Discussion
+...it may be worthwhile to integrate using the cost form of yield...
 
 ...here focused on the motivating context, but the method is applicable in CGE models etc. anywhere a model of aggregate supply is required...
 
@@ -974,8 +900,8 @@ Then
 &= \frac{1}{\sqrt{2 \pi}} \int_0^{\frac{\ln(\bar{u}) - m_u}{s_u}} e^{-\frac{(p - s_u)^2}{2}} e^{m_u + \frac{s_u^2}{2}} \: dp \\
 &= e^{m_u + \frac{s_u^2}{2}} \frac{1}{\sqrt{2 \pi}} \int_0^{\frac{\ln(\bar{u}) - m_u}{s_u}} e^{-\frac{(p - s_u)^2}{2}} \: dp \\
 &= \frac{E[u]}{\sqrt{2 \pi}} \int_0^{\frac{\ln(\bar{u}) - m_u}{s_u}} e^{-\frac{(p - s_u)^2}{2}} \: dp \\
-&= \frac{E[u]} \int_0^{\frac{\ln(\bar{u}) - m_u}{s_u}} \phi(p - s_u) \: dp \\
-&= \frac{E[u]} \Phi \left(\frac{\ln(\bar{u}) - m_u}{s_u} - s_u \right)
+&= E[u] \int_0^{\frac{\ln(\bar{u}) - m_u}{s_u}} \phi(p - s_u) \: dp \\
+&= E[u] \Phi \left(\frac{\ln(\bar{u}) - m_u}{s_u} - s_u \right)
 \end{split}
 \end{equation}
 
@@ -989,7 +915,7 @@ And substituting this in for $m_u$ in the previous expression gives
 
 \begin{equation}
 \begin{split}
-\int_0^{\bar{u}} u f(u) \: du &= \frac{E[u]} \Phi \left(\frac{\ln(\bar{u}) - \ln(E[u]) + \frac{s_u^2}{2} }{s_u} - s_u \right) \\
+\int_0^{\bar{u}} u f(u) \: du &= E[u] \Phi \left(\frac{\ln(\bar{u}) - \ln(E[u]) + \frac{s_u^2}{2} }{s_u} - s_u \right) \\
 &= \frac{E[u]} \Phi \left(\frac{\ln \left(\frac{\bar{u}}{E[u]} \right) - \frac{s_u^2}{2} }{s_u} \right)
 \end{split}
 \end{equation}
@@ -1291,3 +1217,44 @@ And substituting this in for $m_u$ in the previous expression gives
 <!-- \mathcal{L}^* = (1 - h) P y^* + \lambda B -->
 <!-- \label{eq:NBenv} -->
 <!-- \end{equation} -->
+
+<!-- Farm production $q^*$ is, of course, just farm yield envelope times farm area. Often, area is one of the control variables in $\beta_k$. In this case, $q^*$ is given by adding $1$ to the fitted exponent (call this $\kappa_a$) on area. -->
+
+<!-- \begin{equation} -->
+<!-- \begin{split} -->
+<!-- q^* &= A y^* \\ -->
+<!-- &= y_0 \hat{\beta}^{\eta(D)} \left(\frac{E[P(T)]\bigr|_{t = 0}}{\lambda}\right)^{\eta(E[P(T)]\bigr|_{t = 0})} -->
+<!-- \end{split} -->
+<!-- \end{equation} -->
+
+<!-- Where -->
+
+<!-- \begin{equation} -->
+<!-- \begin{split} -->
+<!-- \hat{\beta} &= \frac{\beta_x \hat{\beta_k}}{\beta_w} \\ -->
+<!-- \hat{\beta_k} &= A \beta_k = A^{\kappa_a + 1} \prod_{i \neq a}^{n_k} k_i^{\kappa_i} -->
+<!-- \end{split} -->
+<!-- \end{equation} -->
+
+
+<!-- \begin{equation} -->
+<!-- \int_{0}^{h^{-\eta(P)}} \lambda^{-\eta(P)} f(\lambda^{-\eta(P)}) \: d \lambda^{-\eta(P)} = E[\lambda^{-\eta(P)}] (1 - \Phi(z)) -->
+<!-- \end{equation} -->
+
+<!-- Where -->
+
+<!-- \begin{equation} -->
+<!-- z = \frac{\ln\left( \left( \frac{\mu_{C^{\#}}(0)}{P(0)} \right)^{\eta(D)} \right) - \left(\eta(D) m_{\lambda} - \eta(D)^2 \frac{s_{\lambda}^2}{2} \right)T}{s_{\lambda} \sqrt{T}} -->
+<!-- \end{equation} -->
+
+<!-- The term $1 - \Phi(z)$ may thus be interpreted as the probability, at planting time, that the elasticity adjusted output price at time of harvest and sale $P(T)^{\eta(P)}$ will be greater than the corresponding elasticity adjusted mean marginal cost of production $\mu_{C^{\#}}(T)^{\eta(D)}$. -->
+
+<!-- \begin{equation} -->
+<!-- 1 - \Phi(z) = \text{Prob}(P(T)^{\eta(D)} > \mu_{C^{\#}}(T)^{\eta(D)}) -->
+<!-- \end{equation} -->
+
+<!-- The effect of $\eta(D)$ in this equation is to regulate the rate at which the condition $P(T)^{\eta(D)} > \mu_{C^{\#}}(T)^{\eta(D)}$ is met (or fails) with changes in either $P(T)$ or $\mu_{C^{\#}}(T)$. To see this, it may be helpful to rewrite the condition in terms of a "marginal benefit-cost" ratio $r$. -->
+<!-- \begin{equation} -->
+<!-- 1 - \Phi(z) = \text{Prob}(r^{\eta(D)} > 1) \:\:;\:\:\: r = P(T) / \mu_{C^{\#}}(T) -->
+<!-- \end{equation} -->
+<!-- As $\eta(D)$ is lower, $r^{\eta(D)}$ changes less when $r$ changes. As $\eta(D)$ is higher, movements of $r^{\eta(D)}$ become more pronounced in response to changes in $r$. -->
