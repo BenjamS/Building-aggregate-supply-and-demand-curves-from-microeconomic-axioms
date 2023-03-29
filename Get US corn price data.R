@@ -8,4 +8,4 @@ df <- c("ZC=F") %>%
 thisFolder <- "D:/OneDrive - CGIAR/Documents 1/CIAT 2/A theory of aggregate supply and demand/"
 thisFile <-"US corn future price.csv"
 thisFilePath <- paste0(thisFolder, thisFile)
-write.csv(df, thisFilePath, col.names = colnames(df))
+write.csv(df, thisFilePath)

@@ -30,10 +30,11 @@ knitr::opts_chunk$set(echo = FALSE,
 
 library(tidyverse)
 library(patchwork)
+library(scales)
 
 labelSize <- 2.5
 smallLabelSize <- 2
-titleSize <- 8
+titleSize <- 7
 subtitleSize <- 7
 legendTextSize <- 6
 axisTextSize <- 6
@@ -443,14 +444,35 @@ y^* < (g_0 \beta)^{\eta / h}  \left(\frac{P}{h} \right)^{\eta} \:\:;\:\:\: \eta 
 
 ### Geometric Brownian motion of prices and weather (Axiom 4)
 
-Henceforth it is necessary to be more specific in the treatment of yield $y^*$ and output price $P$ as stochastic variables. Absent a forward contract, the output price at the time of harvest and sale $(t = T)$ is unknown to the farmer at the time of planting and input expenditures $(t = 0)$. Likewise, yield is largely dependent upon numerous stochastic meteorological processes occurring between planting and harvest---particularly temperature, solar radiation, and humidity---which are unknown to the farmer at the time of planting. Wherever $P$ and $y^*$ appear in the equations above, then, what is really meant is $E[P(T)]\bigr|_{t = 0}$ and $E[y^*(T)]\bigr|_{t = 0}$. That is, farmers make their management decisions at planting time ($t = 0$) based on what they expect the values of $y^*$ and $P$ to be at harvest ($t = T$).
+Henceforth it is necessary to be more specific in the treatment of yield $y^*$ and output price $P$ as stochastic variables. Absent a forward contract, the output price at the time of harvest and sale $(t = T)$ is unknown to the farmer at the time of planting and input expenditures $(t = 0)$. Likewise, yield is largely dependent upon numerous stochastic meteorological processes occurring between planting and harvest which are unknown to the farmer at the time of planting. Wherever $P$ and $y^*$ appear in the equations above, then, what is really meant is $E[P(T)]\bigr|_{t = 0}$ and $E[y^*(T)]\bigr|_{t = 0}$.
+<!-- ---especially temperature, solar radiation, and humidity--- -->
+<!-- That is, farmers make their expenditure decision $C^*$ at planting time ($t = 0$) based on what they expect the values of $y^*$ and $P$ to be at harvest ($t = T$). -->
 
-The farm budget shadow price $\lambda$ is thus more accurately written
+yield is a linear function of these things then yield also gBm
 
 \begin{equation}
-\lambda = h \frac{E[P(T)]\bigr|_{t = 0} E[y^*(T)]\bigr|_{t = 0}}{C^*} = h E\left[ \frac{P(T)]}{C^{\#}} \right]\Bigr|_{t = 0}
-\label{eq:lambda4}
+E[C^{\#}(T)]^* = C^* E \left[ \frac{1}{y^*(T)} \right] \biggr|_{t = 0}
+\label{eq:EcSharp}
 \end{equation}
+
+
+
+In particular, the farmer's expenditure decision at or around planting time ($C^*$) is based on their expectations regarding the yield and price they can fetch at harvest and sale.
+
+\begin{equation}
+C^* = \frac{h}{\lambda} = E[P(T)]\bigr|_{t = 0} E[y^*(T)]\bigr|_{t = 0}
+\label{eq:cStar}
+\end{equation}
+
+yield
+
+Which can be rearranged
+
+\begin{equation}
+E[C^{\#}(T)]^* = \frac{h}{\lambda} = E[P(T)]\bigr|_{t = 0} E[y^*(T)]\bigr|_{t = 0}
+\label{eq:cSharp}
+\end{equation}
+
 <!-- And the optimal input level (Equation \ref{eq:inputDem1}) is thus more accurately represented as -->
 <!-- \begin{equation} -->
 <!-- x_j^* = \frac{E[P(T)]\bigr|_{t = 0} E[y^*(T)]\bigr|_{t = 0} \alpha_j}{\lambda w_j} -->
@@ -477,31 +499,31 @@ Var \left[\frac{\Delta P(T)}{P(T)} \right] &= s_{p}^2 \Delta t
 
 Technically, $\Delta t$ is an instantaneous time interval, and hence $m_p$ is the expected instantaneous growth rate. In practice, it is often acceptable to treat $\Delta t$ as a finitely small, but judicious, time step. As a rule of thumb, $\Delta t$ should be as small as the resolution of the data will allow, while also ensuring a finite sample path with no jumps.
 
-```{r Fig1, fig.show = "hold", fig.width = 5, fig.height=3, fig.align="center", fig.cap="\\label{fig:gBmEgs}(Left) Maize price time series from (top to bottom) Eldoret market, Kenya (downloaded using the FAO Food Price Monitoring and Analysis Tool), Johannesburg Stock Exchange, South Africa, and the Chicago Board of Trade, USA. The Kenya series is monthly, while the South African and US series are daily. (Right) The corresponding daily log returns (monthly log returns in the case of Kenya) exhibit the normal distribution typical of geometric Brownian motion.", echo = FALSE}
+```{r Fig1, fig.show = "hold", fig.width = 5, fig.height=3, fig.align="center", fig.cap="\\label{fig:gBmPrice}(Left) Maize price series from (top to bottom) Eldoret market, Kenya (FPMA, 2023), Johannesburg, South Africa (JSE, 2023), and Chicago, USA (CME, 2023). (Right) The corresponding daily (monthly, in the case of Kenya) log changes exhibit the normal distribution typical of geometric Brownian motion.", echo = FALSE}
 
 thisFolder <- "D:/OneDrive - CGIAR/Documents 1/CIAT 2/A theory of aggregate supply and demand/"
 thisFile <- "South Africa corn future price.csv"
 thisFilePath <- paste0(thisFolder, thisFile)
 df_raw <- read.csv(thisFilePath, stringsAsFactors = F)
-keepCols <- c("DATE", "YELLOW")
+keepCols <- c("DATE", "WHITE")
 df_raw <- df_raw[, keepCols]
 colnames(df_raw) <- c("Date", "Price")
 df_raw$Date <- as.Date(df_raw$Date, "%m/%d/%Y")
-df <- subset(df_raw, Date > "2017-06-30" &
-               Date < "2018-06-30")
-df$`Log return` <- c(NA, diff(log(df$Price)))
-colnames(df)[2] <- "ZAR / kg."
-gg <- ggplot(df, aes(x = Date, y = `ZAR / kg.`))
-gg <- gg + geom_line()
-gg <- gg + theme_bw()
-gg <- gg + theme(axis.title.x = element_blank(),
-                 axis.title.y = element_text(size = axisTitleSize),
-                 axis.text = element_text(size = axisTextSize))
-gg_sa <- gg
+df <- subset(df_raw, Date > "2017-11-01" &
+               Date < "2018-04-15")
+df$`Log change` <- c(NA, diff(log(df$Price)))
+#colnames(df)[2] <- "ZAR / kg."
+# gg <- ggplot(df, aes(x = Date, y = `ZAR / kg.`))
+# gg <- gg + geom_line()
+# gg <- gg + theme_bw()
+# gg <- gg + theme(axis.title.x = element_blank(),
+#                  axis.title.y = element_text(size = axisTitleSize),
+#                  axis.text = element_text(size = axisTextSize))
+# gg_sa <- gg
 df_sa <- df
-df_sa$`ZAR / kg.` <- NULL
+#df_sa$`ZAR / kg.` <- NULL
 df_sa$Place <- "South Africa"
-# gg <- ggplot(df, aes(x = `Log return`))
+# gg <- ggplot(df, aes(x = `Log change`))
 # gg <- gg + geom_histogram(color = 4, fill = "white", bins = 15)
 # gg
 # mm <- mean(df$`Log daily return`, na.rm = T)
@@ -516,23 +538,20 @@ keepCols <- c("date", "adjusted")
 df_raw <- df_raw[, keepCols]
 colnames(df_raw) <- c("Date", "Price")
 df_raw$Date <- as.Date(df_raw$Date, "%Y-%m-%d")
-df <- subset(df_raw, Date > "2017-09-01" &
-               Date < "2018-09-01")
+df <- subset(df_raw, Date > "2018-03-31" &
+               Date < "2018-12-01")
 df$Price <- df$Price / 100
-df$`Log return` <- c(NA, diff(log(df$Price)))
-colnames(df)[2] <- "USD / bushel"
-gg <- ggplot(df, aes(x = Date, y = `USD / bushel`))
-gg <- gg + geom_line()
-gg <- gg + theme_bw()
-gg <- gg + theme(axis.title = element_text(size = axisTitleSize),
-                 axis.text = element_text(size = axisTextSize))
-gg_us <- gg
+df$`Log change` <- c(NA, diff(log(df$Price)))
+#colnames(df)[2] <- "USD / bushel"
+# gg <- ggplot(df, aes(x = Date, y = `USD / bushel`))
+# gg <- gg + geom_line()
+# gg <- gg + theme_bw()
+# gg <- gg + theme(axis.title = element_text(size = axisTitleSize),
+#                  axis.text = element_text(size = axisTextSize))
+# gg_us <- gg
 df_us <- df
-df_us$`USD / bushel` <- NULL
+#df_us$`USD / bushel` <- NULL
 df_us$Place <- "USA"
-# gg <- ggplot(df, aes(x = `Log daily return`))
-# gg <- gg + geom_histogram(color = 4, fill = "white", bins = 15)
-# gg
 # mm <- mean(df$`Log daily return`, na.rm = T)
 # s <- sd(df$`Log daily return`, na.rm = T)
 # print(mm)
@@ -549,48 +568,70 @@ df_raw$Price <- as.numeric(df_raw$Price)
 df_raw$Date <- as.Date(df_raw$Date, "%m/%d/%Y")
 df <- subset(df_raw, Date > "2008-04-01" &
                Date < "2019-08-01")
-df$`Log return` <- c(NA, diff(log(df$Price)))
-colnames(df)[2] <- "KES / kg."
-gg <- ggplot(df, aes(x = Date, y = `KES / kg.`))
-gg <- gg + geom_line()
-gg <- gg + theme_bw()
-gg <- gg + theme(axis.title.x = element_blank(),
-                 axis.title.y = element_text(size = axisTitleSize),
-                 axis.text = element_text(size = axisTextSize))
-gg_ky <- gg
+df$`Log change` <- c(NA, diff(log(df$Price)))
+#colnames(df)[2] <- "KES / kg."
+# gg <- ggplot(df, aes(x = Date, y = `KES / kg.`))
+# gg <- gg + geom_line()
+# gg <- gg + theme_bw()
+# gg <- gg + theme(axis.title.x = element_blank(),
+#                  axis.title.y = element_text(size = axisTitleSize),
+#                  axis.text = element_text(size = axisTextSize))
+# gg_ky <- gg
 df_ky <- df
-df_ky$`KES / kg.` <- NULL
+#df_ky$`KES / kg.` <- NULL
 df_ky$Place <- "Kenya"
-# gg <- ggplot(df, aes(x = `Log return`))
+# gg <- ggplot(df, aes(x = `Log change`))
 # gg <- gg + geom_histogram(color = 4, fill = "white", bins = 20)
 # gg
 # mm <- mean(df$`Log daily return`, na.rm = T)
 # s <- sd(df$`Log daily return`, na.rm = T)
 # print(mm)
 # print(s)
-#---------------------------------------------------------------
-df_hist <- as.data.frame(do.call(rbind, list(df_sa, df_us, df_ky)))
-gg <- ggplot(df_hist, aes(x = `Log return`))
-gg <- gg + geom_histogram(color = 4, fill = "white", bins = 20)
-gg <- gg + facet_wrap(~Place, ncol = 1, scales = "free")
+df_ts <- as.data.frame(do.call(rbind, list(df_us, df_sa, df_ky)))
+df_ts$Place <- gsub("Kenya", "Eldoret, Kenya\n2008-2019 (monthly)\nKES / kg. white", df_ts$Place)
+df_ts$Place <- gsub("USA", "Chicago, USA\n2018 growing season (daily)\nUSD / bushel yellow", df_ts$Place)
+df_ts$Place <- gsub("South Africa", "Johannesburg, RSA\n2018 growing season (daily)\nZAR / kg. white", df_ts$Place)
+gg <- ggplot(df_ts, aes(x = Date, y = Price))
+gg <- gg + geom_line()
+gg <- gg + scale_x_date(breaks = scales::breaks_pretty(n = 8), labels = date_format("%b\n%Y"))
+# gg <- gg + scale_x_date(breaks = "4 months", labels = date_format("%m-%Y"))
+#gg <- gg + scale_x_date(date_breaks = "4 month", date_labels =  "%b %Y")
+gg <- gg + facet_wrap(~Place, ncol = 1, scales = "free", strip.position = "left")
+gg <- gg + labs(title = "Maize price series exhibiting geometric Brownian motion")
 gg <- gg + theme_bw()
-gg <- gg + theme(axis.title.y = element_blank(),
-                 axis.title.x = element_text(size = axisTitleSize),
+gg <- gg + theme(axis.title.x = element_text(size = axisTitleSize),
+                 axis.title.y = element_blank(),
                  axis.text = element_text(size = axisTextSize),
                  strip.background = element_rect(fill = "white"),
-                 strip.text = element_text(size = facetTitleSize))
+                 strip.text = element_text(size = facetTitleSize),
+                 plot.title = element_text(size = titleSize))
+gg_ts <- gg
+#---------------------------------------------------------------
+df_hist <- as.data.frame(do.call(rbind, list(df_sa, df_us, df_ky)))
+gg <- ggplot(df_hist, aes(x = `Log change`))
+gg <- gg + geom_histogram(color = 4, fill = "white", bins = 20)
+gg <- gg + facet_wrap(~Place, ncol = 1, scales = "free")
+gg <- gg + labs(title = "Log change")
+gg <- gg + theme_bw()
+gg <- gg + theme(axis.title = element_blank(),
+                 axis.text = element_text(size = axisTextSize),
+                 strip.background = element_rect(fill = "white"),
+                 strip.text = element_blank(),
+                 plot.title = element_text(size = titleSize))
 gg_hist <- gg
 #---------------------------------------------------------------
 # library(patchwork)
-design <- c("AAD
-            BBD
-            CCD")
-wrap_plots(A = gg_ky, B = gg_sa, C = gg_us, D = gg_hist, design = design)
 
+gg_ts + gg_hist + plot_layout(ncol = 2, widths = c(1, 1/3))
+
+# design <- c("AAD
+#             BBD
+#             CCD")
+# wrap_plots(A = gg_ky, B = gg_sa, C = gg_us, D = gg_hist, design = design)
 
 ```
 
-The log return of a geometric Browning motion is defined over finite time intervals $\ln(P(T) / P(\hat{t}))$ for some starting time $\hat{t}<T$, and is also normally distributed, with mean and variance
+The log change of a geometric Browning motion is defined over finite time intervals $\ln(P(T) / P(\hat{t}))$ for some starting time $t<T$, and is also normally distributed, with mean and variance
 
 \begin{equation}
 \begin{split}
@@ -599,12 +640,21 @@ Var \left[\ln \left( \frac{P(T)}{P(\hat{t})} \right) \right] &= s_{p}^2 T
 \end{split}
 \end{equation}
 
-Examples of maize prices following a geometric Brownian motion are given from different parts of the world in Figure \ref{fig:gBmEgs}.
+Examples of maize prices following a geometric Brownian motion are given from different parts of the world in Figure \ref{fig:gBmPrice}. If $P(t)$ follows a geometric Brownian motion, the expected sale price $E[P(T)]\bigr|_{t = 0}$ equals the price at planting time $P(0)$ times $e^{m_p T}$.
+
+\begin{equation}
+E[P(T)]\bigr|_{t = 0} = P(0) e^{m_p T}
+\end{equation}
+
+The weather variables upon which crop yields depend generally follow geometric Brownian motion. Since yield is a function of such variables, then, by Ito's lemma, yield is also a geometric Brownian motion. Examples of weather variables following a geometric Brownian motion over a given growing season are presented in Figure \ref{fig:gBmWeather}. 
+
 
 <!-- [atmospheric processes] -->
-The modeling of stochastic meteorological processes is slightly less straightforward. Weather derivatives are increasingly priced based on    Geometric Brownian motion is also known to approximate the time evolution of certain meteorological variables such as temperature, solar radiation, and humidity, which, together with management decisions, drive production. Axiom 4 is the assumption that production and output price follow independent geometric Brownian motions.
+The assumption that yield and output price follow independent geometric Brownian motions (Axiom 4) is thus well supported, empirically.
 
-<!-- Letting $b(T)$ stand for the ratio $P(T) / C^{\#}(T)$, this means that the log return $\ln(b(T) / b(\hat{t}))$ is normally distributed with mean and variance -->
+
+
+<!-- Letting $b(T)$ stand for the ratio $P(T) / C^{\#}(T)$, this means that the Log change $\ln(b(T) / b(\hat{t}))$ is normally distributed with mean and variance -->
 <!-- \begin{equation} -->
 <!-- \begin{split} -->
 <!-- E \left[\ln \left( \frac{b(T)}{b(\hat{t})} \right) \right] &= \left(m_b - \frac{s_b^2}{2} \right) T \\ -->
@@ -618,7 +668,53 @@ The modeling of stochastic meteorological processes is slightly less straightfor
 <!-- s_b^2 &= s_p^2 + s_y^2 \:\:;\:\:\: s_y^2 = Var\left[ \frac{\Delta y^*}{y^* \Delta t} \right] -->
 <!-- \end{split} -->
 <!-- \end{equation} -->
+```{r Fig1, fig.show = "hold", fig.width = 5, fig.height=3, fig.align="center", fig.cap="\\label{fig:gBmWeather}(Left) Daily average weather variable time series covering the 2018 maize long rains growing season in Eldoret, Kenya (NREL 2023). (Right) The corresponding daily log changes exhibit the normal distribution typical of geometric Brownian motion.", echo = FALSE}
 
+#Weather data from National Solar Radiation Database
+#https://nsrdb.nrel.gov/data-viewer
+thisFolder <- "D:/OneDrive - CGIAR/Documents 1/CIAT 2/A theory of aggregate supply and demand/Eldoret weather data/"
+thisFile <- "NSRDB weather data Eldoret 2018 maize season.csv"
+thisFilePath <- paste0(thisFolder, thisFile)
+df <- read.csv(thisFilePath, stringsAsFactors = F)
+colnames(df)[ncol(df)] <- "Log change"
+df$Date <- as.Date(df$Date)
+
+gg <- ggplot(df, aes(x = Date, y = val))
+gg <- gg + geom_line()
+gg <- gg + scale_x_date(breaks = scales::breaks_pretty(n = 8))
+gg <- gg + facet_wrap(~var, ncol = 1, scales = "free_y", strip.position = "left")
+gg <- gg + labs(title = "Daily time series of key weather variables influencing crop yields\nEldoret, Kenya, 2018 maize growing season")
+gg <- gg + theme_bw()
+gg <- gg + theme(axis.title.x = element_text(size = axisTitleSize),
+                 axis.title.y = element_blank(),
+                 axis.text = element_text(size = axisTextSize),
+                 strip.background = element_rect(fill = "white"),
+                 strip.text = element_text(size = facetTitleSize),
+                 plot.title = element_text(size = titleSize))
+gg_line <- gg
+
+
+gg <- ggplot(df, aes(x = `Log change`))
+gg <- gg + geom_histogram(color = 4, fill = "white", bins = 20)
+gg <- gg + facet_wrap(~var, ncol = 1, scales = "free")
+gg <- gg + labs(title = "Daily log change")
+gg <- gg + theme_bw()
+gg <- gg + theme(axis.title = element_blank(),
+                 #axis.title.y = element_blank(),
+                 #axis.title.x = element_text(size = axisTitleSize),
+                 axis.text = element_text(size = axisTextSize),
+                 strip.background = element_rect(fill = "white"),
+                 strip.text = element_blank(),
+                 plot.title = element_text(size = titleSize))
+gg_hist <- gg
+
+
+gg_line + gg_hist + plot_layout(ncol = 2, widths = c(1, 1/3))
+
+
+```
+
+[@jseData; @fpmaData; @cmeData; @nsrdbData]
 
 ### Aggregation from farm to population level based on Axiom 5
 
@@ -694,7 +790,7 @@ E[Q(T)]\bigr|_{t = 0} = N_f E[\tilde{q}^*(T)]\bigr|_{t = 0} (1 - \Phi(z)) \:\:;\
 \label{eq:sup2}
 \end{equation}
 
-Now, note that $z$ is the standard score of the log return $\ln(P(T)^{\eta} / P(0)^{\eta} )$ evaluated at $P(T) = E[\tilde{C}^{\#}(T)]\bigr|_{t = 0}$. Therefore, $\Phi(z)$ may be interpreted as the probability that the output price at planting time $P(0)$ will fall to the mean farm's expected cost per unit output $E[\tilde{C}^{\#}]\bigr|_{t = 0}$ by harvest and sale. That is,
+Now, note that $z$ is the standard score of the Log change $\ln(P(T)^{\eta} / P(0)^{\eta} )$ evaluated at $P(T) = E[\tilde{C}^{\#}(T)]\bigr|_{t = 0}$. Therefore, $\Phi(z)$ may be interpreted as the probability that the output price at planting time $P(0)$ will fall to the mean farm's expected cost per unit output $E[\tilde{C}^{\#}]\bigr|_{t = 0}$ by harvest and sale. That is,
 
 \begin{equation}
 \Phi(z) = \text{Prob}(P(T) \leq E[\tilde{C}^{\#}(T)]\bigr|_{t = 0})
