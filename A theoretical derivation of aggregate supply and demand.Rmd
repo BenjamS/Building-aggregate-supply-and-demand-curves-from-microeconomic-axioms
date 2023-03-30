@@ -442,45 +442,11 @@ y^* < (g_0 \beta)^{\eta / h}  \left(\frac{P}{h} \right)^{\eta} \:\:;\:\:\: \eta 
 
 ## Derivation of aggregate supply from Axioms 4-5 \label{sec:aggSupply}
 
-### Geometric Brownian motion of prices and weather (Axiom 4)
+### Geometric Brownian motion of prices and yield (Axiom 4)
 
-Henceforth it is necessary to be more specific in the treatment of yield $y^*$ and output price $P$ as stochastic variables. Absent a forward contract, the output price at the time of harvest and sale $(t = T)$ is unknown to the farmer at the time of planting and input expenditures $(t = 0)$. Likewise, yield is largely dependent upon numerous stochastic meteorological processes occurring between planting and harvest which are unknown to the farmer at the time of planting. Wherever $P$ and $y^*$ appear in the equations above, then, what is really meant is $E[P(T)]\bigr|_{t = 0}$ and $E[y^*(T)]\bigr|_{t = 0}$.
-<!-- ---especially temperature, solar radiation, and humidity--- -->
-<!-- That is, farmers make their expenditure decision $C^*$ at planting time ($t = 0$) based on what they expect the values of $y^*$ and $P$ to be at harvest ($t = T$). -->
+Henceforth it is necessary to be more specific in the treatment of yield $y^*$ and output price $P$ as stochastic variables. Absent a forward contract, the output price at the time of harvest and sale $(t = T)$ is unknown to the farmer at the time of planting $(t = 0)$. Likewise, yield is largely dependent upon numerous stochastic meteorological processes occurring between planting and harvest which are unknown to the farmer at the time of planting. Wherever $P$ and $y^*$ appear in the equations above, then, what is really meant is $E[P(T)]\bigr|_{t = 0}$ and $E[y^*(T)]\bigr|_{t = 0}$.
 
-yield is a linear function of these things then yield also gBm
-
-\begin{equation}
-E[C^{\#}(T)]^* = C^* E \left[ \frac{1}{y^*(T)} \right] \biggr|_{t = 0}
-\label{eq:EcSharp}
-\end{equation}
-
-
-
-In particular, the farmer's expenditure decision at or around planting time ($C^*$) is based on their expectations regarding the yield and price they can fetch at harvest and sale.
-
-\begin{equation}
-C^* = \frac{h}{\lambda} = E[P(T)]\bigr|_{t = 0} E[y^*(T)]\bigr|_{t = 0}
-\label{eq:cStar}
-\end{equation}
-
-yield
-
-Which can be rearranged
-
-\begin{equation}
-E[C^{\#}(T)]^* = \frac{h}{\lambda} = E[P(T)]\bigr|_{t = 0} E[y^*(T)]\bigr|_{t = 0}
-\label{eq:cSharp}
-\end{equation}
-
-<!-- And the optimal input level (Equation \ref{eq:inputDem1}) is thus more accurately represented as -->
-<!-- \begin{equation} -->
-<!-- x_j^* = \frac{E[P(T)]\bigr|_{t = 0} E[y^*(T)]\bigr|_{t = 0} \alpha_j}{\lambda w_j} -->
-<!-- \label{eq:inputDem2} -->
-<!-- \end{equation} -->
-[Not necessary to specify y(t) process as C^{\#} based entirely on P(t) (by the lambda equation)]
-
-The question remains as to what kind of stochastic process $y^*(t)$ and $P(t)$ follow. Prices generally follow a geometric Brownian motion. That is to say, changes in $P$ over a small time interval $\Delta t$ ($\Delta P = P(t + \Delta t) - P(t)$) are often accurately modeled by
+The question remains as to what kind of stochastic process $y^*(t)$ and $P(t)$ follow. Prices often follow a geometric Brownian motion. That is to say, changes in $P$ over a small time interval $\Delta t$ ($\Delta P = P(t + \Delta t) - P(t)$) are often accurately modeled by
 
 \begin{equation}
 \Delta P = \Delta P(t) m_p \Delta t - P(t) s_p \epsilon \sqrt{\Delta t}
@@ -497,9 +463,24 @@ Var \left[\frac{\Delta P(T)}{P(T)} \right] &= s_{p}^2 \Delta t
 
 (For a reference, see Hull [-@hull9thEdition].)
 
-Technically, $\Delta t$ is an instantaneous time interval, and hence $m_p$ is the expected instantaneous growth rate. In practice, it is often acceptable to treat $\Delta t$ as a finitely small, but judicious, time step. As a rule of thumb, $\Delta t$ should be as small as the resolution of the data will allow, while also ensuring a finite sample path with no jumps.
+Technically, $\Delta t$ is an instantaneous time interval, and hence $m_p$ is the expected instantaneous growth rate. In practice, it is often acceptable to treat $\Delta t$ as a finitely small, but judicious, time step. As a rule of thumb, $\Delta t$ should be as small as the resolution of the data will allow, while also ensuring a finite sample path with no jumps. Some examples of maize prices following a geometric Brownian motion are given in Figure \ref{fig:gBmPrice}.
 
-```{r Fig1, fig.show = "hold", fig.width = 5, fig.height=3, fig.align="center", fig.cap="\\label{fig:gBmPrice}(Left) Maize price series from (top to bottom) Eldoret market, Kenya (FPMA, 2023), Johannesburg, South Africa (JSE, 2023), and Chicago, USA (CME, 2023). (Right) The corresponding daily (monthly, in the case of Kenya) log changes exhibit the normal distribution typical of geometric Brownian motion.", echo = FALSE}
+The log change of a geometric Brownian motion is defined over finite time intervals $\ln(P(T) / P(\hat{t}))$ for some starting time $\hat{t}<T$, and is also normally distributed, with mean and variance
+
+\begin{equation}
+\begin{split}
+E \left[\ln \left( \frac{P(T)}{P(\hat{t})} \right) \right] &= \left(m_{p} - \frac{s_p^2}{2} \right) T \\
+Var \left[\ln \left( \frac{P(T)}{P(\hat{t})} \right) \right] &= s_{p}^2 T
+\end{split}
+\end{equation}
+
+And the expected value is
+
+\begin{equation}
+E[P(T)]\bigr|_{t = 0} = P(0) e^{m_p T}
+\end{equation}
+
+```{r Fig1, fig.show = "hold", fig.width = 5, fig.height=3, fig.align="center", fig.cap="\\label{fig:gBmPrice}(Left) Maize price series from (top to bottom) Chicago, USA (CME, 2023), Johannesburg, RSA (JSE, 2023), and Eldoret market, Kenya (FPMA, 2023). (Right) The corresponding daily (monthly, in the case of Kenya) log changes exhibit the normal distribution typical of geometric Brownian motion.", echo = FALSE}
 
 thisFolder <- "D:/OneDrive - CGIAR/Documents 1/CIAT 2/A theory of aggregate supply and demand/"
 thisFile <- "South Africa corn future price.csv"
@@ -588,15 +569,19 @@ df_ky$Place <- "Kenya"
 # print(mm)
 # print(s)
 df_ts <- as.data.frame(do.call(rbind, list(df_us, df_sa, df_ky)))
-df_ts$Place <- gsub("Kenya", "Eldoret, Kenya\n2008-2019 (monthly)\nKES / kg. white", df_ts$Place)
-df_ts$Place <- gsub("USA", "Chicago, USA\n2018 growing season (daily)\nUSD / bushel yellow", df_ts$Place)
-df_ts$Place <- gsub("South Africa", "Johannesburg, RSA\n2018 growing season (daily)\nZAR / kg. white", df_ts$Place)
+df_ts$Place <- gsub("Kenya", "Eldoret, Kenya\n2008-2019 (monthly)\nKES / kg.", df_ts$Place)
+df_ts$Place <- gsub("USA", "Chicago, USA\n2018 growing season (daily)\nUSD / bushel", df_ts$Place)
+df_ts$Place <- gsub("South Africa", "Johannesburg, RSA\n2018 growing season (daily)\nZAR / kg.", df_ts$Place)
 gg <- ggplot(df_ts, aes(x = Date, y = Price))
 gg <- gg + geom_line()
 gg <- gg + scale_x_date(breaks = scales::breaks_pretty(n = 8), labels = date_format("%b\n%Y"))
 # gg <- gg + scale_x_date(breaks = "4 months", labels = date_format("%m-%Y"))
 #gg <- gg + scale_x_date(date_breaks = "4 month", date_labels =  "%b %Y")
-gg <- gg + facet_wrap(~Place, ncol = 1, scales = "free", strip.position = "left")
+gg <- gg + facet_wrap(~factor(Place,
+                      levels = c("Chicago, USA\n2018 growing season (daily)\nUSD / bushel",
+                                 "Johannesburg, RSA\n2018 growing season (daily)\nZAR / kg.",
+                                 "Eldoret, Kenya\n2008-2019 (monthly)\nKES / kg.")),
+                      ncol = 1, scales = "free", strip.position = "left")
 gg <- gg + labs(title = "Maize price series exhibiting geometric Brownian motion")
 gg <- gg + theme_bw()
 gg <- gg + theme(axis.title.x = element_text(size = axisTitleSize),
@@ -607,10 +592,14 @@ gg <- gg + theme(axis.title.x = element_text(size = axisTitleSize),
                  plot.title = element_text(size = titleSize))
 gg_ts <- gg
 #---------------------------------------------------------------
-df_hist <- as.data.frame(do.call(rbind, list(df_sa, df_us, df_ky)))
+# df_hist <- as.data.frame(do.call(rbind, list(df_sa, df_us, df_ky)))
+df_hist <- df_ts
 gg <- ggplot(df_hist, aes(x = `Log change`))
 gg <- gg + geom_histogram(color = 4, fill = "white", bins = 20)
-gg <- gg + facet_wrap(~Place, ncol = 1, scales = "free")
+gg <- gg + facet_wrap(~factor(Place,
+                      levels = c("Chicago, USA\n2018 growing season (daily)\nUSD / bushel",
+                                 "Johannesburg, RSA\n2018 growing season (daily)\nZAR / kg.",
+                                 "Eldoret, Kenya\n2008-2019 (monthly)\nKES / kg.")), ncol = 1, scales = "free")
 gg <- gg + labs(title = "Log change")
 gg <- gg + theme_bw()
 gg <- gg + theme(axis.title = element_blank(),
@@ -631,44 +620,11 @@ gg_ts + gg_hist + plot_layout(ncol = 2, widths = c(1, 1/3))
 
 ```
 
-The log change of a geometric Browning motion is defined over finite time intervals $\ln(P(T) / P(\hat{t}))$ for some starting time $t<T$, and is also normally distributed, with mean and variance
+The stochastic movement of $y^*(t)$ is slightly less straightforward. While it may be difficult to make a direct case that $y^*(t)$---which is unobservable until harvest---follows a geometric Brownian motion, the geometric Brownian motion of the meteorological variables upon which yield depends is well supported empirically (Figure \ref{fig:gBmWeather}). By Ito's lemma, it then follows that $y^*(t)$ must also follow a geometric Brownian motion.
 
-\begin{equation}
-\begin{split}
-E \left[\ln \left( \frac{P(T)}{P(\hat{t})} \right) \right] &= \left(m_{p} - \frac{s_p^2}{2} \right) T \\
-Var \left[\ln \left( \frac{P(T)}{P(\hat{t})} \right) \right] &= s_{p}^2 T
-\end{split}
-\end{equation}
+Denoting the mean and variance of the normally distributed changes $\Delta y^* / y^*$ as $m_y \Delta t$ and $s_y^2 \Delta t$, respectively, it is then straightforward to verify, again by Ito's lemma, that $C^{\#}$ also follows a geometric Brownian motion whose log changes have variance $s_c^2$ equal to $s_y^2$. Moreover, Equation \ref{eq:lambda3} implies $s_c^2 = s_p^2$, and thus by transitivity $s_y^2 = s_p^2$.
 
-Examples of maize prices following a geometric Brownian motion are given from different parts of the world in Figure \ref{fig:gBmPrice}. If $P(t)$ follows a geometric Brownian motion, the expected sale price $E[P(T)]\bigr|_{t = 0}$ equals the price at planting time $P(0)$ times $e^{m_p T}$.
-
-\begin{equation}
-E[P(T)]\bigr|_{t = 0} = P(0) e^{m_p T}
-\end{equation}
-
-The weather variables upon which crop yields depend generally follow geometric Brownian motion. Since yield is a function of such variables, then, by Ito's lemma, yield is also a geometric Brownian motion. Examples of weather variables following a geometric Brownian motion over a given growing season are presented in Figure \ref{fig:gBmWeather}. 
-
-
-<!-- [atmospheric processes] -->
-The assumption that yield and output price follow independent geometric Brownian motions (Axiom 4) is thus well supported, empirically.
-
-
-
-<!-- Letting $b(T)$ stand for the ratio $P(T) / C^{\#}(T)$, this means that the Log change $\ln(b(T) / b(\hat{t}))$ is normally distributed with mean and variance -->
-<!-- \begin{equation} -->
-<!-- \begin{split} -->
-<!-- E \left[\ln \left( \frac{b(T)}{b(\hat{t})} \right) \right] &= \left(m_b - \frac{s_b^2}{2} \right) T \\ -->
-<!-- Var \left[\ln \left( \frac{b(T)}{b(\hat{t})} \right) \right] &= b_{p}^2 T -->
-<!-- \end{split} -->
-<!-- \end{equation} -->
-<!-- Where  -->
-<!-- \begin{equation} -->
-<!-- \begin{split} -->
-<!-- m_b &= m_p - m_y + \ln(C^*) \:\:;\:\:\: m_y = E\left[ \frac{\Delta y^*}{y^* \Delta t} \right]\\ -->
-<!-- s_b^2 &= s_p^2 + s_y^2 \:\:;\:\:\: s_y^2 = Var\left[ \frac{\Delta y^*}{y^* \Delta t} \right] -->
-<!-- \end{split} -->
-<!-- \end{equation} -->
-```{r Fig1, fig.show = "hold", fig.width = 5, fig.height=3, fig.align="center", fig.cap="\\label{fig:gBmWeather}(Left) Daily average weather variable time series covering the 2018 maize long rains growing season in Eldoret, Kenya (NREL 2023). (Right) The corresponding daily log changes exhibit the normal distribution typical of geometric Brownian motion.", echo = FALSE}
+```{r Fig2, fig.show = "hold", fig.width = 5, fig.height=3, fig.align="center", fig.cap="\\label{fig:gBmWeather}(Left) Daily average weather variable time series covering the 2018 maize long rains growing season in Eldoret, Kenya (NREL 2023). (Right) The corresponding daily log changes exhibit the normal distribution typical of geometric Brownian motion.", echo = FALSE}
 
 #Weather data from National Solar Radiation Database
 #https://nsrdb.nrel.gov/data-viewer
@@ -683,7 +639,7 @@ gg <- ggplot(df, aes(x = Date, y = val))
 gg <- gg + geom_line()
 gg <- gg + scale_x_date(breaks = scales::breaks_pretty(n = 8))
 gg <- gg + facet_wrap(~var, ncol = 1, scales = "free_y", strip.position = "left")
-gg <- gg + labs(title = "Daily time series of key weather variables influencing crop yields\nEldoret, Kenya, 2018 maize growing season")
+gg <- gg + labs(title = "Daily averages of key weather variables influencing crop yields\nEldoret, Kenya, 2018 maize growing season")
 gg <- gg + theme_bw()
 gg <- gg + theme(axis.title.x = element_text(size = axisTitleSize),
                  axis.title.y = element_blank(),
@@ -716,6 +672,9 @@ gg_line + gg_hist + plot_layout(ncol = 2, widths = c(1, 1/3))
 
 [@jseData; @fpmaData; @cmeData; @nsrdbData]
 
+<!-- ---especially temperature, solar radiation, and humidity--- -->
+<!-- That is, farmers make their expenditure decision $C^*$ at planting time ($t = 0$) based on what they expect the values of $y^*$ and $P$ to be at harvest ($t = T$). -->
+
 ### Aggregation from farm to population level based on Axiom 5
 
 The farm density function $\rho(q^*)$ in Equation \ref{eq:sup1} is defined such that
@@ -732,27 +691,16 @@ Where $N_f$ is the number of farms in the population. The farm density may thus 
 
 Aggregate supply can now be specified in greater detail.
 
-<!-- \begin{equation} -->
-<!-- \begin{split} -->
-<!-- E[Q(T)]\bigr|_{t = 0} &= N_f \int_{0}^{\bar{q}^*} q^* f(q^*) \: dq^* \\ -->
-<!-- &= \theta E[P(T)]\bigr|_{t = 0}^{\eta} \int_{0}^{h^{-\eta}} \lambda^{-\eta} f(q^*) \: dq^* \:\:;\:\:\: \theta = N_f E[A] (g_0 E[\beta])^{\eta / h} -->
-<!-- \end{split} -->
-<!-- \label{eq:sup2} -->
-<!-- \end{equation} -->
+\begin{equation}
+E[Q(T)]\bigr|_{t = 0} = N_f \int_0^{E[\bar{q}^*(T)]|_{t = 0}} E[q^*(T)]|_{t = 0} f(E[q^*(T)]|_{t = 0})  \: d E[q^*(T)]|_{t = 0} 
+\label{eq:sup2}
+\end{equation}
 
-<!-- By the law of the unconscious statistician, the integral in the expression above can be rewritten -->
-
-<!-- \begin{equation} -->
-<!-- \int_{0}^{h^{-\eta}} \lambda^{-\eta} f(q^*) \: dq^* = \int_{0}^{h^{-\eta}} \lambda^{-\eta} f(\lambda^{-\eta}) \: d \lambda^{-\eta} -->
-<!-- \end{equation} -->
-
-Assuming production is lognormally distributed (Axiom 5), then
+Assuming production is lognormally distributed (Axiom 5), then this resolves as follows.
 
 \begin{equation}
-\begin{split}
-E[Q(T)]\bigr|_{t = 0} &= N_f \int_0^{E[\bar{q}^*(T)]|_{t = 0}} E[q^*(T)]|_{t = 0} f(E[q^*(T)]|_{t = 0})  \: d E[q^*(T)]|_{t = 0} \\
-&= N_f E[E[q^*(T)]\bigr|_{t = 0}] \Phi \left(\frac{\ln\left(\frac{E[\bar{q}^*(T)]|_{t = 0}}{E[E[q^*(T)]|_{t = 0}]}\right) - \frac{s_{EqT0}^2}{2}}{s_{EqT0}} \right) \:\:;\:\:\: s_{EqT0}^2 = Var[E[q^*(T)]\bigr|_{t = 0}]
-\end{split}
+E[Q(T)]\bigr|_{t = 0} = N_f E[E[q^*(T)]\bigr|_{t = 0}] \Phi \left(\frac{\ln\left(\frac{E[\bar{q}^*(T)]|_{t = 0}}{E[E[q^*(T)]|_{t = 0}]}\right) - \frac{s_{EqT0}^2}{2}}{s_{EqT0}} \right) \:\:;\:\:\: s_{EqT0}^2 = Var[E[q^*(T)]\bigr|_{t = 0}]
+\label{eq:sup3}
 \end{equation}
 
 (See Appendix for details.)
@@ -952,7 +900,7 @@ sketch out extension to aggregate demand and PE analysis...computing Econ Surplu
 
 # Appendix
 
-Proof of equation ...
+Proof of equation \ref{eq:sup3}
 
 Given a lognormally distributed random variable $u$, such that $\ln(u)$ is normally distributed with mean $m_u$ and variance $s_u^2$, then the expected value of $u$ is
 <!-- Where $p(q)$ is the probability density function of the random variable $q$. If $\ln(q)$ is normally distributed with mean $m_u$ and variance $s_u^2$, then -->
@@ -1015,6 +963,12 @@ And substituting this in for $m_u$ in the previous expression gives
 &= \frac{E[u]} \Phi \left(\frac{\ln \left(\frac{\bar{u}}{E[u]} \right) - \frac{s_u^2}{2} }{s_u} \right)
 \end{split}
 \end{equation}
+
+In Equation \ref{eq:sup3}, $u = E[q^*(T)]\bigr|_{t = 0}$, giving
+
+$$
+E[Q(T)]\bigr|_{t = 0} = N_f E[E[q^*(T)]\bigr|_{t = 0}] \Phi \left(\frac{\ln\left(\frac{E[\bar{q}^*(T)]|_{t = 0}}{E[E[q^*(T)]|_{t = 0}]}\right) - \frac{s_{EqT0}^2}{2}}{s_{EqT0}} \right) \:\:;\:\:\: s_{EqT0}^2 = Var[E[q^*(T)]\bigr|_{t = 0}]
+$$
 
 <!-- \blacksquare -->
 
