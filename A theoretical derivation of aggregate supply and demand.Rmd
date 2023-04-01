@@ -322,12 +322,7 @@ y^* = (g_0 \beta)^{\frac{1}{1 - h}} \left( \frac{P}{\lambda} \right)^{\frac{h}{1
 Where
 
 \begin{equation}
-\begin{split}
-\beta &= \frac{\beta_x \beta_k}{\beta_w} \\
-\beta_w &= \prod_i {w_i}^{\alpha_i} \\
-\beta_x &= \prod_i {\alpha_i}^{\alpha_i} \\
-\beta_k &= \prod_i {k_i}^{\kappa_i}
-\end{split}
+\beta = \frac{\beta_x \beta_k}{\beta_w} \:\:;\:\:\: \beta_w = \prod_i{w_i}^{\alpha_i} \:\:\: \beta_x = \prod_i {\alpha_i}^{\alpha_i} \:\:\: \beta_k = \prod_i {k_i}^{\kappa_i}
 \end{equation}
 
 Dotting the first order conditions in Equation \ref{eq:eqFOC} through by $\mathbf{x}$ results in a handy expression for the budget shadow price.
@@ -375,14 +370,14 @@ Axioms 1 and 2 thus imply constant marginal cost. (As mentioned in the introduct
 \label{eq:lambda2}
 \end{equation}
 
-Letting $C^{\#}$ denote the "average cost of production" (i.e., the cost per unit output), moreover, then
+Letting $C^{\#}$ denote the cost per unit output (i.e. the so called "average cost of production"), moreover, then
 
 \begin{equation}
-\lambda = \frac{C^{\#}}{h}
+\lambda = \frac{P}{C^{\#}} h
 \label{eq:lambda3}
 \end{equation}
 
-And the marginal cost and average cost are thus related as follows.
+And the marginal cost and cost per unit output are thus related as follows.
 
 \begin{equation}
 \frac{dC^*}{dy^*} h = C^{\#}
@@ -440,9 +435,9 @@ y^* < (g_0 \beta)^{\eta / h}  \left(\frac{P}{h} \right)^{\eta} \:\:;\:\:\: \eta 
 
 (No lower bound is imposed by Axiom 3, and so the lower bound of $y^*$ just defaults to the physical lower bound $y^* > 0$.)
 
-## Derivation of aggregate supply from Axioms 4-5 \label{sec:aggSupply}
+## Derivation of aggregate supply from Axioms 4-5
 
-### Geometric Brownian motion of prices and yield (Axiom 4)
+### Geometric Brownian motion of prices and yield (Axiom 4) \label{sec:gBmAx}
 
 Henceforth it is necessary to be more specific in the treatment of yield $y^*$ and output price $P$ as stochastic variables. Absent a forward contract, the output price at the time of harvest and sale $(t = T)$ is unknown to the farmer at the time of planting $(t = 0)$. Likewise, yield is largely dependent upon numerous stochastic meteorological processes occurring between planting and harvest which are unknown to the farmer at the time of planting. Wherever $P$ and $y^*$ appear in the equations above, then, what is really meant is $E[P(T)]\bigr|_{t = 0}$ and $E[y^*(T)]\bigr|_{t = 0}$.
 
@@ -478,9 +473,10 @@ And the expected value is
 
 \begin{equation}
 E[P(T)]\bigr|_{t = 0} = P(0) e^{m_p T}
+\label{eq:EPT0}
 \end{equation}
 
-```{r Fig1, fig.show = "hold", fig.width = 5, fig.height=3, fig.align="center", fig.cap="\\label{fig:gBmPrice}(Left) Maize price series from (top to bottom) Chicago, USA (CME, 2023), Johannesburg, RSA (JSE, 2023), and Eldoret market, Kenya (FPMA, 2023). (Right) The corresponding daily (monthly, in the case of Kenya) log changes exhibit the normal distribution typical of geometric Brownian motion.", echo = FALSE}
+```{r Fig1, fig.show = "hold", fig.width = 5, fig.height=4, fig.align="center", fig.cap="\\label{fig:gBmPrice}(Left) Maize price series from (top to bottom) Chicago, USA (CME, 2023), Johannesburg, RSA (JSE, 2023), and Eldoret market, Kenya (FPMA, 2023). (Right) The corresponding daily (monthly, in the case of Kenya) log changes exhibit the normal distribution typical of geometric Brownian motion.", echo = FALSE}
 
 thisFolder <- "D:/OneDrive - CGIAR/Documents 1/CIAT 2/A theory of aggregate supply and demand/"
 thisFile <- "South Africa corn future price.csv"
@@ -547,8 +543,8 @@ df_raw <- as.data.frame(apply(df_raw, 2, rev))
 colnames(df_raw) <- c("Date", "Price")
 df_raw$Price <- as.numeric(df_raw$Price)
 df_raw$Date <- as.Date(df_raw$Date, "%m/%d/%Y")
-df <- subset(df_raw, Date > "2008-04-01" &
-               Date < "2019-08-01")
+df <- subset(df_raw, Date >= "2008-03-01" &
+               Date <= "2019-08-01")
 df$`Log change` <- c(NA, diff(log(df$Price)))
 #colnames(df)[2] <- "KES / kg."
 # gg <- ggplot(df, aes(x = Date, y = `KES / kg.`))
@@ -624,7 +620,9 @@ The stochastic movement of $y^*(t)$ is slightly less straightforward. While it m
 
 Denoting the mean and variance of the normally distributed changes $\Delta y^* / y^*$ as $m_y \Delta t$ and $s_y^2 \Delta t$, respectively, it is then straightforward to verify, again by Ito's lemma, that $C^{\#}$ also follows a geometric Brownian motion whose log changes have variance $s_c^2$ equal to $s_y^2$. Moreover, Equation \ref{eq:lambda3} implies $s_c^2 = s_p^2$, and thus by transitivity $s_y^2 = s_p^2$.
 
-```{r Fig2, fig.show = "hold", fig.width = 5, fig.height=3, fig.align="center", fig.cap="\\label{fig:gBmWeather}(Left) Daily average weather variable time series covering the 2018 maize long rains growing season in Eldoret, Kenya (NREL 2023). (Right) The corresponding daily log changes exhibit the normal distribution typical of geometric Brownian motion.", echo = FALSE}
+[gBm over a given growing season; beyond that the motion may exhibit cyclic or mean reverting behavior, which diverges from gBm]
+
+```{r Fig2, fig.show = "hold", fig.width = 5, fig.height=4, fig.align="center", fig.cap="\\label{fig:gBmWeather}(Left) Daily average weather variable time series covering the 2018 maize long rains growing season in Eldoret, Kenya (NREL 2023). (Right) The corresponding daily log changes exhibit the normal distribution typical of geometric Brownian motion.", echo = FALSE}
 
 #Weather data from National Solar Radiation Database
 #https://nsrdb.nrel.gov/data-viewer
@@ -675,7 +673,7 @@ gg_line + gg_hist + plot_layout(ncol = 2, widths = c(1, 1/3))
 <!-- ---especially temperature, solar radiation, and humidity--- -->
 <!-- That is, farmers make their expenditure decision $C^*$ at planting time ($t = 0$) based on what they expect the values of $y^*$ and $P$ to be at harvest ($t = T$). -->
 
-### Aggregation from farm to population level based on Axiom 5
+### Aggregation from farm to population level assuming lognormally distributed production (Axiom 5)
 
 The farm density function $\rho(q^*)$ in Equation \ref{eq:sup1} is defined such that
 
@@ -718,36 +716,36 @@ By Rubini's theorem, $E[E[q^*(T)]\bigr|_{t = 0}] = E[\tilde{q}(T)]\bigr|_{t = 0}
 \begin{equation}
 \begin{split}
 E[Q(T)]\bigr|_{t = 0} &= N_f E[\tilde{q}^*(T)]\bigr|_{t = 0} \Phi \left(\frac{\ln \left( \frac{E[\bar{q}^*(T)]}{E[\tilde{q}^*(T)]|_{t = 0}} \right) - \frac{s_{\tilde{q}}^2}{2} T}{s_{\tilde{q}} \sqrt{T}} \right) \:\:;\:\:\: s_{\tilde{q}}^2 T = Var \left[ \ln \left( \frac{\tilde{q}^*(T)}{\tilde{q}^*(0)} \right) \right] \\
-&= N_f E[\tilde{q}^*(T)]\bigr|_{t = 0} \Phi \left(\frac{\ln \left( \frac{E[P(T)]\bigr|_{t = 0}^{\eta}}{E[\tilde{C}^{\#}(T)]|_{t = 0}^{\eta}} \right) - \eta^2 \frac{s_{\tilde{c}}^2}{2} T}{\eta s_{\tilde{c}} \sqrt{T}} \right) \:\:;\:\:\: s_{\tilde{C}}^2 T = Var \left[ \ln \left( \frac{\tilde{C}^{\#}(T)}{\tilde{C}^{\#}(0)} \right) \right]
+&= N_f E[\tilde{q}^*(T)]\bigr|_{t = 0} \Phi \left(\frac{\ln \left( \frac{E[P(T)]\bigr|_{t = 0}^{\eta}}{E[C_0^{\#}(T)]|_{t = 0}^{\eta}} \right) - \eta^2 \frac{s_{c}^2}{2} T}{\eta s_{c} \sqrt{T}} \right) \:\:;\:\:\: s_{c}^2 T = Var \left[ \ln \left( \frac{C_0^{\#}(T)}{C_0^{\#}(0)} \right) \right]
 \end{split}
 \end{equation}
 
-Since the definition of $\lambda$ (Equation \ref{eq:lambda4}) generally implies $P(t) = \lambda / h \: C^{\#}(t)$, it is straightforward to show by Ito's lemma that $s_{\tilde{c}} = s_p$. Recalling, moreover, that $E[P(T)]\bigr|_{t = 0} = P(0) e^{m_p T}$, aggregate supply may again be rewritten
+Substituting $s_p$ for $s_p$ (see the end of the previous section for details), and $P(0) e^{m_p T}$ for $E[P(T)]\bigr|_{t = 0}$ (recall Equation \ref{eq:EPT0}), aggregate supply may again be rewritten
 
 \begin{equation}
 \begin{split}
-E[Q(T)]\bigr|_{t = 0} &= N_f E[\tilde{q}^*(T)]\bigr|_{t = 0} \Phi \left(\frac{\ln \left( \frac{P(0)^{\eta}}{E[\tilde{C}^{\#}(T)]|_{t = 0}^{\eta}} \right) + \left( \eta m_p - \eta^2 \frac{s_p^2}{2} \right) T}{\eta s_p \sqrt{T} \right) \:\:;\:\:\: s_p^2 T = Var \left[ \ln \left( \frac{P(T)}{P(0)} \right) \right] \\
-&= N_f E[\tilde{q}^*(T)]\bigr|_{t = 0} \Phi \left( -\frac{\ln \left( \frac{E[\tilde{C}^{\#}(T)]|_{t = 0}^{\eta}}{P(0)^{\eta}} \right) - \left( \eta m_p - \eta^2 \frac{s_p^2}{2} \right) T}{\eta s_p \sqrt{T} \right)
+E[Q(T)]\bigr|_{t = 0} &= N_f E[\tilde{q}^*(T)]\bigr|_{t = 0} \Phi \left(\frac{\ln \left( \frac{P(0)^{\eta}}{E[C_0^{\#}(T)]|_{t = 0}^{\eta}} \right) + \left( \eta m_p - \eta^2 \frac{s_p^2}{2} \right) T}{\eta s_p \sqrt{T}} \right) \:\:;\:\:\: s_p^2 T = Var \left[ \ln \left( \frac{P(T)}{P(0)} \right) \right] \\
+&= N_f E[\tilde{q}^*(T)]\bigr|_{t = 0} \Phi \left( -\frac{\ln \left( \frac{E[C_0^{\#}(T)]|_{t = 0}^{\eta}}{P(0)^{\eta}} \right) - \left( \eta m_p - \eta^2 \frac{s_p^2}{2} \right) T}{\eta s_p \sqrt{T}} \right)
 \end{split}
 \end{equation}
 
 Or, more compactly,
 
 \begin{equation}
-E[Q(T)]\bigr|_{t = 0} = N_f E[\tilde{q}^*(T)]\bigr|_{t = 0} (1 - \Phi(z)) \:\:;\:\:\: z = \frac{\ln \left( \frac{E[\tilde{C}^{\#}(T)]|_{t = 0}^{\eta}}{P(0)^{\eta}} \right) - \left( \eta m_p - \eta^2 \frac{s_p^2}{2} \right) T}{\eta s_p \sqrt{T}
-\label{eq:sup2}
+E[Q(T)]\bigr|_{t = 0} = N_f E[\tilde{q}^*(T)]\bigr|_{t = 0} (1 - \Phi(z)) \:\:;\:\:\: z = \frac{\ln \left( \frac{E[C_0^{\#}(T)]|_{t = 0}^{\eta}}{P(0)^{\eta}} \right) - \left( \eta m_p - \eta^2 \frac{s_p^2}{2} \right) T}{\eta s_p \sqrt{T}}
+\label{eq:sup4}
 \end{equation}
 
-Now, note that $z$ is the standard score of the Log change $\ln(P(T)^{\eta} / P(0)^{\eta} )$ evaluated at $P(T) = E[\tilde{C}^{\#}(T)]\bigr|_{t = 0}$. Therefore, $\Phi(z)$ may be interpreted as the probability that the output price at planting time $P(0)$ will fall to the mean farm's expected cost per unit output $E[\tilde{C}^{\#}]\bigr|_{t = 0}$ by harvest and sale. That is,
+Now, note that $z$ is the standard score of the log change $\ln(P(T)^{\eta} / P(0)^{\eta} )$ evaluated at $P(T) = E[C_0^{\#}(T)]\bigr|_{t = 0}$. Therefore, $\Phi(z)$ may be interpreted as the probability that the output price at planting time $P(0)$ will fall to the mean farm's expected cost per unit output $E[C_0^{\#}]\bigr|_{t = 0}$ by harvest and sale. That is,
 
 \begin{equation}
-\Phi(z) = \text{Prob}(P(T) \leq E[\tilde{C}^{\#}(T)]\bigr|_{t = 0})
+\Phi(z) = \text{Prob}(P(T) \leq E[C_0^{\#}(T)]\bigr|_{t = 0})
 \end{equation}
 
 And $1 - \Phi(z)$ may be roughly interpreted as the probability that the output price will remain above this level.
 
 \begin{equation}
-1 - \Phi(z) = \text{Prob}(P(T) > E[\tilde{C}^{\#}(T)]\bigr|_{t = 0})
+1 - \Phi(z) = \text{Prob}(P(T) > E[C_0^{\#}(T)]\bigr|_{t = 0})
 \end{equation}
 <!-- The qualifier "roughly" must be added because of the exponent $\eta$.  -->
 
@@ -766,15 +764,463 @@ Recall that $\eta$ is just the farm level output price elasticity of supply. The
 Note that elasticity is inversely proportionate to the price risk ($s_p \sqrt{T}$). The effect of price risk on supply can be examined more explicitly as follows.
 
 \begin{equation}
-\frac{\partial \ln(Q)}{\partial (s_p \sqrt{T})} = -\eta \frac{\phi(-z)}{\Phi(-z)} \left( \frac{1}{\eta^2 s_p^2 T} \ln \left( \frac{E[P(T)]\bigr|_{t = 0}}{E[\tilde{C}^{\#}(T)]\bigr|_{t = 0}} \right)  + \frac{1}{2} \right)
+\frac{\partial \ln(Q)}{\partial (s_p \sqrt{T})} = -\eta \frac{\phi(-z)}{\Phi(-z)} \left( \frac{1}{\eta^2 s_p^2 T} \ln \left( \frac{E[P(T)]\bigr|_{t = 0}}{E[C_0^{\#}(T)]\bigr|_{t = 0}} \right)  + \frac{1}{2} \right)
 \end{equation}
 
 # Illustrative use case
 
-## Data and estimation
+## Data, specification, estimation
+
+The variable is included only if it is used. variables that equal 0 are removed from the model. this is tantamount to setting them equal to 1.
+
+It is important to keep in mind that, while $y_0$ (and $g_0$) are constant, the mean yield (and TFP) vary across farms if there are binary management and/or control variables among the $x_i$ and $k_i$. For example, say the model includes a binary technology adoption variable $x_{adopt}$ that takes the value of $x_{adopt} = e$ on adopting farms and $x_{adopt} = 1$ on non-adopting farms. Then the fitted coefficient $\alpha_{adopt}$ is effectively added to the constant $\alpha_0$ on adopting farms, thus altering its ... while the on non-adopting farms is left unaltered.
+
+
+```{r}
+
+thisFolder <- "D:/OneDrive - CGIAR/Documents 1/CIAT 2/A theory of aggregate supply and demand/"
+thisFile <- "df_mod2007.csv"
+thisFilepath <- paste0(thisFolder, thisFile)
+df_mod <- read.csv(thisFilepath, stringsAsFactors = F)
+colnames(df_mod) <- df_mod[nrow(df_mod), ]
+df_mod <- df_mod[-nrow(df_mod), ]
+df_mod[, -1] <- as.data.frame(apply(df_mod[, -1], 2, as.numeric))
+#=======================================================================
+input_vars <- c(#"Total fam lab child (pers-hrs/acre)",
+                #"Total fam lab (pers-hrs/acre)",
+                #"Total fam lab adult (pers-hrs/acre)",
+                #"Total wage labor (pers-hrs/acre)",
+              #"1st weeding fam lab child (pers-hrs/acre)",
+               #"2nd weeding fam lab fem (pers-hrs/acre)",
+               #"2nd weeding fam lab adult (pers-hrs/acre)",
+              #"1st weeding fam lab fem (pers-hrs/acre)",
+              #"1st weeding fam lab adult (pers-hrs/acre)",
+              #"1st weeding fam lab male (pers-hrs/acre)", *
+                #"1st weeding wage labor (pers-hrs/acre)",
+                #"2nd weeding wage labor (pers-hrs/acre)",
+               # "1st ploughing fam lab child (pers-hrs/acre)",
+              #"1st ploughing fam lab adult (pers-hrs/acre)",
+               # "1st ploughing fam lab fem (pers-hrs/acre)",
+               #"1st ploughing fam lab male (pers-hrs/acre)",
+                #"1st ploughing wage labor (pers-hrs/acre)",
+              #"shelling fam lab adult (pers-hrs/acre)",
+              #"shelling fam lab fem (pers-hrs/acre)",
+                #"shelling fam lab male (pers-hrs/acre)",
+              #"shelling fam lab child (pers-hrs/acre)",
+              # "shelling wage labor (pers-hrs/acre)",
+              #"harvesting fam lab male (pers-hrs/acre)", #**
+              #"harvesting fam lab adult (pers-hrs/acre)", *
+              #"harvesting fam lab fem (pers-hrs/acre)",
+            #"harvesting fam lab child (pers-hrs/acre)",
+              #"harvesting wage labor (pers-hrs/acre)",
+            #  "planting fam lab adult (pers-hrs/acre)",
+               # "planting fam lab fem (pers-hrs/acre)",
+                #"planting fam lab male (pers-hrs/acre)",
+              "planting fam lab child (pers-hrs/acre)",
+               #"planting wage labor (pers-hrs/acre)",
+                #"Total synth. fert. (kg/acre)",
+                "seed (kg/acre)",
+              "Total CAN fert (kg/acre)",      
+              "Total NPK fert (kg/acre)",  
+              "Total UREA fert (kg/acre)",
+              "dap (kg/acre)",
+                #"UREA (46:0:0) (kg/acre)",
+                #"CAN (26:0:0) (kg/acre)",
+                # "NPK (23:23:23) (kg/acre)",
+                # "NPK (23:23:0) (kg/acre)",
+              #"NPK (17:17:0) (kg/acre)",
+               #"manure (kg/acre)",
+              #"compost (kg/acre)",
+              #"mavuno-basal (kg/acre)",
+              #"foliar feed (kg/acre)",
+               # "Fungicide qty (kg/acre)",
+               # "Herbicide qty (kg/acre)",
+               # "Insecticide qty (kg/acre)",
+               # "Pesticide qty (kg/acre)"
+              "Total P&D chem (kg/acre)"
+              )
+demog_vars <- c(#"age",
+                "aehh07"#,
+                #"hhsize07"
+                # "km to organic fert mkt",
+                #"km to synth fert mkt",
+                #"km to pest/plague chem mkt"
+                )
+clim_vars <- c("Rain anomaly"#,
+               #"qwetpre",
+               #"main07",
+                # "qwetxt",
+                # "qwetit"
+               )
+bin_vars <- c("adopter", #"gend",
+              #"irrigated",
+               # "tenure: govt/communal/cooperative",
+               # "tenure: owned by parent/relative", 
+              "tenure: owned with title deed",
+              # "tenure: owned without title deed",
+              # "tenure: rented",
+              # "landprep: manual",
+              # "landprep: none",
+              "landprep: oxen",
+              "landprep: tractor")
+#-----------------------------------------------------------------------
+costVars <- c("Cstar", #"seed (KES/acre)",
+              "dap (KES/acre)",
+              #"UREA (46:0:0) (KES/acre)",
+              "Total CAN fert (KES/acre)",
+              #"CAN (26:0:0) (KES/acre)",
+              "Total NPK fert (KES/acre)",
+              #"NPK (23:23:23) (KES/acre)",
+              #"NPK (23:23:0) (KES/acre)",
+              "Total UREA fert (KES/acre)",
+              #"manure (KES/acre)",
+              "Total P&D chem (KES/acre)"
+              )
+priceVars <- gsub("acre", "kg", costVars[-1])
+priceVars <- c(priceVars, "harvesting (KES/hour)")
+#-----------------------------------------------------------------------
+mod1Vars <- c("dist", "yield (kg/acre)", "acres",
+              input_vars, bin_vars, demog_vars, clim_vars,
+              costVars, priceVars, "P")
+df_mod1 <- df_mod[, mod1Vars]
+not_these <- which(colnames(df_mod1) %in% c("dist", costVars, priceVars, "P"))
+mod1 <- lm(`yield (kg/acre)`~., df_mod1[, -not_these])
+summary(mod1)
+sum(mod1$residuals^2)
+plot(mod1$fitted.values, mod1$residuals)
+#car::vif(mod1)
+#View(df_mod1[which(mod1$residuals < -2), ])
+library(jtools)
+summ(mod1)
+coefsNeg <- mod1$coefficients[which(mod1$coefficients < 0)]
+coefsNegNames <- gsub("`", "", names(coefsNeg))
+inputsNegCoef <- coefsNegNames[which(coefsNegNames %in% input_vars)]
+inputsPosCoef <- setdiff(input_vars, inputsNegCoef)
+#-----------------------------------------------------------------------
+mod2Vars <- c("dist", "yield (kg/acre)", "Cstar", "acres", "seed (kg/acre)",
+              inputsNegCoef, bin_vars, demog_vars, clim_vars)
+df_mod2 <- df_mod[, mod2Vars]
+not_these <- which(colnames(df_mod2) %in% c("dist", costVars[-1]))
+mod2 <- lm(`yield (kg/acre)`~., df_mod2[, -not_these])
+summary(mod2)
+sum(mod2$residuals^2)
+plot(mod2$fitted.values, mod1$residuals)
+#car::vif(mod2)
+#View(df_mod2[which(mod2$residuals < -1.5), ])
+summ(mod2)
+#------------------------------------------------------------------------# Model validation tests
+#-----------------------------------------------------------------------
+coefsNames <- gsub("`", "", names(mod1$coefficients))
+aVec <- mod1$coefficients[which(coefsNames %in% inputsPosCoef)]
+# If seed coef removed, calculation of h based on model 1 input coefs
+# matches estimation of h in model 2 
+rmThese <- which(names(aVec) == "`seed (kg/acre)`")#%in% c("`seed (kg/acre)`", "`harvesting fam lab male (pers-hrs/acre)`"))
+aVec <- aVec[-rmThese]
+hFull <- sum(aVec)
+#aVec / h
+inputMat <- as.matrix(df_mod1[, inputsPosCoef[-c(1)]]) # (if removing seed coef)
+#inputMat <- as.matrix(df_mod1[, inputsPosCoef])
+inputMat[inputMat != 0] <- 1
+h <-  inputMat %*% aVec
+hist(h)
+ind_h0 <- which(h == 0)
+hist(df_mod1$`yield (kg/acre)`[ind_h0])
+unique(df_mod1$dist[ind_h0])
+hist(df_mod1$`seed (kg/acre)`[ind_h0])
+hist(df_mod1$aehh07[ind_h0])
+#plot(mod1$fitted.values[ind_h0], mod1$residuals[ind_h0])
+View(df_mod1[ind_h0, ])
+h[ind_h0] <- 0.02
+#---
+# Validation test 1 using cost shares vs. tech shares
+# (Theory predicts that input cost_i / total input cost = alpha_i / h)
+# (So the following ratios should = 1, or log(ratio) = 0)
+# Encouraging results, make sure Cstar only includes inputs used in model,
+# and that seed might better not be considered an input
+#---
+Cstar <- exp(df_mod1$Cstar)
+yStar <- exp(df_mod1$`yield (kg/acre)`)
+# Cstar, yStar, and CtildeStar are lognormally distributed
+CtildeStarEff <- Cstar / yStar
+hist(log(CtildeStarEff), breaks = 25)
+hist(log(Cstar), breaks = 25)
+hist(log(yStar), breaks = 25)
+#Cstar[which(Cstar == 1)] <- 0
+hist(log(Cstar / yStar))
+#ratio <- aVec[which(names(aVec) == "`seed (kg/acre)`")] / h * Cstar / df_mod1$`seed (KES/acre)`
+#ratio <- aVec[which(names(aVec) == "`manure (kg/acre)`")] / h * Cstar / df_mod1$`manure (KES/acre)`
+ratio <- aVec[which(names(aVec) == "`Total NPK fert (kg/acre)`")] / h * Cstar / df_mod1$`Total NPK fert (KES/acre)`
+ratio <- aVec[which(names(aVec) == "`Total CAN fert (kg/acre)`")] / h * Cstar / df_mod1$`Total CAN fert (KES/acre)`
+ratio <- aVec[which(names(aVec) == "`Total UREA fert (kg/acre)`")] / h * Cstar / df_mod1$`Total UREA fert (KES/acre)`
+ratio <- aVec[which(names(aVec) == "`dap (kg/acre)`")] / h * Cstar / df_mod1$`dap (KES/acre)`
+ratio <- aVec[which(names(aVec) == "`Total P&D chem (kg/acre)`")] / h * Cstar / df_mod1$`Total P&D chem (KES/acre)`
+#hist(log(ratio))
+#---
+# Validation test 2 based only on input costs and tech coeffs
+# (Theory says input cost_i / alpha_i = input cost_j / alpha_j)
+# (So the following ratios should = 1, or log(ratio) = 0)
+# More encouraging results!
+# Ratios involving seed continue to diverge from theory,
+# maybe b/c the seed cost is incomplete,
+# maybe farmers have ways of getting it for free
+# maybe b/c seed cost is not really a management variable
+# Note this way of validating opens the door to deducing family labor wage
+#---
+ratio <- df_mod1$`Total CAN fert (KES/acre)` * 
+  aVec[which(names(aVec) == "`Total NPK fert (kg/acre)`")] / (df_mod1$`Total NPK fert (KES/acre)` * aVec[which(names(aVec) == "`Total CAN fert (kg/acre)`")])
+ratio <- df_mod1$`Total CAN fert (KES/acre)` *
+  aVec[which(names(aVec) == "`Total UREA fert (kg/acre)`")] / (df_mod1$`Total UREA fert (KES/acre)` * aVec[which(names(aVec) == "`Total CAN fert (kg/acre)`")])
+ratio <- df_mod1$`Total CAN fert (KES/acre)` *
+  aVec[which(names(aVec) == "`dap (kg/acre)`")] / (df_mod1$`dap (KES/acre)` * aVec[which(names(aVec) == "`Total CAN fert (kg/acre)`")])
+ratio <- df_mod1$`Total UREA fert (KES/acre)` *
+  aVec[which(names(aVec) == "`dap (kg/acre)`")] / (df_mod1$`dap (KES/acre)` * aVec[which(names(aVec) == "`Total UREA fert (kg/acre)`")])
+#ratio <- df_mod1$`seed (KES/acre)` * aVec[which(names(aVec) == "`dap (kg/acre)`")] / (df_mod1$`dap (KES/acre)` * aVec[which(names(aVec) == "`seed (kg/acre)`")])
+ratio <- df_mod1$`Total NPK fert (KES/acre)` *
+  aVec[which(names(aVec) == "`dap (kg/acre)`")] / (df_mod1$`dap (KES/acre)` * aVec[which(names(aVec) == "`Total NPK fert (kg/acre)`")])
+ratio <- df_mod1$`Total NPK fert (KES/acre)` *
+  aVec[which(names(aVec) == "`Total CAN fert (kg/acre)`")] / (df_mod1$`Total CAN fert (KES/acre)` * aVec[which(names(aVec) == "`Total NPK fert (kg/acre)`")])
+ratio <- df_mod1$`Total NPK fert (KES/acre)` *
+  aVec[which(names(aVec) == "`Total P&D chem (kg/acre)`")] / (df_mod1$`Total P&D chem (KES/acre)` * aVec[which(names(aVec) == "`Total NPK fert (kg/acre)`")])
+ratio <- df_mod1$`Total CAN fert (KES/acre)` *
+  aVec[which(names(aVec) == "`Total P&D chem (kg/acre)`")] / (df_mod1$`Total P&D chem (KES/acre)` * aVec[which(names(aVec) == "`Total CAN fert (kg/acre)`")])
+ratio <- df_mod1$`Total P&D chem (kg/acre)` *
+  aVec[which(names(aVec) == "`dap (kg/acre)`")] / (df_mod1$`dap (kg/acre)` * aVec[which(names(aVec) == "`Total P&D chem (kg/acre)`")])
+# # Fam labor is in qty terms, not cost terms, but exhibits stable ratio values
+# ratio <- df_mod1$`Total CAN fert (KES/acre)` * aVec[which(names(aVec) == "`harvesting fam lab male (pers-hrs/acre)`")] / (df_mod1$`harvesting fam lab male (pers-hrs/acre)` * aVec[which(names(aVec) == "`Total CAN fert (kg/acre)`")])
+# ratio <- df_mod1$`Total NPK fert (KES/acre)` * aVec[which(names(aVec) == "`harvesting fam lab male (pers-hrs/acre)`")] / (df_mod1$`harvesting fam lab male (pers-hrs/acre)` * aVec[which(names(aVec) == "`Total NPK fert (kg/acre)`")])
+# ratio <- df_mod1$`Total UREA fert (KES/acre)` * aVec[which(names(aVec) == "`harvesting fam lab male (pers-hrs/acre)`")] / (df_mod1$`harvesting fam lab male (pers-hrs/acre)` * aVec[which(names(aVec) == "`Total UREA fert (kg/acre)`")])
+# ratio <- df_mod1$`dap (KES/acre)` * aVec[which(names(aVec) == "`harvesting fam lab male (pers-hrs/acre)`")] / (df_mod1$`harvesting fam lab male (pers-hrs/acre)` * aVec[which(names(aVec) == "`dap (kg/acre)`")])
+#hist(log(ratio))
+#---------------------------------------------------------------------
+
+```
 
 ## Parameterization of the aggregate supply curve
 
+```{r}
+
+
+# Get mean price jump from county level monthly price data (downloaded from GIEWS-FPMA)
+yrVec <- unique(year(df_ky$Date))
+nYr <- length(yrVec)
+for(i in 1:nYr){
+  thisDate <- as.Date(paste0(as.character(2007 + i), "-03-01"))
+  ind <- grep(thisDate, df_ky$Date)
+  ind <- ind:(ind + 6)
+  print(mean(df_ky$`Log change`[ind], na.rm = T))
+  print(sd(df_ky$`Log change`[ind], na.rm = T))
+  
+}
+mP <- 0.09
+sP <- 0.12
+#-------------------------------------------------------------------
+rootFnUp <- function(xIn, xUp, sXtrunc, mXtrunc){
+  sX <- xIn[1]
+  mX <- xIn[2]
+  zUp <- (log(xUp) - mX) / sX
+  probTerm <- dnorm(zUp) / pnorm(zUp)
+  slack_s <- sXtrunc^2 - sX^2 * (1 - zUp * probTerm - probTerm^2)
+  slack_m <- mXtrunc - mX + sX * probTerm
+  outVec <- c(slack_s, slack_m)
+  return(outVec)
+}
+rootFnLo <- function(xIn, xLo, sXtrunc, mXtrunc){
+  sX <- xIn[1]
+  mX <- xIn[2]
+  zLo <- (log(xLo) - mX) / sX
+  probTerm <- dnorm(zLo) / pnorm(-zLo)
+  slack_s <- sXtrunc^2 - sX^2 * (1 + zLo * probTerm - probTerm^2)
+  slack_m <- mXtrunc - mX - sX * probTerm
+  outVec <- c(slack_s, slack_m)
+  return(outVec)
+}
+
+mECsharpT0trunc <- mean(df_mod$Cstar - df_mod$`yield (kg/acre)`)
+sECsharpT0trunc <- sd(df_mod$Cstar - df_mod$`yield (kg/acre)`)
+EPT02007 <- 13
+xIn <- c(sECsharpT0trunc, mECsharpT0trunc)
+sol <- nleqslv::nleqslv(xIn, rootFnUp, jac = NULL,
+                        xUp = EPT02007,
+                        sXtrunc = sECsharpT0trunc,
+                        mXtrunc = mECsharpT0trunc)
+sol
+sECsharpT0 <- sol$x[1]
+mECsharpT0 <- sol$x[2]
+muECsharpT0 <- exp(mECsharpT0 + sECsharpT0^2 / 2)
+#muECsharpT0
+
+mLamTrunc <- mean(log(lambdaRhoC))
+sLamTrunc <- sd(log(lambdaRhoC))
+xIn <- c(sLamTrunc, sLamTrunc)
+sol <- nleqslv::nleqslv(xIn, rootFnLo, jac = NULL,
+                        xLo = hCoef,
+                        sXtrunc = sLamTrunc,
+                        mXtrunc = mLamTrunc)
+sol
+sLam <- sol$x[1]
+mLam <- sol$x[2]
+muLam <- exp(mLam + sLam^2 / 2)
+#----------------------------------------------------------------------
+indKvars <- which(!(coefsNames %in% input_vars[3:7]))
+coefsNames[indKvars]
+#kVec <- mod1$coefficients[-which(coefsNames %in% input_vars[-c(1, 3:4)])]
+kVec <- mod1$coefficients[indKvars]
+kVec <- kVec[-1]
+lwMat <- log(df_mod1[, priceVars[-length(priceVars)]]) %>%
+  #mutate_all(~replace(., is.nan(.), 0)) %>%
+  as.matrix()
+# lwMat[, ncol(lwMat)] <- log(wgFamMale)
+lwMat[is.infinite(lwMat)] <- 0
+lwMat[is.nan(lwMat)] <- 0
+lwMat[is.na(lwMat)] <- 0
+colnames(lwMat)
+names(aVec)
+colnamesOrdered <- gsub("`", "", names(aVec))
+colnamesOrdered <- gsub("kg/acre", "KES/kg", colnamesOrdered)
+colnamesOrdered <- gsub("fam lab male \\(pers-hrs/acre\\)", "\\(KES/hour\\)", colnamesOrdered)
+lwMat <- lwMat[, colnamesOrdered]
+
+betaW <- exp(lwMat %*% aVec)
+hist(log(betaW))
+alogaVec <- aVec * log(aVec)
+betaA <- exp(inputMat %*% alogaVec)
+hist(betaA)
+names(kVec) <- gsub("`", "", names(kVec))
+lkMat <- as.matrix(df_mod[, names(kVec)])
+betaK <- exp(lkMat %*% kVec)
+hist(betaK)
+beta <- betaA * betaK / betaW
+hist(log(beta))
+a0 <- mod1$coefficients[1]
+g0 <- exp(a0)
+EyStar <- g0 * beta * (Cstar / h)^h
+#EyStar <- (y0 * beta * (CtildeStar / h)^h)^(1 / (1-h))
+#yStar <- exp(df_mod1$`yield (kg/acre)`)
+hist(log(EyStar / exp(df_mod1$`yield (kg/acre)`)), breaks = 15) #Nice
+ERstar <- EyStar * df_mod1$P
+hist(log(ERstar / Cstar))
+# Revealed lambda calculated based on parameters observable ex-ante (at planting time)
+lambdaCstarP <- g0 * beta * df_mod1$P * (Cstar / h)^(h - 1)
+lambdaRhoC <- ERstar / Cstar * h
+hist(log(lambdaCstarP))
+hist(log(lambdaRhoC))
+sd(log(lambdaCstarP))
+sd(log(lambdaRhoC))
+mean(log(lambdaCstarP))
+sLambdaTrunc <- sd(log(lambdaCstarP))
+mLambdaTrunc <- mean(log(lambdaCstarP))
+exp(mLambdaTrunc + sLambdaTrunc^2 / 2)
+exp(mLambdaTrunc - sLambdaTrunc^2)
+# How many are rational
+length(lambdaCstarP[lambdaCstarP > h]) / length(lambdaCstarP)
+# CtildeStar <- df_mod1$P / lambdaCstarP * h
+# #CtildeStar2 <- Cstar / EyStar
+# hist(log(CtildeStar))
+# #hist(log(CtildeStar2 / CtildeStar))
+# #hist(log(CtildeStar / CtildeStarEff))
+# # Mean and sd of farmer's expected marginal cost of production
+# mCtildeStarTrunc <- mean(log(CtildeStar))
+# sCtildeStarTrunc <- sd(log(CtildeStar))
+# exp(mCtildeStarTrunc + sCtildeStarTrunc^2 / 2)
+# # Mean and sd of their actual marginal cost of production
+# mCtildeStarEffTrunc <- mean(log(CtildeStarEff))
+# sCtildeStarEffTrunc <- sd(log(CtildeStarEff))
+# exp(mCtildeStarEffTrunc + sCtildeStarEffTrunc^2 / 2)
+
+# First convert yield params to production params
+kVecQs <- kVec
+kVecQs["acres"] <- kVecQs["acres"] + 1
+betaKQs <- exp(lkMat %*% kVecQs)
+hist(log(betaKQs))
+betaQs <- betaA * betaKQs / betaW
+hist(log(betaQs))
+
+hCoef <- mod2$coefficients["Cstar"]
+eta <- hCoef / (1 - hCoef)
+
+mBetaQs <- mean(log(betaQs))
+sBetaQs <- sd(log(betaQs))
+muEtahBetaQs <- exp(eta / hCoef * mBetaQs + (eta / hCoef)^2 * sBetaQs^2 / 2)
+
+muEtaLamInv <- exp(-eta * mLam + eta^2 * sLam^2 / 2)
+
+# mArea <- mean(df_mod$acres)
+# sArea <- sd(df_mod$acres)
+# muArea <- exp(mArea + sArea^2 / 2)
+
+P0vec <- seq(0.1, 25, length.out = 40)
+Nf <- 2.6 * 10^6
+th <- 6
+P02007 <- 8
+#---------
+# Aggregate supply curve
+h <- hCoef
+  EPT0vec <- P02007 * exp(mP * th)
+  muEqStarT0 <- g0^(eta / hCoef) * muEtahBetaQs * muEtaLamInv * EPT0vec
+  z <- (eta * log(muECsharpT0 / P02007) - (eta * mP - eta^2 * sP^2 / 2) * th) / (eta * sP * sqrt(th))
+  Qs <- Nf * muEqStarT0 * (1 - pnorm(z)) #in kg
+
+
+
+QsFun <- function(P0vec, g0, h, muEtahBetaQs, muEtaLamInv,
+                  muECsharpT0, mP, sP, th, Nf){
+  eta <- h / (1 - h)
+  EPT0vec <- P0vec * exp(mP * th)
+  muEqStarT0 <- g0^(eta / hCoef) * muEtahBetaQs * muEtaLamInv * EPT0vec
+  z <- (eta * log(muECsharpT0 / P0vec) - (eta * mP - eta^2 * sP^2 / 2) * th) / (eta * sP * sqrt(th))
+  Qs <- Nf * muEqStarT0 * (1 - pnorm(z)) #in kg
+  #------------
+  etaAg <- eta + dnorm(-z) / pnorm(-z) * 1 / (sP * sqrt(th))
+  #------------
+  dfQs <- data.frame(P0 = P0vec, Qs, PelastQs = etaAg)
+  return(dfQs)
+}
+dfQs <- QsFun(P0vec, g0, h = hCoef, muEtahBetaQs, muEtaLamInv,
+                  muECsharpT0, mP, sP, th, Nf)
+dfQs$Qs <- dfQs$Qs / 1000
+
+dfQs2007 <- QsFun(P02007, g0, h = hCoef, muEtahBetaQs, muEtaLamInv,
+                  muECsharpT0, mP, sP, th, Nf)
+Qs2007 <- dfQs$Qs2007 / 1000 #in MT. FAO 2007 says ~3 million MT
+PelastQs2007 <- dfQs$PelastQs
+#----------
+# Price elasticity of aggregate supply
+#----------
+df_plotQs <- data.frame(val = Qs / 1000, P0vec)
+df_plotQs$type <- "Qs"
+df_plotEta <- data.frame(val = etaAg, P0vec)
+df_plotEta$type <- "Elast"
+df_plot <- as.data.frame(rbind(df_plotQs, df_plotEta))
+gg <- ggplot(dfQs, aes(x = P0, y = Qs))
+gg <- gg + geom_line()
+#gg <- gg + geom_vline(xintercept = Pactual)
+gg <- gg + facet_wrap(~type, ncol = 1, scales = "free_y")
+gg
+#---------
+# Quick (and dirty) point estimate for 2007 gives value close to FAO
+# (Dirty because muEQstar mECsharp estimated based on post hoc data, not expected values, and on truncated pop.)
+# mECsharpT0 <- mean(df_mod$Cstar - df_mod$`yield (kg/acre)`)
+# sECsharpT0 <- sd(df_mod$Cstar - df_mod$`yield (kg/acre)`)
+# muECsharpT0 <- exp(mECsharpT0 + sECsharpT0^2 / 2)
+# mEQstarT0 <- mean(df_mod$`yield (kg/acre)` + df_mod$acres)
+# sEQstarT0 <- sd(df_mod$`yield (kg/acre)` + df_mod$acres)
+# muEQstarT0 <- exp(mEQstarT0 + sEQstarT0^2 / 2)
+#---------
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+```
 ...have to get the population mean/sd from the truncated mean/sd...
 
 
