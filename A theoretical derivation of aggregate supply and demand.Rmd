@@ -1141,62 +1141,109 @@ eta <- hCoef / (1 - hCoef)
 mBetaQs <- mean(log(betaQs))
 sBetaQs <- sd(log(betaQs))
 muEtahBetaQs <- exp(eta / hCoef * mBetaQs + (eta / hCoef)^2 * sBetaQs^2 / 2)
+mBeta <- mean(log(beta))
+sBeta <- sd(log(beta))
+muEtahBeta <- exp(eta / hCoef * mBeta + (eta / hCoef)^2 * sBeta^2 / 2)
 
 muEtaLamInv <- exp(-eta * mLam + eta^2 * sLam^2 / 2)
 
 # mArea <- mean(df_mod$acres)
 # sArea <- sd(df_mod$acres)
 # muArea <- exp(mArea + sArea^2 / 2)
-
-P0vec <- seq(0.1, 25, length.out = 40)
-Nf <- 2.6 * 10^6
+P0vec <- seq(1, 20, length.out = 40)
+Nf <- 1.7 * 10^6
 th <- 6
-P02007 <- 8
+P02007 <- 7
+#FAO Kenya 2006-2008
+#Area ~ 1.7 million ha (1.6-1.9)
+#Prod ~ 3 million MT (2.3-3.2)
 #---------
 # Aggregate supply curve
-h <- hCoef
-  EPT0vec <- P02007 * exp(mP * th)
-  muEqStarT0 <- g0^(eta / hCoef) * muEtahBetaQs * muEtaLamInv * EPT0vec
-  z <- (eta * log(muECsharpT0 / P02007) - (eta * mP - eta^2 * sP^2 / 2) * th) / (eta * sP * sqrt(th))
-  Qs <- Nf * muEqStarT0 * (1 - pnorm(z)) #in kg
-
-
+# Price elasticity of aggregate supply
+# h <- hCoef
+#   EPT0vec <- P02007 * exp(mP * th)
+#   muEqStarT0 <- g0^(eta / hCoef) * muEtahBeta * muEtaLamInv * EPT0vec^eta
+#   z <- (eta * log(muECsharpT0 / P02007) - (eta * mP - eta^2 * sP^2 / 2) * th) / (eta * sP * sqrt(th))
+#   Qs2007 <- Nf * muEqStarT0 * (1 - pnorm(z)) #in kg
+# Qs2007/1000 #million MT
+# etaAg2007 <- eta + dnorm(-z) / pnorm(-z) * 1 / (sP * sqrt(th))
 
 QsFun <- function(P0vec, g0, h, muEtahBetaQs, muEtaLamInv,
                   muECsharpT0, mP, sP, th, Nf){
   eta <- h / (1 - h)
   EPT0vec <- P0vec * exp(mP * th)
-  muEqStarT0 <- g0^(eta / hCoef) * muEtahBetaQs * muEtaLamInv * EPT0vec
+  muEqStarT0 <- g0^(eta / hCoef) * muEtahBetaQs * muEtaLamInv * EPT0vec^eta
   z <- (eta * log(muECsharpT0 / P0vec) - (eta * mP - eta^2 * sP^2 / 2) * th) / (eta * sP * sqrt(th))
   Qs <- Nf * muEqStarT0 * (1 - pnorm(z)) #in kg
+  Qs <- Qs / 1000 #in MT
+  Qs <- Qs * 10^-6 #in million MT
   #------------
   etaAg <- eta + dnorm(-z) / pnorm(-z) * 1 / (sP * sqrt(th))
   #------------
-  dfQs <- data.frame(P0 = P0vec, Qs, PelastQs = etaAg)
+  etaRisk <- -dnorm(-z) / pnorm(-z) * (eta * sP * sqrt(th) - z)
+  #------------
+  dfQs <- data.frame(EPT0 = EPT0vec, Qs, PelastQs = etaAg, etaRisk)
+  colnames(dfQs) <- c("Expected price (KES/kg)",
+                      "Supply\n(million metric tons)",
+                      "Price elasticity\nof supply",
+                      "Price risk elasticity\nof supply")
   return(dfQs)
 }
 dfQs <- QsFun(P0vec, g0, h = hCoef, muEtahBetaQs, muEtaLamInv,
                   muECsharpT0, mP, sP, th, Nf)
-dfQs$Qs <- dfQs$Qs / 1000
-
-dfQs2007 <- QsFun(P02007, g0, h = hCoef, muEtahBetaQs, muEtaLamInv,
-                  muECsharpT0, mP, sP, th, Nf)
-Qs2007 <- dfQs$Qs2007 / 1000 #in MT. FAO 2007 says ~3 million MT
-PelastQs2007 <- dfQs$PelastQs
+# dfQs2007 <- QsFun(P02007, g0, h = hCoef, muEtahBetaQs, muEtaLamInv,
+#                   muECsharpT0, mP, sP, th, Nf)
+# Qs2007 <- dfQs$Qs
+# PelastQs2007 <- dfQs$PelastQs
 #----------
-# Price elasticity of aggregate supply
-#----------
-df_plotQs <- data.frame(val = Qs / 1000, P0vec)
-df_plotQs$type <- "Qs"
-df_plotEta <- data.frame(val = etaAg, P0vec)
-df_plotEta$type <- "Elast"
-df_plot <- as.data.frame(rbind(df_plotQs, df_plotEta))
-gg <- ggplot(dfQs, aes(x = P0, y = Qs))
+#df_plot <- dfQs %>% gather(var, val, Qs:PelastQs)
+gg <- ggplot(dfQs, aes(x = `Expected price (KES/kg)`, y = `Supply\n(million metric tons)`))
 gg <- gg + geom_line()
-#gg <- gg + geom_vline(xintercept = Pactual)
-gg <- gg + facet_wrap(~type, ncol = 1, scales = "free_y")
-gg
-#---------
+gg <- gg + theme_bw()
+ggQs <- gg
+#---
+gg <- ggplot(dfQs, aes(x = `Expected price (KES/kg)`, y = `Price elasticity\nof supply`))
+gg <- gg + geom_line()
+gg <- gg + theme_bw()
+ggElast <- gg
+df_inset <- subset(dfQs, `Expected price (KES/kg)` > 11 & `Expected price (KES/kg)` < 16)
+gg <- ggplot(df_inset, aes(x = `Expected price (KES/kg)`, y = `Price elasticity\nof supply`))
+gg <- gg + geom_line()
+gg <- gg + geom_hline(yintercept = 1, linetype = "dashed", color = "red")
+gg <- gg + theme_bw()
+gg <- gg + theme(axis.title = element_blank())
+ggElastInset <- gg
+ggPelastQs <- ggElast + annotation_custom(ggplotGrob(ggElastInset),
+                            xmin = 8, xmax = 35, 
+                            ymin = 6, ymax = 20)
+#---
+gg <- ggplot(dfQs, aes(x = `Expected price (KES/kg)`, y = `Price risk elasticity\nof supply`))
+gg <- gg + geom_line()
+gg <- gg + theme_bw()
+ggElast <- gg
+df_inset <- subset(dfQs, `Expected price (KES/kg)` > 9 & `Expected price (KES/kg)` < 25)
+gg <- ggplot(df_inset, aes(x = `Expected price (KES/kg)`, y = `Price risk elasticity\nof supply`))
+gg <- gg + geom_line()
+gg <- gg + geom_hline(yintercept = 0, linetype = "dashed", color = "red")
+gg <- gg + theme_bw()
+gg <- gg + theme(axis.title = element_blank())
+ggElastInset <- gg
+ggPriskElastQs <- ggElast + annotation_custom(ggplotGrob(ggElastInset),
+                            xmin = 6, xmax = 35, 
+                            ymin = 9, ymax = 35)
+#----------
+ggQs + ggPelastQs + ggPriskElastQs + plot_layout(ncol = 1)
+
+
+
+
+
+
+
+
+
+
+
 # Quick (and dirty) point estimate for 2007 gives value close to FAO
 # (Dirty because muEQstar mECsharp estimated based on post hoc data, not expected values, and on truncated pop.)
 # mECsharpT0 <- mean(df_mod$Cstar - df_mod$`yield (kg/acre)`)
