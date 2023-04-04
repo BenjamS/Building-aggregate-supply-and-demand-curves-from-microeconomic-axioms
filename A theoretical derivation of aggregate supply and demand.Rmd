@@ -476,7 +476,7 @@ E[P(T)]\bigr|_{t = 0} = P(0) e^{m_p T}
 \label{eq:EPT0}
 \end{equation}
 
-```{r Fig1, fig.show = "hold", fig.width = 5, fig.height=4, fig.align="center", fig.cap="\\label{fig:gBmPrice}(Left) Maize price series from (top to bottom) Chicago, USA (CME, 2023), Johannesburg, RSA (JSE, 2023), and Eldoret market, Kenya (FPMA, 2023). (Right) The corresponding daily (monthly, in the case of Kenya) log changes exhibit the normal distribution typical of geometric Brownian motion.", echo = FALSE}
+```{r Fig1, fig.show = "hold", fig.width = 5, fig.height=5, fig.align="center", fig.cap="\\label{fig:gBmPrice}(Left) Maize price series from (top to bottom) Chicago, USA (CME, 2023), Johannesburg, RSA (JSE, 2023), and Eldoret market, Kenya (FPMA, 2023). (Right) The corresponding daily (monthly, in the case of Kenya) log changes exhibit the normal distribution typical of geometric Brownian motion.", echo = FALSE}
 
 thisFolder <- "D:/OneDrive - CGIAR/Documents 1/CIAT 2/A theory of aggregate supply and demand/"
 thisFile <- "South Africa corn future price.csv"
@@ -622,7 +622,7 @@ Denoting the mean and variance of the normally distributed changes $\Delta y^* /
 
 [gBm over a given growing season; beyond that the motion may exhibit cyclic or mean reverting behavior, which diverges from gBm]
 
-```{r Fig2, fig.show = "hold", fig.width = 5, fig.height=4, fig.align="center", fig.cap="\\label{fig:gBmWeather}(Left) Daily average weather variable time series covering the 2018 maize long rains growing season in Eldoret, Kenya (NREL 2023). (Right) The corresponding daily log changes exhibit the normal distribution typical of geometric Brownian motion.", echo = FALSE}
+```{r Fig2, fig.show = "hold", fig.width = 5, fig.height=5, fig.align="center", fig.cap="\\label{fig:gBmWeather}(Left) Daily average weather variable time series covering the 2018 maize long rains growing season in Eldoret, Kenya (NREL 2023). (Right) The corresponding daily log changes exhibit the normal distribution typical of geometric Brownian motion.", echo = FALSE}
 
 #Weather data from National Solar Radiation Database
 #https://nsrdb.nrel.gov/data-viewer
@@ -889,10 +889,10 @@ costVars <- c("Cstar", #"seed (KES/acre)",
 priceVars <- gsub("acre", "kg", costVars[-1])
 priceVars <- c(priceVars, "harvesting (KES/hour)")
 #-----------------------------------------------------------------------
-# Remove farms not using any inputs (as these farms then have h=0)
-indh0 <- which(rowSums(df_mod[, setdiff(input_vars, c("planting fam lab child (pers-hrs/acre)", "seed (kg/acre)"))]) == 0)
-#length(indh0)
-df_mod <- df_mod[-indh0, ]
+# # Remove farms not using any inputs (as these farms then have h=0)
+# indh0 <- which(rowSums(df_mod[, setdiff(input_vars, c("planting fam lab child (pers-hrs/acre)", "seed (kg/acre)"))]) == 0)
+# #length(indh0)
+# df_mod <- df_mod[-indh0, ]
 #-----------------------------------------------------------------------
 mod1Vars <- c("dist", "yield (kg/acre)", "acres",
               input_vars, bin_vars, demog_vars, clim_vars,
@@ -906,7 +906,7 @@ mod1 <- lm(`yield (kg/acre)`~., df_mod1[, -not_these])
 #car::vif(mod1)
 #View(df_mod1[which(mod1$residuals < -2), ])
 library(jtools)
-summ(mod1)
+#summ(mod1)
 coefsNeg <- mod1$coefficients[which(mod1$coefficients < 0)]
 coefsNegNames <- gsub("`", "", names(coefsNeg))
 inputsNegCoef <- coefsNegNames[which(coefsNegNames %in% input_vars)]
@@ -914,8 +914,8 @@ inputsPosCoef <- setdiff(input_vars, inputsNegCoef)
 #-----------------------------------------------------------------------
 mod2Vars <- c("dist", "yield (kg/acre)", "Cstar", "acres", "seed (kg/acre)",
               inputsNegCoef, bin_vars, demog_vars, clim_vars)
-df_mod2 <- df_mod[, mod2Vars]
-not_these <- which(colnames(df_mod2) %in% c("dist", costVars[-1]))
+df_mod2 <- df_mod[, c(mod2Vars, "P")]
+not_these <- which(colnames(df_mod2) %in% c("P", "dist", costVars[-1]))
 mod2 <- lm(`yield (kg/acre)`~., df_mod2[, -not_these])
 #summary(mod2)
 #sum(mod2$residuals^2)
@@ -923,93 +923,132 @@ mod2 <- lm(`yield (kg/acre)`~., df_mod2[, -not_these])
 #car::vif(mod2)
 #View(df_mod2[which(mod2$residuals < -1.5), ])
 summ(mod2)
-#------------------------------------------------------------------------# Model validation tests
-#-----------------------------------------------------------------------
-coefsNames <- gsub("`", "", names(mod1$coefficients))
-aVec <- mod1$coefficients[which(coefsNames %in% inputsPosCoef)]
-# If seed coef removed, calculation of h based on model 1 input coefs
-# matches estimation of h in model 2 
-rmThese <- which(names(aVec) == "`seed (kg/acre)`")#%in% c("`seed (kg/acre)`", "`harvesting fam lab male (pers-hrs/acre)`"))
-aVec <- aVec[-rmThese]
-hFull <- sum(aVec)
-#aVec / h
-inputMat <- as.matrix(df_mod1[, inputsPosCoef[-c(1)]]) # (if removing seed coef)
-#inputMat <- as.matrix(df_mod1[, inputsPosCoef])
-inputMat[inputMat != 0] <- 1
-h <-  inputMat %*% aVec
-eta <- h / (1 - h)
-hist(h, breaks = 10)
-hCoef <- mod2$coefficients["Cstar"]
-etaCoef <- hCoef / (1 - hCoef)
-#ind_h0 <- which(h == 0)
-#hist(df_mod1$`yield (kg/acre)`[ind_h0])
-#unique(df_mod1$dist[ind_h0])
-#hist(df_mod1$`seed (kg/acre)`[ind_h0])
-#hist(df_mod1$aehh07[ind_h0])
-#plot(mod1$fitted.values[ind_h0], mod1$residuals[ind_h0])
-#View(df_mod1[ind_h0, ])
-#h[ind_h0] <- 0.02
-#---
-# Validation test 1 using cost shares vs. tech shares
-# (Theory predicts that input cost_i / total input cost = alpha_i / h)
-# (So the following ratios should = 1, or log(ratio) = 0)
-# Encouraging results, make sure Cstar only includes inputs used in model,
-# and that seed might better not be considered an input
-#---
-Cstar <- exp(df_mod1$Cstar)
-yStar <- exp(df_mod1$`yield (kg/acre)`)
-# Cstar, yStar, and CtildeStar are lognormally distributed
-cSharpEff <- Cstar / yStar
-# # hist(log(CtildeStarEff), breaks = 25)
-# # hist(log(Cstar), breaks = 25)
-# # hist(log(yStar), breaks = 25)
-# # #Cstar[which(Cstar == 1)] <- 0
-# # hist(log(Cstar / yStar))
-# #ratio <- aVec[which(names(aVec) == "`seed (kg/acre)`")] / h * Cstar / df_mod1$`seed (KES/acre)`
-# #ratio <- aVec[which(names(aVec) == "`manure (kg/acre)`")] / h * Cstar / df_mod1$`manure (KES/acre)`
-# ratio <- aVec[which(names(aVec) == "`Total NPK fert (kg/acre)`")] / h * Cstar / df_mod1$`Total NPK fert (KES/acre)`
-# ratio <- aVec[which(names(aVec) == "`Total CAN fert (kg/acre)`")] / h * Cstar / df_mod1$`Total CAN fert (KES/acre)`
-# ratio <- aVec[which(names(aVec) == "`Total UREA fert (kg/acre)`")] / h * Cstar / df_mod1$`Total UREA fert (KES/acre)`
-# ratio <- aVec[which(names(aVec) == "`dap (kg/acre)`")] / h * Cstar / df_mod1$`dap (KES/acre)`
-# ratio <- aVec[which(names(aVec) == "`Total P&D chem (kg/acre)`")] / h * Cstar / df_mod1$`Total P&D chem (KES/acre)`
-# #hist(log(ratio))
+#======================================================================
+#======================================================================
+#======================================================================
+# # Model validation tests
+# #----------------------------------------------------------------------
+# coefsNames <- gsub("`", "", names(mod1$coefficients))
+# aVec <- mod1$coefficients[which(coefsNames %in% inputsPosCoef)]
+# # If seed coef removed, calculation of h based on model 1 input coefs
+# # matches estimation of h in model 2 
+# rmThese <- which(names(aVec) == "`seed (kg/acre)`")#%in% c("`seed (kg/acre)`", "`harvesting fam lab male (pers-hrs/acre)`"))
+# aVec <- aVec[-rmThese]
+# hFull <- sum(aVec)
+# #aVec / h
+# inputMat <- as.matrix(df_mod1[, inputsPosCoef[-c(1)]]) # (if removing seed coef)
+# #inputMat <- as.matrix(df_mod1[, inputsPosCoef])
+# inputMat[inputMat != 0] <- 1
+# h <-  inputMat %*% aVec
+# eta <- h / (1 - h)
+# hist(h, breaks = 10)
+# #ind_h0 <- which(h == 0)
+# #hist(df_mod1$`yield (kg/acre)`[ind_h0])
+# #unique(df_mod1$dist[ind_h0])
+# #hist(df_mod1$`seed (kg/acre)`[ind_h0])
+# #hist(df_mod1$aehh07[ind_h0])
+# #plot(mod1$fitted.values[ind_h0], mod1$residuals[ind_h0])
+# #View(df_mod1[ind_h0, ])
+# #h[ind_h0] <- 0.02
 # #---
-# # Validation test 2 based only on input costs and tech coeffs
-# # (Theory says input cost_i / alpha_i = input cost_j / alpha_j)
+# # Validation test 1 using cost shares vs. tech shares
+# # (Theory predicts that input cost_i / total input cost = alpha_i / h)
 # # (So the following ratios should = 1, or log(ratio) = 0)
-# # More encouraging results!
-# # Ratios involving seed continue to diverge from theory,
-# # maybe b/c the seed cost is incomplete,
-# # maybe farmers have ways of getting it for free
-# # maybe b/c seed cost is not really a management variable
-# # Note this way of validating opens the door to deducing family labor wage
+# # Encouraging results, make sure Cstar only includes inputs used in model,
+# # and that seed might better not be considered an input
 # #---
-# ratio <- df_mod1$`Total CAN fert (KES/acre)` * 
-#   aVec[which(names(aVec) == "`Total NPK fert (kg/acre)`")] / (df_mod1$`Total NPK fert (KES/acre)` * aVec[which(names(aVec) == "`Total CAN fert (kg/acre)`")])
-# ratio <- df_mod1$`Total CAN fert (KES/acre)` *
-#   aVec[which(names(aVec) == "`Total UREA fert (kg/acre)`")] / (df_mod1$`Total UREA fert (KES/acre)` * aVec[which(names(aVec) == "`Total CAN fert (kg/acre)`")])
-# ratio <- df_mod1$`Total CAN fert (KES/acre)` *
-#   aVec[which(names(aVec) == "`dap (kg/acre)`")] / (df_mod1$`dap (KES/acre)` * aVec[which(names(aVec) == "`Total CAN fert (kg/acre)`")])
-# ratio <- df_mod1$`Total UREA fert (KES/acre)` *
-#   aVec[which(names(aVec) == "`dap (kg/acre)`")] / (df_mod1$`dap (KES/acre)` * aVec[which(names(aVec) == "`Total UREA fert (kg/acre)`")])
-# #ratio <- df_mod1$`seed (KES/acre)` * aVec[which(names(aVec) == "`dap (kg/acre)`")] / (df_mod1$`dap (KES/acre)` * aVec[which(names(aVec) == "`seed (kg/acre)`")])
-# ratio <- df_mod1$`Total NPK fert (KES/acre)` *
-#   aVec[which(names(aVec) == "`dap (kg/acre)`")] / (df_mod1$`dap (KES/acre)` * aVec[which(names(aVec) == "`Total NPK fert (kg/acre)`")])
-# ratio <- df_mod1$`Total NPK fert (KES/acre)` *
-#   aVec[which(names(aVec) == "`Total CAN fert (kg/acre)`")] / (df_mod1$`Total CAN fert (KES/acre)` * aVec[which(names(aVec) == "`Total NPK fert (kg/acre)`")])
-# ratio <- df_mod1$`Total NPK fert (KES/acre)` *
-#   aVec[which(names(aVec) == "`Total P&D chem (kg/acre)`")] / (df_mod1$`Total P&D chem (KES/acre)` * aVec[which(names(aVec) == "`Total NPK fert (kg/acre)`")])
-# ratio <- df_mod1$`Total CAN fert (KES/acre)` *
-#   aVec[which(names(aVec) == "`Total P&D chem (kg/acre)`")] / (df_mod1$`Total P&D chem (KES/acre)` * aVec[which(names(aVec) == "`Total CAN fert (kg/acre)`")])
-# ratio <- df_mod1$`Total P&D chem (kg/acre)` *
-#   aVec[which(names(aVec) == "`dap (kg/acre)`")] / (df_mod1$`dap (kg/acre)` * aVec[which(names(aVec) == "`Total P&D chem (kg/acre)`")])
-# # # Fam labor is in qty terms, not cost terms, but exhibits stable ratio values
-# # ratio <- df_mod1$`Total CAN fert (KES/acre)` * aVec[which(names(aVec) == "`harvesting fam lab male (pers-hrs/acre)`")] / (df_mod1$`harvesting fam lab male (pers-hrs/acre)` * aVec[which(names(aVec) == "`Total CAN fert (kg/acre)`")])
-# # ratio <- df_mod1$`Total NPK fert (KES/acre)` * aVec[which(names(aVec) == "`harvesting fam lab male (pers-hrs/acre)`")] / (df_mod1$`harvesting fam lab male (pers-hrs/acre)` * aVec[which(names(aVec) == "`Total NPK fert (kg/acre)`")])
-# # ratio <- df_mod1$`Total UREA fert (KES/acre)` * aVec[which(names(aVec) == "`harvesting fam lab male (pers-hrs/acre)`")] / (df_mod1$`harvesting fam lab male (pers-hrs/acre)` * aVec[which(names(aVec) == "`Total UREA fert (kg/acre)`")])
-# # ratio <- df_mod1$`dap (KES/acre)` * aVec[which(names(aVec) == "`harvesting fam lab male (pers-hrs/acre)`")] / (df_mod1$`harvesting fam lab male (pers-hrs/acre)` * aVec[which(names(aVec) == "`dap (kg/acre)`")])
-# #hist(log(ratio))
-#---------------------------------------------------------------------
+# Cstar <- exp(df_mod1$Cstar)
+# yStar <- exp(df_mod1$`yield (kg/acre)`)
+# # Cstar, yStar, and CtildeStar are lognormally distributed
+# cSharpEff <- Cstar / yStar
+# # # hist(log(CtildeStarEff), breaks = 25)
+# # # hist(log(Cstar), breaks = 25)
+# # # hist(log(yStar), breaks = 25)
+# # # #Cstar[which(Cstar == 1)] <- 0
+# # # hist(log(Cstar / yStar))
+# # #ratio <- aVec[which(names(aVec) == "`seed (kg/acre)`")] / h * Cstar / df_mod1$`seed (KES/acre)`
+# # #ratio <- aVec[which(names(aVec) == "`manure (kg/acre)`")] / h * Cstar / df_mod1$`manure (KES/acre)`
+# # ratio <- aVec[which(names(aVec) == "`Total NPK fert (kg/acre)`")] / h * Cstar / df_mod1$`Total NPK fert (KES/acre)`
+# # ratio <- aVec[which(names(aVec) == "`Total CAN fert (kg/acre)`")] / h * Cstar / df_mod1$`Total CAN fert (KES/acre)`
+# # ratio <- aVec[which(names(aVec) == "`Total UREA fert (kg/acre)`")] / h * Cstar / df_mod1$`Total UREA fert (KES/acre)`
+# # ratio <- aVec[which(names(aVec) == "`dap (kg/acre)`")] / h * Cstar / df_mod1$`dap (KES/acre)`
+# # ratio <- aVec[which(names(aVec) == "`Total P&D chem (kg/acre)`")] / h * Cstar / df_mod1$`Total P&D chem (KES/acre)`
+# # #hist(log(ratio))
+# # #---
+# # # Validation test 2 based only on input costs and tech coeffs
+# # # (Theory says input cost_i / alpha_i = input cost_j / alpha_j)
+# # # (So the following ratios should = 1, or log(ratio) = 0)
+# # # More encouraging results!
+# # # Ratios involving seed continue to diverge from theory,
+# # # maybe b/c the seed cost is incomplete,
+# # # maybe farmers have ways of getting it for free
+# # # maybe b/c seed cost is not really a management variable
+# # # Note this way of validating opens the door to deducing family labor wage
+# # #---
+# # ratio <- df_mod1$`Total CAN fert (KES/acre)` * 
+# #   aVec[which(names(aVec) == "`Total NPK fert (kg/acre)`")] / (df_mod1$`Total NPK fert (KES/acre)` * aVec[which(names(aVec) == "`Total CAN fert (kg/acre)`")])
+# # ratio <- df_mod1$`Total CAN fert (KES/acre)` *
+# #   aVec[which(names(aVec) == "`Total UREA fert (kg/acre)`")] / (df_mod1$`Total UREA fert (KES/acre)` * aVec[which(names(aVec) == "`Total CAN fert (kg/acre)`")])
+# # ratio <- df_mod1$`Total CAN fert (KES/acre)` *
+# #   aVec[which(names(aVec) == "`dap (kg/acre)`")] / (df_mod1$`dap (KES/acre)` * aVec[which(names(aVec) == "`Total CAN fert (kg/acre)`")])
+# # ratio <- df_mod1$`Total UREA fert (KES/acre)` *
+# #   aVec[which(names(aVec) == "`dap (kg/acre)`")] / (df_mod1$`dap (KES/acre)` * aVec[which(names(aVec) == "`Total UREA fert (kg/acre)`")])
+# # #ratio <- df_mod1$`seed (KES/acre)` * aVec[which(names(aVec) == "`dap (kg/acre)`")] / (df_mod1$`dap (KES/acre)` * aVec[which(names(aVec) == "`seed (kg/acre)`")])
+# # ratio <- df_mod1$`Total NPK fert (KES/acre)` *
+# #   aVec[which(names(aVec) == "`dap (kg/acre)`")] / (df_mod1$`dap (KES/acre)` * aVec[which(names(aVec) == "`Total NPK fert (kg/acre)`")])
+# # ratio <- df_mod1$`Total NPK fert (KES/acre)` *
+# #   aVec[which(names(aVec) == "`Total CAN fert (kg/acre)`")] / (df_mod1$`Total CAN fert (KES/acre)` * aVec[which(names(aVec) == "`Total NPK fert (kg/acre)`")])
+# # ratio <- df_mod1$`Total NPK fert (KES/acre)` *
+# #   aVec[which(names(aVec) == "`Total P&D chem (kg/acre)`")] / (df_mod1$`Total P&D chem (KES/acre)` * aVec[which(names(aVec) == "`Total NPK fert (kg/acre)`")])
+# # ratio <- df_mod1$`Total CAN fert (KES/acre)` *
+# #   aVec[which(names(aVec) == "`Total P&D chem (kg/acre)`")] / (df_mod1$`Total P&D chem (KES/acre)` * aVec[which(names(aVec) == "`Total CAN fert (kg/acre)`")])
+# # ratio <- df_mod1$`Total P&D chem (kg/acre)` *
+# #   aVec[which(names(aVec) == "`dap (kg/acre)`")] / (df_mod1$`dap (kg/acre)` * aVec[which(names(aVec) == "`Total P&D chem (kg/acre)`")])
+# # # # Fam labor is in qty terms, not cost terms, but exhibits stable ratio values
+# # # ratio <- df_mod1$`Total CAN fert (KES/acre)` * aVec[which(names(aVec) == "`harvesting fam lab male (pers-hrs/acre)`")] / (df_mod1$`harvesting fam lab male (pers-hrs/acre)` * aVec[which(names(aVec) == "`Total CAN fert (kg/acre)`")])
+# # # ratio <- df_mod1$`Total NPK fert (KES/acre)` * aVec[which(names(aVec) == "`harvesting fam lab male (pers-hrs/acre)`")] / (df_mod1$`harvesting fam lab male (pers-hrs/acre)` * aVec[which(names(aVec) == "`Total NPK fert (kg/acre)`")])
+# # # ratio <- df_mod1$`Total UREA fert (KES/acre)` * aVec[which(names(aVec) == "`harvesting fam lab male (pers-hrs/acre)`")] / (df_mod1$`harvesting fam lab male (pers-hrs/acre)` * aVec[which(names(aVec) == "`Total UREA fert (kg/acre)`")])
+# # # ratio <- df_mod1$`dap (KES/acre)` * aVec[which(names(aVec) == "`harvesting fam lab male (pers-hrs/acre)`")] / (df_mod1$`harvesting fam lab male (pers-hrs/acre)` * aVec[which(names(aVec) == "`dap (kg/acre)`")])
+# # #hist(log(ratio))
+# #---------------------------------------------------------------------
+# indKvars <- which(!(coefsNames %in% input_vars[3:7]))
+# coefsNames[indKvars]
+# #kVec <- mod1$coefficients[-which(coefsNames %in% input_vars[-c(1, 3:4)])]
+# kVec <- mod1$coefficients[indKvars]
+# kVec <- kVec[-1]
+# lwMat <- log(df_mod1[, priceVars[-length(priceVars)]]) %>%
+#   #mutate_all(~replace(., is.nan(.), 0)) %>%
+#   as.matrix()
+# # lwMat[, ncol(lwMat)] <- log(wgFamMale)
+# lwMat[is.infinite(lwMat)] <- 0
+# lwMat[is.nan(lwMat)] <- 0
+# lwMat[is.na(lwMat)] <- 0
+# colnames(lwMat)
+# names(aVec)
+# colnamesOrdered <- gsub("`", "", names(aVec))
+# colnamesOrdered <- gsub("kg/acre", "KES/kg", colnamesOrdered)
+# colnamesOrdered <- gsub("fam lab male \\(pers-hrs/acre\\)", "\\(KES/hour\\)", colnamesOrdered)
+# lwMat <- lwMat[, colnamesOrdered]
+# betaW <- exp(lwMat %*% aVec)
+# #hist(log(betaW))
+# alogaVec <- aVec * log(aVec)
+# betaA <- exp(inputMat %*% alogaVec)
+# #hist(betaA)
+# names(kVec) <- gsub("`", "", names(kVec))
+# lkMat <- as.matrix(df_mod[, names(kVec)])
+# betaK <- exp(lkMat %*% kVec)
+# #hist(betaK)
+# beta <- betaA * betaK / betaW
+# #hist(log(beta))
+# a0 <- mod1$coefficients[1]
+# g0 <- exp(a0)
+# mg0BetaEtaH <- mean(eta / h * log(g0 * beta))
+# sg0BetaEtaH <- sd(eta / h * log(g0 * beta))
+# mug0BetaEtaH <- exp(mg0BetaEtaH + sg0BetaEtaH^2 / 2)
+# EyStar <- g0 * beta * (Cstar / h)^h
+# #EyStar <- (y0 * beta * (CtildeStar / h)^h)^(1 / (1-h))
+# hist(log(EyStar / yStar), breaks = 15) #Nice
+# EyStarBar <- mug0BetaEtaH * (EPT02007 / hCoef)^etaCoef
 
 ```
 
@@ -1023,7 +1062,7 @@ cSharpEff <- Cstar / yStar
 
 ...have to get the population mean/sd from the truncated mean/sd...
 
-```{r Fig4, fig.show = "hold", fig.width = 5, fig.height=5, fig.align="center", fig.cap="\\label{fig:EyStarLambda} uyiijl", echo = FALSE}
+```{r Fig4, fig.show = "hold", fig.width = 4, fig.height=3, fig.align="center", fig.cap="\\label{fig:EyStarLambda} uyiijl", echo = FALSE}
 
 # Define root functions
 rootFnUp <- function(xIn, xUp, sXtrunc, mXtrunc){
@@ -1046,47 +1085,104 @@ rootFnLo <- function(xIn, xLo, sXtrunc, mXtrunc){
   outVec <- c(slack_s, slack_m)
   return(outVec)
 }
+#====================================================================
+# Get mean price jump from county level monthly price data (downloaded from GIEWS-FPMA)
+thisFile <- "Nakuru Eldoret monthly maize price.csv"
+thisFilePath <- paste0(thisFolder, thisFile)
+df_raw <- read.csv(thisFilePath, stringsAsFactors = F)
+keepCols <- c(1, 2)
+df_raw <- df_raw[, keepCols]
+df_raw <- as.data.frame(apply(df_raw, 2, rev))
+colnames(df_raw) <- c("Date", "Price")
+df_raw$Price <- as.numeric(df_raw$Price)
+df_raw$Date <- as.Date(df_raw$Date, "%m/%d/%Y")
+df <- df_raw
+# df <- subset(df_raw, Date >= "2008-03-01" &
+#                Date <= "2019-08-01")
+df$`Log change` <- c(NA, diff(log(df$Price)))
+library(lubridate)
+yrVec <- unique(year(df$Date))
+nYr <- length(yrVec) - 1
+th <- 5
+mVec <- c()
+sVec <- c()
+P0vec <- c()
+EPT0vec <- c()
+anomVec <- c()
+for(i in 1:nYr){
+  thisDate <- as.Date(paste0(as.character(2005 + i), "-03-01"))
+  indMY <- grep(thisDate, df$Date)
+  indMY <- indMY:(indMY + 11)
+  this_m <- mean(df$`Log change`[indMY], na.rm = T)
+  this_s <- sd(df$`Log change`[indMY], na.rm = T)
+  mVec[i] <- this_m
+  sVec[i] <- this_s
+  #---
+  thisDate <- as.Date(paste0(as.character(2005 + i), "-03-01"))
+  indGrow <- grep(thisDate, df$Date)
+  indGrow <- indGrow:(indGrow + th)
+  P0 <- df$Price[indGrow[1]]
+  PT <- df$Price[indGrow[1 + th]]
+  P0vec[i] <- P0 
+  #---
+  print(year(df$Date[indGrow[1]]))
+  print(paste("m = ", this_m))
+  print(paste("s = ", this_s))
+  if(i > 1){
+  EPT0 <- P0 * exp(mVec[i - 1] * th)
+  thisAnomaly <- EPT0 / PT - 1
+  print(paste("P0 = ", P0))
+  print(paste("PT = ", PT))
+  print(paste("EPT0 = ", EPT0))
+  print(thisAnomaly)
+  # print(this_m)
+  # print(this_s)
+  EPT0vec[i] <- EPT0
+  anomVec[i] <- thisAnomaly
+  }
+  
+}
+
+# hist(anomVec)
+# hist(mVec)
+P02007 <- P0vec[2]
+mP <- mVec[1]
+sP <- sVec[1]
+EPT02007 <- floor(P02007 * exp(mP * th))
 #----------------------------------------------------------------------
-indKvars <- which(!(coefsNames %in% input_vars[3:7]))
-coefsNames[indKvars]
-#kVec <- mod1$coefficients[-which(coefsNames %in% input_vars[-c(1, 3:4)])]
-kVec <- mod1$coefficients[indKvars]
-kVec <- kVec[-1]
-lwMat <- log(df_mod1[, priceVars[-length(priceVars)]]) %>%
-  #mutate_all(~replace(., is.nan(.), 0)) %>%
-  as.matrix()
-# lwMat[, ncol(lwMat)] <- log(wgFamMale)
-lwMat[is.infinite(lwMat)] <- 0
-lwMat[is.nan(lwMat)] <- 0
-lwMat[is.na(lwMat)] <- 0
-colnames(lwMat)
-names(aVec)
-colnamesOrdered <- gsub("`", "", names(aVec))
-colnamesOrdered <- gsub("kg/acre", "KES/kg", colnamesOrdered)
-colnamesOrdered <- gsub("fam lab male \\(pers-hrs/acre\\)", "\\(KES/hour\\)", colnamesOrdered)
-lwMat <- lwMat[, colnamesOrdered]
-betaW <- exp(lwMat %*% aVec)
-#hist(log(betaW))
-alogaVec <- aVec * log(aVec)
-betaA <- exp(inputMat %*% alogaVec)
-#hist(betaA)
+# coefsNames <- gsub("`", "", names(mod2$coefficients))
+# coefsNames <- coefsNames[-c(1, 2)]
+# #kVec <- mod1$coefficients[-which(coefsNames %in% input_vars[-c(1, 3:4)])]
+kVec <- mod2$coefficients[-c(1, 2)]
 names(kVec) <- gsub("`", "", names(kVec))
 lkMat <- as.matrix(df_mod[, names(kVec)])
 betaK <- exp(lkMat %*% kVec)
 #hist(betaK)
-beta <- betaA * betaK / betaW
 #hist(log(beta))
-a0 <- mod1$coefficients[1]
+hCoef <- mod2$coefficients["Cstar"]
+etaCoef <- hCoef / (1 - hCoef)
+a0 <- mod2$coefficients[1]
+a0 <- a0 + hCoef * log(hCoef)
 g0 <- exp(a0)
-mg0BetaEtaH <- mean(eta / h * log(g0 * beta))
-sg0BetaEtaH <- sd(eta / h * log(g0 * beta))
-mug0BetaEtaH <- exp(mg0BetaEtaH + sg0BetaEtaH^2 / 2)
-EyStar <- g0 * beta * (Cstar / h)^h
-#EyStar <- (y0 * beta * (CtildeStar / h)^h)^(1 / (1-h))
-hist(log(EyStar / yStar), breaks = 15) #Nice
-EyStarBar <- mug0BetaEtaH * (EPT02007 / hCoef)^etaCoef
-
-EcSharp <- Cstar / EyStar
+#betaK * g0
+# cStar <- exp(df_mod2$Cstar)
+# EyStar <- g0 * betaK * (cStar / hCoef)^hCoef
+# exp(mod2$fitted.values) - EyStar
+sErr <- sd(mod2$residuals)
+EyStar <- exp(mod2$fitted.values + sErr^2 / 2)
+#ERstar <- df_mod2$P * EyStar
+ERstar <- EyStar * EPT02007
+cStar <- exp(df_mod2$Cstar)
+lam <- ERstar / cStar * hCoef
+EcSharp <- cStar / EyStar
+EyStarUp <- g0 * betaK * (ERstar / hCoef)^hCoef * exp(sErr^2 / 2)
+#----------------------------------------------------------------------
+# How many rational farms?
+nRational <- sum(lam > hCoef) / length(lam)
+sum(EcSharp < EPT02007) / length(EcSharp)
+# sum(EcSharp < df_mod2$P) / length(EcSharp)
+# sum(EyStar < EyStarUp) / length(EyStarUp)
+#----------------------------------------------------------------------
 mEcSharpTrunc <- mean(log(EcSharp))
 sEcSharpTrunc <- sd(log(EcSharp))
 muEcSharpTrunc <- exp(mEcSharpTrunc + sEcSharpTrunc^2 / 2)
@@ -1099,20 +1195,11 @@ sol <- nleqslv::nleqslv(xIn, rootFnUp, jac = NULL,
 sol
 sEcSharp <- sol$x[1]
 mEcSharp <- sol$x[2]
-muEcSharp <- exp(mEcSharp + sEcSharp^2 / 2)
+muEcSharpT0 <- exp(mEcSharp + sEcSharp^2 / 2)
 #muEcSharpTrunc
-
-#lambdaCstarP <- g0 * beta * df_mod1$P * (Cstar / h)^(h - 1)
-ERstar <- EyStar * df_mod1$P
-# hist(log(ERstar / Cstar))
-lambdaRhoC <- ERstar / Cstar * h
 #----------------------------------------------------------------------
-# How many are rational?
-sum(lambdaRhoC > h) / nrow(df_mod1)
-sum(EcSharp < df_mod1$P) / nrow(df_mod1)
-#----------------------------------------------------------------------
-mLamTrunc <- mean(log(lambdaRhoC))
-sLamTrunc <- sd(log(lambdaRhoC))
+mLamTrunc <- mean(log(lam))
+sLamTrunc <- sd(log(lam))
 muLamTrunc <- exp(mLamTrunc + sLamTrunc^2 / 2)
 xIn <- c(sLamTrunc, sLamTrunc)
 sol <- nleqslv::nleqslv(xIn, rootFnLo, jac = NULL,
@@ -1123,40 +1210,38 @@ sol
 sLam <- sol$x[1]
 mLam <- sol$x[2]
 muLam <- exp(mLam + sLam^2 / 2)
-muLamTrunc
+#muLamTrunc
+muEtaLamInv <- exp(-etaCoef * mLam + etaCoef^2 * sLam^2 / 2)
 #--------
-df_plot <- data.frame(EcSharp, lambdaRhoC)
-gg <- ggplot(df_plot, aes(x = EcSharp))
+df_plot <- data.frame(EcSharp, lam)
+gg <- ggplot(df_plot, aes(x = log(EcSharp)))
 gg <- gg + geom_histogram(color = 4, fill = "white", bins = 20)
-gg <- gg + geom_vline(xintercept = EPT02007)
-gg
+gg <- gg + geom_vline(xintercept = log(EPT02007))
+gg1 <- gg
 
-gg <- ggplot(df_plot, aes(x = lambdaRhoC))
+gg <- ggplot(df_plot, aes(x = log(lam)))
 gg <- gg + geom_histogram(color = 4, fill = "white", bins = 20)
-gg <- gg + geom_vline(xintercept = hCoef)
-gg
-
-
-#--------
+gg <- gg + geom_vline(xintercept = log(hCoef))
+gg2 <- gg
+gg1 + gg2 + plot_layout(ncol = 2)
 #=====================================================================
 
 
-# First convert yield params to production params
-kVecQs <- kVec
-kVecQs["acres"] <- kVecQs["acres"] + 1
-betaKQs <- exp(lkMat %*% kVecQs)
-#hist(log(betaKQs))
-betaQs <- betaA * betaKQs / betaW
-#hist(log(betaQs))
+# # First convert yield params to production params
+# kVecQs <- kVec
+# kVecQs["acres"] <- kVecQs["acres"] + 1
+# betaKQs <- exp(lkMat %*% kVecQs)
+# #hist(log(betaKQs))
+# betaQs <- betaA * betaKQs / betaW
+# #hist(log(betaQs))
+# 
+# mBetaQs <- mean(log(betaQs))
+# sBetaQs <- sd(log(betaQs))
+# muEtahBetaQs <- exp(eta / hCoef * mBetaQs + (eta / hCoef)^2 * sBetaQs^2 / 2)
+# mBeta <- mean(log(beta))
+# sBeta <- sd(log(beta))
+# muEtahBeta <- exp(eta / hCoef * mBeta + (eta / hCoef)^2 * sBeta^2 / 2)
 
-mBetaQs <- mean(log(betaQs))
-sBetaQs <- sd(log(betaQs))
-muEtahBetaQs <- exp(eta / hCoef * mBetaQs + (eta / hCoef)^2 * sBetaQs^2 / 2)
-mBeta <- mean(log(beta))
-sBeta <- sd(log(beta))
-muEtahBeta <- exp(eta / hCoef * mBeta + (eta / hCoef)^2 * sBeta^2 / 2)
-
-muEtaLamInv <- exp(-eta * mLam + eta^2 * sLam^2 / 2)
 
 # mArea <- mean(df_mod$acres)
 # sArea <- sd(df_mod$acres)
@@ -1167,24 +1252,15 @@ muEtaLamInv <- exp(-eta * mLam + eta^2 * sLam^2 / 2)
 
 ```{r Fig5, fig.show = "hold", fig.width = 5, fig.height=5, fig.align="center", fig.cap="\\label{fig:Qs} uyiijl", echo = FALSE}
 
-# Get mean price jump from county level monthly price data (downloaded from GIEWS-FPMA)
-yrVec <- unique(year(df_ky$Date))
-nYr <- length(yrVec)
-for(i in 1:nYr){
-  thisDate <- as.Date(paste0(as.character(2007 + i), "-03-01"))
-  ind <- grep(thisDate, df_ky$Date)
-  ind <- ind:(ind + 6)
-  print(mean(df_ky$`Log change`[ind], na.rm = T))
-  print(sd(df_ky$`Log change`[ind], na.rm = T))
-  
-}
-mP <- 0.09
-sP <- 0.12
 #----
-P0vec <- seq(1, 20, length.out = 40)
+EPT0vec <- seq(1, 25, length.out = 60)
 Nf <- 1.7 * 10^6
-th <- 6
-P02007 <- EPT02007 * exp(-mP * th)
+mBetaK <- mean(log(betaK))
+sBetaK <- sd(log(betaK))
+muBetaKetaH <- exp(etaCoef / hCoef * mBetaK + (etaCoef / hCoef)^2 * sBetaK^2 / 2)
+mArea <- mean(df_mod2$acres)
+sArea <- sd(df_mod2$acres)
+muArea <- exp(mArea + sArea^2 / 2)
 #FAO Kenya 2006-2008
 #Area ~ 1.7 million ha (1.6-1.9)
 #Prod ~ 3 million MT (2.3-3.2)
@@ -1199,12 +1275,14 @@ P02007 <- EPT02007 * exp(-mP * th)
 # Qs2007/1000 #million MT
 # etaAg2007 <- eta + dnorm(-z) / pnorm(-z) * 1 / (sP * sqrt(th))
 
-QsFun <- function(P0vec, g0, h, muEtahBetaQs, muEtaLamInv,
-                  muECsharpT0, mP, sP, th, Nf){
+QsFun <- function(EPT0vec, muArea, g0, h, muBetaKetaH, muEtaLamInv,
+                  muEcSharpT0, mP, sP, th, Nf){
   eta <- h / (1 - h)
-  EPT0vec <- P0vec * exp(mP * th)
-  muEqStarT0 <- g0^(eta / hCoef) * muEtahBetaQs * muEtaLamInv * EPT0vec^eta
-  z <- (eta * log(muECsharpT0 / P0vec) - (eta * mP - eta^2 * sP^2 / 2) * th) / (eta * sP * sqrt(th))
+  muEyStarT0 <- (g0)^(eta / h) * muBetaKetaH * EPT0vec^eta * muEtaLamInv
+  muEqStarT0 <- muArea * muEyStarT0
+      # muEqStarT0 <- g0^(eta / hCoef) * muEtahBetaQs * muEtaLamInv * EPT0vec^eta
+  P0vec <- EPT0vec * exp(-mP * th)
+  z <- (eta * log(muEcSharpT0 / P0vec) - (eta * mP - eta^2 * sP^2 / 2) * th) / (eta * sP * sqrt(th))
   Qs <- Nf * muEqStarT0 * (1 - pnorm(z)) #in kg
   Qs <- Qs / 1000 #in MT
   Qs <- Qs * 10^-6 #in million MT
@@ -1223,8 +1301,8 @@ QsFun <- function(P0vec, g0, h, muEtahBetaQs, muEtaLamInv,
                       "Participation (%)")
   return(dfQs)
 }
-dfQs <- QsFun(P0vec, g0, h = hCoef, muEtahBetaQs, muEtaLamInv,
-                  muECsharpT0, mP, sP, th, Nf)
+dfQs <- QsFun(P0vec, muArea, g0, h = hCoef, muBetaKetaH, muEtaLamInv,
+                  muEcSharpT0, mP, sP, th, Nf)
 # dfQs2007 <- QsFun(P02007, g0, h = hCoef, muEtahBetaQs, muEtaLamInv,
 #                   muECsharpT0, mP, sP, th, Nf)
 # Qs2007 <- dfQs$Qs
