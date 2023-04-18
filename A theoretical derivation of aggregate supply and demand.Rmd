@@ -1230,20 +1230,27 @@ EyStar2 <- (y0 * betaKnormdAdj * kRn^kappaRn)^(etaCoef / hCoef) * EcSharp^etaCoe
 # EyStar - EyStar2
 #---
 EyStarUp <- (y0 * betaKnormdAdj * kRn^kappaRn)^(etaCoef / hCoef) * EPT02007^etaCoef * exp(sErr^2 / 2)^(etaCoef / hCoef)
+# EyStarUp <- (y0 * betaKnormdAdj * kRn^kappaRn)^(etaCoef / hCoef) * df_mod2$P^etaCoef * exp(sErr^2 / 2)^(etaCoef / hCoef)
+
 # ERstar <- EyStar * EPT02007
 lam <- EPT02007 / EcSharp * hCoef
+# lam <- df_mod2$P / EcSharp * hCoef
 # EyStarUp2 <- y0 * betaKnormdAdj * kRn^kappaRn * ERstar^hCoef * exp(sErr^2 / 2)
 # EyStarUp - EyStarUp2
 #----------------------------------------------------------------------
 # How many rational farms?
 nRational <- sum(lam > hCoef) / length(lam)
+# sum(EcSharp < df_mod2$P) / length(EcSharp)
 # sum(EcSharp < EPT02007) / length(EcSharp)
 # sum(EyStar < EyStarUp) / length(EyStar)
 #----------------------------------------------------------------------
-# df_plot <- data.frame(EyStar, EyStarUp) %>% gather(var, val, EyStar:EyStarUp)
-# gg <- ggplot(df_plot, aes(x = val, color = var))
-# gg <- gg + geom_histogram(fill = "white")#, bins = 12)
-# gg
+# EyStarUpMu <- mean(y0^(etaCoef / hCoef)) * EPT02007^etaCoef * exp(sErr^2 / 2)^(etaCoef / hCoef)
+# df_plot <- data.frame(EyStar, EyStarUp)# %>% gather(var, val, EyStar:EyStarUp)
+# #gg <- ggplot(df_plot, aes(x = val))
+# gg <- ggplot(df_plot, aes(x = EyStar))
+# gg <- gg + geom_histogram(fill = "white", color = "orange", bins = 12)
+# gg <- gg + geom_vline(xintercept = mean(EyStarUp))
+# # gg
 #----------------------------------------------------------------------
 mEcSharpTrunc <- mean(log(EcSharp))
 sEcSharpTrunc <- sd(log(EcSharp))
