@@ -222,7 +222,7 @@ Where the $\kappa_i$ are the control variable elasticities of yield. Because the
 Interpretation of the constant $g_0$ is as difficult as one wants to make it. It is, of course, usually called the "total factor productivity", and understood to represent the yield per unit "all inputs"---although a more accurate description would be yield per unit "all input and control variables, raised to various powers". For those not yet comfortable working in units of, say,
 
 $$
-kgs. \: acres^{-1} \: liters^{-\alpha_{pest}} \: kgs.^{-\alpha_{fert}} \: manhours^{-\alpha_{labor}} \: mm.^{-\alpha_{rain}}\: degrees^{-\alpha_{temp}} \: years^{-\alpha_{age}} \: num. \: people^{-\alpha_{HHsize}}
+\text{kg.} \times \: \text{acres}^{-1} \times \: \text{liters}^{-\alpha_{pest}} \times \: \text{kg.}^{-\alpha_{fert}} \times \: \text{manhours}^{-\alpha_{labor}} \times\: \\ \text{mm.}^{-\alpha_{rain}} \times\: \: \text{years}^{-\alpha_{age}} \times\: \text{num. persons}^{-\alpha_{HHsize}} \:;\:\: \alpha_{(var)} \in \mathbb{R}
 $$
 an alternative approach is to arbitrarily define $g_0$ in terms of another parameter that is expressed in intelligible units, and to work with this instead. For example, $g_0$ may be defined in terms of another parameter $y_0$ and fixed reference values $\tilde{k}_i$, $\tilde{x}_i$ that have the same units as the corresponding management and control variables $x_i$ and $k_i$.
 
@@ -1134,18 +1134,16 @@ for(i in 1:(nYr - 1)){
   PT <- df$Price[indGrow[1 + th]]
   P0vec[i] <- P0 
   #---
-  print(year(df$Date[indGrow[1]]))
-  print(paste("m = ", this_m))
-  print(paste("s = ", this_s))
+  # print(year(df$Date[indGrow[1]]))
+  # print(paste("m = ", this_m))
+  # print(paste("s = ", this_s))
   if(i > 1){
   EPT0 <- P0 * exp(mVec[i - 1] * th)
   thisAnomaly <- 100 * (EPT0 / PT - 1)
-  print(paste("P0 = ", P0))
-  print(paste("PT = ", PT))
-  print(paste("EPT0 = ", EPT0))
-  print(thisAnomaly)
-  # print(this_m)
-  # print(this_s)
+  # print(paste("P0 = ", P0))
+  # print(paste("PT = ", PT))
+  # print(paste("EPT0 = ", EPT0))
+  # print(thisAnomaly)
   EPT0hist[i] <- EPT0
   anomVec[i] <- thisAnomaly
   }
@@ -1189,16 +1187,16 @@ g0 <- exp(a0)
 kBinVec <- mod2Coefs[which(coefsNames %in% bin_vars)]
 a0adj <- a0 + as.matrix(df_mod2[, bin_vars]) %*% kBinVec
 tfp <- exp(a0adj)
-kNames <- c("Cstar", "acres", "seed (kg/acre)",
+kNames <- c("acres", "seed (kg/acre)",
             "planting fam lab child (pers-hrs/acre)",
             demog_vars)
 kVec <- mod2Coefs[which(coefsNames %in% kNames)]
 lkMat <- as.matrix(df_mod2[, kNames])
 betaK <- exp(lkMat %*% kVec)
-mBetaK <- mean(log(betaK))
-sBetaK <- sd(log(betaK))
-muBetaK <- exp(mBetaK + sBetaK^2 / 2)
-betaKnormd <- betaK / muBetaK
+# mBetaK <- mean(log(betaK))
+# sBetaK <- sd(log(betaK))
+# muBetaK <- exp(mBetaK + sBetaK^2 / 2)
+# betaKnormd <- betaK / muBetaK
 # mBetaKnormd <- mean(log(betaKnormd))
 # sBetaKnormd <- sd(log(betaKnormd))
 # muBetaKnormd <- exp(mBetaKnormd + sBetaKnormd^2 / 2)
@@ -1209,27 +1207,24 @@ lkRn <- as.matrix(df_mod2[, "Rain anomaly"])
 betaRn <- exp(lkRn * kappaRn)
 kRn <- exp(lkRn)
 cStar <- exp(df_mod2$Cstar)
-# mCstarTrunc <- mean(log(cStar))
-# sCstarTrunc <- sd(log(cStar))
-# muCstarTruncH <- exp(hCoef * mCstarTrunc + hCoef^2 * sCstarTrunc^2 / 2)
-#muCstarTruncH <- mean(cStar^hCoef)
-betaKnormdAdj <- betaKnormd / cStar^hCoef
+# betaKnormdAdj <- betaKnormd / (cStar^hCoef)
 #mean(betaKnormdAdj)
-sErr <- sd(mod2$residuals)
+eps <- mod2$residuals
+sErr <- sd(eps)
 #----------------------------------------------------------------------
 # y0 is EyStar*exp(-sErr^2 / 2) at mean(betaKnormdAdj*cStar^hCoef) and kRn = 1 (no rain anomaly)--i.e. basically y0 = mean(yStar)
-y0 <- tfp * muBetaK
+y0 <- tfp * hCoef^hCoef
+const <- y0 * betaK * exp(sErr^2 / 2)
 #----------------------------------------------------------------------
-EyStar <- y0 * betaKnormdAdj * kRn^kappaRn * cStar^hCoef * exp(sErr^2 / 2)
-EcSharp <- cStar / EyStar
-EyStar2 <- (y0 * betaKnormdAdj * kRn^kappaRn)^(etaCoef / hCoef) * EcSharp^etaCoef * exp(sErr^2 / 2)^(etaCoef / hCoef)
+EyStar1 <- const * kRn^kappaRn * (cStar / hCoef)^hCoef
+EcSharp <- cStar / EyStar1
 #---
 # test
 # tfp * muBetaK - y0
 # EyStar - exp(mod2$fitted.values + sErr^2 / 2)
 # EyStar - EyStar2
 #---
-EyStarUp <- (y0 * betaKnormdAdj * kRn^kappaRn)^(etaCoef / hCoef) * EPT02007^etaCoef * exp(sErr^2 / 2)^(etaCoef / hCoef)
+# EyStarUp <- (y0 * betaKnormdAdj * kRn^kappaRn)^(etaCoef / hCoef) * EPT02007^etaCoef * exp(sErr^2 / 2)^(etaCoef / hCoef)
 # EyStarUp <- (y0 * betaKnormdAdj * kRn^kappaRn)^(etaCoef / hCoef) * df_mod2$P^etaCoef * exp(sErr^2 / 2)^(etaCoef / hCoef)
 
 # ERstar <- EyStar * EPT02007
@@ -1244,33 +1239,30 @@ nRational <- sum(lam > hCoef) / length(lam)
 # sum(EcSharp < EPT02007) / length(EcSharp)
 # sum(EyStar < EyStarUp) / length(EyStar)
 #----------------------------------------------------------------------
-# EyStarUpMu <- mean(y0^(etaCoef / hCoef)) * EPT02007^etaCoef * exp(sErr^2 / 2)^(etaCoef / hCoef)
-# df_plot <- data.frame(EyStar, EyStarUp)# %>% gather(var, val, EyStar:EyStarUp)
-# #gg <- ggplot(df_plot, aes(x = val))
-# gg <- ggplot(df_plot, aes(x = EyStar))
-# gg <- gg + geom_histogram(fill = "white", color = "orange", bins = 12)
-# gg <- gg + geom_vline(xintercept = mean(EyStarUp))
-# # gg
+EyStar2 <- (const * kRn^kappaRn)^(etaCoef / hCoef) * (EcSharp / hCoef)^etaCoef
+#EyStar1 - EyStar2
+EyStar3 <- (const * kRn^kappaRn)^(etaCoef / hCoef) * (EPT02007 / lam)^etaCoef
+#EyStar1 - EyStar3
 #----------------------------------------------------------------------
-mEcSharpTrunc <- mean(log(EcSharp))
-sEcSharpTrunc <- sd(log(EcSharp))
-muEcSharpTrunc <- exp(mEcSharpTrunc + sEcSharpTrunc^2 / 2)
-xIn <- c(sEcSharpTrunc, mEcSharpTrunc)
-sol <- nleqslv::nleqslv(xIn, rootFnUp, jac = NULL,
-                        xUp = EPT02007,
-                        sXtrunc = sEcSharpTrunc,
-                        mXtrunc = mEcSharpTrunc)
-sol
-sEcSharp <- sol$x[1]
-mEcSharp <- sol$x[2]
-muEcSharpT0 <- exp(mEcSharp + sEcSharp^2 / 2)
-#muEcSharpTrunc
+# mEcSharpTrunc <- mean(log(EcSharp))
+# sEcSharpTrunc <- sd(log(EcSharp))
+# muEcSharpTrunc <- exp(mEcSharpTrunc + sEcSharpTrunc^2 / 2)
+# xIn <- c(sEcSharpTrunc, mEcSharpTrunc)
+# sol <- nleqslv::nleqslv(xIn, rootFnUp, jac = NULL,
+#                         xUp = EPT02007,
+#                         sXtrunc = sEcSharpTrunc,
+#                         mXtrunc = mEcSharpTrunc)
+# sol
+# sEcSharp <- sol$x[1]
+# mEcSharp <- sol$x[2]
+# muEcSharpT0 <- exp(mEcSharp + sEcSharp^2 / 2)
+# #muEcSharpTrunc
 #---
-x <- seq(0, 13, length = 200)
-y <- dlnorm(x, meanlog = mEcSharp, sdlog = sEcSharp)
-gg <- ggplot(data.frame(x = x, y = y), aes(x = x, y = y))
-gg <- gg + geom_line()
-gg <- gg + geom_vline(xintercept = EPT02007)
+# x <- seq(0, 13, length = 200)
+# y <- dlnorm(x, meanlog = mEcSharp, sdlog = sEcSharp)
+# gg <- ggplot(data.frame(x = x, y = y), aes(x = x, y = y))
+# gg <- gg + geom_line()
+# gg <- gg + geom_vline(xintercept = EPT02007)
 #----------------------------------------------------------------------
 mLamTrunc <- mean(log(lam))
 sLamTrunc <- sd(log(lam))
@@ -1294,58 +1286,56 @@ gg <- ggplot(data.frame(x = x, y = y), aes(x = x, y = y))
 gg <- gg + geom_line()
 gg <- gg + geom_vline(xintercept = hCoef)
 #---------------------------------------------------------------------
-
-EyStarUpMu <- (mean(y0) * mean(kRn^kappaRn))^(etaCoef / hCoef) * (EPT02007 / hCoef)^etaCoef * exp(sErr^2 / 2)^(etaCoef / hCoef)
-mEyStarTrunc <- mean(log(EyStar))
-sEyStarTrunc <- sd(log(EyStar))
-muEyStarTrunc <- exp(mEyStarTrunc + sEyStarTrunc^2 / 2)
-xIn <- c(sEyStarTrunc, mEyStarTrunc)
-sol <- nleqslv::nleqslv(xIn, rootFnUp, jac = NULL,
-                        xUp = EyStarUpMu,
-                        sXtrunc = sEyStarTrunc,
-                        mXtrunc = mEyStarTrunc)
-sol
-sEyStar <- sol$x[1]
-mEyStar <- sol$x[2]
-muEyStarT0 <- exp(mEyStar + sEyStar^2 / 2)
-#---
-df_plot <- data.frame(EyStar, EyStarUp) %>% gather(var, val, EyStar:EyStarUp)
-gg <- ggplot(df_plot, aes(x = val, color = var))
-gg <- gg + geom_histogram(fill = "white")#, bins = 12)
-gg <- gg + geom_vline(xintercept = EyStarUpMu)
-gg
+# EyStarUpMu <- (mean(y0) * mean(kRn^kappaRn))^(etaCoef / hCoef) * (EPT02007 / hCoef)^etaCoef * exp(sErr^2 / 2)^(etaCoef / hCoef)
+# mEyStarTrunc <- mean(log(EyStar))
+# sEyStarTrunc <- sd(log(EyStar))
+# muEyStarTrunc <- exp(mEyStarTrunc + sEyStarTrunc^2 / 2)
+# xIn <- c(sEyStarTrunc, mEyStarTrunc)
+# sol <- nleqslv::nleqslv(xIn, rootFnUp, jac = NULL,
+#                         xUp = EyStarUpMu,
+#                         sXtrunc = sEyStarTrunc,
+#                         mXtrunc = mEyStarTrunc)
+# sol
+# sEyStar <- sol$x[1]
+# mEyStar <- sol$x[2]
+# muEyStarT0 <- exp(mEyStar + sEyStar^2 / 2)
+# #---
+# df_plot <- data.frame(EyStar, EyStarUp) %>% gather(var, val, EyStar:EyStarUp)
+# gg <- ggplot(df_plot, aes(x = val, color = var))
+# gg <- gg + geom_histogram(fill = "white")#, bins = 12)
+# gg <- gg + geom_vline(xintercept = EyStarUpMu)
+# gg
 #----------------------------------------------------------------------
-cStarMuUp <- EyStarUpMu * EPT02007
-mCstarTrunc <- mean(log(cStar))
-sCstarTrunc <- sd(log(cStar))
-muCstarTrunc <- exp(mCstarTrunc + sCstarTrunc^2 / 2)
-xIn <- c(sCstarTrunc, mCstarTrunc)
-sol <- nleqslv::nleqslv(xIn, rootFnUp, jac = NULL,
-                        xUp = cStarMuUp,
-                        sXtrunc = sCstarTrunc,
-                        mXtrunc = mCstarTrunc)
-sol
-sCstar <- sol$x[1]
-mCstar <- sol$x[2]
-muCstar <- exp(mCstar + sCstar^2 / 2)
+# cStarMuUp <- EyStarUpMu * EPT02007
+# mCstarTrunc <- mean(log(cStar))
+# sCstarTrunc <- sd(log(cStar))
+# muCstarTrunc <- exp(mCstarTrunc + sCstarTrunc^2 / 2)
+# xIn <- c(sCstarTrunc, mCstarTrunc)
+# sol <- nleqslv::nleqslv(xIn, rootFnUp, jac = NULL,
+#                         xUp = cStarMuUp,
+#                         sXtrunc = sCstarTrunc,
+#                         mXtrunc = mCstarTrunc)
+# sol
+# sCstar <- sol$x[1]
+# mCstar <- sol$x[2]
+# muCstar <- exp(mCstar + sCstar^2 / 2)
 #----------------------------------------------------------------------
-df_plot <- data.frame(EcSharp, lam)
-gg <- ggplot(df_plot, aes(x = log(EcSharp)))
-gg <- gg + geom_histogram(color = 4, fill = "white", bins = 12)
-gg <- gg + geom_vline(xintercept = log(EPT02007))
-gg1 <- gg
-
-gg <- ggplot(df_plot, aes(x = log(lam)))
-gg <- gg + geom_histogram(color = 4, fill = "white", bins = 12)
-gg <- gg + geom_vline(xintercept = log(hCoef))
-gg2 <- gg
-gg1 + gg2 + plot_layout(ncol = 2)
+# df_plot <- data.frame(EcSharp, lam)
+# gg <- ggplot(df_plot, aes(x = log(EcSharp)))
+# gg <- gg + geom_histogram(color = 4, fill = "white", bins = 12)
+# gg <- gg + geom_vline(xintercept = log(EPT02007))
+# gg1 <- gg
+# 
+# gg <- ggplot(df_plot, aes(x = log(lam)))
+# gg <- gg + geom_histogram(color = 4, fill = "white", bins = 12)
+# gg <- gg + geom_vline(xintercept = log(hCoef))
+# gg2 <- gg
+# gg1 + gg2 + plot_layout(ncol = 2)
 #---------------------------------------------------------------------
 mArea <- mean(df_mod2$acres)
 sArea <- sd(df_mod2$acres)
 muArea <- exp(mArea + sArea^2 / 2)
 #---------------------------------------------------------------------
-
 # # First convert yield params to production params
 # kVecQs <- kVec
 # kVecQs["acres"] <- kVecQs["acres"] + 1
@@ -1360,8 +1350,6 @@ muArea <- exp(mArea + sArea^2 / 2)
 # mBeta <- mean(log(beta))
 # sBeta <- sd(log(beta))
 # muEtahBeta <- exp(eta / hCoef * mBeta + (eta / hCoef)^2 * sBeta^2 / 2)
-
-
 # mArea <- mean(df_mod$acres)
 # sArea <- sd(df_mod$acres)
 # muArea <- exp(mArea + sArea^2 / 2)
@@ -1372,11 +1360,12 @@ muArea <- exp(mArea + sArea^2 / 2)
 ```{r Fig5, fig.show = "hold", fig.width = 5, fig.height=5, fig.align="center", fig.cap="\\label{fig:Qs} uyiijl", echo = FALSE}
 
 # Define supply curve/price elasticity of supply/price risk elasticity of supply function
-QsFun <- function(EPT0vec, muArea, g0, h, muBetaRnEtaH,
-                  muBetaKetaH, muEtaLamInv,
+QsFun <- function(EPT0vec, muKrn, kappaRn, muArea, muConst,
+                  h, mLam, sLam,
                   muEcSharpT0, mP, sP, th, Nf){
   eta <- h / (1 - h)
-  muEyStarT0 <- (g0)^(eta / h) * muBetaRnEtaH * muBetaKetaH * EPT0vec^eta * muEtaLamInv
+  muEtaLamInv <- exp(-eta * mLam + eta^2 * sLam^2 / 2)
+  muEyStarT0 <- (muConst)^(eta / h) * muKrn^kappaRn *  EPT0vec^eta
   muEqStarT0 <- muArea * muEyStarT0
       # muEqStarT0 <- g0^(eta / hCoef) * muEtahBetaQs * muEtaLamInv * EPT0vec^eta
   P0vec <- EPT0vec * exp(-mP * th)
@@ -1418,20 +1407,25 @@ prodFAO2009 <- dfFAO$Value[which(dfFAO$Year == 2009 & dfFAO$Element == "Producti
 # prodFAO2007 <- 2928793
 # prodFAO2008 <- 2367237
 #----------------------------------------------------------------------
-mRnAnom <- 0 #mean(log(rainAnom))
-sRnAnom <- sd(log(rainAnom))
-muRnAnom <- exp(mRnAnom + sRnAnom^2 / 2)
-sigRnAnom <- muRnAnom * sqrt(exp(sRnAnom^2) - 1)
-mBetaRn <- 0 #mean(log(betaRn))
-sBetaRn <- sd(log(betaRn))
-muBetaRnEtaH <- exp(etaCoef / hCoef * mBetaRn + (etaCoef / hCoef)^2 * sBetaRn^2 / 2)
+# mRnAnom <- mean(log(kRn))
+# sRnAnom <- sd(log(kRn))
+# muRnAnom <- exp(mRnAnom + sRnAnom^2 / 2)
+# sigRnAnom <- muRnAnom * sqrt(exp(sRnAnom^2) - 1)
+# mBetaRn <- 0 #mean(log(betaRn))
+# sBetaRn <- sd(log(betaRn))
+# muBetaRnEtaH <- exp(etaCoef / hCoef * mBetaRn + (etaCoef / hCoef)^2 * sBetaRn^2 / 2)
 #----------------------------------------------------------------------
 # Ex-post calibration number of farms Nf
-dfQs2007 <- QsFun(EPT02007, muArea, g0, h = hCoef,
-                  muBetaRnEtaH, muBetaKetaH,
-                  muEtaLamInv, muEcSharpT0,
-                  mP = mP2006, sP = sP2006,
+dfQs2007 <- QsFun(EPT02007, muKrn = 1, kappaRn, muArea,
+                  muConst = mean(const),
+                  h = hCoef, mLam, sLam,
+                  muEcSharpT0, mP = mP2006, sP = sP2006,
                   th, Nf = 1)
+# dfQs2007 <- QsFun(EPT02007, muArea, g0, h = hCoef,
+#                   muBetaRnEtaH, muBetaKetaH,
+#                   muEtaLamInv, muEcSharpT0,
+#                   mP = mP2006, sP = sP2006,
+#                   th, Nf = 1)
 Qs2007 <- dfQs2007$`Supply\n(million metric tons)`
 Nf <- prodFAO2007 * 10^-6 / Qs2007
 #Nf <- 1.7 * 10^6
@@ -1440,12 +1434,17 @@ Nf <- prodFAO2007 * 10^-6 / Qs2007
 #----------------------------------------------------------------------
 # Now have everything needed to parameterize 2009 expected aggregate supply curve (FPMA price info required for 2008 curve unavailable)
 EPT0vec <- seq(1, 40, length.out = 60)
-dfQs2009 <- QsFun(EPT0vec, muArea, g0, h = hCoef,
-                  muBetaRnAnomEtaH, muBetaKetaH,
-                  muEtaLamInv,
-              muEcSharpT0,
-              mP = mP2008, sP = sP2008,
-              th, Nf)
+dfQs2009 <- QsFun(EPT0vec, muKrn = 1, kappaRn, muArea,
+                  muConst = mean(const),
+                  h = hCoef, mLam, sLam,
+                  muEcSharpT0, mP = mP2008, sP = sP2008,
+                  th, Nf)
+# dfQs2009 <- QsFun(EPT0vec, muArea, g0, h = hCoef,
+#                   muBetaRnAnomEtaH, muBetaKetaH,
+#                   muEtaLamInv,
+#               muEcSharpT0,
+#               mP = mP2008, sP = sP2008,
+#               th, Nf)
 #----------------------------------------------------------------------
 #df_plot <- dfQs %>% gather(var, val, Qs:PelastQs)
 df_plot <- dfQs2009
@@ -1464,7 +1463,7 @@ df_inset <- subset(df_plot, `Expected price (KES/kg)` > 6.5 & `Expected price (K
 gg <- ggplot(df_inset, aes(x = `Expected price (KES/kg)`, y = `Price elasticity\nof supply`))
 gg <- gg + geom_line()
 gg <- gg + geom_hline(yintercept = 1, linetype = "dashed", color = "red")
-gg <- gg + geom_vline(xintercept = EPT02007)
+gg <- gg + geom_vline(xintercept = EPT02009)
 gg <- gg + theme_bw()
 gg <- gg + theme(axis.title = element_blank())
 ggElastInset <- gg
