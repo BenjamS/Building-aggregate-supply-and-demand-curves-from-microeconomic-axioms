@@ -924,6 +924,9 @@ inputsPosCoef <- setdiff(input_vars, inputsNegCoef)
 mod2Vars <- c("dist", "yield (kg/acre)", "Cstar", "acres", "seed (kg/acre)",
               inputsNegCoef, bin_vars, demog_vars, clim_vars)
 df_mod2 <- df_mod[, c(mod2Vars, "P")]
+theseCols <- c("Cstar", "acres", "seed (kg/acre)", demog_vars)
+thisFun <- function(x){out <- x - log(mean(exp(x))); return(out)}
+df_mod2[, theseCols] <- as.data.frame(apply(df_mod2[, theseCols], 2, thisFun))
 not_these <- which(colnames(df_mod2) %in% c("P", "dist", costVars[-1]))
 mod2 <- lm(`yield (kg/acre)`~., df_mod2[, -not_these])
 #summary(mod2)
@@ -1178,30 +1181,32 @@ aVec <- mod2Coefs
 lkMat <- as.matrix(df_mod2[, coefsNames])
 lBetaK <- lkMat %*% aVec
 betaK <- exp(lBetaK)
-g0 <- exp(a0)
+yBasal <- exp(a0)
 #---
 # test
 #a0 + lBetaK - mod2$fitted.values
 #g0 * betaK - exp(mod2$fitted.values)
 #---
 kBinVec <- mod2Coefs[which(coefsNames %in% bin_vars)]
-a0adj <- a0 + as.matrix(df_mod2[, bin_vars]) %*% kBinVec
-tfp <- exp(a0adj)
+dfBinVar <- df_mod2[, bin_vars]
+a0adj <- a0 + as.matrix(dfBinVar) %*% kBinVec
+dfBinVar$adopter <- ifelse(dfBinVar$adopter == 1, "Hybrid", "0")
+dfBinVar$`tenure: owned with title deed` <- ifelse(dfBinVar$`tenure: owned with title deed` == 1, "Tenure", "0")
+dfBinVar$`landprep: oxen` <- ifelse(dfBinVar$`landprep: oxen` == 1, "Oxen", "0")
+dfBinVar$`landprep: tractor` <- ifelse(dfBinVar$`landprep: tractor` == 1, "Tractor", "0")
+endowVec <- apply(dfBinVar, 1, paste, collapse = "+")
+endowVec <- gsub("0+0+0+0", "Base", endowVec)
+y0 <- exp(a0adj)
+#---------------------------------------------------------------------
+data.frame(, y0)
+gg <- ggplot(data.frame(, y0), aes(x = y0))
+#---------------------------------------------------------------------
 kNames <- c("acres", "seed (kg/acre)",
             "planting fam lab child (pers-hrs/acre)",
             demog_vars)
 kVec <- mod2Coefs[which(coefsNames %in% kNames)]
 lkMat <- as.matrix(df_mod2[, kNames])
 betaK <- exp(lkMat %*% kVec)
-# mBetaK <- mean(log(betaK))
-# sBetaK <- sd(log(betaK))
-# muBetaK <- exp(mBetaK + sBetaK^2 / 2)
-# betaKnormd <- betaK / muBetaK
-# mBetaKnormd <- mean(log(betaKnormd))
-# sBetaKnormd <- sd(log(betaKnormd))
-# muBetaKnormd <- exp(mBetaKnormd + sBetaKnormd^2 / 2)
-# mean(betaKnormd)
-#kMat <- exp(lkMat)
 kappaRn <- mod2Coefs[which(coefsNames == "Rain anomaly")]
 lkRn <- as.matrix(df_mod2[, "Rain anomaly"])
 betaRn <- exp(lkRn * kappaRn)
