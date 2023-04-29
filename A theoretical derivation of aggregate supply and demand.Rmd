@@ -924,8 +924,14 @@ inputsPosCoef <- setdiff(input_vars, inputsNegCoef)
 mod2Vars <- c("dist", "yield (kg/acre)", "Cstar", "acres", "seed (kg/acre)",
               inputsNegCoef, bin_vars, demog_vars, clim_vars)
 df_mod2 <- df_mod[, c(mod2Vars, "P")]
+#-----------------------------------------------------------------------
+# Get cStar and area before transforming
 cStar <- exp(df_mod2$Cstar)
 muCstarSamp <- mean(cStar)
+mArea <- mean(df_mod2$acres)
+sArea <- sd(df_mod2$acres)
+muArea <- exp(mArea + sArea^2 / 2)
+#---------------------------------------------------------------------
 theseCols <- c("Cstar", "acres", "seed (kg/acre)", demog_vars)
 thisFun <- function(x){out <- x - log(mean(exp(x))); return(out)}
 df_mod2[, theseCols] <- as.data.frame(apply(df_mod2[, theseCols], 2, thisFun))
@@ -1251,7 +1257,7 @@ mP2008 <- mVec[3]
 sP2008 <- sVec[3]
 EPT02009 <- P02009 * exp(mP2008 * th)
 #---
-dfEPT0 <- data.frame(Year = yrVec[-c(1, nYr)], EPT0 = EPT0hist[-1], mP = mVec[-c((nYr - 1), nYr)], sP = sVec[-c((nYr - 1), nYr)], Anomaly = anomVec[-1])
+# dfEPT0 <- data.frame(Year = yrVec[-c(1, nYr)], EPT0 = EPT0hist[-1], mP = mVec[-c((nYr - 1), nYr)], sP = sVec[-c((nYr - 1), nYr)], Anomaly = anomVec[-1])
 #----------------------------------------------------------------------
 kNames <- c("acres", "seed (kg/acre)",
             "planting fam lab child (pers-hrs/acre)",
@@ -1306,7 +1312,7 @@ sol <- nleqslv::nleqslv(xIn, rootFnUp, jac = NULL,
                         xUp = EPT02007,
                         sXtrunc = sEcSharpTrunc,
                         mXtrunc = mEcSharpTrunc)
-sol
+#sol
 sEcSharp <- sol$x[1]
 mEcSharp <- sol$x[2]
 muEcSharpT0 <- exp(mEcSharp + sEcSharp^2 / 2)
@@ -1319,7 +1325,7 @@ sol <- nleqslv::nleqslv(xIn, rootFnLo, jac = NULL,
                         xLo = hCoef,
                         sXtrunc = sLamTrunc,
                         mXtrunc = mLamTrunc)
-sol
+#sol
 sLam <- sol$x[1]
 mLam <- sol$x[2]
 muLam <- exp(mLam + sLam^2 / 2)
@@ -1341,55 +1347,6 @@ mean(kRn^kappaRn)^(etaCoef / hCoef) - mean(kRn^(kappaRn * etaCoef / hCoef))
 muConst <- mean((const)^(etaCoef / hCoef)) # * mean(kRn)^(kappaRn * etaCoef / hCoef)
 muEyStarT0 <- muConst * muEcSharpT0eta * hCoef^-etaCoef
 muEyStarT0trunc <- mean(EyStar2 * kRn^-kappaRn)
-#----------------------------------------------------------------------
-# cStarMuUp <- EyStarUpMu * EPT02007
-# mCstarTrunc <- mean(log(cStar))
-# sCstarTrunc <- sd(log(cStar))
-# muCstarTrunc <- exp(mCstarTrunc + sCstarTrunc^2 / 2)
-# xIn <- c(sCstarTrunc, mCstarTrunc)
-# sol <- nleqslv::nleqslv(xIn, rootFnUp, jac = NULL,
-#                         xUp = cStarMuUp,
-#                         sXtrunc = sCstarTrunc,
-#                         mXtrunc = mCstarTrunc)
-# sol
-# sCstar <- sol$x[1]
-# mCstar <- sol$x[2]
-# muCstar <- exp(mCstar + sCstar^2 / 2)
-#----------------------------------------------------------------------
-# df_plot <- data.frame(EcSharp, lam)
-# gg <- ggplot(df_plot, aes(x = log(EcSharp)))
-# gg <- gg + geom_histogram(color = 4, fill = "white", bins = 12)
-# gg <- gg + geom_vline(xintercept = log(EPT02007))
-# gg1 <- gg
-# 
-# gg <- ggplot(df_plot, aes(x = log(lam)))
-# gg <- gg + geom_histogram(color = 4, fill = "white", bins = 12)
-# gg <- gg + geom_vline(xintercept = log(hCoef))
-# gg2 <- gg
-# gg1 + gg2 + plot_layout(ncol = 2)
-#---------------------------------------------------------------------
-mArea <- mean(df_mod2$acres)
-sArea <- sd(df_mod2$acres)
-muArea <- exp(mArea + sArea^2 / 2)
-#---------------------------------------------------------------------
-# # First convert yield params to production params
-# kVecQs <- kVec
-# kVecQs["acres"] <- kVecQs["acres"] + 1
-# betaKQs <- exp(lkMat %*% kVecQs)
-# #hist(log(betaKQs))
-# betaQs <- betaA * betaKQs / betaW
-# #hist(log(betaQs))
-# 
-# mBetaQs <- mean(log(betaQs))
-# sBetaQs <- sd(log(betaQs))
-# muEtahBetaQs <- exp(eta / hCoef * mBetaQs + (eta / hCoef)^2 * sBetaQs^2 / 2)
-# mBeta <- mean(log(beta))
-# sBeta <- sd(log(beta))
-# muEtahBeta <- exp(eta / hCoef * mBeta + (eta / hCoef)^2 * sBeta^2 / 2)
-# mArea <- mean(df_mod$acres)
-# sArea <- sd(df_mod$acres)
-# muArea <- exp(mArea + sArea^2 / 2)
-
 
 ```
 
@@ -1474,11 +1431,13 @@ Nf <- prodFAO2007 * mean(kRn^(-kappaRn * etaCoef / hCoef)) * 10^-6 / Qs2007
 #----------------------------------------------------------------------
 # Now have everything needed to parameterize 2009 expected aggregate supply curve (FPMA price info required for 2008 curve unavailable)
 fracVec <- seq(0.01, 3, length.out = 50)
-dfQs <- QsFun(muEyStarT0,
+dfQs <- QsFun(muEyStarT0 = muEyStarT0 * (EPT02009 / EPT02007)^hCoef,
                   EPT0 = EPT02007, fracVec,
                   h = hCoef, kappaRn, muArea,
                   muEcSharpT0 = muEcSharpT0,
-                  mP = mP2006, sP = sP2006, th, Nf)
+                  #mP = mP2008, sP = sP2008,
+              mP = mean(mVec), sP = mean(sVec),
+              th, Nf)
 #---------------------------------------------------------------------
 gg <- ggplot(dfQs)
 gg <- gg + geom_ribbon(aes(x = `Expected price (KES/kg)`,
@@ -1493,7 +1452,7 @@ gg <- gg + geom_line(data = df_line, aes(x = `Expected price (KES/kg)`, y = `Exp
 gg <- gg + scale_color_manual(values = c("green", "red", "black"))
 gg <- gg + geom_vline(xintercept = EPT02009)
 gg <- gg + theme_bw()
-gg <- gg + theme(axis.title.x = element_blank(),
+gg <- gg + theme(axis.title.x = element_text(size = axisTextSize),
                  legend.title = element_blank(),
                  legend.text = element_text(size = legendTextSize),
                  legend.position = "top")
