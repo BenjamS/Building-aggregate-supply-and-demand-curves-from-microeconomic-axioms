@@ -1194,12 +1194,51 @@ dfBinVar$adopter <- ifelse(dfBinVar$adopter == 1, "Hybrid", "0")
 dfBinVar$`tenure: owned with title deed` <- ifelse(dfBinVar$`tenure: owned with title deed` == 1, "Tenure", "0")
 dfBinVar$`landprep: oxen` <- ifelse(dfBinVar$`landprep: oxen` == 1, "Oxen", "0")
 dfBinVar$`landprep: tractor` <- ifelse(dfBinVar$`landprep: tractor` == 1, "Tractor", "0")
-endowVec <- apply(dfBinVar, 1, paste, collapse = "+")
-endowVec <- gsub("0+0+0+0", "Base", endowVec)
+endowVec <- apply(dfBinVar, 1, paste, collapse = " + ")
+endowVec <- gsub("0 \\+|\\+ 0", "", endowVec)
+endowVec <- gsub("   0", "Base", endowVec)
+endowVec[which(endowVec != "Base")] <- paste("Base +", endowVec[which(endowVec != "Base")])
+endowVec <- gsub("  ", " ", endowVec)
+endowVec <- trimws(endowVec)
 y0 <- exp(a0adj)
 #---------------------------------------------------------------------
-data.frame(, y0)
-gg <- ggplot(data.frame(, y0), aes(x = y0))
+cellText_size <- 2.5
+df_plot <- data.frame(Type = endowVec, y0 = round(y0, 1))
+df_plot$xx <- 1
+df_plot <- df_plot %>% group_by(Type) %>% summarise(`Number of farms` = sum(xx, na.rm = T), y0 = unique(y0)) %>% as.data.frame()
+df_plot$Element <- 1
+df_plot <- df_plot[order(df_plot$y0, decreasing = T), ]
+typeVec <- df_plot$Type
+# df_plot$Type <- factor(df_plot$Type, levels = df_plot$y0[order(df_plot$y0)], ordered = T)
+gg <- ggplot(df_plot, aes(x = Element, y = Type, fill = y0, label = y0))
+gg <- gg + scale_y_discrete(limits = typeVec)
+gg <- gg + geom_tile(alpha = 0)
+gg <- gg + labs(title = expression("y"[0]))
+gg <- gg + theme_bw()
+gg <- gg + theme(axis.title = element_blank(),
+                 axis.text.x = element_blank(),
+                 axis.ticks.x = element_blank(),
+                 axis.text.y = element_text(size = axisTextSize),
+                 panel.grid = element_blank(),
+                 plot.title = element_text(size = axisTitleSize, hjust = 0.5),
+                 legend.position = "none")
+gg <- gg + geom_text(size = cellText_size)
+gg1 <- gg
+#---
+gg <- ggplot(df_plot, aes(x = `Number of farms`, y = Type))
+gg <- gg + scale_y_discrete(limits = typeVec)
+gg <- gg + geom_col()
+gg <- gg + labs(title = "Number of farms")
+gg <- gg + theme_bw()
+gg <- gg + theme(axis.title = element_blank(),
+                 #axis.title.x = element_text(size = axisTitleSize),
+                 axis.text.y = element_blank(),
+                 axis.text.x = element_text(size = axisTextSize),
+                 #panel.grid = element_blank(),
+                 plot.title = element_text(size = axisTitleSize, hjust = 0.5))
+gg2 <- gg
+#---
+gg1 + gg2 + plot_layout(ncol = 2, widths = c(1/2, 1))
 #---------------------------------------------------------------------
 kNames <- c("acres", "seed (kg/acre)",
             "planting fam lab child (pers-hrs/acre)",
