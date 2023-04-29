@@ -924,6 +924,8 @@ inputsPosCoef <- setdiff(input_vars, inputsNegCoef)
 mod2Vars <- c("dist", "yield (kg/acre)", "Cstar", "acres", "seed (kg/acre)",
               inputsNegCoef, bin_vars, demog_vars, clim_vars)
 df_mod2 <- df_mod[, c(mod2Vars, "P")]
+cStar <- exp(df_mod2$Cstar)
+muCstarSamp <- mean(cStar)
 theseCols <- c("Cstar", "acres", "seed (kg/acre)", demog_vars)
 thisFun <- function(x){out <- x - log(mean(exp(x))); return(out)}
 df_mod2[, theseCols] <- as.data.frame(apply(df_mod2[, theseCols], 2, thisFun))
@@ -1074,7 +1076,89 @@ summ(mod2)
 
 ...have to get the population mean/sd from the truncated mean/sd...
 
-```{r Fig4, fig.show = "hold", fig.width = 5, fig.height=3, fig.align="center", fig.cap="\\label{fig:EyStarLambda} uyiijl", echo = FALSE}
+```{r Fig4, fig.show = "hold", fig.width=5, fig.height=3, fig.align="center", fig.cap="\\label{fig:y0}Yield evaluated at the sample means of the control variables, and with rainfall anomaly set to 1 (no divergence from historical rainfall), for farms with different endowments. The 'Base' endowment is just the exponential of the regression constant.", echo = FALSE}
+
+mod2Coefs <- mod2$coefficients
+hCoef <- mod2Coefs["Cstar"]
+etaCoef <- hCoef / (1 - hCoef)
+a0 <- mod2Coefs[1]
+coefsNames <- gsub("`", "", names(mod2Coefs))
+coefsNames <- coefsNames[-1]
+mod2Coefs <- mod2Coefs[-1]
+#---
+aVec <- mod2Coefs
+lkMat <- as.matrix(df_mod2[, coefsNames])
+lBetaK <- lkMat %*% aVec
+betaK <- exp(lBetaK)
+yBasal <- exp(a0)
+#---
+# test
+#a0 + lBetaK - mod2$fitted.values
+#g0 * betaK - exp(mod2$fitted.values)
+#---
+kBinVec <- mod2Coefs[which(coefsNames %in% bin_vars)]
+dfBinVar <- df_mod2[, bin_vars]
+a0adj <- a0 + as.matrix(dfBinVar) %*% kBinVec
+y0 <- exp(a0adj)
+dfBinVar$adopter <- ifelse(dfBinVar$adopter == 1, "Hybrid", "0")
+dfBinVar$`tenure: owned with title deed` <- ifelse(dfBinVar$`tenure: owned with title deed` == 1, "Tenure", "0")
+dfBinVar$`landprep: oxen` <- ifelse(dfBinVar$`landprep: oxen` == 1, "Oxen", "0")
+dfBinVar$`landprep: tractor` <- ifelse(dfBinVar$`landprep: tractor` == 1, "Tractor", "0")
+endowVec <- apply(dfBinVar, 1, paste, collapse = " + ")
+endowVec <- gsub("0 \\+|\\+ 0", "", endowVec)
+endowVec <- gsub("   0", "Base", endowVec)
+endowVec[which(endowVec != "Base")] <- paste("Base +", endowVec[which(endowVec != "Base")])
+endowVec <- gsub("  ", " ", endowVec)
+endowVec <- trimws(endowVec)
+#---------------------------------------------------------------------
+cellText_size <- 2.5
+df_plot <- data.frame(Type = endowVec, y0 = round(y0, 1))
+df_plot$xx <- 1
+df_plot <- df_plot %>% group_by(Type) %>% summarise(`Number of farms` = sum(xx, na.rm = T), y0 = unique(y0)) %>% as.data.frame()
+df_plot$Element <- 1
+df_plot <- df_plot[order(df_plot$y0, decreasing = T), ]
+typeVec <- df_plot$Type
+# df_plot$Type <- factor(df_plot$Type, levels = df_plot$y0[order(df_plot$y0)], ordered = T)
+gg <- ggplot(df_plot, aes(x = Element, y = Type, fill = y0, label = y0))
+gg <- gg + scale_y_discrete(limits = typeVec)
+gg <- gg + geom_tile(alpha = 0)
+gg <- gg + labs(title = expression("y"[0]))
+gg <- gg + theme_bw()
+gg <- gg + theme(axis.title = element_blank(),
+                 axis.text.x = element_blank(),
+                 axis.ticks.x = element_blank(),
+                 axis.text.y = element_text(size = axisTextSize),
+                 panel.grid = element_blank(),
+                 plot.title = element_text(size = axisTitleSize, hjust = 0.5),
+                 legend.position = "none")
+gg <- gg + geom_text(size = cellText_size)
+gg1 <- gg
+#---
+gg <- ggplot(df_plot, aes(x = `Number of farms`, y = Type))
+gg <- gg + scale_y_discrete(limits = typeVec)
+gg <- gg + geom_col()
+gg <- gg + labs(title = "Number of farms")
+gg <- gg + theme_bw()
+gg <- gg + theme(axis.title = element_blank(),
+                 #axis.title.x = element_text(size = axisTitleSize),
+                 axis.text.y = element_blank(),
+                 axis.text.x = element_text(size = axisTextSize),
+                 #panel.grid = element_blank(),
+                 plot.title = element_text(size = axisTitleSize, hjust = 0.5))
+gg2 <- gg
+#---
+gg1 + gg2 + plot_layout(ncol = 2, widths = c(1/2, 1))
+
+```
+
+
+This is an ex-ante curve in the sense that each point on the curve is an ex-ante projection based on the expected price information available at or before planting time.
+
+The projection overestimates the eventual  is far off because of the 2008-2009 drought.
+
+<!-- https://www.fao.org/giews/reports/sub-saharan-africa-cereal-report/en/ -->
+
+```{r Fig5, fig.show = "hold", fig.width = 5, fig.height=3, fig.align="center", fig.cap="\\label{fig:Qs2009}The ex-ante Kenya 2009 aggregate maize supply curve, parameterized based on the 2007 Kenya farm data. The shaded area around the curve...", echo = FALSE}
 
 # Define root functions
 rootFnUp <- function(xIn, xUp, sXtrunc, mXtrunc){
@@ -1098,7 +1182,7 @@ rootFnLo <- function(xIn, xLo, sXtrunc, mXtrunc){
   return(outVec)
 }
 #====================================================================
-# Get mean price jump from county level monthly price data (downloaded from GIEWS-FPMA)
+# Get mean price jump from county level monthly price data (downloaded from FAO GIEWS-FPMA Tool)
 thisFile <- "Nakuru Eldoret monthly maize price.csv"
 thisFilePath <- paste0(thisFolder, thisFile)
 df_raw <- read.csv(thisFilePath, stringsAsFactors = F)
@@ -1169,77 +1253,6 @@ EPT02009 <- P02009 * exp(mP2008 * th)
 #---
 dfEPT0 <- data.frame(Year = yrVec[-c(1, nYr)], EPT0 = EPT0hist[-1], mP = mVec[-c((nYr - 1), nYr)], sP = sVec[-c((nYr - 1), nYr)], Anomaly = anomVec[-1])
 #----------------------------------------------------------------------
-mod2Coefs <- mod2$coefficients
-hCoef <- mod2Coefs["Cstar"]
-etaCoef <- hCoef / (1 - hCoef)
-a0 <- mod2Coefs[1]
-coefsNames <- gsub("`", "", names(mod2Coefs))
-coefsNames <- coefsNames[-1]
-mod2Coefs <- mod2Coefs[-1]
-#---
-aVec <- mod2Coefs
-lkMat <- as.matrix(df_mod2[, coefsNames])
-lBetaK <- lkMat %*% aVec
-betaK <- exp(lBetaK)
-yBasal <- exp(a0)
-#---
-# test
-#a0 + lBetaK - mod2$fitted.values
-#g0 * betaK - exp(mod2$fitted.values)
-#---
-kBinVec <- mod2Coefs[which(coefsNames %in% bin_vars)]
-dfBinVar <- df_mod2[, bin_vars]
-a0adj <- a0 + as.matrix(dfBinVar) %*% kBinVec
-dfBinVar$adopter <- ifelse(dfBinVar$adopter == 1, "Hybrid", "0")
-dfBinVar$`tenure: owned with title deed` <- ifelse(dfBinVar$`tenure: owned with title deed` == 1, "Tenure", "0")
-dfBinVar$`landprep: oxen` <- ifelse(dfBinVar$`landprep: oxen` == 1, "Oxen", "0")
-dfBinVar$`landprep: tractor` <- ifelse(dfBinVar$`landprep: tractor` == 1, "Tractor", "0")
-endowVec <- apply(dfBinVar, 1, paste, collapse = " + ")
-endowVec <- gsub("0 \\+|\\+ 0", "", endowVec)
-endowVec <- gsub("   0", "Base", endowVec)
-endowVec[which(endowVec != "Base")] <- paste("Base +", endowVec[which(endowVec != "Base")])
-endowVec <- gsub("  ", " ", endowVec)
-endowVec <- trimws(endowVec)
-y0 <- exp(a0adj)
-#---------------------------------------------------------------------
-cellText_size <- 2.5
-df_plot <- data.frame(Type = endowVec, y0 = round(y0, 1))
-df_plot$xx <- 1
-df_plot <- df_plot %>% group_by(Type) %>% summarise(`Number of farms` = sum(xx, na.rm = T), y0 = unique(y0)) %>% as.data.frame()
-df_plot$Element <- 1
-df_plot <- df_plot[order(df_plot$y0, decreasing = T), ]
-typeVec <- df_plot$Type
-# df_plot$Type <- factor(df_plot$Type, levels = df_plot$y0[order(df_plot$y0)], ordered = T)
-gg <- ggplot(df_plot, aes(x = Element, y = Type, fill = y0, label = y0))
-gg <- gg + scale_y_discrete(limits = typeVec)
-gg <- gg + geom_tile(alpha = 0)
-gg <- gg + labs(title = expression("y"[0]))
-gg <- gg + theme_bw()
-gg <- gg + theme(axis.title = element_blank(),
-                 axis.text.x = element_blank(),
-                 axis.ticks.x = element_blank(),
-                 axis.text.y = element_text(size = axisTextSize),
-                 panel.grid = element_blank(),
-                 plot.title = element_text(size = axisTitleSize, hjust = 0.5),
-                 legend.position = "none")
-gg <- gg + geom_text(size = cellText_size)
-gg1 <- gg
-#---
-gg <- ggplot(df_plot, aes(x = `Number of farms`, y = Type))
-gg <- gg + scale_y_discrete(limits = typeVec)
-gg <- gg + geom_col()
-gg <- gg + labs(title = "Number of farms")
-gg <- gg + theme_bw()
-gg <- gg + theme(axis.title = element_blank(),
-                 #axis.title.x = element_text(size = axisTitleSize),
-                 axis.text.y = element_blank(),
-                 axis.text.x = element_text(size = axisTextSize),
-                 #panel.grid = element_blank(),
-                 plot.title = element_text(size = axisTitleSize, hjust = 0.5))
-gg2 <- gg
-#---
-gg1 + gg2 + plot_layout(ncol = 2, widths = c(1/2, 1))
-#---------------------------------------------------------------------
 kNames <- c("acres", "seed (kg/acre)",
             "planting fam lab child (pers-hrs/acre)",
             demog_vars)
@@ -1250,18 +1263,15 @@ kappaRn <- mod2Coefs[which(coefsNames == "Rain anomaly")]
 lkRn <- as.matrix(df_mod2[, "Rain anomaly"])
 betaRn <- exp(lkRn * kappaRn)
 kRn <- exp(lkRn)
-cStar <- exp(df_mod2$Cstar)
-# betaKnormdAdj <- betaKnormd / (cStar^hCoef)
-#mean(betaKnormdAdj)
 eps <- mod2$residuals
 sErr <- sd(eps)
 #----------------------------------------------------------------------
-# y0 is EyStar*exp(-sErr^2 / 2) at mean(betaKnormdAdj*cStar^hCoef) and kRn = 1 (no rain anomaly)--i.e. basically y0 = mean(yStar)
-y0 <- tfp * hCoef^hCoef
-const <- y0 * betaK * exp(sErr^2 / 2)
+const <- y0 * betaK / muCstarSamp^hCoef * hCoef^hCoef * exp(sErr^2 / 2)
 #----------------------------------------------------------------------
 EyStar1 <- const * kRn^kappaRn * (cStar / hCoef)^hCoef
-EcSharp <- cStar / EyStar1
+EyStar0 <- exp(mod2$fitted.values - kappaRn * lkRn + sErr^2 / 2)
+#EyStar1 - EyStar0
+EcSharp <- cStar / EyStar0
 #---
 # test
 # tfp * muBetaK - y0
@@ -1288,25 +1298,18 @@ EyStar2 <- (const * kRn^kappaRn)^(etaCoef / hCoef) * (EcSharp / hCoef)^etaCoef
 EyStar3 <- (const * kRn^kappaRn)^(etaCoef / hCoef) * (EPT02007 / lam)^etaCoef
 #EyStar1 - EyStar3
 #----------------------------------------------------------------------
-# mEcSharpTrunc <- mean(log(EcSharp))
-# sEcSharpTrunc <- sd(log(EcSharp))
-# muEcSharpTrunc <- exp(mEcSharpTrunc + sEcSharpTrunc^2 / 2)
-# xIn <- c(sEcSharpTrunc, mEcSharpTrunc)
-# sol <- nleqslv::nleqslv(xIn, rootFnUp, jac = NULL,
-#                         xUp = EPT02007,
-#                         sXtrunc = sEcSharpTrunc,
-#                         mXtrunc = mEcSharpTrunc)
-# sol
-# sEcSharp <- sol$x[1]
-# mEcSharp <- sol$x[2]
-# muEcSharpT0 <- exp(mEcSharp + sEcSharp^2 / 2)
-# #muEcSharpTrunc
-#---
-# x <- seq(0, 13, length = 200)
-# y <- dlnorm(x, meanlog = mEcSharp, sdlog = sEcSharp)
-# gg <- ggplot(data.frame(x = x, y = y), aes(x = x, y = y))
-# gg <- gg + geom_line()
-# gg <- gg + geom_vline(xintercept = EPT02007)
+mEcSharpTrunc <- mean(log(EcSharp))
+sEcSharpTrunc <- sd(log(EcSharp))
+muEcSharpTrunc <- exp(mEcSharpTrunc + sEcSharpTrunc^2 / 2)
+xIn <- c(sEcSharpTrunc, mEcSharpTrunc)
+sol <- nleqslv::nleqslv(xIn, rootFnUp, jac = NULL,
+                        xUp = EPT02007,
+                        sXtrunc = sEcSharpTrunc,
+                        mXtrunc = mEcSharpTrunc)
+sol
+sEcSharp <- sol$x[1]
+mEcSharp <- sol$x[2]
+muEcSharpT0 <- exp(mEcSharp + sEcSharp^2 / 2)
 #----------------------------------------------------------------------
 mLamTrunc <- mean(log(lam))
 sLamTrunc <- sd(log(lam))
@@ -1320,35 +1323,24 @@ sol
 sLam <- sol$x[1]
 mLam <- sol$x[2]
 muLam <- exp(mLam + sLam^2 / 2)
+muLamEtaInv <- exp(-etaCoef * mLam + etaCoef^2 * sLam^2 / 2)
 # #muLamTrunc
 # exp(mLamTrunc - sLamTrunc^2)
 # exp(mLam - sLam^2)
 #---
-x <- seq(0, 3, length = 200)
-y <- dlnorm(x, meanlog = mLam, sdlog = sLam)
-gg <- ggplot(data.frame(x = x, y = y), aes(x = x, y = y))
-gg <- gg + geom_line()
-gg <- gg + geom_vline(xintercept = hCoef)
+# x <- seq(0, 3, length = 200)
+# y <- dlnorm(x, meanlog = mLam, sdlog = sLam)
+# gg <- ggplot(data.frame(x = x, y = y), aes(x = x, y = y))
+# gg <- gg + geom_line()
+# gg <- gg + geom_vline(xintercept = hCoef)
 #---------------------------------------------------------------------
-# EyStarUpMu <- (mean(y0) * mean(kRn^kappaRn))^(etaCoef / hCoef) * (EPT02007 / hCoef)^etaCoef * exp(sErr^2 / 2)^(etaCoef / hCoef)
-# mEyStarTrunc <- mean(log(EyStar))
-# sEyStarTrunc <- sd(log(EyStar))
-# muEyStarTrunc <- exp(mEyStarTrunc + sEyStarTrunc^2 / 2)
-# xIn <- c(sEyStarTrunc, mEyStarTrunc)
-# sol <- nleqslv::nleqslv(xIn, rootFnUp, jac = NULL,
-#                         xUp = EyStarUpMu,
-#                         sXtrunc = sEyStarTrunc,
-#                         mXtrunc = mEyStarTrunc)
-# sol
-# sEyStar <- sol$x[1]
-# mEyStar <- sol$x[2]
-# muEyStarT0 <- exp(mEyStar + sEyStar^2 / 2)
-# #---
-# df_plot <- data.frame(EyStar, EyStarUp) %>% gather(var, val, EyStar:EyStarUp)
-# gg <- ggplot(df_plot, aes(x = val, color = var))
-# gg <- gg + geom_histogram(fill = "white")#, bins = 12)
-# gg <- gg + geom_vline(xintercept = EyStarUpMu)
-# gg
+mean(const)^(etaCoef / hCoef) * mean(kRn^kappaRn)^(etaCoef / hCoef)
+mean(kRn^kappaRn)^(etaCoef / hCoef) - (mean(kRn)^kappaRn)^(etaCoef / hCoef)
+mean(kRn^kappaRn)^(etaCoef / hCoef) - mean(kRn^(kappaRn * etaCoef / hCoef))
+#muConst <- mean((const * kRn^kappaRn)^(etaCoef / hCoef))
+muConst <- mean((const)^(etaCoef / hCoef)) # * mean(kRn)^(kappaRn * etaCoef / hCoef)
+muEyStarT0 <- muConst * muEcSharpT0eta * hCoef^-etaCoef
+muEyStarT0trunc <- mean(EyStar2 * kRn^-kappaRn)
 #----------------------------------------------------------------------
 # cStarMuUp <- EyStarUpMu * EPT02007
 # mCstarTrunc <- mean(log(cStar))
@@ -1404,29 +1396,40 @@ muArea <- exp(mArea + sArea^2 / 2)
 ```{r Fig5, fig.show = "hold", fig.width = 5, fig.height=5, fig.align="center", fig.cap="\\label{fig:Qs} uyiijl", echo = FALSE}
 
 # Define supply curve/price elasticity of supply/price risk elasticity of supply function
-QsFun <- function(EPT0vec, muKrn, kappaRn, muArea, muConst,
-                  h, mLam, sLam,
+QsFun <- function(muEyStarT0, EPT0, fracVec, h, kappaRn, muArea,
                   muEcSharpT0, mP, sP, th, Nf){
-  eta <- h / (1 - h)
-  muEtaLamInv <- exp(-eta * mLam + eta^2 * sLam^2 / 2)
-  muEyStarT0 <- (muConst)^(eta / h) * muKrn^kappaRn *  EPT0vec^eta
-  muEqStarT0 <- muArea * muEyStarT0
-      # muEqStarT0 <- g0^(eta / hCoef) * muEtahBetaQs * muEtaLamInv * EPT0vec^eta
+    eta <- h / (1 - h)
+    muKrnKapEtaH_up <- mean(2^(kappaRn * eta / h))
+    muKrnKapEtaH_lo <- mean((1 / 2)^(kappaRn * eta / h))
+
+  EPT0vec <- fracVec * EPT0
+  muEyStarT0vec <- muEyStarT0 * fracVec^eta
+  muEyStarT0upVec <- muEyStarT0vec * muKrnKapEtaH_up
+  muEyStarT0loVec <- muEyStarT0vec * muKrnKapEtaH_lo
+  muEqStarT0vec <- muArea * muEyStarT0vec
+  muEqStarT0upVec <- muArea * muEyStarT0upVec
+  muEqStarT0loVec <- muArea * muEyStarT0loVec
   P0vec <- EPT0vec * exp(-mP * th)
   z <- (eta * log(muEcSharpT0 / P0vec) - (eta * mP - eta^2 * sP^2 / 2) * th) / (eta * sP * sqrt(th))
-  Qs <- Nf * muEqStarT0 * (1 - pnorm(z)) #in kg
-  Qs <- Qs / 1000 #in MT
-  Qs <- Qs * 10^-6 #in million MT
+  EQs <- Nf * muEqStarT0vec * (1 - pnorm(z)) #in kg
+  EQsUp <- Nf * muEqStarT0upVec * (1 - pnorm(z)) #in kg
+  EQsLo <- Nf * muEqStarT0loVec * (1 - pnorm(z)) #in kg
+  EQs <- EQs * 10^-9 #in million MT
+  EQsUp <- EQsUp * 10^-9 #in million MT
+  EQsLo <- EQsLo * 10^-9
   #------------
   etaAg <- eta + dnorm(-z) / pnorm(-z) * 1 / (sP * sqrt(th))
   #------------
   etaRisk <- -dnorm(-z) / pnorm(-z) * (eta * sP * sqrt(th) - z)
   #------------
-  dfQs <- data.frame(EPT0 = EPT0vec, Qs,
+  dfQs <- data.frame(EPT0 = EPT0vec, 100 * fracVec,
+                     EQs, EQsUp, EQsLo,
                      etaAg, etaRisk,
                      probPgtC = pnorm(-z))
-  colnames(dfQs) <- c("Expected price (KES/kg)",
-                      "Supply\n(million metric tons)",
+  colnames(dfQs) <- c("Expected price (KES/kg)", "Pct. of E[P(T)]",
+                      "Expected supply, normal rainfall\n(million metric tons)",
+                      "Expected supply, high rainfall\n(million metric tons)",
+                      "Expected supply, low rainfall\n(million metric tons)",
                       "Price elasticity\nof supply",
                       "Price risk elasticity\nof supply",
                       "Participation (%)")
@@ -1460,37 +1463,50 @@ prodFAO2009 <- dfFAO$Value[which(dfFAO$Year == 2009 & dfFAO$Element == "Producti
 # muBetaRnEtaH <- exp(etaCoef / hCoef * mBetaRn + (etaCoef / hCoef)^2 * sBetaRn^2 / 2)
 #----------------------------------------------------------------------
 # Ex-post calibration number of farms Nf
-dfQs2007 <- QsFun(EPT02007, muKrn = 1, kappaRn, muArea,
-                  muConst = mean(const),
-                  h = hCoef, mLam, sLam,
-                  muEcSharpT0, mP = mP2006, sP = sP2006,
-                  th, Nf = 1)
-# dfQs2007 <- QsFun(EPT02007, muArea, g0, h = hCoef,
-#                   muBetaRnEtaH, muBetaKetaH,
-#                   muEtaLamInv, muEcSharpT0,
-#                   mP = mP2006, sP = sP2006,
-#                   th, Nf = 1)
-Qs2007 <- dfQs2007$`Supply\n(million metric tons)`
-Nf <- prodFAO2007 * 10^-6 / Qs2007
+dfQs2007 <- QsFun(muEyStarT0,
+                  EPT0 = EPT02007, fracVec = 1,
+                  h = hCoef, kappaRn, muArea,
+                  muEcSharpT0 = muEcSharpT02007,
+                  mP = mP2006, sP = sP2006, th, Nf = 1)
+Qs2007 <- dfQs2007$`Expected supply, normal rainfall\n(million metric tons)`
+Nf <- prodFAO2007 * mean(kRn^(-kappaRn * etaCoef / hCoef)) * 10^-6 / Qs2007
 #Nf <- 1.7 * 10^6
-# eta2007 <- dfQs2007$`Price elasticity\nof supply`
-# pctDif2007 <- 100 * (10^6 * Qs2007 / prodFAO2007 - 1)
 #----------------------------------------------------------------------
 # Now have everything needed to parameterize 2009 expected aggregate supply curve (FPMA price info required for 2008 curve unavailable)
-EPT0vec <- seq(1, 40, length.out = 60)
-dfQs2009 <- QsFun(EPT0vec, muKrn = 1, kappaRn, muArea,
-                  muConst = mean(const),
-                  h = hCoef, mLam, sLam,
-                  muEcSharpT0, mP = mP2008, sP = sP2008,
-                  th, Nf)
-# dfQs2009 <- QsFun(EPT0vec, muArea, g0, h = hCoef,
-#                   muBetaRnAnomEtaH, muBetaKetaH,
-#                   muEtaLamInv,
-#               muEcSharpT0,
-#               mP = mP2008, sP = sP2008,
-#               th, Nf)
-#----------------------------------------------------------------------
-#df_plot <- dfQs %>% gather(var, val, Qs:PelastQs)
+fracVec <- seq(0.01, 3, length.out = 50)
+dfQs <- QsFun(muEyStarT0,
+                  EPT0 = EPT02007, fracVec,
+                  h = hCoef, kappaRn, muArea,
+                  muEcSharpT0 = muEcSharpT0,
+                  mP = mP2006, sP = sP2006, th, Nf)
+#---------------------------------------------------------------------
+gg <- ggplot(dfQs)
+gg <- gg + geom_ribbon(aes(x = `Expected price (KES/kg)`,
+                  ymin = `Expected supply, low rainfall\n(million metric tons)`,
+                   ymax = `Expected supply, high rainfall\n(million metric tons)`),
+                   fill='blue',alpha=0.2)
+df_line <- dfQs[, c("Expected price (KES/kg)", "Expected supply, low rainfall\n(million metric tons)", "Expected supply, high rainfall\n(million metric tons)",
+                    "Expected supply, normal rainfall\n(million metric tons)")]
+colnames(df_line)[2:4] <- c("Low rainfall", "High rainfall", "Normal rainfall")
+df_line <- df_line %>% gather(var, `Expected supply\n(million metric tons)`, `Low rainfall`:`Normal rainfall`)
+gg <- gg + geom_line(data = df_line, aes(x = `Expected price (KES/kg)`, y = `Expected supply\n(million metric tons)`, group = var, color = var))
+gg <- gg + scale_color_manual(values = c("green", "red", "black"))
+gg <- gg + geom_vline(xintercept = EPT02009)
+gg <- gg + theme_bw()
+gg <- gg + theme(axis.title.x = element_blank(),
+                 legend.title = element_blank(),
+                 legend.text = element_text(size = legendTextSize),
+                 legend.position = "top")
+ggQs <- gg
+
+
+p1 = ggplot(df) +
+ +
+   geom_line(aes(x=Year,
+                 y=Tmean),
+                 color='blue')
+
+
 df_plot <- dfQs2009
 gg <- ggplot(df_plot, aes(x = `Expected price (KES/kg)`, y = `Supply\n(million metric tons)`))
 gg <- gg + geom_line()
