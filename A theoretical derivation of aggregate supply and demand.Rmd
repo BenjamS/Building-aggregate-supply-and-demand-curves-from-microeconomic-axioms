@@ -928,8 +928,9 @@ df_mod2 <- df_mod[, c(mod2Vars, "P")]
 # Get cStar and area before transforming
 cStar <- exp(df_mod2$Cstar)
 muCstarSamp <- mean(cStar)
-mArea <- mean(df_mod2$acres)
-sArea <- sd(df_mod2$acres)
+lAcres <- df_mod2$acres
+mArea <- mean(lAcres)
+sArea <- sd(lAcres)
 muArea <- exp(mArea + sArea^2 / 2)
 #---------------------------------------------------------------------
 theseCols <- c("Cstar", "acres", "seed (kg/acre)", demog_vars)
@@ -1279,17 +1280,8 @@ EyStar0 <- exp(mod2$fitted.values - kappaRn * lkRn + sErr^2 / 2)
 #EyStar1 - EyStar0
 EcSharp <- cStar / EyStar0
 #---
-# test
-# tfp * muBetaK - y0
-# EyStar - exp(mod2$fitted.values + sErr^2 / 2)
-# EyStar - EyStar2
-#---
-# EyStarUp <- (y0 * betaKnormdAdj * kRn^kappaRn)^(etaCoef / hCoef) * EPT02007^etaCoef * exp(sErr^2 / 2)^(etaCoef / hCoef)
-# EyStarUp <- (y0 * betaKnormdAdj * kRn^kappaRn)^(etaCoef / hCoef) * df_mod2$P^etaCoef * exp(sErr^2 / 2)^(etaCoef / hCoef)
-
-# ERstar <- EyStar * EPT02007
 lam <- EPT02007 / EcSharp * hCoef
-# lam <- df_mod2$P / EcSharp * hCoef
+#lam <- exp(-mP2006) * df_mod2$P / EcSharp * hCoef
 # EyStarUp2 <- y0 * betaKnormdAdj * kRn^kappaRn * ERstar^hCoef * exp(sErr^2 / 2)
 # EyStarUp - EyStarUp2
 #----------------------------------------------------------------------
@@ -1298,11 +1290,6 @@ nRational <- sum(lam > hCoef) / length(lam)
 # sum(EcSharp < df_mod2$P) / length(EcSharp)
 # sum(EcSharp < EPT02007) / length(EcSharp)
 # sum(EyStar < EyStarUp) / length(EyStar)
-#----------------------------------------------------------------------
-EyStar2 <- (const * kRn^kappaRn)^(etaCoef / hCoef) * (EcSharp / hCoef)^etaCoef
-#EyStar1 - EyStar2
-EyStar3 <- (const * kRn^kappaRn)^(etaCoef / hCoef) * (EPT02007 / lam)^etaCoef
-#EyStar1 - EyStar3
 #----------------------------------------------------------------------
 mEcSharpTrunc <- mean(log(EcSharp))
 sEcSharpTrunc <- sd(log(EcSharp))
@@ -1340,26 +1327,30 @@ muLamEtaInv <- exp(-etaCoef * mLam + etaCoef^2 * sLam^2 / 2)
 # gg <- gg + geom_line()
 # gg <- gg + geom_vline(xintercept = hCoef)
 #---------------------------------------------------------------------
-mean(const)^(etaCoef / hCoef) * mean(kRn^kappaRn)^(etaCoef / hCoef)
-mean(kRn^kappaRn)^(etaCoef / hCoef) - (mean(kRn)^kappaRn)^(etaCoef / hCoef)
-mean(kRn^kappaRn)^(etaCoef / hCoef) - mean(kRn^(kappaRn * etaCoef / hCoef))
-#muConst <- mean((const * kRn^kappaRn)^(etaCoef / hCoef))
+# mean(const)^(etaCoef / hCoef) * mean(kRn^kappaRn)^(etaCoef / hCoef)
+# mean(kRn^kappaRn)^(etaCoef / hCoef) - (mean(kRn)^kappaRn)^(etaCoef / hCoef)
+# mean(kRn^kappaRn)^(etaCoef / hCoef) - mean(kRn^(kappaRn * etaCoef / hCoef))
+# #muConst <- mean((const * kRn^kappaRn)^(etaCoef / hCoef))
 muConst <- mean((const)^(etaCoef / hCoef)) # * mean(kRn)^(kappaRn * etaCoef / hCoef)
+muEcSharpT0eta <- exp(etaCoef * mEcSharp + etaCoef^2 * sEcSharp^2 / 2)
 muEyStarT0 <- muConst * muEcSharpT0eta * hCoef^-etaCoef
-muEyStarT0trunc <- mean(EyStar2 * kRn^-kappaRn)
+muEyStarT0trunc <- mean(EyStar0 * kRn^-kappaRn)
 
 ```
+
+`r nRational`
+
 
 ```{r Fig5, fig.show = "hold", fig.width = 5, fig.height=5, fig.align="center", fig.cap="\\label{fig:Qs} uyiijl", echo = FALSE}
 
 # Define supply curve/price elasticity of supply/price risk elasticity of supply function
-QsFun <- function(muEyStarT0, EPT0, fracVec, h, kappaRn, muArea,
-                  muEcSharpT0, mP, sP, th, Nf){
+QsFun <- function(muEyStarT0, EPT0ref, fracVec, h, kappaRn, muArea,
+                  muEcSharpT0, mP, sP, th, Nf, kRn = 1){
     eta <- h / (1 - h)
-    muKrnKapEtaH_up <- mean(2^(kappaRn * eta / h))
-    muKrnKapEtaH_lo <- mean((1 / 2)^(kappaRn * eta / h))
+    muKrnKapEtaH_up <- mean((kRn * 2)^(kappaRn * eta / h))
+    muKrnKapEtaH_lo <- mean((kRn * 1 / 2)^(kappaRn * eta / h))
 
-  EPT0vec <- fracVec * EPT0
+  EPT0vec <- fracVec * EPT0ref
   muEyStarT0vec <- muEyStarT0 * fracVec^eta
   muEyStarT0upVec <- muEyStarT0vec * muKrnKapEtaH_up
   muEyStarT0loVec <- muEyStarT0vec * muKrnKapEtaH_lo
@@ -1411,6 +1402,22 @@ prodFAO2009 <- dfFAO$Value[which(dfFAO$Year == 2009 & dfFAO$Element == "Producti
 # prodFAO2007 <- 2928793
 # prodFAO2008 <- 2367237
 #----------------------------------------------------------------------
+# lA <- quantile(df_mod2$acres, 0.01 * c(1:100))
+# prob <- 0.01 * as.numeric(gsub("%", "", names(lA)))
+# dfArea <- data.frame(lA, prob)
+# #ggplot(dfArea, aes(x = lA, prob)) + geom_line()
+# modArea <- glm(prob ~ lA, dfArea, family = "binomial")
+# #summary(modArea)
+# b0 <- modArea$coefficients[1]
+# bA <- modArea$coefficients[2]
+# probHat <- 1 / (1 + exp(-b0 - bA * lA))
+# err <- probHat - prob
+# #plot(probHat, err)
+# dfArea$probHat <- probHat
+# dfArea$probHat2 <- pnorm(lA, mean(lAcres), sd(lAcres))
+# dfArea <- dfArea %>% gather(var, val, prob:probHat2)
+# ggplot(dfArea, aes(x = lA, y = val, group = var, color = var)) + geom_line()
+#----------------------------------------------------------------------
 # mRnAnom <- mean(log(kRn))
 # sRnAnom <- sd(log(kRn))
 # muRnAnom <- exp(mRnAnom + sRnAnom^2 / 2)
@@ -1419,24 +1426,25 @@ prodFAO2009 <- dfFAO$Value[which(dfFAO$Year == 2009 & dfFAO$Element == "Producti
 # sBetaRn <- sd(log(betaRn))
 # muBetaRnEtaH <- exp(etaCoef / hCoef * mBetaRn + (etaCoef / hCoef)^2 * sBetaRn^2 / 2)
 #----------------------------------------------------------------------
-# Ex-post calibration number of farms Nf
-dfQs2007 <- QsFun(muEyStarT0,
-                  EPT0 = EPT02007, fracVec = 1,
-                  h = hCoef, kappaRn, muArea,
-                  muEcSharpT0 = muEcSharpT02007,
-                  mP = mP2006, sP = sP2006, th, Nf = 1)
-Qs2007 <- dfQs2007$`Expected supply, normal rainfall\n(million metric tons)`
-Nf <- prodFAO2007 * mean(kRn^(-kappaRn * etaCoef / hCoef)) * 10^-6 / Qs2007
-#Nf <- 1.7 * 10^6
+# # Ex-post calibration number of farms Nf
+# dfQs2007 <- QsFun(muEyStarT0,
+#                   EPT0 = EPT02007, fracVec = 1,
+#                   h = hCoef, kappaRn, muArea,
+#                   muEcSharpT0 = muEcSharpT0,
+#                   mP = mP2006, sP = sP2006, th, Nf = 1)
+# Qs2007 <- dfQs2007$`Expected supply, normal rainfall\n(million metric tons)`
+# Nf <- prodFAO2007 * mean(kRn^(-kappaRn * etaCoef / hCoef)) * 10^-6 / Qs2007
+# #Nf <- 1.7 * 10^6
 #----------------------------------------------------------------------
-# Now have everything needed to parameterize 2009 expected aggregate supply curve (FPMA price info required for 2008 curve unavailable)
-fracVec <- seq(0.01, 3, length.out = 50)
-dfQs <- QsFun(muEyStarT0 = muEyStarT0 * (EPT02009 / EPT02007)^hCoef,
-                  EPT0 = EPT02007, fracVec,
+# 2007 aggregate supply curve
+fracVec <- seq(0.01, 2, length.out = 50)
+#dfQs <- QsFun(muEyStarT0 = muEyStarT0 * (EPT02009 / EPT02007)^hCoef,
+Nf = 1.7 * 10^6
+dfQs <- QsFun(muEyStarT0 = muEyStarT0,
+                  EPT0ref = EPT02007, fracVec,
                   h = hCoef, kappaRn, muArea,
                   muEcSharpT0 = muEcSharpT0,
-                  #mP = mP2008, sP = sP2008,
-              mP = mean(mVec), sP = mean(sVec),
+                  mP = mP2006, sP = sP2006,
               th, Nf)
 #---------------------------------------------------------------------
 gg <- ggplot(dfQs)
@@ -1450,47 +1458,31 @@ colnames(df_line)[2:4] <- c("Low rainfall", "High rainfall", "Normal rainfall")
 df_line <- df_line %>% gather(var, `Expected supply\n(million metric tons)`, `Low rainfall`:`Normal rainfall`)
 gg <- gg + geom_line(data = df_line, aes(x = `Expected price (KES/kg)`, y = `Expected supply\n(million metric tons)`, group = var, color = var))
 gg <- gg + scale_color_manual(values = c("green", "red", "black"))
-gg <- gg + geom_vline(xintercept = EPT02009)
+gg <- gg + geom_vline(xintercept = EPT02007)
 gg <- gg + theme_bw()
 gg <- gg + theme(axis.title.x = element_text(size = axisTextSize),
                  legend.title = element_blank(),
                  legend.text = element_text(size = legendTextSize),
                  legend.position = "top")
 ggQs <- gg
-
-
-p1 = ggplot(df) +
- +
-   geom_line(aes(x=Year,
-                 y=Tmean),
-                 color='blue')
-
-
-df_plot <- dfQs2009
-gg <- ggplot(df_plot, aes(x = `Expected price (KES/kg)`, y = `Supply\n(million metric tons)`))
-gg <- gg + geom_line()
-gg <- gg + geom_vline(xintercept = EPT02009)
-gg <- gg + theme_bw()
-gg <- gg + theme(axis.title.x = element_blank())
-ggQs <- gg
 #---
-gg <- ggplot(df_plot, aes(x = `Expected price (KES/kg)`, y = `Price elasticity\nof supply`))
+gg <- ggplot(dfQs, aes(x = `Expected price (KES/kg)`, y = `Price elasticity\nof supply`))
 gg <- gg + geom_line()
 gg <- gg + theme_bw()
 ggElast <- gg
-df_inset <- subset(df_plot, `Expected price (KES/kg)` > 6.5 & `Expected price (KES/kg)` < 11)
+df_inset <- subset(dfQs, `Expected price (KES/kg)` > 7 & `Expected price (KES/kg)` < 11)
 gg <- ggplot(df_inset, aes(x = `Expected price (KES/kg)`, y = `Price elasticity\nof supply`))
 gg <- gg + geom_line()
 gg <- gg + geom_hline(yintercept = 1, linetype = "dashed", color = "red")
-gg <- gg + geom_vline(xintercept = EPT02009)
+gg <- gg + geom_vline(xintercept = EPT02007)
 gg <- gg + theme_bw()
 gg <- gg + theme(axis.title = element_blank())
 ggElastInset <- gg
 ggPelastQs <- ggElast + annotation_custom(ggplotGrob(ggElastInset),
-                            xmin = 11, xmax = 20, 
-                            ymin = 3, ymax = 10.5)
+                            xmin = 6, xmax = 20, 
+                            ymin = 20, ymax = 70)
 #----------
-gg <- ggplot(df_plot, aes(x = `Expected price (KES/kg)`, y = `Participation (%)`))
+gg <- ggplot(dfQs, aes(x = `Expected price (KES/kg)`, y = `Participation (%)`))
 gg <- gg + geom_line()
 # gg <- gg + labs(y = expression(paste("Prob(", P(T)^eta, "> E[", C^[0](T), "]", ")")))
 gg <- gg + theme_bw()
@@ -1498,16 +1490,28 @@ gg <- gg + theme(axis.title.x = element_blank())
 ggProb <- gg
 #----------
 ggQs + ggProb + ggPelastQs + plot_layout(ncol = 1, heights = c(1, 1/4, 1))
+#----------------------------------------------------------------------
+# Expected aggregate supply maps
+fracVec <- seq(0.75, 1.2, length.out = 50)
+n <- length(fracVec)
+kRnVec <- seq(1 / 5, 3, length.out = n)
+list_df <- list()
+for(i in 1:n){
+  thisKrn <- kRnVec[i]
+  dfQs <- QsFun(muEyStarT0, EPT0ref = EPT02007,
+                fracVec, h = hCoef, kappaRn, muArea,
+                muEcSharpT0, mP = mP2006, sP = sP2006,
+                th, Nf, kRn = thisKrn)
+  dfQs$`Rainfall anomaly` <- thisKrn
+  list_df[[i]] <- dfQs
+}
 
-# Quick (and dirty) point estimate for 2007 gives value close to FAO
-# (Dirty because muEQstar mECsharp estimated based on post hoc data, not expected values, and on truncated pop.)
-# mECsharpT0 <- mean(df_mod$Cstar - df_mod$`yield (kg/acre)`)
-# sECsharpT0 <- sd(df_mod$Cstar - df_mod$`yield (kg/acre)`)
-# muECsharpT0 <- exp(mECsharpT0 + sECsharpT0^2 / 2)
-# mEQstarT0 <- mean(df_mod$`yield (kg/acre)` + df_mod$acres)
-# sEQstarT0 <- sd(df_mod$`yield (kg/acre)` + df_mod$acres)
-# muEQstarT0 <- exp(mEQstarT0 + sEQstarT0^2 / 2)
-#---------
+dfMap <- as.data.frame(do.call(rbind, list_df))
+colnames(dfMap)[3] <- "Expected supply\n(million metric tons)"
+gg <- ggplot(dfMap, aes(x = `Expected price (KES/kg)`,
+                        y = `Rainfall anomaly`, fill = `Participation (%)`))
+gg <- gg + geom_tile()
+gg
 
 
 ```
