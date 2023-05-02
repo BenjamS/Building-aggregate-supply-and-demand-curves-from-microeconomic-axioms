@@ -149,7 +149,7 @@ Finally, the parameterization of such forms tends to be highly abstract, with no
 
 # Methodology
 
-## Derivation of the farm production function from Axioms 1 and 2
+## Derivation of the farm production function from Axioms 1 and 2 \label{sec:ax12}
 
 Throughout much of written history, astute observers have noticed that the usefulness of increments in the quantity of a good is inversely proportional to amount of the input or good or service already acquired [@kauder1953genesis]. In 1738, Daniel Bernoulli put it this way:
 <!-- an input (in the case of producer yield functions) or good or service (in the case of consumer utility functions) -->
@@ -583,9 +583,9 @@ gg <- gg + scale_x_date(breaks = scales::breaks_pretty(n = 8), labels = date_for
 # gg <- gg + scale_x_date(breaks = "4 months", labels = date_format("%m-%Y"))
 #gg <- gg + scale_x_date(date_breaks = "4 month", date_labels =  "%b %Y")
 gg <- gg + facet_wrap(~factor(Place,
-                      levels = c("Chicago, USA\n2018 growing season (daily)\nUSD / bushel",
-                                 "Johannesburg, RSA\n2018 growing season (daily)\nZAR / kg.",
-                                 "Eldoret, Kenya\n2008-2019 (monthly)\nKES / kg.")),
+                              levels = c("Chicago, USA\n2018 growing season (daily)\nUSD / bushel",
+                                         "Johannesburg, RSA\n2018 growing season (daily)\nZAR / kg.",
+                                         "Eldoret, Kenya\n2008-2019 (monthly)\nKES / kg.")),
                       ncol = 1, scales = "free", strip.position = "left")
 gg <- gg + labs(title = "Maize price series exhibiting geometric Brownian motion")
 gg <- gg + theme_bw()
@@ -602,9 +602,9 @@ df_hist <- df_ts
 gg <- ggplot(df_hist, aes(x = `Log change`))
 gg <- gg + geom_histogram(color = 4, fill = "white", bins = 20)
 gg <- gg + facet_wrap(~factor(Place,
-                      levels = c("Chicago, USA\n2018 growing season (daily)\nUSD / bushel",
-                                 "Johannesburg, RSA\n2018 growing season (daily)\nZAR / kg.",
-                                 "Eldoret, Kenya\n2008-2019 (monthly)\nKES / kg.")), ncol = 1, scales = "free")
+                              levels = c("Chicago, USA\n2018 growing season (daily)\nUSD / bushel",
+                                         "Johannesburg, RSA\n2018 growing season (daily)\nZAR / kg.",
+                                         "Eldoret, Kenya\n2008-2019 (monthly)\nKES / kg.")), ncol = 1, scales = "free")
 gg <- gg + labs(title = "Log change")
 gg <- gg + theme_bw()
 gg <- gg + theme(axis.title = element_blank(),
@@ -780,20 +780,27 @@ Note that elasticity is inversely proportionate to the price risk ($s_p \sqrt{T}
 
 ## Data, specification, estimation
 
-...summary statistics...
+Below, an aggregate supply curve is parameterized based on Kenya farm data for the 2007 main cropping season [@maizeData]. Summary statistics can be found in the Appendix.
 
-...management and control variables, child family labor, farm size, input and output prices vary considerably...
+The yield model is specified as a function of cost ($C^*$) and control variables ($k_i$), and no management variables, in accordance with Equation \ref{eq:yStarC}. The cost variable (cost per acre) covers the cost of inputs and land preparation. The control variables are farm size (acres), seed quantity per acre, child family labor (person-hours/acre) during planting, adult-equivalent household size (aehh07), and the rainfall anomaly (2007 main season rainfall divided by the historical average). Except for rainfall anomaly, all of these variables are known to the farmer ex-ante, i.e. at planting time. As discussed in section \ref{sec:ax12}, the ex-ante control variables are divided by their respective sample means $\tilde{k}_i$ in order to facilitate interpretation of the constant $g_0 = e^{\alpha_0}$. That is to say, the constant $g_0$ is replaced by a new constant $y_0 = g_0 \prod_i \tilde{k}_i$, such that $y_0$ may be interpreted as yield evaluated at the control variable sample means, and at the historical average rainfall (i.e. at a rainfall anomaly of $1$). Henceforth this yield is referred to as the "sample average yield".
 
-...binary variables---landprep, hybrid maize,...
+In addition the continuous control variables, four binary control variables are included in the model, covering endowments in terms of land tenure, adoption of hybrid maize seed, and land preparation technique (oxen, tractor, or none). These take a value of $e$ in the affirmative case and $1$ otherwise, such that the coefficients on the binary terms are added to the intercept term $\alpha_0$ on farms that have the endowment, and disappear from the equation on farms that do not have the endowment. The sample average yield is thus not limited to the base case of $y_0$, but varies across farms depending on binary endowments. The base case represents the sample average yield on farms with none of the binary endowments, i.e. farms without land tenure, which do not use hybrid seed, and which use neither oxen nor tractors for land preparation.
 
-It is important to keep in mind that, while $y_0$ (and $g_0$) are constant, the mean yield (and TFP) vary across farms if there are binary management and/or control variables among the $x_i$ and $k_i$. For example, say the model includes a binary technology adoption variable $x_{adopt}$ that takes the value of $x_{adopt} = e$ on adopting farms and $x_{adopt} = 1$ on non-adopting farms. Then the fitted coefficient $\alpha_{adopt}$ is effectively added to the constant $\alpha_0$ on adopting farms, thus altering its ... while the on non-adopting farms is left unaltered.
+Letting the notation $\tilde{y}$ refer more generally to sample average yields that may or may not include one or more of these endowments, in addition to the base endowment, Equation \ref{eq:yStarC} implies
 
-The variable is included only if it is used. variables that equal 0 are removed from the model. this is tantamount to setting them equal to 1.
+\begin{equation}
+\tilde{y} = \frac{\beta_{\alpha}}{\beta_w} h^h
+\end{equation}
 
-...the two models, Cstar consists of...
+The input variable elasticities $\alpha_i$ and input prices $w_i$ are thus implicit in the constant $\tilde{y}$, without requiring detailed information about either.
 
-graphics: lognormally distributed (truncated) production
-appendix graphics: input use, family labor, sumstats table
+Models including farmer age, education, gender, maximum and minimum temperature, other types of family labor, and distance to market variables were also explored. But the coefficients on these variables were either statistically insignificant, introduced multicollinearity issues, or introduced missing data issues.
+
+The coefficients and intercept of the logged model are estimated via OLS and presented in Table 1. Because the model is estimated in logs, the coefficients on the continuous variables may be interpreted as the control variable elasticities ($\kappa_i$). Note that the coefficient on acres is negative, affirming the inverse relation between farm size and yield found in numerous other studies [@muyanga2019revisiting; @larson2014should; @wassie2019revisiting; @gautam2019too; @kimhi2006plot]. The coefficient on child family labor during planting is also negative, confirming that this variable is better thought of as a hard constraint rather than a discretionary management variable. There are 14 unique sample average yields in the present sample, summarized in Table 2.
+
+By Equation \ref{eq:yStarC}, the coefficient of `r round(hCoef, 3)` on cost/acre can be interpreted as the yield degree of homogeneity $h$. By Equation \ref{eq:PelastYstar}, the farm level price elasticity of supply then follows as `r round(etaCoef, 3)`.
+
+<!-- appendix graphics: input use, family labor, sumstats table -->
 
 ```{r Fig3, fig.show = "hold", fig.width = 5, fig.height=5, fig.align="center", fig.cap="\\label{fig:lognormalYd}", echo = FALSE}
 
@@ -804,77 +811,78 @@ df_mod <- read.csv(thisFilepath, stringsAsFactors = F)
 colnames(df_mod) <- df_mod[nrow(df_mod), ]
 df_mod <- df_mod[-nrow(df_mod), ]
 df_mod[, -1] <- as.data.frame(apply(df_mod[, -1], 2, as.numeric))
+colnames(df_mod)[which(colnames(df_mod) == "Cstar")] <- "cost/acre"
 #=======================================================================
 input_vars <- c(#"Total fam lab child (pers-hrs/acre)",
-                #"Total fam lab (pers-hrs/acre)",
-                #"Total fam lab adult (pers-hrs/acre)",
-                #"Total wage labor (pers-hrs/acre)",
-              #"1st weeding fam lab child (pers-hrs/acre)",
-               #"2nd weeding fam lab fem (pers-hrs/acre)",
-               #"2nd weeding fam lab adult (pers-hrs/acre)",
-              #"1st weeding fam lab fem (pers-hrs/acre)",
-              #"1st weeding fam lab adult (pers-hrs/acre)",
-              #"1st weeding fam lab male (pers-hrs/acre)", *
-                #"1st weeding wage labor (pers-hrs/acre)",
-                #"2nd weeding wage labor (pers-hrs/acre)",
-               # "1st ploughing fam lab child (pers-hrs/acre)",
-              #"1st ploughing fam lab adult (pers-hrs/acre)",
-               # "1st ploughing fam lab fem (pers-hrs/acre)",
-               #"1st ploughing fam lab male (pers-hrs/acre)",
-                #"1st ploughing wage labor (pers-hrs/acre)",
-              #"shelling fam lab adult (pers-hrs/acre)",
-              #"shelling fam lab fem (pers-hrs/acre)",
-                #"shelling fam lab male (pers-hrs/acre)",
-              #"shelling fam lab child (pers-hrs/acre)",
-              # "shelling wage labor (pers-hrs/acre)",
-              #"harvesting fam lab male (pers-hrs/acre)", #**
-              #"harvesting fam lab adult (pers-hrs/acre)", *
-              #"harvesting fam lab fem (pers-hrs/acre)",
-            #"harvesting fam lab child (pers-hrs/acre)",
-              #"harvesting wage labor (pers-hrs/acre)",
-            #  "planting fam lab adult (pers-hrs/acre)",
-               # "planting fam lab fem (pers-hrs/acre)",
-                #"planting fam lab male (pers-hrs/acre)",
-              "planting fam lab child (pers-hrs/acre)",
-               #"planting wage labor (pers-hrs/acre)",
-                #"Total synth. fert. (kg/acre)",
-                "seed (kg/acre)",
-              "Total CAN fert (kg/acre)",      
-              "Total NPK fert (kg/acre)",  
-              "Total UREA fert (kg/acre)",
-              "dap (kg/acre)",
-                #"UREA (46:0:0) (kg/acre)",
-                #"CAN (26:0:0) (kg/acre)",
-                # "NPK (23:23:23) (kg/acre)",
-                # "NPK (23:23:0) (kg/acre)",
-              #"NPK (17:17:0) (kg/acre)",
-               #"manure (kg/acre)",
-              #"compost (kg/acre)",
-              #"mavuno-basal (kg/acre)",
-              #"foliar feed (kg/acre)",
-               # "Fungicide qty (kg/acre)",
-               # "Herbicide qty (kg/acre)",
-               # "Insecticide qty (kg/acre)",
-               # "Pesticide qty (kg/acre)"
-              "Total P&D chem (kg/acre)"
-              )
+  #"Total fam lab (pers-hrs/acre)",
+  #"Total fam lab adult (pers-hrs/acre)",
+  #"Total wage labor (pers-hrs/acre)",
+  #"1st weeding fam lab child (pers-hrs/acre)",
+  #"2nd weeding fam lab fem (pers-hrs/acre)",
+  #"2nd weeding fam lab adult (pers-hrs/acre)",
+  #"1st weeding fam lab fem (pers-hrs/acre)",
+  #"1st weeding fam lab adult (pers-hrs/acre)",
+  #"1st weeding fam lab male (pers-hrs/acre)", *
+  #"1st weeding wage labor (pers-hrs/acre)",
+  #"2nd weeding wage labor (pers-hrs/acre)",
+  # "1st ploughing fam lab child (pers-hrs/acre)",
+  #"1st ploughing fam lab adult (pers-hrs/acre)",
+  # "1st ploughing fam lab fem (pers-hrs/acre)",
+  #"1st ploughing fam lab male (pers-hrs/acre)",
+  #"1st ploughing wage labor (pers-hrs/acre)",
+  #"shelling fam lab adult (pers-hrs/acre)",
+  #"shelling fam lab fem (pers-hrs/acre)",
+  #"shelling fam lab male (pers-hrs/acre)",
+  #"shelling fam lab child (pers-hrs/acre)",
+  # "shelling wage labor (pers-hrs/acre)",
+  #"harvesting fam lab male (pers-hrs/acre)", #**
+  #"harvesting fam lab adult (pers-hrs/acre)", *
+  #"harvesting fam lab fem (pers-hrs/acre)",
+  #"harvesting fam lab child (pers-hrs/acre)",
+  #"harvesting wage labor (pers-hrs/acre)",
+  #  "planting fam lab adult (pers-hrs/acre)",
+  # "planting fam lab fem (pers-hrs/acre)",
+  #"planting fam lab male (pers-hrs/acre)",
+  "planting fam lab child (pers-hrs/acre)",
+  #"planting wage labor (pers-hrs/acre)",
+  #"Total synth. fert. (kg/acre)",
+  "seed (kg/acre)",
+  "Total CAN fert (kg/acre)",      
+  "Total NPK fert (kg/acre)",  
+  "Total UREA fert (kg/acre)",
+  "dap (kg/acre)",
+  #"UREA (46:0:0) (kg/acre)",
+  #"CAN (26:0:0) (kg/acre)",
+  # "NPK (23:23:23) (kg/acre)",
+  # "NPK (23:23:0) (kg/acre)",
+  #"NPK (17:17:0) (kg/acre)",
+  #"manure (kg/acre)",
+  #"compost (kg/acre)",
+  #"mavuno-basal (kg/acre)",
+  #"foliar feed (kg/acre)",
+  # "Fungicide qty (kg/acre)",
+  # "Herbicide qty (kg/acre)",
+  # "Insecticide qty (kg/acre)",
+  # "Pesticide qty (kg/acre)"
+  "Total P&D chem (kg/acre)"
+)
 demog_vars <- c(#"age",
-                "aehh07"#,
-                #"hhsize07"
-                # "km to organic fert mkt",
-                #"km to synth fert mkt",
-                #"km to pest/plague chem mkt"
-                )
+  "aehh07"#,
+  #"hhsize07"
+  # "km to organic fert mkt",
+  #"km to synth fert mkt",
+  #"km to pest/plague chem mkt"
+)
 clim_vars <- c("Rain anomaly"#,
                #"qwetpre",
                #"main07",
-                # "qwetxt",
-                # "qwetit"
-               )
+               # "qwetxt",
+               # "qwetit"
+)
 bin_vars <- c("adopter", #"gend",
               #"irrigated",
-               # "tenure: govt/communal/cooperative",
-               # "tenure: owned by parent/relative", 
+              # "tenure: govt/communal/cooperative",
+              # "tenure: owned by parent/relative", 
               "tenure: owned with title deed",
               # "tenure: owned without title deed",
               # "tenure: rented",
@@ -883,7 +891,7 @@ bin_vars <- c("adopter", #"gend",
               "landprep: oxen",
               "landprep: tractor")
 #-----------------------------------------------------------------------
-costVars <- c("Cstar", #"seed (KES/acre)",
+costVars <- c("cost/acre", #"seed (KES/acre)",
               "dap (KES/acre)",
               #"UREA (46:0:0) (KES/acre)",
               "Total CAN fert (KES/acre)",
@@ -894,7 +902,7 @@ costVars <- c("Cstar", #"seed (KES/acre)",
               "Total UREA fert (KES/acre)",
               #"manure (KES/acre)",
               "Total P&D chem (KES/acre)"
-              )
+)
 priceVars <- gsub("acre", "kg", costVars[-1])
 priceVars <- c(priceVars, "harvesting (KES/hour)")
 #-----------------------------------------------------------------------
@@ -921,19 +929,19 @@ coefsNegNames <- gsub("`", "", names(coefsNeg))
 inputsNegCoef <- coefsNegNames[which(coefsNegNames %in% input_vars)]
 inputsPosCoef <- setdiff(input_vars, inputsNegCoef)
 #-----------------------------------------------------------------------
-mod2Vars <- c("dist", "yield (kg/acre)", "Cstar", "acres", "seed (kg/acre)",
+mod2Vars <- c("dist", "yield (kg/acre)", "`cost/acre`", "acres", "seed (kg/acre)",
               inputsNegCoef, bin_vars, demog_vars, clim_vars)
 df_mod2 <- df_mod[, c(mod2Vars, "P")]
 #-----------------------------------------------------------------------
 # Get cStar and area before transforming
-cStar <- exp(df_mod2$Cstar)
+cStar <- exp(df_mod2$`cost/acre`)
 muCstarSamp <- mean(cStar)
 lAcres <- df_mod2$acres
 mArea <- mean(lAcres)
 sArea <- sd(lAcres)
 muArea <- exp(mArea + sArea^2 / 2)
 #---------------------------------------------------------------------
-theseCols <- c("Cstar", "acres", "seed (kg/acre)", demog_vars)
+theseCols <- c("cost/acre", "acres", "seed (kg/acre)", demog_vars)
 thisFun <- function(x){out <- x - log(mean(exp(x))); return(out)}
 df_mod2[, theseCols] <- as.data.frame(apply(df_mod2[, theseCols], 2, thisFun))
 not_these <- which(colnames(df_mod2) %in% c("P", "dist", costVars[-1]))
@@ -975,25 +983,25 @@ summ(mod2)
 # # Validation test 1 using cost shares vs. tech shares
 # # (Theory predicts that input cost_i / total input cost = alpha_i / h)
 # # (So the following ratios should = 1, or log(ratio) = 0)
-# # Encouraging results, make sure Cstar only includes inputs used in model,
+# # Encouraging results, make sure `cost/acre` only includes inputs used in model,
 # # and that seed might better not be considered an input
 # #---
-# Cstar <- exp(df_mod1$Cstar)
+# `cost/acre` <- exp(df_mod1$`cost/acre`)
 # yStar <- exp(df_mod1$`yield (kg/acre)`)
-# # Cstar, yStar, and CtildeStar are lognormally distributed
-# cSharpEff <- Cstar / yStar
+# # `cost/acre`, yStar, and CtildeStar are lognormally distributed
+# cSharpEff <- `cost/acre` / yStar
 # # # hist(log(CtildeStarEff), breaks = 25)
-# # # hist(log(Cstar), breaks = 25)
+# # # hist(log(`cost/acre`), breaks = 25)
 # # # hist(log(yStar), breaks = 25)
-# # # #Cstar[which(Cstar == 1)] <- 0
-# # # hist(log(Cstar / yStar))
-# # #ratio <- aVec[which(names(aVec) == "`seed (kg/acre)`")] / h * Cstar / df_mod1$`seed (KES/acre)`
-# # #ratio <- aVec[which(names(aVec) == "`manure (kg/acre)`")] / h * Cstar / df_mod1$`manure (KES/acre)`
-# # ratio <- aVec[which(names(aVec) == "`Total NPK fert (kg/acre)`")] / h * Cstar / df_mod1$`Total NPK fert (KES/acre)`
-# # ratio <- aVec[which(names(aVec) == "`Total CAN fert (kg/acre)`")] / h * Cstar / df_mod1$`Total CAN fert (KES/acre)`
-# # ratio <- aVec[which(names(aVec) == "`Total UREA fert (kg/acre)`")] / h * Cstar / df_mod1$`Total UREA fert (KES/acre)`
-# # ratio <- aVec[which(names(aVec) == "`dap (kg/acre)`")] / h * Cstar / df_mod1$`dap (KES/acre)`
-# # ratio <- aVec[which(names(aVec) == "`Total P&D chem (kg/acre)`")] / h * Cstar / df_mod1$`Total P&D chem (KES/acre)`
+# # # #`cost/acre`[which(`cost/acre` == 1)] <- 0
+# # # hist(log(`cost/acre` / yStar))
+# # #ratio <- aVec[which(names(aVec) == "`seed (kg/acre)`")] / h * `cost/acre` / df_mod1$`seed (KES/acre)`
+# # #ratio <- aVec[which(names(aVec) == "`manure (kg/acre)`")] / h * `cost/acre` / df_mod1$`manure (KES/acre)`
+# # ratio <- aVec[which(names(aVec) == "`Total NPK fert (kg/acre)`")] / h * `cost/acre` / df_mod1$`Total NPK fert (KES/acre)`
+# # ratio <- aVec[which(names(aVec) == "`Total CAN fert (kg/acre)`")] / h * `cost/acre` / df_mod1$`Total CAN fert (KES/acre)`
+# # ratio <- aVec[which(names(aVec) == "`Total UREA fert (kg/acre)`")] / h * `cost/acre` / df_mod1$`Total UREA fert (KES/acre)`
+# # ratio <- aVec[which(names(aVec) == "`dap (kg/acre)`")] / h * `cost/acre` / df_mod1$`dap (KES/acre)`
+# # ratio <- aVec[which(names(aVec) == "`Total P&D chem (kg/acre)`")] / h * `cost/acre` / df_mod1$`Total P&D chem (KES/acre)`
 # # #hist(log(ratio))
 # # #---
 # # # Validation test 2 based only on input costs and tech coeffs
@@ -1031,45 +1039,6 @@ summ(mod2)
 # # # ratio <- df_mod1$`Total UREA fert (KES/acre)` * aVec[which(names(aVec) == "`harvesting fam lab male (pers-hrs/acre)`")] / (df_mod1$`harvesting fam lab male (pers-hrs/acre)` * aVec[which(names(aVec) == "`Total UREA fert (kg/acre)`")])
 # # # ratio <- df_mod1$`dap (KES/acre)` * aVec[which(names(aVec) == "`harvesting fam lab male (pers-hrs/acre)`")] / (df_mod1$`harvesting fam lab male (pers-hrs/acre)` * aVec[which(names(aVec) == "`dap (kg/acre)`")])
 # # #hist(log(ratio))
-# #---------------------------------------------------------------------
-# indKvars <- which(!(coefsNames %in% input_vars[3:7]))
-# coefsNames[indKvars]
-# #kVec <- mod1$coefficients[-which(coefsNames %in% input_vars[-c(1, 3:4)])]
-# kVec <- mod1$coefficients[indKvars]
-# kVec <- kVec[-1]
-# lwMat <- log(df_mod1[, priceVars[-length(priceVars)]]) %>%
-#   #mutate_all(~replace(., is.nan(.), 0)) %>%
-#   as.matrix()
-# # lwMat[, ncol(lwMat)] <- log(wgFamMale)
-# lwMat[is.infinite(lwMat)] <- 0
-# lwMat[is.nan(lwMat)] <- 0
-# lwMat[is.na(lwMat)] <- 0
-# colnames(lwMat)
-# names(aVec)
-# colnamesOrdered <- gsub("`", "", names(aVec))
-# colnamesOrdered <- gsub("kg/acre", "KES/kg", colnamesOrdered)
-# colnamesOrdered <- gsub("fam lab male \\(pers-hrs/acre\\)", "\\(KES/hour\\)", colnamesOrdered)
-# lwMat <- lwMat[, colnamesOrdered]
-# betaW <- exp(lwMat %*% aVec)
-# #hist(log(betaW))
-# alogaVec <- aVec * log(aVec)
-# betaA <- exp(inputMat %*% alogaVec)
-# #hist(betaA)
-# names(kVec) <- gsub("`", "", names(kVec))
-# lkMat <- as.matrix(df_mod[, names(kVec)])
-# betaK <- exp(lkMat %*% kVec)
-# #hist(betaK)
-# beta <- betaA * betaK / betaW
-# #hist(log(beta))
-# a0 <- mod1$coefficients[1]
-# g0 <- exp(a0)
-# mg0BetaEtaH <- mean(eta / h * log(g0 * beta))
-# sg0BetaEtaH <- sd(eta / h * log(g0 * beta))
-# mug0BetaEtaH <- exp(mg0BetaEtaH + sg0BetaEtaH^2 / 2)
-# EyStar <- g0 * beta * (Cstar / h)^h
-# #EyStar <- (y0 * beta * (CtildeStar / h)^h)^(1 / (1-h))
-# hist(log(EyStar / yStar), breaks = 15) #Nice
-# EyStarBar <- mug0BetaEtaH * (EPT02007 / hCoef)^etaCoef
 
 ```
 
@@ -1083,10 +1052,18 @@ summ(mod2)
 
 ...have to get the population mean/sd from the truncated mean/sd...
 
+Assuming that the fitted coefficients do not vary much within a few years of when they are estimated...
+
+Expected yield is actual yield divided by the rainfall anomaly...[assume farms expect rainfall consistent with the historical trend. The same would go for other weather variables like temperature and solar radiation, if they were included in the model and were statistically significant.] AND using EXPECTED PRICE at planting time, not the post harvest sale price.
+
+...mP and sP -- time period over which it is taken.
+
+
+
 ```{r Fig4, fig.show = "hold", fig.width=5, fig.height=3, fig.align="center", fig.cap="\\label{fig:y0}Yield evaluated at the sample means of the control variables, and with rainfall anomaly set to 1 (no divergence from historical rainfall), for farms with different endowments. The 'Base' endowment is just the exponential of the regression constant.", echo = FALSE}
 
 mod2Coefs <- mod2$coefficients
-hCoef <- mod2Coefs["Cstar"]
+hCoef <- mod2Coefs["`cost/acre`"]
 etaCoef <- hCoef / (1 - hCoef)
 a0 <- mod2Coefs[1]
 coefsNames <- gsub("`", "", names(mod2Coefs))
@@ -1232,14 +1209,14 @@ for(i in 1:(nYr - 1)){
   # print(paste("m = ", this_m))
   # print(paste("s = ", this_s))
   if(i > 1){
-  EPT0 <- P0 * exp(mVec[i - 1] * th)
-  thisAnomaly <- 100 * (EPT0 / PT - 1)
-  # print(paste("P0 = ", P0))
-  # print(paste("PT = ", PT))
-  # print(paste("EPT0 = ", EPT0))
-  # print(thisAnomaly)
-  EPT0hist[i] <- EPT0
-  anomVec[i] <- thisAnomaly
+    EPT0 <- P0 * exp(mVec[i - 1] * th)
+    thisAnomaly <- 100 * (EPT0 / PT - 1)
+    # print(paste("P0 = ", P0))
+    # print(paste("PT = ", PT))
+    # print(paste("EPT0 = ", EPT0))
+    # print(thisAnomaly)
+    EPT0hist[i] <- EPT0
+    anomVec[i] <- thisAnomaly
   }
   
 }
@@ -1346,10 +1323,10 @@ muEyStarT0trunc <- mean(EyStar0 * kRn^-kappaRn)
 # Define supply curve/price elasticity of supply/price risk elasticity of supply function
 QsFun <- function(muEyStarT0, EPT0ref, fracVec, h, kappaRn, muArea,
                   muEcSharpT0, mP, sP, th, Nf, kRn = 1){
-    eta <- h / (1 - h)
-    muKrnKapEtaH_up <- mean((kRn * 2)^(kappaRn * eta / h))
-    muKrnKapEtaH_lo <- mean((kRn * 1 / 2)^(kappaRn * eta / h))
-
+  eta <- h / (1 - h)
+  muKrnKapEtaH_up <- mean((kRn * 2)^(kappaRn * eta / h))
+  muKrnKapEtaH_lo <- mean((kRn * 1 / 2)^(kappaRn * eta / h))
+  
   EPT0vec <- fracVec * EPT0ref
   muEyStarT0vec <- muEyStarT0 * fracVec^eta
   muEyStarT0upVec <- muEyStarT0vec * muKrnKapEtaH_up
@@ -1441,17 +1418,17 @@ fracVec <- seq(0.01, 2, length.out = 50)
 #dfQs <- QsFun(muEyStarT0 = muEyStarT0 * (EPT02009 / EPT02007)^hCoef,
 Nf = 1.7 * 10^6
 dfQs <- QsFun(muEyStarT0 = muEyStarT0,
-                  EPT0ref = EPT02007, fracVec,
-                  h = hCoef, kappaRn, muArea,
-                  muEcSharpT0 = muEcSharpT0,
-                  mP = mP2006, sP = sP2006,
+              EPT0ref = EPT02007, fracVec,
+              h = hCoef, kappaRn, muArea,
+              muEcSharpT0 = muEcSharpT0,
+              mP = mP2006, sP = sP2006,
               th, Nf)
 #---------------------------------------------------------------------
 gg <- ggplot(dfQs)
 gg <- gg + geom_ribbon(aes(x = `Expected price (KES/kg)`,
-                  ymin = `Expected supply, low rainfall\n(million metric tons)`,
-                   ymax = `Expected supply, high rainfall\n(million metric tons)`),
-                   fill='blue',alpha=0.2)
+                           ymin = `Expected supply, low rainfall\n(million metric tons)`,
+                           ymax = `Expected supply, high rainfall\n(million metric tons)`),
+                       fill='blue',alpha=0.2)
 df_line <- dfQs[, c("Expected price (KES/kg)", "Expected supply, low rainfall\n(million metric tons)", "Expected supply, high rainfall\n(million metric tons)",
                     "Expected supply, normal rainfall\n(million metric tons)")]
 colnames(df_line)[2:4] <- c("Low rainfall", "High rainfall", "Normal rainfall")
@@ -1479,8 +1456,8 @@ gg <- gg + theme_bw()
 gg <- gg + theme(axis.title = element_blank())
 ggElastInset <- gg
 ggPelastQs <- ggElast + annotation_custom(ggplotGrob(ggElastInset),
-                            xmin = 6, xmax = 20, 
-                            ymin = 20, ymax = 70)
+                                          xmin = 6, xmax = 20, 
+                                          ymin = 20, ymax = 70)
 #----------
 gg <- ggplot(dfQs, aes(x = `Expected price (KES/kg)`, y = `Participation (%)`))
 gg <- gg + geom_line()
@@ -1543,8 +1520,8 @@ gg <- gg + theme_bw()
 gg <- gg + theme(axis.title = element_blank())
 ggElastInset <- gg
 ggPriskElastQs <- ggElast + annotation_custom(ggplotGrob(ggElastInset),
-                            xmin = 6, xmax = 35, 
-                            ymin = 9, ymax = 35)
+                                              xmin = 6, xmax = 35, 
+                                              ymin = 9, ymax = 35)
 
 ggPriskElastQs
 
@@ -1573,6 +1550,16 @@ gg
 
 
 # Discussion
+
+This not really a validation of the model...markets at the time were in disarray dysfunctional...SAP liberalization... [@Jayne wicked problem].
+
+Address more nuanced questions like what is the right balance of policy and technology mix required to reach certain development goals...how can the impact of new technology release be enhanced through policy
+
+More than validation this is to illustrate the potential usefulness of the model in examining new technologies, policies (subsidies, storage, transportation, microfinance, insurance), etc....comparison of different impact pathways. Current methods focus on yield enhancing varieties...maybe the same development goals can be reached at lower cost and in a shorter time frame through policy instruments...
+
+In minimum data contexts...
+
+short cropping season is omitted from aggregate supply, but this generally accounts for less than 5% of total production in any given year
 
 The participation term, does it mean employment? ...
 
