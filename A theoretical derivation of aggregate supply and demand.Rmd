@@ -227,17 +227,17 @@ $$
 an alternative approach is to arbitrarily define $g_0$ in terms of another parameter that is expressed in intelligible units, and to work with this instead. For example, $g_0$ may be defined in terms of another parameter $\tilde{y}$ and fixed reference values $\tilde{k}_i$, $\tilde{x}_i$ that have the same units as the corresponding management and control variables $x_i$ and $k_i$.
 
 \begin{equation}
-g_0 = \tilde{y} \prod_{i = 1}^{n_k} \tilde{k}_i^{-\kappa_i} \prod_{i = 1}^{n_x} \tilde{x}_i^{-\alpha_i}
+g_0 = y_0 \prod_{i = 1}^{n_k} \tilde{k}_i^{-\kappa_i} \prod_{i = 1}^{n_x} \tilde{x}_i^{-\alpha_i}
 \end{equation}
 
 Such that the yield function may be rewritten
 
 \begin{equation}
-y = \tilde{y} \prod_{i = 1}^{n_k} \left( \frac{k_i}{\tilde{k}_i} \right)^{\kappa_i} \prod_{i = 1}^{n_x} \left( \frac{x_i}{\tilde{x}_i} \right)^{\alpha_i}
+y = y_0 \prod_{i = 1}^{n_k} \left( \frac{k_i}{\tilde{k}_i} \right)^{\kappa_i} \prod_{i = 1}^{n_x} \left( \frac{x_i}{\tilde{x}_i} \right)^{\alpha_i}
 \label{eq:cobbDoug3}
 \end{equation}
 
-Because the ratios in parentheses are dimensionless, $\tilde{y}$ must have the same units as $y$; and $\tilde{y}$ may be interpreted as the value of $y$ when all management and control variables equal their reference values. In the empirical study included here, for example, the reference values are set equal to the sample means, such that $y_0$ is the value of $y$ evaluated at the sample means of the input and control variables.
+Because the ratios in parentheses are dimensionless, $y_0$ must have the same units as $y$; and $y_0$ may be interpreted as the value of $y$ when all management and control variables equal their reference values. In the empirical study included here, for example, the reference values are set equal to the sample means, such that $y_0$ is the value of $y$ evaluated at the sample means of the input and control variables.
 
 Equation \ref{eq:cobbDoug3} is, of course, the Cobb-Douglas form. Outside of Economics, it would simply be referred to as a (multivariate) power law. Such forms are often good models of observed processes across a wide range of research contexts and disciplines. In Economics, the Cobb-Douglas form was widely used from the 1920s to 1950s on the basis of its good empirical fit, but fell into disrepute thereafter for its perceived lack a theoretical basis. Capalbo and Antle [-@capalbo2015agricultural] offer a succinct introduction to this vast discussion. The forgoing derivation of the Cobb-Douglas form from Axiom 1 in some measure redresses the lack of a theoretical basis. [Other perceived shortcomings of the form are briefly addressed in the Discussion. if there is enough space!] [Or: In the course of the derivation below, a number of theoretical strengths are brought to light---underrepresented or overlooked by textbook treatments---that cast doubt on the bad reputation as a "restrictive" model]
 
@@ -249,7 +249,7 @@ The farm level yield model $y^*$ is then obtained by introducing Axiom 2.
 Formally, Axiom 2 may be written
 
 \begin{equation}
-y^* = y(\mathbf{x}^*; \tilde{y}, \mathbf{k}, \boldsymbol{\alpha}, \boldsymbol{\kappa}) \:;\:\: x^* = \text{argmax}_{\mathbf{x}}(P y - \lambda(C - B))
+y^* = y(\mathbf{x}^*; y_0, \mathbf{k}, \boldsymbol{\alpha}, \boldsymbol{\kappa}) \:;\:\: x^* = \text{argmax}_{\mathbf{x}}(P y - \lambda(C - B))
 \end{equation}
 
 Where $P$ is the output price, $B$ is the farm budget, $C$ is the cost function, defined
@@ -307,7 +307,7 @@ x_j^* = \frac{P y^* \alpha_j}{\lambda w_j}
 Optimal yield $y^*$ then follows as the unoptimized yield evaluated at the optimal input levels $x_j^*$. This works out to
 
 \begin{equation}
-y^* =  \left(\tilde{y} \prod_i \left(\frac{\alpha_i}{w_i}\right)^{\alpha_i} \prod_i k_i^{\kappa_i} \right)^{\frac{1}{1 - h}} \left(\frac{P}{\lambda}\right)^{\frac{h}{1 - h}}
+y^* =  \left(y_0 \prod_i \left(\frac{\alpha_i}{w_i}\right)^{\alpha_i} \prod_i k_i^{\kappa_i} \right)^{\frac{1}{1 - h}} \left(\frac{P}{\lambda}\right)^{\frac{h}{1 - h}}
 \label{eq:YdEnv1}
 \end{equation}
 <!-- Heathfield and Wibe [-@heathfield1987introduction] -->
@@ -315,7 +315,7 @@ y^* =  \left(\tilde{y} \prod_i \left(\frac{\alpha_i}{w_i}\right)^{\alpha_i} \pro
 This is the optimized yield function, or yield envelope, henceforth simply referred to as the farm yield. To reduce notational clutter, $y^*$ is rewritten as follows.
 
 \begin{equation}
-y^* = (\tilde{y} \theta)^{\frac{1}{1 - h}} \left( \frac{P}{\lambda} \right)^{\frac{h}{1 - h}}
+y^* = (y_0 \theta)^{\frac{1}{1 - h}} \left( \frac{P}{\lambda} \right)^{\frac{h}{1 - h}}
 \label{eq:YdEnvCompact}
 \end{equation}
 
@@ -340,7 +340,7 @@ Dotting the first order conditions in Equation \ref{eq:eqFOC} through by $\mathb
 which, when combined with \ref{eq:YdEnvCompact}, gives an instructive, alternative expression for $y^*$,
 
 \begin{equation}
-y^* = \tilde{y} \theta \left( \frac{C^*}{h} \right)^h
+y^* = y_0 \theta \left( \frac{C^*}{h} \right)^h
 \label{eq:yStarC}
 \end{equation}
 
@@ -351,16 +351,16 @@ y = \hat{y} C^{*h} \prod_{i = 1}^{n_k} \left( \frac{k_i}{\tilde{k}_i} \right)^{\
 \label{eq:cobbDoug4}
 \end{equation}
 
-Where the estimated constant $\hat{y}$ may then be interpreted as 
+Where the estimated constant $\tilde{y}$ may then be interpreted as 
 
 \begin{equation}
-\hat{y} = \tilde{y} \frac{\theta_{\alpha}}{\theta_w} h^{-h}
+\tilde{y} = y_0 \frac{\theta_{\alpha}}{\theta_w} h^{-h}
 \label{eq:yConst}
 \end{equation}
 
-Such that the input elasticities $\alpha_i$ and prices $w_i$ are implicit in the fitted constant $\hat{y}$ without requiring detailed information about input types and quantities. Moreover, the fitted coefficient on $\ln(C^*)$ may be interpreted as $h$.
+Such that the input elasticities $\alpha_i$ and prices $w_i$ are implicit in the fitted constant $\tilde{y}$ without requiring detailed information about input types and quantities. A further advantage of this form is that the fitted coefficient on $\ln(C^*)$ may be directly interpreted as $h$, valid for all farms in the sample. Estimation of the model in Equation \ref{eq:cobbDoug3}, on the other hand, requires the extra step of summation of the input elasticities $\alpha_i$ in order to arrive at $h$. This results in varying $h$ across the sample, as not all farms apply all the inputs considered in the model.
 
-Note also the similarity to Equation \ref{eq:integrate_lny}. And note that
+Finally, note also the similarity between Equations \ref{eq:yStarC} and \ref{eq:integrate_lny}. And note that
 
 \begin{equation}
 \frac{\partial \ln(y^*)}{\partial C^*} \sim \frac{1}{C^*}
@@ -785,14 +785,21 @@ Note that elasticity is inversely proportionate to the price risk ($s_p \sqrt{T}
 
 # Illustrative use case
 
+The aggregate supply curve derived from Axioms 1-5 above is parameterized based on Kenya farm data. This sort of a validation but not so much a validation...
+
 ## Data, specification, estimation
 
-Below, an aggregate supply curve is parameterized based on Kenya farm data for the 2007 main cropping season [@maizeData]... multiple family labor types, fert/chem types, also county level historical rainfall data and 2007 rainfall data at.... (graphics here or in Appendix) Summary statistics can be found in the Appendix. lots of management variables available, but not required because of Equation \ref{eq:yStarC}.
+The farm data used below cover the 2007 main maize season in all maize producing regions of Kenya. The data are a subset of a much larger panel covering the main and short seasons of multiple crops for the years 2000, 2004, 2007, and 2010, originally gathered by the Egerton University Tegemeo Institute of Agricultural Policy and Development in partnership with Michigan State University, under the auspices of a USAID project [@maizeData]. The data include use of x organic and chemical fertilizers, x pest/plague control chemicals. The data also include detailed information on quantities of adult and child family labor expended on x different farm labor activities. In the case of 2007 main season maize, only xx fertilizers and xx pest/plague chemicals were used in significant quantities; and family labor was concentrated on xx activities (Figure \ref{xx}). Numerous demographic and infrastructural control variables are also included, as well as 2007 rainfall data... as well as the historical average rainfall. ...binary endowment variables...
+<!-- (graphics here or in Appendix) Summary statistics can be found in the Appendix. -->
+
+This is where we talk about the continuous and binary variables used in the model and how other specifications are certainly feasible... lots of management variables available, but not required because of Equation \ref{eq:yStarC}. Models including farmer age, education, gender, maximum and minimum temperature, other types of family labor, and distance to market variables were also explored. But the coefficients on these variables were either statistically insignificant or introduced multicollinearity and/or missing data issues. A model based on Equation \ref{eq:cobbdoug3} was also estimated (provided in the Appendix) to compare h via mod2 against h as sum of estimated output elasticities of inputs. As discussed in sec..., the mod1 h varies across farms...the mod 2 h is very close to the mean h of mod1.
+
+As discussed in section \ref{sec:ax12}, the independent continuous variables $k_i$ and $C^*$ are divided by their respective sample means $\tilde{k}_i$ and $\tilde{C}^*$ in order to facilitate interpretation of the constant $\hat{y}$. (In the case of rainfall, $\tilde{k}_i$ is the historical average, not the sample average). The constant $\hat{y}$ may then be interpreted as the "sample average yield", that is, the farm yield evaluated at the sample mean of the independent variables (at the historical mean in the case of rainfall).
 
 The yield model is specified in logs as a function of cost ($C^*$), control variables ($k_i$), and binary endowment variables ($b_i$), plus an error term $\epsilon$ assumed to be normally distributed with mean 0.
 
 \begin{equation}
-\ln(y) = \ln(\hat{y}) + \sum_{i = 1}^{n_k} \kappa \ln \left(\frac{k_i}{\tilde{k}_i}\right) + h \ln \left( \frac{C^*}{\tilde} \right) + \epsilon \:\:;\;\;\; \ln(\hat{y}) = \beta_0 + \sum_i \beta_i \ln(b_i)
+\ln(y) = \ln(\tilde{y}) + \sum_{i = 1}^{n_k} \kappa \ln \left(\frac{k_i}{\tilde{k}_i}\right) + h \ln \left( \frac{C^*}{\tilde} \right) + \epsilon \:\:;\;\;\; \ln(\hat{y}) = \beta_0 + \sum_i \beta_i \ln(b_i)
 \label{eq:regMod}
 \end{equation}
 
@@ -801,24 +808,10 @@ This is just the yield function in Equation \ref{eq:yStarC} in logs, and adjuste
 
 The continuous control variables $k_i$ are farm size (acres), seed quantity per acre, child family labor during planting (person-hours/acre), adult-equivalent household size (aehh07), and the 2007 main season rainfall. The cost per acre $C^*$ is the sum of all land prep and input (fertilizer, hired labor, and pesticide) costs. The OLS estimation results are presented in Table 1.
 
-Models including farmer age, education, gender, maximum and minimum temperature, other types of family labor, and distance to market variables were also explored. But the coefficients on these variables were either statistically insignificant or introduced multicollinearity and/or missing data issues.
-
-As discussed in section \ref{sec:ax12}, the independent continuous variables $k_i$ and $C^*$ are divided by their respective sample means $\tilde{k}_i$ and $\tilde{C}^*$ in order to facilitate interpretation of the constant $\hat{y}$. (In the case of rainfall, $\tilde{k}_i$ is the historical average, not the sample average). The constant $\hat{y}$ may then be interpreted as the "sample average yield", that is, the farm yield evaluated at the sample mean of the independent variables (historical mean in the case of rainfall).
+Because the model is estimated in logs, the coefficients on the continuous variables may be interpreted as the control variable elasticities ($\kappa_i$). Note that the coefficient on acres is negative, affirming the inverse relation between farm size and yield found in numerous other studies [@muyanga2019revisiting; @larson2014should; @wassie2019revisiting; @gautam2019too; @kimhi2006plot]. The coefficient on child family labor during planting is also negative, confirming that this variable is better thought of as a hard constraint rather than a discretionary management variable.
 <!-- [recall from Equation \ref{eq:yConst} that the input variable elasticities $\alpha_i$ and input prices $w_i$ are implicit in the constant $\tilde{y}$, without requiring detailed information about either.] -->
 
-Note that the constant $\hat{y}$ is not the same for all farms, but varies depending upon how many binary endowments the farm has. The "base case" of $\hat{y} = e^{\beta_0}$, represents the sample average yield on farms with neither land tenure nor hybrid maize nor use of oxen or tractors for land preparation. In the sample examined here, there are 14 unique values for $\hat{y}$, summarized in Figure \ref{fig:ySampAvg}.
-
-Equation \ref{eq:regMod} represents the real yield $y^*(T)$, known post harvest. Assuming that farmers generally expect rainfall to adhere to the historical average, then the expected yield at planting time ($E[y^*(T)]\bigr|_{t = 0}$) may reckoned from the available post hoc information as follows.
-
-\begin{equation}
-E[y^*(T)]\bigr|_{t = 0} = y^*(T) \frac{k_r}{\tilde{k}_r}^{-\kappa_r} e^{\frac{s_{\epsilon}^2}{2}}
-\end{equation}
-
-Where $s_{\epsilon}^2$ is the variance of the error term $\epsilon$.
-
-
-The coefficients and intercept of the logged model are estimated via OLS and presented in Table 1. Because the model is estimated in logs, the coefficients on the continuous variables may be interpreted as the control variable elasticities ($\kappa_i$). Note that the coefficient on acres is negative, affirming the inverse relation between farm size and yield found in numerous other studies [@muyanga2019revisiting; @larson2014should; @wassie2019revisiting; @gautam2019too; @kimhi2006plot]. The coefficient on child family labor during planting is also negative, confirming that this variable is better thought of as a hard constraint rather than a discretionary management variable. There are 14 unique sample average yields in the present sample, summarized in Table 2.
-
+Note that the constant $\tilde{y}$ is not the same for all farms, but varies depending upon how many binary endowments the farm has. The "base case" of $\hat{y} = e^{\beta_0}$, represents the sample average yield on farms with neither land tenure nor hybrid maize nor use of oxen or tractors for land preparation. In the sample examined here, there are 14 unique values for $\tilde{y}$, summarized in Figure \ref{fig:ySampAvg}.
 <!-- appendix graphics: input use, family labor, sumstats table -->
 
 ```{r Fig3, fig.show = "hold", fig.width = 5, fig.height=5, fig.align="center", fig.cap="\\label{fig:lognormalYd}", echo = FALSE}
@@ -1136,26 +1129,21 @@ gg1 + gg2 + plot_layout(ncol = 2, widths = c(1/2, 1))
 
 ```
 
-By Equation \ref{eq:yStarC}, the coefficient of `r round(hCoef, 3)` on cost/acre can be interpreted as the yield degree of homogeneity $h$. By Equation \ref{eq:PelastYstar}, the farm level price elasticity of supply then follows as `r round(etaCoef, 3)`.
-
-The fitted values $\hat{y}$ may be expressed as follows.
-
-\begin{equation}
-\hat{y} = \tilde{y} \tilde{\theta}_k \frac{C^*}{\tilde{C}^*} e^{\epsilon}
-\end{equation}
-
-Expected yield
-
-\begin{equation}
-E[\hat{y}] = E[\tilde{y}] E[\tilde{\theta}_k] E\frac{C^*}{\tilde{C}^*} e^{\frac{s_{\epsilon}^2}{2}}
-\end{equation}
-
-
-
 
 ...lambda > h for most as expected, with truncated mean slightly less than 1...
 
 ## Parameterization of the aggregate supply curve
+
+By Equation \ref{eq:yStarC}, the coefficient of `r round(hCoef, 3)` on logged cost/acre can be interpreted as the yield degree of homogeneity $h$. By Equation \ref{eq:PelastYstar}, the farm level price elasticity of supply then follows as `r round(etaCoef, 3)`.
+
+Equation \ref{eq:regMod} represents the real yield $y^*(T)$, known post harvest. Assuming that farmers expect rainfall to adhere to the historical average, then the expected yield at planting time ($E[y^*(T)]\bigr|_{t = 0}$) may reckoned from the available post hoc information as follows.
+
+\begin{equation}
+E[y^*(T)]\bigr|_{t = 0} = y^*(T) \frac{\tilde{k}_r}{k_r}^{\kappa_r} e^{\frac{s_{\epsilon}^2}{2}}
+\end{equation}
+
+Where $s_{\epsilon}^2$ is the variance of the error term $\epsilon$.
+
 
 ...have to get the population mean/sd from the truncated mean/sd...
 
