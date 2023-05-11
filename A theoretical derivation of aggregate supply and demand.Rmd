@@ -87,9 +87,9 @@ The five Axioms are:
 5) Farm yield is lognormally distributed
 
 
-Four other desirable properties---a farm production function that is homogeneous (and thus homothetic) and concave in inputs, upward sloping farm supply curves, and downward sloping farm input demand curves---follow as corollaries, and thus do not have to be imposed as additional Axioms. [The form also agrees with Lipton's theory of technology adoption.]
+Four other desirable properties---a farm production function that is homogeneous (and thus homothetic) and concave in inputs, upward sloping farm supply curves, and downward sloping farm input demand curves---follow as corollaries, and thus need not be imposed as additional Axioms. [The form also agrees with Lipton's theory of technology adoption.]
 
-On the other hand, two somewhat controversial corollaries also follow: strictly decreasing returns to scale and constant marginal cost. (The latter is well supported empirically [@lavoie2014post], but is still eschewed in the textbooks.) Regardless of one's view on returns to scale and marginal cost curves, the very fact that it is possible to disagree with specific corollaries, and to trace the disagreement back to specific Axioms, underscores the theoretic transparency of the derived curve. The theoretic opacity of the expedient approach, by contrast, it is not even possible to know if one agrees or disagrees with the premises, since there is little clarity as to what those premises are in the first place. [Moreover, note that the Axioms themselves are not controversial. If they result in a controversial corollary, then this is invitation to reflect upon whether trying to have their cake and eat it too]
+On the other hand, two somewhat controversial corollaries also follow: strictly decreasing returns to scale and constant marginal cost. (The latter is well supported empirically [@lavoie2014post], but is still eschewed in the textbooks.) Regardless of one's view on returns to scale and marginal cost curves, the very fact that it is possible to disagree with specific corollaries, and to trace the disagreement back to specific Axioms, underscores a key strength of the derived curve: its theoretic transparency. The theoretic opacity of the expedient approach, by contrast, it is not even possible to know if one agrees or disagrees with the premises, since there is little clarity as to what those premises are in the first place. [Moreover, note that the Axioms themselves are not controversial. If they result in a controversial corollary, then this is invitation to reflect upon whether trying to have their cake and eat it too]
 <!-- limits the possibility of knowing whether the implied farm production function is homogeneous, much less the degree of homogeneity or shape of the marginal cost curve. In general, it  -->
 
 The gain in transparency and explanatory power comes at little cost to tractability... computation of economic surplus...  While the derived functional form is considerably more sophisticated than expedient forms, it remains highly tractable, and may be implemented at low cost. Unlike expedient forms, the derived curve generates testable hypotheses regarding farm level economic behavior. The curve is estimated on Kenya maize farm data, and hypotheses are tested. Extensions to aggregate demand and partial equilibrium analysis, and application in min data contexts, are briefly addressed in the Discussion.
@@ -237,6 +237,13 @@ y = y_0 \prod_{i = 1}^{n_k} \left( \frac{k_i}{\tilde{k}_i} \right)^{\kappa_i} \p
 \label{eq:cobbDoug3}
 \end{equation}
 
+Or, taking logs,
+
+\begin{equation}
+\ln(y) = \ln(y_0) + \sum_{i = 1}^{n_k} \kappa_i \ln \left( \frac{k_i}{\tilde{k}_i} \right) + \sum_{i = 1}^{n_x} \alpha_i \ln \left( \frac{x_i}{\tilde{x}_i} \right)
+\label{eq:cobbDoug3ln}
+\end{equation}
+
 Because the ratios in parentheses are dimensionless, $y_0$ must have the same units as $y$; and $y_0$ may be interpreted as the value of $y$ when all management and control variables equal their reference values. In the empirical study included here, for example, the reference values are set equal to the sample means, such that $y_0$ is the value of $y$ evaluated at the sample means of the input and control variables.
 
 Equation \ref{eq:cobbDoug3} is, of course, the Cobb-Douglas form. Outside of Economics, it would simply be referred to as a (multivariate) power law. Such forms are often good models of observed processes across a wide range of research contexts and disciplines. In Economics, the Cobb-Douglas form was widely used from the 1920s to 1950s on the basis of its good empirical fit, but fell into disrepute thereafter for its perceived lack a theoretical basis. Capalbo and Antle [-@capalbo2015agricultural] offer a succinct introduction to this vast discussion. The forgoing derivation of the Cobb-Douglas form from Axiom 1 in some measure redresses the lack of a theoretical basis. [Other perceived shortcomings of the form are briefly addressed in the Discussion. if there is enough space!] [Or: In the course of the derivation below, a number of theoretical strengths are brought to light---underrepresented or overlooked by textbook treatments---that cast doubt on the bad reputation as a "restrictive" model]
@@ -249,7 +256,7 @@ The farm level yield model $y^*$ is then obtained by introducing Axiom 2.
 Formally, Axiom 2 may be written
 
 \begin{equation}
-y^* = y(\mathbf{x}^*; y_0, \mathbf{k}, \boldsymbol{\alpha}, \boldsymbol{\kappa}) \:;\:\: x^* = \text{argmax}_{\mathbf{x}}(P y - \lambda(C - B))
+y^* = y(\mathbf{x}^*; y_0, \tilde{\mathbf{x}}, \mathbf{k}, \tilde{\mathbf{k}}, \boldsymbol{\alpha}, \boldsymbol{\kappa}) \:;\:\: x^* = \text{argmax}_{\mathbf{x}}(P y - \lambda(C - B))
 \end{equation}
 
 Where $P$ is the output price, $B$ is the farm budget, $C$ is the cost function, defined
@@ -337,28 +344,28 @@ Dotting the first order conditions in Equation \ref{eq:eqFOC} through by $\mathb
 <!-- \end{equation} -->
 <!-- which tells us that rational cost shares equal their respective "technology shares". -->
 
-which, when combined with \ref{eq:YdEnvCompact}, gives an instructive, alternative expression for $y^*$,
+which, when combined with Equation \ref{eq:YdEnvCompact}, gives an instructive, alternative expression for $y^*$,
 
 \begin{equation}
 y^* = y_0 \theta \left( \frac{C^*}{h} \right)^h
 \label{eq:yStarC}
 \end{equation}
 
-The degree of homogeneity $h$ is thus also the scale elasticity of yield ($d \ln(y^*) / d \ln(C^*) = h$) as noted in the textbooks. This form is particularly useful for estimation, as it requires only the control variables $k_i$ and input cost $C^*$, as opposed to detailed information on all of the input quantities. That is, instead of estimating the model in Equation \ref{eq:cobbDoug3}, one estimates
+The degree of homogeneity $h$ is thus also the scale elasticity of yield ($d \ln(y^*) / d \ln(C^*) = h$), as noted in the textbooks. This form is particularly useful for estimation, as it requires only the control variables $k_i$ and input cost $C^*$, as opposed to detailed information on all of the input quantities. That is, instead of estimating the model in Equation \ref{eq:cobbDoug3ln}, one estimates
 
 \begin{equation}
-y = \hat{y} C^{*h} \prod_{i = 1}^{n_k} \left( \frac{k_i}{\tilde{k}_i} \right)^{\kappa_i}
+\ln(y) = \ln(\tilde{y}) + h \ln \left(\frac{C^*}{\tilde{C}^*} \right) + \sum_{i = 1}^{n_k} \kappa_i \ln \left( \frac{k_i}{\tilde{k}_i} \right)
 \label{eq:cobbDoug4}
 \end{equation}
 
-Where the estimated constant $\tilde{y}$ may then be interpreted as 
+Where the shorthand $\tilde{y}$ has been introduced, defined
 
 \begin{equation}
-\tilde{y} = y_0 \frac{\theta_{\alpha}}{\theta_w} h^{-h}
+\tilde{y} = y_0 \frac{\theta_{\alpha}}{\theta_w} \left( \frac{\tilde{C}}{h} \right)^h
 \label{eq:yConst}
 \end{equation}
 
-Such that the input elasticities $\alpha_i$ and prices $w_i$ are implicit in the fitted constant $\tilde{y}$ without requiring detailed information about input types and quantities. A further advantage of this form is that the fitted coefficient on $\ln(C^*)$ may be directly interpreted as $h$, valid for all farms in the sample. Estimation of the model in Equation \ref{eq:cobbDoug3}, on the other hand, requires the extra step of summation of the input elasticities $\alpha_i$ in order to arrive at $h$. This results in varying $h$ across the sample, as not all farms apply all the inputs considered in the model.
+Such that the input elasticities $\alpha_i$ and prices $w_i$ are implicit in the fitted constant $\tilde{y}$ without requiring detailed information about input types and quantities. Moreover, letting the reference values $\tilde{C}^*$ and $\tilde{k}_i$ equal the mean of the cost per acre and control variables, respectively, then $\tilde{y}$ is equal to the mean yield. A further advantage of this form is that the fitted coefficient on $\ln(C^*)$ may be directly interpreted as $h$, valid for all farms in the sample. Estimation of the model in Equation \ref{eq:cobbDoug3}, on the other hand, requires the extra step of summation of the input elasticities $\alpha_i$ in order to arrive at $h$. This may result in varying $h$ across the sample, as not all farms necessarily apply all the inputs specified in the model.
 
 Finally, note also the similarity between Equations \ref{eq:yStarC} and \ref{eq:integrate_lny}. And note that
 
@@ -719,7 +726,14 @@ E[Q(T)]\bigr|_{t = 0} = N_f E[E[q^*(T)]\bigr|_{t = 0}] \Phi \left(\frac{\ln\left
 
 (See Appendix for details.)
 
-By Rubini's theorem, $E[E[q^*(T)]\bigr|_{t = 0}] = E[\tilde{q}(T)]\bigr|_{t = 0}$, where the shorthand $\tilde{q}^*(T) = E[q^*(T)]$ has been introduced. That is, the population mean of the expected value of $q^*(T)$ is equal to the expected value of the population mean of $q^*(T)$. Aggregate supply can therefore be rewritten
+By Rubini's theorem,
+
+\begin{equation}
+E[E[q^*(T)]\bigr|_{t = 0}] = E[E[q^*(T)]\bigr|_{t = T}]\bigr|_{t = 0}
+\end{equation}
+<!-- $E[E[q^*(T)]\bigr|_{t = 0}] = E[\tilde{q}(T)]\bigr|_{t = 0}$, where the shorthand $\tilde{q}^*(T) = E[q^*(T)]\bigr|_{t=T}$ has been introduced. -->
+
+In words, this says that the population mean of the expected value of $q^*(T)$ at planting time ($t = 0$) is equal to the expected value at planting time of the population mean of $q^*(T)$. Introducing the shorthand $\tilde{q}^*(T)$ to stand for $E[q^*(T)]\bigr|_{t = T}$, the aggregate supply can therefore be rewritten
 <!-- \begin{equation} -->
 <!-- E[E[b(T)]\bigr|_{t = 0}] = E[E[b(T)]]\bigr|_{t = 0} -->
 <!-- \end{equation} -->
@@ -736,7 +750,7 @@ E[Q(T)]\bigr|_{t = 0} &= N_f E[\tilde{q}^*(T)]\bigr|_{t = 0} \Phi \left(\frac{\l
 \end{split}
 \end{equation}
 
-Substituting $s_p$ for $s_p$ (see the end of the previous section for details), and $P(0) e^{m_p T}$ for $E[P(T)]\bigr|_{t = 0}$ (recall Equation \ref{eq:EPT0}), aggregate supply may again be rewritten
+Substituting $s_p$ for $s_c$ (see the end of the previous section for details), and $P(0) e^{m_p T}$ for $E[P(T)]\bigr|_{t = 0}$ (recall Equation \ref{eq:EPT0}), aggregate supply may again be rewritten
 
 \begin{equation}
 \begin{split}
@@ -748,11 +762,17 @@ E[Q(T)]\bigr|_{t = 0} &= N_f E[\tilde{q}^*(T)]\bigr|_{t = 0} \Phi \left(\frac{\l
 Or, more compactly,
 
 \begin{equation}
-E[Q(T)]\bigr|_{t = 0} = N_f E[\tilde{q}^*(T)]\bigr|_{t = 0} (1 - \Phi(z)) \:\:;\:\:\: z = \frac{\ln \left( \frac{E[C_0^{\#}(T)]|_{t = 0}^{\eta}}{P(0)^{\eta}} \right) - \left( \eta m_p - \eta^2 \frac{s_p^2}{2} \right) T}{\eta s_p \sqrt{T}}
+E[Q(T)]\bigr|_{t = 0} = N_f E[\tilde{q}^*(T)]\bigr|_{t = 0} (1 - \Phi(z))
 \label{eq:sup4}
 \end{equation}
 
-Now, note that $z$ is the standard score of the log change $\ln(P(T)^{\eta} / P(0)^{\eta} )$ evaluated at $P(T) = E[C_0^{\#}(T)]\bigr|_{t = 0}$. Therefore, $\Phi(z)$ may be interpreted as the probability that the output price at planting time $P(0)$ will fall to the mean farm's expected cost per unit output $E[C_0^{\#}]\bigr|_{t = 0}$ by harvest and sale. That is,
+Where
+
+\begin{equation}
+z = \frac{\ln \left( \frac{E[C_0^{\#}(T)]|_{t = 0}^{\eta}}{P(0)^{\eta}} \right) - \left( \eta m_p - \eta^2 \frac{s_p^2}{2} \right) T}{\eta s_p \sqrt{T}}
+\end{equation}
+
+Now, note that $z$ is the standard score of the log change $\ln(P(T)^{\eta} / P(0)^{\eta} )$ evaluated at $P(T) = E[C_0^{\#}(T)]\bigr|_{t = 0}$. Therefore, $\Phi(z)$ may be interpreted as the probability that the output price at planting time $P(0)$ will fall to the mean farm's expected cost per unit output $E[C_0^{\#}(T)]\bigr|_{t = 0}$ by harvest and sale. That is,
 
 \begin{equation}
 \Phi(z) = \text{Prob}(P(T) \leq E[C_0^{\#}(T)]\bigr|_{t = 0})
@@ -769,49 +789,123 @@ The price elasticity of aggregate supply is then
 
 \begin{equation}
 \frac{\partial \ln(Q)}{\partial \ln(E[P(T)]\bigr|_{t = 0})} = \eta + \frac{\phi(-z)}{\Phi(-z)} \frac{1}{s_p \sqrt{T}}
+\label{eq:pElasQagg}
 \end{equation}
 
-Recall that $\eta$ is just the farm level output price elasticity of supply. The output price elasticity of aggregate supply is thus the farm level elasticity plus the effect of farm entry/exit in response to price movements. Aggregate supply is inelastic/elastic if 
+Recall that $\eta$ is just the farm level output price elasticity of supply. The output price elasticity of aggregate supply is thus the farm level elasticity plus the effect of farm entry/exit in response to price movements. As farm participation approaches $100\%$, the price elasticity of aggregate supply approaches $\eta$, the price elasticity of farm level supply. Aggregate supply is inelastic/elastic if
 
 \begin{equation}
 \eta </> 1 - \frac{\phi(-z)}{\Phi(-z)} \frac{1}{s_p \sqrt{T}}
 \end{equation}
 
-Note that elasticity is inversely proportionate to the price risk ($s_p \sqrt{T}$). The effect of price risk on supply can be examined more explicitly as follows.
+Such that the possibility of an elastic aggregate supply response to price movements becomes increasingly limited as farm participation approaches $100\%$.
+
+Note, moreover, that elasticity is inversely proportionate to the price risk ($s_p \sqrt{T}$). The effect of price risk on supply can be examined more explicitly as follows.
 
 \begin{equation}
 \frac{\partial \ln(Q)}{\partial (s_p \sqrt{T})} = -\eta \frac{\phi(-z)}{\Phi(-z)} \left( \frac{1}{\eta^2 s_p^2 T} \ln \left( \frac{E[P(T)]\bigr|_{t = 0}}{E[C_0^{\#}(T)]\bigr|_{t = 0}} \right)  + \frac{1}{2} \right)
+\label{eq:pRiskElasQagg}
 \end{equation}
 
 # Illustrative use case
 
-The aggregate supply curve derived from Axioms 1-5 above is parameterized based on Kenya farm data. This sort of a validation but not so much a validation...
+Parameterization of the aggregate supply curve derived above requires knowledge of the crop expected output price at time of planting $P(0)$, the price growth rate $m_p$ and volatility $s_p$, the length of the cropping season $T$, the number of farms in the population $N_f$, the output degree of homogeneity $h$, the expected mean cost per unit output as evaluated at planting time $E[C_0^{\#}(T)]|_{t = 0}$, and the expected mean harvested output as evaluated at planting time $E[\tilde{q}^*(T)]\bigr|_{t = 0}$. The last of these may of course be further decomposed as $E[A] E[\tilde{y}(T)]\bigr|_{t = 0}$, where $E[A]$ is the mean farm size and $\tilde{y}(T)$ is just the $\tilde{y}$ from Equation \ref{eq:yConst}, with the time of evaluation (harvest) made explicit.
+
+When estimating $E[C_0^{\#}(T)]|_{t = 0}$ and $E[y^*(T)]\bigr|_{t = 0}$ based on farm survey data, it may be tempting to use the respective sample means. This would be erroneous in two ways: 1) The sample mean gives the actual values known post-harvest, whereas the model deduced above requires the farmers' expectation at planting time. And 2) recall that Axiom 3 implies that $C^{\#} < E[P(T)]\bigr|_{t = 0}$, which in turn implies that the sample means are over a truncated distribution.
+
+Given the assumption of lognormally distributed yield (Axiom 4), then, by linear independence of the logged regressors in Equation \ref{eq:cobbDoug4}, $C^{\#}$ is also lognormally distributed, such that
+
+\begin{equation}
+C_0^{\#}(T) = e^{m_c + \frac{s_c^2}{2}}
+\end{equation}
+
+Where the unobserved mean and variance of the untruncated distribution ($m_c$, $s_c^2$) can be implicitly calculated from the observed (i.e. sample) mean and variance ($\overline{m}_c$, $\overline{s}_c^2$) by the following formulae.
+
+\begin{equation}
+\begin{split}
+\overline{s}_c^2 &= s_c^2 \left( 1 - \overline(z) \frac{\phi(\overline{z})}{\Phi(\overline{z})} - \left( \frac{\phi(\overline{z})}{\Phi(\overline{z})} \right)^2   \right) \:\:;\:\:\: \frac{\ln(E[P(T)]\bigr|_{t = 0}) - m_c}{s_c} \\
+\overline{m}_c &= m_c - s_c \frac{\phi(\overline{z})}{\Phi(\overline{z})}
+\end{split}
+\end{equation}
+<!-- rootFnUp <- function(xIn, xUp, sXtrunc, mXtrunc){ -->
+<!--   sX <- xIn[1] -->
+<!--   mX <- xIn[2] -->
+<!--   zUp <- (log(xUp) - mX) / sX -->
+<!--   probTerm <- dnorm(zUp) / pnorm(zUp) -->
+<!--   slack_s <- sXtrunc^2 - sX^2 * (1 - zUp * probTerm - probTerm^2) -->
+<!--   slack_m <- mXtrunc - mX + sX * probTerm -->
+<!--   outVec <- c(slack_s, slack_m) -->
+<!--   return(outVec) -->
+<!-- } -->
+
+If the available farm survey data contains control variables ($k_i$), such that the model in Equation \ref{eq:cobbDoug4} can be estimated (making sure to use the untruncated mean of $C^{\#}$), then the mean yield at harvest $\tilde{y}(T)$ can be calculated directly from the estimated regression constant.
+
+
+
+
+
+
+
+
+
+Ideally, $C_0^{\#}$ and $h$ should be derived from detailed farm survey data. Calculation of $C_0^{\#}$ requires only farm cost and yield data. The value of $h$, on the other hand, must be estimated by regressing logged cost _and_ control variables on logged yield (recall Equation \ref{eq:cobbDoug4}). The estimated coefficient on logged cost may then be interpreted as $h$.
+
+Accurate price parameters may be difficult to come by in regions with poorly developed farm-to-market linkages due to an entrenched intermediary market which thrives precisely on buyer-seller information asymmetry. An accurate value for $N_f$ will likewise be difficult to estimate in populations where no recent farm census data is available. Note that $N_f$ is not necessary for evaluation of the price elasticity of aggregate supply and price risk elasticity of aggregate supply (Equations \ref{eq:pElasQagg} and \ref{eq:pRiskElasQagg}).
+
+
+
+
+The aggregate supply curve derived from Axioms 1-5 above is parameterized based on Kenya farm data. First, the farm level model in Equation \ref{eq:yStarC} is estimated using this data. Then, the resulting values for $h$, $\eta$, and $E[y^*(T)]\bigr|_{t = 0}$ are input into the aggregate model...   This sort of a validation but not so much a validation...
 
 ## Data, specification, estimation
 
-The farm data used below cover the 2007 main maize season in all maize producing regions of Kenya. The data are a subset of a much larger panel covering the main and short seasons of multiple crops for the years 2000, 2004, 2007, and 2010, originally gathered by the Egerton University Tegemeo Institute of Agricultural Policy and Development in partnership with Michigan State University, under the auspices of a USAID project [@maizeData]. The data include use of x organic and chemical fertilizers, x pest/plague control chemicals. The data also include detailed information on quantities of adult and child family labor expended on x different farm labor activities. In the case of 2007 main season maize, only xx fertilizers and xx pest/plague chemicals were used in significant quantities; and family labor was concentrated on xx activities (Figure \ref{xx}). Numerous demographic and infrastructural control variables are also included, as well as 2007 rainfall data... as well as the historical average rainfall. ...binary endowment variables...
+The farm data used below cover the 2007 main maize season on 942 farms in 20 different counties of Kenya. The data are a subset of a much larger panel covering the main and short seasons of multiple crops for the years 2000, 2004, 2007, and 2010, originally gathered by the Egerton University Tegemeo Institute of Agricultural Policy and Development in partnership with Michigan State University, under the auspices of a USAID project [@maizeData]. The data include detailed information on quantities of numerous types of organic and inorganic fertilizers, pest/plague control chemicals, and hired and family labor. A wide variety of demographic and infrastructural control variables, as well as input and crop prices, are also included.
+[as well as 2007 rainfall data... as well as the historical average rainfall. ...binary endowment variables...]
 <!-- (graphics here or in Appendix) Summary statistics can be found in the Appendix. -->
 
-This is where we talk about the continuous and binary variables used in the model and how other specifications are certainly feasible... lots of management variables available, but not required because of Equation \ref{eq:yStarC}. Models including farmer age, education, gender, maximum and minimum temperature, other types of family labor, and distance to market variables were also explored. But the coefficients on these variables were either statistically insignificant or introduced multicollinearity and/or missing data issues. A model based on Equation \ref{eq:cobbdoug3} was also estimated (provided in the Appendix) to compare h via mod2 against h as sum of estimated output elasticities of inputs. As discussed in sec..., the mod1 h varies across farms...the mod 2 h is very close to the mean h of mod1.
+For the purpose of parameterizing an aggregate supply curve, the data is required in order to have a mean yield ($E[y^*]$), average cost ($C^#$), and degree of homogeneity ($h$)....   The yield model in Equation \ref{eq:cobbDoug4} is specified as a function of cost per acre ($C^*$) and control variables ($k_i$).
 
-As discussed in section \ref{sec:ax12}, the independent continuous variables $k_i$ and $C^*$ are divided by their respective sample means $\tilde{k}_i$ and $\tilde{C}^*$ in order to facilitate interpretation of the constant $\hat{y}$. (In the case of rainfall, $\tilde{k}_i$ is the historical average, not the sample average). The constant $\hat{y}$ may then be interpreted as the "sample average yield", that is, the farm yield evaluated at the sample mean of the independent variables (at the historical mean in the case of rainfall).
+The continuous control variables $k_i$ are farm size (acres), seed quantity per acre, child family labor during planting (person-hours/acre), adult-equivalent household size (aehh07), and the 2007 main season rainfall. The cost per acre $C^*$ is the sum of all land prep and input (fertilizer, hired labor, and pesticide) costs. 
 
-The yield model is specified in logs as a function of cost ($C^*$), control variables ($k_i$), and binary endowment variables ($b_i$), plus an error term $\epsilon$ assumed to be normally distributed with mean 0.
+
+B and binary endowment variables ($b_i$), plus an error term $\epsilon$ assumed to be normally distributed with mean 0.
+
+
+
+The binary endowments in the model are land tenure (whether or not the farmer owns their land), hybrid maize seed, oxen, and tractor. These variables take a value of $e$ if the endowment is present and $1$ otherwise, such that the coefficients $\beta_i$ are added to the intercept term $\beta_0$ on farms that have the endowment, and vanish otherwise.
+
+The OLS estimation results are presented in Table 1. Excellent fit, low standard errors, reasonable R2, homoskedastic. A multicollinearity test revealed low vif score and hence linearly independent logged regressors.
+
+Because the model is estimated in logs, the coefficients on the continuous variables may be interpreted as the control variable elasticities ($\kappa_i$). Note that the coefficient on acres is negative, affirming the inverse relation between farm size and yield found in numerous other studies [@muyanga2019revisiting; @larson2014should; @wassie2019revisiting; @gautam2019too; @kimhi2006plot]. The coefficient on child family labor during planting is also negative, confirming that this variable is better thought of as a hard constraint rather than a discretionary management variable.
+
+
+This is where we talk about the continuous and binary variables used in the model and how other specifications are certainly feasible... lots of management variables available, but not required because of Equation \ref{eq:yStarC}. Models including farmer age, education, gender, maximum and minimum temperature, other types of family labor, and distance to market variables were also explored. But the coefficients on these variables were either statistically insignificant or introduced multicollinearity and/or missing data issues. A model based on Equation \ref{eq:cobbDoug3} was also estimated (provided in the Appendix) to compare h via mod2 against h as sum of estimated output elasticities of inputs. As discussed in sec..., the mod1 h varies across farms...the mod 2 h is very close to the mean h of mod1.
+
+As discussed in section \ref{sec:ax12}, the independent continuous variables $k_i$ and $C^*$ are divided by their respective sample means $\tilde{k}_i$ and $\tilde{C}^*$ in order to facilitate interpretation of the constant $\tilde{y}$. (In the case of rainfall, $\tilde{k}_i$ is the historical average, not the sample average). The constant $\tilde{y}$ may then be interpreted as the farm yield evaluated at the sample mean of the continuous independent variables (at the historical mean in the case of rainfall). Insofar as the continuous independent variables are uncorrelated, moreover, then $E[\hat{y}^*] = \tilde{y} e^{s_{\epsilon}^2 / 2}$, where $s_{\epsilon}^2$ is the variance of the error $\epsilon$.
+
+But $E[\hat{y}^*]$ is the sample mean. 
+
+
+
+
+
+
+The yield model is specified in logs as a function of 
 
 \begin{equation}
-\ln(y) = \ln(\tilde{y}) + \sum_{i = 1}^{n_k} \kappa \ln \left(\frac{k_i}{\tilde{k}_i}\right) + h \ln \left( \frac{C^*}{\tilde} \right) + \epsilon \:\:;\;\;\; \ln(\hat{y}) = \beta_0 + \sum_i \beta_i \ln(b_i)
+\ln(\hat{y}) = \ln(\tilde{y}) + \sum_{i = 1}^{n_k} \kappa \ln \left(\frac{k_i}{\tilde{k}_i}\right) + h \ln \left( \frac{C^*}{\tilde} \right) + \epsilon \:\:;\;\;\; \ln(\hat{y}) = \beta_0 + \sum_i \beta_i \ln(b_i)
 \label{eq:regMod}
 \end{equation}
 
-This is just the yield function in Equation \ref{eq:yStarC} in logs, and adjusted for estimation error $\epsilon$ and binary endowments $b_i$. The binary endowments in the model are land tenure (whether or not the farmer owns their land), hybrid maize seed, oxen, and tractor. These variables take a value of $e$ if the endowment is present and $1$ otherwise, such that the coefficients $\beta_i$ are added to the intercept term $\beta_0$ on farms that have the endowment, and vanish otherwise.
+This is just the yield function in Equation \ref{eq:yStarC} in logs, and adjusted for estimation error $\epsilon$ and binary endowments $b_i$. 
 <!-- [This means that the constant $\hat{y}$ is not the same on all farms, but varies depending on which, if any, binary endowments are present. The "base case"...]  -->
 
-The continuous control variables $k_i$ are farm size (acres), seed quantity per acre, child family labor during planting (person-hours/acre), adult-equivalent household size (aehh07), and the 2007 main season rainfall. The cost per acre $C^*$ is the sum of all land prep and input (fertilizer, hired labor, and pesticide) costs. The OLS estimation results are presented in Table 1.
 
-Because the model is estimated in logs, the coefficients on the continuous variables may be interpreted as the control variable elasticities ($\kappa_i$). Note that the coefficient on acres is negative, affirming the inverse relation between farm size and yield found in numerous other studies [@muyanga2019revisiting; @larson2014should; @wassie2019revisiting; @gautam2019too; @kimhi2006plot]. The coefficient on child family labor during planting is also negative, confirming that this variable is better thought of as a hard constraint rather than a discretionary management variable.
 <!-- [recall from Equation \ref{eq:yConst} that the input variable elasticities $\alpha_i$ and input prices $w_i$ are implicit in the constant $\tilde{y}$, without requiring detailed information about either.] -->
 
-Note that the constant $\tilde{y}$ is not the same for all farms, but varies depending upon how many binary endowments the farm has. The "base case" of $\hat{y} = e^{\beta_0}$, represents the sample average yield on farms with neither land tenure nor hybrid maize nor use of oxen or tractors for land preparation. In the sample examined here, there are 14 unique values for $\tilde{y}$, summarized in Figure \ref{fig:ySampAvg}.
+Note that the constant $\tilde{y}$ is not the same for all farms, but varies depending upon how many binary endowments the farm has. The "base case" of $\tilde{y} = e^{\beta_0}$, represents the sample average yield on farms with neither land tenure nor hybrid maize nor use of oxen or tractors for land preparation. In the sample examined here, there are 14 unique values for $\tilde{y}$, summarized in Figure \ref{fig:ySampAvg}.
+
+In the Appendix it is shown that the model in Equation \ref{eq:cobbDoug3} is also estimated...see Appendix. The value of $x_i / \tilde{x}_i$ is set to $1$ on farms where the input is not applied, such that the term vanishes from the equation... The output elasticities of input $\alpha_i$ are summed... add up to $h$.
 <!-- appendix graphics: input use, family labor, sumstats table -->
 
 ```{r Fig3, fig.show = "hold", fig.width = 5, fig.height=5, fig.align="center", fig.cap="\\label{fig:lognormalYd}", echo = FALSE}
@@ -1129,14 +1223,13 @@ gg1 + gg2 + plot_layout(ncol = 2, widths = c(1/2, 1))
 
 ```
 
-
-...lambda > h for most as expected, with truncated mean slightly less than 1...
-
-## Parameterization of the aggregate supply curve
-
 By Equation \ref{eq:yStarC}, the coefficient of `r round(hCoef, 3)` on logged cost/acre can be interpreted as the yield degree of homogeneity $h$. By Equation \ref{eq:PelastYstar}, the farm level price elasticity of supply then follows as `r round(etaCoef, 3)`.
 
+Since the $k_i$ are linearly independent, then the sample average yield equals $E[\hat{y}^*]$
+The mean yield 
+
 Equation \ref{eq:regMod} represents the real yield $y^*(T)$, known post harvest. Assuming that farmers expect rainfall to adhere to the historical average, then the expected yield at planting time ($E[y^*(T)]\bigr|_{t = 0}$) may reckoned from the available post hoc information as follows.
+
 
 \begin{equation}
 E[y^*(T)]\bigr|_{t = 0} = y^*(T) \frac{\tilde{k}_r}{k_r}^{\kappa_r} e^{\frac{s_{\epsilon}^2}{2}}
@@ -1144,6 +1237,11 @@ E[y^*(T)]\bigr|_{t = 0} = y^*(T) \frac{\tilde{k}_r}{k_r}^{\kappa_r} e^{\frac{s_{
 
 Where $s_{\epsilon}^2$ is the variance of the error term $\epsilon$.
 
+...lambda > h for most as expected, with truncated mean slightly less than 1...
+
+[additional tacit axioms---linear independence ]
+
+## Parameterization of the aggregate supply curve
 
 ...have to get the population mean/sd from the truncated mean/sd...
 
@@ -1379,7 +1477,7 @@ QsFun <- function(muEyStarT0, EPT0ref, fracVec, h, kappaRn, muArea,
   return(dfQs)
 }
 #=====================================================================
-# Get FAO Kenya maize data for calibration of Nf / validation of Qs
+# Get FAO Kenya maize data for validation of Qs
 thisFolder
 thisFile <- "FAO Kenya maize.csv"
 thisFilepath <- paste0(thisFolder, thisFile)
