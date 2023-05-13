@@ -407,6 +407,16 @@ And the marginal cost and cost per unit output are thus related as follows.
 \label{eq:lambda3}
 \end{equation}
 
+[comment here about how this differs from textbook concept of MC-AC relation?]
+
+Moreover, combining Equations \ref{eq:lambda3} and \ref{eq:YdEnvCompact} gives yet another expression for $y^*$ which proves useful during parameterization of the aggregate supply curve farther below.
+
+\begin{equation}
+y^* = (y_0 \theta)^{\frac{\eta}{h}} \left( \frac{C^{\#}}{\eta} \right)^{\eta} \:\:;\:\:\: \eta = \frac{h}{1 - h}
+\label{eq:yStarCsharp}
+\end{equation}
+
+
 Turning to supply and demand curves, From Equation \ref{eq:YdEnvCompact} and the domain of $h$, it follows that farm supply curves are positively sloped.
 
 \begin{equation}
@@ -807,19 +817,25 @@ Note, moreover, that elasticity is inversely proportionate to the price risk ($s
 \label{eq:pRiskElasQagg}
 \end{equation}
 
-# Illustrative use case
+# Parameterization of the aggregate supply curve
 
-Parameterization of the aggregate supply curve derived above requires knowledge of the crop expected output price at time of planting $P(0)$, the price growth rate $m_p$ and volatility $s_p$, the length of the cropping season $T$, the number of farms in the population $N_f$, the output degree of homogeneity $h$, the expected mean cost per unit output as evaluated at planting time $E[C_0^{\#}(T)]|_{t = 0}$, and the expected mean harvested output as evaluated at planting time $E[\tilde{q}^*(T)]\bigr|_{t = 0}$. The last of these may of course be further decomposed as $E[A] E[\tilde{y}(T)]\bigr|_{t = 0}$, where $E[A]$ is the mean farm size and $\tilde{y}(T)$ is just the $\tilde{y}$ from Equation \ref{eq:yConst}, with the time of evaluation (harvest) made explicit.
+Parameterization of the aggregate supply curve derived above thus requires knowledge of the output price at time of planting $P(0)$, the price growth rate $m_p$ and volatility $s_p$, the length of the cropping season $T$, the number of farms in the population $N_f$, the output degree of homogeneity $h$, the expected mean cost per unit output as evaluated at planting time $E[C_0^{\#}(T)]|_{t = 0}$, and the expected mean harvested output as evaluated at planting time $E[\tilde{q}^*(T)]\bigr|_{t = 0}$. The last of these may of course be further decomposed as $E[A] E[\tilde{y}(T)]\bigr|_{t = 0}$, where $E[A]$ is the mean farm size and $\tilde{y}(T)$ is just the $\tilde{y}$ from Equation \ref{eq:yConst}, with the time of evaluation (harvest) made explicit.
 
-When estimating $E[C_0^{\#}(T)]|_{t = 0}$ and $E[y^*(T)]\bigr|_{t = 0}$ based on farm survey data, it may be tempting to use the respective sample means. This would be erroneous in two ways: 1) The sample mean gives the actual values known post-harvest, whereas the model deduced above requires the farmers' expectation at planting time. And 2) recall that Axiom 3 implies that $C^{\#} < E[P(T)]\bigr|_{t = 0}$, which in turn implies that the sample means are over a truncated distribution.
+When estimating $E[C_0^{\#}(T)]|_{t = 0}$ and $E[y^*(T)]\bigr|_{t = 0}$ based on farm survey data, it may be tempting to use the respective sample means. This would be erroneous on two counts: 1) The sample mean gives the actual values known post-harvest, whereas the model deduced above requires the farmers' expectation at planting time. And 2) recall that Axiom 3 implies that $C^{\#} < E[P(T)]\bigr|_{t = 0}$, which in turn implies that the sample means are taken over a truncated distribution.
 
-Given the assumption of lognormally distributed yield (Axiom 4), then, by linear independence of the logged regressors in Equation \ref{eq:cobbDoug4}, $C^{\#}$ is also lognormally distributed, such that
+The expected yield at planting time for a given farm $E[y^*(T)]\bigr|_{t = 0}$ can be assessed by estimating the model in Equation \ref{eq:cobbDoug4} on the farm survey data, and then, for each farm, taking the expected value of the fitted model $\hat{y}^*$ evaluated at the observed values of the control variables, with the exception of weather variables (and any other control variables whose values are known only post harvest), which should be set to their expected values ($\tilde{k}_i$). That is, for each farm,
 
 \begin{equation}
-C_0^{\#}(T) = e^{m_c + \frac{s_c^2}{2}}
+E[y^*(T)]\bigr|_{t = 0} = \hat{y}^*(\mathbf{k}_{ante}, C^*)|_{\mathbf{k}_{post} = \tilde{\mathbf{k}}_{post}}) e^{\frac{s_{\epsilon}^2}{2}}
 \end{equation}
 
-Where the unobserved mean and variance of the untruncated distribution ($m_c$, $s_c^2$) can be implicitly calculated from the observed (i.e. sample) mean and variance ($\overline{m}_c$, $\overline{s}_c^2$) by the following formulae.
+Where $s_{\epsilon}^2$ is the variance of the estimation error. Now, the sample mean of this does not represent $E[\tilde{y}^*(T)]\bigr|_{t = 0}$ but rather $E[\tilde{y}^*(T) | C^# < E[P(T)]\bigr|_{t = 0}]\bigr|_{t = 0}$. In order to arrive at the former, the farm cost per unit output is first calculated as follows.
+
+\begin{equation}
+C^{\#} = frac{C^*}{E[y^*(T)]\bigr|_{t = 0}}
+\end{equation}
+
+The sample mean of this represents the mean taken over the truncated distribution, $E[C^{\#} | C^{\#} < E[P(T)]\bigr|_{t = 0}]$. Given the assumption of lognormally distributed yield (Axiom 4), then, by linear independence of the logged regressors in Equation \ref{eq:cobbDoug4}, $C^{\#}$ is also lognormally distributed, such that the unobserved mean and variance of the untruncated distribution of $\ln(C^{\#})$ ($m_c$, $s_c^2$) can be implicitly calculated from the observed (i.e. sample) mean and variance ($\overline{m}_c$, $\overline{s}_c^2$) by the following formulae.
 
 \begin{equation}
 \begin{split}
@@ -838,12 +854,24 @@ Where the unobserved mean and variance of the untruncated distribution ($m_c$, $
 <!--   return(outVec) -->
 <!-- } -->
 
-If the available farm survey data contains control variables ($k_i$), such that the model in Equation \ref{eq:cobbDoug4} can be estimated (making sure to use the untruncated mean of $C^{\#}$), then the mean yield at harvest $\tilde{y}(T)$ can be calculated directly from the estimated regression constant.
+With $m_c$ and $s_c$ in hand, the mean cost per unit output over the untruncated population then follows as $E[C^{\#}] = e^{m_c + s_c^2/2}$. Because Equation \ref{eq:yStarCsharp} is also a model for $y^*$, the mean expected yield taken over the untruncated distribution then follows as the mean over the truncated distribution (the sample mean) multiplied by a correction term.
+
+\begin{equation}
+E[\tilde{y}^*(T)]\bigr|_{t = 0} = E[\tilde{y}^*(T) | C^# < E[P(T)]\bigr|_{t = 0}]\bigr|_{t = 0} \left( \frac{E[C^{\#}]}{E[C^{\#} | C^{\#} < E[P(T)]\bigr|_{t = 0}]} \right)^{\eta}
+\end{equation}
+
+Where $h$ (implied in $\eta$) is the coefficient on $\ln(C^*)$ when $\hat{y}^*$ is estimated.
 
 
 
 
 
+If the available farm survey data includes control variables ($k_i$), then, with the untruncated $C^{\#}$ in hand, ... such that the model in Equation \ref{eq:cobbDoug4} can be estimated (making sure to use the untruncated mean of $C^{\#}$), then the mean yield at harvest $\tilde{y}(T)$ can be calculated directly from the estimated regression constant.
+
+
+
+The output price $P(T)$ received by farmers after harvest might be reported in the farm survey. However, the model requires the price at planting time $P(0)$ as well as $m_p$ and $s_p$, which are generally not reported in farm surveys. In countries with a well developed forward contracts market, such information is available. Elsewhere, it is becoming increasingly available via services like the FAO Food Price Monitoring and Analysis Tool. The question of estimating over how much time...one season? the entire previous year? a running 2 or 3 year average of the one season values? 
+<!-- , required to calculate the farmers' expected price (recall Equation \ref{eq:EPT0}) -->
 
 
 
@@ -857,7 +885,7 @@ Accurate price parameters may be difficult to come by in regions with poorly dev
 
 The aggregate supply curve derived from Axioms 1-5 above is parameterized based on Kenya farm data. First, the farm level model in Equation \ref{eq:yStarC} is estimated using this data. Then, the resulting values for $h$, $\eta$, and $E[y^*(T)]\bigr|_{t = 0}$ are input into the aggregate model...   This sort of a validation but not so much a validation...
 
-## Data, specification, estimation
+## Illustrative use case: Data, specification, estimation
 
 The farm data used below cover the 2007 main maize season on 942 farms in 20 different counties of Kenya. The data are a subset of a much larger panel covering the main and short seasons of multiple crops for the years 2000, 2004, 2007, and 2010, originally gathered by the Egerton University Tegemeo Institute of Agricultural Policy and Development in partnership with Michigan State University, under the auspices of a USAID project [@maizeData]. The data include detailed information on quantities of numerous types of organic and inorganic fertilizers, pest/plague control chemicals, and hired and family labor. A wide variety of demographic and infrastructural control variables, as well as input and crop prices, are also included.
 [as well as 2007 rainfall data... as well as the historical average rainfall. ...binary endowment variables...]
@@ -886,7 +914,7 @@ As discussed in section \ref{sec:ax12}, the independent continuous variables $k_
 But $E[\hat{y}^*]$ is the sample mean. 
 
 
-
+There are x distinct output prices reported in the data, ranging from x to x with a mean of x... mp and sp from FPMA.
 
 
 
