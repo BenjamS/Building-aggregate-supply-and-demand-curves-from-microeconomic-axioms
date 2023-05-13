@@ -375,7 +375,8 @@ Finally, note also the similarity between Equations \ref{eq:yStarC} and \ref{eq:
 
 which is congruent to Axiom 1. The question arises, then, whether Axiom 2 requires axiom status, or whether it is implied by Axiom 1. But this is a question for pure logicians. Pending clarification, we continue to call it an Axiom.
 
-### Some important/underrepresented corollaries
+### Cost per unit output
+<!-- Some important/underrepresented corollaries -->
 
 Because the C-D fn has fallen into such disrepute, it is worthwhile to take a moment to highlight some attractive corollaries that are underrepresented in the textbook treatments. [and one new one -lipton]
 
@@ -409,13 +410,16 @@ And the marginal cost and cost per unit output are thus related as follows.
 
 [comment here about how this differs from textbook concept of MC-AC relation?]
 
-Moreover, combining Equations \ref{eq:lambda3} and \ref{eq:YdEnvCompact} gives yet another expression for $y^*$ which proves useful during parameterization of the aggregate supply curve farther below.
+Moreover, combining Equations \ref{eq:lambda3} and \ref{eq:YdEnvCompact} gives yet another instructive expression for $y^*$.
 
 \begin{equation}
 y^* = (y_0 \theta)^{\frac{\eta}{h}} \left( \frac{C^{\#}}{\eta} \right)^{\eta} \:\:;\:\:\: \eta = \frac{h}{1 - h}
 \label{eq:yStarCsharp}
 \end{equation}
 
+This expression proves useful during parameterization of the aggregate supply curve farther below, but has limited predictive power since, by definition, $C^{\#}$ is not known until harvest.
+
+### Farm level supply and input demand
 
 Turning to supply and demand curves, From Equation \ref{eq:YdEnvCompact} and the domain of $h$, it follows that farm supply curves are positively sloped.
 
@@ -649,11 +653,11 @@ gg_ts + gg_hist + plot_layout(ncol = 2, widths = c(1, 1/3))
 
 ```
 
-The stochastic movement of $y^*(t)$ is slightly less straightforward. While it may be difficult to make a direct case that $y^*(t)$---which is unobservable until harvest---follows a geometric Brownian motion, the geometric Brownian motion of the meteorological variables upon which yield depends is well supported empirically (Figure \ref{fig:gBmWeather}). By Ito's lemma, it then follows that $y^*(t)$ must also follow a geometric Brownian motion.
+The stochastic movement of $y^*(t)$ is slightly less straightforward. Yield is a function of both deterministic and stochastic (mostly meteorological) variables. Insofar as the stochastic movement of meteorological variables follows a geometric Brownian motion (as in Figure \ref{fig:gBmWeather}), then it can be shown by Ito's lemma that $y^*(t)$ must also follow a geometric Brownian motion.
 
-Denoting the mean and variance of the normally distributed changes $\Delta y^* / y^*$ as $m_y \Delta t$ and $s_y^2 \Delta t$, respectively, it is then straightforward to verify, again by Ito's lemma, that $C^{\#}$ also follows a geometric Brownian motion whose log changes have variance $s_c^2$ equal to $s_y^2$. Moreover, Equation \ref{eq:lambda3} implies $s_c^2 = s_p^2$, and thus by transitivity $s_y^2 = s_p^2$.
+Because the cost per unit output $C^{\#}$ is defined as a function of $y^*(t)$, then---again by Ito's lemma---it too must follow a geometric Brownian motion. Denoting the mean and variance of the normally distributed changes $\Delta y^* / y^*$ as $m_y \Delta t$ and $s_y^2 \Delta t$, respectively, then Ito's lemma also reveals that the log changes of $C^{\#}$ have variance $s_c^2$ equal to $s_y^2$. Moreover, Equation \ref{eq:lambda3} implies $s_c^2 = s_p^2$; and thus, by transitivity, $s_y^2 = s_p^2$.
 
-[gBm over a given growing season; beyond that the motion may exhibit cyclic or mean reverting behavior, which diverges from gBm]
+...It is important to consider these time series over a relevant time period, i.e. the growing season. Beyond that the motion may exhibit cyclic or mean reverting behavior, which diverges from gBm..
 
 ```{r Fig2, fig.show = "hold", fig.width = 5, fig.height=5, fig.align="center", fig.cap="\\label{fig:gBmWeather}(Left) Daily average weather variable time series covering the 2018 maize long rains growing season in Eldoret, Kenya (NREL 2023). (Right) The corresponding daily log changes exhibit the normal distribution typical of geometric Brownian motion.", echo = FALSE}
 
@@ -740,6 +744,7 @@ By Rubini's theorem,
 
 \begin{equation}
 E[E[q^*(T)]\bigr|_{t = 0}] = E[E[q^*(T)]\bigr|_{t = T}]\bigr|_{t = 0}
+\label{eq:rubThm}
 \end{equation}
 <!-- $E[E[q^*(T)]\bigr|_{t = 0}] = E[\tilde{q}(T)]\bigr|_{t = 0}$, where the shorthand $\tilde{q}^*(T) = E[q^*(T)]\bigr|_{t=T}$ has been introduced. -->
 
@@ -823,19 +828,24 @@ Parameterization of the aggregate supply curve derived above thus requires knowl
 
 When estimating $E[C_0^{\#}(T)]|_{t = 0}$ and $E[y^*(T)]\bigr|_{t = 0}$ based on farm survey data, it may be tempting to use the respective sample means. This would be erroneous on two counts: 1) The sample mean gives the actual values known post-harvest, whereas the model deduced above requires the farmers' expectation at planting time. And 2) recall that Axiom 3 implies that $C^{\#} < E[P(T)]\bigr|_{t = 0}$, which in turn implies that the sample means are taken over a truncated distribution.
 
-The expected yield at planting time for a given farm $E[y^*(T)]\bigr|_{t = 0}$ can be assessed by estimating the model in Equation \ref{eq:cobbDoug4} on the farm survey data, and then, for each farm, taking the expected value of the fitted model $\hat{y}^*$ evaluated at the observed values of the control variables, with the exception of weather variables (and any other control variables whose values are known only post harvest), which should be set to their expected values ($\tilde{k}_i$). That is, for each farm,
+To redress count 1, the log-log model in either Equation \ref{eq:cobbDoug3Ln} or \ref{eq:cobbDoug4} can be estimated by OLS on farm survey data (taking the usual precautions to ensure homoscedasticity and linear independence of the regressors). If the fit is good, then each farm's expected yield at planting may then be reasonably approximated by evaluating the fitted model $\hat{y}^*$ at the farm's regressor values, with the exception of weather variables (and any other control variables whose values are known only post harvest), denoted $\mathbf{k}_{post}$, which should be set to their expected values ($\mathbf{\tilde{k}}_{post}$). That is, for each farm,
+<!-- the expected yield at planting time for a given farm $E[y^*(T)]\bigr|_{t = 0}$ can be assessed by estimating -->
+<!-- The fitted model then describes the behavior of all farms -->
+<!-- As discussed in section ... Equation \ref{eq:cobbDoug4} has the advantage of requiring less data, and giving a  -->
 
 \begin{equation}
-E[y^*(T)]\bigr|_{t = 0} = \hat{y}^*(\mathbf{k}_{ante}, C^*)|_{\mathbf{k}_{post} = \tilde{\mathbf{k}}_{post}}) e^{\epsilon}
+E[y^*(T)]\bigr|_{t = 0} \approx \hat{y}^*|_{\mathbf{k}_{post} = \mathbf{\tilde{k}}_{post}})
 \end{equation}
 
-Where $\epsilon$ is the estimation error. Now, the sample mean of this does not represent $E[\tilde{y}^*(T)]\bigr|_{t = 0}$ but rather $E[\tilde{y}^*(T) | C^# < E[P(T)]\bigr|_{t = 0}]\bigr|_{t = 0}$. In order to arrive at the former, the farm cost per unit output is first calculated as follows.
+Now, as discussed in the previous section, the population mean of $E[y^*(T)]\bigr|_{t = 0}$ may be considered equal to the expected value at planting time of the population mean harvested yield $\tilde{y}^*(T)$ (recall Equation \ref{eq:rubThm}). However, because of Axiom 3, the sample mean of $E[y^*(T)]\bigr|_{t = 0}$ does not represent the population mean, but rather the mean over a truncated population, i.e. $E[\tilde{y}^*(T) | C^# < E[P(T)]\bigr|_{t = 0}]\bigr|_{t = 0}$.
+
+In order to arrive at the population mean and redress count 2, the sample mean of $C^{\#}$ is first calculated as follows.
 
 \begin{equation}
-C^{\#} = frac{C^*}{E[y^*(T)]\bigr|_{t = 0}}
+E[C^{\#}(T) | E[C^{\#}(T)]\bigr|_{t = 0} < E[P(T)]\bigr|_{t = 0}]\bigr|_{t = T} = E\left[ frac{C^*}{y^*(T)} \right]
 \end{equation}
 
-The sample mean of this represents the mean taken over the truncated distribution, $E[C^{\#} | C^{\#} < E[P(T)]\bigr|_{t = 0}]$. Given the assumption of lognormally distributed yield (Axiom 4), then, by linear independence of the logged regressors in Equation \ref{eq:cobbDoug4}, $C^{\#}$ is also lognormally distributed, such that the unobserved mean and variance of the untruncated distribution of $\ln(C^{\#})$ ($m_c$, $s_c^2$) can be implicitly calculated from the observed (i.e. sample) mean and variance ($\overline{m}_c$, $\overline{s}_c^2$) by the following formulae.
+Given the assumption of lognormally distributed yield (Axiom 4), then, by linear independence of the OLS regressors, $C^{\#}(T)$ is also lognormally distributed, such that the unobserved mean and variance of the untruncated distribution of $\ln(C^{\#}(T))$ ($m_c$, $s_c^2$) can be implicitly calculated from the observed (i.e. sample) mean and variance ($\overline{m}_c$, $\overline{s}_c^2$) by the following standard formulae.
 
 \begin{equation}
 \begin{split}
@@ -854,7 +864,7 @@ The sample mean of this represents the mean taken over the truncated distributio
 <!--   return(outVec) -->
 <!-- } -->
 
-With $m_c$ and $s_c$ in hand, the mean cost per unit output over the untruncated population then follows as $E[C^{\#}] = e^{m_c + s_c^2/2}$. Because Equation \ref{eq:yStarCsharp} is also a model for $y^*$, the mean expected yield taken over the untruncated distribution then follows as the mean over the truncated distribution (the sample mean) multiplied by a correction term.
+With $m_c$ and $s_c$ in hand, the mean cost per unit output over the untruncated population then follows as $E[C^{\#}(T)] = e^{m_c + s_c^2/2}$. Because Equation \ref{eq:yStarCsharp} is also a model for $y^*$, the mean expected yield taken over the untruncated distribution then follows as the mean over the truncated distribution (the sample mean) multiplied by a correction term.
 
 \begin{equation}
 \begin{split}
@@ -863,7 +873,7 @@ E[\tilde{y}^*(T)]\bigr|_{t = 0} &= E[\tilde{y}^*(T) | C^# < E[P(T)]\bigr|_{t = 0
 \end{split}
 \end{equation}
 
-Where $s_{\epsilon}^2$ is the variance of the estimation error and $h$ (implied in $\eta$) is the coefficient on $\ln(C^*)$.
+Where $s_{\epsilon}^2$ is the variance of the OLS estimation error and $h$ (implied in $\eta$) is the coefficient on $\ln(C^*)$.
 
 The output price $P(T)$ received by farmers after harvest might be reported in the same farm survey data used to estimate $E[\tilde{y}^*(T)]\bigr|_{t = 0}$. However, the model requires the price at planting time $P(0)$, as well as $m_p$ and $s_p$, which are generally not reported in farm surveys. In countries with well developed forward contracts markets, such information is often available from commodity exchanges. And even in regions with poorly developed farm-to-market linkages, price information is increasingly available from services like the FAO Food Price Monitoring and Analysis Tool, which is the source of the price series in the lower left panel of Figure \ref{fig:gBmPrice}.
 <!-- , often due to a large, entrenched intermediary market which thrives precisely on buyer-seller information asymmetry -->
