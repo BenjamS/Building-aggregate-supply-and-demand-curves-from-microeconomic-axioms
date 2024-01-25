@@ -3,7 +3,7 @@ title: A theoretical derivation of the aggregate supply curve accounting for far
 # author: "Benjamin Schiek"
 # date: "`r Sys.Date()`"
 abstract: |
-  The functional form of aggregate supply is typically specified in order to facilitate calculations, with little thought given to its theoretical basis. This results in theoretical contradictions which call into question the results of the analysis. Here we derive a closed form aggregate agricultural supply and demand functions from microeconomic axioms and the assumption of lognormally distributed yields. The resulting functional form is highly instructive and agrees well with other aspects of theory... indicates that farm market participation is proportionate to the probability that the producer harvest price will be greater than the farm population's mean marginal cost of production. Allows for analysis of price and technology impacts at specific centiles. The elasticity The functional form opens a new vista on supply elasticity...decomposed into yield and farm participation terms. An aggregate farm input demand curve is also derived, followed by an aggregate farm commodity demand curve. The supply curve is fit to Kenya maize data. Food policy implications are discussed.
+  The specification of conventional models of aggregate supply of agricultural commodities, such as the linear or constant elasticity of supply model, typically prioritizes computational expedience over theoretical consistency. This results in theoretical contradictions which call into question the results of the analysis. The interpretation of such models is further complicated by the appearance of abstract parameters with a tenuous connection to real economic phenomena. For applications where theoretical transparency and consistency are a priority, here we derive a closed form aggregate agricultural supply function from non-controversial microeconomic axioms, and the assumption of lognormally distributed yields. The resulting model is highly instructive and intuitive, indicating that farm entry/exit is proportionate to the probability that the mean farm will make a profit at harvest. The resulting price elasticity of aggregate supply is likewise intuitive, capturing farm entry/exit due to changes in price. We estimate the model using Kenya farm data. Calculation of supply and price elasticity of supply based on the model agrees with empirical estimates. Other potential use cases are discussed, including usage in partial equilibrium models and research induced supply curve shifts.
 header-includes:
   - \usepackage{geometry}
   - \geometry{top=1in,left=1in,bottom=1in,right=1in}
@@ -42,10 +42,11 @@ axisTitleSize <- 7
 facetTitleSize <- 7
 
 ```
+   <!-- Allows for analysis of price and technology impacts at specific centiles. -->
 
 # Introduction
 
-In ex-ante impact assessments of exogenous changes in agricultural technology and agroclimatic conditions, aggregate supply curves are often specified primarily for the purpose of facilitating certain calculations (usually of economic surplus, deadweight loss, and the like), with secondary consideration given to the plausibility of the theoretical underpinnings implied by the choice of functional form. The resulting models are then, by construction, theoretically opaque.
+In ex-ante impact assessments of exogenous changes in agricultural technology and agroclimatic conditions, aggregate supply curves are often specified primarily for the purpose of facilitating certain calculations (e.g. economic surplus or deadweight loss), with secondary consideration given to the plausibility of the theoretical underpinnings implied by the choice of functional form. The resulting models are then, by construction, theoretically opaque.
 
 In particular, it is unclear whether they are consistent with microeconomic principles regarding homogeneity, convexity/concavity, and profit maximization; and it is unclear what shape of farm production density function is implied by the model. That is to say, if aggregate supply $Q$ may be defined as the definite integral of farm production function $q^*$ times the production density $\rho(q^*)$ over the domain of profitable production $(\underline{q}^*, \bar{q}^*)$,
 
@@ -57,8 +58,9 @@ Q(P) = \int_{\underline{q}^*}^{\bar{q}^*} q^* \rho(q^*) \: dq^*
 then it is not readily apparent from expedient specifications of $Q$ what the functions $q^*$ and $\rho(q^*)$ are, nor whether they are plausible vis-a-vis microeconomic theory and empirical evidence. Critically, expedient specifications of $Q$ also gloss over farm entry and exit---i.e. the domain of profitable production $(\underline{q}^*, \bar{q}^*)$---such that it is not possible to decompose changes in aggregate supply into yield and employment (farm entry/exit) components.
 [...holding multiple axioms without knowing if they perhaps contradict each other...]
 
-Expedient functional forms are also empirically opaque, in the sense that the parameterization of such forms is highly abstract, with no clear mapping to the relevant measurable, real world phenomena---i.e. technology, input prices, agroclimatic conditions, demographic variables, etc. This leaves very little basis upon which to assess the plausibility of different parameterizations of a given exogenous shock, or to attribute modeled impacts to the exogenous shock with confidence (the attribution problem). Some expedient forms also introduce awkward artifacts---such as the possibility of negative supply quantities and/or of farms producing for free, in the case of the linear aggregate supply curve---which further limit the model's explanatory power. [This, in turn, complicates the defense of any modeling results, especially when the modeler or their source of funding have a vested interest in said results.. as it boils down to modeler fiat not to any verifiable presmises]
-adoption
+Expedient functional forms are also empirically opaque, in the sense that the parameterization of such forms is highly abstract, with no clear mapping to the relevant measurable, real world phenomena---i.e. technology, input prices, agroclimatic conditions, demographic variables, etc. This leaves very little basis upon which to assess the plausibility of different parameterizations of a given exogenous shock, or to attribute modeled impacts to the exogenous shock with confidence (the attribution problem). Some expedient forms also introduce awkward artifacts---such as the possibility of negative supply quantities and/or of farms producing for free, in the case of the linear aggregate supply curve---which further limit the model's explanatory power.
+<!-- [This, in turn, complicates the defense of any modeling results, especially when the modeler or their source of funding have a vested interest in said results.. as it boils down to modeler fiat not to any verifiable presmises] -->
+<!-- adoption -->
 <!-- [, while adding more layers of methodological wrangling/theoretical opacity.] -->
 <!-- [which in turn invites misuse and abuse of the model, and otherwise complicates the defense of any modeling results.] -->
 <!-- [the mathematical expression no different from the same statement in literary form] -->
@@ -66,11 +68,28 @@ adoption
 
 To be fair, this is, in some sense, the whole point of expedient specifications of aggregate supply and demand: A degree of explanatory power is deliberately sacrificed in exchange for computational expedience. And the thousands of published ex-ante impact assessments of agricultural research that specify linear aggregate supply and demand functions might seem to suggest that the modicum of explanatory power retained by such specifications is sufficient for most modeling purposes.
 
-However, popularity is a misleading indicator in this regard. It might merely reflect the low cost of implementing the model, and/or the lack of comparably low cost alternatives. Self-interest might also play a role, as the opacity of such models is known to invite misuse and abuse in the form of overstated net benefits [@alston2001attribution; @hurley2014re]. Hurley et al. [@hurley2014re; @hurley2016returns] note a growing "disconnect" between the level of funding for agricultural research and the level of funding that would be justified by such impact assessments, and conclude that donors have stopped believing them.
+However, popularity can be a misleading indicator of quality. It could merely reflect the low cost of implementing the model, for example, and/or the lack of comparably low cost alternatives. A more telling indicator of model quality, we submit, is the growing "disconnect" between the actual level of funding for agricultural research and the level of funding that would be justified by impact assessments conducted on the basis of conventional aggregate supply models [@hurley2016returns]. There is good reason to suspect that this disconnect is due to the implausibly high---and sometimes absurdly high---internal rates of return reported in conventional impact assessments of agricultural R&D [@hurley2014re; @alston2001attribution; @hurley2016returns]. In a meta-analysis of 492 such impact assessments, for example, Hurley et al. [@hurley2016] note that the average reported internal rate of return (IRR) implies that the USDA's 2000 R&D investment of \$4.1 billion should be worth \$56.3 quintillion in 2050, or 2.3 million times projected world GDP at that time. "[I]t is not difficult to see," the authors conclude, "how policy makers may question the credibility of such evidence" [@hurley2016].
+<!-- [In discussion: The implausibility is made more conspicuous considering that these assessments are typically written by or in close consultation with the scientists whose research is under evaluation, and who thus have a vested interest in its success.] -->
 
-This is a more telling indicator suggesting that expedient specifications are insufficient for most purposes---i.e. for the purposes of producing accurate, unbiased, credible ex-ante impact assessments. Or, at the very least, it points to a growing, unmet demand for more transparency and plausibility in ex-ante impact assessment.
+Hurley et al. [@hurley2014re] respond to the incredulity of policy makers by replacing IRR with their "modified" IRR or MIRR, whereby implausibly high projected returns are deflated to plausible levels. This is a suitable response insofar as the implausibility in question is rooted in the discounting method (although see the debate between Ohemke [] and Hurley et al. 2014). The present work is motivated by cases where implausible modeling results are rooted in the modeling of exogenous shocks on farm populations---particularly the modeling of aggregate supply and supply curve shifts. In such cases, application of the MIRR method does not resolve implausibility, but rather disguises it.
+<!-- in particular its theoretical premises and derivation, its estimation, and the assumptions upon which it rests.  In the present article we dubious assumptions and theoretically opaque modeling---especially ---that generate implausibly high projections of net benefits in the first place. -->
+<!-- In other words, there is a demand for theoretical transparency and consistency, and empirical plausibility in the ex-ante impact assessment itself, not in how the result of the assessment is discounted back to the present. -->
+<!-- Insofar as this suspicion is correct, MIRR is but a cosmetic dressing up of implausibility that fails to address the real root of the problem. -->
+<!-- Or, at the very least, it points to a growing, unmet demand for more . -->
+<!-- conclude that donors have stopped believing them. This is a more telling indicator than popularity, suggesting that expedient specifications are insufficient for most purposes---i.e. for the purposes of producing accurate, unbiased, credible ex-ante impact assessments.  -->
+<!-- Self-interest might also play a role, as the opacity of such models is known to invite misuse and abuse in the form of overstated net benefits [@alston2001attribution; @hurley2014re].-->
 
-[MIRR] To meet this demand, below we derive an aggregate supply curve from five Axioms. The derived curve explicitly accounts for farm entry/exit, such that supply response to shocks can be decomposed into yield and participation components. The term in the function regulating farm entry/exit is surprisingly instructive, as it is proportionate to the probability that output price will be greater than marginal cost at the time of sale. The curve is empirically transparent, i.e. its parameters have a straightforward interpretation in terms of concrete, measurable phenomena, such that exogenous shocks may be modeled precisely and transparently.
+Progress in this direction is deterred by a general perception that the task is impossible:
+
+>"What does economic theory tell us about the nature of ...[research induced aggregate supply curve] shifts? Unfortunately, not very much. To be confident about this aspect of the problem would require either (a) precise econometric evidence or (b) detailed information on the effects on individual agents, details of industry structure including details on exit and entry of firms, and a complete theory of aggregation. This information is not available; assumptions are unavoidable" [@alston1995science].
+
+The remainder of this article is essentially one long disagreement with this passage. We disagree with the perception that economic theory does not tell us very much about the nature of aggregate supply curve shifts. On the contrary, economic theory gives us a set of axioms upon which it is possible to construct the "complete theory of aggregation" that Alston et al. [@alston1995science] suppose to be impossible. 
+
+In this article, we effectively provide (b)..."effects on individual agents" is a matter of farm level modeling, and "industry structure including details on exit and entry of firms" is a matter of Axiom 5.  show that economic theory can tell us a great deal more than these guys suspected...an optimistic view of what theory can tell us about the aggregate supply response to exogenous shocks.
+
+
+For those who share our suspicion, here we derive an aggregate supply curve from five Axioms. The derived curve explicitly accounts for farm entry/exit, such that supply response to shocks can be decomposed into yield and entry/exit components. The term in the function regulating farm entry/exit turns out to be surprisingly instructive, as it is proportionate to the probability that output price will be greater than mean farm's expected cost per unit output at the time of sale (i.e. the mean farm's probability of profit). The curve is empirically transparent, i.e. its parameters have a straightforward interpretation in terms of concrete, measurable phenomena, such that exogenous shocks may be modeled precisely and transparently.
+The price elasticity of aggregate supply resulting from this functional form is the farm level price elasticity of supply plus a term capturing farm entry/exit. The research induced supply curve shift is complex. ...adoption... derivative of aggregate supply with respect to price volatility, multiple levers at the policy maker's disposal.
 
 The five Axioms are:
 
@@ -86,10 +105,11 @@ The five Axioms are:
 
 5) Farm yield is lognormally distributed
 
-
 Four other desirable properties---a farm production function that is homogeneous (and thus homothetic) and concave in inputs, upward sloping farm supply curves, and downward sloping farm input demand curves---follow as corollaries, and thus need not be imposed as additional Axioms. [The form also agrees with Lipton's theory of technology adoption.]
 
 On the other hand, two somewhat controversial corollaries also follow: strictly decreasing returns to scale and constant marginal cost. (The latter is well supported empirically [@lavoie2014post], but is still eschewed in the textbooks.) Regardless of one's view on returns to scale and marginal cost curves, the very fact that it is possible to disagree with specific corollaries, and to trace the disagreement back to specific Axioms, underscores a key strength of the derived curve: its theoretic transparency. The theoretic opacity of the expedient approach, by contrast, it is not even possible to know if one agrees or disagrees with the premises, since there is little clarity as to what those premises are in the first place. [Moreover, note that the Axioms themselves are not controversial. If they result in a controversial corollary, then this is invitation to reflect upon whether trying to have their cake and eat it too]
+
+preclude constant returns to scale, directly contradicting the conventional wisdom handed down by Hicks [-@hicks1963theory] and Solow [-@solow1957technical]. ...also constant marginal cost...This agrees with empirical evidence [@lavoie2014post]. It also contradicts the theory of the firm presented in most microeconomic textbooks, which assumes (with no evidentiary basis) increasing marginal cost as output rises.]
 <!-- limits the possibility of knowing whether the implied farm production function is homogeneous, much less the degree of homogeneity or shape of the marginal cost curve. In general, it  -->
 
 The gain in transparency and explanatory power comes at little cost to tractability... computation of economic surplus...  While the derived functional form is considerably more sophisticated than expedient forms, it remains highly tractable, and may be implemented at low cost. Unlike expedient forms, the derived curve generates testable hypotheses regarding farm level economic behavior. The curve is estimated on Kenya maize farm data, and hypotheses are tested. Extensions to aggregate demand and partial equilibrium analysis, and application in min data contexts, are briefly addressed in the Discussion.
@@ -115,9 +135,6 @@ Specification of the aggregate supply curve may be considered a case in point. T
 
 ...The current sense is that this is somehow impossible. The verdict:
 
-"What does economic theory tell us about the nature of these shifts? Unfortunately, not very much. To be confident about this aspect of the problem would require either (a) precise econometric evidence or (b) detailed information on the effects on individual agents, details of industry structure including details on exit and entry of firms, and a complete theory of aggregation. This information is not available; assumptions are unavoidable" (Alston, Norton, & Pardey, 1995).
-
-In this article, we effectively provide (b)..."effects on individual agents" is a matter of farm level modeling, and "industry structure including details on exit and entry of firms" is a matter of Axiom 5.  show that economic theory can tell us a great deal more than these guys suspected...an optimistic view of what theory can tell us about the aggregate supply response to exogenous shocks.
 
 
 Expedient functional forms also tend to introduce awkward model artifacts---such as the possibility of negative supply quantities and/or of farms producing for free, in the case of linear supply functions---which effectively reduce the form to a local approximation of some inscrutable global function, with validity restricted to a small domain of convergence around the starting equilibrium point. The 
@@ -375,10 +392,9 @@ Finally, note also the similarity between Equations \ref{eq:yStarC} and \ref{eq:
 
 which is congruent to Axiom 1. The question arises, then, whether Axiom 2 requires axiom status, or whether it is implied by Axiom 1. But this is a question for pure logicians. Pending clarification, we continue to call it an Axiom.
 
-### Cost per unit output
+### Marginal cost and cost per unit output
 <!-- Some important/underrepresented corollaries -->
-
-Because the C-D fn has fallen into such disrepute, it is worthwhile to take a moment to highlight some attractive corollaries that are underrepresented in the textbook treatments. [and one new one -lipton]
+<!-- Because the C-D fn has fallen into such disrepute, it is worthwhile to take a moment to highlight some attractive corollaries that are underrepresented in the textbook treatments. [and one new one -lipton] -->
 
 The farm marginal cost readily follows from the scale elasticity of yield by combining it with the budget shadow price expression in Equation \ref{eq:lambda}.
 
@@ -394,7 +410,14 @@ Axioms 1 and 2 thus imply constant marginal cost. (As mentioned in the introduct
 \label{eq:lambda2}
 \end{equation}
 
-Letting $C^{\#}$ denote the cost per unit output (i.e. the so called "average cost of production"), moreover, then
+Letting $C^{\#}$ denote the cost per unit output (often called the "average cost of production"),
+
+\begin{equation}
+C^{\#} = \frac{C^*}{y^*}
+\label{eq:cSharp1}
+\end{equation}
+
+Then
 
 \begin{equation}
 \lambda = \frac{P}{C^{\#}} h
@@ -407,17 +430,6 @@ And the marginal cost and cost per unit output are thus related as follows.
 \frac{dC^*}{dy^*} h = C^{\#}
 \label{eq:lambda3}
 \end{equation}
-
-[comment here about how this differs from textbook concept of MC-AC relation?]
-
-Moreover, combining Equations \ref{eq:lambda3} and \ref{eq:YdEnvCompact} gives yet another instructive expression for $y^*$.
-
-\begin{equation}
-y^* = (y_0 \theta)^{\frac{\eta}{h}} \left( \frac{C^{\#}}{\eta} \right)^{\eta} \:\:;\:\:\: \eta = \frac{h}{1 - h}
-\label{eq:yStarCsharp}
-\end{equation}
-
-This expression proves useful during parameterization of the aggregate supply curve farther below, but has limited predictive power since, by definition, $C^{\#}$ is not known until harvest.
 
 ### Farm level supply and input demand
 
@@ -463,18 +475,18 @@ whereby it is clear that the domain of $h$ implies negatively sloped own and cro
 <!-- ### Domain of profitable production (Axiom 3) and restatement of aggregate supply -->
 <!-- It is now possible to define in detail the domain of profitable production $(\underline{q}^*, \bar{q}^*)$ appearing in the aggregate supply integral (Equation \ref{eq:sup1}). -->
 
-Assuming that farms do not enter production unless they expect to make a profit (Axiom 3) is tantamount to assuming that $C^{\#} < P$. By Equation \ref{eq:lambda3}, then, Axiom 3 introduces the bound $\lambda > h$. This, in turn, imposes the following upper bound on expected yield.
+<!-- Assuming that farms do not enter production unless they expect to make a profit (Axiom 3) is tantamount to assuming that $C^{\#} < P$. By Equation \ref{eq:lambda3}, then, Axiom 3 introduces the bound $\lambda > h$. This, in turn, imposes the following upper bound on expected yield. -->
 
-\begin{equation}
-y^* < (g_0 \theta)^{\eta / h}  \left(\frac{P}{h} \right)^{\eta} \:\:;\:\:\: \eta = \frac{h}{1 - h}
-\label{eq:ydUpBound}
-\end{equation}
+<!-- \begin{equation} -->
+<!-- y^* < (g_0 \theta)^{\eta / h}  \left(\frac{P}{h} \right)^{\eta} \:\:;\:\:\: \eta = \frac{h}{1 - h} -->
+<!-- \label{eq:ydUpBound} -->
+<!-- \end{equation} -->
 
-(No lower bound is imposed by Axiom 3, and so the lower bound of $y^*$ just defaults to the physical lower bound $y^* > 0$.)
+<!-- (No lower bound is imposed by Axiom 3, and so the lower bound of $y^*$ just defaults to the physical lower bound $y^* > 0$.) -->
 
-## Derivation of aggregate supply from Axioms 4-5
+## Derivation of aggregate supply from Axioms 3-5
 
-### Geometric Brownian motion of prices and yield (Axiom 4) \label{sec:gBmAx}
+### Geometric Brownian motion of prices and yield (Axiom 3) \label{sec:gBmAx}
 
 Henceforth it is necessary to be more specific in the treatment of yield $y^*$ and output price $P$ as stochastic variables. Absent a forward contract, the output price at the time of harvest and sale $(t = T)$ is unknown to the farmer at the time of planting $(t = 0)$. Likewise, yield is largely dependent upon numerous stochastic meteorological processes occurring between planting and harvest which are unknown to the farmer at the time of planting. Wherever $P$ and $y^*$ appear in the equations above, then, what is really meant is $E[P(T)]\bigr|_{t = 0}$ and $E[y^*(T)]\bigr|_{t = 0}$.
 
@@ -653,11 +665,29 @@ gg_ts + gg_hist + plot_layout(ncol = 2, widths = c(1, 1/3))
 
 ```
 
-The stochastic movement of $y^*(t)$ is slightly less straightforward. Yield is a function of both deterministic and stochastic (mostly meteorological) variables. Insofar as the stochastic movement of meteorological variables follows a geometric Brownian motion (as in Figure \ref{fig:gBmWeather}), then it can be shown by Ito's lemma that $y^*(t)$ must also follow a geometric Brownian motion.
+Because of the functional relation in Equation \ref{eq:lambda3}---which says that farms regulate their expenditure based on output price expectations---it can be shown by Ito's lemma that cost per unit output $C^{\#}$ is also a geometric Brownian motion with volatility $s_c$ equal to $s_p$.
 
-Because the cost per unit output $C^{\#}$ is defined as a function of $y^*(t)$, then---again by Ito's lemma---it too must follow a geometric Brownian motion. Denoting the mean and variance of the normally distributed changes $\Delta y^* / y^*$ as $m_y \Delta t$ and $s_y^2 \Delta t$, respectively, then Ito's lemma also reveals that the log changes of $C^{\#}$ have variance $s_c^2$ equal to $s_y^2$. Moreover, Equation \ref{eq:lambda3} implies $s_c^2 = s_p^2$; and thus, by transitivity, $s_y^2 = s_p^2$.
+<!-- The stochastic movement of $y^*(t)$ is slightly less straightforward. Unlike prices, yield is never directly observable except at $t = T$. While it is increasingly possible to make indirect observations of $y^*(t)$ for $t$ well before $T$ via remote sensing data [@wahab2018remote; @vallentin2022suitability; @ali2022crop], it is unlikely that it will ever be possible to check the value of $y^*(t)$ for $t$ close to $0$ (planting time) in the same way that one may check the spot price of a commodity $P(t)$. -->
+
+<!-- However, the specific question of whether or not $y^*(t)$ follows a geometric Brownian motion can be assessed in another way: Insofar as the stochastic movement of the meteorological variables on which yield depends follows a geometric Brownian motion (as in Figure \ref{fig:gBmWeather}), then it can be shown by Ito's lemma that $y^*(t)$ must also follow a geometric Brownian motion. -->
+<!-- Yield is a function of both deterministic and stochastic (mostly meteorological) variables. -->
+<!-- The assessment of the yield trend and volatility parameters $m_y$, $s_y$ in terms of trend and volatility parameters that can be estimated from observable meteorological variables is problematic, moreover, since this requires knowledge about the precise functional relation between these variables and yield. -->
+<!-- (Although see Wahab et al. [-@wahab2018remote], Vallentin et al. [-@vallentin2022suitability], and Ali et al. [-@ali2022crop].) -->
+
+<!-- For the present purpose, the relevance of $y^*(t)$ following a gBm lies in the relation between $y^*(t)$ and cost per unit output $C^{\#}$. Because $C^{\#}$ is a function of $y^*(t)$, and because this function is known (Equation \ref{eq:cSharp1}), then, by Ito's lemma, $C^{\#}$ must also follow a geometric Brownian motion with volatility $s_c$ equal to the yield volatility $s_y$. Moreover, Equation \ref{eq:lambda3} implies $s_c = s_p$; and thus, by transitivity, $s_y = s_p$. -->
+<!-- Denoting the mean and variance of the normally distributed changes $\Delta y^* / y^*$ as $m_y \Delta t$ and $s_y^2 \Delta t$, respectively, then Ito's lemma also reveals that the   -->
 
 ...It is important to consider these time series over a relevant time period, i.e. the growing season. Beyond that the motion may exhibit cyclic or mean reverting behavior, which diverges from gBm..
+
+Moreover, combining Equations \ref{eq:lambda3} and \ref{eq:YdEnvCompact} gives yet another instructive expression for $y^*$.
+
+\begin{equation}
+y^* = (y_0 \theta)^{\frac{\eta}{h}} \left( \frac{C^{\#}}{\eta} \right)^{\eta} \:\:;\:\:\: \eta = \frac{h}{1 - h}
+\label{eq:yStarCsharp}
+\end{equation}
+
+This expression proves useful during parameterization of the aggregate supply curve farther below, but has limited predictive power since, by definition, $C^{\#}$ is not known until harvest.
+
 
 ```{r Fig2, fig.show = "hold", fig.width = 5, fig.height=5, fig.align="center", fig.cap="\\label{fig:gBmWeather}(Left) Daily average weather variable time series covering the 2018 maize long rains growing season in Eldoret, Kenya (NREL 2023). (Right) The corresponding daily log changes exhibit the normal distribution typical of geometric Brownian motion.", echo = FALSE}
 
