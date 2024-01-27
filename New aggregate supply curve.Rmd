@@ -1,0 +1,2370 @@
+---
+title: A theoretical derivation of the aggregate supply curve accounting for farm entry and exit
+# author: "Benjamin Schiek"
+# date: "`r Sys.Date()`"
+abstract: |
+  The specification of conventional models of aggregate supply of agricultural commodities, such as the linear or constant elasticity of supply model, typically prioritizes computational expedience over theoretical consistency. This results in theoretical contradictions which call into question the results of the analysis. The interpretation of such models is further complicated by the appearance of abstract parameters with a tenuous connection to real economic phenomena. For applications where theoretical transparency and consistency are a priority, here we derive a closed form aggregate agricultural supply function from non-controversial microeconomic axioms, and the assumption of lognormally distributed yields. The resulting model is highly instructive and intuitive, indicating that farm entry/exit is proportionate to the probability that the mean farm will make a profit at harvest. The resulting price elasticity of aggregate supply is likewise intuitive, capturing farm entry/exit due to changes in price. We estimate the model using Kenya farm data. Calculation of supply and price elasticity of supply based on the model agrees with empirical estimates. Other potential use cases are discussed, including usage in partial equilibrium models and research induced supply curve shifts.
+header-includes:
+  - \usepackage{geometry}
+  - \geometry{top=1in,left=1in,bottom=1in,right=1in}
+  - \usepackage{framed}
+  - \usepackage{setspace}\doublespacing
+  - \usepackage{float}
+  - \floatplacement{figure}{H}
+  - \usepackage{amsmath}
+  - \numberwithin{equation}{section}
+output:
+  pdf_document:
+   fig_caption: true
+   number_sections: true
+   #latex_engine: xelatex
+# mainfont: Times Roman
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE,
+                      message = FALSE,
+                      warning = FALSE,
+                      dev = c("png", "tiff"),
+                      dpi = 300)
+
+library(tidyverse)
+library(patchwork)
+library(scales)
+
+labelSize <- 2.5
+smallLabelSize <- 2
+titleSize <- 7
+subtitleSize <- 7
+legendTextSize <- 6
+axisTextSize <- 6
+axisTitleSize <- 7
+facetTitleSize <- 7
+
+```
+   <!-- Allows for analysis of price and technology impacts at specific centiles. -->
+
+# Introduction
+
+In ex-ante impact assessments of exogenous changes in agricultural technology and agroclimatic conditions, aggregate supply curves are often specified primarily for the purpose of facilitating certain calculations (e.g. economic surplus or deadweight loss), with secondary consideration given to the plausibility of the theoretical underpinnings implied by the choice of functional form. The resulting models are then, by construction, theoretically opaque.
+
+In particular, it is unclear whether they are consistent with microeconomic principles regarding homogeneity, convexity/concavity, and profit maximization; and it is unclear what shape of farm production density function is implied by the model. That is to say, if aggregate supply $Q$ may be defined as the definite integral of farm production function $q^*$ times the production density $\rho(q^*)$ over the domain of profitable production $(\underline{q}^*, \bar{q}^*)$,
+
+\begin{equation}
+Q(P) = \int_{\underline{q}^*}^{\bar{q}^*} q^* \rho(q^*) \: dq^*
+\label{eq:sup1}
+\end{equation}
+
+then it is not readily apparent from expedient specifications of $Q$ what the functions $q^*$ and $\rho(q^*)$ are, nor whether they are plausible vis-a-vis microeconomic theory and empirical evidence. Critically, expedient specifications of $Q$ also gloss over farm entry and exit---i.e. the domain of profitable production $(\underline{q}^*, \bar{q}^*)$---such that it is not possible to decompose changes in aggregate supply into yield and employment (farm entry/exit) components.
+<!-- [...holding multiple axioms without knowing if they perhaps contradict each other...] -->
+
+Expedient functional forms are also _empirically_ opaque, in the sense that the parameterization of such forms is highly abstract, with no clear mapping to the relevant measurable, real world phenomena---i.e. technology, input prices, agroclimatic conditions, demographic variables, etc. This leaves very little basis upon which to assess the plausibility of different parameterizations of a given exogenous shock, or to attribute modeled impacts to the exogenous shock with confidence (the attribution problem). Some expedient forms also introduce awkward artifacts---such as the possibility of negative supply quantities and/or of farms producing for free, in the case of the linear aggregate supply curve---which further limit the model's explanatory power.
+<!-- [This, in turn, complicates the defense of any modeling results, especially when the modeler or their source of funding have a vested interest in said results.. as it boils down to modeler fiat not to any verifiable presmises] -->
+<!-- adoption -->
+<!-- [, while adding more layers of methodological wrangling/theoretical opacity.] -->
+<!-- [which in turn invites misuse and abuse of the model, and otherwise complicates the defense of any modeling results.] -->
+<!-- [the mathematical expression no different from the same statement in literary form] -->
+<!-- [Meanwhile, the growing disparity between current research funding levels and the levels that would seem to be justified by expediently specified ex-ante impact assessments suggests that donors have stopped taking the results of such models seriously...] -->
+
+To be fair, this is, in some sense, the whole point of expedient specifications of aggregate supply and demand: A degree of explanatory power is deliberately sacrificed in exchange for computational expedience. And the thousands of published ex-ante impact assessments of agricultural research that specify linear aggregate supply and demand functions might seem to suggest that the modicum of explanatory power retained by such specifications is sufficient for most modeling purposes [].
+<!-- [Expedience no longer a pressing concern due to high cpu power.] -->
+
+However, popularity can be a misleading indicator of quality. It could merely reflect the low cost of implementing the model, for example, and/or the lack of comparably low cost alternatives. A more telling indicator of model quality, we submit, is the growing "disconnect" between the actual level of funding for agricultural research and the level of funding that would be justified by impact assessments conducted on the basis of conventional aggregate supply models [@hurley2016returns]. There is good reason to suspect that this disconnect is due to the implausibly high---and sometimes absurdly high---internal rates of return reported in conventional impact assessments of agricultural R&D [@hurley2014re; @alston2001attribution; @hurley2016returns]. In a meta-analysis of 492 such impact assessments, for example, Hurley et al. [@hurley2016] note that the average reported internal rate of return (IRR) implies that the USDA's 2000 R&D investment of \$4.1 billion should be worth \$56.3 quintillion in 2050, or 2.3 million times projected world GDP at that time. "[I]t is not difficult to see," the authors conclude, "how policy makers may question the credibility of such evidence" [@hurley2016].
+<!-- [In discussion: The implausibility is made more conspicuous considering that these assessments are typically written by or in close consultation with the scientists whose research is under evaluation, and who thus have a vested interest in its success.] -->
+
+Hurley et al. [@hurley2014re] respond to the incredulity of policy makers by replacing IRR with their "modified" IRR or "MIRR", whereby implausibly high projected returns are deflated to plausible levels. This is a suitable response insofar as the implausibility in question is rooted in the discounting method (although see the debate between Ohemke [] and Hurley et al. 2014). The present work is motivated by cases where implausible ex ante impact assessment results are rooted in the modeling of exogenous shocks on farm populations---particularly the modeling of aggregate supply and supply curve shifts. In such cases, application of MIRR does not resolve but rather exacerbates implausibility, by masking it and thus making the real source of implausibility more difficult to identify.
+<!-- in particular its theoretical premises and derivation, its estimation, and the assumptions upon which it rests.  In the present article we dubious assumptions and theoretically opaque modeling---especially ---that generate implausibly high projections of net benefits in the first place. -->
+<!-- In other words, there is a demand for theoretical transparency and consistency, and empirical plausibility in the ex-ante impact assessment itself, not in how the result of the assessment is discounted back to the present. -->
+<!-- Insofar as this suspicion is correct, MIRR is but a cosmetic dressing up of implausibility that fails to address the real root of the problem. -->
+<!-- Or, at the very least, it points to a growing, unmet demand for more . -->
+<!-- conclude that donors have stopped believing them. This is a more telling indicator than popularity, suggesting that expedient specifications are insufficient for most purposes---i.e. for the purposes of producing accurate, unbiased, credible ex-ante impact assessments.  -->
+<!-- Self-interest might also play a role, as the opacity of such models is known to invite misuse and abuse in the form of overstated net benefits [@alston2001attribution; @hurley2014re].-->
+
+To redress cases where implausibility is rooted in the assumptions and theoretical premises of the modeling, here we present an alternative aggregate supply model that prioritizes theoretical consistency and transparency, such that implausible results may be traced back to specific assumptions regarding economic behavior, and/or the estimation of specific parameter values that have a clear mapping to measurable empirical phenomena. Progress in this direction has long been discouraged by a general perception that the task is impossible. In their highly influential book, e.g., Alston et al. [-@alston1995science] write:
+
+>"What does economic theory tell us about the nature of ...[research induced aggregate supply curve] shifts? Unfortunately, not very much. To be confident about this aspect of the problem would require either (a) precise econometric evidence or (b) detailed information on the effects on individual agents, details of industry structure including details on exit and entry of firms, and a complete theory of aggregation. This information is not available; assumptions are unavoidable".
+
+The remainder of this article is essentially one long disagreement with this passage. In particular, we disagree with the claim that economic theory does not tell us very much about the nature of aggregate supply curve shifts. On the contrary, economic theory provides a set of microeconomic principles or axioms whence a firm level yield model is derived, whence we can model "effects on individual agents", i.e., farm level response to exogenous shock. Insofar as the phrase "complete theory of aggregation" refers to the specification of aggregate supply and demand curves, this too can be derived from theory by integrating individual effects over a suitable density function. The firm level yield model implies bounds on the domain of optimal output and input use, such that the "exit and entry of firms" is accounted for by integrating over the domain of optimal behavior (optimal production in the case of supply, optimal input use in the case of demand).
+
+To be clear, we agree that the "precise econometric evidence or...detailed information" that the authors refer to is generally not available, but disagree with the suggestion that economic theory offers nothing in its stead. On the contrary, the whole point of having a theory is precisely to draw inference when information is scarce. If the inference proves wrong, then the theory is corrected. The authors themselves may have made little use of theory when they specified their linear aggregate supply and demand curves; but this does not mean that others are prohibited from doing so.
+
+The aggregate supply curve presented below is derived from the following five axioms:
+
+1) Diminishing marginal returns to input use
+
+2) Farms maximize their expected net benefit subject to a budget constraint
+
+3) Output price and yield follow independent geometric Brownian motions
+
+4) Farms enter production only if they expect to make positive profit
+
+5) Farm yield is lognormally distributed
+
+Four other desirable properties immediately follow from axioms 1 and 2 as corollaries, and need not be imposed as additional axioms: 1) a farm yield function that is homogeneous (and thus homothetic) and 2) concave in inputs, 3) upward sloping farm supply curves, and 4) downward sloping farm input demand curves. We also take a moment to demonstrate that the farm yield function agrees with Lipton's theory of technology adoption [].
+
+On the other hand, two somewhat controversial corollaries also follow: strictly decreasing returns to scale and constant marginal cost. The former directly contradicts the conventional wisdom handed down by Hicks [-@hicks1963theory] and Solow [-@solow1957technical]. The latter is well supported empirically [@lavoie2014post], but is eschewed in textbooks. Regardless of one's view on returns to scale and marginal cost curves, the very fact that it is possible to disagree with specific corollaries, and to trace the disagreement back to specific axioms, underscores a key strength of the derived model: its theoretic transparency. Under the theoretic opacity of the expedient approach, by contrast, it is not even possible to know if one agrees or disagrees with the premises, or whether the premises contradict each other mathematically, since those premises are stated in literary form (if they are stated at all), and the model is not explicitly derived from such premises. Working under such opacity, many economists would not hesitate to add Solow's axiom (constant returns to scale) to the list above, and would never discover the mathematical contradiction between this and axioms 1 and 2.
+<!-- Moreover, such  a corollary of eminently reasonable axioms seems distasteful, then one may not simply discard the offending corollary without also discarding the reasonable axioms whence it derives. Another strength of the theoretically rigorous approach followed here is that it invites careful reflection upon . -->
+
+The aggregate supply model that mathematically results from axioms 1-5 consists of terms that capture technology, agroclimatic conditions, input and output prices, and farm entry/exit. The term capturing farm entry/exit turns out to be surprisingly instructive and intuitive, as it is proportionate to the probability that output price will be greater than the mean farm's expected cost per unit output at harvest (i.e. the mean farm's probability of profit). The price elasticity of aggregate supply resulting from this functional form is likewise intuitive, consisting of farm level price elasticity of supply plus a term capturing farm entry/exit in response to price movements. The model also accounts for price volatility, such that the effect of price stabilization policies may be explicitly modeled. This gain in theoretical rigor and explanatory power comes at little or no cost to expedience on modern processors.
+
+Derivation of the farm yield function from axioms 1 and 2 is review for professional economists, and is given in the Appendix. [rudimentary, but the fact that there is generally no appreciation of the contradiction between constant returns to scale and profit maximization would suggest that the "review" is new to many] The main sections of this article are reserved for the derivation of the aggregate supply model from the farm yield function and from axioms 3-5. We then walk through an illustrative use case, parameterizing the model based on Kenya maize farm data. Calculations of aggregate production and price elasticity of aggregate supply agree with empirical estimates. Food policy relevance, application in partial equilibrium analysis, and application in minimum data contexts are briefly considered in the Discussion.
+
+# Methodology
+
+## Derivation of the aggregate supply curve
+
+Axiom 1 gives us the farm yield function as a multivariate power law (better known to economists as the Cobb-Douglas form).
+
+\begin{equation}
+y = y_0 \prod_{i = 1}^{n_k} \left( \frac{k_i}{\tilde{k}_i} \right)^{\kappa_i} \prod_{i = 1}^{n_x} \left( \frac{x_i}{\tilde{x}_i} \right)^{\alpha_i}
+\label{eq:cobbDoug3}
+\end{equation}
+
+Where the $x_i$ are management inputs (fertilizer, etc.), the $k_i$ are control variables (demographic and agroclimatic variables, etc.), and the $\alpha_i$ and $\kappa_i$ are input and control variable elasticities of yield, respectively. The product bounds $n_x$ and $n_k$ indicate the number of inputs and control variables, respectively. The variables $x_i$ and $k_i$ are assumed to be linearly independent and are divided by their population means, such that $y_0$ may be interpreted as the mean yield. (See Appendix for details.)
+
+The introduction of Axiom 2 then results in the profit maximizing farm yield function.
+
+\begin{equation}
+y^* = (y_0 \theta)^{\frac{1}{1 - h}} \left( \frac{P}{\lambda} \right)^{\frac{h}{1 - h}}
+\label{eq:YdEnvCompact0}
+\end{equation}
+
+Where $h = \sum_i \alpha_i$ is the farm yield degree of homogeneity, $P$ is the output price, $\lambda$ is the farm budget shadow price, and
+
+\begin{equation}
+\theta = \frac{\theta_x \theta_k}{\theta_w} \:\:;\:\:\: \theta_w = \prod_i{w_i}^{\alpha_i} \:\:\: \theta_x = \prod_i {\alpha_i}^{\alpha_i} \:\:\: \theta_k = \prod_i \left( \frac{k_i}{\tilde{k}_i} \right)^{\kappa_i}
+\end{equation}
+
+And where the $w_i$ are input prices. Equation \ref{eq:YdEnvCompact0} may also be written
+
+\begin{equation}
+y^* = y_0 \theta \left( \frac{C^*}{h} \right)^h
+\label{eq:yStarC0}
+\end{equation}
+
+Where $C^*$ is the optimal farm expenditure. This expression comes in handy for estimation purposes because it requires information only on cost and control variables, and not on input quantities. Another corollary that will soon come in handy is
+
+\begin{equation}
+\frac{P}{\lambda} = \frac{C^{\#}}{h}
+\label{eq:lambda30}
+\end{equation}
+
+Where $C^{\#}$ is the cost per unit output, i.e., $C^{\#} = C^* / y^*$.
+
+upper and lower bounds important for the domain of profitable production farm entry/exit result from axiom (3)
+
+\begin{equation}
+C^{\#} < P
+\label{eq:upBnd}
+\end{equation}
+
+By Equation \ref{eq:lambda30}, it follows that
+
+\begin{equation}
+\lambda > h
+\end{equation}
+
+lower bound defaults to physical lower bound of 0
+
+### Geometric Brownian motion of prices and yield (Axiom 3) \label{sec:gBmAx}
+
+Henceforth it is necessary to be more specific in the treatment of yield $y^*$ and output price $P$ as stochastic variables. Absent a forward contract, the output price at the time of harvest and sale $(t = T)$ is unknown to the farmer at the time of planting $(t = 0)$. Likewise, yield is largely dependent upon numerous stochastic meteorological processes occurring between planting and harvest which are unknown to the farmer at the time of planting. Wherever $P$ and $y^*$ appear in the equations above, then, what is really meant is $E[P(T)]\bigr|_{t = 0}$ and $E[y^*(T)]\bigr|_{t = 0}$. That is to say, expressions \ref{eq:YdEnvCompact0}-\ref{eq:upBnd} should be rewritten, respectively,
+
+\begin{equation}
+E[y^*]\bigr|_{t = 0} = (y_0 \theta)^{\frac{1}{1 - h}} \left( \frac{E[P(T)]\bigr|_{t = 0}}{\lambda} \right)^{\frac{h}{1 - h}}
+\label{eq:YdEnvCompact0b}
+\end{equation}
+
+\begin{equation}
+E[y^*]\bigr|_{t = 0} = y_0 \theta \left( \frac{C^*}{h} \right)^h
+\label{eq:yStarC0b}
+\end{equation}
+
+\begin{equation}
+\frac{E[P(T)]\bigr|_{t = 0}}{\lambda} = \frac{E[C^{\#}]\bigr|_{t = 0}}{h}
+\label{eq:lambda30b}
+\end{equation}
+
+and
+
+\begin{equation}
+E[C^{\#}(T)]\bigr_{t = 0} < E[P(T)]\bigr|_{t = 0}
+\label{eq:upBnd2}
+\end{equation}
+
+The question remains as to what kind of stochastic process $y^*(t)$ and $P(t)$ follow. We first address price movements. Within a given season, prices often follow a geometric Brownian motion. That is to say, changes in $P$ over a small time interval $\Delta t$ ($\Delta P = P(t + \Delta t) - P(t)$) are often accurately modeled by
+
+\begin{equation}
+\Delta P = \Delta P(t) m_p \Delta t - P(t) s_p \epsilon \sqrt{\Delta t}
+\end{equation}
+
+Where $\epsilon$ is a normally distributed random variable with mean $0$ and variance $1$, such that the arithmetic return $\Delta P / P$ is normally distributed with mean and variance
+
+\begin{equation}
+\begin{split}
+E \left[\frac{\Delta P(T)}{P(T)} \right] &= m_{p} \Delta t  \\
+Var \left[\frac{\Delta P(T)}{P(T)} \right] &= s_{p}^2 \Delta t
+\end{split}
+\end{equation}
+
+(For a reference, see Hull [-@hull9thEdition].)
+
+Technically, $\Delta t$ is an instantaneous time interval, and hence $m_p$ is the expected instantaneous growth rate. In practice, it is often acceptable to treat $\Delta t$ as a finitely small, but judicious, time step. As a rule of thumb, $\Delta t$ should be as small as the resolution of the data will allow, while also ensuring a finite sample path with no jumps. Some examples of maize prices following a geometric Brownian motion are given in Figure \ref{fig:gBmPrice}.
+
+The expected value of $P(T)$ is
+
+\begin{equation}
+E[P(T)]\bigr|_{t = 0} = P(0) e^{m_p T}
+\label{eq:EPT0}
+\end{equation}
+
+For what follows, it is also important to note that the log change of a geometric Brownian motion $\ln(P(T) / P(\hat{t}))$ is defined over finite time intervals for some starting time $\hat{t}<T$, and is also normally distributed, with mean and variance
+
+\begin{equation}
+\begin{split}
+E \left[\ln \left( \frac{P(T)}{P(\hat{t})} \right) \right] &= \left(m_{p} - \frac{s_p^2}{2} \right) T \\
+Var \left[\ln \left( \frac{P(T)}{P(\hat{t})} \right) \right] &= s_{p}^2 T
+\end{split}
+\end{equation}
+
+```{r Fig1, fig.show = "hold", fig.width = 5, fig.height=5, fig.align="center", fig.cap="\\label{fig:gBmPrice}(Left) Maize price series from (top to bottom) Chicago, USA (CME, 2023), Johannesburg, RSA (JSE, 2023), and Eldoret market, Kenya (FPMA, 2023). (Right) The corresponding daily (monthly, in the case of Kenya) log changes exhibit the normal distribution typical of geometric Brownian motion.", echo = FALSE}
+
+thisFolder <- "D:/OneDrive - CGIAR/Documents 1/CIAT 2/A theory of aggregate supply and demand/"
+thisFile <- "South Africa corn future price.csv"
+thisFilePath <- paste0(thisFolder, thisFile)
+df_raw <- read.csv(thisFilePath, stringsAsFactors = F)
+keepCols <- c("DATE", "WHITE")
+df_raw <- df_raw[, keepCols]
+colnames(df_raw) <- c("Date", "Price")
+df_raw$Date <- as.Date(df_raw$Date, "%m/%d/%Y")
+df <- subset(df_raw, Date > "2017-11-01" &
+               Date < "2018-04-15")
+df$`Log change` <- c(NA, diff(log(df$Price)))
+#colnames(df)[2] <- "ZAR / kg."
+# gg <- ggplot(df, aes(x = Date, y = `ZAR / kg.`))
+# gg <- gg + geom_line()
+# gg <- gg + theme_bw()
+# gg <- gg + theme(axis.title.x = element_blank(),
+#                  axis.title.y = element_text(size = axisTitleSize),
+#                  axis.text = element_text(size = axisTextSize))
+# gg_sa <- gg
+df_sa <- df
+#df_sa$`ZAR / kg.` <- NULL
+df_sa$Place <- "South Africa"
+# gg <- ggplot(df, aes(x = `Log change`))
+# gg <- gg + geom_histogram(color = 4, fill = "white", bins = 15)
+# gg
+# mm <- mean(df$`Log daily return`, na.rm = T)
+# s <- sd(df$`Log daily return`, na.rm = T)
+# print(mm)
+# print(s)
+#-----------------------------------------------------------------
+thisFile <- "US corn future price.csv"
+thisFilePath <- paste0(thisFolder, thisFile)
+df_raw <- read.csv(thisFilePath, stringsAsFactors = F)
+keepCols <- c("date", "adjusted")
+df_raw <- df_raw[, keepCols]
+colnames(df_raw) <- c("Date", "Price")
+df_raw$Date <- as.Date(df_raw$Date, "%Y-%m-%d")
+df <- subset(df_raw, Date > "2018-03-31" &
+               Date < "2018-12-01")
+df$Price <- df$Price / 100
+df$`Log change` <- c(NA, diff(log(df$Price)))
+#colnames(df)[2] <- "USD / bushel"
+# gg <- ggplot(df, aes(x = Date, y = `USD / bushel`))
+# gg <- gg + geom_line()
+# gg <- gg + theme_bw()
+# gg <- gg + theme(axis.title = element_text(size = axisTitleSize),
+#                  axis.text = element_text(size = axisTextSize))
+# gg_us <- gg
+df_us <- df
+#df_us$`USD / bushel` <- NULL
+df_us$Place <- "USA"
+# mm <- mean(df$`Log daily return`, na.rm = T)
+# s <- sd(df$`Log daily return`, na.rm = T)
+# print(mm)
+# print(s)
+#---------------------------------------------------------------
+thisFile <- "Nakuru Eldoret monthly maize price.csv"
+thisFilePath <- paste0(thisFolder, thisFile)
+df_raw <- read.csv(thisFilePath, stringsAsFactors = F)
+keepCols <- c(1, 2)
+df_raw <- df_raw[, keepCols]
+df_raw <- as.data.frame(apply(df_raw, 2, rev))
+colnames(df_raw) <- c("Date", "Price")
+df_raw$Price <- as.numeric(df_raw$Price)
+df_raw$Date <- as.Date(df_raw$Date, "%m/%d/%Y")
+df <- subset(df_raw, Date >= "2008-03-01" &
+               Date <= "2019-08-01")
+df$`Log change` <- c(NA, diff(log(df$Price)))
+#colnames(df)[2] <- "KES / kg."
+# gg <- ggplot(df, aes(x = Date, y = `KES / kg.`))
+# gg <- gg + geom_line()
+# gg <- gg + theme_bw()
+# gg <- gg + theme(axis.title.x = element_blank(),
+#                  axis.title.y = element_text(size = axisTitleSize),
+#                  axis.text = element_text(size = axisTextSize))
+# gg_ky <- gg
+df_ky <- df
+#df_ky$`KES / kg.` <- NULL
+df_ky$Place <- "Kenya"
+# gg <- ggplot(df, aes(x = `Log change`))
+# gg <- gg + geom_histogram(color = 4, fill = "white", bins = 20)
+# gg
+# mm <- mean(df$`Log daily return`, na.rm = T)
+# s <- sd(df$`Log daily return`, na.rm = T)
+# print(mm)
+# print(s)
+df_ts <- as.data.frame(do.call(rbind, list(df_us, df_sa, df_ky)))
+df_ts$Place <- gsub("Kenya", "Eldoret, Kenya\n2008-2019 (monthly)\nKES / kg.", df_ts$Place)
+df_ts$Place <- gsub("USA", "Chicago, USA\n2018 growing season (daily)\nUSD / bushel", df_ts$Place)
+df_ts$Place <- gsub("South Africa", "Johannesburg, RSA\n2018 growing season (daily)\nZAR / kg.", df_ts$Place)
+gg <- ggplot(df_ts, aes(x = Date, y = Price))
+gg <- gg + geom_line()
+gg <- gg + scale_x_date(breaks = scales::breaks_pretty(n = 8), labels = date_format("%b\n%Y"))
+# gg <- gg + scale_x_date(breaks = "4 months", labels = date_format("%m-%Y"))
+#gg <- gg + scale_x_date(date_breaks = "4 month", date_labels =  "%b %Y")
+gg <- gg + facet_wrap(~factor(Place,
+                              levels = c("Chicago, USA\n2018 growing season (daily)\nUSD / bushel",
+                                         "Johannesburg, RSA\n2018 growing season (daily)\nZAR / kg.",
+                                         "Eldoret, Kenya\n2008-2019 (monthly)\nKES / kg.")),
+                      ncol = 1, scales = "free", strip.position = "left")
+gg <- gg + labs(title = "Maize price series exhibiting geometric Brownian motion")
+gg <- gg + theme_bw()
+gg <- gg + theme(axis.title.x = element_text(size = axisTitleSize),
+                 axis.title.y = element_blank(),
+                 axis.text = element_text(size = axisTextSize),
+                 strip.background = element_rect(fill = "white"),
+                 strip.text = element_text(size = facetTitleSize),
+                 plot.title = element_text(size = titleSize))
+gg_ts <- gg
+#---------------------------------------------------------------
+# df_hist <- as.data.frame(do.call(rbind, list(df_sa, df_us, df_ky)))
+df_hist <- df_ts
+gg <- ggplot(df_hist, aes(x = `Log change`))
+gg <- gg + geom_histogram(color = 4, fill = "white", bins = 20)
+gg <- gg + facet_wrap(~factor(Place,
+                              levels = c("Chicago, USA\n2018 growing season (daily)\nUSD / bushel",
+                                         "Johannesburg, RSA\n2018 growing season (daily)\nZAR / kg.",
+                                         "Eldoret, Kenya\n2008-2019 (monthly)\nKES / kg.")), ncol = 1, scales = "free")
+gg <- gg + labs(title = "Log change")
+gg <- gg + theme_bw()
+gg <- gg + theme(axis.title = element_blank(),
+                 axis.text = element_text(size = axisTextSize),
+                 strip.background = element_rect(fill = "white"),
+                 strip.text = element_blank(),
+                 plot.title = element_text(size = titleSize))
+gg_hist <- gg
+#---------------------------------------------------------------
+# library(patchwork)
+
+gg_ts + gg_hist + plot_layout(ncol = 2, widths = c(1, 1/3))
+
+# design <- c("AAD
+#             BBD
+#             CCD")
+# wrap_plots(A = gg_ky, B = gg_sa, C = gg_us, D = gg_hist, design = design)
+
+```
+
+By Ito's lemma, the relation in Equation \ref{eq:lambda30b} implies that the cost per unit output $C^{\#}$ is also a geometric Brownian motion with trend and volatility parameters ($m_c$, $s_c^2$) equal to those of the output price ($m_p$, $s_p^2$).
+
+\begin{equation}
+\begin{split}
+m_c = E \left[\frac{\Delta C^{\#}(T)}{C^{\#}(T)} \right] &= m_{p} \Delta t  \\
+s_c^2 = Var \left[\frac{\Delta C^{\#}(T)}{C^{\#}(T)} \right] &= s_{p}^2 \Delta t
+\end{split}
+\end{equation}
+
+(See Appendix for details.)
+
+It is important to keep in mind that the price trajectory considered here is over a cropping season---from planting to harvest. When considered over multiple cropping seasons, prices typically exhibit cyclic or mean reverting behavior, which requires a more sophisticated stochastic model.
+<!-- Because of the functional relation in Equation \ref{eq:lambda3}---which says that farms regulate their expenditure based on output price expectations---it can be shown by Ito's lemma that cost per unit output $C^{\#}$ is also a geometric Brownian motion with volatility $s_c$ equal to $s_p$. -->
+
+The stochastic movement of $y^*(t)$ is slightly less straightforward. Unlike prices, yield is never directly observable except at $t = T$. While it is increasingly possible to make indirect observations of $y^*(t)$ for $t$ well before $T$ via remote sensing data [@wahab2018remote; @vallentin2022suitability; @ali2022crop], it is unlikely that it will ever be possible to check the value of $y^*(t)$ for $t$ close to $0$ (planting time) in the same way that one may check the spot price of a commodity $P(t)$.
+
+However, the specific question of whether or not $y^*(t)$ follows a geometric Brownian motion can be assessed in another way. Insofar as the stochastic movement of the meteorological variables on which yield depends biophysically follows a geometric Brownian motion, then, once again by Ito's lemma, it follows that $y^*(t)$ must also follow a geometric Brownian motion. The question then becomes whether or not the relevant meteorological variables (typically rainfall, temperature, and solar radiation) follow a gBm within a given cropping season. This is a much weaker assumption than the assumption that yield itself follows a gBm (see, e.g., Figure \ref{fig:gBmWeather}).
+<!-- Yield is a function of both deterministic and stochastic (mostly meteorological) variables. -->
+<!-- The assessment of the yield trend and volatility parameters $m_y$, $s_y$ in terms of trend and volatility parameters that can be estimated from observable meteorological variables is problematic, moreover, since this requires knowledge about the precise functional relation between these variables and yield. -->
+<!-- (Although see Wahab et al. [-@wahab2018remote], Vallentin et al. [-@vallentin2022suitability], and Ali et al. [-@ali2022crop].) -->
+<!-- For the present purpose, the relevance of $y^*(t)$ following a gBm lies in the relation between $y^*(t)$ and cost per unit output $C^{\#}$. Because $C^{\#}$ is a function of $y^*(t)$, and because this function is known (Equation \ref{eq:cSharp1}), then, by Ito's lemma, $C^{\#}$ must also follow a geometric Brownian motion with volatility $s_c$ equal to the yield volatility $s_y$. Moreover, Equation \ref{eq:lambda3} implies $s_c = s_p$; and thus, by transitivity, $s_y = s_p$. -->
+<!-- Denoting the mean and variance of the normally distributed changes $\Delta y^* / y^*$ as $m_y \Delta t$ and $s_y^2 \Delta t$, respectively, then Ito's lemma also reveals that the   -->
+<!-- ... -->
+<!-- Moreover, combining Equations \ref{eq:lambda3} and \ref{eq:YdEnvCompact} gives yet another instructive expression for $y^*$. -->
+<!-- \begin{equation} -->
+<!-- y^* = (y_0 \theta)^{\frac{\eta}{h}} \left( \frac{C^{\#}}{\eta} \right)^{\eta} \:\:;\:\:\: \eta = \frac{h}{1 - h} -->
+<!-- \label{eq:yStarCsharp} -->
+<!-- \end{equation} -->
+<!-- This expression proves useful during parameterization of the aggregate supply curve farther below, but has limited predictive power since, by definition, $C^{\#}$ is not known until harvest. -->
+```{r Fig2, fig.show = "hold", fig.width = 5, fig.height=5, fig.align="center", fig.cap="\\label{fig:gBmWeather}(Left) Daily average weather variable time series covering the 2018 maize long rains growing season in Eldoret, Kenya (NREL 2023). (Right) The corresponding daily log changes exhibit the normal distribution typical of geometric Brownian motion.", echo = FALSE}
+
+#Weather data from National Solar Radiation Database
+#https://nsrdb.nrel.gov/data-viewer
+thisFolder <- "D:/OneDrive - CGIAR/Documents 1/CIAT 2/A theory of aggregate supply and demand/Eldoret weather data/"
+thisFile <- "NSRDB weather data Eldoret 2018 maize season.csv"
+thisFilePath <- paste0(thisFolder, thisFile)
+df <- read.csv(thisFilePath, stringsAsFactors = F)
+colnames(df)[ncol(df)] <- "Log change"
+df$Date <- as.Date(df$Date)
+
+gg <- ggplot(df, aes(x = Date, y = val))
+gg <- gg + geom_line()
+gg <- gg + scale_x_date(breaks = scales::breaks_pretty(n = 8))
+gg <- gg + facet_wrap(~var, ncol = 1, scales = "free_y", strip.position = "left")
+gg <- gg + labs(title = "Daily averages of key weather variables influencing crop yields\nEldoret, Kenya, 2018 maize growing season")
+gg <- gg + theme_bw()
+gg <- gg + theme(axis.title.x = element_text(size = axisTitleSize),
+                 axis.title.y = element_blank(),
+                 axis.text = element_text(size = axisTextSize),
+                 strip.background = element_rect(fill = "white"),
+                 strip.text = element_text(size = facetTitleSize),
+                 plot.title = element_text(size = titleSize))
+gg_line <- gg
+
+
+gg <- ggplot(df, aes(x = `Log change`))
+gg <- gg + geom_histogram(color = 4, fill = "white", bins = 20)
+gg <- gg + facet_wrap(~var, ncol = 1, scales = "free")
+gg <- gg + labs(title = "Daily log change")
+gg <- gg + theme_bw()
+gg <- gg + theme(axis.title = element_blank(),
+                 #axis.title.y = element_blank(),
+                 #axis.title.x = element_text(size = axisTitleSize),
+                 axis.text = element_text(size = axisTextSize),
+                 strip.background = element_rect(fill = "white"),
+                 strip.text = element_blank(),
+                 plot.title = element_text(size = titleSize))
+gg_hist <- gg
+
+
+gg_line + gg_hist + plot_layout(ncol = 2, widths = c(1, 1/3))
+
+
+```
+
+[@jseData; @fpmaData; @cmeData; @nsrdbData]
+
+<!-- ---especially temperature, solar radiation, and humidity--- -->
+<!-- That is, farmers make their expenditure decision $C^*$ at planting time ($t = 0$) based on what they expect the values of $y^*$ and $P$ to be at harvest ($t = T$). -->
+
+### Aggregation from farm to population level assuming lognormally distributed production (Axiom 5)
+
+Taking into account stochasticity of yield and price, the expression for aggregate supply given in Equation \ref{eq:sup1} may now be rewritten more accurately as follows. and given bounds of profitable production in inequality \ref{eq:upBnd2}.
+
+\begin{equation}
+\begin{split}
+E[Q(T)]\bigr|_{t = 0} &= \int_0^{E[\bar{q}^*(T)]|_{t = 0}} E[q^*(T)]|_{t = 0} \rho(q^*(T))  \: dq^*(T) \\
+&= \int_0^{E[\bar{q}^*(T)]|_{t = 0}} E[q^*(T)]|_{t = 0} \rho(q^*(T))  \: dq^*(T)
+\end{split}
+\label{eq:sup3}
+\end{equation}
+
+The farm density function $\rho(q^*)$ in Equation \ref{eq:sup1} is defined such that
+
+\begin{equation}
+\rho(q^*) = \int_{0}^{\infty} \rho(q^*) \: dq^* = N_f
+\end{equation}
+
+Where $N_f$ is the number of farms in the population. The farm density may thus be rewritten in terms of a probability density function $f(q^*)$ as follows.
+
+\begin{equation}
+\rho(q^*) = N_f f(q^*)
+\end{equation}
+
+... Given the upper and lower bounds...
+
+\begin{equation}
+\begin{split}
+E[Q(T)]\bigr|_{t = 0} &= N E[\beta_1] E[E[\beta_2(T)]\bigr|_{t = 0}] \int_0^{E[P(T)]|_{t = 0}} E[E[C^{\#}(T)]|_{t = 0}^{\eta}] f(C^{\#}(T)) \: dC^{\#}(T) \:\:; \:\:\: \beta_1 = y_0 \left( \frac{\theta_x \hat{\theta}_k}{\theta_w} \right)^{\frac{\eta}{h}} \lambda^{\eta}, \:\: \beta_2 = \tilde{\theta_k}^{\frac{\eta}{h}}  \\
+&=
+\end{split}
+\label{eq:sup3}
+\end{equation}
+
+
+
+
+
+
+
+Aggregate supply can now be specified in greater detail.
+
+\begin{equation}
+E[Q(T)]\bigr|_{t = 0} = N_f \int_0^{E[\bar{q}^*(T)]|_{t = 0}} E[q^*(T)]|_{t = 0} f(E[q^*(T)]|_{t = 0})  \: d E[q^*(T)]|_{t = 0} 
+\label{eq:sup2}
+\end{equation}
+
+Assuming production is lognormally distributed (Axiom 5), then this resolves as follows.
+
+\begin{equation}
+E[Q(T)]\bigr|_{t = 0} = N_f E[E[q^*(T)]\bigr|_{t = 0}] \Phi \left(\frac{\ln\left(\frac{E[\bar{q}^*(T)]|_{t = 0}}{E[E[q^*(T)]|_{t = 0}]}\right) - \frac{s_{EqT0}^2}{2}}{s_{EqT0}} \right) \:\:;\:\:\: s_{EqT0}^2 = Var[E[q^*(T)]\bigr|_{t = 0}]
+\label{eq:sup3}
+\end{equation}
+
+(See Appendix for details.)
+
+By Rubini's theorem,
+
+\begin{equation}
+E[E[q^*(T)]\bigr|_{t = 0}] = E[E[q^*(T)]\bigr|_{t = T}]\bigr|_{t = 0}
+\label{eq:rubThm}
+\end{equation}
+<!-- $E[E[q^*(T)]\bigr|_{t = 0}] = E[\tilde{q}(T)]\bigr|_{t = 0}$, where the shorthand $\tilde{q}^*(T) = E[q^*(T)]\bigr|_{t=T}$ has been introduced. -->
+
+In words, this says that the population mean of the expected value of $q^*(T)$ at planting time ($t = 0$) is equal to the expected value at planting time of the population mean of $q^*(T)$. Introducing the shorthand $\tilde{q}^*(T)$ to stand for $E[q^*(T)]\bigr|_{t = T}$, the aggregate supply can therefore be rewritten
+<!-- \begin{equation} -->
+<!-- E[E[b(T)]\bigr|_{t = 0}] = E[E[b(T)]]\bigr|_{t = 0} -->
+<!-- \end{equation} -->
+<!-- Or, introducing the more compact notation $\mu_b(T) = E[b(T)]$, -->
+<!-- \begin{equation} -->
+<!-- E[E[b(T)]\bigr|_{t = 0}] = E[\mu_b(T)]\bigr|_{t = 0} -->
+<!-- \end{equation} -->
+<!-- That is, the population mean of the expected value of $b(T)$ is equal to the expected value of the population mean of $b(T)$. -->
+
+\begin{equation}
+\begin{split}
+E[Q(T)]\bigr|_{t = 0} &= N_f E[\tilde{q}^*(T)]\bigr|_{t = 0} \Phi \left(\frac{\ln \left( \frac{E[\bar{q}^*(T)]}{E[\tilde{q}^*(T)]|_{t = 0}} \right) - \frac{s_{\tilde{q}}^2}{2} T}{s_{\tilde{q}} \sqrt{T}} \right) \:\:;\:\:\: s_{\tilde{q}}^2 T = Var \left[ \ln \left( \frac{\tilde{q}^*(T)}{\tilde{q}^*(0)} \right) \right] \\
+&= N_f E[\tilde{q}^*(T)]\bigr|_{t = 0} \Phi \left(\frac{\ln \left( \frac{E[P(T)]\bigr|_{t = 0}^{\eta}}{E[C_0^{\#}(T)]|_{t = 0}^{\eta}} \right) - \eta^2 \frac{s_{c}^2}{2} T}{\eta s_{c} \sqrt{T}} \right) \:\:;\:\:\: s_{c}^2 T = Var \left[ \ln \left( \frac{C_0^{\#}(T)}{C_0^{\#}(0)} \right) \right]
+\end{split}
+\end{equation}
+
+Substituting $s_p$ for $s_c$ (see the end of the previous section for details), and $P(0) e^{m_p T}$ for $E[P(T)]\bigr|_{t = 0}$ (recall Equation \ref{eq:EPT0}), aggregate supply may again be rewritten
+
+\begin{equation}
+\begin{split}
+E[Q(T)]\bigr|_{t = 0} &= N_f E[\tilde{q}^*(T)]\bigr|_{t = 0} \Phi \left(\frac{\ln \left( \frac{P(0)^{\eta}}{E[C_0^{\#}(T)]|_{t = 0}^{\eta}} \right) + \left( \eta m_p - \eta^2 \frac{s_p^2}{2} \right) T}{\eta s_p \sqrt{T}} \right) \:\:;\:\:\: s_p^2 T = Var \left[ \ln \left( \frac{P(T)}{P(0)} \right) \right] \\
+&= N_f E[\tilde{q}^*(T)]\bigr|_{t = 0} \Phi \left( -\frac{\ln \left( \frac{E[C_0^{\#}(T)]|_{t = 0}^{\eta}}{P(0)^{\eta}} \right) - \left( \eta m_p - \eta^2 \frac{s_p^2}{2} \right) T}{\eta s_p \sqrt{T}} \right)
+\end{split}
+\end{equation}
+
+Or, more compactly,
+
+\begin{equation}
+E[Q(T)]\bigr|_{t = 0} = N_f E[\tilde{q}^*(T)]\bigr|_{t = 0} (1 - \Phi(z))
+\label{eq:sup4}
+\end{equation}
+
+Where
+
+\begin{equation}
+z = \frac{\ln \left( \frac{E[C_0^{\#}(T)]|_{t = 0}^{\eta}}{P(0)^{\eta}} \right) - \left( \eta m_p - \eta^2 \frac{s_p^2}{2} \right) T}{\eta s_p \sqrt{T}}
+\end{equation}
+
+Now, note that $z$ is the standard score of the log change $\ln(P(T)^{\eta} / P(0)^{\eta} )$ evaluated at $P(T) = E[C_0^{\#}(T)]\bigr|_{t = 0}$. Therefore, $\Phi(z)$ may be interpreted as the probability that the output price at planting time $P(0)$ will fall to the mean farm's expected cost per unit output $E[C_0^{\#}(T)]\bigr|_{t = 0}$ by harvest and sale. That is,
+
+\begin{equation}
+\Phi(z) = \text{Prob}(P(T) \leq E[C_0^{\#}(T)]\bigr|_{t = 0})
+\end{equation}
+
+And $1 - \Phi(z)$ may be roughly interpreted as the probability that the output price will remain above this level.
+
+\begin{equation}
+1 - \Phi(z) = \text{Prob}(P(T) > E[C_0^{\#}(T)]\bigr|_{t = 0})
+\end{equation}
+<!-- The qualifier "roughly" must be added because of the exponent $\eta$.  -->
+
+The price elasticity of aggregate supply is then
+
+\begin{equation}
+\frac{\partial \ln(Q)}{\partial \ln(E[P(T)]\bigr|_{t = 0})} = \eta + \frac{\phi(-z)}{\Phi(-z)} \frac{1}{s_p \sqrt{T}}
+\label{eq:pElasQagg}
+\end{equation}
+
+Recall that $\eta$ is just the farm level output price elasticity of supply. The output price elasticity of aggregate supply is thus the farm level elasticity plus the effect of farm entry/exit in response to price movements. As farm participation approaches $100\%$, the price elasticity of aggregate supply approaches $\eta$, the price elasticity of farm level supply. Aggregate supply is inelastic/elastic if
+
+\begin{equation}
+\eta </> 1 - \frac{\phi(-z)}{\Phi(-z)} \frac{1}{s_p \sqrt{T}}
+\end{equation}
+
+Such that the possibility of an elastic aggregate supply response to price movements becomes increasingly limited as farm participation approaches $100\%$.
+
+Note, moreover, that elasticity is inversely proportionate to the price risk ($s_p \sqrt{T}$). The effect of price risk on supply can be examined more explicitly as follows.
+
+\begin{equation}
+\frac{\partial \ln(Q)}{\partial (s_p \sqrt{T})} = -\eta \frac{\phi(-z)}{\Phi(-z)} \left( \frac{1}{\eta^2 s_p^2 T} \ln \left( \frac{E[P(T)]\bigr|_{t = 0}}{E[C_0^{\#}(T)]\bigr|_{t = 0}} \right)  + \frac{1}{2} \right)
+\label{eq:pRiskElasQagg}
+\end{equation}
+
+# Parameterization of the aggregate supply curve
+
+Parameterization of the aggregate supply curve derived above thus requires knowledge of the output price at time of planting $P(0)$, the price growth rate $m_p$ and volatility $s_p$, the length of the cropping season $T$, the number of farms in the population $N_f$, the output degree of homogeneity $h$, the expected mean cost per unit output as evaluated at planting time $E[C_0^{\#}(T)]|_{t = 0}$, and the expected mean harvested output as evaluated at planting time $E[\tilde{q}^*(T)]\bigr|_{t = 0}$. The last of these may of course be further decomposed as $E[A] E[\tilde{y}(T)]\bigr|_{t = 0}$, where $E[A]$ is the mean farm size and $\tilde{y}(T)$ is just the $\tilde{y}$ from Equation \ref{eq:yConst}, with the time of evaluation (harvest) made explicit.
+
+When estimating $E[C_0^{\#}(T)]|_{t = 0}$ and $E[y^*(T)]\bigr|_{t = 0}$ based on farm survey data, it may be tempting to use the respective sample means. This would be erroneous on two counts: 1) The sample mean gives the actual values known post-harvest, whereas the model deduced above requires the farmers' expectation at planting time. And 2) recall that Axiom 3 implies that $C^{\#} < E[P(T)]\bigr|_{t = 0}$, which in turn implies that the sample means are taken over a truncated distribution.
+
+To redress count 1, the log-log model in either Equation \ref{eq:cobbDoug3Ln} or \ref{eq:cobbDoug4} can be estimated by OLS on farm survey data (taking the usual precautions to ensure homoscedasticity and linear independence of the regressors). If the fit is good, then each farm's expected yield at planting may then be reasonably approximated by evaluating the fitted model $\hat{y}^*$ at the farm's regressor values, with the exception of weather variables (and any other control variables whose values are known only post harvest), denoted $\mathbf{k}_{post}$, which should be set to their expected values ($\mathbf{\tilde{k}}_{post}$). That is, for each farm,
+<!-- the expected yield at planting time for a given farm $E[y^*(T)]\bigr|_{t = 0}$ can be assessed by estimating -->
+<!-- The fitted model then describes the behavior of all farms -->
+<!-- As discussed in section ... Equation \ref{eq:cobbDoug4} has the advantage of requiring less data, and giving a  -->
+
+\begin{equation}
+E[y^*(T)]\bigr|_{t = 0} \approx \hat{y}^*|_{\mathbf{k}_{post} = \mathbf{\tilde{k}}_{post}})
+\end{equation}
+
+Now, as discussed in the previous section, the population mean of $E[y^*(T)]\bigr|_{t = 0}$ may be considered equal to the expected value at planting time of the population mean harvested yield $\tilde{y}^*(T)$ (recall Equation \ref{eq:rubThm}). However, because of Axiom 3, the sample mean of $E[y^*(T)]\bigr|_{t = 0}$ does not represent the population mean, but rather the mean over a truncated population, i.e. $E[\tilde{y}^*(T) | C^# < E[P(T)]\bigr|_{t = 0}]\bigr|_{t = 0}$.
+
+In order to arrive at the population mean and redress count 2, the sample mean of $C^{\#}$ is first calculated as follows.
+
+\begin{equation}
+E[C^{\#}(T) | E[C^{\#}(T)]\bigr|_{t = 0} < E[P(T)]\bigr|_{t = 0}]\bigr|_{t = T} = E\left[ frac{C^*}{y^*(T)} \right]
+\end{equation}
+
+Given the assumption of lognormally distributed yield (Axiom 4), then, by linear independence of the OLS regressors, $C^{\#}(T)$ is also lognormally distributed, such that the unobserved mean and variance of the untruncated distribution of $\ln(C^{\#}(T))$ ($m_c$, $s_c^2$) can be implicitly calculated from the observed (i.e. sample) mean and variance ($\overline{m}_c$, $\overline{s}_c^2$) by the following standard formulae.
+
+\begin{equation}
+\begin{split}
+\overline{s}_c^2 &= s_c^2 \left( 1 - \overline(z) \frac{\phi(\overline{z})}{\Phi(\overline{z})} - \left( \frac{\phi(\overline{z})}{\Phi(\overline{z})} \right)^2   \right) \:\:;\:\:\: \frac{\ln(E[P(T)]\bigr|_{t = 0}) - m_c}{s_c} \\
+\overline{m}_c &= m_c - s_c \frac{\phi(\overline{z})}{\Phi(\overline{z})}
+\end{split}
+\end{equation}
+<!-- rootFnUp <- function(xIn, xUp, sXtrunc, mXtrunc){ -->
+<!--   sX <- xIn[1] -->
+<!--   mX <- xIn[2] -->
+<!--   zUp <- (log(xUp) - mX) / sX -->
+<!--   probTerm <- dnorm(zUp) / pnorm(zUp) -->
+<!--   slack_s <- sXtrunc^2 - sX^2 * (1 - zUp * probTerm - probTerm^2) -->
+<!--   slack_m <- mXtrunc - mX + sX * probTerm -->
+<!--   outVec <- c(slack_s, slack_m) -->
+<!--   return(outVec) -->
+<!-- } -->
+
+With $m_c$ and $s_c$ in hand, the mean cost per unit output over the untruncated population then follows as $E[C^{\#}(T)] = e^{m_c + s_c^2/2}$. Because Equation \ref{eq:yStarCsharp} is also a model for $y^*$, the mean expected yield taken over the untruncated distribution then follows as the mean over the truncated distribution (the sample mean) multiplied by a correction term.
+
+\begin{equation}
+\begin{split}
+E[\tilde{y}^*(T)]\bigr|_{t = 0} &= E[\tilde{y}^*(T) | C^# < E[P(T)]\bigr|_{t = 0}]\bigr|_{t = 0} \left( \frac{E[C^{\#}]}{E[C^{\#} | C^{\#} < E[P(T)]\bigr|_{t = 0}]} \right)^{\eta} \\
+&= E[\hat{y}^*(\mathbf{k}_{ante}, C^*)|_{\mathbf{k}_{post} = \tilde{\mathbf{k}}_{post}})] e^{\frac{s_{\epsilon}^2}{2}} \left( \frac{E[C^{\#}]}{E[C^{\#} | C^{\#} < E[P(T)]\bigr|_{t = 0}]} \right)^{\eta}
+\end{split}
+\end{equation}
+
+Where $s_{\epsilon}^2$ is the variance of the OLS estimation error and $h$ (implied in $\eta$) is the coefficient on $\ln(C^*)$.
+
+The output price $P(T)$ received by farmers after harvest might be reported in the same farm survey data used to estimate $E[\tilde{y}^*(T)]\bigr|_{t = 0}$. However, the model requires the price at planting time $P(0)$, as well as $m_p$ and $s_p$, which are generally not reported in farm surveys. In countries with well developed forward contracts markets, such information is often available from commodity exchanges. And even in regions with poorly developed farm-to-market linkages, price information is increasingly available from services like the FAO Food Price Monitoring and Analysis Tool, which is the source of the price series in the lower left panel of Figure \ref{fig:gBmPrice}.
+<!-- , often due to a large, entrenched intermediary market which thrives precisely on buyer-seller information asymmetry -->
+
+Given sufficient price data, the values of $m_p$ and $s_p$ should be estimated over a suitable timeframe. Assuming that farmers expect the output price to behave roughly as it did during the previous year, then $m_p$ and $s_p$ should be estimated over the previous year or growing season. However, this may not always be an appropriate assumption, particularly in volatile markets. It may be more suitable to average over multiple years, or to take the average of the parameters estimated over multiple growing seasons.
+<!-- , required to calculate the farmers' expected price (recall Equation \ref{eq:EPT0}) -->
+
+An accurate value for $N_f$ will be difficult to estimate in populations where no recent farm census data is available. Note that $N_f$ is not necessary for evaluation of the price elasticity of aggregate supply and price risk elasticity of aggregate supply (Equations \ref{eq:pElasQagg} and \ref{eq:pRiskElasQagg}).
+
+## Illustrative use case: Data, specification, estimation
+
+The farm data used below cover the 2007 main maize season on 942 farms in 20 different counties of Kenya. The data are a subset of a much larger panel covering the main and short seasons of multiple crops for the years 2000, 2004, 2007, and 2010, originally gathered by the Egerton University Tegemeo Institute of Agricultural Policy and Development in partnership with Michigan State University, under the auspices of a USAID project [@maizeData]. The data include detailed information on quantities of numerous types of organic and inorganic fertilizers, pest/plague control chemicals, and hired and family labor. A wide variety of demographic and infrastructural control variables, as well as input and crop prices, are also included.
+[as well as 2007 rainfall data... as well as the historical average rainfall. ...binary endowment variables...]
+This sort of a validation but not so much a validation...
+<!-- (graphics here or in Appendix) Summary statistics can be found in the Appendix. -->
+
+For the purpose of parameterizing an aggregate supply curve, the data is required in order to have a mean yield ($E[y^*]$), average cost ($C^#$), and degree of homogeneity ($h$)....   The yield model in Equation \ref{eq:cobbDoug4} is specified as a function of cost per acre ($C^*$) and control variables ($k_i$).
+
+The continuous control variables $k_i$ are farm size (acres), seed quantity per acre, child family labor during planting (person-hours/acre), adult-equivalent household size (aehh07), and the 2007 main season rainfall. The cost per acre $C^*$ is the sum of all land prep and input (fertilizer, hired labor, and pesticide) costs. 
+
+
+B and binary endowment variables ($b_i$), plus an error term $\epsilon$ assumed to be normally distributed with mean 0.
+
+
+
+The binary endowments in the model are land tenure (whether or not the farmer owns their land), hybrid maize seed, oxen, and tractor. These variables take a value of $e$ if the endowment is present and $1$ otherwise, such that the coefficients $\beta_i$ are added to the intercept term $\beta_0$ on farms that have the endowment, and vanish otherwise.
+
+The OLS estimation results are presented in Table 1. Excellent fit, low standard errors, reasonable R2, homoskedastic. A multicollinearity test revealed low vif score and hence linearly independent logged regressors.
+
+Because the model is estimated in logs, the coefficients on the continuous variables may be interpreted as the control variable elasticities ($\kappa_i$). Note that the coefficient on acres is negative, affirming the inverse relation between farm size and yield found in numerous other studies [@muyanga2019revisiting; @larson2014should; @wassie2019revisiting; @gautam2019too; @kimhi2006plot]. The coefficient on child family labor during planting is also negative, confirming that this variable is better thought of as a hard constraint rather than a discretionary management variable.
+
+
+This is where we talk about the continuous and binary variables used in the model and how other specifications are certainly feasible... lots of management variables available, but not required because of Equation \ref{eq:yStarC}. Models including farmer age, education, gender, maximum and minimum temperature, other types of family labor, and distance to market variables were also explored. But the coefficients on these variables were either statistically insignificant or introduced multicollinearity and/or missing data issues. A model based on Equation \ref{eq:cobbDoug3} was also estimated (provided in the Appendix) to compare h via mod2 against h as sum of estimated output elasticities of inputs. As discussed in sec..., the mod1 h varies across farms...the mod 2 h is very close to the mean h of mod1.
+
+As discussed in section \ref{sec:ax12}, the independent continuous variables $k_i$ and $C^*$ are divided by their respective sample means $\tilde{k}_i$ and $\tilde{C}^*$ in order to facilitate interpretation of the constant $\tilde{y}$. (In the case of rainfall, $\tilde{k}_i$ is the historical average, not the sample average). The constant $\tilde{y}$ may then be interpreted as the farm yield evaluated at the sample mean of the continuous independent variables (at the historical mean in the case of rainfall). Insofar as the continuous independent variables are uncorrelated, moreover, then $E[\hat{y}^*] = \tilde{y} e^{s_{\epsilon}^2 / 2}$, where $s_{\epsilon}^2$ is the variance of the error $\epsilon$.
+
+But $E[\hat{y}^*]$ is the sample mean. 
+
+
+There are x distinct output prices reported in the data, ranging from x to x with a mean of x... mp and sp from FPMA.
+
+
+
+The yield model is specified in logs as a function of 
+
+\begin{equation}
+\ln(\hat{y}) = \ln(\tilde{y}) + \sum_{i = 1}^{n_k} \kappa \ln \left(\frac{k_i}{\tilde{k}_i}\right) + h \ln \left( \frac{C^*}{\tilde} \right) + \epsilon \:\:;\;\;\; \ln(\hat{y}) = \beta_0 + \sum_i \beta_i \ln(b_i)
+\label{eq:regMod}
+\end{equation}
+
+This is just the yield function in Equation \ref{eq:yStarC} in logs, and adjusted for estimation error $\epsilon$ and binary endowments $b_i$. 
+<!-- [This means that the constant $\hat{y}$ is not the same on all farms, but varies depending on which, if any, binary endowments are present. The "base case"...]  -->
+
+
+<!-- [recall from Equation \ref{eq:yConst} that the input variable elasticities $\alpha_i$ and input prices $w_i$ are implicit in the constant $\tilde{y}$, without requiring detailed information about either.] -->
+
+Note that the constant $\tilde{y}$ is not the same for all farms, but varies depending upon how many binary endowments the farm has. The "base case" of $\tilde{y} = e^{\beta_0}$, represents the sample average yield on farms with neither land tenure nor hybrid maize nor use of oxen or tractors for land preparation. In the sample examined here, there are 14 unique values for $\tilde{y}$, summarized in Figure \ref{fig:ySampAvg}.
+
+In the Appendix it is shown that the model in Equation \ref{eq:cobbDoug3} is also estimated...see Appendix. The value of $x_i / \tilde{x}_i$ is set to $1$ on farms where the input is not applied, such that the term vanishes from the equation... The output elasticities of input $\alpha_i$ are summed... add up to $h$.
+<!-- appendix graphics: input use, family labor, sumstats table -->
+
+```{r Fig3, fig.show = "hold", fig.width = 5, fig.height=5, fig.align="center", fig.cap="\\label{fig:lognormalYd}", echo = FALSE}
+
+thisFolder <- "D:/OneDrive - CGIAR/Documents 1/CIAT 2/A theory of aggregate supply and demand/"
+thisFile <- "df_mod2007.csv"
+thisFilepath <- paste0(thisFolder, thisFile)
+df_mod <- read.csv(thisFilepath, stringsAsFactors = F)
+colnames(df_mod) <- df_mod[nrow(df_mod), ]
+df_mod <- df_mod[-nrow(df_mod), ]
+df_mod[, -1] <- as.data.frame(apply(df_mod[, -1], 2, as.numeric))
+colnames(df_mod)[which(colnames(df_mod) == "Cstar")] <- "cost/acre"
+#=======================================================================
+input_vars <- c(#"Total fam lab child (pers-hrs/acre)",
+  #"Total fam lab (pers-hrs/acre)",
+  #"Total fam lab adult (pers-hrs/acre)",
+  #"Total wage labor (pers-hrs/acre)",
+  #"1st weeding fam lab child (pers-hrs/acre)",
+  #"2nd weeding fam lab fem (pers-hrs/acre)",
+  #"2nd weeding fam lab adult (pers-hrs/acre)",
+  #"1st weeding fam lab fem (pers-hrs/acre)",
+  #"1st weeding fam lab adult (pers-hrs/acre)",
+  #"1st weeding fam lab male (pers-hrs/acre)", *
+  #"1st weeding wage labor (pers-hrs/acre)",
+  #"2nd weeding wage labor (pers-hrs/acre)",
+  # "1st ploughing fam lab child (pers-hrs/acre)",
+  #"1st ploughing fam lab adult (pers-hrs/acre)",
+  # "1st ploughing fam lab fem (pers-hrs/acre)",
+  #"1st ploughing fam lab male (pers-hrs/acre)",
+  #"1st ploughing wage labor (pers-hrs/acre)",
+  #"shelling fam lab adult (pers-hrs/acre)",
+  #"shelling fam lab fem (pers-hrs/acre)",
+  #"shelling fam lab male (pers-hrs/acre)",
+  #"shelling fam lab child (pers-hrs/acre)",
+  # "shelling wage labor (pers-hrs/acre)",
+  #"harvesting fam lab male (pers-hrs/acre)", #**
+  #"harvesting fam lab adult (pers-hrs/acre)", *
+  #"harvesting fam lab fem (pers-hrs/acre)",
+  #"harvesting fam lab child (pers-hrs/acre)",
+  #"harvesting wage labor (pers-hrs/acre)",
+  #  "planting fam lab adult (pers-hrs/acre)",
+  # "planting fam lab fem (pers-hrs/acre)",
+  #"planting fam lab male (pers-hrs/acre)",
+  "planting fam lab child (pers-hrs/acre)",
+  #"planting wage labor (pers-hrs/acre)",
+  #"Total synth. fert. (kg/acre)",
+  "seed (kg/acre)",
+  "Total CAN fert (kg/acre)",      
+  "Total NPK fert (kg/acre)",  
+  "Total UREA fert (kg/acre)",
+  "dap (kg/acre)",
+  #"UREA (46:0:0) (kg/acre)",
+  #"CAN (26:0:0) (kg/acre)",
+  # "NPK (23:23:23) (kg/acre)",
+  # "NPK (23:23:0) (kg/acre)",
+  #"NPK (17:17:0) (kg/acre)",
+  #"manure (kg/acre)",
+  #"compost (kg/acre)",
+  #"mavuno-basal (kg/acre)",
+  #"foliar feed (kg/acre)",
+  # "Fungicide qty (kg/acre)",
+  # "Herbicide qty (kg/acre)",
+  # "Insecticide qty (kg/acre)",
+  # "Pesticide qty (kg/acre)"
+  "Total P&D chem (kg/acre)"
+)
+demog_vars <- c(#"age",
+  "aehh07"#,
+  #"hhsize07"
+  # "km to organic fert mkt",
+  #"km to synth fert mkt",
+  #"km to pest/plague chem mkt"
+)
+clim_vars <- c("Rain anomaly"#,
+               #"qwetpre",
+               #"main07",
+               # "qwetxt",
+               # "qwetit"
+)
+bin_vars <- c("adopter", #"gend",
+              #"irrigated",
+              # "tenure: govt/communal/cooperative",
+              # "tenure: owned by parent/relative", 
+              "tenure: owned with title deed",
+              # "tenure: owned without title deed",
+              # "tenure: rented",
+              # "landprep: manual",
+              # "landprep: none",
+              "landprep: oxen",
+              "landprep: tractor")
+#-----------------------------------------------------------------------
+costVars <- c("cost/acre", #"seed (KES/acre)",
+              "dap (KES/acre)",
+              #"UREA (46:0:0) (KES/acre)",
+              "Total CAN fert (KES/acre)",
+              #"CAN (26:0:0) (KES/acre)",
+              "Total NPK fert (KES/acre)",
+              #"NPK (23:23:23) (KES/acre)",
+              #"NPK (23:23:0) (KES/acre)",
+              "Total UREA fert (KES/acre)",
+              #"manure (KES/acre)",
+              "Total P&D chem (KES/acre)"
+)
+priceVars <- gsub("acre", "kg", costVars[-1])
+priceVars <- c(priceVars, "harvesting (KES/hour)")
+#-----------------------------------------------------------------------
+# # Remove farms not using any inputs (as these farms then have h=0)
+# indh0 <- which(rowSums(df_mod[, setdiff(input_vars, c("planting fam lab child (pers-hrs/acre)", "seed (kg/acre)"))]) == 0)
+# #length(indh0)
+# df_mod <- df_mod[-indh0, ]
+#-----------------------------------------------------------------------
+mod1Vars <- c("dist", "yield (kg/acre)", "acres",
+              input_vars, bin_vars, demog_vars, clim_vars,
+              costVars, priceVars, "P")
+df_mod1 <- df_mod[, mod1Vars]
+not_these <- which(colnames(df_mod1) %in% c("dist", costVars, priceVars, "P"))
+mod1 <- lm(`yield (kg/acre)`~., df_mod1[, -not_these])
+#summary(mod1)
+#sum(mod1$residuals^2)
+#plot(mod1$fitted.values, mod1$residuals)
+#car::vif(mod1)
+#View(df_mod1[which(mod1$residuals < -2), ])
+library(jtools)
+#summ(mod1)
+coefsNeg <- mod1$coefficients[which(mod1$coefficients < 0)]
+coefsNegNames <- gsub("`", "", names(coefsNeg))
+inputsNegCoef <- coefsNegNames[which(coefsNegNames %in% input_vars)]
+inputsPosCoef <- setdiff(input_vars, inputsNegCoef)
+#-----------------------------------------------------------------------
+mod2Vars <- c("dist", "yield (kg/acre)", "cost/acre", "acres", "seed (kg/acre)",
+              inputsNegCoef, bin_vars, demog_vars, clim_vars)
+df_mod2 <- df_mod[, c(mod2Vars, "P")]
+#-----------------------------------------------------------------------
+# Get cStar and area before transforming
+cStar <- exp(df_mod2$`cost/acre`)
+muCstarSamp <- mean(cStar)
+lAcres <- df_mod2$acres
+mArea <- mean(lAcres)
+sArea <- sd(lAcres)
+muArea <- exp(mArea + sArea^2 / 2)
+#---------------------------------------------------------------------
+theseCols <- c("cost/acre", "acres", "seed (kg/acre)", demog_vars)
+thisFun <- function(x){out <- x - log(mean(exp(x))); return(out)}
+df_mod2[, theseCols] <- as.data.frame(apply(df_mod2[, theseCols], 2, thisFun))
+not_these <- which(colnames(df_mod2) %in% c("P", "dist", costVars[-1]))
+mod2 <- lm(`yield (kg/acre)`~., df_mod2[, -not_these])
+#summary(mod2)
+#sum(mod2$residuals^2)
+#plot(mod2$fitted.values, mod1$residuals)
+#car::vif(mod2)
+#View(df_mod2[which(mod2$residuals < -1.5), ])
+summ(mod2)
+#======================================================================
+#======================================================================
+#======================================================================
+# # Model validation tests
+# #----------------------------------------------------------------------
+# coefsNames <- gsub("`", "", names(mod1$coefficients))
+# aVec <- mod1$coefficients[which(coefsNames %in% inputsPosCoef)]
+# # If seed coef removed, calculation of h based on model 1 input coefs
+# # matches estimation of h in model 2 
+# rmThese <- which(names(aVec) == "`seed (kg/acre)`")#%in% c("`seed (kg/acre)`", "`harvesting fam lab male (pers-hrs/acre)`"))
+# aVec <- aVec[-rmThese]
+# hFull <- sum(aVec)
+# #aVec / h
+# inputMat <- as.matrix(df_mod1[, inputsPosCoef[-c(1)]]) # (if removing seed coef)
+# #inputMat <- as.matrix(df_mod1[, inputsPosCoef])
+# inputMat[inputMat != 0] <- 1
+# h <-  inputMat %*% aVec
+# eta <- h / (1 - h)
+# hist(h, breaks = 10)
+# #ind_h0 <- which(h == 0)
+# #hist(df_mod1$`yield (kg/acre)`[ind_h0])
+# #unique(df_mod1$dist[ind_h0])
+# #hist(df_mod1$`seed (kg/acre)`[ind_h0])
+# #hist(df_mod1$aehh07[ind_h0])
+# #plot(mod1$fitted.values[ind_h0], mod1$residuals[ind_h0])
+# #View(df_mod1[ind_h0, ])
+# #h[ind_h0] <- 0.02
+# #---
+# # Validation test 1 using cost shares vs. tech shares
+# # (Theory predicts that input cost_i / total input cost = alpha_i / h)
+# # (So the following ratios should = 1, or log(ratio) = 0)
+# # Encouraging results, make sure `cost/acre` only includes inputs used in model,
+# # and that seed might better not be considered an input
+# #---
+# `cost/acre` <- exp(df_mod1$`cost/acre`)
+# yStar <- exp(df_mod1$`yield (kg/acre)`)
+# # `cost/acre`, yStar, and CtildeStar are lognormally distributed
+# cSharpEff <- `cost/acre` / yStar
+# # # hist(log(CtildeStarEff), breaks = 25)
+# # # hist(log(`cost/acre`), breaks = 25)
+# # # hist(log(yStar), breaks = 25)
+# # # #`cost/acre`[which(`cost/acre` == 1)] <- 0
+# # # hist(log(`cost/acre` / yStar))
+# # #ratio <- aVec[which(names(aVec) == "`seed (kg/acre)`")] / h * `cost/acre` / df_mod1$`seed (KES/acre)`
+# # #ratio <- aVec[which(names(aVec) == "`manure (kg/acre)`")] / h * `cost/acre` / df_mod1$`manure (KES/acre)`
+# # ratio <- aVec[which(names(aVec) == "`Total NPK fert (kg/acre)`")] / h * `cost/acre` / df_mod1$`Total NPK fert (KES/acre)`
+# # ratio <- aVec[which(names(aVec) == "`Total CAN fert (kg/acre)`")] / h * `cost/acre` / df_mod1$`Total CAN fert (KES/acre)`
+# # ratio <- aVec[which(names(aVec) == "`Total UREA fert (kg/acre)`")] / h * `cost/acre` / df_mod1$`Total UREA fert (KES/acre)`
+# # ratio <- aVec[which(names(aVec) == "`dap (kg/acre)`")] / h * `cost/acre` / df_mod1$`dap (KES/acre)`
+# # ratio <- aVec[which(names(aVec) == "`Total P&D chem (kg/acre)`")] / h * `cost/acre` / df_mod1$`Total P&D chem (KES/acre)`
+# # #hist(log(ratio))
+# # #---
+# # # Validation test 2 based only on input costs and tech coeffs
+# # # (Theory says input cost_i / alpha_i = input cost_j / alpha_j)
+# # # (So the following ratios should = 1, or log(ratio) = 0)
+# # # More encouraging results!
+# # # Ratios involving seed continue to diverge from theory,
+# # # maybe b/c the seed cost is incomplete,
+# # # maybe farmers have ways of getting it for free
+# # # maybe b/c seed cost is not really a management variable
+# # # Note this way of validating opens the door to deducing family labor wage
+# # #---
+# # ratio <- df_mod1$`Total CAN fert (KES/acre)` * 
+# #   aVec[which(names(aVec) == "`Total NPK fert (kg/acre)`")] / (df_mod1$`Total NPK fert (KES/acre)` * aVec[which(names(aVec) == "`Total CAN fert (kg/acre)`")])
+# # ratio <- df_mod1$`Total CAN fert (KES/acre)` *
+# #   aVec[which(names(aVec) == "`Total UREA fert (kg/acre)`")] / (df_mod1$`Total UREA fert (KES/acre)` * aVec[which(names(aVec) == "`Total CAN fert (kg/acre)`")])
+# # ratio <- df_mod1$`Total CAN fert (KES/acre)` *
+# #   aVec[which(names(aVec) == "`dap (kg/acre)`")] / (df_mod1$`dap (KES/acre)` * aVec[which(names(aVec) == "`Total CAN fert (kg/acre)`")])
+# # ratio <- df_mod1$`Total UREA fert (KES/acre)` *
+# #   aVec[which(names(aVec) == "`dap (kg/acre)`")] / (df_mod1$`dap (KES/acre)` * aVec[which(names(aVec) == "`Total UREA fert (kg/acre)`")])
+# # #ratio <- df_mod1$`seed (KES/acre)` * aVec[which(names(aVec) == "`dap (kg/acre)`")] / (df_mod1$`dap (KES/acre)` * aVec[which(names(aVec) == "`seed (kg/acre)`")])
+# # ratio <- df_mod1$`Total NPK fert (KES/acre)` *
+# #   aVec[which(names(aVec) == "`dap (kg/acre)`")] / (df_mod1$`dap (KES/acre)` * aVec[which(names(aVec) == "`Total NPK fert (kg/acre)`")])
+# # ratio <- df_mod1$`Total NPK fert (KES/acre)` *
+# #   aVec[which(names(aVec) == "`Total CAN fert (kg/acre)`")] / (df_mod1$`Total CAN fert (KES/acre)` * aVec[which(names(aVec) == "`Total NPK fert (kg/acre)`")])
+# # ratio <- df_mod1$`Total NPK fert (KES/acre)` *
+# #   aVec[which(names(aVec) == "`Total P&D chem (kg/acre)`")] / (df_mod1$`Total P&D chem (KES/acre)` * aVec[which(names(aVec) == "`Total NPK fert (kg/acre)`")])
+# # ratio <- df_mod1$`Total CAN fert (KES/acre)` *
+# #   aVec[which(names(aVec) == "`Total P&D chem (kg/acre)`")] / (df_mod1$`Total P&D chem (KES/acre)` * aVec[which(names(aVec) == "`Total CAN fert (kg/acre)`")])
+# # ratio <- df_mod1$`Total P&D chem (kg/acre)` *
+# #   aVec[which(names(aVec) == "`dap (kg/acre)`")] / (df_mod1$`dap (kg/acre)` * aVec[which(names(aVec) == "`Total P&D chem (kg/acre)`")])
+# # # # Fam labor is in qty terms, not cost terms, but exhibits stable ratio values
+# # # ratio <- df_mod1$`Total CAN fert (KES/acre)` * aVec[which(names(aVec) == "`harvesting fam lab male (pers-hrs/acre)`")] / (df_mod1$`harvesting fam lab male (pers-hrs/acre)` * aVec[which(names(aVec) == "`Total CAN fert (kg/acre)`")])
+# # # ratio <- df_mod1$`Total NPK fert (KES/acre)` * aVec[which(names(aVec) == "`harvesting fam lab male (pers-hrs/acre)`")] / (df_mod1$`harvesting fam lab male (pers-hrs/acre)` * aVec[which(names(aVec) == "`Total NPK fert (kg/acre)`")])
+# # # ratio <- df_mod1$`Total UREA fert (KES/acre)` * aVec[which(names(aVec) == "`harvesting fam lab male (pers-hrs/acre)`")] / (df_mod1$`harvesting fam lab male (pers-hrs/acre)` * aVec[which(names(aVec) == "`Total UREA fert (kg/acre)`")])
+# # # ratio <- df_mod1$`dap (KES/acre)` * aVec[which(names(aVec) == "`harvesting fam lab male (pers-hrs/acre)`")] / (df_mod1$`harvesting fam lab male (pers-hrs/acre)` * aVec[which(names(aVec) == "`dap (kg/acre)`")])
+# # #hist(log(ratio))
+
+```
+
+```{r Fig4, fig.show = "hold", fig.width=5, fig.height=3, fig.align="center", fig.cap="\\label{fig:ySampAvg}Yield evaluated at the sample means of the control variables, and with rainfall anomaly set to 1 (no divergence from historical rainfall), for farms with different binary endowments.", echo = FALSE}
+
+mod2Coefs <- mod2$coefficients
+hCoef <- mod2Coefs["`cost/acre`"]
+etaCoef <- hCoef / (1 - hCoef)
+a0 <- mod2Coefs[1]
+coefsNames <- gsub("`", "", names(mod2Coefs))
+coefsNames <- coefsNames[-1]
+mod2Coefs <- mod2Coefs[-1]
+#---
+aVec <- mod2Coefs
+lkMat <- as.matrix(df_mod2[, coefsNames])
+lBetaK <- lkMat %*% aVec
+betaK <- exp(lBetaK)
+yBasal <- exp(a0)
+#---
+# test
+#a0 + lBetaK - mod2$fitted.values
+#g0 * betaK - exp(mod2$fitted.values)
+#---
+kBinVec <- mod2Coefs[which(coefsNames %in% bin_vars)]
+dfBinVar <- df_mod2[, bin_vars]
+a0adj <- a0 + as.matrix(dfBinVar) %*% kBinVec
+y0 <- exp(a0adj)
+dfBinVar$adopter <- ifelse(dfBinVar$adopter == 1, "Hybrid", "0")
+dfBinVar$`tenure: owned with title deed` <- ifelse(dfBinVar$`tenure: owned with title deed` == 1, "Tenure", "0")
+dfBinVar$`landprep: oxen` <- ifelse(dfBinVar$`landprep: oxen` == 1, "Oxen", "0")
+dfBinVar$`landprep: tractor` <- ifelse(dfBinVar$`landprep: tractor` == 1, "Tractor", "0")
+endowVec <- apply(dfBinVar, 1, paste, collapse = " + ")
+endowVec <- gsub("0 \\+|\\+ 0", "", endowVec)
+endowVec <- gsub("   0", "Base", endowVec)
+endowVec[which(endowVec != "Base")] <- paste("Base +", endowVec[which(endowVec != "Base")])
+endowVec <- gsub("  ", " ", endowVec)
+endowVec <- trimws(endowVec)
+#---------------------------------------------------------------------
+cellText_size <- 2.5
+df_plot <- data.frame(Type = endowVec, y0 = round(y0, 1))
+df_plot$xx <- 1
+df_plot <- df_plot %>% group_by(Type) %>% summarise(`Number of farms` = sum(xx, na.rm = T), y0 = unique(y0)) %>% as.data.frame()
+df_plot$Element <- 1
+df_plot <- df_plot[order(df_plot$y0, decreasing = T), ]
+typeVec <- df_plot$Type
+# df_plot$Type <- factor(df_plot$Type, levels = df_plot$y0[order(df_plot$y0)], ordered = T)
+gg <- ggplot(df_plot, aes(x = Element, y = Type, fill = y0, label = y0))
+gg <- gg + scale_y_discrete(limits = typeVec)
+gg <- gg + geom_tile(alpha = 0)
+gg <- gg + labs(title = expression(tilde(y)))
+gg <- gg + theme_bw()
+gg <- gg + theme(axis.title = element_blank(),
+                 axis.text.x = element_blank(),
+                 axis.ticks.x = element_blank(),
+                 axis.text.y = element_text(size = axisTextSize),
+                 panel.grid = element_blank(),
+                 plot.title = element_text(size = axisTitleSize, hjust = 0.5),
+                 legend.position = "none")
+gg <- gg + geom_text(size = cellText_size)
+gg1 <- gg
+#---
+gg <- ggplot(df_plot, aes(x = `Number of farms`, y = Type))
+gg <- gg + scale_y_discrete(limits = typeVec)
+gg <- gg + geom_col()
+gg <- gg + labs(title = "Number of farms")
+gg <- gg + theme_bw()
+gg <- gg + theme(axis.title = element_blank(),
+                 #axis.title.x = element_text(size = axisTitleSize),
+                 axis.text.y = element_blank(),
+                 axis.text.x = element_text(size = axisTextSize),
+                 #panel.grid = element_blank(),
+                 plot.title = element_text(size = axisTitleSize, hjust = 0.5))
+gg2 <- gg
+#---
+gg1 + gg2 + plot_layout(ncol = 2, widths = c(1/2, 1))
+
+```
+
+By Equation \ref{eq:yStarC}, the coefficient of `r round(hCoef, 3)` on logged cost/acre can be interpreted as the yield degree of homogeneity $h$. By Equation \ref{eq:PelastYstar}, the farm level price elasticity of supply then follows as `r round(etaCoef, 3)`.
+
+Since the $k_i$ are linearly independent, then the sample average yield equals $E[\hat{y}^*]$
+The mean yield 
+
+Equation \ref{eq:regMod} represents the real yield $y^*(T)$, known post harvest. Assuming that farmers expect rainfall to adhere to the historical average, then the expected yield at planting time ($E[y^*(T)]\bigr|_{t = 0}$) may reckoned from the available post hoc information as follows.
+
+
+\begin{equation}
+E[y^*(T)]\bigr|_{t = 0} = y^*(T) \frac{\tilde{k}_r}{k_r}^{\kappa_r} e^{\frac{s_{\epsilon}^2}{2}}
+\end{equation}
+
+Where $s_{\epsilon}^2$ is the variance of the error term $\epsilon$.
+
+...lambda > h for most as expected, with truncated mean slightly less than 1...
+
+[additional tacit axioms---linear independence ]
+
+## ...
+
+...have to get the population mean/sd from the truncated mean/sd...
+
+Assuming that the fitted coefficients do not vary much within a few years of when they are estimated...
+
+Expected yield is actual yield divided by the rainfall anomaly...[assume farms expect rainfall consistent with the historical trend. The same would go for other weather variables like temperature and solar radiation, if they were included in the model and were statistically significant.] AND using EXPECTED PRICE at planting time, not the post harvest sale price.
+
+...mP and sP -- time period over which it is taken.
+
+
+This is an ex-ante curve in the sense that each point on the curve is an ex-ante projection based on the expected price information available at or before planting time.
+
+The projection overestimates the eventual  is far off because of the 2008-2009 drought.
+
+<!-- https://www.fao.org/giews/reports/sub-saharan-africa-cereal-report/en/ -->
+
+```{r Fig5, fig.show = "hold", fig.width = 5, fig.height=3, fig.align="center", fig.cap="\\label{fig:Qs2009}The ex-ante Kenya 2009 aggregate maize supply curve, parameterized based on the 2007 Kenya farm data. The shaded area around the curve...", echo = FALSE}
+
+# Define root functions
+rootFnUp <- function(xIn, xUp, sXtrunc, mXtrunc){
+  sX <- xIn[1]
+  mX <- xIn[2]
+  zUp <- (log(xUp) - mX) / sX
+  probTerm <- dnorm(zUp) / pnorm(zUp)
+  slack_s <- sXtrunc^2 - sX^2 * (1 - zUp * probTerm - probTerm^2)
+  slack_m <- mXtrunc - mX + sX * probTerm
+  outVec <- c(slack_s, slack_m)
+  return(outVec)
+}
+rootFnLo <- function(xIn, xLo, sXtrunc, mXtrunc){
+  sX <- xIn[1]
+  mX <- xIn[2]
+  zLo <- (log(xLo) - mX) / sX
+  probTerm <- dnorm(zLo) / pnorm(-zLo)
+  slack_s <- sXtrunc^2 - sX^2 * (1 + zLo * probTerm - probTerm^2)
+  slack_m <- mXtrunc - mX - sX * probTerm
+  outVec <- c(slack_s, slack_m)
+  return(outVec)
+}
+#====================================================================
+# Get mean price jump from county level monthly price data (downloaded from FAO GIEWS-FPMA Tool)
+thisFile <- "Nakuru Eldoret monthly maize price.csv"
+thisFilePath <- paste0(thisFolder, thisFile)
+df_raw <- read.csv(thisFilePath, stringsAsFactors = F)
+keepCols <- c(1, 2)
+df_raw <- df_raw[, keepCols]
+df_raw <- as.data.frame(apply(df_raw, 2, rev))
+colnames(df_raw) <- c("Date", "Price")
+df_raw$Price <- as.numeric(df_raw$Price)
+df_raw$Date <- as.Date(df_raw$Date, "%m/%d/%Y")
+df <- df_raw
+# df <- subset(df_raw, Date >= "2008-03-01" &
+#                Date <= "2019-08-01")
+df$`Log change` <- c(NA, diff(log(df$Price)))
+library(lubridate)
+yrVec <- unique(year(df$Date))
+nYr <- length(yrVec)
+th <- 5
+mVec <- c()
+sVec <- c()
+P0vec <- c()
+EPT0hist <- c()
+anomVec <- c()
+for(i in 1:(nYr - 1)){
+  thisDate <- as.Date(paste0(as.character(yrVec[i]), "-03-01"))
+  indMY <- grep(thisDate, df$Date)
+  indMY <- indMY:(indMY + 11)
+  this_m <- mean(df$`Log change`[indMY], na.rm = T)
+  this_s <- sd(df$`Log change`[indMY], na.rm = T)
+  mVec[i] <- this_m
+  sVec[i] <- this_s
+  #---
+  thisDate <- as.Date(paste0(as.character(yrVec[i]), "-03-01"))
+  indGrow <- grep(thisDate, df$Date)
+  indGrow <- indGrow:(indGrow + th)
+  P0 <- df$Price[indGrow[1]]
+  PT <- df$Price[indGrow[1 + th]]
+  P0vec[i] <- P0 
+  #---
+  # print(year(df$Date[indGrow[1]]))
+  # print(paste("m = ", this_m))
+  # print(paste("s = ", this_s))
+  if(i > 1){
+    EPT0 <- P0 * exp(mVec[i - 1] * th)
+    thisAnomaly <- 100 * (EPT0 / PT - 1)
+    # print(paste("P0 = ", P0))
+    # print(paste("PT = ", PT))
+    # print(paste("EPT0 = ", EPT0))
+    # print(thisAnomaly)
+    EPT0hist[i] <- EPT0
+    anomVec[i] <- thisAnomaly
+  }
+  
+}
+
+# hist(anomVec)
+# hist(mVec)
+#---
+P02007 <- P0vec[2]
+mP2006 <- mVec[1]
+sP2006 <- sVec[1]
+#EPT02007 <- floor(P02007 * exp(mP2006 * th))
+EPT02007 <- P02007 * exp(mP2006 * th)
+#---
+P02009 <- P0vec[4]
+mP2008 <- mVec[3]
+sP2008 <- sVec[3]
+EPT02009 <- P02009 * exp(mP2008 * th)
+#---
+# dfEPT0 <- data.frame(Year = yrVec[-c(1, nYr)], EPT0 = EPT0hist[-1], mP = mVec[-c((nYr - 1), nYr)], sP = sVec[-c((nYr - 1), nYr)], Anomaly = anomVec[-1])
+#----------------------------------------------------------------------
+kNames <- c("acres", "seed (kg/acre)",
+            "planting fam lab child (pers-hrs/acre)",
+            demog_vars)
+kVec <- mod2Coefs[which(coefsNames %in% kNames)]
+lkMat <- as.matrix(df_mod2[, kNames])
+betaK <- exp(lkMat %*% kVec)
+kappaRn <- mod2Coefs[which(coefsNames == "Rain anomaly")]
+lkRn <- as.matrix(df_mod2[, "Rain anomaly"])
+betaRn <- exp(lkRn * kappaRn)
+kRn <- exp(lkRn)
+eps <- mod2$residuals
+sErr <- sd(eps)
+#----------------------------------------------------------------------
+const <- y0 * betaK / muCstarSamp^hCoef * hCoef^hCoef * exp(sErr^2 / 2)
+#----------------------------------------------------------------------
+EyStar1 <- const * kRn^kappaRn * (cStar / hCoef)^hCoef
+EyStar0 <- exp(mod2$fitted.values - kappaRn * lkRn + sErr^2 / 2)
+#EyStar1 - EyStar0
+EcSharp <- cStar / EyStar0
+#---
+lam <- EPT02007 / EcSharp * hCoef
+#lam <- exp(-mP2006) * df_mod2$P / EcSharp * hCoef
+# EyStarUp2 <- y0 * betaKnormdAdj * kRn^kappaRn * ERstar^hCoef * exp(sErr^2 / 2)
+# EyStarUp - EyStarUp2
+#----------------------------------------------------------------------
+# How many rational farms?
+nRational <- sum(lam > hCoef) / length(lam)
+# sum(EcSharp < df_mod2$P) / length(EcSharp)
+# sum(EcSharp < EPT02007) / length(EcSharp)
+# sum(EyStar < EyStarUp) / length(EyStar)
+#----------------------------------------------------------------------
+mEcSharpTrunc <- mean(log(EcSharp))
+sEcSharpTrunc <- sd(log(EcSharp))
+muEcSharpTrunc <- exp(mEcSharpTrunc + sEcSharpTrunc^2 / 2)
+xIn <- c(sEcSharpTrunc, mEcSharpTrunc)
+sol <- nleqslv::nleqslv(xIn, rootFnUp, jac = NULL,
+                        xUp = EPT02007,
+                        sXtrunc = sEcSharpTrunc,
+                        mXtrunc = mEcSharpTrunc)
+#sol
+sEcSharp <- sol$x[1]
+mEcSharp <- sol$x[2]
+muEcSharpT0 <- exp(mEcSharp + sEcSharp^2 / 2)
+#----------------------------------------------------------------------
+mLamTrunc <- mean(log(lam))
+sLamTrunc <- sd(log(lam))
+muLamTrunc <- exp(mLamTrunc + sLamTrunc^2 / 2)
+xIn <- c(sLamTrunc, sLamTrunc)
+sol <- nleqslv::nleqslv(xIn, rootFnLo, jac = NULL,
+                        xLo = hCoef,
+                        sXtrunc = sLamTrunc,
+                        mXtrunc = mLamTrunc)
+#sol
+sLam <- sol$x[1]
+mLam <- sol$x[2]
+muLam <- exp(mLam + sLam^2 / 2)
+muLamEtaInv <- exp(-etaCoef * mLam + etaCoef^2 * sLam^2 / 2)
+# #muLamTrunc
+# exp(mLamTrunc - sLamTrunc^2)
+# exp(mLam - sLam^2)
+#---
+# x <- seq(0, 3, length = 200)
+# y <- dlnorm(x, meanlog = mLam, sdlog = sLam)
+# gg <- ggplot(data.frame(x = x, y = y), aes(x = x, y = y))
+# gg <- gg + geom_line()
+# gg <- gg + geom_vline(xintercept = hCoef)
+#---------------------------------------------------------------------
+# mean(const)^(etaCoef / hCoef) * mean(kRn^kappaRn)^(etaCoef / hCoef)
+# mean(kRn^kappaRn)^(etaCoef / hCoef) - (mean(kRn)^kappaRn)^(etaCoef / hCoef)
+# mean(kRn^kappaRn)^(etaCoef / hCoef) - mean(kRn^(kappaRn * etaCoef / hCoef))
+# #muConst <- mean((const * kRn^kappaRn)^(etaCoef / hCoef))
+muConst <- mean((const)^(etaCoef / hCoef)) # * mean(kRn)^(kappaRn * etaCoef / hCoef)
+muEcSharpT0eta <- exp(etaCoef * mEcSharp + etaCoef^2 * sEcSharp^2 / 2)
+muEyStarT0 <- muConst * muEcSharpT0eta * hCoef^-etaCoef
+muEyStarT0trunc <- mean(EyStar0 * kRn^-kappaRn)
+
+```
+
+`r nRational`
+
+
+```{r Fig5, fig.show = "hold", fig.width = 5, fig.height=5, fig.align="center", fig.cap="\\label{fig:Qs} uyiijl", echo = FALSE}
+
+# Define supply curve/price elasticity of supply/price risk elasticity of supply function
+QsFun <- function(muEyStarT0, EPT0ref, fracVec, h, kappaRn, muArea,
+                  muEcSharpT0, mP, sP, th, Nf, kRn = 1){
+  eta <- h / (1 - h)
+  muKrnKapEtaH_up <- mean((kRn * 2)^(kappaRn * eta / h))
+  muKrnKapEtaH_lo <- mean((kRn * 1 / 2)^(kappaRn * eta / h))
+  
+  EPT0vec <- fracVec * EPT0ref
+  muEyStarT0vec <- muEyStarT0 * fracVec^eta
+  muEyStarT0upVec <- muEyStarT0vec * muKrnKapEtaH_up
+  muEyStarT0loVec <- muEyStarT0vec * muKrnKapEtaH_lo
+  muEqStarT0vec <- muArea * muEyStarT0vec
+  muEqStarT0upVec <- muArea * muEyStarT0upVec
+  muEqStarT0loVec <- muArea * muEyStarT0loVec
+  P0vec <- EPT0vec * exp(-mP * th)
+  z <- (eta * log(muEcSharpT0 / P0vec) - (eta * mP - eta^2 * sP^2 / 2) * th) / (eta * sP * sqrt(th))
+  EQs <- Nf * muEqStarT0vec * (1 - pnorm(z)) #in kg
+  EQsUp <- Nf * muEqStarT0upVec * (1 - pnorm(z)) #in kg
+  EQsLo <- Nf * muEqStarT0loVec * (1 - pnorm(z)) #in kg
+  EQs <- EQs * 10^-9 #in million MT
+  EQsUp <- EQsUp * 10^-9 #in million MT
+  EQsLo <- EQsLo * 10^-9
+  #------------
+  etaAg <- eta + dnorm(-z) / pnorm(-z) * 1 / (sP * sqrt(th))
+  #------------
+  etaRisk <- -dnorm(-z) / pnorm(-z) * (eta * sP * sqrt(th) - z)
+  #------------
+  dfQs <- data.frame(EPT0 = EPT0vec, 100 * fracVec,
+                     EQs, EQsUp, EQsLo,
+                     etaAg, etaRisk,
+                     probPgtC = pnorm(-z))
+  colnames(dfQs) <- c("Expected price (KES/kg)", "Pct. of E[P(T)]",
+                      "Expected supply, normal rainfall\n(million metric tons)",
+                      "Expected supply, high rainfall\n(million metric tons)",
+                      "Expected supply, low rainfall\n(million metric tons)",
+                      "Price elasticity\nof supply",
+                      "Price risk elasticity\nof supply",
+                      "Participation (%)")
+  return(dfQs)
+}
+#=====================================================================
+# Get FAO Kenya maize data for validation of Qs
+thisFolder
+thisFile <- "FAO Kenya maize.csv"
+thisFilepath <- paste0(thisFolder, thisFile)
+dfFAO <- read.csv(thisFilepath, stringsAsFactors = F)
+keepCols <- c("Area", "Element", "Item", "Year", "Unit", "Value")
+dfFAO <- dfFAO[, keepCols]
+areaFAO2007 <- dfFAO$Value[which(dfFAO$Year == 2007 & dfFAO$Element == "Area harvested")]
+prodFAO2007 <- dfFAO$Value[which(dfFAO$Year == 2007 & dfFAO$Element == "Production")]
+areaFAO2009 <- dfFAO$Value[which(dfFAO$Year == 2009 & dfFAO$Element == "Area harvested")]
+prodFAO2009 <- dfFAO$Value[which(dfFAO$Year == 2009 & dfFAO$Element == "Production")]
+# areaFAO2006 <- 1888195
+# areaFAO2007 <- 1615304
+# areaFAO2008 <- 1700000
+# prodFAO2006 <- 3247200
+# prodFAO2007 <- 2928793
+# prodFAO2008 <- 2367237
+#----------------------------------------------------------------------
+# lA <- quantile(df_mod2$acres, 0.01 * c(1:100))
+# prob <- 0.01 * as.numeric(gsub("%", "", names(lA)))
+# dfArea <- data.frame(lA, prob)
+# #ggplot(dfArea, aes(x = lA, prob)) + geom_line()
+# modArea <- glm(prob ~ lA, dfArea, family = "binomial")
+# #summary(modArea)
+# b0 <- modArea$coefficients[1]
+# bA <- modArea$coefficients[2]
+# probHat <- 1 / (1 + exp(-b0 - bA * lA))
+# err <- probHat - prob
+# #plot(probHat, err)
+# dfArea$probHat <- probHat
+# dfArea$probHat2 <- pnorm(lA, mean(lAcres), sd(lAcres))
+# dfArea <- dfArea %>% gather(var, val, prob:probHat2)
+# ggplot(dfArea, aes(x = lA, y = val, group = var, color = var)) + geom_line()
+#----------------------------------------------------------------------
+# mRnAnom <- mean(log(kRn))
+# sRnAnom <- sd(log(kRn))
+# muRnAnom <- exp(mRnAnom + sRnAnom^2 / 2)
+# sigRnAnom <- muRnAnom * sqrt(exp(sRnAnom^2) - 1)
+# mBetaRn <- 0 #mean(log(betaRn))
+# sBetaRn <- sd(log(betaRn))
+# muBetaRnEtaH <- exp(etaCoef / hCoef * mBetaRn + (etaCoef / hCoef)^2 * sBetaRn^2 / 2)
+#----------------------------------------------------------------------
+# # Ex-post calibration number of farms Nf
+# dfQs2007 <- QsFun(muEyStarT0,
+#                   EPT0 = EPT02007, fracVec = 1,
+#                   h = hCoef, kappaRn, muArea,
+#                   muEcSharpT0 = muEcSharpT0,
+#                   mP = mP2006, sP = sP2006, th, Nf = 1)
+# Qs2007 <- dfQs2007$`Expected supply, normal rainfall\n(million metric tons)`
+# Nf <- prodFAO2007 * mean(kRn^(-kappaRn * etaCoef / hCoef)) * 10^-6 / Qs2007
+# #Nf <- 1.7 * 10^6
+#----------------------------------------------------------------------
+# 2007 aggregate supply curve
+fracVec <- seq(0.01, 2, length.out = 50)
+#dfQs <- QsFun(muEyStarT0 = muEyStarT0 * (EPT02009 / EPT02007)^hCoef,
+Nf = 1.7 * 10^6
+dfQs <- QsFun(muEyStarT0 = muEyStarT0,
+              EPT0ref = EPT02007, fracVec,
+              h = hCoef, kappaRn, muArea,
+              muEcSharpT0 = muEcSharpT0,
+              mP = mP2006, sP = sP2006,
+              th, Nf)
+#---------------------------------------------------------------------
+gg <- ggplot(dfQs)
+gg <- gg + geom_ribbon(aes(x = `Expected price (KES/kg)`,
+                           ymin = `Expected supply, low rainfall\n(million metric tons)`,
+                           ymax = `Expected supply, high rainfall\n(million metric tons)`),
+                       fill='blue',alpha=0.2)
+df_line <- dfQs[, c("Expected price (KES/kg)", "Expected supply, low rainfall\n(million metric tons)", "Expected supply, high rainfall\n(million metric tons)",
+                    "Expected supply, normal rainfall\n(million metric tons)")]
+colnames(df_line)[2:4] <- c("Low rainfall", "High rainfall", "Normal rainfall")
+df_line <- df_line %>% gather(var, `Expected supply\n(million metric tons)`, `Low rainfall`:`Normal rainfall`)
+gg <- gg + geom_line(data = df_line, aes(x = `Expected price (KES/kg)`, y = `Expected supply\n(million metric tons)`, group = var, color = var))
+gg <- gg + scale_color_manual(values = c("green", "red", "black"))
+gg <- gg + geom_vline(xintercept = EPT02007)
+gg <- gg + theme_bw()
+gg <- gg + theme(axis.title.x = element_text(size = axisTextSize),
+                 legend.title = element_blank(),
+                 legend.text = element_text(size = legendTextSize),
+                 legend.position = "top")
+ggQs <- gg
+#---
+gg <- ggplot(dfQs, aes(x = `Expected price (KES/kg)`, y = `Price elasticity\nof supply`))
+gg <- gg + geom_line()
+gg <- gg + theme_bw()
+ggElast <- gg
+df_inset <- subset(dfQs, `Expected price (KES/kg)` > 7 & `Expected price (KES/kg)` < 11)
+gg <- ggplot(df_inset, aes(x = `Expected price (KES/kg)`, y = `Price elasticity\nof supply`))
+gg <- gg + geom_line()
+gg <- gg + geom_hline(yintercept = 1, linetype = "dashed", color = "red")
+gg <- gg + geom_vline(xintercept = EPT02007)
+gg <- gg + theme_bw()
+gg <- gg + theme(axis.title = element_blank())
+ggElastInset <- gg
+ggPelastQs <- ggElast + annotation_custom(ggplotGrob(ggElastInset),
+                                          xmin = 6, xmax = 20, 
+                                          ymin = 20, ymax = 70)
+#----------
+gg <- ggplot(dfQs, aes(x = `Expected price (KES/kg)`, y = `Participation (%)`))
+gg <- gg + geom_line()
+# gg <- gg + labs(y = expression(paste("Prob(", P(T)^eta, "> E[", C^[0](T), "]", ")")))
+gg <- gg + theme_bw()
+gg <- gg + theme(axis.title.x = element_blank())
+ggProb <- gg
+#----------
+ggQs + ggProb + ggPelastQs + plot_layout(ncol = 1, heights = c(1, 1/4, 1))
+#----------------------------------------------------------------------
+# Expected aggregate supply maps
+fracVec <- seq(0.75, 1.2, length.out = 50)
+n <- length(fracVec)
+kRnVec <- seq(1 / 5, 3, length.out = n)
+list_df <- list()
+for(i in 1:n){
+  thisKrn <- kRnVec[i]
+  dfQs <- QsFun(muEyStarT0, EPT0ref = EPT02007,
+                fracVec, h = hCoef, kappaRn, muArea,
+                muEcSharpT0, mP = mP2006, sP = sP2006,
+                th, Nf, kRn = thisKrn)
+  dfQs$`Rainfall anomaly` <- thisKrn
+  list_df[[i]] <- dfQs
+}
+
+dfMap <- as.data.frame(do.call(rbind, list_df))
+colnames(dfMap)[3] <- "Expected supply\n(million metric tons)"
+gg <- ggplot(dfMap, aes(x = `Expected price (KES/kg)`,
+                        y = `Rainfall anomaly`, fill = `Participation (%)`))
+gg <- gg + geom_tile()
+gg
+
+
+```
+
+`r round(Qs2007, 2)`
+
+`r round(pctDif2007, 1)` percent divergence from FAO
+
+`r round(eta2007, 3)`
+
+
+...pretty close to FAO (put in % divergence terms), divergence maybe rooted in variation of output price, also because we don't really know EyStarT0 and EPT0, also because this is expected supply at planting, not actual supply at harvest...also does not account for short rains growing season (October-December) (but short rains harvest is small % of total, in 2021 it was about 250,000MT)
+
+[@abodi2021supply; @mckay1999aggregate; @muchapondwa2009supply]
+
+...price risk elasticity of supply...
+
+```{r Fig6, fig.show = "hold", fig.width = 4, fig.height=3, fig.align="center", fig.cap="\\label{fig:PriskElastQs} uyiijl", echo = FALSE}
+
+gg <- ggplot(dfQs, aes(x = `Expected price (KES/kg)`, y = `Price risk elasticity\nof supply`))
+gg <- gg + geom_line()
+gg <- gg + theme_bw()
+ggElast <- gg
+df_inset <- subset(dfQs, `Expected price (KES/kg)` > 9 & `Expected price (KES/kg)` < 25)
+gg <- ggplot(df_inset, aes(x = `Expected price (KES/kg)`, y = `Price risk elasticity\nof supply`))
+gg <- gg + geom_line()
+gg <- gg + geom_hline(yintercept = 0, linetype = "dashed", color = "red")
+gg <- gg + theme_bw()
+gg <- gg + theme(axis.title = element_blank())
+ggElastInset <- gg
+ggPriskElastQs <- ggElast + annotation_custom(ggplotGrob(ggElastInset),
+                                              xmin = 6, xmax = 35, 
+                                              ymin = 9, ymax = 35)
+
+ggPriskElastQs
+
+```
+
+```{r Fig7, fig.show = "hold", fig.width = 5, fig.height=5, fig.align="center", fig.cap="\\label{fig:PriskElastQs} uyiijl", echo = FALSE}
+
+#dfEPT0 <- subset(dfEPT0, Year > 2008)
+dfQs <- QsFun(dfEPT0$EPT0,
+              muArea, g0, h = hCoef, muBetaKetaH, muEtaLamInv,
+              muEcSharpT0,
+              mP = dfEPT0$mP,
+              sP = dfEPT0$sP,
+              th, Nf)
+#dfQs$`Supply\n(million metric tons)`
+dfFAOlook <- subset(dfFAO, Year %in% c(2007:2022) & Element == "Production")
+dif <- dfQs$`Supply\n(million metric tons)` - dfFAOlook$Value * 10^-6
+pctDif <- 100 * dif / (dfFAOlook$Value * 10^-6)
+dfEPT0$`FAO Anomaly` <- pctDif
+df_plot <-  dfEPT0[, c("Year", "Anomaly", "FAO Anomaly")] %>% gather(var, val, Anomaly:`FAO Anomaly`)
+gg <- ggplot(df_plot, aes(x = Year, y = val,
+                          group = var, color = var))
+gg <- gg + geom_line()
+gg
+```
+
+
+# Discussion
+
+[In discussion: key strength is versatility in the research questions that may be addressed either in concert or in isolation...may examine multi-faceted policy involving price stabilization, technology.... multi-lever...The curve is empirically transparent, i.e. its parameters have a straightforward interpretation in terms of concrete, measurable phenomena, such that exogenous shocks may be modeled precisely and transparently. The research induced supply curve shift is complex. ...adoption...  derivative of aggregate supply with respect to price volatility, multiple levers at the policy maker's disposal.explicitly accounts for price risk and agroclimatic uncertainty, allowing explicit analysis of the role of futures markets and marketing board policy, in enhancing technological impact....the trade board debate... ...comparative analysis of multiple impact pathways to achieve the same result (ETH bean example)]
+
+This not really a validation of the model...markets at the time were in disarray dysfunctional...SAP liberalization... [@Jayne wicked problem].
+
+Address more nuanced questions like what is the right balance of policy and technology mix required to reach certain development goals...how can the impact of new technology release be enhanced through policy
+
+More than validation this is to illustrate the potential usefulness of the model in examining new technologies, policies (subsidies, storage, transportation, microfinance, insurance), etc....comparison of different impact pathways. Current methods focus on yield enhancing varieties...maybe the same development goals can be reached at lower cost and in a shorter time frame through policy instruments...
+
+In minimum data contexts...
+
+short cropping season is omitted from aggregate supply, but this generally accounts for less than 5% of total production in any given year
+
+The participation term, does it mean employment? ...
+
+Of course, supply can also be defined in terms of an integral of farm yield over its density.
+
+\begin{equation}
+Q_S = \int_{0}^{\bar{y}^*} y^* \rho(y^*) \: dq^*
+\end{equation}
+
+Where the yield density is defined such that
+
+\begin{equation}
+\rho(y^*) = \int_{0}^{\infty} \rho(y^*) \: dy^* = N_a
+\end{equation}
+
+Where $N_a$ is the number of acres (or whatever the unit of area is) in the population.
+
+The latter expression may be more suitable when dealing with remote sensing data. The former is more suitable when dealing with farm survey data, as here.
+
+...it may be worthwhile to integrate using the cost form of yield...
+
+...here focused on the motivating context, but the method is applicable in CGE models etc. anywhere a model of aggregate supply is required...
+
+
+
+...this form allows one to look at questions of the value of storage...forward contracts...for e.g. as policy instruments implemented in tandem with new technology...questions of how to optimize the enabling environment to maximize impact of new technology...
+
+...treatment of aggregate demand...
+...upper bound on $x_j^*$,
+
+\begin{equation}
+x_j^* < \frac{\alpha_j}{w_j} \left(y_0 \frac{P}{h} \right)
+\label{eq:inputUpBound}
+\end{equation}
+
+
+...negatively sloped cross price demand curves implies that all inputs are complements, not substitutes...makes sense, can't substitute CAN for dap or labor or pesticide
+
+...Axioms can be formalized differently...intensive versus extensive diminishing marginal returns... or a risk constraint can be introduced in addition to the budget constraint in Axiom 2.  More than a specific functional form, an axiomatic approach... rules are made to be refined and ammended... the aim is to come up with a set of Axioms that generate a game that is worth the candle... Axioms should be formulated so as to minimize Axioms and maximize corollaries, i.e. maximize the number of Axioms that are explained by the original Axioms  and must not contradict each other.
+
+In defense of CobbDoug
+[Mention the good empirical fit and validation tests (input demand, optimal area, etc.) as arguments in favor of C-D]
+
+Translog is so "flexible" that it ends up being restrictive from an economic standpoint---not homogeneous, monotonicity and concavity, global concavity requires negative semidefinite matrix of parameters, enforcement of which "destroys the flexibility of the form" and restricts the price elasticities in undesired way (from "Estimating a Derived Demand System from a Translog Cost Function"). Jorgenson etc. have to then devise ways to make it less flexible, in order to impose constant returns to scale, for eg.
+
+However, it does not directly address---not in an obvious way---the most enduring objections to the form: its perceived conflict with evidence and intuitions regarding 1) input substitution, 2) production elasticities, and 3) factor demand elasticities. A complete response to these objections is beyond the scope of the work at hand. Nonetheless, a minimal response is sketched out below in the hopes of retaining the attention of the many vigorous critics of Cobb-Douglas who might otherwise read no further.
+
+Enduring objection 1 is that the Cobb-Douglas function implies a unitary elasticity of input substitution, whereas intuition and evidence clearly suggest otherwise. Arrow et al. [-@arrow1961capital] set the tone in their seminal article:
+
+>"Technological alternatives are numerous and flexible in some sectors, limited in others; and uniform substitutability is most unlikely. The difference in elasticities is confirmed by direct observation of capital-labor proportions, which show much more variation among countries in some sectors than in others".
+
+However, the authors here are objecting not to unitary elasticity of substitution, but rather "uniform substitutability". The measure of substitutability of one input for another in a two factor model $y(x_1, x_2)$ given an output target is not the elasticity of substitution, but rather the marginal rate of substitution, $dx_1/dx_2$. And the phrase "uniform substitutability" followed closely by the word "elasticities" may reasonably be interpreted as $d\ln(x_1)/\ln(dx_2) = 1$. (Hundreds of subsequent authors espousing this objection appear to mean this, at any rate.) It is straightforward to show that the two factor Cobb-Douglas model does not imply this. On the contrary, it implies
+
+\begin{equation}
+\frac{d \ln(x_1)}{d\ln(x_2)} = -\frac{\alpha_2}{\alpha_1}
+\end{equation}
+
+And thus agrees with Arrow et al.'s observations regarding the unlikelihood of "uniform substitutability".
+
+At the same time, it is true that the two factor Cobb-Douglas model implies a unitary elasticity of substitution. But the elasticity of substitution is not a measure of factor substitutability. It is a measure of how factor proportions change with substitutability. A unitary elasticity of substitution thus means that a $1\%$ change in substitutability ($dx_1/dx_2$) results in a $1\%$ change in the ratio $x_1/x_2$. In plain English: a change in substitutability of $x_1$ for $x_2$ results in a proportionate change in the substitution of $x_1$ for $x_2$. One may conjecture without controversy that most farm managers would consider this an eminently reasonable characterization of management decision-making.
+
+Enduring objection 2 is that the Cobb-Douglas production elasticities $\alpha_i$ are constant, whereas intuition suggests that production elasticities are functions of inputs, and should thus vary with input use. To lift this "restriction", the translog production function was introduced, with production elasticities defined as Cobb-Douglas functions of the inputs.
+
+While the Cobb-Douglas production elasticities are indeed constant, it is fallacious to then conclude from this that they are not functions of the inputs. On the contrary, by Euler's theorem it is straightforward to show that
+
+\begin{equation}
+\alpha_i = \left(\frac{h - 1}{h} \right)  \frac{x_i}{y} \sum_{j}^{n} \frac{\partial^2 y}{\partial x_i \partial x_j} x_j
+\end{equation}
+
+And, moreover,
+
+\begin{equation}
+\frac{\partial^2 y}{\partial x_i \partial x_j} = \frac{1}{h - 2}  \sum_{k}^{n} \frac{\partial}{ \partial x_i} \frac{\partial y}{\partial x_j \partial x_k} x_k
+\end{equation}
+
+And, so on for any order $\mathcal{\ell}$ of differentiation, ad infinitum,
+
+\begin{equation}
+\frac{\partial^{\ell} y}{\partial x_i^{\ell}} = \frac{1}{h - \ell + 1}  \sum_{j}^{n} \frac{\partial^{\ell + 1} y}{\partial x_i^{\ell + 1} \partial x_j} x_j
+\end{equation}
+
+That is to say, for $h \neq 1$, the Cobb-Douglas production elasticities are not just functions of all inputs, but also of the $2^{nd}$, $3^{rd}$, $\dots$,$\infty^{th}$ order variation of production with respect to inputs, as well as the interactions of these implied in the successive orders of cross derivatives. That all this complex interaction should add up to a constant is a sign not of oversimplification, then, but of mathematical serendipity stemming from Axiom 1. The translog function, meanwhile, is not derived from any first principle and is not even a homogeneous function. Which, then, is the more restrictive model?
+
+It may be added that the economic principle of net-benefit maximization (cost minimization) implies that optimal input quantities are functions of prices and control variables, and are thus constant. In this sense, the translog production elasticities are also constant.
+
+The same riposte applies to enduring objection 3, namely, that the Cobb-Douglas input demand elasticities are constant, whereas intuition and evidence indicate that input demand elasticities vary with input use. Again, it is true that Cobb-Douglas demand elasticities are constant. But, again, this does not mean that they are not functions of inputs. On the assumption that producers maximize their net benefit (or minimize cost), the Cobb-Douglas input demand own and cross price elasticities follows as
+
+\begin{equation}
+\end{equation}
+
+The input own and cross price demand elasticities are thus functions of price and technology. Because optimal input use is also a function of price, these elasticities may be written as functions of input use, if so desired. Conversely, the Hicks-Allen partial elasticities derived using the translog model may be written in terms of prices, if so desired.
+
+how to implement in minimum data contexts...
+
+Also agrees with Lipton...
+
+Lipton says... .
+
+>\singlespacing "New science usually raises farm supply of outputs and demand for inputs. That makes outputs cheaper and inputs more expensive; hence the ratio of farm output prices to input prices falls. Do small and poor farmers gain? If, and only if, this science-induced fall in their relative farm prices is slower than the science-induced rise in their conversion ratio of physical inputs into physical outputs (that is, TFP)" [-@lipton2005family].
+
+the mapping defaults to the subjective preferences of the modeler, which in turn prefigures the results of the impact assessment.  ...arbitrarily set by modeler...in the name of expedience, then, petitio principii. an assumed result dressed up in mathematical symbols. [In lit review: The most famous example is whether an improved variety does a shift or pivot of the supply curve. Results depend critically on this choice...conflict of interest.] Counterveiling changes in prices...Lipton.
+
+in Discussion: the starting Axioms are to be experimented with. Other sets of Axioms might yield the same or different results.
+
+...the numerous methodological headaches incurred in the pursuit of expedience, outlined above (and reviewed in more detail below), outweigh any gain in computational expedience. [What good is computational expedience if it is not even clear what is being calculated, what its connection to reality is]
+
+can also address questions of how the same result might be achieved through interventions of other variables (Ethiopia bean an example), so as to compare which impact pathway is cheapest
+
+
+sketch out extension to aggregate demand and PE analysis...computing Econ Surplus, change in net benefit as alternative to ES
+
+
+# References {-}
+
+<div id="refs"></div>
+
+\pagebreak
+
+# Appendix
+
+## Derivation of the farm production function from Axioms 1 and 2 \label{sec:ax12}
+
+Throughout much of written history, astute observers have noticed that the usefulness of increments in the quantity of a good is inversely proportional to amount of the input or good or service already acquired [@kauder1953genesis]. In 1738, Daniel Bernoulli put it this way:
+<!-- an input (in the case of producer yield functions) or good or service (in the case of consumer utility functions) -->
+
+>\singlespacing "In the absence of the unusual, the utility resulting from any small increase in wealth will be inversely proportionate to the quantity of goods previously possessed" [@bernoulli1954exposition].
+
+\doublespacing
+<!-- Today, this is known as the "law of diminishing marginal returns". -->
+<!-- \begin{framed} -->
+<!--    \textbf{Axiom 1} \\ The law of diminishing marginal returns. -->
+<!-- \end{framed} -->
+<!-- Formalization of Bernoulli's verbal statement of the law of diminishing marginal returns depends upon how one defines "small increase". If "small increase" means a marginal increase, then Bernoulli's statement can be written down as follows.^[Bernoulli himself could not have had "marginal increase" in mind per se, as calculus had not yet been invented.] -->
+
+Today, this is known as the "law of diminishing marginal returns". Bernoulli's statement is a consumer side formulation of the law. It can also has a producer side formulation: "In the absence of the unusual, the yield increase resulting from any small increase in a given input will be inversely proportionate to the quantity of the input already applied." With the aid of calculus (which was not available to Bernoulli), this may be formalized as follows.
+
+\begin{equation}
+\frac{\partial \ln(y)}{\partial x} \sim \frac{1}{x}
+\label{eq:dimUtilDefine}
+\end{equation}
+
+Where, to be clear, the term $\partial \ln(y) / \partial x$ is the [percentage change in yield?] change in total yield given a marginal increase in the quantity of good $x$, and "$\sim 1 / x$", means "inversely proportionate to the quantity of good $x$ already acquired". An expression $y(x)$ for the yield of good $x$ can then be obtained by integrating Bernoulli's statement.
+
+\begin{equation}
+\begin{split}
+\int \frac{\partial \ln(y)}{\partial x} \: dx &= \int \alpha \frac{d \ln(x)}{dx} \: dx \\
+\ln(y(x))  &= \alpha \ln(x) + k \\
+y(x) &= e^k x^{\alpha}
+\end{split}
+\label{eq:integrate_lny}
+\end{equation}
+
+Where the proportionality constant $\alpha = \partial \ln(y)/ \partial \ln(x)$ is the input elasticity of yield, i.e., the percentage change in yield given a $1$ percent increase in input $x$.
+
+In the multivariate case, an expression $y(\mathbf{x})$ for yield as a function of a vector of $n$ goods $\mathbf{x} = [x_1,x_2,...,x_n]$ can be obtained as follows.
+
+\begin{equation}
+\int \nabla_{\mathbf{x}} \ln(y) \cdot d \mathbf{x} = \int D(\boldsymbol{\alpha}) \nabla_{\mathbf{x}} \ln(\mathbf{x}) \cdot d \mathbf{x}
+\end{equation}
+
+\begin{equation}
+\begin{split}
+\ln(y(\mathbf{x})) &= \boldsymbol{\alpha} \cdot \ln(\mathbf{x}) + \alpha_0 \\
+y &= e^{\alpha_0} \prod_{i = 1}^{n} x_i^{\alpha_i}
+\end{split}
+\label{eq:cobbDoug}
+\end{equation}
+
+where $\boldsymbol{\alpha}$ is the vector of input elasticities corresponding to each $x_i$, the notation $D(\boldsymbol{\alpha})$ indicates a diagonal matrix with the elements of $\boldsymbol{\alpha}$ along its diagonal, and
+
+\begin{equation}
+\nabla_{\mathbf{x}} \ln(y) = \left[ \begin{matrix} \frac{\partial \ln(y)}{\partial x_1} \\
+\frac{\partial \ln(y)}{\partial x_2} \\
+\vdots \\
+\frac{\partial \ln(y)}{\partial x_n}
+\end{matrix} \right]
+\end{equation}
+
+It is straightforward to see that equation \ref{eq:cobbDoug2} is a homogeneous (and thus also homothetic) function with degree of homogeneity $h$ equal to $\sum_i \alpha_i$. There is no need, then, to impose homogeneity as an additional Axiom. It follows from the Axiom of diminishing marginal returns.
+
+Empirical analysis involves exogenously given control variables ($k_i$), typically including demographic variables such as age, education, gender, household size, as well as agroclimatic variables such as temperature, rainfall, soil conditions, and so forth. Equation \ref{eq:cobbDoug} is thus henceforth rewritten as follows.
+<!-- (Analysis is said to be "ceteris paribus" when these variables are held constant at a particular value across the population.) -->
+
+\begin{equation}
+y = g_0 \prod_{i = 1}^{n_k} k_i^{\kappa_i} \prod_{i = 1}^{n_x} x_i^{\alpha_i} \:\:;\:\:\: g_0 = e^{\alpha_0}
+\label{eq:cobbDoug2}
+\end{equation}
+
+Where the $\kappa_i$ are the control variable elasticities of yield. Because the control variables $k_i$ are non-discretionary, the corresponding elasticities $\kappa_i$ may take positive or negative values. The input elasticities $\alpha_i$, on the other hand, which correspond to discretionary management variables, are generally positive. However, there may arise cases where a variable does not fall neatly into either the management or control category. In the empirical analysis presented farther below, for example, the coefficient on child family labor takes a negative value. Labor is generally considered a discretionary management variable; but family labor, and especially child family labor, might, in some cases, better be considered a control variable, indicative of hard constraints beyond the farmers' discretion. For purposes of economic analysis, the degree of homogeneity is calculated only over the production elasticities corresponding to management variables ($h = \sum_i \alpha_i$, omitting the $\kappa_i$).
+
+Interpretation of the constant $g_0$ is as difficult as one wants to make it. It is, of course, usually called the "total factor productivity", and understood to represent the yield per unit "all inputs"---although a more accurate description would be yield per unit "all input and control variables, raised to various powers". For those not yet comfortable working in units of, say,
+
+$$
+\text{kg.} \times \: \text{acres}^{-1} \times \: \text{liters}^{-\alpha_{pest}} \times \: \text{kg.}^{-\alpha_{fert}} \times \: \text{manhours}^{-\alpha_{labor}} \times\: \\ \text{mm.}^{-\alpha_{rain}} \times\: \: \text{years}^{-\alpha_{age}} \times\: \text{num. persons}^{-\alpha_{HHsize}} \:;\:\: \alpha_{(var)} \in \mathbb{R}
+$$
+an alternative approach is to arbitrarily define $g_0$ in terms of another parameter that is expressed in intelligible units, and to work with this instead. For example, $g_0$ may be defined in terms of another parameter $\tilde{y}$ and fixed reference values $\tilde{k}_i$, $\tilde{x}_i$ that have the same units as the corresponding management and control variables $x_i$ and $k_i$.
+
+\begin{equation}
+g_0 = y_0 \prod_{i = 1}^{n_k} \tilde{k}_i^{-\kappa_i} \prod_{i = 1}^{n_x} \tilde{x}_i^{-\alpha_i}
+\end{equation}
+
+Such that the yield function may be rewritten
+
+\begin{equation}
+y = y_0 \prod_{i = 1}^{n_k} \left( \frac{k_i}{\tilde{k}_i} \right)^{\kappa_i} \prod_{i = 1}^{n_x} \left( \frac{x_i}{\tilde{x}_i} \right)^{\alpha_i}
+\label{eq:cobbDoug3}
+\end{equation}
+
+Or, taking logs,
+
+\begin{equation}
+\ln(y) = \ln(y_0) + \sum_{i = 1}^{n_k} \kappa_i \ln \left( \frac{k_i}{\tilde{k}_i} \right) + \sum_{i = 1}^{n_x} \alpha_i \ln \left( \frac{x_i}{\tilde{x}_i} \right)
+\label{eq:cobbDoug3ln}
+\end{equation}
+
+Because the ratios in parentheses are dimensionless, $y_0$ must have the same units as $y$; and $y_0$ may be interpreted as the value of $y$ when all management and control variables equal their reference values. In the empirical study included here, for example, the reference values are set equal to the sample means, such that $y_0$ is the value of $y$ evaluated at the sample means of the input and control variables.
+
+Equation \ref{eq:cobbDoug3} is, of course, the Cobb-Douglas form. Outside of Economics, it would simply be referred to as a (multivariate) power law. Such forms are often good models of observed processes across a wide range of research contexts and disciplines. In Economics, the Cobb-Douglas form was widely used from the 1920s to 1950s on the basis of its good empirical fit, but fell into disrepute thereafter for its perceived lack a theoretical basis. Capalbo and Antle [-@capalbo2015agricultural] offer a succinct introduction to this vast discussion. The forgoing derivation of the Cobb-Douglas form from Axiom 1 in some measure redresses the lack of a theoretical basis. [Other perceived shortcomings of the form are briefly addressed in the Discussion. if there is enough space!] [Or: In the course of the derivation below, a number of theoretical strengths are brought to light---underrepresented or overlooked by textbook treatments---that cast doubt on the bad reputation as a "restrictive" model]
+
+The farm level yield model $y^*$ is then obtained by introducing Axiom 2.
+<!-- \begin{framed} -->
+<!--    \textbf{Axiom 2} \\ Farms apply inputs so as to maximize their net benefit subject to a budget constraint. -->
+<!-- \end{framed} -->
+
+Formally, Axiom 2 may be written
+
+\begin{equation}
+y^* = y(\mathbf{x}^*; y_0, \tilde{\mathbf{x}}, \mathbf{k}, \tilde{\mathbf{k}}, \boldsymbol{\alpha}, \boldsymbol{\kappa}) \:;\:\: x^* = \text{argmax}_{\mathbf{x}}(P y - \lambda(C - B))
+\end{equation}
+
+Where $P$ is the output price, $B$ is the farm budget, $C$ is the cost function, defined
+
+\begin{equation}
+C = \mathbf{w} ' \mathbf{x}
+\end{equation}
+
+and $\mathbf{w}$ is the vector of input prices corresponding to each element in the input vector $\mathbf{x}$.
+
+The Lagrangian is then
+
+\begin{equation}
+\mathcal{L} = Py - \lambda (C - B)
+\end{equation}
+
+Where $\lambda$ is the farm budget shadow price, that is, the marginal benefit to the farm of a marginal increase in budget.
+
+\begin{equation}
+\frac{\partial \mathcal{L}}{\partial B} = \lambda
+\end{equation}
+<!-- The budget shadow price is an implicit measure of how each farm values cash for expenditures on farm inputs, and plays a central role in the aggregation step farther below. -->
+
+Standard textbook treatments of the first and second order conditions for Cobb-Douglas profit maximization are generally limited to the two input case (capital and labor) for the purpose of isoquant analysis, and omit the budget constraint. It is therefore necessary to take a moment to examine theses conditions for the more general case, and specific aims, at hand. The first order conditions for a maximum of $\mathcal{L}$ are
+
+\begin{equation}
+\begin{split}
+\nabla_{\mathbf{x}} \mathcal{L} &= P \nabla_{\mathbf{x}} y - \lambda \mathbf{w} = \mathbf{0} \\
+&= Py D(\mathbf{x})^{-1} \boldsymbol{\alpha} - \lambda \mathbf{w} = \mathbf{0}
+\end{split}
+\label{eq:eqFOC}
+\end{equation}
+
+Where the $\mathbf{0}$ indicates a vector of zeroes equal to the length of $\mathbf{x}$.
+
+And the second order condition for a maximum is
+
+\begin{equation}
+\begin{split}
+\mathbf{x} ' \nabla_{\mathbf{x}}^2 \mathcal{L} \mathbf{x} &= P \mathbf{x} ' \nabla_{\mathbf{x}}^2 y \mathbf{x} ' < 0 \\
+&= P h (h - 1) < 0
+\end{split}
+\label{eq:eqSOC}
+\end{equation}
+
+Where Euler's Theorem has been invoked in the second line of the condition. It follows that Axiom 2 requires $0 < h < 1$, i.e. diminishing returns to scale. Constant returns to scale ($h = 1$) imply the break-even point, while increasing returns to scale ($h > 1$) imply a loss. The farm yield function is thus globally concave in inputs. Constant and increasing returns, on the other hand, would imply global linearity and convexity, respectively.
+
+The first order conditions may be solved for input demand $x_j^*$ as follows.
+
+\begin{equation}
+x_j^* = \frac{P y^* \alpha_j}{\lambda w_j}
+\label{eq:inputDem1}
+\end{equation}
+
+Optimal yield $y^*$ then follows as the unoptimized yield evaluated at the optimal input levels $x_j^*$. This works out to
+
+\begin{equation}
+y^* =  \left(y_0 \prod_i \left(\frac{\alpha_i}{w_i}\right)^{\alpha_i} \prod_i k_i^{\kappa_i} \right)^{\frac{1}{1 - h}} \left(\frac{P}{\lambda}\right)^{\frac{h}{1 - h}}
+\label{eq:YdEnv1}
+\end{equation}
+<!-- Heathfield and Wibe [-@heathfield1987introduction] -->
+
+This is the optimized yield function, or yield envelope, henceforth simply referred to as the farm yield. To reduce notational clutter, $y^*$ is rewritten as follows.
+
+\begin{equation}
+y^* = (y_0 \theta)^{\frac{1}{1 - h}} \left( \frac{P}{\lambda} \right)^{\frac{h}{1 - h}}
+\label{eq:YdEnvCompact}
+\end{equation}
+
+Where
+
+\begin{equation}
+\theta = \frac{\theta_x \theta_k}{\theta_w} \:\:;\:\:\: \theta_w = \prod_i{w_i}^{\alpha_i} \:\:\: \theta_x = \prod_i {\alpha_i}^{\alpha_i} \:\:\: \theta_k = \prod_i \left( \frac{k_i}{\tilde{k}_i} \right)^{\kappa_i}
+\end{equation}
+
+Dotting the first order conditions in Equation \ref{eq:eqFOC} through by $\mathbf{x}$ results in a handy expression for the budget shadow price.
+
+\begin{equation}
+\lambda = \frac{R^*}{C^*} h \:\:;\:\:\: C^* = \mathbf{w} ' \mathbf{x}^* \:\:\: R^* = P y^*
+\label{eq:lambda}
+\end{equation}
+<!-- when combined with Equation \ref{eq:inputDem1}, then gives -->
+<!-- \begin{equation} -->
+<!-- \frac{x_j^* w_j}{C^*} = \frac{\alpha_j}{h} -->
+<!-- \end{equation} -->
+<!-- which tells us that rational cost shares equal their respective "technology shares". -->
+
+which, when combined with Equation \ref{eq:YdEnvCompact}, gives an instructive, alternative expression for $y^*$,
+
+\begin{equation}
+y^* = y_0 \theta \left( \frac{C^*}{h} \right)^h
+\label{eq:yStarC}
+\end{equation}
+
+The degree of homogeneity $h$ is thus also the scale elasticity of yield ($d \ln(y^*) / d \ln(C^*) = h$), as noted in the textbooks. This form is particularly useful for estimation, as it requires only the control variables $k_i$ and input cost $C^*$, as opposed to detailed information on all of the input quantities. That is, instead of estimating the model in Equation \ref{eq:cobbDoug3ln}, one estimates
+
+\begin{equation}
+\ln(y) = \ln(\tilde{y}) + h \ln \left(\frac{C^*}{\tilde{C}^*} \right) + \sum_{i = 1}^{n_k} \kappa_i \ln \left( \frac{k_i}{\tilde{k}_i} \right)
+\label{eq:cobbDoug4}
+\end{equation}
+
+Where the shorthand $\tilde{y}$ has been introduced, defined
+
+\begin{equation}
+\tilde{y} = y_0 \frac{\theta_{\alpha}}{\theta_w} \left( \frac{\tilde{C}}{h} \right)^h
+\label{eq:yConst}
+\end{equation}
+
+Such that the input elasticities $\alpha_i$ and prices $w_i$ are implicit in the fitted constant $\tilde{y}$ without requiring detailed information about input types and quantities. Moreover, letting the reference values $\tilde{C}^*$ and $\tilde{k}_i$ equal the mean of the cost per acre and control variables, respectively, then $\tilde{y}$ is equal to the mean yield. A further advantage of this form is that the fitted coefficient on $\ln(C^*)$ may be directly interpreted as $h$, valid for all farms in the sample. Estimation of the model in Equation \ref{eq:cobbDoug3}, on the other hand, requires the extra step of summation of the input elasticities $\alpha_i$ in order to arrive at $h$. This may result in varying $h$ across the sample, as not all farms necessarily apply all the inputs specified in the model.
+
+Finally, note also the similarity between Equations \ref{eq:yStarC} and \ref{eq:integrate_lny}. And note that
+
+\begin{equation}
+\frac{\partial \ln(y^*)}{\partial C^*} \sim \frac{1}{C^*}
+\end{equation}
+
+which is congruent to Axiom 1. The question arises, then, whether Axiom 2 requires axiom status, or whether it is implied by Axiom 1. But this is a question for pure logicians. Pending clarification, we continue to call it an Axiom.
+
+### Marginal cost and cost per unit output
+<!-- Some important/underrepresented corollaries -->
+<!-- Because the C-D fn has fallen into such disrepute, it is worthwhile to take a moment to highlight some attractive corollaries that are underrepresented in the textbook treatments. [and one new one -lipton] -->
+
+The farm marginal cost readily follows from the scale elasticity of yield by combining it with the budget shadow price expression in Equation \ref{eq:lambda}.
+
+\begin{equation}
+\frac{dC^*}{dy^*} = \frac{P}{\lambda}
+\label{eq:margCost1}
+\end{equation}
+
+Axioms 1 and 2 thus imply constant marginal cost. (As mentioned in the introduction, this is well supported empirically [].) Since $P = d R^* / d y^*$, this can be rearranged into another instructive expression for $\lambda$.
+
+\begin{equation}
+\lambda = \frac{dR^* / dy^*}{dC^* / dy^*} = \frac{dR^*}{dC^*}
+\label{eq:lambda2}
+\end{equation}
+
+Letting $C^{\#}$ denote the cost per unit output (often called the "average cost of production"),
+
+\begin{equation}
+C^{\#} = \frac{C^*}{y^*}
+\label{eq:cSharp1}
+\end{equation}
+
+Then
+
+\begin{equation}
+\lambda = \frac{P}{C^{\#}} h
+\label{eq:lambda3}
+\end{equation}
+
+And the marginal cost and cost per unit output are thus related as follows.
+
+\begin{equation}
+\frac{dC^*}{dy^*} h = C^{\#}
+\label{eq:lambda3}
+\end{equation}
+
+### Farm level supply and input demand
+
+Turning to supply and demand curves, From Equation \ref{eq:YdEnvCompact} and the domain of $h$, it follows that farm supply curves are positively sloped.
+
+\begin{equation}
+\frac{\partial \ln(y^*)}{\partial \ln(P)} = \frac{h}{1 - h} > 0
+\label{eq:PelastYstar}
+\end{equation}
+
+Note, in passing, that farm supply is elastic for $h \in (1 / 2 , 1)$, inelastic for $h \in (0, 1 / 2)$, and linear when $h = 1 / 2$. And note that increasing returns to scale would imply negatively sloped supply curves.
+
+The domain of $h$ required by Axiom 2 also implies strictly downward sloping input demand curves. To see this, combine Equations \ref{eq:inputDem1} and \ref{eq:YdEnvCompact} to obtain an alternate expression for input demand.
+
+\begin{equation}
+x_j^* = \frac{\alpha_j}{w_j} \left( y_0 \theta \frac{P}{\lambda} \right)^{\frac{1}{1 - h}}
+\label{eq:inputDem2}
+\end{equation}
+
+The own and cross input price elasticities of input demand are, then, respectively,
+
+\begin{equation}
+\begin{split}
+\frac{\partial \ln(x_j^*)}{\partial \ln(w_j)} &= - 1 - \frac{1}{1 - h} \frac{\partial \ln(\theta_w)}{\partial \ln(w_j)} \\
+&= \frac{-\alpha_j}{1 - h} - 1
+\end{split}
+\label{eq:ownPriceElas}
+\end{equation}
+
+And
+
+\begin{equation}
+\frac{\partial \ln(x_j^*)}{\partial \ln(w_{\ell \neq j})} = \frac{-\alpha_{\ell}}{1 - h}
+\label{eq:CrossPriceElas}
+\end{equation}
+
+whereby it is clear that the domain of $h$ implies negatively sloped own and cross price demand curves. It follows, moreover, that input demand is strictly elastic in own price. For cross price input demand curves, demand is elastic if $h \in (1 - \alpha_{\ell}, 1)$, inelastic if $h \in (0, 1 - \alpha_{\ell})$, and linear if $h = 1 - \alpha_{\ell}$. Note that increasing returns to scale would imply strictly upward sloping cross price demand curves, and the possibility of upward sloping own price demand curves.
+<!-- In the case of cross price demand curves, this implies that all inputs are complements, not substitutes. -->
+<!-- Positively sloped supply curves and negatively sloped demand curves thus follow from Axioms 1 and 2, and do not need to be imposed as additional Axioms. -->
+[...recovers Lipton's theory of adoption...]
+[...optimal farm size...?]
+
+<!-- ### Domain of profitable production (Axiom 3) and restatement of aggregate supply -->
+<!-- It is now possible to define in detail the domain of profitable production $(\underline{q}^*, \bar{q}^*)$ appearing in the aggregate supply integral (Equation \ref{eq:sup1}). -->
+
+<!-- Assuming that farms do not enter production unless they expect to make a profit (Axiom 3) is tantamount to assuming that $C^{\#} < P$. By Equation \ref{eq:lambda3}, then, Axiom 3 introduces the bound $\lambda > h$. This, in turn, imposes the following upper bound on expected yield. -->
+
+<!-- \begin{equation} -->
+<!-- y^* < (g_0 \theta)^{\eta / h}  \left(\frac{P}{h} \right)^{\eta} \:\:;\:\:\: \eta = \frac{h}{1 - h} -->
+<!-- \label{eq:ydUpBound} -->
+<!-- \end{equation} -->
+
+<!-- (No lower bound is imposed by Axiom 3, and so the lower bound of $y^*$ just defaults to the physical lower bound $y^* > 0$.) -->
+
+
+
+# Proof of equation \ref{eq:sup3}
+
+Given a lognormally distributed random variable $u$, such that $\ln(u)$ is normally distributed with mean $m_u$ and variance $s_u^2$, then the expected value of $u$ is
+<!-- Where $p(q)$ is the probability density function of the random variable $q$. If $\ln(q)$ is normally distributed with mean $m_u$ and variance $s_u^2$, then -->
+
+\begin{equation}
+E[u] = e^{m_u + \frac{s_u^2}{2}}
+\label{eq:muU}
+\end{equation}
+
+And the probability density function of $u$ is
+
+\begin{equation}
+f(u) = \frac{1}{u s_u} \phi \left(\frac{\ln(u) - m_u}{s_u} \right)
+\end{equation}
+
+Where $\phi()$ is the standard normal probability density function.
+
+Now, introducing a change of variables,
+
+\begin{equation}
+p = \frac{\ln(u) - m_u}{s_u}
+\label{eq:subThis1}
+\end{equation}
+
+Such that
+
+\begin{equation}
+\frac{dp}{du} = \frac{1}{u s_u}\: \rightarrow \: d u = u s_u dp
+\label{eq:subThis2}
+\end{equation}
+
+Then
+
+\begin{equation}
+\begin{split}
+\int_0^{\bar{u}} u f(u) \: du &= \int_0^{\frac{\ln(\bar{u}) - m_u}{s_u}} e^{s_u p + m_u} \phi(p) \: dp  \\
+&= \int_0^{\frac{\ln(\bar{u}) - m_u}{s_u}} e^{s_u p + m_u} \frac{1}{\sqrt{2 \pi}} e^{\frac{p^2}{2}} \: dp \\
+&= \frac{1}{\sqrt{2 \pi}} \int_0^{\frac{\ln(\bar{u}) - m_u}{s_u}} e^{p s_u + m_u -\frac{p^2}{2}} \: dp \\
+&= \frac{1}{\sqrt{2 \pi}} \int_0^{\frac{\ln(\bar{u}) - m_u}{s_u}} e^{-1 / 2 (p^2 - 2 p s_u - 2 m_u)} \: dp \\
+&= \frac{1}{\sqrt{2 \pi}} \int_0^{\frac{\ln(\bar{u}) - m_u}{s_u}} e^{-\frac{(p - s_u)^2}{2} + m_u + \frac{s_u^2}{2}} \: dp \\
+&= \frac{1}{\sqrt{2 \pi}} \int_0^{\frac{\ln(\bar{u}) - m_u}{s_u}} e^{-\frac{(p - s_u)^2}{2}} e^{m_u + \frac{s_u^2}{2}} \: dp \\
+&= e^{m_u + \frac{s_u^2}{2}} \frac{1}{\sqrt{2 \pi}} \int_0^{\frac{\ln(\bar{u}) - m_u}{s_u}} e^{-\frac{(p - s_u)^2}{2}} \: dp \\
+&= \frac{E[u]}{\sqrt{2 \pi}} \int_0^{\frac{\ln(\bar{u}) - m_u}{s_u}} e^{-\frac{(p - s_u)^2}{2}} \: dp \\
+&= E[u] \int_0^{\frac{\ln(\bar{u}) - m_u}{s_u}} \phi(p - s_u) \: dp \\
+&= E[u] \Phi \left(\frac{\ln(\bar{u}) - m_u}{s_u} - s_u \right)
+\end{split}
+\end{equation}
+
+Finally, rearranging equation \ref{eq:muU} into an expression for $m_u$
+
+\begin{equation}
+m_u = \ln(E[u]) - \frac{s_u^2}{2}
+\end{equation}
+
+And substituting this in for $m_u$ in the previous expression gives
+
+\begin{equation}
+\begin{split}
+\int_0^{\bar{u}} u f(u) \: du &= E[u] \Phi \left(\frac{\ln(\bar{u}) - \ln(E[u]) + \frac{s_u^2}{2} }{s_u} - s_u \right) \\
+&= \frac{E[u]} \Phi \left(\frac{\ln \left(\frac{\bar{u}}{E[u]} \right) - \frac{s_u^2}{2} }{s_u} \right)
+\end{split}
+\end{equation}
+
+In Equation \ref{eq:sup3}, $u = E[q^*(T)]\bigr|_{t = 0}$, giving
+
+$$
+E[Q(T)]\bigr|_{t = 0} = N_f E[E[q^*(T)]\bigr|_{t = 0}] \Phi \left(\frac{\ln\left(\frac{E[\bar{q}^*(T)]|_{t = 0}}{E[E[q^*(T)]|_{t = 0}]}\right) - \frac{s_{EqT0}^2}{2}}{s_{EqT0}} \right) \:\:;\:\:\: s_{EqT0}^2 = Var[E[q^*(T)]\bigr|_{t = 0}]
+$$
+
+<!-- \blacksquare -->
+
+
+
+
+
+<!-- <!-- this can be rewritten --> -->
+<!-- <!-- \begin{equation} --> -->
+<!-- <!-- \int_0^{h^{-\theta}} \lambda^{-\theta} f(\lambda^{-\theta}) \: d \lambda^{-\theta} = h^{-\theta} E[E[b(T)]\bigr|_{t = 0}] \Phi \left(\frac{\ln \left(\frac{1}{E[E[b(T)]\bigr|_{t = 0}^{-\theta}]} \right) - \theta^2 \frac{\omega^2}{2}}{\theta \omega} \right) --> -->
+<!-- <!-- \label{eq:refEq} --> -->
+<!-- <!-- \end{equation} --> -->
+<!-- <!-- Where $\omega^2 = Var[\ln(E[b(T)]\bigr|_{t = 0})]$. --> -->
+
+
+<!--  Equation \ref{eq:refEq} may now be rewritten -->
+
+<!-- \begin{equation} -->
+<!-- \begin{split} -->
+<!-- \int_0^{h^{-\theta}} \lambda^{-\theta} f(\lambda^{-\theta}) \: d \lambda^{-\theta} &= h^{-\theta} E[\mu_b(T)^{-\theta}]\bigr|_{t = 0} \Phi \left(\frac{\ln \left(\frac{1}{E[\mu_b(T)]\bigr|_{t = 0}^{-\theta}} \right) - \theta^2 \frac{s_{\mu}^2}{2} T}{\theta s_{\mu} T} \right) \\ -->
+<!-- &= h^{-\theta} \mu_b(0)^{-\theta} e^{-\theta m_{\mu} T} \Phi \left(\frac{\ln \left(\frac{1}{\mu_b(0)^{-\theta}} \right) - \theta m_{\mu}T - \theta^2 \frac{s_{\mu}^2}{2} T}{\theta s_{\mu} T} \right) \\ -->
+<!-- &= h^{-\theta} \mu_b(0)^{-\theta} e^{-\theta m_{\mu} T} \Phi \left( -\frac{\ln \left(\frac{1}{\mu_b(0)^{-\theta}} \right) - \left(\theta m_{\mu} - \theta^2 \frac{s_{\mu}^2}{2}\right) T}{\theta s_{\mu} T} \right) -->
+<!-- \end{split} -->
+<!-- \end{equation} -->
+
+
+
+
+<!-- The mean and variance of the log fractional change (or "return") of $\mu_b(t)$ over period $T$, meanwhile, are -->
+
+<!-- \begin{equation} -->
+<!-- \begin{split} -->
+<!-- E \left[ \ln \left( \frac{\mu_b(T)}{\mu_b(0)} \right) \right] &= \left(m_{\mu} - \frac{s_{Eb}^2}{2} \right) T \\ -->
+<!-- Var \left[ \ln \left( \frac{\mu_b(T)}{\mu_b(0)} \right) \right] &= Var[\ln(\mu_b(T))]\bigr|_{t = 0} = s_{\mu}^2 T -->
+<!-- \end{split} -->
+<!-- \end{equation} -->
+
+<!-- By which it follows that the -->
+
+
+<!-- Taking logs and factoring out $\ln (P y^*/\lambda)$, -->
+
+<!-- \begin{equation} -->
+<!-- \ln(y^*) = \alpha_0 + \ln \left(\frac{P y^*}{\lambda} \right) \sum_i \alpha_i + \sum_i \alpha_i \ln \left(\frac{\alpha_i}{w_i} \right) + \sum_i \kappa_i \ln(k_i) -->
+<!-- \end{equation} -->
+
+<!-- But note that, by Euler's homogenous function theorem, -->
+
+<!-- \begin{equation} -->
+<!-- \sum_i \alpha_i = h -->
+<!-- \end{equation} -->
+
+<!-- where $h$ is the degree of homogeneity of $y$. -->
+
+<!-- \begin{equation} -->
+<!-- y^* =  \left(y_0 \left(\frac{P}{\lambda}\right)^h \prod_i \left(\frac{\alpha_i}{w_i}\right)^{\alpha_i} \prod_i k_i^{\kappa_i} \right)^{\frac{1}{1 - h}} -->
+<!-- \label{eq:YdEnv1} -->
+<!-- \end{equation} -->
+
+
+
+
+
+<!-- The Lagrangian is then -->
+
+<!-- \begin{equation} -->
+<!-- \mathcal{L} = Py - \lambda (C - B) -->
+<!-- \end{equation} -->
+
+<!-- Where $\lambda$ is the farm budget shadow price, that is, the marginal benefit to the farm of a marginal increase in budget. -->
+
+<!-- \begin{equation} -->
+<!-- \frac{\partial \mathcal{L}}{\partial B} = \lambda -->
+<!-- \end{equation} -->
+
+<!-- The first order conditions for a maximum work out to: -->
+
+<!-- \begin{equation} -->
+<!-- \nabla_{\mathbf{x}} \mathcal{L} = Py D(\mathbf{x})^{-1} \boldsymbol{\alpha} - \lambda \mathbf{x} = \mathbf{0} -->
+<!-- \label{eq:eqFOC} -->
+<!-- \end{equation} -->
+
+<!-- Where the $\mathbf{0}$ indicates a vector of zeroes equal to the length of $\mathbf{x}$. This is then solved for the optimal input levels $\mathbf{x}^*$. -->
+
+<!-- \begin{equation} -->
+<!-- \mathbf{x}^* = P y^* / \lambda D(\mathbf{w})^{-1} \boldsymbol{\alpha} -->
+<!-- \end{equation} -->
+
+<!-- Or, alternatively, -->
+
+<!-- \begin{equation} -->
+<!-- x_v^* = \frac{P y^* \alpha_v}{\lambda w_v} -->
+<!-- \label{eq:inputDem1} -->
+<!-- \end{equation} -->
+
+<!-- The optimal yield, or yield envelope, or economic yield, $y^*$ is then found by evaluating $y$ at $\mathbf{x}^*$. -->
+
+<!-- \begin{equation} -->
+<!-- y^* = y(\mathbf{x}^*; y_0, \boldsymbol{\alpha}, \mathbf{k}, \boldsymbol{\kappa}) = y_0 \prod_i \left(\frac{P y^* \alpha_i}{\lambda w_i} \right)^{\alpha_i} \prod_i k_i^{\kappa_i} -->
+<!-- \end{equation} -->
+
+<!-- Taking logs and factoring out $\ln (P y^*/\lambda)$, -->
+
+<!-- \begin{equation} -->
+<!-- \ln(y^*) = \alpha_0 + \ln \left(\frac{P y^*}{\lambda} \right) \sum_i \alpha_i + \sum_i \alpha_i \ln \left(\frac{\alpha_i}{w_i} \right) + \sum_i \kappa_i \ln(k_i)  -->
+<!-- \end{equation} -->
+
+<!-- But note that, by Euler's homogenous function theorem, -->
+
+<!-- \begin{equation} -->
+<!-- \sum_i \alpha_i = h -->
+<!-- \end{equation} -->
+
+<!-- where $h$ is the degree of homogeneity of $y$. Hence the previous equation can be rewritten -->
+
+<!-- \begin{equation} -->
+<!-- \ln(y^*) = \alpha_0 + h \ln \left(\frac{P y^*}{\lambda} \right) + \sum_i \alpha_i \ln \left(\frac{\alpha_i}{w_i} \right) + \sum_i \kappa_i \ln(k_i)  -->
+<!-- \label{eq:eulerInvokd} -->
+<!-- \end{equation} -->
+
+<!-- Solving for $\ln(y^*)$, -->
+
+<!-- \begin{equation} -->
+<!-- \ln(y^*) = \frac{1}{1 - h} \left(\alpha_0 + h \ln \left(\frac{P}{\lambda} \right) + \sum_i \alpha_i \ln \left(\frac{\alpha_i}{w_i} \right) + \sum_i \kappa_i \ln(k_i) \right) -->
+<!-- \end{equation} -->
+
+<!-- And taking the exponential function of this then gives the yield envelope. -->
+
+<!-- \begin{equation} -->
+<!-- y^* =  \left(y_0 \left(\frac{P}{\lambda}\right)^h \prod_i \left(\frac{\alpha_i}{w_i}\right)^{\alpha_i} \prod_i k_i^{\kappa_i} \right)^{\frac{1}{1 - h}} -->
+<!-- \label{eq:YdEnv1} -->
+<!-- \end{equation} -->
+
+<!-- Economic yield is thus a function of: -->
+
+<!-- 1) Input prices $\mathbf{w}$ -->
+
+<!-- 2) The output price $P$ -->
+
+<!-- 3) The input elasticities of yield $\boldsymbol{\alpha}$ (i.e. the technology) -->
+
+<!-- 4) The control variables $\mathbf{k}$ -->
+
+<!-- 5) Their control variable elasticities of yield $\boldsymbol{\kappa}$ -->
+
+<!-- 6) The farm budget shadow price $\lambda$ -->
+<!-- The steps followed above more or less align with the standard derivation of the Cobb-Douglas yield envelope found in textbooks , with the important exception of the invocation of Euler's homogeneous function theorem in equation \ref{eq:eulerInvokd}. -->
+
+
+
+<!-- \begin{equation} -->
+<!-- \frac{\partial \ln(y^*)}{\partial \ln(w_i)} = \frac{-\alpha_v}{1 - h} -->
+<!-- \end{equation} -->
+
+<!-- With domain -->
+
+<!-- \begin{equation} -->
+<!-- \frac{\partial \ln(y^*)}{\partial \ln(w_v)} \in (-\infty, -\alpha_v) -->
+<!-- \end{equation} -->
+
+<!-- The yield envelope derived in equation \ref{eq:YdEnvCompact} implies that the farm supply curve^["Farm supply curve" is used as a shorthand for the "yield envelope as a function of price $P$, with all other variables held constant".] is a power law---or, in economics jargon, a constant elasticity of supply curve. This becomes more evident if the yield envelope is rewritten in the following compact form. -->
+
+<!-- \begin{equation} -->
+<!-- y^* = t_S P^{\eta(P, y^*)} -->
+<!-- \end{equation} -->
+
+<!-- Where -->
+
+<!-- \begin{equation} -->
+<!-- t_S = \left(y_0 \frac{\theta_x \theta_k}{\lambda^h \theta_w} \right)^{\frac{1}{1 - h}} -->
+<!-- \end{equation} -->
+
+<!-- And $\eta(P, y^*)$ is the price elasticity of yield defined in equation \ref{eq:PelastYstar}. -->
+
+<!-- <!-- Both the scale parameter $t$ and exponent $\eta(P, y^*)$ depend critically upon the degree of homogeneity. --> -->
+<!-- The output price elasticity of yield implies that the farm supply curve is elastic for $h \in (1 / 2 , 1)$, and inelastic for $h \in (0, 1 / 2)$, and linear with slope $t_S \bigr|_{h = 1 / 2}$ when $h = 1 / 2$. -->
+
+<!-- This is important information. This means that (insofar as Axioms 1-3 are true) for a given increase in output price, the supply response in a population of farms with inefficient input elasticities (such that $h < 1 / 2$) will be less than proportionate to the increase in price. In a population of relatively input-efficient farms (such that $h > 1 / 2$), on the other hand, the supply response will be more than proportionate to the increase in price. -->
+
+<!-- The farm supply curve approaches perfect inelasticity as $h$ approaches $0$, and approaches (but never reaches) perfect elasticity as $h$ approaches $1$. The scale factor $t_S$ approaches $0$ as $h$ approaches $0$, and tends toward infinity as $h$ approaches $1$. -->
+
+
+
+<!-- ## The degree of homogeneity and output price elasticity of yield \label{sec:degHomog} -->
+
+<!-- [The costStar^h  formulation of yield envelope] -->
+
+<!-- [Put "certain useful elasticities/expressions" here maybe] -->
+
+<!-- By invoking Euler's theorem in the derivation of the yield envelope above, the yield degree of homogeneity $h$ is made explicit in the yield envelope; and this lays bare some interesting critical properties. Note, first of all, that the yield envelope is undefined at $h = 1$. The theory constructed so far from Axioms 1 and 2 thus contradicts the deeply entrenched surmise among economists, going back at least to Hicks [-@hicks1963theory], and later cemented into place by Solow [-@solow1957technical], that yield functions are homogeneous of degree 1. -->
+
+<!-- In section \ref{sec:PDfunP}, circumstances are explored under which increasing returns to scale are possible. However, these circumstances generally apply to firms---mills and factories, for example---and not to farms. -->
+
+<!-- The domain of $h$ derived above in turn implies the following bounds on the price elasticity of yield. -->
+<!-- <!-- Note, in passing, that the input price elasticity of yield likewise bears the expected sign only under decreasing returns to scale. -->
+
+<!-- ## Input demand \label{sec:inDem} -->
+
+<!-- Using equation \ref{eq:YdEnvCompact} to substitute for $y^*$ in input demand (equation \ref{eq:inputDem1}) gives the following expression for input demand as a function of basal yield, prices, input elasticities, the budget shadow price, and control variables together with their respective elasticities. -->
+
+<!-- \begin{equation} -->
+<!-- x_v^* = \frac{\alpha_v}{w_v} \left( y_0 \frac{P \theta_x \theta_k}{\lambda \theta_w} \right)^{\frac{1}{1 - h}} -->
+<!-- \label{eq:inputDem2} -->
+<!-- \end{equation} -->
+
+<!-- Note that input demand, like optimal yield, is undefined at $h = 1$. The own price elasticity of input demand is -->
+
+
+<!-- Here another Axiom comes into play. -->
+
+<!-- \begin{framed} -->
+<!--    \textbf{Axiom 4} \\ Demand curves are negatively sloped. $\left( \frac{\partial \ln(x_v^*)}{\partial \ln(w_v)} < 0 \:\: \forall v \right)$ -->
+<!-- \end{framed} -->
+
+<!-- From equation \ref{eq:ownPriceElas}, it is clear that Axiom 4 imposes the following domain on $h$. -->
+
+<!-- \begin{equation} -->
+<!-- h \in (-\infty, 1 + \underline{\alpha}) \:\:; \:\:\: \underline{\alpha} = \min(\boldsymbol{\alpha}) -->
+<!-- \end{equation} -->
+
+<!-- Considering that $\underline{\alpha} > 0$, the effective domain of $h$ satisfying both Axioms 3 and 4 (upward sloping supply curves and downward sloping demand curves) is -->
+
+<!-- \begin{equation} -->
+<!-- h \in (0, 1) -->
+<!-- \end{equation} -->
+
+<!-- The effective domain of $h$ in turn implies the following bounds on the own price elasticity of input demand. -->
+
+<!-- \begin{equation} -->
+<!-- \frac{\partial \ln(x_v^*)}{\partial \ln(w_v)} \in (\infty, -1) -->
+<!-- \end{equation} -->
+
+<!-- The input demand curve is thus always elastic, such that the increase in farm level demand resulting from a decrease in the input price is always more than proportionate to the fall in price. -->
+
+<!-- Note that the cross price elasticity of input demand also bears the expected sign under the effective domain of $h$, -->
+
+
+<!-- As does the output price elasticity of input demand, -->
+
+<!-- \begin{equation} -->
+<!-- \frac{\partial \ln(x_v^*)}{\partial \ln(P)} = \frac{1}{1 - h} -->
+<!-- \end{equation} -->
+
+<!-- Equation \ref{eq:inputDem2} implies that the input demand curve^["Input demand curve" is used as a shorthand for the "optimal input level as a function of its price, with all other variables held constant".] is a power law. This is more evident when expressed in the following compact form. -->
+
+<!-- \begin{equation} -->
+<!-- x_v^* = z w_v^{\eta(w_v, x_v^*)} -->
+<!-- \end{equation} -->
+
+<!-- Where -->
+
+<!-- \begin{equation} -->
+<!-- z = \left(y_0 \frac{\theta_x \theta_k}{\lambda^h \tilde{\theta}_w} \right)^{\frac{1}{1 - h}} \:\:;\:\:\: \tilde{\theta}_w = w_v^{-\alpha_v}\theta_w -->
+<!-- \end{equation} -->
+
+<!-- And $\eta(w_v, x_v^*)$ is the own price elasticity of input demand, derived in equation \ref{eq:ownPriceElas}. -->
+
+<!-- In equation \ref{eq:cobbDoug2}, the shorthand $y_0 = e^{\alpha_0}$ has also been introduced. The scale factor $y_0$ is the yield when inputs $\mathbf{x}$ are set to 1 and the control variables $\mathbf{k}$ are also set to 1. It may thus be interpreted as the "unit input yield" or "unit input ceteris paribus yield", to be more precise. "Basal yield" is henceforth used as a shorthand. -->
+<!-- Many economists prefer to call $y_0$ the "total factor productivity" (TFP). This is because $y_0$ equals, in some sense, the "yield per unit all inputs" when it is isolated on one side of the equation. However, the presence of control variables complicates this interpretation. Moreover, TFP implies bizarre and rather useless units of measurement. For example, if the inputs $x_i$ are labor and pesticide, while the control variables $k_i$ are rainfall, temperature, and farmer age, then the TFP $y_0$ has units of kg hectare$^{-1}$ manhour$^{-1}$ liter$^{-1}$ millimeter$^{-1}$ degree Celsius$^{-1}$ years$^{-1}$, each of which is raised to various exponents (the respective elasticities $\alpha_i$ and $\kappa_i$). Because of the exponents, a more accurate name for TFP would be the "technology adjusted total factor productivity". -->
+<!-- Nonetheless, a very mature literature has developed around TFP, and the reader is encouraged to continue thinking of $y_0$ in terms of TFP if that is what they are most comfortable with. The "basal yield" interpretation is merely provided here as an alternative for those of us who wrestle with the idea of TFP or are not yet familiar with it. -->
+<!-- exogenously given control variables like age, soil quality, or climate variables. -->
+<!-- TFP vis-à-vis dimensional analysis -->
+<!-- The (in)famous residual -->
+<!-- “The rate of growth of total factor productivity is defined as the difference between the rate of growth of real product and the rate of growth of real factor input” (Jorgenson & Griliches, 1967). This definition violates dimensional analysis. -->
+<!-- Given a yield function -->
+<!-- y=Kx_1^(α_1 ) x_2^(α_2 )…x_n^(α_n )	(1) -->
+<!-- "TFP"=K=y/(x_1^(α_1 ) x_2^(α_2 )…x_n^(α_n ) )	(2) -->
+<!-- There are two problems with this expression from the point of view of dimensional analysis. First of all, the units in which “TFP” is expressed are impossible to make sense of. Say n=4, with x_1 standing for labor, x_2 for machinery, x_3 for fertilizer, and x_4 for pesticide. Then TFP has units of production per unit -->
+<!-- area (man hour)^(α_1 ) (machine hour)^(α_2 )  (weight)^(α_3 )  (volume)^(α_4 )	(3) -->
+<!-- The second, more serious, problem is that these units will always vary from one data set to another. Even if the variables x_1,x_2,…,x_n are the same across studies, and are expressed in the same units, the units in which the “residual” K is expressed will nonetheless vary because the estimated parameters α_i vary. It is therefore impossible to make meaningful comparisons of K across data sets. -->
+<!-- On the other hand, it is possible to make meaningful comparisons of the residual in another sense. Define the parameter K as follows: -->
+<!-- K=k/(x ̃_1^(α_1 ) x ̃_2^(α_2 )…x ̃_n^(α_n ) )	(3) -->
+<!-- Where the x ̃_i are arbitrarily chosen reference values. Then the yield equation becomes: -->
+<!-- y=ku_1^(α_1 ) u_2^(α_2 )… u_n^(α_n )  ;  u_i=x_i/x ̃_i 	(3) -->
+<!-- It now becomes clear what the units of k are. Each x ̃_i has the same units as its respective x_i. This means that all of the u_i^(α_i ) terms on the right hand side of the equation are dimensionless. Therefore, the units of k must agree with the units of whatever is on the left hand side, which happens to be yield.  -->
+<!-- k=y/(u_1^(α_1 ) u_2^(α_2 )… u_n^(α_n ) )	(5) -->
+<!-- When interpreted in this way, it is now possible to make meaningful comparisons of the residual across data sets (if the reference values x ̃_i are harmonized across the data sets). However, the residual now has units of productivity with respect to land only, and not with respect to any other factor, much less the “total factor”. -->
+<!-- Conclusion -->
+<!-- Above I have shown that TFP (equation 2) is measured in units which 1) are virtually impossible to make sense of, and 2) cannot be compared across data sets. I have shown that it is possible to express the residual in straightforward units that are comparable across data sets, but that these are units of land productivity only. The residual may be interpreted as TFP only at the cost of nonsensical units and cross-study incompatibility. A residual with sensible units and comparability, on the other hand, comes at the cost of expressibility only in units of a single factor’s productivity—land in the case of farms, widget factories in the case of firms. -->
+<!-- As mentioned above, this result depends on a definition of small increase as a marginal increase. Other forms result from other definitions of small increase. If small increase is defined as a percentage increase, for example, a functional form involving Lambert's W function results (left as an exercise for the reader). The Cobb-Douglas function is selected from among these two choices on empirical grounds. (The Cobb-Douglas function is famous for how well it fits economic data across many contexts and scales.) -->
+<!-- [# Derivation of the yield envelope from Axiom 2 (net benefit maximization)] -->
+
+
+
+<!-- ## The farm net benefit envelope -->
+
+<!-- The optimized objective function or "net benefit envelope" $\mathcal{L}^*$ is just the objective function $\mathcal{L}$ evaluated at the optimal yield $y^*$. -->
+
+<!-- \begin{equation} -->
+<!-- \mathcal{L}^* = \mathcal{L} \bigr|_{y = y^*} = P y^* - \lambda (C^* - B) -->
+<!-- \end{equation} -->
+
+<!-- Note that, applying the handy relation in equation \ref{eq:lambdaHandy}, the net benefit envelope can be rewritten without the optimal expenditure term $C^*$. -->
+
+<!-- \begin{equation} -->
+<!-- \mathcal{L}^* = (1 - h) P y^* + \lambda B -->
+<!-- \label{eq:NBenv} -->
+<!-- \end{equation} -->
+
+<!-- Farm production $q^*$ is, of course, just farm yield envelope times farm area. Often, area is one of the control variables in $\theta_k$. In this case, $q^*$ is given by adding $1$ to the fitted exponent (call this $\kappa_a$) on area. -->
+
+<!-- \begin{equation} -->
+<!-- \begin{split} -->
+<!-- q^* &= A y^* \\ -->
+<!-- &= y_0 \hat{\theta}^{\eta(D)} \left(\frac{E[P(T)]\bigr|_{t = 0}}{\lambda}\right)^{\eta(E[P(T)]\bigr|_{t = 0})} -->
+<!-- \end{split} -->
+<!-- \end{equation} -->
+
+<!-- Where -->
+
+<!-- \begin{equation} -->
+<!-- \begin{split} -->
+<!-- \hat{\theta} &= \frac{\theta_x \hat{\theta_k}}{\theta_w} \\ -->
+<!-- \hat{\theta_k} &= A \theta_k = A^{\kappa_a + 1} \prod_{i \neq a}^{n_k} k_i^{\kappa_i} -->
+<!-- \end{split} -->
+<!-- \end{equation} -->
+
+
+<!-- \begin{equation} -->
+<!-- \int_{0}^{h^{-\eta(P)}} \lambda^{-\eta(P)} f(\lambda^{-\eta(P)}) \: d \lambda^{-\eta(P)} = E[\lambda^{-\eta(P)}] (1 - \Phi(z)) -->
+<!-- \end{equation} -->
+
+<!-- Where -->
+
+<!-- \begin{equation} -->
+<!-- z = \frac{\ln\left( \left( \frac{\mu_{C^{\#}}(0)}{P(0)} \right)^{\eta(D)} \right) - \left(\eta(D) m_{\lambda} - \eta(D)^2 \frac{s_{\lambda}^2}{2} \right)T}{s_{\lambda} \sqrt{T}} -->
+<!-- \end{equation} -->
+
+<!-- The term $1 - \Phi(z)$ may thus be interpreted as the probability, at planting time, that the elasticity adjusted output price at time of harvest and sale $P(T)^{\eta(P)}$ will be greater than the corresponding elasticity adjusted mean marginal cost of production $\mu_{C^{\#}}(T)^{\eta(D)}$. -->
+
+<!-- \begin{equation} -->
+<!-- 1 - \Phi(z) = \text{Prob}(P(T)^{\eta(D)} > \mu_{C^{\#}}(T)^{\eta(D)}) -->
+<!-- \end{equation} -->
+
+<!-- The effect of $\eta(D)$ in this equation is to regulate the rate at which the condition $P(T)^{\eta(D)} > \mu_{C^{\#}}(T)^{\eta(D)}$ is met (or fails) with changes in either $P(T)$ or $\mu_{C^{\#}}(T)$. To see this, it may be helpful to rewrite the condition in terms of a "marginal benefit-cost" ratio $r$. -->
+<!-- \begin{equation} -->
+<!-- 1 - \Phi(z) = \text{Prob}(r^{\eta(D)} > 1) \:\:;\:\:\: r = P(T) / \mu_{C^{\#}}(T) -->
+<!-- \end{equation} -->
+<!-- As $\eta(D)$ is lower, $r^{\eta(D)}$ changes less when $r$ changes. As $\eta(D)$ is higher, movements of $r^{\eta(D)}$ become more pronounced in response to changes in $r$. -->
+
+
+
+
+
+
+<!-- ----------------------------------- -->
+<!-- ...expedient forms are considered unavoidable because...characterize the alternative, a theoretical derivation, as an impossible task [a fool's errand?]... -->
+<!--  In the name of expedience, then, many methodological headaches are accumulated. At some point the headaches outweigh the expedience   Difficult to defend and impossible to account for farm entry and exit. disentangle impact from model artifact...difficult to tell whether the result is due to exogenous shock, or to artifacts of the model  ... -->
+
+<!-- # Literature review -->
+
+<!-- In 1944, Von Neumann and Morgenstern observed that "part of the feeling of dissatisfaction with the mathematical treatment of economic theory derives largely from the fact that frequently one is offered not proofs but mere assertions which are really no better than the same assertions given in literary form" [@morgenstern1953theory]. The authors go on to suggest there is a "scientifically unsound" inclination among economists to confuse these formalized literary assertions, including "very valuable surmises and inspiring anticipations of results", with proofs or otherwise rigorously derived theoretical results [@morgenstern1953theory]. More recently, Romer has similarly criticized the rise of "mathiness" in economic modeling. -->
+<!-- <!-- "There is no point in using exact methods where there is no clarity in the concepts and issues to which they are to be applied" [@morgenstern1953theory]. --> -->
+<!-- <!-- "the economic problems were not formulated clearly and are often stated in such vague terms as to make mathematical treatment _a priori_ appear hopeless because it is quite uncertain what the problems really are" [@morgenstern1953theory]. --> -->
+
+<!-- "[The style that I am calling mathiness lets academic politics masquerade as science.] Like mathematical theory, mathiness uses a mixture of words and symbols, but instead of making tight links, it leaves ample room for slippage between statements in the languages of words as opposed to symbols[, and between statements with theoretical as opposed to empirical content]". [@romer2015mathiness] -->
+
+<!-- The slippage ... to confuse results with assumptions (petitio principii), or, as in the case of the economic surplus model, to infuse a collection of contradictory and/or unfounded assertions with an air of rigor and coherence. -->
+
+<!-- Specification of the aggregate supply curve may be considered a case in point. The model is not theoretically derived, but rather a collection of educated guesses or surmises translated into mathematical equations. Many of these surmises imply well documented contradictions of basic economic theory, and/or inconvenient ramifications vis-a-vis the supposed benefits of research and technology adoption []. The model has evolved into its present form not by force of logic, but as a matter of preference. For example, there was considerable debate in the 1970s over whether the research-induced supply curve shift should be modeled as a parallel shift or a pivot [@alston1995science; @norton1981evaluating; @lindner1978supply]. The debate was further complicated by differing views as to whether supply should be modeled as a linear or a curved function. Modeling results depend critically upon these choices. A curved specification   Without a theoretical framework to link parameter values and functional forms to real world conditions, the debate was ultimately inconclusive. The answers to the questions left unresolved by the debate have come down to us today as a matter of preference. In their highly influential book, _Science Under Scarcity_, Alston et al. indicated their preference for the linear parallel shift [-@alston1995science]. This is a conspicuous choice, to put it mildly, considering that 1) it prefigures research impacts in the best possible light, and 2) by the authors' own admission, there are no theoretical or empirical grounds to justify this preference [@alston1995science; @alston2009economics]. AR4D partial equilibrium impact studies since then have generally follow suit. -->
+
+<!-- ...The current sense is that this is somehow impossible. The verdict: -->
+
+
+
+<!-- Expedient functional forms also tend to introduce awkward model artifacts---such as the possibility of negative supply quantities and/or of farms producing for free, in the case of linear supply functions---which effectively reduce the form to a local approximation of some inscrutable global function, with validity restricted to a small domain of convergence around the starting equilibrium point. The  -->
+<!-- The representation of exogenous shocks in terms of such abstract parameters is thus largely a matter of modeler fiat. Insofar as the modeling results hinge upon this parameterization, they too are prefigured by modeler fiat. The impact "assessment" is thus more accurately an impact _assertion_ dressed up in mathematical language, i.e. in this measure, reduced to an exercise in petitio principii. -->
+<!-- <!-- -contradict theory [have to be constant returns to scale but also upward sloping demand curves...] --> -->
+
+<!-- ...haven't even gotten to adoption yet... -->
+<!-- This, in turn, complicates the defense of modeling results. Without any theoretical framework by which to map the real world to model parameters, the parameterization of exogenous shocks effectively defaults to modeler fiat.  That is, the "assessment" is reduced to an _assertion_ dressed up in mathematical symbols. The     cannot be decomposed into specific components---a technology effect versus a price effect--- -->
+<!-- ...distinguish between impact, model artifact, modeler fiat. -->
+<!-- , and cannot be decomposed into technology and price components.  -->
+
+<!-- When there is a [...Wd be nice to consider a range of scenarios covering a range of potential input price increases versus technology shocks, but this not possible ... not clear why adoption rate takes a certain value... or how the shock affects the entry and exit of farms... nor how the shock affects the aggregate...  nor which centiles adopt...] The representation of exogenous shocks to real world parameters in terms of model parameters thus largely boils down to a matter of modeler fiat. Insofar as modeling results hinge upon the parameterization of shocks, the conclusions of the impact assessment are, in this measure, also by fiat; and the whole process is thereby reduced to an exercise in petitio principii. This obviously complicates subsequent defense of the modeling results, especially if the modelers and/or their source of funding have a vested interest in the results. -->
+
+<!-- [The response to the growing impatience is the cosmetic approach---MIRR] -->
+<!-- <!-- The constant elasticity of supply curve, for example, --> -->
+<!-- <!-- \begin{equation} --> -->
+<!-- <!-- Q = a P^{\eta} --> -->
+<!-- <!-- \end{equation} --> -->
+<!-- <!-- conflates yield and employment response to price changes in one parameter, $\eta$. --> -->
+
+<!-- Expedient specifications also tend to introduce awkward model artifacts. The parameter $\eta$, for example, implies that yield and employment responses offset each other such that $\eta$ is always constant. The linear aggregate supply curve, on the other hand, implies the possibility of negative supply quantities and/or of farms producing for free. This either requires redefinition of the curve as a piecewise function---which further complicates interpretation in terms of Equation \ref{eq:sup1}---or compels us to regard the function as a local approximation to an inscrutable global function, with validity restricted to a small domain of convergence around the starting equilibrium point. -->
+
+<!-- Finally, the parameterization of such forms tends to be highly abstract, with no clear mapping to the relevant measurable, real world phenomena---i.e. technology, input prices, agroclimatic conditions, demographic variables, and so on. This leaves very little basis upon which to assess the plausibility of a given parameterization of exogenous shocks. How should a 10% increase in total factor productivity be represented in terms of a change in, say, $a$ and $\eta$? The answer effectively boils down to modeler fiat, which in turn invites misuse and abuse of the model, and otherwise complicates the defense of any modeling results. -->
+
+<!-- [preclude constant returns to scale, directly contradicting the conventional wisdom handed down by Hicks [-@hicks1963theory] and Solow [-@solow1957technical]. ...also constant marginal cost...This agrees with empirical evidence [@lavoie2014post]. It also contradicts the theory of the firm presented in most microeconomic textbooks, which assumes (with no evidentiary basis) increasing marginal cost as output rises.] -->
+<!-- Note, in passing, that the notion of an upper bound on economic yields agrees with empirical observation [@herdt1988increasing; @pingali2001cereal]. In Pingali and Heisey's words: -->
+<!-- >\singlespacing "The best yields obtained on experiment stations are often used as the indicator of technology potential. Experiment stations are often located on the best lands within a region and have reliable irrigation water supplies. Agronomic yield potential determined on experiment stations, with no physical, biological, or economic constraints, is the maximum achievable yield.... When the objective of the experiment is changed from maximizing yields to maximizing profits, the yields obtained by experiment station researchers drop significantly..." [-@pingali2001cereal]. -->
+<!-- \doublespacing -->
