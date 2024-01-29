@@ -467,29 +467,33 @@ E[Q(T)]\bigr|_{t = 0} = N E[E[q^*(T)]\bigr|_{t = 0}] \Phi \left(\frac{\ln\left(\
 
 (See Appendix for details.)
 
-The ugly term $E[E[q^*(T)]\bigr|_{t = 0}]$ represents the population mean of expected production at planting time. It is a double integral. By Fubini's theorem [], the order of integration may be swapped, such that the term may also be interpreted as the mean farm's expected production at planting time.
+The ugly term $E[E[q^*(T)]\bigr|_{t = 0}]$ represents the population mean of expected production at planting time. It is a double integral. By Fubini's theorem [], the order of integration may be swapped, such that the term may be interpreted as the mean farm's expected production at planting time.
 
 \begin{equation}
 E[E[q^*(T)]\bigr|_{t = 0}] = E[E[q^*(T)]]\bigr|_{t = 0}
 \label{eq:fubThm}
 \end{equation}
-<!-- $E[E[q^*(T)]\bigr|_{t = 0}] = E[\tilde{q}(T)]\bigr|_{t = 0}$, where the shorthand $\tilde{q}^*(T) = E[q^*(T)]\bigr|_{t=T}$ has been introduced. -->
-<!-- In words, this says that the population mean of the expected value of $q^*(T)$ at planting time ($t = 0$) is equal to the expected value at planting time of the population mean of $q^*(T)$. -->
 
-Introducing the shorthand $\tilde{q}^*(T) = E[q^*(T)]$ to reduce notational ugliness, the expected aggregate supply function can be rewritten as follows.
-<!-- Likewise, -->
-<!-- \begin{equation} -->
-<!-- Var[\ln(E[q^*(T)]\bigr|_{t = 0})] = Var[\ln(E[q^*(T))]]\bigr|_{t = 0} -->
-<!-- \label{eq:rubThmVar} -->
-<!-- \end{equation} -->
-<!-- \begin{equation} -->
-<!-- E[E[b(T)]\bigr|_{t = 0}] = E[E[b(T)]]\bigr|_{t = 0} -->
-<!-- \end{equation} -->
-<!-- Or, introducing the more compact notation $\mu_b(T) = E[b(T)]$, -->
-<!-- \begin{equation} -->
-<!-- E[E[b(T)]\bigr|_{t = 0}] = E[\mu_b(T)]\bigr|_{t = 0} -->
-<!-- \end{equation} -->
-<!-- That is, the population mean of the expected value of $b(T)$ is equal to the expected value of the population mean of $b(T)$. -->
+And the other ugly term $Var[\ln(E[q^*(T)]\bigr|_{t = 0})]$ may likewise be rewritten
+
+\begin{equation}
+Var[\ln(E[q^*(T)]\bigr|_{t = 0})] = Var[\ln(E[q^*(T)])]\bigr|_{t = 0}
+\end{equation}
+
+To reduce the notational ugliness, the shorthand $\tilde{q}^*(T) = E[q^*(T)]$ is henceforth introduced, such that
+
+\begin{equation}
+\begin{split}
+E[E[q^*(T)]]\bigr|_{t = 0} &= E[\tilde{q}^*(T)]\bigr|_{t = 0} \\
+Var[\ln(E[q^*(T)])]\bigr|_{t = 0} &= Var[\ln(\tilde{q}^*(T))]\bigr|_{t = 0} \\
+&= s_q^2 \tau
+\end{split}
+\end{equation}
+
+
+Substituting Equation \ref{eq:yStarC0b} for $E[\tilde{q}^*(T)]\bigr|_{t = 0}$   and so the aggregate supply function can be rewritten as follows.
+<!-- E[y^*]\bigr|_{t = 0} = y_0 \theta \left( \frac{C^*}{h} \right)^h -->
+<!-- \label{eq:yStarC0b} -->
 
 \begin{equation}
 \begin{split}
