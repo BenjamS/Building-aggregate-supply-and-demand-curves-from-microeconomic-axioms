@@ -46,21 +46,28 @@ facetTitleSize <- 7
 
 # Introduction
 
-In ex-ante impact assessments of exogenous changes in agricultural technology and agroclimatic conditions, aggregate supply curves are often specified primarily for the purpose of facilitating certain calculations (e.g. economic surplus or deadweight loss), with secondary consideration given to the plausibility of the theoretical underpinnings implied by the choice of functional form. The resulting models of aggregate supply and supply curve shifts are then, by construction, theoretically opaque.
-
-In particular, it is unclear whether these models are consistent with microeconomic principles regarding homogeneity, convexity/concavity, and profit maximization; and it is unclear what shape of farm production density function is implied by the model. That is to say, if we consider aggregate supply $Q$ in its most basic definition as the definite integral of farm production function $q^*$ times the production density $\rho(q^*)$ over the domain of profitable production $(\underline{q}^*, \bar{q}^*)$,
+In ex-ante impact assessments of exogenous changes in agricultural technology and agroclimatic conditions, aggregate supply curves are often specified primarily for the purpose of facilitating certain calculations (e.g. economic surplus or deadweight loss), with secondary consideration given to the plausibility of the theoretical underpinnings and empirical implications of the choice of functional form. In particular, it is unclear whether these models are consistent with microeconomic principles regarding homogeneity, convexity/concavity, and profit maximization; and it is unclear what shape of farm production density function is implied by the model. That is to say, if we consider aggregate supply $Q$ in its most basic definition as the definite integral of farm production function $q^*$ times the production density $\rho(q^*)$ over the domain of profitable production $(\underline{q}^*, \bar{q}^*)$,
 
 \begin{equation}
 Q(P) = \int_{\underline{q}^*}^{\bar{q}^*} q^* \rho(q^*) \: dq^*
 \label{eq:sup1}
 \end{equation}
 
-then it is not readily apparent from expedient specifications of $Q$ what the functions $q^*$ and $\rho(q^*)$ are, nor whether they are plausible vis-a-vis microeconomic theory and empirical evidence. It is no secret, for example, that the widely used linear aggregate supply curve implies that all farms are equally endowed and produce the same output quantity (in which case $\rho(q^*)$ would have to be the Dirac delta density function). Critically, expedient specifications of $Q$ also omit or gloss over farm entry and exit---i.e. the domain of profitable production $(\underline{q}^*, \bar{q}^*)$---such that it is not possible to decompose changes in aggregate supply into yield and farm entry/exit components. Wohlgenant [-@wohlgenant1997nature] demonstrates analytically that impact assessment results are highly sensitive to both heterogeneous endowments and entry/exit.
+then it is not readily apparent from expedient specifications of $Q$ what the functions $q^*$ and $\rho(q^*)$ are, nor whether they are plausible vis-a-vis microeconomic theory and empirical evidence. Critically, expedient specifications of $Q$ also omit or gloss over farm entry and exit---i.e. the domain of profitable production $(\underline{q}^*, \bar{q}^*)$---such that it is not possible to decompose changes in aggregate supply into yield and farm entry/exit components. Wohlgenant [-@wohlgenant1997nature] demonstrates analytically that impact assessment results are substantially distorted by omissions and/or oversimplifications in this regard.
+
+Because such models are not built up from microeconomic principles, the mapping between model parameters and relevant, measurable, empirical phenomena---i.e., technology, input prices, agroclimatic conditions, demographic variables, etc.---is tenuous at best. This leaves very little basis upon which to assess the plausibility of different parameterizations of a given exogenous shock, or to attribute modeled impacts to the exogenous shock with confidence. For example, expedient modelers typically do not mathematically assess the anticipated farm yield increase and/or cost reduction due to the introduction of a certain new technology, but rather _assert_ it based on experimental information elicited from scientists who have a vested interest in the technology. Expedient model guidelines (e.g., Alston et al. [-@alston1995science]) might mention that "allowances" must be made for the well documented difference between experimental and economic yield/cost []; and that measures should be taken to compensate for the glaring conflict of interest inherent in the "expert opinion" of scientists closely involved in the researched technology. But 1) no theoretically rigorous process for translating experimental yields into economic yield is proposed because, in the name of expedience, the model authors never bother to derive or invoke an economic yield equation based on standard microeconomic axioms; and 2) the suggested measures for compensating expert bias---such as the delphi method, or structuring research in such a way etc...---are too costly in time and resources to be realistically implemented, and/or require a level of authority that the economists tasked with the impact assessment generally do not have, especially if they are hired as consultants. ...petitio principii.
+
+Moreover, such models ignore changes on price elasticity. Upshot: modeler fiat, not an impact assessment but an impact assertion.
+
+Some expedient forms also introduce awkward artifacts---such as the possibility of negative supply quantities and/or of farms producing for free, in the case of the linear aggregate supply curve---which further limit the model's explanatory power. A great many methodological headaches are accumulated in the name of expedience.
+
+ <!-- (the attribution problem) -->
+
+
+
+<!-- The widely implemented linear aggregate supply curve, for example, assumes homogeneous factor endowment and output across all farms, effectively implying that $\rho(q^*)$ is congruent to a Dirac delta density function, and that the domain of profitable production is a single value. Wohlgenant [-@wohlgenant1997nature] demonstrates analytically that impact assessment results can be highly sensitive such brazen oversimplifications. -->
 <!-- [...holding multiple axioms without knowing if they perhaps contradict each other...] -->
-
-Expedient functional forms are also _empirically_ opaque, in the sense that the parameterization of such forms is highly abstract, with no clear mapping to the relevant measurable, real world phenomena---i.e. technology, input prices, agroclimatic conditions, demographic variables, etc. This leaves very little basis upon which to assess the plausibility of different parameterizations of a given exogenous shock, or to attribute modeled impacts to the exogenous shock with confidence (the attribution problem). Some expedient forms also introduce awkward artifacts---such as the possibility of negative supply quantities and/or of farms producing for free, in the case of the linear aggregate supply curve---which further limit the model's explanatory power.
-
-...They also introduce exogenous shocks in terms of a cost reduction---typically based on results gathered at experimental stations under biophysically optimal management conditions---whereas the cost reduction must be modeled as an endogenous economic reaction to a change in technological parameters....Cost, more properly optimal expenditure, is an economic variable, a function of technology and prices. Since the 1950s it has been observed that "yields are very different when the goal is changed to maximizing profit" [Pingali etc.]... By assuming a cost reduction, the modeler effectively engages in petitio principii---i.e. assumes what must be proven.... below we show that the cost/supply response to changes in tech is far more complex than the conventional treatment would suggest. 
+Expedient functional forms are also _empirically_ opaque, in the sense that 
 <!-- [This, in turn, complicates the defense of any modeling results, especially when the modeler or their source of funding have a vested interest in said results.. as it boils down to modeler fiat not to any verifiable presmises] -->
 <!-- adoption -->
 <!-- [, while adding more layers of methodological wrangling/theoretical opacity.] -->
@@ -71,11 +78,11 @@ Expedient functional forms are also _empirically_ opaque, in the sense that the 
 To be fair, this is, in some sense, the whole point of expedient specifications of aggregate supply and demand: A degree of explanatory power is deliberately sacrificed in exchange for computational expedience, which was at a premium when these models were first popularized in the post-WWII literature. And the thousands of published ex-ante impact assessments of agricultural research that specify linear aggregate supply and demand functions would seem to suggest that the explanatory power retained by such specifications is sufficient for most modeling purposes [].
 <!-- [Expedience no longer a pressing concern due to high cpu power.] -->
 
-However, in ex-ante impact assessment, as in music, wine, or anything else, popularity can be a misleading indicator of quality. A more telling indicator, arguably, is the growing "disconnect" between the actual level of funding for agricultural research and the level of funding that would be justified by impact assessments conducted on the basis of conventional aggregate supply models [@hurley2016returns]. There is good reason to suspect that this disconnect is due to the implausibly high---and sometimes absurdly high---internal rates of return reported in conventional impact assessments of agricultural R&D [@hurley2014re; @alston2001attribution; @hurley2016returns]. In a meta-analysis of 492 such impact assessments, for example, Hurley et al. [@hurley2016] note that the average reported internal rate of return (IRR) implies that the USDA's 2000 R&D investment of \$4.1 billion should be worth \$56.3 quintillion in 2050, or 2.3 million times projected world GDP at that time.^[The meta-analysis covered a variety of impact assessment methods in addition to expedient specifications of aggregate supply (economic surplus analyses). It is safe to assume that most of these studies were economic surplus analyses.] "[I]t is not difficult to see," the authors conclude, "how policy makers may question the credibility of such evidence" [@hurley2016].
+However, in ex-ante impact assessment, as in music, wine, or anything else, popularity can be a misleading indicator of quality. A more telling indicator, arguably, is the growing "disconnect" between the actual level of funding for agricultural research and the level of funding that would be justified by impact assessments conducted on the basis of conventional aggregate supply models [@hurley2016returns]. There is good reason to suspect that this disconnect is due to the implausibly high---and sometimes absurdly high---internal rates of return reported in conventional impact assessments of agricultural R&D [@hurley2014re; @alston2001attribution; @hurley2016returns]. The high reported returns are, of course, made more conspicuous considering the aforementioned conflict of interest inherent in the expert opinion on which these studies are typically based. In a meta-analysis of 492 such impact assessments, for example, Hurley et al. [@hurley2016] note that the average reported internal rate of return (IRR) implies that the USDA's 2000 R&D investment of \$4.1 billion should be worth \$56.3 quintillion in 2050, or 2.3 million times projected world GDP at that time.^[The meta-analysis covered a variety of impact assessment methods in addition to expedient specifications of aggregate supply (economic surplus analyses). It is safe to assume that most of these studies were economic surplus analyses.] "[I]t is not difficult to see," the authors conclude, "how policy makers may question the credibility of such evidence" [@hurley2016].
 <!-- It could merely reflect the low cost of implementing the model, for example, and/or the lack of comparably low cost alternatives.  -->
 <!-- [In discussion: The implausibility is made more conspicuous considering that these assessments are typically written by or in close consultation with the scientists whose research is under evaluation, and who thus have a vested interest in its success.] -->
 
-Hurley et al. [@hurley2014re] respond to the incredulity of policy makers by replacing IRR with their "modified" IRR or "MIRR", whereby implausibly high projected returns are deflated to plausible levels. This is a suitable response insofar as the implausibility in question is rooted in the discounting method (although see the debate between Ohemke [-@oehmke2017re] and Hurley et al. [-@hurley2017re]). Insofar as the implausibility is rooted in the aforementioned theoretical and empirical opacity of conventional aggregate supply models, however, MIRR exacerbates the problem by masking it and thus making it more difficult to identify.
+Hurley et al. [@hurley2014re] respond to the incredulity of policy makers by replacing IRR with their "modified" IRR or "MIRR", whereby implausibly high projected returns are deflated to plausible levels. This is a suitable response insofar as the implausibility in question is rooted in the discounting method (although see the debate between Ohemke [-@oehmke2017re] and Hurley et al. [-@hurley2017re]). Insofar as the implausibility is rooted in the aforementioned theoretical and empirical opacity of conventional aggregate supply models, however, MIRR exacerbates the problem by masking the real source of implausibility and thus making it more difficult to identify.
 
 To redress the incredulity of policy makers insofar as it is directed at theoretically and empirically opaque modeling of aggregate supply and of research/policy induced supply curve shifts, here I derive an aggregate supply model prioritizing theoretical and empirical clarity and consistency. The model is rigorously derived from five non-controversial axioms; and all parameters appearing in the model have a straightforward interpretation in terms of measurable empirical phenomena. Any results that seem peculiar can be traced back to specific assumptions regarding economic behavior, and/or the estimation of specific parameter values.
 <!-- in particular its theoretical premises and derivation, its estimation, and the assumptions upon which it rests.  In the present article we dubious assumptions and theoretically opaque modeling---especially ---that generate implausibly high projections of net benefits in the first place. -->
@@ -103,14 +110,14 @@ The aggregate supply curve presented below is derived from the following five ax
 
 4) Farms enter production only if they expect to make positive profit
 
-5) Output price and yield follow independent geometric Brownian motions
+5) Output price follows a geometric Brownian motion over time
 
 Five other desirable properties immediately follow from axioms 1 and 2 as corollaries, and need not be imposed as additional axioms: 1) The farm yield function is homogeneous (and thus homothetic) and 2) concave in inputs; 3) farm supply curves are upward sloping; and 4) input demand curves are downward sloping. We also take a moment to demonstrate that 5) the derived yield function agrees with Lipton's theory of technology adoption [].
 
 On the other hand, two somewhat controversial corollaries also follow: strictly decreasing returns to scale and constant marginal cost. The former directly contradicts the conventional wisdom handed down by Hicks [-@hicks1963theory] and Solow [-@solow1957technical]. The latter is well supported empirically [@lavoie2014post], but is eschewed in textbooks. Regardless of one's view on returns to scale and marginal cost curves, the very fact that it is possible to disagree with specific corollaries, and to trace the disagreement back to specific axioms, underscores a key strength of the derived model: its theoretic transparency. Under the theoretic opacity of the expedient approach, by contrast, it is not even possible to know if one agrees or disagrees with the premises, or whether the premises contradict each other mathematically, since those premises are stated in literary form (if they are stated at all), and the model is not explicitly derived from such premises. Working under such opacity, many economists would not hesitate to add Solow's axiom (constant returns to scale) to the list above, and would never discover the mathematical contradiction between this and axioms 1 and 2.
 <!-- Moreover, such  a corollary of eminently reasonable axioms seems distasteful, then one may not simply discard the offending corollary without also discarding the reasonable axioms whence it derives. Another strength of the theoretically rigorous approach followed here is that it invites careful reflection upon . -->
 
-The aggregate supply model that mathematically results from axioms 1-5 consists of parameters that have a straightforward interpretation in terms of technology, agroclimatic conditions, input and output prices, and output price volatility. The form includes a term that explicitly captures farm entry/exit in response to price movements and risk. This term is surprisingly instructive and intuitive, as it is proportionate to the probability that output price will be greater than the mean farm's expected cost per unit output at harvest---i.e. the mean farm's probability of profit. The resulting expression for price elasticity of aggregate supply decomposes changes in aggregate supply in response to price into a technology component and a farm entry/exit component. These gains in theoretical rigor and explanatory power come at little or no cost to expedience on modern CPUs.  ...it turns out that the supply response to changes in technology is quite complex, and can be negative under certain circumstances...
+The aggregate supply model that mathematically results from axioms 1-5 consists of parameters that have a straightforward interpretation in terms of technology, agroclimatic conditions, input and output prices, and output price volatility. The form includes a term that explicitly captures farm entry/exit in response to price movements and risk. This term is surprisingly instructive and intuitive, as it is proportionate to the probability that output price will be greater than the mean farm's expected cost per unit output at harvest---i.e. the mean farm's probability of profit. The resulting expression for price elasticity of aggregate supply decomposes changes in aggregate supply in response to price into a technology component and a farm entry/exit component. These gains in theoretical rigor and explanatory power come at little or no cost to expedience on modern CPUs.  ...it turns out that the supply response to changes in technology is quite complex, and can be negative under certain circumstances...price elasticity of supply changes with technology unlike what linear agg sup fn presumes...
 
 In the main text below, the derivation of the farm yield function from axioms 1-3 is presented in summarized form, with the details of the derivation presented in the Appendix. The main focus of the article is on the subsequent derivation of the aggregate supply model from the farm yield function and from axioms 4 and 5. We then walk through an illustrative use case, parameterizing the model based on Kenya maize farm data. Calculations of aggregate production and price elasticity of aggregate supply agree with empirical estimates. Food policy relevance, application in partial equilibrium analysis, and application in minimum data contexts are briefly considered in the Discussion.
 
@@ -203,38 +210,76 @@ The aggregate supply function can thus at last be written in the following tract
 
 \begin{equation}
 Q = N \left( \frac{\theta_x}{\theta_w} \right)^{\frac{\eta}{h}} E \left[\hat{\theta}_k^{\frac{\eta}{h}} \right] \frac{E \left[C^{\# \eta}\right]}{h^{\eta}} \Phi(\gamma) \:\:;\:\:\: \gamma = \frac{\ln\left(\frac{P}{E \left[C^{\#} \right]} \right)^{\eta} - \frac{\eta^2}{2} Var \left[C^{\#} \right]}{\eta \sqrt{Var \left[C^{\#} \right]}}
+\label{eq:sup2}
 \end{equation}
 
 This might be a suitable aggregate supply function in sectors characterized by highly deterministic production processes, negligible delays between input decisions and output, and negligible output price volatility. However, it is not suited to the primary sector, where production is partly deterministic, partly a function of stochastic agroclimatic variables; where there is a significant delay between input decisions and output (i.e., the cropping season); and where output price volatility looms large in any management decision. In order to accommodate these features, a suitable assumption regarding the stochastic character of farm production (axiom 5) is introduced in the next section; and the aggregate supply model derived above is modified accordingly. In addition to accommodating the stochastic character of farm production and price, the modified model resolves the term $\Phi(\gamma)$ into a surprisingly instructive and intuitive form.
 
 ## Derivation of the aggregate supply curve from the forgoing + axiom 5 
-<!-- Geometric Brownian motion of prices and yield (Axiom 4) \label{sec:gBmAx} -->
 
-Henceforth it is necessary to be more specific in the treatment of yield $y^*$ and output price $P$ as stochastic variables. Absent a forward contract, the output price at the time of harvest and sale $(t = T)$ is unknown to the farmer at the time of planting $(t = 0)$. Likewise, yield is largely dependent upon numerous stochastic meteorological processes occurring between planting and harvest which are unknown to the farmer at the time of planting. Wherever $P$ and $y^*$ appear in the equations above, then, what is really meant is $E[P(T)]\bigr|_{t = 0}$ and $E[y^*(T)]\bigr|_{t = 0}$. That is to say, expressions \ref{eq:YdEnvCompact0}-\ref{eq:upBnd} should be rewritten, respectively,
+Henceforth it is necessary to be more specific in the treatment of yield $y^*$ and output price $P$ as stochastic variables. Absent a forward contract, the output price at the time of harvest and sale $(t = T)$ is unknown to the farmer at the time of planting $(t = 0)$. Likewise, yield is partly dependent upon stochastic meteorological processes occurring between planting and harvest which are unknown to the farmer at the time of planting. Wherever $P$ and $y^*$ appear in the equations above, then, what is really meant is $E[P(T)]\bigr|_{t = 0}$ and $E[y^*(T)]\bigr|_{t = 0}$.
 
-\begin{equation}
-E[y^*]\bigr|_{t = 0} = (y_0 \theta)^{\frac{1}{1 - h}} \left( \frac{E[P(T)]\bigr|_{t = 0}}{\lambda} \right)^{\frac{h}{1 - h}}
-\label{eq:YdEnvCompact0b}
-\end{equation}
+Cost per unit output $C^{\#}$ must likewise be replaced with $E\left[C^{\#}(T)\right]\biggr|_{t = 0}$, such that the population mean $E\left[C^{\#}\right]$ appearing in the aggregate supply function in Equation \ref{eq:sup2} must be replaced with
 
 \begin{equation}
-E[y^*]\bigr|_{t = 0} = y_0 \theta \left( \frac{C^*}{h} \right)^h
-\label{eq:yStarC0b}
+E\left[E\left[C^{\#}(T)\right]\biggr|_{t = 0}\right]
 \end{equation}
 
-\begin{equation}
-\frac{E[P(T)]\bigr|_{t = 0}}{\lambda} = \frac{E[C^{\#}]\bigr|_{t = 0}}{h}
-\label{eq:lambda30b}
-\end{equation}
+To avoid ugly and potentially ambiguous notation, the population mean of $C^{\#}(T)$ is henceforth denoted $\tilde{C}^{\#}(T)$. That is to say, $E\left[C^{\#}(T)\right] = \tilde{C}^{\#}(T)$. The term $E[]$
 
-and
 
-\begin{equation}
-E[C^{\#}(T)]\bigr_{t = 0} < E[P(T)]\bigr|_{t = 0}
-\label{eq:upBnd2}
-\end{equation}
+<!-- \begin{equation} -->
+<!-- E\left[C^{\#}(T)\right]\biggr|_{t = 0} -->
+<!-- \end{equation} -->
 
-The question remains as to what kind of stochastic process $y^*(t)$ and $P(t)$ follow. We first address price movements. Within a given season, prices often follow a geometric Brownian motion. That is to say, changes in $P$ over a small time interval $\Delta t$ ($\Delta P = P(t + \Delta t) - P(t)$) are often accurately modeled by
+
+<!-- population mean of expected production at planting time. It is a double integral. By Fubini's theorem, the order of integration may be swapped, such that the term may be interpreted as the mean farm's expected production at planting time. -->
+
+<!-- \begin{equation} -->
+<!-- E[E[q^*(T)]\bigr|_{t = 0}] = E[E[q^*(T)]]\bigr|_{t = 0} -->
+<!-- \label{eq:fubThm} -->
+<!-- \end{equation} -->
+
+<!-- And the other ugly term $Var[\ln(E[q^*(T)]\bigr|_{t = 0})]$ may likewise be rewritten -->
+
+<!-- \begin{equation} -->
+<!-- Var[\ln(E[q^*(T)]\bigr|_{t = 0})] = Var[\ln(E[q^*(T)])]\bigr|_{t = 0} -->
+<!-- \end{equation} -->
+
+<!-- To reduce the notational ugliness, the shorthand $\tilde{q}^*(T) = E[q^*(T)]$ is henceforth introduced, such that -->
+
+<!-- \begin{equation} -->
+<!-- \begin{split} -->
+<!-- E[E[q^*(T)]]\bigr|_{t = 0} &= E[\tilde{q}^*(T)]\bigr|_{t = 0} = \tilde{q}^*(0) e^{m_q T} \\ -->
+<!-- Var[\ln(E[q^*(T)])]\bigr|_{t = 0} &= Var[\ln(\tilde{q}^*(T))]\bigr|_{t = 0} = s_q^2 T -->
+<!-- \end{split} -->
+<!-- \end{equation} -->
+
+<!-- Where, recall from the previous section, $m_q = E[\Delta \tilde{q} / (\tilde{q} \Delta t)]$ and $s_q^2 = Var[\Delta \tilde{q} / (\tilde{q} \Delta t)]$. -->
+
+
+
+<!-- That is to say, expressions \ref{eq:YdEnvCompact0}-\ref{eq:upBnd} should be rewritten, respectively, -->
+<!-- \begin{equation} -->
+<!-- E[y^*]\bigr|_{t = 0} = (y_0 \theta)^{\frac{1}{1 - h}} \left( \frac{E[P(T)]\bigr|_{t = 0}}{\lambda} \right)^{\frac{h}{1 - h}} -->
+<!-- \label{eq:YdEnvCompact0b} -->
+<!-- \end{equation} -->
+<!-- \begin{equation} -->
+<!-- E[y^*]\bigr|_{t = 0} = y_0 \theta \left( \frac{C^*}{h} \right)^h -->
+<!-- \label{eq:yStarC0b} -->
+<!-- \end{equation} -->
+<!-- \begin{equation} -->
+<!-- \frac{E[P(T)]\bigr|_{t = 0}}{\lambda} = \frac{E[C^{\#}]\bigr|_{t = 0}}{h} -->
+<!-- \label{eq:lambda30b} -->
+<!-- \end{equation} -->
+<!-- and -->
+<!-- \begin{equation} -->
+<!-- E[C^{\#}(T)]\bigr_{t = 0} < E[P(T)]\bigr|_{t = 0} -->
+<!-- \label{eq:upBnd2} -->
+<!-- \end{equation} -->
+
+For present purposes, a stochastic model must be specified that reasonably describes the time evolution of $P(t)$. Within a given season, prices often follow a geometric Brownian motion (gBm). That is to say, changes in $P$ over a small time interval $\Delta t$ ($\Delta P = P(t + \Delta t) - P(t)$) are often accurately modeled by
+<!-- The question remains as to what kind of stochastic process $y^*(t)$ and $P(t)$ follow. We first address price movements.  -->
 
 \begin{equation}
 \Delta P = \Delta P(t) m_p \Delta t - P(t) s_p \epsilon \sqrt{\Delta t}
@@ -251,7 +296,7 @@ Var \left[\frac{\Delta P(T)}{P(T)} \right] &= s_{p}^2 \Delta t
 
 (For a reference, see Hull [-@hull9thEdition].)
 
-Technically, $\Delta t$ is an instantaneous time interval, and hence $m_p$ is the expected instantaneous growth rate. In practice, it is often acceptable to treat $\Delta t$ as a finitely small, but judicious, time step. As a rule of thumb, $\Delta t$ should be as small as the resolution of the data will allow, while also ensuring a finite sample path with no jumps. Some examples of maize prices following a geometric Brownian motion are given in Figure \ref{fig:gBmPrice}.
+Technically, $\Delta t$ is an instantaneous time interval, and hence $m_p$ is the expected instantaneous growth rate. In practice, it is often acceptable to treat $\Delta t$ as a finitely small, but judicious, time step. As a rule of thumb, $\Delta t$ should be as small as the resolution of the data will allow, while also ensuring a finite sample path with no jumps. Some examples of maize prices following a gBm are given in Figure \ref{fig:gBmPrice}.
 
 The expected value of $P(T)$ is
 
@@ -260,7 +305,7 @@ E[P(T)]\bigr|_{t = 0} = P(0) e^{m_p T}
 \label{eq:EPT0}
 \end{equation}
 
-For what follows, it is also important to note that the log change of a geometric Brownian motion $\ln(P(T) / P(\hat{t}))$ is defined over finite time intervals for some starting time $\hat{t}<T$, and is also normally distributed, with mean and variance
+For what follows, it is also important to note that the log change of a gBm $\ln(P(T) / P(\hat{t}))$ is defined over finite time intervals for some starting time $\hat{t}<T$, and is also normally distributed, with mean and variance
 
 \begin{equation}
 \begin{split}
@@ -423,9 +468,9 @@ s_c^2 = Var \left[\frac{\Delta C^{\#}(T)}{C^{\#}(T)} \right] &= s_{p}^2 \Delta t
 It is important to keep in mind that the price trajectory considered here is over a cropping season---from planting to harvest. When considered over multiple cropping seasons, prices typically exhibit cyclic or mean reverting behavior, which requires a more sophisticated stochastic model.
 <!-- Because of the functional relation in Equation \ref{eq:lambda3}---which says that farms regulate their expenditure based on output price expectations---it can be shown by Ito's lemma that cost per unit output $C^{\#}$ is also a geometric Brownian motion with volatility $s_c$ equal to $s_p$. -->
 
-The stochastic movement of $y^*(t)$ is slightly less straightforward. Unlike prices, yield is never directly observable except at $t = T$. While it is increasingly possible to make indirect observations of $y^*(t)$ for $t$ well before $T$ via remote sensing data [@wahab2018remote; @vallentin2022suitability; @ali2022crop], it is unlikely that it will ever be possible to check the value of $y^*(t)$ for $t$ close to $0$ (planting time) in the same way that one may check the spot price of a commodity $P(t)$.
-
-However, the specific question of whether or not $y^*(t)$ follows a geometric Brownian motion can be assessed in another way. Insofar as the stochastic movement of the meteorological variables on which yield depends biophysically follows a geometric Brownian motion, then, once again by Ito's lemma, it follows that $y^*(t)$ must also follow a geometric Brownian motion. The question then becomes whether or not the relevant meteorological variables (typically rainfall, temperature, and solar radiation) follow a gBm within a given cropping season. This is a much weaker assumption than the assumption that yield itself follows a gBm (see, e.g., Figure \ref{fig:gBmWeather}).
+For present purposes, it is not necessary to specify a stochastic model for $y^*(t)$. However, in passing it is worth noting that, insofar as the meteorological variables on which $y^*(t)$ depends follow a gBm over the course of a given cropping season (as they appear to do, e.g., in Figure \ref{fig:gBmWeather}), then, again by Ito's lemma, $y^*(t)$ must also follow a gBm.
+<!-- The stochastic movement of $y^*(t)$ is slightly less straightforward. Unlike prices, yield is never directly observable except at $t = T$. While it is increasingly possible to make indirect observations of $y^*(t)$ for $t$ well before $T$ via remote sensing data [@wahab2018remote; @vallentin2022suitability; @ali2022crop], it is unlikely that it will ever be possible to check the value of $y^*(t)$ for $t$ close to $0$ (planting time) in the same way that one may check the spot price of a commodity $P(t)$. -->
+<!-- However, the specific question of whether or not $y^*(t)$ follows a geometric Brownian motion can be assessed in another way. Insofar as the stochastic movement of the meteorological variables on which yield depends biophysically follows a geometric Brownian motion, then, once again by Ito's lemma, it follows that $y^*(t)$ must also follow a geometric Brownian motion. The question then becomes whether or not the relevant meteorological variables (typically rainfall, temperature, and solar radiation) follow a gBm within a given cropping season. This is a much weaker assumption than the assumption that yield itself follows a gBm (see, e.g., Figure \ref{fig:gBmWeather}). -->
 <!-- Yield is a function of both deterministic and stochastic (mostly meteorological) variables. -->
 <!-- The assessment of the yield trend and volatility parameters $m_y$, $s_y$ in terms of trend and volatility parameters that can be estimated from observable meteorological variables is problematic, moreover, since this requires knowledge about the precise functional relation between these variables and yield. -->
 <!-- (Although see Wahab et al. [-@wahab2018remote], Vallentin et al. [-@vallentin2022suitability], and Ali et al. [-@ali2022crop].) -->
@@ -489,31 +534,7 @@ gg_line + gg_hist + plot_layout(ncol = 2, widths = c(1, 1/3))
 <!-- ---especially temperature, solar radiation, and humidity--- -->
 <!-- That is, farmers make their expenditure decision $C^*$ at planting time ($t = 0$) based on what they expect the values of $y^*$ and $P$ to be at harvest ($t = T$). -->
 
-
-The ugly term $E[E[q^*(T)]\bigr|_{t = 0}]$ represents the population mean of expected production at planting time. It is a double integral. By Fubini's theorem, the order of integration may be swapped, such that the term may be interpreted as the mean farm's expected production at planting time.
-
-\begin{equation}
-E[E[q^*(T)]\bigr|_{t = 0}] = E[E[q^*(T)]]\bigr|_{t = 0}
-\label{eq:fubThm}
-\end{equation}
-
-And the other ugly term $Var[\ln(E[q^*(T)]\bigr|_{t = 0})]$ may likewise be rewritten
-
-\begin{equation}
-Var[\ln(E[q^*(T)]\bigr|_{t = 0})] = Var[\ln(E[q^*(T)])]\bigr|_{t = 0}
-\end{equation}
-
-To reduce the notational ugliness, the shorthand $\tilde{q}^*(T) = E[q^*(T)]$ is henceforth introduced, such that
-
-\begin{equation}
-\begin{split}
-E[E[q^*(T)]]\bigr|_{t = 0} &= E[\tilde{q}^*(T)]\bigr|_{t = 0} = \tilde{q}^*(0) e^{m_q T} \\
-Var[\ln(E[q^*(T)])]\bigr|_{t = 0} &= Var[\ln(\tilde{q}^*(T))]\bigr|_{t = 0} = s_q^2 T
-\end{split}
-\end{equation}
-
-Where, recall from the previous section, $m_q = E[\Delta \tilde{q} / (\tilde{q} \Delta t)]$ and $s_q^2 = Var[\Delta \tilde{q} / (\tilde{q} \Delta t)]$.
-
+The ugly term $E[E[q^*(T)]\bigr|_{t = 0}]$ represents the 
 
 
 
@@ -2489,3 +2510,16 @@ $$
 <!-- \label{eq:sup3} -->
 <!-- \end{equation} -->
 <!-- (See Appendix for details.) -->
+
+
+<!-- Science under scarcity p360: -->
+<!-- "(after allowing for the optimization of the input mix when switching from existing technology to new technology and allowing for differences between changes in commercial yields and changes in experimental yields)" -->
+
+<!-- The exogenous shock is introduced as a change in farm yield and cost elicited from experimental trial results and from scientists with a clear conflict of interest. These results must then be adjusted to reflect economic yield as opposed to experimental yield, but no clear method of adjustment is available because, in the name of expedience, the aggregate curve is not built up from the farm level curve, and so no farm level yield function is ever specified in the process. The change in yield in cost must be calculated from the economic yield and cost envelopes evaluated at the new technology, not the other way around. The impact asessor must elicit the change in technical efficiency resulting from the new technology and then calculate the change in yield and cost by evaluating the optimized yield and cost functions at the    The change in technology      The mechanism by which  ...also the price elasticity of aggregate supply is assumed to be independent of changes in technology... The impact assessment thus effectively an impact assertion. _petitio principii_ ... a great many methodological headaches are quickly accumulated in the name of expedience, which ultimately defeat the purpose/invalidate the model/etc. -->
+<!-- ...They also introduce exogenous shocks in terms of a cost reduction---typically based on results gathered at experimental stations under biophysically optimal management conditions---whereas the cost reduction must be modeled as an endogenous economic reaction to a change in technological parameters....Cost, more properly optimal expenditure, is an economic variable, a function of technology and prices. Since the 1950s it has been observed that "yields are very different when the goal is changed to maximizing profit" [Pingali etc.]... By assuming a cost reduction, the modeler effectively engages in petitio principii---i.e. assumes what must be proven.... below we show that the cost/supply response to changes in tech is far more complex than the conventional treatment would suggest.  -->
+
+
+<!-- The authors warn against this conflict of interest, and provide a few recommendations for managing this bias, none of which are ever followed in practice.... the result is a sort of positive impact assessment mill -->
+<!-- Science under scarcity p349: -->
+<!-- >When information for calculating Ks for prospective research is elicited from scientists, it is necessary to guard against unrealistic responses that would invalidate the analysis and the use of the results for evaluating research or setting priorities. A particular risk of bias  -->
+<!-- arises because scientists know the purpose of the analysis and often have (or perceive) a vested interest in a high measured rate of return to research. Three ways of dealing with this potential bias are (a) using objective data on past experimental results, historical yield trends, and perhaps, total factor productivity growth rates to calibrate the elicitations, (b) creating an environment of peer review and, perhaps, a competitive process (e.g., Delphi methods) that will reduce the potential for personal incentives to bias estimates of technical parameters, and (c) creating an institutional setting in which scientists will be held accountable for systematic biases in their estimates of research impact (e.g., by comparing actual achievements within programs over time against scientists' forecasts of what would be achieved). -->
