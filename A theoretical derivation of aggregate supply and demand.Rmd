@@ -227,6 +227,8 @@ E\left[E\left[C^{\#}(T)\right]\biggr|_{t = 0}\right]
 
 To avoid ugly and potentially ambiguous notation, the population mean of $C^{\#}(T)$ is henceforth denoted $\tilde{C}^{\#}(T)$. That is to say, $E\left[C^{\#}(T)\right] = \tilde{C}^{\#}(T)$. The term $E[]$
 
+<!-- reference justifying application of Fubini's thm here: -->
+<!-- https://stats.stackexchange.com/questions/412936/when-can-integration-and-expectation-be-exchanged -->
 
 <!-- \begin{equation} -->
 <!-- E\left[C^{\#}(T)\right]\biggr|_{t = 0} -->
