@@ -240,6 +240,7 @@ Q = N \left( \frac{\theta_x}{\theta_w} \right)^{\frac{\eta}{h}} E \left[\hat{\th
 \label{eq:sup2a}
 \end{equation}
 
+the Phi term captures entry/exit
 By making substitutions based on the corollary in Equation \ref{eq:useful}, this can be rewritten in a variety of ways, in accordance with the objectives and information available in a given use case. For the rest of the article, the focus is on the classical form below, where the fraction $C^{\#} / h$ has been replaced with $P / \lambda$.
 
 \begin{equation}
@@ -514,7 +515,10 @@ z &= -\gamma = \frac{\ln\left(\frac{E \left[ \tilde{C}^{\#}(T) \right]\bigr|_{t 
 \label{eq:sup4}
 \end{equation}
 
-The term $z$ is the standard score of the hypothetical log change in output price $\ln \left(E\left[\tilde{C}^{\#}(T)\bigr|_{t = 0} \right] / P(0) \right)$, scaled by the farm level price elasticity $\eta$---i.e., the log change in output price from its value at planting time ($P(0)$) to a value equal to the mean farm's expected cost per unit output, scaled by $\eta$. The term $\Phi(z)$ is thus the probability that output price will fall from its value at planting time to or below the mean farm's expected cost per unit output (scaled by $\eta$). And the term $\Phi(-z)$, it follows, is the probability that output price will remain above the mean farm's expected cost per unit output (scaled by $\eta$). In simple terms, $\Phi(-z)$ is roughly the probability that the mean farm will be profitable.
+Recalling from Equations \ref{eq:lnChngP} that $\left(\eta m_p - \eta^2 \frac{s_p^2}{2} \right) T$ and $s_p^2 T$ are the mean and variance of the log change in price $\ln(P(T) / P(0))$, then the term $z$ is the standard score of the hypothetical log change in output price $\ln \left(E\left[\tilde{C}^{\#}(T)\bigr|_{t = 0} \right] / P(0) \right)$, scaled by the farm level price elasticity $\eta$. The term $\Phi(z)$, which captures farm entry/exit, is thus the probability that output price will fall from its value at planting time to or below the mean farm's expected cost per unit output (scaled by $\eta$). And the term $\Phi(-z)$, it follows, is the probability that output price will remain above the mean farm's expected cost per unit output (scaled by $\eta$). In simple terms, $\Phi(-z)$ is roughly the probability that the mean farm will be profitable.
+
+Here it is tempting to introduce a sixth axiom saying that farmers will only pursue a risky bet if the probability of profit is greater than that of a coin toss (i.e., greater than $50\%$), and to thereby limit the domain of $z$ to $(-\infty, 0)$. But this is left to the discretion of the reader. There are cases when rational economic agents pursue "out of the money" bets.
+<!-- i.e., the log change in output price from its value at planting time ($P(0)$) to a value equal to the mean farm's expected cost per unit output, scaled by $\eta$. -->
 <!-- \begin{equation} -->
 <!-- \begin{split} -->
 <!-- E \left[\ln \left( \frac{C^{\#}(T)}{C^{\#}(\hat{t})} \right) \right] &= E \left[\ln \left( \frac{P(T)}{P(\hat{t})} \right) \right] \\ -->
@@ -585,8 +589,9 @@ The term $z$ is the standard score of the hypothetical log change in output pric
 <!-- ---especially temperature, solar radiation, and humidity--- -->
 <!-- That is, farmers make their expenditure decision $C^*$ at planting time ($t = 0$) based on what they expect the values of $y^*$ and $P$ to be at harvest ($t = T$). -->
 
+## Some derivatives of interest to policy makers
 
-The price elasticity of aggregate supply is then
+A few derivatives of the aggregate supply curve with respect to variables that are of general interest to policy makers are briefly explored below. First and foremost, the price elasticity of aggregate supply:
 
 \begin{equation}
 \begin{split}
@@ -596,7 +601,7 @@ The price elasticity of aggregate supply is then
 \label{eq:pElasQagg}
 \end{equation}
 
-The output price elasticity of aggregate supply is thus the farm level elasticity plus the effect of farm entry/exit in response to the price movement. As farm entry approaches $100\%$, the price elasticity of aggregate supply approaches $\eta$, the price elasticity of farm level supply. Aggregate supply is inelastic/elastic if
+The output price elasticity of aggregate supply is thus the farm level elasticity $\eta$ plus a term capturing the effect of farm entry/exit in response to the price movement. Note that the entry/exit term is the slope of the log of the standard normal cumulative distribution function. As the mean farm's probability of profit approaches $100\%$, this term approaches zero, such that price elasticity of aggregate supply approaches the price elasticity of supply on an individual farm. Aggregate supply is inelastic/elastic if
 
 \begin{equation}
 \eta </> 1 - \frac{\phi(-z)}{\Phi(-z)} \frac{1}{s_p \sqrt{T}}
@@ -604,32 +609,32 @@ The output price elasticity of aggregate supply is thus the farm level elasticit
 
 Such that the possibility of an elastic aggregate supply response to price movements becomes increasingly limited as farm participation approaches $100\%$.
 
-A novelty of the form is that aggregate supply sensitivity to price volatility may also be inspected.
+One of the many novelties of the derived form is that it allows for explicit inspection of the aggregate supply sensitivity to price volatility.
 
 \begin{equation}
 \frac{\partial \ln(E[Q(T)]|_{t = 0})}{\partial (s_p \sqrt{T})} = - \frac{\phi(-z)}{\Phi(-z)} \left(\eta -  \frac{z}{\eta s_p \sqrt{T}}\right)
 \label{eq:pRiskElasQagg}
 \end{equation}
 
-z is negative (?) therefore $\eta^2 > z / (s_p \sqrt{T})$ therefore $\frac{\partial \ln(E[Q(T)]|_{t = 0})}{\partial (s_p \sqrt{T})} < 0$
+So long as $z$ is negative (and thus the mean farm's probability of profit greater than $50\%$), then this says that aggregate supply is decreasing in price volatility.
 
-
-<!-- Note, moreover, that elasticity is inversely proportionate to the price risk ($s_p \sqrt{T}$). -->
-
-The effect of price risk on supply can be examined more explicitly as follows.
+Finally, consider the derivative with respect to technology.
 
 \begin{equation}
-\frac{\partial \ln(Q)}{\partial (s_p \sqrt{T})} = -\eta \frac{\phi(-z)}{\Phi(-z)} \left( \frac{1}{\eta^2 s_p^2 T} \ln \left( \frac{E[P(T)]\bigr|_{t = 0}}{E[C_0^{\#}(T)]\bigr|_{t = 0}} \right)  + \frac{1}{2} \right)
-\label{eq:pRiskElasQagg}
 \end{equation}
 
-# An illustrative use case: Parameterization of the aggregate supply curve using Kenya farm survey data
+# An illustrative use case: Parameterization and estimation of the aggregate supply curve using Kenya farm survey data
 
 ## Data
-...
+
+The farm data used below cover the 2007 main maize season on 942 farms in 20 different counties of Kenya. The data are a subset of a much larger panel covering the main and short seasons of multiple crops for the years 2000, 2004, 2007, and 2010, originally gathered by the Egerton University Tegemeo Institute of Agricultural Policy and Development in partnership with Michigan State University, under the auspices of a USAID project [@maizeData]. The data include detailed information on quantities of numerous types of organic and inorganic fertilizers, pest/plague control chemicals, and hired and family labor. A wide variety of demographic and infrastructural control variables, as well as input and crop prices, are also included. summary statistics are provided in the appendix...variables on which focus...bin vars
+[as well as 2007 rainfall data... as well as the historical average rainfall. ...binary endowment variables...]
+This sort of a validation but not so much a validation...
+<!-- (graphics here or in Appendix) Summary statistics can be found in the Appendix. -->
+
 ## Estimation
 
-For purposes of estimation, 
+For purposes of estimation, the y
 
 Equation \ref{eq:useful} + Equation \ref{eq:prodFn1} =
 
@@ -640,7 +645,7 @@ q^* = y_0 \hat{\theta} \left( \frac{C^*}{h} \right)^h
 
 (Where, in this case, the $\hat{\theta}_k$ in $\hat{\theta}$ equals $k_a^{\kappa_a + 1} \prod_{i \neq a} k_i^{\kappa_i}$.)
 
-The latter expression comes in handy for estimation purposes because it requires information only on cost and control variables, and not on input quantities used in production. The degree of homogeneity $h$ is thus also the scale elasticity of yield ($d \ln(y^*) / d \ln(C^*) = h$), as noted in the textbooks. This form is particularly useful for estimation, as it requires only the control variables $k_i$ and input cost $C^*$, as opposed to detailed information on all of the input quantities. That is, instead of estimating the model in Equation \ref{eq:cobbDoug3ln}, one estimates
+The latter expression comes in handy for estimation purposes because it requires information only on cost and control variables, and not on input quantities used in production. The degree of homogeneity $h$ is thus also the scale elasticity of yield ($d \ln(y^*) / d \ln(C^*) = h$), as noted in the textbooks. This form is particularly useful for estimation, as it requires only the control variables $k_i$ and input cost $C^*$, and not the management variables. That is, instead of estimating the model in Equation \ref{eq:cobbDoug3ln}, one estimates
 
 \begin{equation}
 \ln(y) = \ln(\tilde{y}) + h \ln \left(\frac{C^*}{\tilde{C}^*} \right) + \sum_{i = 1}^{n_k} \kappa_i \ln \left( \frac{k_i}{\tilde{k}_i} \right)
@@ -677,7 +682,7 @@ In order to arrive at the population mean and redress count 2, the sample mean o
 E[C^{\#}(T) | E[C^{\#}(T)]\bigr|_{t = 0} < E[P(T)]\bigr|_{t = 0}]\bigr|_{t = T} = E\left[ frac{C^*}{y^*(T)} \right]
 \end{equation}
 
-Given the assumption of lognormally distributed yield (Axiom 4), then, by linear independence of the OLS regressors, $C^{\#}(T)$ is also lognormally distributed, such that the unobserved mean and variance of the untruncated distribution of $\ln(C^{\#}(T))$ ($m_c$, $s_c^2$) can be implicitly calculated from the observed (i.e. sample) mean and variance ($\overline{m}_c$, $\overline{s}_c^2$) by the following standard formulae.
+Given the assumption of lognormally distributed yield (axiom 4), then, by linear independence of the OLS regressors, $C^{\#}(T)$ is also lognormally distributed, such that the unobserved mean and variance of the untruncated distribution of $\ln(C^{\#}(T))$ ($m_c$, $s_c^2$) can be implicitly calculated from the observed (i.e. sample) mean and variance ($\overline{m}_c$, $\overline{s}_c^2$) by the following standard formulae.
 
 \begin{equation}
 \begin{split}
@@ -715,12 +720,15 @@ Given sufficient price data, the values of $m_p$ and $s_p$ should be estimated o
 
 An accurate value for $N$ will be difficult to estimate in populations where no recent farm census data is available. Note that $N$ is not necessary for evaluation of the price elasticity of aggregate supply and price risk elasticity of aggregate supply (Equations \ref{eq:pElasQagg} and \ref{eq:pRiskElasQagg}).
 
+
+
+
+
+
+
 ## Illustrative use case: Data, specification, estimation
 
-The farm data used below cover the 2007 main maize season on 942 farms in 20 different counties of Kenya. The data are a subset of a much larger panel covering the main and short seasons of multiple crops for the years 2000, 2004, 2007, and 2010, originally gathered by the Egerton University Tegemeo Institute of Agricultural Policy and Development in partnership with Michigan State University, under the auspices of a USAID project [@maizeData]. The data include detailed information on quantities of numerous types of organic and inorganic fertilizers, pest/plague control chemicals, and hired and family labor. A wide variety of demographic and infrastructural control variables, as well as input and crop prices, are also included.
-[as well as 2007 rainfall data... as well as the historical average rainfall. ...binary endowment variables...]
-This sort of a validation but not so much a validation...
-<!-- (graphics here or in Appendix) Summary statistics can be found in the Appendix. -->
+
 
 For the purpose of parameterizing an aggregate supply curve, the data is required in order to have a mean yield ($E[y^*]$), average cost ($C^#$), and degree of homogeneity ($h$)....   The yield model in Equation \ref{eq:cobbDoug4} is specified as a function of cost per acre ($C^*$) and control variables ($k_i$).
 
