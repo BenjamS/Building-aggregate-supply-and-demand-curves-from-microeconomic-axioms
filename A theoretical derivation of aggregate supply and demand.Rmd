@@ -161,12 +161,12 @@ y = y_0 \prod_{i = 1}^{n_k} \left( \frac{k_i}{\tilde{k}_i} \right)^{\kappa_i} \p
 \label{eq:cobbDoug3}
 \end{equation}
 
-Where the $x_i$ are management inputs (fertilizer, etc.), the $k_i$ are control variables (demographic and agroclimatic variables, etc.), and the $\alpha_i$ and $\kappa_i$ are input and control variable elasticities of yield, respectively. The product bounds $n_x$ and $n_k$ indicate the number of inputs and control variables, respectively. The variables $x_i$ and $k_i$ are assumed to be linearly independent and are divided by their population means, such that $y_0$ may be interpreted as the mean yield. (See Appendix for details.)
+Where the $x_i$ are management inputs (fertilizer, etc.), the $k_i$ are control variables (demographic and agroclimatic variables, etc.), and the $\alpha_i$ and $\kappa_i$ are input and control variable elasticities of yield, respectively. The input elasticities of yield are also referred to collectively as the "technology".  The product bounds $n_x$ and $n_k$ indicate the number of inputs and control variables, respectively. The variables $x_i$ and $k_i$ are assumed to be linearly independent and are divided by their population means, such that $y_0$ may be interpreted as the mean yield. (See Appendix for details.)
 
 The introduction of axiom 2 then results in the profit maximizing farm yield function.
 
 \begin{equation}
-y^* = (y_0 \theta)^{\frac{1}{1 - h}} \left( \frac{P}{\lambda} \right)^{\frac{h}{1 - h}}
+y^* = (y_0 \theta)^{\frac{\eta}{h}} \left( \frac{P}{\lambda} \right)^{\eta} \:\:;\:\:\: \eta = \frac{h}{1 - h}
 \label{eq:YdEnvCompact0}
 \end{equation}
 
@@ -176,10 +176,10 @@ Where $h = \sum_i \alpha_i$ is the farm yield degree of homogeneity, $P$ is the 
 \theta = \frac{\theta_x \theta_k}{\theta_w} \:\:;\:\:\: \theta_w = \prod_i{w_i}^{\alpha_i} \:\:\: \theta_x = \prod_i {\alpha_i}^{\alpha_i} \:\:\: \theta_k = \prod_i \left( \frac{k_i}{\tilde{k}_i} \right)^{\kappa_i}
 \end{equation}
 
-And where the $w_i$ are input prices. The budget constrained, profit maximizing farm yield in Equation \ref{eq:YdEnvCompact0} is henceforth referred to simply as the farm yield. Likewise, "farm production function" henceforth refers to the budget constrained, profit maximizing production function $q^*$ obtained by multiplying $y^*$ by the cultivated area $k_a$.
+Where the $w_i$ are input prices. Note that $\eta$ is the farm level output price elasticity of supply; and that it is endogenously determined by the technology $h$. The yield envelope---i.e., the budget constrained, profit maximizing farm yield in Equation \ref{eq:YdEnvCompact0}---is henceforth referred to simply as the farm yield. Likewise, "farm production function" henceforth refers to the budget constrained, profit maximizing production function $q^*$ obtained when $y^*$ is multiplied by the cultivated area $k_a$.
 
 \begin{equation}
-q^* = k_a y^* = k_a (y_0 \theta)^{\frac{\eta}{h}} \left( \frac{C^{\#}}{h} \right)^{\eta} \:\:;\:\:\: \eta = \frac{h}{1 - h}
+q^* = k_a y^* = k_a (y_0 \theta)^{\frac{\eta}{h}} \left( \frac{C^{\#}}{h} \right)^{\eta}
 \end{equation}
 
 Whenever the area $k_a$ is included among the control variables $k_i$ (as it is in the Kenya farm data analysis farther below), it is henceforth notationally absorbed into $\theta_k$ as follows.
@@ -219,7 +219,7 @@ Q = N \left( \frac{\theta_x}{\theta_w} \right)^{\frac{\eta}{h}} E \left[\theta_k
 
 Where the farm density $\rho(C^{\#})$ that appears in Equation \ref{eq:sup1} has been rewritten in terms of the probability density $f(C^{\#})$ and the number of farms in the population $N$ (i.e., $\rho(C^{\#}) = N f(C^{\#})$).
 
-4) Assuming that farms enter production only if they expect to make a profit (axiom 4), then cost per unit output cannot exceed price, thus resolving the upper bound of this integral. Since cost cannot be negative, the lower bound is $0$; and so the domain of integration is $0 < C^{\#} < P$.
+4) Assuming that farms enter production only if they expect to make a profit (axiom 4), then cost per unit output cannot exceed price, thus resolving the upper bound of this integral. Since cost cannot be negative, the lower bound is $0$. The domain of integration must then be $0 < C^{\#} < P$.
 
 \begin{equation}
 Q = N \left( \frac{\theta_x}{\theta_w} \right)^{\frac{\eta}{h}} E \left[\hat{\theta}_k^{\frac{\eta}{h}} \right] h^{-\eta} \int_{0}^{P} C^{\# \eta} f(C^{\#}) \: dC^{\#}
@@ -233,28 +233,30 @@ Because production is assumed to be lognormally distributed, $C^{\#}$ (and $\lam
 
 Where $\Phi()$ is the standard normal cumulative distribution function. (See Appendix for details.)
 
-The aggregate supply function can thus at last be written in the following tractable form.
+The aggregate supply function thus reduces to the following tractable form.
 
 \begin{equation}
-Q = N \left( \frac{\theta_x}{\theta_w} \right)^{\frac{\eta}{h}} E \left[\hat{\theta}_k^{\frac{\eta}{h}} \right] \frac{E \left[C^{\# \eta}\right]}{h^{\eta}} \Phi(\gamma) \:\:;\:\:\: \gamma = \frac{\ln\left(\frac{P}{E \left[C^{\#} \right]} \right)^{\eta} - \frac{\eta^2}{2} Var \left[C^{\#} \right]}{\eta \sqrt{Var \left[C^{\#} \right]}}
+Q = N \left( \frac{\theta_x}{\theta_w} \right)^{\frac{\eta}{h}} E \left[\hat{\theta}_k^{\frac{\eta}{h}} \right] \frac{E \left[C^{\# \eta}\right]}{h^{\eta}} \Phi(\gamma) \:\:;\:\:\: \gamma = \frac{\ln\left(\frac{P}{E \left[C^{\#} \right]} \right)^{\eta} - \frac{\eta^2}{2} Var \left[\ln \left(C^{\#} \right) \right]}{\eta \sqrt{Var \left[\ln \left( C^{\#} \right) \right]}}
 \label{eq:sup2a}
 \end{equation}
 
-Invoking the corollary in Equation \ref{eq:useful}, the function can be written more explicitly as a function of output price. 
+By making substitutions based on the corollary in Equation \ref{eq:useful}, this can be rewritten in a variety of ways, in accordance with the objectives and information available in a given use case. For the rest of the article, the focus is on the classical form below, where the fraction $C^{\#} / h$ has been replaced with $P / \lambda$.
 
 \begin{equation}
-Q = N \left( \frac{\theta_x}{\theta_w} \right)^{\frac{\eta}{h}} E \left[\hat{\theta}_k^{\frac{\eta}{h}} \right] E[\lambda^{-\eta}] P^{\eta} \Phi(\gamma) \:\:;\:\:\: \gamma = \frac{\ln\left(\frac{P}{E \left[C^{\#} \right]} \right)^{\eta} - \frac{\eta^2}{2} Var \left[C^{\#} \right]}{\eta \sqrt{Var \left[C^{\#} \right]}}
+Q = N \left( \frac{\theta_x}{\theta_w} \right)^{\frac{\eta}{h}} E \left[\hat{\theta}_k^{\frac{\eta}{h}} \right] E[\lambda^{-\eta}] P^{\eta} \Phi(\gamma) \:\:;\:\:\: \gamma = \frac{\ln\left(\frac{P}{E \left[C^{\#} \right]} \right)^{\eta} - \frac{\eta^2}{2} Var \left[ \ln \left(C^{\#} \right) \right]}{\eta \sqrt{Var \left[\ln \left(C^{\#} \right) \right]}}
 \label{eq:sup2b}
 \end{equation}
 
-This might be a suitable aggregate supply function in sectors characterized by highly deterministic production processes, negligible delays between input decisions and output, and negligible output price volatility. However, it is not suited to the primary sector, where production is partly deterministic, partly a function of stochastic meteorological variables; where there is a significant delay between input decisions and output (i.e., the cropping season); and where output price volatility looms large in any management decision. In order to accommodate these features, a suitable assumption regarding the stochastic character of farm production (axiom 5) is introduced in the next section; and the aggregate supply model derived above is modified accordingly. In addition to accommodating the stochastic character of farm production and price, the modified model resolves the term $\Phi(\gamma)$ into a surprisingly instructive and intuitive form.
+This is "classical" in the sense that makes aggregate supply as explicit a function of output price as possible.
+
+This might be a suitable aggregate supply function in sectors characterized by highly deterministic production processes, negligible delays between input decisions and output, and negligible output price volatility. However, it is not suited to the primary sector, where production is partly deterministic, partly a function of stochastic meteorological variables; where there is a significant delay between input decisions and output (i.e., the cropping season); and where output price volatility looms large in any management decision. In order to accommodate these features, a suitable assumption regarding the stochastic character of output price (axiom 5) is introduced in the next section; and the aggregate supply model derived above is modified accordingly. In addition to accommodating the stochastic character of farm production and price, the modified model resolves the term $\Phi(\gamma)$ into a surprisingly instructive and intuitive form.
 
 ## Derivation of the aggregate supply curve from the forgoing + axiom 5 
 
 Henceforth it is necessary to be more specific in the treatment of output price $P$, yield $y^*$, and cost per unit output $C^{\#}$ as stochastic variables. Absent a forward contract, the output price at the time of harvest and sale $(t = T)$ is unknown to the farmer at the time of planting $(t = 0)$. Likewise, yield and cost per unit output are partly dependent upon stochastic processes occurring between planting and harvest (especially meteorological processes) which are unknown to the farmer at the time of planting. Wherever $P$, $y^*$, and $C^{\#}$ appear in the equations above, then, what is really meant is $E[P(T)]|_{t = 0}$, $E[y^*(T)]\bigr|_{t = 0}$, and $E[C^{\#}(T)]\bigr|_{t = 0}$---that is to say, what is meant is the values that the farmer expects $P$, $y^*$, and $C^{\#}$ to take at harvest/sale, as evaluated at planting time.
 <!-- Cost per unit output is likewise partly dependent upon possible unforeseen adversity after planting (e.g., pests & disease), and then it too must be considered a stochastic variable whose value is not known at the time of planting. -->
 
-In the aggregate supply function (Equation \ref{eq:sup2b}), the term $E \left[C^{\#} \right]$ is thus replaced with $E \left[E\left[C^{\#}(T) \right]\bigr|_{t = 0} \right]$, which is the population mean of expected cost per unit production at planting time. This is a double integral. By Fubini's theorem, the order of integration may be swapped, such that this may also be interpreted as the mean farm's expected cost at planting time. That is,
+In the aggregate supply function (Equation \ref{eq:sup2b}), the term $E \left[C^{\#} \right]$ is thus replaced with $E \left[E\left[C^{\#}(T) \right]\bigr|_{t = 0} \right]$, which is the population mean of expected cost per unit production at planting time. This is a double integral. By Fubini's theorem, the order of integration may be swapped, such that this may also be interpreted as the mean farm's expected cost as evaluated at planting time.
 
 \begin{equation}
 E\left[E\left[C^{\#}(T)\right]\biggr|_{t = 0}\right] = E\left[E\left[C^{\#}(T)\right]]\biggr|_{t = 0}\right
@@ -267,12 +269,13 @@ To avoid ugly and potentially ambiguous notation, the population mean of $C^{\#}
 <!-- \end{equation} -->
 <!-- This is the population mean of the expected  -->
 
-Making these substitutions for $P$ and $C^{\#}$ in Equation \ref{eq:sup2b}, then, the aggregate supply function becomes
+Making these substitutions for $P$ and $C^{\#}$ in Equation \ref{eq:sup2b}, then, the provisional aggregate supply function becomes an _expected_ aggregate supply function.
 
 \begin{equation}
 \begin{split}
-Q &= \beta E[P(T)^{\eta}]|_{t = 0} \Phi(\gamma) \:\:; \\ \gamma &= \frac{\ln\left(\frac{E[P(T)]|_{t = 0}}{E \left[ \tilde{C}^{\#}(T) \right]\bigr|_{t = 0}} \right)^{\eta} - \frac{\eta^2}{2} Var \left[\tilde{C}^{\#}(T) \right]}{\eta \sqrt{Var \left[\tilde{C}^{\#}(T) \right]}} \\
-\beta &= N \left( \frac{\theta_x}{\theta_w} \right)^{\frac{\eta}{h}} E \left[\hat{\theta}_k^{\frac{\eta}{h}} \right] E[\lambda^{-\eta}]
+E[Q(T)]|_{t = 0} &= \beta E[P(T)^{\eta}]|_{t = 0} \Phi(\gamma) \:\:; \\
+\beta &= N \left( \frac{\theta_x}{\theta_w} \right)^{\frac{\eta}{h}} E \left[\hat{\theta}_k^{\frac{\eta}{h}} \right] E[\lambda^{-\eta}] \\
+\gamma &= \frac{\ln\left(\frac{E[P(T)]|_{t = 0}}{E \left[ \tilde{C}^{\#}(T) \right]\bigr|_{t = 0}} \right)^{\eta} - \frac{\eta^2}{2} Var \left[\ln \left( \tilde{C}^{\#}(T) \right) \right]}{\eta \sqrt{Var \left[\ln \left( \tilde{C}^{\#}(T) \right) \right]}}
 \end{split}
 \label{eq:sup3}
 \end{equation}
@@ -316,14 +319,13 @@ Q &= \beta E[P(T)^{\eta}]|_{t = 0} \Phi(\gamma) \:\:; \\ \gamma &= \frac{\ln\lef
 <!-- \label{eq:upBnd2} -->
 <!-- \end{equation} -->
 
-Now a stochastic model must be specified that reasonably describes the time evolution of $P(t)$. Within a given season, prices often follow a geometric Brownian motion (gBm). That is to say, changes in $P$ over a small time interval $\Delta t$ ($\Delta P = P(t + \Delta t) - P(t)$) are often accurately modeled by
-<!-- The question remains as to what kind of stochastic process $y^*(t)$ and $P(t)$ follow. We first address price movements.  -->
+To evaluate this expression, a suitable stochastic model must be assumed for $P(t)$ and $C^{\#}(t)$ follow. Within a given season, prices often follow a geometric Brownian motion (gBm). That is to say, changes in $P$ over a small time interval $\Delta t$ ($\Delta P = P(t + \Delta t) - P(t)$) are often accurately modeled by
 
 \begin{equation}
 \Delta P = \Delta P(t) m_p \Delta t - P(t) s_p \epsilon \sqrt{\Delta t}
 \end{equation}
 
-Where $\epsilon$ is a normally distributed random variable with mean $0$ and variance $1$, such that the arithmetic return $\Delta P / P$ is normally distributed with mean and variance
+Where $\epsilon$ is a normally distributed random variable with mean $0$ and variance $1$, such that the arithmetic change $\Delta P / P$ is normally distributed with mean and variance
 
 \begin{equation}
 \begin{split}
@@ -343,12 +345,13 @@ E[P(T)]\bigr|_{t = 0} = P(0) e^{m_p T}
 \label{eq:EPT0}
 \end{equation}
 
-For what follows, it is also important to note that the log change of a gBm $\ln(P(T) / P(\hat{t}))$ is defined over finite time intervals for some starting time $\hat{t}<T$, and is also normally distributed, with mean and variance
+For what follows, it is also important to note that the log change of a gBm $\ln(P(T) / P(\hat{t}))$ is defined over any finite time interval for some starting time $\hat{t}<T$, and is also normally distributed, with mean and variance
 
 \begin{equation}
 \begin{split}
 E \left[\ln \left( \frac{P(T)}{P(\hat{t})} \right) \right] &= \left(m_{p} - \frac{s_p^2}{2} \right) T \\
-Var \left[\ln \left( \frac{P(T)}{P(\hat{t})} \right) \right] &= s_{p}^2 T
+Var \left[\ln \left( \frac{P(T)}{P(\hat{t})} \right) \right] &= Var \left[\ln (P(T)) \right] = s_{p}^2 T
+\label{eq:lnChngP}
 \end{split}
 \end{equation}
 
@@ -492,21 +495,41 @@ gg_ts + gg_hist + plot_layout(ncol = 2, widths = c(1, 1/3))
 
 ```
 
-By Ito's lemma, the relation in Equation \ref{eq:lambda30b} implies that the cost per unit output $C^{\#}$ is also a geometric Brownian motion with trend and volatility parameters ($m_c$, $s_c^2$) equal to those of the output price ($m_p$, $s_p^2$).
+It is important to keep in mind that the price trajectory considered here is over a cropping season---from planting to harvest. When considered over multiple cropping seasons, prices typically exhibit cyclic or mean reverting behavior, which requires a more sophisticated stochastic model.
+
+Assuming that output price follows a gBm (axiom 5), the stochastic model for $C^{\#}(t)$ follows directly from the gBm model for $P(t)$. That is to say, since ${C}^{\#}(t)$ and $P(t)$ are related by Equation \ref{eq:useful}, then, by Ito's lemma, $C^{\#}(t)$ must also follow a gBm with trend and volatility parameters ($m_c$, $s_c$) equal to those of the output price ($m_p$, $s_p$). (See Appendix for details.) It then follows trivially that the mean and variance of the log change $\ln(C^{\#}(T)/C^{\#}(\hat{t}))$ are equal to those of the log change in output price displayed in Equations \ref{eq:lnChngP}. This means that
+
+\begin{equation}
+Var \left[\ln \left( \tilde{C}^{\#}(T) \right) \right] = s_p^2 T 
+\label{eq:lnChngC}
+\end{equation}
+
+Substituting the right hand sides of this and Equation \ref{eq:EPT0} into Equation \ref{eq:sup3} then results in the following form for expected aggregate supply.
 
 \begin{equation}
 \begin{split}
-m_c = E \left[\frac{\Delta C^{\#}(T)}{C^{\#}(T)} \right] &= m_{p} \Delta t  \\
-s_c^2 = Var \left[\frac{\Delta C^{\#}(T)}{C^{\#}(T)} \right] &= s_{p}^2 \Delta t
+E[Q(T)]|_{t = 0} &= \beta P(0)^{\eta} e^{\eta m_p T} \Phi(-z) \:\:; \\
+z &= -\gamma = \frac{\ln\left(\frac{E \left[ \tilde{C}^{\#}(T) \right]\bigr|_{t = 0}}{P(0)} \right)^{\eta} - \left(\eta m_p - \eta^2 \frac{s_p^2}{2} \right) T }{\eta s_p \sqrt{T}}
 \end{split}
+\label{eq:sup4}
 \end{equation}
 
-(See Appendix for details.)
-
-It is important to keep in mind that the price trajectory considered here is over a cropping season---from planting to harvest. When considered over multiple cropping seasons, prices typically exhibit cyclic or mean reverting behavior, which requires a more sophisticated stochastic model.
+The term $z$ is the standard score of the hypothetical log change in output price $\ln \left(E\left[\tilde{C}^{\#}(T)\bigr|_{t = 0} \right] / P(0) \right)$, scaled by the farm level price elasticity $\eta$---i.e., the log change in output price from its value at planting time ($P(0)$) to a value equal to the mean farm's expected cost per unit output, scaled by $\eta$. The term $\Phi(z)$ is thus the probability that output price will fall from its value at planting time to or below the mean farm's expected cost per unit output (scaled by $\eta$). And the term $\Phi(-z)$, it follows, is the probability that output price will remain above the mean farm's expected cost per unit output (scaled by $\eta$). In simple terms, $\Phi(-z)$ is roughly the probability that the mean farm will be profitable.
+<!-- \begin{equation} -->
+<!-- \begin{split} -->
+<!-- E \left[\ln \left( \frac{C^{\#}(T)}{C^{\#}(\hat{t})} \right) \right] &= E \left[\ln \left( \frac{P(T)}{P(\hat{t})} \right) \right] \\ -->
+<!-- Var \left[\ln \left( \frac{C^{\#}(T)}{C^{\#}(\hat{t})} \right) \right] &= Var \left[\ln \left( C^{\#}(T) \right) \right] = Var \left[\ln(P(T)) \right] -->
+<!-- \end{split} -->
+<!-- \label{eq:lnChngC} -->
+<!-- \end{equation} -->
+<!-- \begin{equation} -->
+<!-- \begin{split} -->
+<!-- m_c \Delta t = E \left[\frac{\Delta C^{\#}(T)}{C^{\#}(T)} \right] &= m_{p} \Delta t  \\ -->
+<!-- s_c^2 \Delta t = Var \left[\frac{\Delta C^{\#}(T)}{C^{\#}(T)} \right] &= s_{p}^2 \Delta t -->
+<!-- \end{split} -->
+<!-- \end{equation} -->
 <!-- Because of the functional relation in Equation \ref{eq:lambda3}---which says that farms regulate their expenditure based on output price expectations---it can be shown by Ito's lemma that cost per unit output $C^{\#}$ is also a geometric Brownian motion with volatility $s_c$ equal to $s_p$. -->
-
-For present purposes, it is not necessary to specify a stochastic model for $y^*(t)$. However, in passing it is worth noting that, insofar as the meteorological variables on which $y^*(t)$ depends follow a gBm over the course of a given cropping season (as they appear to do, e.g., in Figure \ref{fig:gBmWeather}), then, again by Ito's lemma, $y^*(t)$ must also follow a gBm.
+<!-- For present purposes, it is not necessary to specify a stochastic model for $y^*(t)$. However, in passing it is worth noting that, insofar as the meteorological variables on which $y^*(t)$ depends follow a gBm over the course of a given cropping season (as they appear to do, e.g., in Figure \ref{fig:gBmWeather}), then, again by Ito's lemma, $y^*(t)$ must also follow a gBm. -->
 <!-- The stochastic movement of $y^*(t)$ is slightly less straightforward. Unlike prices, yield is never directly observable except at $t = T$. While it is increasingly possible to make indirect observations of $y^*(t)$ for $t$ well before $T$ via remote sensing data [@wahab2018remote; @vallentin2022suitability; @ali2022crop], it is unlikely that it will ever be possible to check the value of $y^*(t)$ for $t$ close to $0$ (planting time) in the same way that one may check the spot price of a commodity $P(t)$. -->
 <!-- However, the specific question of whether or not $y^*(t)$ follows a geometric Brownian motion can be assessed in another way. Insofar as the stochastic movement of the meteorological variables on which yield depends biophysically follows a geometric Brownian motion, then, once again by Ito's lemma, it follows that $y^*(t)$ must also follow a geometric Brownian motion. The question then becomes whether or not the relevant meteorological variables (typically rainfall, temperature, and solar radiation) follow a gBm within a given cropping season. This is a much weaker assumption than the assumption that yield itself follows a gBm (see, e.g., Figure \ref{fig:gBmWeather}). -->
 <!-- Yield is a function of both deterministic and stochastic (mostly meteorological) variables. -->
@@ -521,143 +544,59 @@ For present purposes, it is not necessary to specify a stochastic model for $y^*
 <!-- \label{eq:yStarCsharp} -->
 <!-- \end{equation} -->
 <!-- This expression proves useful during parameterization of the aggregate supply curve farther below, but has limited predictive power since, by definition, $C^{\#}$ is not known until harvest. -->
-```{r Fig2, fig.show = "hold", fig.width = 5, fig.height=5, fig.align="center", fig.cap="\\label{fig:gBmWeather}(Left) Daily average weather variable time series covering the 2018 maize long rains growing season in Eldoret, Kenya (NREL 2023). (Right) The corresponding daily log changes exhibit the normal distribution typical of geometric Brownian motion.", echo = FALSE}
-
-#Weather data from National Solar Radiation Database
-#https://nsrdb.nrel.gov/data-viewer
-thisFolder <- "D:/OneDrive - CGIAR/Documents 1/CIAT 2/A theory of aggregate supply and demand/Eldoret weather data/"
-thisFile <- "NSRDB weather data Eldoret 2018 maize season.csv"
-thisFilePath <- paste0(thisFolder, thisFile)
-df <- read.csv(thisFilePath, stringsAsFactors = F)
-colnames(df)[ncol(df)] <- "Log change"
-df$Date <- as.Date(df$Date)
-
-gg <- ggplot(df, aes(x = Date, y = val))
-gg <- gg + geom_line()
-gg <- gg + scale_x_date(breaks = scales::breaks_pretty(n = 8))
-gg <- gg + facet_wrap(~var, ncol = 1, scales = "free_y", strip.position = "left")
-gg <- gg + labs(title = "Daily averages of key weather variables influencing crop yields\nEldoret, Kenya, 2018 maize growing season")
-gg <- gg + theme_bw()
-gg <- gg + theme(axis.title.x = element_text(size = axisTitleSize),
-                 axis.title.y = element_blank(),
-                 axis.text = element_text(size = axisTextSize),
-                 strip.background = element_rect(fill = "white"),
-                 strip.text = element_text(size = facetTitleSize),
-                 plot.title = element_text(size = titleSize))
-gg_line <- gg
-
-
-gg <- ggplot(df, aes(x = `Log change`))
-gg <- gg + geom_histogram(color = 4, fill = "white", bins = 20)
-gg <- gg + facet_wrap(~var, ncol = 1, scales = "free")
-gg <- gg + labs(title = "Daily log change")
-gg <- gg + theme_bw()
-gg <- gg + theme(axis.title = element_blank(),
-                 #axis.title.y = element_blank(),
-                 #axis.title.x = element_text(size = axisTitleSize),
-                 axis.text = element_text(size = axisTextSize),
-                 strip.background = element_rect(fill = "white"),
-                 strip.text = element_blank(),
-                 plot.title = element_text(size = titleSize))
-gg_hist <- gg
-
-
-gg_line + gg_hist + plot_layout(ncol = 2, widths = c(1, 1/3))
-
-
-```
-
-[@jseData; @fpmaData; @cmeData; @nsrdbData]
-
+<!-- # ```{r Fig2, fig.show = "hold", fig.width = 5, fig.height=5, fig.align="center", fig.cap="\\label{fig:gBmWeather}(Left) Daily average weather variable time series covering the 2018 maize long rains growing season in Eldoret, Kenya (NREL 2023). (Right) The corresponding daily log changes exhibit the normal distribution typical of geometric Brownian motion.", echo = FALSE} -->
+<!-- #Weather data from National Solar Radiation Database -->
+<!-- #https://nsrdb.nrel.gov/data-viewer -->
+<!-- thisFolder <- "D:/OneDrive - CGIAR/Documents 1/CIAT 2/A theory of aggregate supply and demand/Eldoret weather data/" -->
+<!-- thisFile <- "NSRDB weather data Eldoret 2018 maize season.csv" -->
+<!-- thisFilePath <- paste0(thisFolder, thisFile) -->
+<!-- df <- read.csv(thisFilePath, stringsAsFactors = F) -->
+<!-- colnames(df)[ncol(df)] <- "Log change" -->
+<!-- df$Date <- as.Date(df$Date) -->
+<!-- gg <- ggplot(df, aes(x = Date, y = val)) -->
+<!-- gg <- gg + geom_line() -->
+<!-- gg <- gg + scale_x_date(breaks = scales::breaks_pretty(n = 8)) -->
+<!-- gg <- gg + facet_wrap(~var, ncol = 1, scales = "free_y", strip.position = "left") -->
+<!-- gg <- gg + labs(title = "Daily averages of key weather variables influencing crop yields\nEldoret, Kenya, 2018 maize growing season") -->
+<!-- gg <- gg + theme_bw() -->
+<!-- gg <- gg + theme(axis.title.x = element_text(size = axisTitleSize), -->
+<!--                  axis.title.y = element_blank(), -->
+<!--                  axis.text = element_text(size = axisTextSize), -->
+<!--                  strip.background = element_rect(fill = "white"), -->
+<!--                  strip.text = element_text(size = facetTitleSize), -->
+<!--                  plot.title = element_text(size = titleSize)) -->
+<!-- gg_line <- gg -->
+<!-- gg <- ggplot(df, aes(x = `Log change`)) -->
+<!-- gg <- gg + geom_histogram(color = 4, fill = "white", bins = 20) -->
+<!-- gg <- gg + facet_wrap(~var, ncol = 1, scales = "free") -->
+<!-- gg <- gg + labs(title = "Daily log change") -->
+<!-- gg <- gg + theme_bw() -->
+<!-- gg <- gg + theme(axis.title = element_blank(), -->
+<!--                  #axis.title.y = element_blank(), -->
+<!--                  #axis.title.x = element_text(size = axisTitleSize), -->
+<!--                  axis.text = element_text(size = axisTextSize), -->
+<!--                  strip.background = element_rect(fill = "white"), -->
+<!--                  strip.text = element_blank(), -->
+<!--                  plot.title = element_text(size = titleSize)) -->
+<!-- gg_hist <- gg -->
+<!-- gg_line + gg_hist + plot_layout(ncol = 2, widths = c(1, 1/3)) -->
+<!-- ``` -->
+<!-- [@jseData; @fpmaData; @cmeData; @nsrdbData] -->
 <!-- ---especially temperature, solar radiation, and humidity--- -->
 <!-- That is, farmers make their expenditure decision $C^*$ at planting time ($t = 0$) based on what they expect the values of $y^*$ and $P$ to be at harvest ($t = T$). -->
 
-Substituting the right hand side of Equation \ref{eq:EPT0} for $P$ in Equation \ref{eq:sup2},
-
-\begin{equation}
-Q = N \left( \frac{\theta_x}{\theta_w} \right)^{\frac{\eta}{h}} E \left[\hat{\theta}_k^{\frac{\eta}{h}} \right] \frac{E \left[C^{\# \eta}\right]}{h^{\eta}} \Phi(\gamma) \:\:;\:\:\: \gamma = \frac{\ln\left(\frac{P(0)}{E \left[ \tilde C^{\#}(T) \right]\bigr_{t=0}} \right)^{\eta} - \eta^2 \frac{s_c^2}{2}}{\eta s_c \sqrt{T}}
-\label{eq:sup4}
-\end{equation}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-\begin{equation}
-\begin{split}
-&= N_f E[\tilde{q}^*(T)]\bigr|_{t = 0} \Phi \left(\frac{\ln \left( \frac{E[P(T)]\bigr|_{t = 0}^{\eta}}{E[C_0^{\#}(T)]|_{t = 0}^{\eta}} \right) - \eta^2 \frac{s_{c}^2}{2} T}{\eta s_{c} \sqrt{T}} \right) \:\:;\:\:\: s_{c}^2 T = Var \left[ \ln \left( \frac{C_0^{\#}(T)}{C_0^{\#}(0)} \right) \right]
-\end{split}
-\end{equation}
-
-
-E[Q(T)]\bigr|_{t = 0} &= N E[\tilde{q}^*(T)]\bigr|_{t = 0} \Phi \left(\frac{\ln \left( \frac{E[\bar{q}^*(T)]}{E[\tilde{q}^*(T)]|_{t = 0}} \right) - \frac{s_{q}^2}{2} T}{s_{q} \sqrt{T}} \right) \:\:;\:\:\: s_{\tilde{q}}^2 T = Var \left[ \ln \left( \frac{\tilde{q}^*(T)}{\tilde{q}^*(0)} \right) \right] \\
-
-
-
-Substituting Equation \ref{eq:yStarC0b} for $E[\tilde{q}^*(T)]\bigr|_{t = 0}$   and so 
-<!-- E[y^*]\bigr|_{t = 0} = y_0 \theta \left( \frac{C^*}{h} \right)^h -->
-<!-- \label{eq:yStarC0b} -->
-
-\begin{equation}
-\begin{split}
-E[Q(T)]\bigr|_{t = 0} &= N E[\tilde{q}^*(T)]\bigr|_{t = 0} \Phi \left(\frac{\ln \left( \frac{E[\bar{q}^*(T)]}{E[\tilde{q}^*(T)]|_{t = 0}} \right) - \frac{s_{q}^2}{2} T}{s_{q} \sqrt{T}} \right) \:\:;\:\:\: s_{\tilde{q}}^2 T = Var \left[ \ln \left( \frac{\tilde{q}^*(T)}{\tilde{q}^*(0)} \right) \right] \\
-&= N_f E[\tilde{q}^*(T)]\bigr|_{t = 0} \Phi \left(\frac{\ln \left( \frac{E[P(T)]\bigr|_{t = 0}^{\eta}}{E[C_0^{\#}(T)]|_{t = 0}^{\eta}} \right) - \eta^2 \frac{s_{c}^2}{2} T}{\eta s_{c} \sqrt{T}} \right) \:\:;\:\:\: s_{c}^2 T = Var \left[ \ln \left( \frac{C_0^{\#}(T)}{C_0^{\#}(0)} \right) \right]
-\end{split}
-\end{equation}
-
-Substituting $s_p$ for $s_c$ (see the end of the previous section for details), and $P(0) e^{m_p T}$ for $E[P(T)]\bigr|_{t = 0}$ (recall Equation \ref{eq:EPT0}), aggregate supply may again be rewritten
-
-\begin{equation}
-\begin{split}
-E[Q(T)]\bigr|_{t = 0} &= N_f E[\tilde{q}^*(T)]\bigr|_{t = 0} \Phi \left(\frac{\ln \left( \frac{P(0)^{\eta}}{E[C_0^{\#}(T)]|_{t = 0}^{\eta}} \right) + \left( \eta m_p - \eta^2 \frac{s_p^2}{2} \right) T}{\eta s_p \sqrt{T}} \right) \:\:;\:\:\: s_p^2 T = Var \left[ \ln \left( \frac{P(T)}{P(0)} \right) \right] \\
-&= N_f E[\tilde{q}^*(T)]\bigr|_{t = 0} \Phi \left( -\frac{\ln \left( \frac{E[C_0^{\#}(T)]|_{t = 0}^{\eta}}{P(0)^{\eta}} \right) - \left( \eta m_p - \eta^2 \frac{s_p^2}{2} \right) T}{\eta s_p \sqrt{T}} \right)
-\end{split}
-\end{equation}
-
-Or, more compactly,
-
-\begin{equation}
-E[Q(T)]\bigr|_{t = 0} = N_f E[\tilde{q}^*(T)]\bigr|_{t = 0} (1 - \Phi(z))
-\label{eq:sup4}
-\end{equation}
-
-Where
-
-\begin{equation}
-z = \frac{\ln \left( \frac{E[C_0^{\#}(T)]|_{t = 0}^{\eta}}{P(0)^{\eta}} \right) - \left( \eta m_p - \eta^2 \frac{s_p^2}{2} \right) T}{\eta s_p \sqrt{T}}
-\end{equation}
-
-Now, note that $z$ is the standard score of the log change $\ln(P(T)^{\eta} / P(0)^{\eta} )$ evaluated at $P(T) = E[C_0^{\#}(T)]\bigr|_{t = 0}$. Therefore, $\Phi(z)$ may be interpreted as the probability that the output price at planting time $P(0)$ will fall to the mean farm's expected cost per unit output $E[C_0^{\#}(T)]\bigr|_{t = 0}$ by harvest and sale. That is,
-
-\begin{equation}
-\Phi(z) = \text{Prob}(P(T) \leq E[C_0^{\#}(T)]\bigr|_{t = 0})
-\end{equation}
-
-And $1 - \Phi(z)$ may be roughly interpreted as the probability that the output price will remain above this level.
-
-\begin{equation}
-1 - \Phi(z) = \text{Prob}(P(T) > E[C_0^{\#}(T)]\bigr|_{t = 0})
-\end{equation}
-<!-- The qualifier "roughly" must be added because of the exponent $\eta$.  -->
 
 The price elasticity of aggregate supply is then
 
 \begin{equation}
-\frac{\partial \ln(Q)}{\partial \ln(E[P(T)]\bigr|_{t = 0})} = \eta + \frac{\phi(-z)}{\Phi(-z)} \frac{1}{s_p \sqrt{T}}
+\begin{split}
+\frac{\partial \ln(E[Q(T)]|_{t = 0})}{\partial \ln(P(0))} &= \eta + \frac{\partial \ln (\Phi(-z))}{\partial(-z)} \frac{\partial (-z)}{\partial \ln(P(0))} \\
+&= \eta + \frac{\phi(-z)}{\Phi(-z)} \frac{1}{s_p \sqrt{T}}
+\end{split}
 \label{eq:pElasQagg}
 \end{equation}
 
-Recall that $\eta$ is just the farm level output price elasticity of supply. The output price elasticity of aggregate supply is thus the farm level elasticity plus the effect of farm entry/exit in response to price movements. As farm participation approaches $100\%$, the price elasticity of aggregate supply approaches $\eta$, the price elasticity of farm level supply. Aggregate supply is inelastic/elastic if
+The output price elasticity of aggregate supply is thus the farm level elasticity plus the effect of farm entry/exit in response to the price movement. As farm entry approaches $100\%$, the price elasticity of aggregate supply approaches $\eta$, the price elasticity of farm level supply. Aggregate supply is inelastic/elastic if
 
 \begin{equation}
 \eta </> 1 - \frac{\phi(-z)}{\Phi(-z)} \frac{1}{s_p \sqrt{T}}
@@ -665,66 +604,26 @@ Recall that $\eta$ is just the farm level output price elasticity of supply. The
 
 Such that the possibility of an elastic aggregate supply response to price movements becomes increasingly limited as farm participation approaches $100\%$.
 
-Note, moreover, that elasticity is inversely proportionate to the price risk ($s_p \sqrt{T}$). The effect of price risk on supply can be examined more explicitly as follows.
+A novelty of the form is that aggregate supply sensitivity to price volatility may also be inspected.
+
+\begin{equation}
+\frac{\partial \ln(E[Q(T)]|_{t = 0})}{\partial (s_p \sqrt{T})} = - \frac{\phi(-z)}{\Phi(-z)} \left(\eta -  \frac{z}{\eta s_p \sqrt{T}}\right)
+\label{eq:pRiskElasQagg}
+\end{equation}
+
+z is negative (?) therefore $\eta^2 > z / (s_p \sqrt{T})$ therefore $\frac{\partial \ln(E[Q(T)]|_{t = 0})}{\partial (s_p \sqrt{T})} < 0$
+
+
+<!-- Note, moreover, that elasticity is inversely proportionate to the price risk ($s_p \sqrt{T}$). -->
+
+The effect of price risk on supply can be examined more explicitly as follows.
 
 \begin{equation}
 \frac{\partial \ln(Q)}{\partial (s_p \sqrt{T})} = -\eta \frac{\phi(-z)}{\Phi(-z)} \left( \frac{1}{\eta^2 s_p^2 T} \ln \left( \frac{E[P(T)]\bigr|_{t = 0}}{E[C_0^{\#}(T)]\bigr|_{t = 0}} \right)  + \frac{1}{2} \right)
 \label{eq:pRiskElasQagg}
 \end{equation}
 
-
-
-
-Taking into account all of the forgoing, the expression for aggregate supply given in Equation \ref{eq:sup1} may now be rewritten more explicitly as follows.
-<!-- and given bounds of profitable production in inequality \ref{eq:upBnd2}. -->
-
-\begin{equation}
-\begin{split}
-E[Q(T)]\bigr|_{t = 0} &= N E[\beta_1] E[E[\beta_2(T)]\bigr|_{t = 0}] \int_0^{E[P(T)]|_{t = 0}} E[E[C^{\#}(T)]|_{t = 0}^{\eta}] f(C^{\#}(T)) \: dC^{\#}(T) \:\:; \:\:\: \beta_1 = y_0 \left( \frac{\theta_x \hat{\theta}_k}{\theta_w} \right)^{\frac{\eta}{h}} \lambda^{\eta}, \:\: \beta_2 = \tilde{\theta_k}^{\frac{\eta}{h}}  \\
-&=
-\end{split}
-\label{eq:sup3}
-\end{equation}
-
-Where the farm density $\rho(q^*)$ has been rewritten in terms of a probability density $f(q^*)$ 
-
-\begin{equation}
-\begin{split}
-E[Q(T)]\bigr|_{t = 0} &= N E[\beta_1] E[E[\beta_2(T)]\bigr|_{t = 0}] \int_0^{E[P(T)]|_{t = 0}} E[E[C^{\#}(T)]|_{t = 0}^{\eta}] f(C^{\#}(T)) \: dC^{\#}(T) \:\:; \:\:\: \beta_1 = y_0 \left( \frac{\theta_x \hat{\theta}_k}{\theta_w} \right)^{\frac{\eta}{h}} \lambda^{\eta}, \:\: \beta_2 = \tilde{\theta_k}^{\frac{\eta}{h}}  \\
-&=
-\end{split}
-\label{eq:sup3}
-\end{equation}
-
-
-
-
-\begin{equation}
-\begin{split}
-E[Q(T)]\bigr|_{t = 0} &= \int_0^{E[\bar{q}^*(T)]|_{t = 0}} E[q^*(T)]|_{t = 0} \rho(q^*(T))  \: dq^*(T) \\
-&= \int_0^{E[\bar{q}^*(T)]|_{t = 0}} E[q^*(T)]|_{t = 0} \rho(q^*(T))  \: dq^*(T)
-\end{split}
-\label{eq:sup3}
-\end{equation}
-
-The farm density function $\rho(q^*)$ in Equation \ref{eq:sup1} is defined such that
-
-\begin{equation}
-\rho(q^*) = \int_{0}^{\infty} \rho(q^*) \: dq^* = N
-\end{equation}
-
-Where $N$ is the number of farms in the population. The farm density may thus be rewritten in terms of a probability density function $f(q^*)$ as follows.
-
-\begin{equation}
-\rho(q^*) = N f(q^*)
-\end{equation}
-
-... Given the upper and lower bounds...
-
-
-
-
-# Parameterization of the aggregate supply curve
+# An illustrative use case: Parameterization of the aggregate supply curve using Kenya farm survey data
 
 ## Data
 ...
@@ -755,7 +654,7 @@ Where the shorthand $\tilde{y}$ has been introduced, defined
 \label{eq:yConst}
 \end{equation}
 
-Such that the input elasticities $\alpha_i$ and prices $w_i$ are implicit in the fitted constant $\tilde{y}$ without requiring detailed information about input types and quantities. Moreover, letting the reference values $\tilde{C}^*$ and $\tilde{k}_i$ equal the mean of the cost per acre and control variables, respectively, then $\tilde{y}$ is equal to the mean yield. A further advantage of this form is that the fitted coefficient on $\ln(C^*)$ may be directly interpreted as $h$, valid for all farms in the sample. Estimation of the model in Equation \ref{eq:cobbDoug3}, on the other hand, requires the extra step of summation of the input elasticities $\alpha_i$ in order to arrive at $h$. This may result in varying $h$ across the sample, as not all farms necessarily apply all the inputs specified in the model.
+Such that the technology $\alpha_i$ and prices $w_i$ are implicit in the fitted constant $\tilde{y}$ without requiring detailed information about input types and quantities. Moreover, letting the reference values $\tilde{C}^*$ and $\tilde{k}_i$ equal the mean of the cost per acre and control variables, respectively, then $\tilde{y}$ is equal to the mean yield. A further advantage of this form is that the fitted coefficient on $\ln(C^*)$ may be directly interpreted as $h$, valid for all farms in the sample. Estimation of the model in Equation \ref{eq:cobbDoug3}, on the other hand, requires the extra step of summation of the input elasticities $\alpha_i$ in order to arrive at $h$. This may result in varying $h$ across the sample, as not all farms necessarily apply all the inputs specified in the model.
 
 Parameterization of the aggregate supply curve derived above thus requires knowledge of the output price at time of planting $P(0)$, the price growth rate $m_p$ and volatility $s_p$, the length of the cropping season $T$, the number of farms in the population $N$, the output degree of homogeneity $h$, the mean farm's expected cost per unit output as evaluated at planting time $E[\tilde{C}^{\#}(T)]|_{t = 0}$, and the expected mean harvested output as evaluated at planting time $E[\tilde{q}^*(T)]\bigr|_{t = 0}$. The last of these may of course be further decomposed as $E[A] E[\tilde{y}(T)]\bigr|_{t = 0}$, where $E[A]$ is the mean farm size and $\tilde{y}(T)$ is just the $\tilde{y}$ from Equation \ref{eq:yConst}, with the time of evaluation (harvest) made explicit.
 
@@ -770,7 +669,7 @@ To redress count 1, the log-log model in either Equation \ref{eq:cobbDoug3Ln} or
 E[y^*(T)]\bigr|_{t = 0} \approx \hat{y}^*|_{\mathbf{k}_{post} = \mathbf{\tilde{k}}_{post}})
 \end{equation}
 
-Now, as discussed in the previous section, the population mean of $E[y^*(T)]\bigr|_{t = 0}$ may be considered equal to the expected value at planting time of the population mean harvested yield $\tilde{y}^*(T)$ (recall Equation \ref{eq:rubThm}). However, because of Axiom 3, the sample mean of $E[y^*(T)]\bigr|_{t = 0}$ does not represent the population mean, but rather the mean over a truncated population, i.e. $E[\tilde{y}^*(T) | C^# < E[P(T)]\bigr|_{t = 0}]\bigr|_{t = 0}$.
+Now, as discussed in the previous section, the population mean of $E[y^*(T)]\bigr|_{t = 0}$ may be considered equal to the expected value at planting time of the population mean harvested yield $\tilde{y}^*(T)$ (recall Equation \ref{eq:rubThm}). However, because of axiom 3, the sample mean of $E[y^*(T)]\bigr|_{t = 0}$ does not represent the population mean, but rather the mean over a truncated population, i.e. $E[\tilde{y}^*(T) | C^# < E[P(T)]\bigr|_{t = 0}]\bigr|_{t = 0}$.
 
 In order to arrive at the population mean and redress count 2, the sample mean of $C^{\#}$ is first calculated as follows.
 
@@ -814,7 +713,7 @@ The output price $P(T)$ received by farmers after harvest might be reported in t
 Given sufficient price data, the values of $m_p$ and $s_p$ should be estimated over a suitable timeframe. Assuming that farmers expect the output price to behave roughly as it did during the previous year, then $m_p$ and $s_p$ should be estimated over the previous year or growing season. However, this may not always be an appropriate assumption, particularly in volatile markets. It may be more suitable to average over multiple years, or to take the average of the parameters estimated over multiple growing seasons.
 <!-- , required to calculate the farmers' expected price (recall Equation \ref{eq:EPT0}) -->
 
-An accurate value for $N_f$ will be difficult to estimate in populations where no recent farm census data is available. Note that $N_f$ is not necessary for evaluation of the price elasticity of aggregate supply and price risk elasticity of aggregate supply (Equations \ref{eq:pElasQagg} and \ref{eq:pRiskElasQagg}).
+An accurate value for $N$ will be difficult to estimate in populations where no recent farm census data is available. Note that $N$ is not necessary for evaluation of the price elasticity of aggregate supply and price risk elasticity of aggregate supply (Equations \ref{eq:pElasQagg} and \ref{eq:pRiskElasQagg}).
 
 ## Illustrative use case: Data, specification, estimation
 
