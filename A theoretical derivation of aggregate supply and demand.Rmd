@@ -161,7 +161,7 @@ y = y_0 \prod_{i = 1}^{n_k} \left( \frac{k_i}{\tilde{k}_i} \right)^{\kappa_i} \p
 \label{eq:cobbDoug3}
 \end{equation}
 
-Where the $x_i$ are management inputs (fertilizer, etc.), the $k_i$ are control variables (demographic and agroclimatic variables, etc.), and the $\alpha_i$ and $\kappa_i$ are input and control variable elasticities of yield, respectively. The input elasticities of yield are also referred to collectively as the "technology".  The product bounds $n_x$ and $n_k$ indicate the number of inputs and control variables, respectively. The variables $x_i$ and $k_i$ are assumed to be linearly independent and are divided by their population means, such that $y_0$ may be interpreted as the mean yield. (See Appendix for details.)
+Where the $x_i$ are management inputs (fertilizer, etc.), the $k_i$ are control variables (demographic and agroclimatic variables, etc.), and the $\alpha_i$ and $\kappa_i$ are input and control variable elasticities of yield, respectively. The input elasticities of yield are also referred to collectively as the "technology". The product bounds $n_x$ and $n_k$ indicate the number of inputs and control variables, respectively. The variables $x_i$ and $k_i$ are assumed to be linearly independent and are divided by their population means, such that $y_0$ may be interpreted as the mean yield. (See Appendix for details.)
 
 The introduction of axiom 2 then results in the profit maximizing farm yield function.
 
@@ -203,9 +203,36 @@ q^* = (y_0 \hat{\theta})^{\frac{\eta}{h}} \left( \frac{C^{\#}}{h} \right)^{\eta}
 \label{eq:prodFn2}
 \end{equation}
 
+Or
+
+\begin{equation}
+q^* = y_0 \hat{\theta} \left( \frac{C^*}{h} \right)^h
+\label{eq:prodFn3}
+\end{equation}
+
+(Where, in the latter case, the $\hat{\theta}_k$ in $\hat{\theta}$ equals $k_a^{\kappa_a + 1} \prod_{i \neq a} k_i^{\kappa_i}$.)
+
+The latter expression comes in handy for estimation purposes because it requires information only on cost and control variables, and not on input quantities used in production. The degree of homogeneity $h$ is thus also the scale elasticity of yield ($d \ln(y^*) / d \ln(C^*) = h$), as noted in the textbooks. This form is particularly useful for estimation, as it requires only the control variables $k_i$ and input cost $C^*$, and not the management variables. That is, instead of estimating the model in Equation \ref{eq:cobbDoug3ln}, one estimates
+
+\begin{equation}
+\ln(y) = \ln(\tilde{y}) + h \ln \left(\frac{C^*}{\tilde{C}^*} \right) + \sum_{i = 1}^{n_k} \kappa_i \ln \left( \frac{k_i}{\tilde{k}_i} \right)
+\label{eq:cobbDoug4}
+\end{equation}
+
+Where the shorthand $\tilde{y}$ has been introduced, defined
+
+\begin{equation}
+\tilde{y} = y_0 \frac{\theta_{\alpha}}{\theta_w} \left( \frac{\tilde{C}}{h} \right)^h
+\label{eq:yConst}
+\end{equation}
+
+Such that the technology $\alpha_i$ and prices $w_i$ are implicit in the fitted constant $\tilde{y}$ without requiring detailed information about input types and quantities. Moreover, letting the reference values $\tilde{C}^*$ and $\tilde{k}_i$ equal the mean of the cost per acre and control variables, respectively, then $\tilde{y}$ is equal to the mean yield. A further advantage of this form is that the fitted coefficient on $\ln(C^*)$ may be directly interpreted as $h$, valid for all farms in the population. Estimation of the model in Equation \ref{eq:cobbDoug3}, on the other hand, requires the extra step of summation of the input elasticities $\alpha_i$ in order to arrive at $h$. This may result in varying $h$ across the sample, as not all farms necessarily apply all the inputs specified in the model.
+
+For the derivation of the aggregate supply curve, immediately below, the focus is on Equation \ref{eq:prodFn2}.
+
 ## Derivation of a provisional aggregate supply function from the forgoing + axioms 3 and 4
 
-The contours of an aggregate supply function begin to emerge into view when one considers what might happen if the right hand side of either of Equations \ref{eq:prodFn1} or \ref{eq:prodFn2} is substituted for $q^*$ in Equation \ref{eq:sup1}. In particular, it becomes clear that:
+The contours of an aggregate supply function begin to emerge into view when one considers what might happen if one of the farm production expressions above is substituted for $q^*$ in Equation \ref{eq:sup1}. In particular, it becomes clear that:
 
 1) Insofar as prices are constant across the population, and insofar as the elasticities $\alpha_i$ are estimated on farm survey data (and are thus constant across the farm population), then $P$, $h$, $\theta_x$, and $\theta_w$ are constants that factor out of the integral.
 
@@ -633,33 +660,6 @@ This sort of a validation but not so much a validation...
 <!-- (graphics here or in Appendix) Summary statistics can be found in the Appendix. -->
 
 ## Estimation
-
-For purposes of estimation, the y
-
-Equation \ref{eq:useful} + Equation \ref{eq:prodFn1} =
-
-\begin{equation}
-q^* = y_0 \hat{\theta} \left( \frac{C^*}{h} \right)^h
-\label{eq:prodFn3}
-\end{equation}
-
-(Where, in this case, the $\hat{\theta}_k$ in $\hat{\theta}$ equals $k_a^{\kappa_a + 1} \prod_{i \neq a} k_i^{\kappa_i}$.)
-
-The latter expression comes in handy for estimation purposes because it requires information only on cost and control variables, and not on input quantities used in production. The degree of homogeneity $h$ is thus also the scale elasticity of yield ($d \ln(y^*) / d \ln(C^*) = h$), as noted in the textbooks. This form is particularly useful for estimation, as it requires only the control variables $k_i$ and input cost $C^*$, and not the management variables. That is, instead of estimating the model in Equation \ref{eq:cobbDoug3ln}, one estimates
-
-\begin{equation}
-\ln(y) = \ln(\tilde{y}) + h \ln \left(\frac{C^*}{\tilde{C}^*} \right) + \sum_{i = 1}^{n_k} \kappa_i \ln \left( \frac{k_i}{\tilde{k}_i} \right)
-\label{eq:cobbDoug4}
-\end{equation}
-
-Where the shorthand $\tilde{y}$ has been introduced, defined
-
-\begin{equation}
-\tilde{y} = y_0 \frac{\theta_{\alpha}}{\theta_w} \left( \frac{\tilde{C}}{h} \right)^h
-\label{eq:yConst}
-\end{equation}
-
-Such that the technology $\alpha_i$ and prices $w_i$ are implicit in the fitted constant $\tilde{y}$ without requiring detailed information about input types and quantities. Moreover, letting the reference values $\tilde{C}^*$ and $\tilde{k}_i$ equal the mean of the cost per acre and control variables, respectively, then $\tilde{y}$ is equal to the mean yield. A further advantage of this form is that the fitted coefficient on $\ln(C^*)$ may be directly interpreted as $h$, valid for all farms in the sample. Estimation of the model in Equation \ref{eq:cobbDoug3}, on the other hand, requires the extra step of summation of the input elasticities $\alpha_i$ in order to arrive at $h$. This may result in varying $h$ across the sample, as not all farms necessarily apply all the inputs specified in the model.
 
 Parameterization of the aggregate supply curve derived above thus requires knowledge of the output price at time of planting $P(0)$, the price growth rate $m_p$ and volatility $s_p$, the length of the cropping season $T$, the number of farms in the population $N$, the output degree of homogeneity $h$, the mean farm's expected cost per unit output as evaluated at planting time $E[\tilde{C}^{\#}(T)]|_{t = 0}$, and the expected mean harvested output as evaluated at planting time $E[\tilde{q}^*(T)]\bigr|_{t = 0}$. The last of these may of course be further decomposed as $E[A] E[\tilde{y}(T)]\bigr|_{t = 0}$, where $E[A]$ is the mean farm size and $\tilde{y}(T)$ is just the $\tilde{y}$ from Equation \ref{eq:yConst}, with the time of evaluation (harvest) made explicit.
 
