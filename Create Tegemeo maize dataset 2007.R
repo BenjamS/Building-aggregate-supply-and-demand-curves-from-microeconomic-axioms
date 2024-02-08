@@ -86,12 +86,17 @@ keep_cols <- c("dist", "hhid", "field", "harvest", "ferttype", "fertotal", "fert
 df_fert <- subset(df_fert[, keep_cols], harvest == "main")
 df_fert$pfert <- df_fert$fertcost / df_fert$fertotal
 #---
+# manure, DAP, CAN, NPK, UREA dominate
+ggplot(df_fert, aes(x = ferttype))+geom_histogram(stat = "count")+coord_flip()
+#---
 #unique(df_fert$ferttype)
 df_look <- df_fert %>% group_by(ferttype) %>%
   summarise(qty = sum(fertotal), cost = sum(fertcost, na.rm = T))
+df_look$pfertCheck <- df_look$cost / df_look$qty
 ind <- which(df_look$qty > 200)
 #View(df_look)
 #View(df_look[ind, ])
+ggplot(df_look, aes(x = qty, y = ferttype))+geom_bar(stat = "identity")
 #---
 # Get aggregate categories first
 #df_fert <- subset(df_fert, !(ferttype %in% c("NPK+CAN", "DAP + CAN", "UREA + CAN")))
@@ -99,9 +104,11 @@ dfAgCat <- subset(df_fert, !(ferttype %in% c("NPK+CAN", "DAP + CAN", "UREA + CAN
 dfAgCat$ferttype[grep("CAN", dfAgCat$ferttype)] <- "Total CAN fert"
 dfAgCat$ferttype[grep("NPK", dfAgCat$ferttype)] <- "Total NPK fert"
 dfAgCat$ferttype[grep("UREA", dfAgCat$ferttype)] <- "Total UREA fert"
+dfAgCat$ferttype[grep("dap", dfAgCat$ferttype)] <- "Total DAP fert"
 totFerts <- c("Total CAN fert",
               "Total NPK fert",
-              "Total UREA fert")
+              "Total UREA fert",
+              "Total DAP fert")
 dfAgCatTotSynth <- subset(dfAgCat, ferttype %in% totFerts)
 dfAgCatTotSynth$ferttype <- "Total synth fert"
 dfAgCatTotSynth <- dfAgCatTotSynth %>%
@@ -110,29 +117,34 @@ dfAgCatTotSynth <- dfAgCatTotSynth %>%
             fertcost = sum(fertcost, na.rm = T)) %>%
   as.data.frame()
 dfAgCatTotSynth$pfert <- dfAgCatTotSynth$fertcost / dfAgCatTotSynth$fertotal
-orgFerts <- c("compost", "foliar feed", "manure", "mavuno-basal")
-dfAgCat$ferttype[which(dfAgCat$ferttype %in% orgFerts)] <- "Total organic fert"
-totFerts <- c(totFerts, "Total organic fert")
-dfAgCat <- subset(dfAgCat, ferttype %in% totFerts)
+# orgFerts <- c("compost", "foliar feed", "manure", "mavuno-basal")
+# dfAgCat$ferttype[which(dfAgCat$ferttype %in% orgFerts)] <- "Total organic fert"
+# totFerts <- c(totFerts, "Total organic fert")
+dfAgCat <- subset(dfAgCat, ferttype %in% c(totFerts, "manure"))
+dfAgCat$ferttype[grep("manure", dfAgCat$ferttype)] <- "Manure"
 dfAgCat <- dfAgCat %>% group_by(dist, hhid, field, harvest, ferttype) %>%
   summarise(fertotal = sum(fertotal, na.rm = T),
             fertcost = sum(fertcost, na.rm = T)) %>%
   as.data.frame()
 dfAgCat$pfert <- dfAgCat$fertcost / dfAgCat$fertotal
-df_fert <- as.data.frame(do.call(rbind, list(df_fert, dfAgCat, dfAgCatTotSynth)))
-# Now get individual fert types
-keepFerts <- df_look$ferttype[ind]
-totFerts <- c(totFerts, "Total synth fert")
-keepFerts <- c(keepFerts, totFerts)
-df_fert <- subset(df_fert, ferttype %in% keepFerts)
-ggplot(df_fert, aes(x = ferttype))+geom_histogram(stat = "count")+coord_flip()
-# Also get rid of ferts that almost no one is using
-df_fert <- subset(df_fert, !(ferttype %in% c("SA (21:0:0)",
-                                             "ssp", "map",
-                                             "DAP + CAN")))
-keepFerts <- unique(df_fert$ferttype)
+#df_fert <- as.data.frame(do.call(rbind, list(df_fert, dfAgCat, dfAgCatTotSynth)))
+df_fert <- as.data.frame(do.call(rbind, list(dfAgCat, dfAgCatTotSynth)))
+# # Now get individual fert types
+# keepFerts <- df_look$ferttype[ind]
+# totFerts <- c(totFerts, "Total synth fert")
+# keepFerts <- c(keepFerts, totFerts)
+# df_fert <- subset(df_fert, ferttype %in% keepFerts)
+# ggplot(df_fert, aes(x = ferttype))+geom_histogram(stat = "count")+coord_flip()
+# # Also get rid of ferts that almost no one is using
+# df_fert <- subset(df_fert, !(ferttype %in% c("SA (21:0:0)",
+#                                              "ssp", "map",
+#                                              "DAP + CAN")))
+# keepFerts <- unique(df_fert$ferttype)
 #---
 ggplot(df_fert, aes(x = ferttype))+geom_histogram(stat = "count")+coord_flip()
+# dfLook <- df_fert[grep("Total", df_fert$ferttype), ]
+# dfLook <- dfLook[-grep("synth", dfLook$ferttype), ]
+# ggplot(dfLook, aes(x = ferttype))+geom_histogram(stat = "count")+coord_flip()
 # df_look <- df_fert %>% 
 #   group_by(dist, ferttype) %>% 
 #   summarise(fertotal = sum(fertotal, na.rm = T)) %>%
@@ -143,8 +155,8 @@ distFert <- c("Bomet", "Bungoma", "Kakamega", "Kisii", "Laikipia", "Makueni",
               "Meru", "Nakuru", "Muranga", "Nyeri", "Uasin Gishu", "Trans Nzoia")
 ggplot(subset(df_fert, dist %in% distFert), aes(x=fertcost,y=ferttype))+geom_bar(stat="identity")+facet_wrap(~dist)
 #---
-orgFerts <- c(orgFerts, "Total organic fert")
-synthFerts <- setdiff(keepFerts, orgFerts)
+#orgFerts <- c(orgFerts, "Total organic fert")
+#synthFerts <- setdiff(keepFerts, orgFerts)
 #---
 # # ind_npk <- grep("NPK", df_fert$ferttype)
 # # df_fert$ferttype[ind_npk] <- "npk"
@@ -167,6 +179,7 @@ ggplot(df_fert,aes(x=pfert))+geom_histogram()+facet_wrap(~ferttype,scales="free"
 # df_fert$ferttype[grep("UREA", df_fert$ferttype)] <- "urea"
 # df_fert$ferttype[grep("CAN", df_fert$ferttype)] <- "can"
 #---
+#df_fert[c(6329, 7430),]
 df_fertCost <- df_fert[, c("hhid", "field", "ferttype", "fertcost")] %>% spread(ferttype, fertcost)
 df_fertCost[is.na(df_fertCost)] <- 0
 colnames(df_fertCost)[3:ncol(df_fertCost)] <- paste(colnames(df_fertCost)[3:ncol(df_fertCost)], "(KES)")
@@ -243,10 +256,10 @@ fertNotPriceCols <- setdiff(fertcols, fertPriceCols)
 df_yield[, fertNotPriceCols] <- df_yield[, fertNotPriceCols] / df_yield$acres
 colnames(df_yield)[which(colnames(df_yield) %in% fertNotPriceCols)] <- gsub("\\)$", "/acre\\)", colnames(df_yield[, fertNotPriceCols]))
 #---
-nrow(df_yield)
-df_look <- subset(df_yield, crop == "maize")
-plot(log(df_look$`seed (kg/acre)`), log(df_look$`yield (kg/acre)`))
-nrow(df_look)
+# nrow(df_yield)
+# df_look <- subset(df_yield, crop == "maize")
+# plot(log(df_look$`seed (kg/acre)`), log(df_look$`yield (kg/acre)`))
+# nrow(df_look)
 #---------------------------------------------------------------------------
 # # Get seed price
 # df_seedPrice <- df_yield[, c("hhid", "dist", "crop", "adopter", "seedkg", "scost")]
@@ -285,18 +298,81 @@ keep_cols <- c("dist", "hhid", "activity", "Wage (KES/hour)", "lab_wg", "lab_fam
 df_labor <- df_labor[, keep_cols]
 #---
 # Which labor type is predominant?
-df_look <- df_labor[, keep_cols[-c(2:4)]]
+#df_look <- df_labor[, keep_cols[-c(2:4)]]
+df_look <- merge(df_labor, df_yield[, c("hhid", "acres")])
+df_look <- df_look[,-c(1,3,4)]
+#---
+dfLookAgg <- df_look[, -1] %>% summarise_all(sum, na.rm = T) %>%
+  gather(type, personHours, lab_wg:lab_fam_ch) %>% as.data.frame()
+dfLookAgg$`Person hrs. / acre` <- dfLookAgg$personHours / dfLookAgg$acres
+dfLookAgg$`Pct. of tot. person hrs.` <- 100 * dfLookAgg$personHours / sum(dfLookAgg$personHours)
+#---
 df_look <- df_look %>% group_by(dist) %>% summarise_all(sum, na.rm = T)
 df_look <- df_look %>% gather(type, personHours, lab_wg:lab_fam_ch) %>% as.data.frame()
+df_look$`Person hrs. / acre` <- df_look$personHours / df_look$acres
 df_look <- df_look %>% group_by(dist) %>%
   mutate(personHrsPct = 100 * personHours / sum(personHours)) %>%
   as.data.frame()
-df_look <- df_look %>% gather(barType, value, personHours:personHrsPct) %>% as.data.frame()
+#df_look <- df_look %>% gather(barType, value, personHours:personHrsPct) %>% as.data.frame()
 #gg <- ggplot(df_look, aes(x=dist,y=personHrsPct, fill = type))
-gg <- ggplot(df_look, aes(x=dist,y=value, fill = type))
+df_look$type[grep("lab_fam_ch", df_look$type)] <- "Child family labor"
+df_look$type[grep("lab_fam_fem", df_look$type)] <- "Female adult family labor"
+df_look$type[grep("lab_fam_male", df_look$type)] <- "Male adult family labor"
+df_look$type[grep("lab_wg", df_look$type)] <- "Wage labor"
+colnames(df_look)[6] <- "Person hrs."
+colnames(df_look)[8] <- "Pct. of tot. person hrs."
+colnames(df_look)[1] <- "County"
+library(randomcoloR)
+library(patchwork)
+palette <- distinctColorPalette(4)
+gg <- ggplot(df_look, aes(x=reorder(County, `Person hrs. / acre`),y=`Person hrs. / acre`, fill = type))
 gg <- gg + geom_bar(position = "stack", stat = "identity") + coord_flip()
-gg <- gg + facet_wrap(~barType, scales = "free_x")
-gg
+gg <- gg + scale_fill_manual(values = palette)
+#gg <- gg + facet_wrap(~barType, scales = "free_x")
+gg1 <- gg + theme(axis.title.y = element_blank(),
+                 axis.title.x = element_text(size = 8),
+                 axis.text = element_text(size = 7),
+                 legend.position = "none"
+                 )
+gg <- ggplot(df_look, aes(x=reorder(County, `Person hrs. / acre`),y=`Pct. of tot. person hrs.`, fill = type))
+gg <- gg + geom_bar(position = "stack", stat = "identity") + coord_flip()
+gg <- gg + scale_fill_manual(values = palette)
+#gg <- gg + facet_wrap(~barType, scales = "free_x")
+gg2 <- gg + theme(axis.title.y = element_blank(),
+                  axis.text.y = element_blank(),
+                  axis.title.x = element_text(size = 8),
+                  axis.text.x = element_text(size = 7),
+                  legend.title = element_blank(),
+                  legend.text = element_text(size = 7))
+gg3 <- gg1 + gg2 + plot_layout(ncol = 2, widths = c(1, 1 / 2))
+picFolder <- "D:/OneDrive - CGIAR/Documents 1/CIAT 2/A theory of aggregate supply and demand/New PE Model/Tegemeo Data/"
+ggsave(paste0(picFolder, "whoLaborsWhere.png"), height = 4, width = 7, dpi = 600)
+ggsave(paste0(picFolder, "whoLaborsWhere.tiff"), height = 4, width = 7, dpi = 600)
+#---
+dfLookAgg$type[grep("lab_fam_ch", dfLookAgg$type)] <- "Child family labor"
+dfLookAgg$type[grep("lab_fam_fem", dfLookAgg$type)] <- "Female adult family labor"
+dfLookAgg$type[grep("lab_fam_male", dfLookAgg$type)] <- "Male adult family labor"
+dfLookAgg$type[grep("lab_wg", dfLookAgg$type)] <- "Wage labor"
+gg <- ggplot(dfLookAgg, aes(x = `Person hrs. / acre`, y = type))
+gg <- gg + geom_bar(position = "stack", stat = "identity")
+#gg <- gg + scale_fill_manual(values = palette)
+#gg <- gg + facet_wrap(~barType, scales = "free_x")
+gg1 <- gg + theme(axis.title.y = element_blank(),
+                  axis.title.x = element_text(size = 8),
+                  axis.text = element_text(size = 7))
+gg <- ggplot(df_look, aes(x=`Pct. of tot. person hrs.`, type))
+gg <- gg + geom_bar(position = "stack", stat = "identity")
+#gg <- gg + scale_fill_manual(values = palette)
+#gg <- gg + facet_wrap(~barType, scales = "free_x")
+# gg2 <- gg + theme(axis.title.y = element_blank(),
+#                   axis.text.y = element_blank(),
+#                   axis.title.x = element_text(size = 8),
+#                   axis.text.x = element_text(size = 7),
+#                   legend.title = element_blank(),
+#                   legend.text = element_text(size = 7))
+# gg3 <- gg1 + gg2 + plot_layout(ncol = 2, widths = c(1, 1 / 2))
+ggsave(paste0(picFolder, "whoLabors.png"), height = 3, width = 5, dpi = 600)
+ggsave(paste0(picFolder, "whoLabors.tiff"), height = 3, width = 5, dpi = 600)
 #---
 keep_cols <- c("hhid", "dist", "activity", "lab_fam_fem")
 df_labFemQty <- df_labor[, keep_cols] %>% spread(activity, lab_fam_fem)
@@ -450,7 +526,7 @@ df_look <- as.data.frame(do.call(rbind, list(df_look_wg,
 gg <- ggplot(df_look, aes(x = activity, y = qty))
 gg <- gg + geom_bar(stat = "identity") + coord_flip()
 gg <- gg + facet_wrap(~labtype)
-#gg <- gg + facet_wrap(~labtype, scales = "free_x")
+gg <- gg + facet_wrap(~labtype, scales = "free_x")
 gg
 # Main activities are:
 #1st weeding, harvesting, planting, 1st ploughing, 2nd weeding,
@@ -570,7 +646,9 @@ df_pestCost[is.na(df_pestCost)] <- 0
 # indDup <- which(duplicated(df_pestCost$hhid))
 # indDup <- c((indDup - 1), indDup)
 # View(df_pestCost[indDup, ])
-hist(log(df_pestCost$`Total P&D chem (KES)`))
+uLook <- log(df_pestCost$`Total P&D chem (KES)`)
+uLook <- uLook[-which(is.infinite(uLook))]
+hist(uLook)
 #---
 # P&D chem qty
 keep_cols <- c("hhid", "dist", "mcrop", "inputype", "kgpur")
@@ -713,8 +791,11 @@ ggplot(df_cropPrice, aes(x=dist,y=`crop price (KES/kg)`))+geom_bar(stat="identit
 #===========================================================================
 #===========================================================================
 # Put it all together
+df_labWgHh2 <- df_labWgHhAct %>% group_by(dist, hhid) %>%
+  summarise(`Wage (KES/hour)` = mean(`Wage (KES/hour)`, na.rm = T))
+df_labWgHh2$`Wage (KES/hour)`[which(is.nan(df_labWgHh2$`Wage (KES/hour)`))] <- 0
 list_df <- list(df_yield, df_labQty, df_pestQty, df_clim, df_demog,
-                df_labWgCost, df_pestCost, df_labWgHh, df_pestPriceHh)#, df_km)
+                df_labWgCost, df_pestCost, df_labWgHh2, df_pestPriceHh)#, df_km)
 df <- plyr::join_all(list_df)
 colnames(df) <- gsub("_", ": ", colnames(df))
 colnames(df) <- gsub(" /", "/", colnames(df))
@@ -738,21 +819,60 @@ df$gend <- as.numeric(df$gend)
 df$`Rain anomaly` <- df$main07 / df$qwetpre
 costVars <- grep("KES/acre", colnames(df))
 colnames(df)[costVars]
-df$Cstar <- df$`Total synth fert (KES/acre)` + 
+df$Cstar <- #df$`Total synth fert (KES/acre)` + 
+  df$`Total CAN fert (KES/acre)` +
+  df$`Total NPK fert (KES/acre)` +
+  df$`Total UREA fert (KES/acre)` +
+  # df$`Total DAP fert (KES/acre)` +
   #df$`Total organic fert (KES/acre)` +
-  #df$`manure (KES/acre)` +
+  df$`Manure (KES/acre)` +
   df$`seed (KES/acre)` +
   df$lpcost +
   #df$`Non-land prep wage labor (KES/acre)` +
   df$`Total P&D chem (KES/acre)`
+df$Cstar2 <- df$`Total synth fert (KES/acre)` + 
+  # df$`Total CAN fert (KES/acre)` + 
+  # df$`Total NPK fert (KES/acre)` + 
+  # df$`Total UREA fert (KES/acre)` + 
+  # df$`Total DAP fert (KES/acre)` +
+  #df$`Manure (KES/acre)` +
+  df$`seed (KES/acre)` +
+  df$lpcost +
+  #df$`planting (KES/acre)` +
+  # df$`stooking (KES/acre)` +
+  # df$`shelling (KES/acre)` +
+#df$`Non-land prep wage labor (KES/acre)` +
+  df$`Total P&D chem (KES/acre)`
 df <- merge(df, df_cropPrice, by = c("crop", "dist"))
 df$Rstar <- df$`yield (kg/acre)` * df$`crop price (KES/kg)`
 #---
+dfLook <- df %>% subset(crop == "maize") %>%
+  select(c(#"Total synth fert (KES/acre)",
+                 "Manure (KES/acre)",
+                 "seed (KES/acre)",
+                 "lpcost",
+                "Non-land prep wage labor (KES/acre)",
+                 "Total P&D chem (KES/acre)",
+           "Total DAP fert (KES/acre)",
+           #"UREA (46:0:0) (KES/acre)",
+           "Total CAN fert (KES/acre)",
+           #"CAN (26:0:0) (KES/acre)",
+           "Total NPK fert (KES/acre)",
+           #"NPK (23:23:23) (KES/acre)",
+           #"NPK (23:23:0) (KES/acre)",
+           "Total UREA fert (KES/acre)")) %>%
+  summarise_all(mean, na.rm = T)
+gathercols <- colnames(dfLook)
+dfLook <- dfLook %>% gather_("type", "value", gathercols)
+ggplot(dfLook,aes(x=value,y=reorder(type, value)))+geom_bar(stat="identity")
+
 df_look <- subset(df, crop == "maize")
 #df_look <- subset(df_yield, crop == "maize")
 #plot(log(df_look$`seed (kg/acre)`), log(df_look$`yield (kg/acre)`))
 hist(log(df_look$Cstar))
+hist(log(df_look$Cstar2))
 hist(log(df_look$Rstar / df_look$Cstar))
+hist(log(df_look$Rstar / df_look$Cstar2))
 #===========================================================================
 # Test it out
 #colnames(df)
@@ -798,13 +918,13 @@ input_vars <- c(#"Total fam lab child (pers-hrs/acre)",
               "Total CAN fert (kg/acre)",      
               "Total NPK fert (kg/acre)",  
               "Total UREA fert (kg/acre)",
-              "dap (kg/acre)",
+              "Total DAP fert (kg/acre)",
                 #"UREA (46:0:0) (kg/acre)",
                 #"CAN (26:0:0) (kg/acre)",
                 # "NPK (23:23:23) (kg/acre)",
                 # "NPK (23:23:0) (kg/acre)",
               #"NPK (17:17:0) (kg/acre)",
-               #"manure (kg/acre)",
+               "Manure (kg/acre)",
               #"compost (kg/acre)",
               #"mavuno-basal (kg/acre)",
               #"foliar feed (kg/acre)",
@@ -824,8 +944,8 @@ demog_vars <- c(#"age",
 clim_vars <- c("Rain anomaly"#,
                #"qwetpre",
                #"main07",
-                # "qwetxt",
-                # "qwetit"
+                #"qwetxt",
+                #"qwetit"
                )
 bin_vars <- c("adopter", #"gend",
               #"irrigated",
@@ -839,25 +959,27 @@ bin_vars <- c("adopter", #"gend",
               "landprep: oxen",
               "landprep: tractor")
 #----------------------------------------------------------------------------
-costVars <- c("Cstar", #"seed (KES/acre)",
-              "dap (KES/acre)",
+costVars <- c("Cstar", "Cstar2", #"seed (KES/acre)",
               #"UREA (46:0:0) (KES/acre)",
               "Total CAN fert (KES/acre)",
               #"CAN (26:0:0) (KES/acre)",
               "Total NPK fert (KES/acre)",
+              "Total DAP fert (KES/acre)",
               #"NPK (23:23:23) (KES/acre)",
               #"NPK (23:23:0) (KES/acre)",
               "Total UREA fert (KES/acre)",
-              #"manure (KES/acre)",
-              "Total P&D chem (KES/acre)"
-              )
-priceVars <- gsub("acre", "kg", costVars[-1])
-priceVars <- c(priceVars, "harvesting (KES/hour)")
+              "Manure (KES/acre)",
+              #"Total organic fert (KES/acre)",
+              "Total P&D chem (KES/acre)")
+priceVars <- gsub("acre", "kg", costVars[-c(1, 2)])
+priceVars <- c(priceVars, "Wage (KES/hour)")
 #----------------------------------------------------------------------------
 mod_vars <- c("dist", "crop", "yield (kg/acre)", "acres",
               input_vars, bin_vars,
               demog_vars, clim_vars,
-              costVars, "Rstar", priceVars, "crop price (KES/kg)")
+              #costVars, "Rstar", "crop price (KES/kg)"
+              costVars[c(1, 2)],
+              priceVars)
 setdiff(mod_vars, colnames(df))
 #----------------------------------------------------------------------------
 df_mod <- subset(df[, mod_vars], crop == "maize" &
@@ -867,28 +989,39 @@ df_mod <- subset(df[, mod_vars], crop == "maize" &
 df_mod <- df_mod[-which(is.na(df_mod$`Rain anomaly`)), ]
 df_mod$crop <- NULL
 #df_mod$dist <- NULL
-colnames(df_mod)[which(colnames(df_mod) == "crop price (KES/kg)")] <- "P"
-ind_bin <- which(colnames(df_mod) %in% bin_vars)
-ind_char <- which(colnames(df_mod) %in% c("dist"))
-indPrice <- which(colnames(df_mod) %in% c(priceVars, "P"))
-indCostVars <- which(colnames(df_mod) %in% costVars[-1])
-not_these <- unique(c(ind_bin, ind_char, indPrice, indCostVars))
-df_mod[, -not_these] <- log(df_mod[, -not_these])
+#colnames(df_mod)[which(colnames(df_mod) == "crop price (KES/kg)")] <- "P"
+not_these <- c(bin_vars, "dist")
+ind_not <- which(colnames(df_mod) %in% not_these)
+#indPrice <- which(colnames(df_mod) %in% c(priceVars, "P"))
+#indCostVars <- which(colnames(df_mod) %in% costVars[-c(1, 2)])
+df_mod[, -ind_not] <- log(df_mod[, -ind_not])
 fun <- function(x){
   x[which(is.infinite(x))] <- 0
   return(x)}
-df_mod[, -not_these] <- as.data.frame(apply(df_mod[, -not_these], 2, fun))
+df_mod[, -ind_not] <- as.data.frame(apply(df_mod[, -ind_not], 2, fun))
 indRm <- which(is.na(df_mod$aehh07))
 if(length(indRm) != 0){
   df_mod <- df_mod[-indRm, ]
 }
-#----------------------------------------------------------------------------
+#===========================================================================
+df_modOut <- df_mod
+df_modOut[nrow(df_modOut) + 1, ] <- colnames(df_modOut)
+thisFolder <- "D:/OneDrive - CGIAR/Documents 1/CIAT 2/A theory of aggregate supply and demand/"
+thisFile <- "df_mod2007.csv"
+thisFilepath <- paste0(thisFolder, thisFile)
+write.csv(df_modOut, thisFilepath, row.names = F)
+#===========================================================================
+theseCols <- c("cost/acre", "acres", "seed (kg/acre)", demog_vars)
+thisFun <- function(x){out <- x - log(mean(exp(x))); return(out)}
+df_mod2[, theseCols] <- as.data.frame(apply(df_mod2[, theseCols], 2, thisFun))
+
+
 mod1Vars <- c("dist", "yield (kg/acre)", "acres",
-              input_vars, bin_vars, demog_vars, clim_vars,
-              costVars, priceVars, "P")
+              input_vars, bin_vars, demog_vars, clim_vars)
 df_mod1 <- df_mod[, mod1Vars]
-not_these <- which(colnames(df_mod1) %in% c("dist", costVars, priceVars, "P"))
-mod1 <- lm(`yield (kg/acre)`~., df_mod1[, -not_these])
+not_these <- c("dist", "Manure (kg/acre)", costVars, priceVars, "P")
+ind_not <- which(colnames(df_mod1) %in% not_these)
+mod1 <- lm(`yield (kg/acre)`~., df_mod1[, -ind_not])
 summary(mod1)
 sum(mod1$residuals^2)
 plot(mod1$fitted.values, mod1$residuals)
@@ -899,14 +1032,23 @@ coefsNegNames <- gsub("`", "", names(coefsNeg))
 inputsNegCoef <- coefsNegNames[which(coefsNegNames %in% input_vars)]
 inputsPosCoef <- setdiff(input_vars, inputsNegCoef)
 #----------------------------------------------------------------------------
-mod2Vars <- c("dist", "yield (kg/acre)", "Cstar", "acres", "seed (kg/acre)",
-              inputsNegCoef, bin_vars, demog_vars, clim_vars)
+mod2Vars <- c("dist", "yield (kg/acre)", "Cstar2", "acres", "seed (kg/acre)",
+              inputsNegCoef, bin_vars, demog_vars, clim_vars, priceVars,
+              "Manure (kg/acre)")
 df_mod2 <- df_mod[, mod2Vars]
-not_these <- which(colnames(df_mod2) %in% c("dist", costVars[-1]))
+not_these <- which(colnames(df_mod2) %in%
+                     c("dist", 
+                       "Wage (KES/hour)",
+                       "Manure (KES/kg)",
+                       "Manure (kg/acre)",
+                       #"Total P&D chem (KES/kg)",
+                       "Total DAP fert (KES/kg)",
+                       "Total UREA fert (KES/kg)",
+                        costVars[-c(1, 2)]))
 mod2 <- lm(`yield (kg/acre)`~., df_mod2[, -not_these])
 summary(mod2)
 sum(mod2$residuals^2)
-plot(mod2$fitted.values, mod1$residuals)
+plot(mod2$fitted.values, mod2$residuals)
 #car::vif(mod2)
 #View(df_mod2[which(mod2$residuals < -1.5), ])
 #----------------------------------------------------------------------------
