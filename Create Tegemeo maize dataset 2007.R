@@ -819,13 +819,13 @@ df$gend <- as.numeric(df$gend)
 df$`Rain anomaly` <- df$main07 / df$qwetpre
 costVars <- grep("KES/acre", colnames(df))
 colnames(df)[costVars]
-df$Cstar <- #df$`Total synth fert (KES/acre)` + 
-  df$`Total CAN fert (KES/acre)` +
-  df$`Total NPK fert (KES/acre)` +
-  df$`Total UREA fert (KES/acre)` +
+df$Cstar <- df$`Total synth fert (KES/acre)` + 
+  # df$`Total CAN fert (KES/acre)` +
+  # df$`Total NPK fert (KES/acre)` +
+  # df$`Total UREA fert (KES/acre)` +
   # df$`Total DAP fert (KES/acre)` +
   #df$`Total organic fert (KES/acre)` +
-  df$`Manure (KES/acre)` +
+  #df$`Manure (KES/acre)` +
   df$`seed (KES/acre)` +
   df$lpcost +
   #df$`Non-land prep wage labor (KES/acre)` +
@@ -835,7 +835,7 @@ df$Cstar2 <- df$`Total synth fert (KES/acre)` +
   # df$`Total NPK fert (KES/acre)` + 
   # df$`Total UREA fert (KES/acre)` + 
   # df$`Total DAP fert (KES/acre)` +
-  #df$`Manure (KES/acre)` +
+  df$`Manure (KES/acre)` +
   df$`seed (KES/acre)` +
   df$lpcost +
   #df$`planting (KES/acre)` +
@@ -1011,22 +1011,32 @@ thisFile <- "df_mod2007.csv"
 thisFilepath <- paste0(thisFolder, thisFile)
 write.csv(df_modOut, thisFilepath, row.names = F)
 #===========================================================================
-theseCols <- c("cost/acre", "acres", "seed (kg/acre)", demog_vars)
-thisFun <- function(x){out <- x - log(mean(exp(x))); return(out)}
-df_mod2[, theseCols] <- as.data.frame(apply(df_mod2[, theseCols], 2, thisFun))
-
-
+#thisFun <- function(x){out <- x - log(mean(exp(x))); return(out)}
+#---
 mod1Vars <- c("dist", "yield (kg/acre)", "acres",
               input_vars, bin_vars, demog_vars, clim_vars)
 df_mod1 <- df_mod[, mod1Vars]
-not_these <- c("dist", "Manure (kg/acre)", costVars, priceVars, "P")
-ind_not <- which(colnames(df_mod1) %in% not_these)
-mod1 <- lm(`yield (kg/acre)`~., df_mod1[, -ind_not])
+not_these <- c("dist", costVars, priceVars, "P")#, "Manure (kg/acre)")
+indNot <- which(colnames(df_mod1) %in% not_these)
+dfReg <- df_mod1[, -indNot]
+# indBin <- which(colnames(dfReg) %in% bin_vars)
+# indNot <- c(1, indBin)
+# dfReg[, -indNot] <- as.data.frame(apply(dfReg[, -indNot], 2, thisFun))
+# theseCols <- c("cost/acre", "acres", "seed (kg/acre)",
+#                demog_vars, priceVars, clim_vars[-1])
+mod1 <- lm(`yield (kg/acre)`~., dfReg)
 summary(mod1)
 sum(mod1$residuals^2)
 plot(mod1$fitted.values, mod1$residuals)
 #car::vif(mod1)
 #View(df_mod1[which(mod1$residuals < -2), ])
+indRmUp <- which(mod1$residuals > 1)
+indRmLo <- which(mod1$residuals < -1)
+dfReg <- dfReg[-c(indRmUp, indRmLo), ]
+mod1 <- lm(`yield (kg/acre)`~., dfReg)
+summary(mod1)
+plot(mod1$fitted.values, mod1$residuals)
+#---
 coefsNeg <- mod1$coefficients[which(mod1$coefficients < 0)]
 coefsNegNames <- gsub("`", "", names(coefsNeg))
 inputsNegCoef <- coefsNegNames[which(coefsNegNames %in% input_vars)]
@@ -1036,19 +1046,35 @@ mod2Vars <- c("dist", "yield (kg/acre)", "Cstar2", "acres", "seed (kg/acre)",
               inputsNegCoef, bin_vars, demog_vars, clim_vars, priceVars,
               "Manure (kg/acre)")
 df_mod2 <- df_mod[, mod2Vars]
-not_these <- which(colnames(df_mod2) %in%
-                     c("dist", 
+notThese <- c("dist", 
                        "Wage (KES/hour)",
                        "Manure (KES/kg)",
                        "Manure (kg/acre)",
-                       #"Total P&D chem (KES/kg)",
+                       "Total P&D chem (KES/kg)",
                        "Total DAP fert (KES/kg)",
                        "Total UREA fert (KES/kg)",
-                        costVars[-c(1, 2)]))
-mod2 <- lm(`yield (kg/acre)`~., df_mod2[, -not_these])
+              "Total P&D chem (KES/kg)",
+              "Total CAN fert (KES/kg)",
+              "Total NPK fert (KES/kg)",
+                        costVars[-c(1, 2)])
+indNot <- which(colnames(df_mod2) %in% notThese)
+dfReg <- df_mod2[, -indNot]
+indPrice <- which(colnames(dfReg) %in% priceVars)
+dfReg[, indPrice] <- -dfReg[, indPrice]
+# indBin <- which(colnames(dfReg) %in% bin_vars)
+# indNot <- c(1, indBin)
+# dfReg[, -indNot] <- as.data.frame(apply(dfReg[, -indNot], 2, thisFun))
+mod2 <- lm(`yield (kg/acre)`~., dfReg)
 summary(mod2)
 sum(mod2$residuals^2)
 plot(mod2$fitted.values, mod2$residuals)
+indRmUp <- which(mod2$residuals > 1)
+indRmLo <- which(mod2$residuals < -1)
+dfReg <- dfReg[-c(indRmUp, indRmLo), ]
+mod2 <- lm(`yield (kg/acre)`~., dfReg)
+summary(mod2)
+plot(mod2$fitted.values, mod2$residuals)
+
 #car::vif(mod2)
 #View(df_mod2[which(mod2$residuals < -1.5), ])
 #----------------------------------------------------------------------------

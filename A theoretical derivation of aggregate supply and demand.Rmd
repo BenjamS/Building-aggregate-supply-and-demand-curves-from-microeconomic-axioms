@@ -161,7 +161,7 @@ y = y_0 \prod_{i = 1}^{n_k} \left( \frac{k_i}{\tilde{k}_i} \right)^{\kappa_i} \p
 \label{eq:cobbDoug3}
 \end{equation}
 
-Where the $x_i$ are management inputs (fertilizer, etc.), the $k_i$ are control variables (demographic and agroclimatic variables, etc.), and the $\alpha_i$ and $\kappa_i$ are input and control variable elasticities of yield, respectively. The input elasticities of yield are also referred to collectively as the "technology". The product bounds $n_x$ and $n_k$ indicate the number of inputs and control variables, respectively. The variables $x_i$ and $k_i$ are assumed to be linearly independent and are divided by their population means ($\tilde{x}_i$, $\tilde{k}_i), such that $y_0$ may be interpreted as the mean yield. (See Appendix for details of the derivation.)
+Where the $x_i$ are management inputs (fertilizer, etc.), the $k_i$ are control variables (demographic and agroclimatic variables, etc.), and the $\alpha_i$ and $\kappa_i$ are input and control variable elasticities of yield, respectively. The input elasticities of yield are also referred to collectively as the "technology". The product bounds $n_x$ and $n_k$ indicate the number of inputs and control variables, respectively. The variables $x_i$ and $k_i$ are assumed to be linearly independent and are divided by their population means ($\tilde{x}_i$, $\tilde{k}_i)$, such that $y_0$ may be interpreted as the mean yield. (See Appendix for details of the derivation.)
 
 The introduction of axiom 2 then results in the profit maximizing farm yield function.
 
@@ -185,7 +185,7 @@ q^* = k_a y^* = k_a \left(y_0 \frac{\theta_{x}}{\theta_{w}}\theta_k \right)^{\fr
 Whenever the area $k_a$ is included among the control variables $k_i$ (as it is in the Kenya farm data analysis farther below), it is henceforth notationally absorbed into $\theta_k$ as follows.
 
 \begin{equation}
-q^* = \left(y_0 \frac{\theta_{x}}{\theta_{w}} \hat{\theta}_k \right)^{\frac{\eta}{h}} \left( \frac{P}{\lambda} \right)^{\eta} \:\:;\:\:\: \hat{\theta}_k = k_a^{\kappa_a + \frac{h}{\eta}} \prod_{i \neq a} k_i^{\kappa_i}
+q^* = \left(y_0 \frac{\theta_{x}}{\theta_{w}} \hat{\theta}_k \right)^{\frac{\eta}{h}} \left( \frac{P}{\lambda} \right)^{\eta} \:\:;\:\:\: \hat{\theta}_k = k_a^{\kappa_a + \frac{h}{\eta}} \prod_{i \neq a} \left( \frac{k_i}{\tilde{k}_i} \right)^{\kappa_i}
 \label{eq:prodFn1}
 \end{equation}
 
@@ -255,7 +255,7 @@ Q = N \left(y_0 \frac{\theta_x}{\theta_w} \right)^{\frac{\eta}{h}} E \left[\hat{
 Because production is assumed to be lognormally distributed, $C^{\#}$ (and $\lambda$) must also be lognormally distributed. It can be shown, then, that the integral in the above expression resolves as follows.
 
 \begin{equation}
-\int_{0}^{P} C^{\# \eta} f(C^{\#}) \: dC^{\#} = E \left[C^{\# \eta} \right] \Phi \left(\frac{\ln\left(\frac{P}{E \left[C^{\#} \right]} \right)^{\eta} - \frac{\eta^2}{2} Var \left[C^{\#} \right]}{\eta \sqrt{Var \left[C^{\#} \right]}} \right)
+\int_{0}^{P} C^{\# \eta} f(C^{\#}) \: dC^{\#} = E \left[C^{\# \eta} \right] \Phi \left(\frac{\ln\left(\frac{P}{E \left[C^{\#} \right]} \right)^{\eta} - \frac{\eta^2}{2} Var \left[\ln \left(C^{\#} \right) \right]}{\eta \sqrt{Var \left[ \ln \left(C^{\#} \right) \right]}} \right)
 \end{equation}
 
 Where $\Phi()$ is the standard normal cumulative distribution function. (See Appendix for details.)
@@ -289,7 +289,7 @@ Henceforth it is necessary to be more explicit in the treatment of output price 
 In the aggregate supply function (Equation \ref{eq:sup2b}), the term $E \left[C^{\#} \right]$ is thus replaced with $E \left[E\left[C^{\#}(T) \right]\bigr|_{t = 0} \right]$, which is the population mean of expected cost per unit production at planting time. This is a double integral. By Fubini's theorem, the order of integration may be swapped, such that this may also be interpreted as the mean farm's expected cost as evaluated at planting time.
 
 \begin{equation}
-E\left[E\left[C^{\#}(T)\right]\biggr|_{t = 0}\right] = E\left[E\left[C^{\#}(T)\right]]\biggr|_{t = 0}\right
+E\left[E\left[C^{\#}(T)\right]\biggr|_{t = 0}\right] = E\left[E\left[C^{\#}(T)\right]]\biggr|_{t = 0}\right]
 \end{equation}
 
 To avoid ugly and potentially ambiguous notation, the population mean of $C^{\#}(T)$ is henceforth denoted $\tilde{C}^{\#}(T)$. That is to say, $E\left[C^{\#}(T)\right] = \tilde{C}^{\#}(T)$, such that the mean farm's expected cost at planting time is henceforth rewritten $E\left[\tilde{C}^{\#}(T)\right]\biggr|_{t = 0}$.
