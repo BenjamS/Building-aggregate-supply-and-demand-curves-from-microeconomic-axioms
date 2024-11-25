@@ -129,6 +129,11 @@ In synthesis, then, it is misleading to characterize the cited literature as sup
 
 ## Relevance to food, equality-efficiency, and price risk policy questions
 
+[@norton1992economic; @alston1995science]
+However, such a caricature is at odds with the CGIAR's long history of constructive response to criticism. This is especially true since the 2011 reforms, when mandatory accountability protocols were implemented [@leeuwis2018reforming]; but was also true prior. Plan Puebla, IR20 rice, the Bean and Cassava Programs, to name only a few examples, were all in some measure born of criticism in order to better align research objectives with the agroclimatic and socioeconomic needs of resource-poor smallholders.
+[@byerlee2000targeting;@byerlee2009agriculture]
+palliative measures  [@alwang2003measuring] have not been widely adopted.
+
 Compounded...little confidence to any results regarding the distribution of net benefits amond producers and consumers.
 
 Calculations of net benefits and their distribution based on this approach can vary considerably with the choice of functional form and type of supply curve shift. With no clear theoretical or empirical basis upon which to recommend one configuration over another, the meaning 
