@@ -91,6 +91,7 @@ For those interested in endogenous modeling of the economic supply response to e
 5) Output price follows a geometric Brownian motion over time
 
 The resulting aggregate supply curve includes a term that explicitly captures farm entry/exit in response to price movements and risk, effectively accounting for the uneven distribution of endowments across inframarginal farms. The entry/exit term itself is surprisingly instructive and intuitive, as it is proportionate to the mean farm's probability of profit. All of the parameters appearing in the model have a straightforward interpretation in terms of relevant, measurable, empirical phenomena. This includes, in addition to the usual variables (technology, agroclimatic variables, price), output price volatility and length of cropping season, widening the range of policy/technology questions that can be explored.
+Wohlgenant [-@wohlgenant1997nature] suggests the lognormal distribution as a suitable density fn...
 <!-- the probability that output price will be greater than the mean farm's expected cost per unit output at harvest---i.e. the mean farm's probability of profit -->
 
 Five other desirable properties immediately follow from axioms 1 and 2 as corollaries, and need not be imposed as additional axioms: 1) The farm yield function is homogeneous (and thus homothetic) and 2) concave in inputs; 3) farm supply curves are upward sloping; and 4) input demand curves are downward sloping. We also take a moment to demonstrate that 5) the derived yield function agrees with Lipton's theory of technology adoption [].
@@ -123,39 +124,45 @@ By the transitive property, then, their conclusion regarding impact assessment s
 
 A fourth document is also cited [@alston1990measuring], but is not peer reviewed and not, at the time of writing, readily available from the publisher. A subsequent peer reviewed article by Zhao et al. [-@zhao1997functional] cites the unavailable document as an annex to a technical report on R&D in the Australian wool industry. The main text of this report appears to have been published in a peer reviewed journal, but without the annex in question [@scobie1991returns]. In their own analysis, Zhao et al. [-@zhao1997functional] find that assessment of net benefits (economic surplus) is highly sensitive to misspecification of the functional form in the case of the CES specification, again contrary to the claim that impact assessments are insensitive to misspecification of the supply curve.
 
-They also find that impact assessment is insensitive to misspecification error when 1) the linear specification is assumed together with 2) a parallel shift, and assuming 3) the shift is small [@zhao1997functional]. Proponents and critics alike acknowledge that the empirical and theoretical grounds for assumptions 1 and 2 are narrow, at best [@lindner1978supply; @alston2009economic; @voon1991calculation; @rose1980supplys]. If the real shift is a pivot or mixture of pivot and shift, then Zhou et al.'s finding of insensitivity does not apply. Moreover, it is questionable whether the parallel supply curve shifts assumed in most economic surplus assessments of returns to agricultural R&D qualify as "small" [@hurley2014re; @alston2000research]. To know for sure, Zhao et al. [-@zhao1997functional] develop a method to calculate the upper bound on misspecification bias; but the present literature review finds no instance where this method has actually been implemented. Finally, Zhao et al. [-@zhao1997functional] acknowledge that linear supply curves imply a farm population consisting entirely of identical marginal farms, a condition never actually observed in any real farm population.
+They also find that impact assessment is insensitive to misspecification error when 1) the linear specification is assumed together with 2) a parallel shift, and assuming 3) the shift is small [@zhao1997functional]. Proponents and critics alike acknowledge that the empirical and theoretical grounds for assumptions 1 and 2 are narrow, at best [@lindner1978supply; @alston2009economic; @voon1991calculation; @rose1980supplys]. If the real shift is a pivot or mixture of pivot and shift, then Zhao et al.'s finding of insensitivity does not apply. Moreover, it is questionable whether the parallel supply curve shifts assumed in most economic surplus assessments of returns to agricultural R&D qualify as "small" [@hurley2014re; @alston2000research]. To know for sure, Zhao et al. [-@zhao1997functional] develop a method to calculate the upper bound on misspecification bias; but the present literature review finds no instance where this method has actually been implemented. Finally, Zhao et al. [-@zhao1997functional] acknowledge that linear supply curves imply a farm population consisting entirely of identical marginal farms, a condition never actually observed in any real farm population.
 
-In synthesis, then, it is misleading to characterize the cited literature as supportive of the broad claim that impact assessments are insensitive to misspecification of the functional form of the supply curve. More accurately, the literature supports the much more limited claim that impact assessments are insensitive to misspecification when the linear specification is assumed together with a parallel shift, and when the real shift is also parallel; and when the shift is small, and when the farm population consists of identical marginal farms. Apart from this exceptionally implausible case identified by Zhao et al. [-@zhao1997functional], the literature indicates that impact assessments are highly sensitive to functional form, whether directly, as in the case of the CES function, or by the transitive property, i.e., through a supply curve shift which is mathematically prefigured by the functional form of the supply curve.
+In synthesis, then, it is misleading to characterize the cited literature as supportive of Alston et al.'s [-@alston1995science] broad claim that impact assessments are insensitive to misspecification of the functional form of the supply curve. More accurately, the literature supports the much narrower claim that impact assessments are insensitive to misspecification when the linear specification is assumed together with a parallel shift, and when the real shift is also parallel; and when the shift is small, and when the farm population consists of identical marginal farms. Apart from this exceptionally implausible case identified by Zhao et al. [-@zhao1997functional], the literature indicates that impact assessments are highly sensitive to functional form, whether directly, as in the case of the CES function, or by the transitive property, i.e., through a supply curve shift which is mathematically prefigured by the functional form of the supply curve.
 
-## Limited policy relevance
+## Is it impossible to do better?
 
-Impact assessments vary considerably with the choice of functional form and type of supply curve shift [@alston2009economic]. With no clear theoretical or empirical premise upon which to recommend one form over another, little confidence can be attached to such results. In particular, calculations of consumer and producer surplus 
-
-Because the conventional models are not formally derived from standard axioms, 
-The literature characterized above is an academic exercise since 
-
-
-
-
-
-
-## Is it impossible?
-
-As a final line of defense, proponents of the conventional supply curve  Progress in this direction has long been discouraged by a widespread perception that the task is impossible [cloud of pessimism]. In their highly influential book, e.g., Alston et al. [-@alston1995science] write:
+As a final line of defense, proponents of conventional aggregate supply curves argue that assumptions regarding supply curves and exogenous shifts, however implausible they might be, are unavoidable. In their highly influential book, e.g., Alston et al. [-@alston1995science] write:
 
 >"What does economic theory tell us about the nature of ...[research induced aggregate supply curve] shifts? Unfortunately, not very much. To be confident about this aspect of the problem would require either (a) precise econometric evidence or (b) detailed information on the effects on individual agents, details of industry structure including details on exit and entry of firms, and a complete theory of aggregation. This information is not available; assumptions are unavoidable".
 
 <!-- The aggregate supply model derived in the subsequent sections -->
-The present work is effectively one long disagreement with this passage. The sweeping [, and rather brazen, _opinion_] claim that economic theory does not tell us "very much" about the nature of aggregate supply curve shifts is particularly vexing. On the contrary, economic theory provides a set of microeconomic principles whence a firm level yield model is derived, whence "effects on individual agents", i.e., farm level response to exogenous shock, can be can modeled. Insofar as the phrase "complete theory of aggregation" refers to the specification of aggregate supply and demand curves, this too can be derived from theory by integrating individual effects over a suitable density function (i.e., Equation \ref{eq:sup1}). The firm yield model implies bounds on the domain of optimal output, such that the "exit and entry of firms" is accounted for by integrating over the domain of optimal behavior.
+The present work is effectively one long disagreement with this passage. The sweeping claim that economic theory does not tell us "very much" about the nature of aggregate supply curve shifts is particularly vexing. On the contrary, economic theory provides a set of microeconomic principles whence a firm level yield model is derived, whence "effects on individual agents", i.e., farm level response to exogenous shock, can be can modeled. Insofar as the phrase "complete theory of aggregation" refers to the specification of aggregate supply and demand curves, this too can be derived from theory by integrating individual effects over a suitable density function (i.e., Equation \ref{eq:sup1}). The firm yield model implies bounds on the domain of optimal output, such that the "exit and entry of firms" is accounted for by integrating over the domain of optimal behavior.
 <!-- (Similar bounds can be determined for optimal input use, whence an aggregate demand curve could be derived; but the focus here is limited to aggregate supply.) -->
 
-To be clear, the "precise econometric evidence or...detailed information" that the authors refer to is generally not available, but the suggestion that economic theory offers nothing in its stead is simply mistaken, ignores textbooks [frankly, brazen]. The whole point of having a theory is [to make sense of empirically observed info and to] precisely to draw inference when available information provides no clear answer to our questions. I also agree that "assumptions are unavoidable" in the sense that the standard microeconomic axioms whence $q^*$ is derived, and plausible assumptions about the shape of the farm density $\rho(q^*)$ are unavoidable,   NOT of assuming what may then be endogenously modeled on this basis. tantamount to assuming what it is the job of economists to show.   [If the inference proves wrong, then the theory is corrected.] It is not theory, then, but rather models not explicitly built up from theory, that tell us "not very much" about the nature of supply curve shifts.  ...And  insofar as the 5 axioms are unavoidable, but assumption of the supply response to exogenous technology shock, which is nearly the same as assuming the result of the impact assessment, is not unavoidable. On the contrary, it is precisely the work of the economist to model the supply response to technology shocks endogenously.
-It is not economic theory, then, but rather an expedient methodology which, by construction, precludes the possibility of explicit, endogenous modeling of the aggregate supply response to exogenous shocks, that tells us "not very much" about the the aggregate supply response to exogenous shocks. The present article, by contrast, explores what economic theory actually can tell us about the nature of the aggregate supply response.
+To be clear, the "precise econometric evidence or...detailed information" that the authors refer to is, indeed, generally not available; but the suggestion that economic theory offers nothing in its stead is simply mistaken. One of the key purposes of having a theory is to draw inference when detailed information is unavailable or otherwise provides no clear answer to our questions. And yes, "assumptions are unavoidable"---but in the sense that standard microeconomic axioms 1-5 in the Introduction are unavoidable, not in the sense of exogenously assuming a supply response instead of deriving it endogenously from said axioms.
+
+Not economic theory, then, but rather a mathematical formulation which, by construction, precludes endogenous modeling of the aggregate supply response to exogenous shocks, is what tells us "not very much" about the the aggregate supply response to exogenous shocks.
 <!-- The authors themselves may have made little use of theory when they specified their linear aggregate supply and demand curves; but this does not mean that others are prohibited from doing so. -->
+<!-- "Previous treatments have been concentrated on increasing the geometric sophistication of explanatory models and even that has been subject to fundamental errors. What is more important is to have an understanding of supply curves and the derivation of cost changes. Geometric manipulations are of little help at that level" [@rose1980supply]. -->
+
+## The limited policy relevance of conventional forms
+
+Effective food policy formation requires careful assessment not only of the magnitude of net benefits of a given intervention, but also of resulting consumer-producer tradeoffs (the "food price dilemma"), as well as the distributional effects of the intervention across income levels. In recent decades, rural-urban migration, and hence rural employment (farm entry/exit), is also a major concern []; as well as the overarching issue of smallholder price risk and risk-mitigating mechanisms [].
+
+Partial equilibrium analysis on the basis of conventional aggregate supply and demand curves is of little to no use in the assessment of any of these issues. Impact assessment results regarding the distribution of net benefits among producers and consumers vary considerably with the choice of functional form and type of supply curve shift [@alston2009economic]. Specifically, assessments based on the CES supply curves can result in consumer-producer tradeoffs, whereas assessments based on the linear supply curve guarantee increases in both consumer and producer welfare. With no clear theoretical or empirical premise upon which to recommend one set of results over another, little confidence can be attached to any of them. In practice, most studies choose the linear specification [@hurley2014re; @alston2000research], which results in the highest net benefit and avoids uncomfortable food-price dilemma [@alston2009economic].
+conspicuous
+the whole point of the form is to facilitate calculations of producer and consumer surplus, which ultimately cannot be used to draw meaningful conclusions and inform policy.
 
 
-## Relevance to food policy and distributional  and price risk policy questions
+...distributional
+The assumption of identical marginal firms implicit in the linear specification precludes any assessment of net benefit distribution across income levels. In some sectors, one might reasonably justify this assumption by invoking competitive long run equilibrium. The case for competitive long run equilibrium is strained in the primary sector, however, where one typically sees an abundance of inframarginal farms in operation. Wohlgenant [-@wohlgenant1997nature] ...
 
+...equity-efficiency
+
+...
+
+..."Many economists argue that agricultural research is a relatively poor instrument for achieving non-efficiency objectives" [@norton1992economic]. Assume an equity-efficiency tradeoff that doesn't exist.
+
+In some sectors, one might reasonably dismiss the need to account for heterogeneously endowed firms by invoking competitive long run equilibrium. The case for competitive long run equilibrium is strained in the primary sector, however, where one often sees an abundance of inframarginal farms in operation. ( provides an analytical exploration of the distortions that can occur when neglecting to account for heterogeneity and inframarginal production.)
 
 [@norton1992economic; @alston1995science] characterize as an equity-efficiency tradeoff, such that the more of one you have, the less of the other...
 but no, subsequently rejected [@byerlee2000targeting;@byerlee2009agriculture]
@@ -188,18 +195,13 @@ The magnitude and distribution of net benefits among consumers and producers are
 
 Net benefits are generally twice as great when the linear specification + parallel shift is used as compared to the CES specification. And the CES function implies increase in consumer surplus but a reduction in producer surplus, while the linear specification always results in an increase in both consumer and producer surplus.
 
-## Farm heterogeneity, entry/exit
 
 The entire debate surrounding functional form and type of shift is moot because it rests upon the assumption of 
 
-Even the exceptional case identified by Zhou et al. [where impact assessment may be insensitive to misspecification of the supply curve] is only valid when  is void as soon as the reality of heterogeneously endowed inframarginal farms is taken into consideration. The linear model assumes a population of homogeneous farms producing identical quantities. In some sectors, one might reasonably justify this assumption by invoking competitive long run equilibrium. The case for competitive long run equilibrium is strained in the primary sector, however, where one typically sees an abundance of inframarginal farms in operation.
-
-In some sectors, one might reasonably dismiss the need to account for heterogeneously endowed firms by invoking competitive long run equilibrium. The case for competitive long run equilibrium is strained in the primary sector, however, where one often sees an abundance of inframarginal farms in operation. (Wohlgenant [-@wohlgenant1997nature] provides an analytical exploration of the distortions that can occur when neglecting to account for heterogeneity and inframarginal production.)
+Even the exceptional case identified by Zhou et al. [where impact assessment may be insensitive to misspecification of the supply curve] is only valid when  is void as soon as the reality of heterogeneously endowed inframarginal farms is taken into consideration. The linear model assumes a population of homogeneous farms producing identical quantities. 
 
 
 (Wohlgenant [-@wohlgenant1997nature] provides an analytical exploration of the distortions that can occur when neglecting to account for heterogeneity and inframarginal production.)
-
-
 
 
 ## Real consequences
@@ -238,14 +240,8 @@ Finally, regardless of the foregoing, pales in comparison to the more important 
 
 [It is unclear how being right on this point is of any benefit to them, as it then leads to the issue of shift which they readily concede ...   Besides, the argument from shift does not absolve them since they recognize that choice of shift too is an arbitrary decision, and readily concede that this choice may bias the impact assessment... No consensus on the issue, Voon and Edwards 1991 compare linear shift and CES pivot and choose CES pivot as more realistic for agricultural commodity supply curves, noting that empirical estimates of short and long run supply "have often been reported in the ineleastic range", and noting that the linear alternative introduces the awkward artifact of negative prices. Conspicuous as alternative choices of shift result in tradeoffs between consumer and producer surplus.  They then discourage any progress towards an empirically and theoretically sound model specification by characterizing the ]
 
-"Previous treatments have been concentrated on increasing the geometric sophistication of explanatory models and even that has been subject to fundamental errors. What is more important is to have an understanding of supply curves and the derivation of cost changes. Geometric manipulations are of little help at that level" [@rose1980supply].
-
-The present work takes Rose up on his neglected invitation. 
 
 
-
-arg1: func form doesn't matter
-arg2: theory tells us little
 ...also the economic equality vs. efficiency dichotomy, ag a poor choice for distributional justice --- out of line with the CG pro-poor mandate and with the new agricultural paradigm literature, pro-poor growth [IMF evidence].
 ...donors have stopped believing the assessments...MIRR a cosmetic fix
 
