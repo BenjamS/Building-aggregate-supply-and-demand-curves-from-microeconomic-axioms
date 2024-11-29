@@ -135,7 +135,7 @@ As a final line of defense, proponents of conventional aggregate supply curves a
 >"What does economic theory tell us about the nature of ...[research induced aggregate supply curve] shifts? Unfortunately, not very much. To be confident about this aspect of the problem would require either (a) precise econometric evidence or (b) detailed information on the effects on individual agents, details of industry structure including details on exit and entry of firms, and a complete theory of aggregation. This information is not available; assumptions are unavoidable".
 
 <!-- The aggregate supply model derived in the subsequent sections -->
-The present work is effectively one long disagreement with this passage. The sweeping claim that economic theory does not tell us "very much" about the nature of aggregate supply curve shifts is particularly vexing. On the contrary, economic theory provides a set of microeconomic principles whence a firm level yield model is derived, whence "effects on individual agents", i.e., farm level response to exogenous shock, can be can modeled. Insofar as the phrase "complete theory of aggregation" refers to the specification of aggregate supply and demand curves, this too can be derived from theory by integrating individual effects over a suitable density function (i.e., Equation \ref{eq:sup1}). The firm yield model implies bounds on the domain of optimal output, such that the "exit and entry of firms" is accounted for by integrating over the domain of optimal behavior.
+The present work is effectively one long disagreement with this passage. The sweeping claim that economic theory does not tell us "very much" about the nature of aggregate supply curve shifts is particularly perplexing. On the contrary, economic theory provides a set of microeconomic principles whence a firm level yield model is derived, whence "effects on individual agents", i.e., farm level response to exogenous shock, can be can modeled. Insofar as the phrase "complete theory of aggregation" refers to the specification of aggregate supply and demand curves, this too can be derived from theory by integrating individual effects over a suitable density function (i.e., Equation \ref{eq:sup1}). The firm yield model implies bounds on the domain of optimal output, such that the "exit and entry of firms" is accounted for by integrating over the domain of optimal behavior.
 <!-- (Similar bounds can be determined for optimal input use, whence an aggregate demand curve could be derived; but the focus here is limited to aggregate supply.) -->
 
 To be clear, the "precise econometric evidence or...detailed information" that the authors refer to is, indeed, generally not available; but the suggestion that economic theory offers nothing in its stead is mistaken. One of the key purposes of having a theory is to draw inference when detailed information is unavailable or otherwise provides no clear answer to our questions. And, yes, "assumptions are unavoidable"---but in the sense that standard microeconomic axioms 1-5 in the Introduction are unavoidable, not in the sense of exogenously assuming a supply response instead of deriving it endogenously from said axioms.
@@ -159,38 +159,16 @@ Proponents of the conventional approach even go so far as to expressly discourag
 
 An underlying assumption here is that distributional equity and economic growth ("efficiency") are mutually exlusive objectives, such that the one cannot be pursued except at the cost of the other. Norton [-@norton1992economic] makes this explicit by actually drawing an equity-efficiency tradeoff frontier to illustrate the concept. Again citing "many economists", he affirms that "agricultural research is a relatively poor instrument for achieving non-efficiency objectives".
 
-While it is true agropessimism [@dethier2012agriculture], in fact, many economists think just the opposite. [@de2020using; @de2022agriculture]
+The authors provide no references to indicate who they mean by the "many economists" who allegedly hold this view; and it is not otherwise readily obvious to whom they might refer. On the contrary, many economists think and/or have demonstrated econometrically that the exact opposite is true. Agricultural research generally results in agricultural productivity growth; and agricultural productivity growth goes hand in hand with poverty reduction [@rosegrant2001transforming; @ravallion1996important; @thorbecke1996multiplier; @fan2005rural; @bourguignon1998inequality; @timmer1997well; @gallup1998economic; @ravallion1999gowth; @ravallion2002has; @byerlee2009agriculture; @valdes2010reflections; @kydd2004agricultural; @world2007world; @de2020using; @de2022agriculture; @gollin2021two]. Publicly funded agricultural research since the 1960s has a history of responding to criticism and aligning with pro-poor growth objectives [@thirtle2003impact; @adato2007agricultural; @hazell2001agricultural; @lipton2005family]. More generally speaking, it is now well documented that a nation's economic growth is more robust and sustainable in the measure that it is equitable [@partridge1997inequality; @easterly2007inequality; @berg2011equality; @berg2012makes; @ostry2015inequality; @berg2017inequality; @berg2018redistribution; @ostry2021growth].
+<!-- The Consultative Group on International Agricultural Research was quick to respond to early criticism regarding its neglect for smallholder farming has a long history of aligning agricultural research with poverty reduction goals. is at odds with the CGIAR's long history of constructive response to criticism. This is especially true since the 2011 reforms, when mandatory accountability protocols were implemented [@leeuwis2018reforming]; but was also true prior. Plan Puebla, IR20 rice, the Bean and Cassava Programs, to name only a few examples, were all in some measure born of criticism in order to better align research objectives with the agroclimatic and socioeconomic needs of resource-poor smallholders. -->
+<!-- Since the 1970s, the standard development narrative emphasizes agricultural productivity growth as a prerequisite stepping stone towards industrialization [@adelman1984beyond; @vogel1994structural; @gollin2002role]; but this literature does not imply that the goals of growth and poverty reduction are mutually exclusive. On the contrary, many  -->
+<!-- For an overview of this evolution, see Dethier and Effenberger [-@dethier2012agriculture] or Byerlee et al. [-@byerlee2009agriculture]. -->
+<!-- palliative measures  [@alwang2003measuring] have not been widely adopted. -->
 
 
-
-[@norton1992economic; @alston1995science] characterize as an equity-efficiency tradeoff, such that the more of one you have, the less of the other...
-but no, subsequently rejected [@byerlee2000targeting;@byerlee2009agriculture]
-
-[@partridge1997inequality; @easterly2007inequality; @berg2011equality; @berg2012makes; @ostry2015inequality; @berg2017inequality; @berg2018redistribution; @ostry2021growth].
-However, such a caricature is at odds with the CGIAR's long history of constructive response to criticism. This is especially true since the 2011 reforms, when mandatory accountability protocols were implemented [@leeuwis2018reforming]; but was also true prior. Plan Puebla, IR20 rice, the Bean and Cassava Programs, to name only a few examples, were all in some measure born of criticism in order to better align research objectives with the agroclimatic and socioeconomic needs of resource-poor smallholders.
-
-palliative measures  [@alwang2003measuring] have not been widely adopted.
-
-@norton2020lessons
-Compounded...little confidence to any results regarding the distribution of net benefits amond producers and consumers.
-
-Calculations of net benefits and their distribution based on this approach can vary considerably with the choice of functional form and type of supply curve shift. With no clear theoretical or empirical basis upon which to recommend one configuration over another, the meaning 
-
-Because there are no theoretical 
-
-Food policy decisions require cogent analysis of consumer-producer tradeoffs (the "food price dilemma"), as well as the distributional effects of exogenous shock across income levels. Increasingly, issues of rural-urban migration are also the impact of price volatility.  Economic surplus studies based on conventional supply curves and supply curve shifts are mathematical descriptions of an agronomic assertion,    Proponents and critics alike acknowledge that impact assessments based on the conventional aggregate supply curves can offer no such analysis (details in Literature Review).
-
-Food policymakers require partial equilibrium modeling of the supply response to    that can provide clear insight into the food price dilemmas   ...mathematical description of an agronomic assertion. 
-
-descriptive math of a subjective view assertion. these math descriptions are of little use, what is needed is a better understanding of supply curves and the impact on marginal costs [after Rose].
-
-
-whether same effect can be achieved through other policy instruments
-food price dilemma [].
 entry/exit and yield components [].
 price risk
 
-The magnitude and distribution of net benefits among consumers and producers are critically dependent upon the choice of functional form, and neither empirical nor theoretical arguments compel towards a particular model and type of shift [@alston2000research]. The conventional food price dilemma.
 
 ## Real consequences
 
