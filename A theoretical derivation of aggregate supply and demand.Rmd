@@ -3,7 +3,7 @@ title: A theoretical derivation of the aggregate supply curve accounting for far
 # author: "Benjamin Schiek"
 # date: "`r Sys.Date()`"
 abstract: |
-  Conventional models of the aggregate supply of agricultural commodities---specifically those used in partial equilibrium ex-ante impact assessments---do not endogenously model the supply response to technology (or any other exogenous) shocks, but rather 1) assume the farm level supply response as exogenously given based on agronomic information, and then 2) assume, as a matter of fiat, the mechanism by which the farm level response manifests at the aggregate level (whether it is a shift or pivot of the aggregate supply curve). Such models also do not account for farm heterogeneity---or, worse still, assume identical marginal farms---and do not account for farm entry/exit. For applications where these things matter, here a tractable aggregate supply model is formally derived from 6 weak axioms. The derived form allows for endogenous modeling of the supply response to exogenous shocks, including entry/exit. The model also accounts for price volatility, opening up a novel set of policy modeling possibilities.. also distributional issues can be addressed... As an illustrative use case, the model is estimated on Kenya farm survey data. Calculations of supply and price elasticity of supply agree with empirical estimates. Potential applications in policy impact assessment are briefly discussed.
+  Conventional models of the aggregate supply of agricultural commodities---specifically those often used in ex-ante impact assessments of policy and research shocks---do not endogenously model the supply response to technology (or any other exogenous) shocks, but rather 1) assume the farm level supply response as exogenously given based on agronomic information, and then 2) assume, as a matter of fiat, the mechanism by which the farm level response manifests at the aggregate level (whether it is a shift or pivot of the aggregate supply curve). Such models also do not account for farm heterogeneity---or, worse still, assume identical marginal farms---and do not account for farm entry/exit. For applications where these things matter, here a tractable aggregate supply model is formally derived from 6 weak axioms. The derived form allows for endogenous modeling of the supply response to exogenous shocks, including entry/exit. The model also accounts for price volatility, opening up a novel set of policy modeling possibilities.. also distributional issues can be addressed... As an illustrative use case, the model is estimated on Kenya farm survey data. Calculations of supply and price elasticity of supply agree with empirical estimates. Potential applications in policy impact assessment are briefly discussed.
   [The term accounting for farm/entry exit turns out to be highly instructive and intuitive, as it is proportionate to the probability that the mean farm will make a profit at harvest.]
 header-includes:
   - \usepackage{geometry}
@@ -51,7 +51,8 @@ facetTitleSize <- 7
 
 # Introduction
 
-The conventional linear and constant elasticity of supply (CES) aggregate supply curves commonly used in ex-ante impact assessments of new agricultural technology [@alston1995science; @alston2009economics] are not explicitly derived from microeconomic axioms, but rather specified primarily for the purpose of facilitating certain calculations---especially of consumer and producer surplus---with little consideration given to the plausibility of the theoretical underpinnings and empirical implications of this choice of functional form. In particular, it is unclear whether these forms are consistent with standard microeconomic axioms regarding homogeneity, convexity/concavity, profit maximization, and the slope of farm level supply and input demand curves. (The model documentation might make passing reference to such axioms; but the models themselves are not formally derived from them.)
+The conventional linear and constant elasticity of supply (CES) aggregate supply curves commonly used in ex-ante impact assessments of new agricultural technology [@alston1995science; @alston2009economics] are not explicitly derived from microeconomic axioms, but rather specified primarily to facilitate calculations of consumer and producer surplus, with little consideration given to the plausibility of the theoretical underpinnings and empirical implications of this choice of functional form. In particular, it is unclear whether these forms are consistent with standard microeconomic axioms regarding homogeneity, convexity/concavity, profit maximization, and the slope of farm level supply and input demand curves.
+<!-- (The model documentation might make passing reference to such axioms; but the models themselves are not formally derived from them.) -->
 
 That is to say, if we consider aggregate supply $Q$ in its most basic definition as the definite integral of farm production function $q^*$ times the production density $\rho(q^*)$ over the domain of profitable production $(\underline{q}^*, \overline{q}^*)$,
 
@@ -60,11 +61,9 @@ Q(P) = \int_{\underline{q}^*}^{\overline{q}^*} q^* \rho(q^*) \: dq^*
 \label{eq:sup1}
 \end{equation}
 
-then it is not readily apparent from conventional linear and CES specifications of $Q$ what the function $q^*$ is, nor whether it is consistent with microeconomic theory. Critically, the farm production density $\rho$---which captures heterogeneity in farm endowments---and domain of profitable production $(\underline{q}^*, \overline{q}^*)$ are likewise unclear, precluding any analysis that would decompose supply response to exogenous shocks into yield and entry/exit components. That is to say, the conventional models either do not explicitly account for heterogeneously endowed farm populations, or, worse still, assume a population of homogeneously endowed identical marginal farms.
+then it is not readily apparent from conventional linear and CES specifications of $Q$ what the function $q^*$ is, nor whether it is consistent with microeconomic theory. Critically, the conventional models also do not explicitly account for heterogeneously endowed farm populations (captured in the farm production density $\rho$)---or, worse still, assume a population of homogeneously endowed identical marginal farms; and they neglect to account for the domain of profitable production $(\underline{q}^*, \overline{q}^*)$, thus precluding any detailed analysis of supply response in terms of yield and entry/exit components.
 
-The conventional models also introduce awkward artifacts that further undermine their explanatory power. The CES function, by definition, implies that yield and entry/exit responses to price changes always offset each other precisely such that the elasticity of supply is constant. The linear aggregate supply curve implies the possibility of negative supply quantities and/or of farms producing for free. This either requires redefinition of the curve as a piecewise function---which further complicates interpretation in terms of Equation \ref{eq:sup1}---or compels us to regard the function as a local approximation to some inscrutable global function, with validity restricted to a small domain of convergence around the starting equilibrium point.
-
-Most importantly, because these models are not formally derived from axioms, there is no clear mapping between their parameters and the relevant, measurable empirical phenomena (i.e., technology, input prices, agroclimatic conditions, demographic variables, etc.), such that it is not clear how a change in any of these phenomena might be accurately represented in terms of a change in parameter values, nor even which parameters might be affected by the change. This, in turn, precludes any endogenous modeling of economic decision making on the part of farmers in response to technology, or any other exogenous, shocks. Instead, the conventional models introduce farm level economic decision making (i.e., the economically rational supply/expenditure/input mix response to the exogenous shock) as a calibrated assumption based on agronomic data gathered from field trials, literature, and/or consultation with scientists involved in the research under evaluation.
+Because these models are not formally derived from axioms, there is no clear mapping between their parameters and the relevant, measurable empirical phenomena (i.e., technology, input prices, agroclimatic conditions, demographic variables, etc.), such that it is not clear how a change in any of these phenomena might be accurately represented in terms of a change in parameter values, nor even which parameters might be affected by the change. This, in turn, precludes any endogenous modeling of economic decision making on the part of farmers in response to technology, or any other exogenous, shocks. Instead, the conventional models introduce farm level economic decision making (i.e., the economically rational supply/expenditure/input mix response to the exogenous shock) as a calibrated assumption based on agronomic data gathered from field trials, literature, and/or consultation with scientists involved in the research under evaluation.
 
 This bears emphasis. The conventional aggregate supply models specifically designed for ex-ante impact assessment of new technology do not in fact model the supply response to new technology, but rather present a mathematical description of a presumed supply response that has been predetermined outside of the model, and then exogenously introduced into it. Model guidelines might offer some words of warning about the difference between economically and agronomically optimal yields/expenditures/input mixes, and about the glaring conflict of interest inherent in the expert opinion of scientists closely involved in the research under evaluation; but very little in the way of actionable advice is actually given. To redress conflicts of interest, e.g., Alston et al. [@alston1995science] prescribe the creation of
 <!-- The absurdly high rates of return to agricultural R&D reported in the literature based on such models [@hurley2016] suggests that few practitioners follow this advice in any substantive way. -->
@@ -73,19 +72,17 @@ This bears emphasis. The conventional aggregate supply models specifically desig
 
 Admirable aspirations, to be sure, but not actionable. If research institute directors are hard pressed to effect such deep cultural changes over the course of a multi-year tenure, how can the lowly economist tasked with the impact assessment---often hired by the scientists as a short term consultant---be expected to do so?
 
-The subsequent step of translating the exogenously introduced farm level response into an aggregate supply response likewise involves no endogenous modeling of economic behavior, but is rather a set of exogenous guesswork translated into mathematical symbols. That is to say, after a long and inconclusive debate in the 1970s over whether the aggregate supply response should be represented as a pivot or parallel shift of the curve [@alston1995science; @norton1981evaluating; @voon1991calculation], or some combination thereof, the current predominance of parallel shift in most impact assessments emerges not on any theoretical or empirical basis, but purely as a matter of fiat [@alston2009economics].
+The subsequent step of translating the exogenously introduced farm level response into an aggregate supply response likewise involves no endogenous modeling of economic behavior, but is rather a set of exogenous guesswork translated into mathematical symbols. That is to say, after a long and inconclusive debate in the 1970s over whether the aggregate supply response should be represented as a pivot or parallel shift of the curve [@alston1995science; @norton1981evaluating; @voon1991calculation], or some combination thereof, the current default choice of parallel shift in most impact assessments emerges not on any theoretical or empirical basis, but purely as a matter of fiat [@alston2009economics].
 <!-- The consensus since the 1990s is that the shock manifests as a parallel shift of the aggregate supply curve [@alston1995science]. But no theoretical or empirical grounds exist for this preference over, say, a supply curve pivot, or a combination of pivot and shift, which would result in a very different calculation of net benefits [@alston1995science; @alston2009economics]. -->
 
 The final step of calculating net benefits in terms of discounted economic surplus, adjusted for probability of success, expected adoption rate, time lags in research and adoption, capital depreciation, and other exogenously collected parameters, bears many of the markings of a rigorous economic assessment. But insofar as the result of this calculation is prefigured by the initial, exogenously determined farm supply/expenditure response to technology change, and to its expression-by-fiat at the aggregate level, it is not so much an impact assessment as it is an impact _assertion_, i.e., an exercise in _petitio principii_.
 <!-- To put it more plainly, impact assessments based on conventional supply curves are offer a depiction of what net benefits could look like _if_ the assumed supply and demand curves, type of supply curve shift, and magnitude of the shift are accurate (with no theoretical or empirical basis to suspect that they are). The  -->
 
-Critics have long noted as much, if perhaps in an more understated way. Rose [-@rose1980supply], for example, notes that
+Critics have long noted as much, if perhaps in a more understated way. Rose [-@rose1980supply], for example, notes that
 
->"Previous treatments have been concentrated on increasing the geometric sophistication of explanatory models and even that has been subject to fundamental errors. What is more important is to have an understanding of supply curves and the derivation of cost changes. Geometric manipulations are of little help at that level" [@rose1980supply].
+>"[T]reatments have been concentrated on increasing the geometric sophistication of explanatory models and even that has been subject to fundamental errors. What is more important is to have an understanding of supply curves and the derivation of cost changes. Geometric manipulations are of little help at that level" [@rose1980supply].
 
-In other words, we do not need better mathematical descriptions of an exogenously assumed supply perturbation, but rather a thorough mathematical understanding of why the supply perturbation happens in the first place. I.e., we need mathematical models that endogenously predict/simulate the supply curve perturbation in response to different kinds of exogenous shock, as opposed to a mathematical description of an assumed supply curve shift in response to the shocks.
-
-For those interested in endogenous modeling of the supply response to exogenous shocks, here an aggregate supply curve function is derived from the following five standard economic axioms.
+In other words, policy formation does not require mathematical descriptions of an exogenously assumed supply response to exogenous shocks, but rather endogenous modeling of the supply response to exogenous shocks. For those interested in such modeling, here an aggregate supply curve function is derived from the following five non-controversial economic axioms.
 
 1) Diminishing marginal returns to input use
 
@@ -97,7 +94,7 @@ For those interested in endogenous modeling of the supply response to exogenous 
 
 5) Output price follows a geometric Brownian motion over time
 
-The resulting aggregate supply curve includes a term that explicitly captures farm entry/exit in response to price movements and risk, effectively accounting for the uneven distribution of endowments across inframarginal farms. The entry/exit term itself is surprisingly instructive and intuitive, as it is proportionate to the mean farm's probability of profit. All of the parameters appearing in the model have a straightforward interpretation in terms of relevant, measurable, empirical phenomena. This includes, in addition to the usual variables (technology, agroclimatic variables, price), output price volatility and length of cropping season, widening the range of policy/technology questions that can be explored.
+All of the parameters appearing in the derived model have a straightforward interpretation in terms of relevant, measurable, empirical phenomena. This includes, in addition to the usual variables (technology, agroclimatic variables, price), output price volatility and length of cropping season, widening the range of policy/technology questions that can be explored. The resulting aggregate supply curve also includes a term that explicitly captures farm entry/exit in response to price movements and risk, effectively accounting for heterogeneous endowments across inframarginal farms. The entry/exit term itself is surprisingly instructive and intuitive, as it is proportionate to the mean farm's probability of profit.
 <!-- Wohlgenant [-@wohlgenant1997nature] suggests the lognormal distribution as a suitable density fn... -->
 <!-- the probability that output price will be greater than the mean farm's expected cost per unit output at harvest---i.e. the mean farm's probability of profit -->
 
@@ -115,7 +112,8 @@ Because the conventional linear and CES aggregate supply functions are in such w
 
 ## Is impact assessment insensitive to misspecification of the supply curve?
 
-When pressed on the matter, proponents of the conventional aggregate supply functions make little attempt to defend their specifications on empirical or theoretical grounds. Proponents of linear models generally admit that real world commodity supply and demand curves are almost certainly never linear [@brester2023equilibrium]; while proponents of the CES model generally argue that CES models are probably at least slightly more accurate than linear specifications [@voon1991calculation]. But no proponent of either form offers a formal derivation of their model on theoretical and/or empirical grounds. On the contrary, everyone involved in this literature acknowledges that the functional forms are specified primarily to facilitate calculations of consumer and producer surplus [@lindner1978supply; @alston1995science; @rose1980supplys]. Rather, the defense of such models centers on the argument that the functional form is irrelevant for purposes of impact assessment.
+When pressed on the matter, proponents of the conventional aggregate supply functions make little attempt to defend their specifications on empirical or theoretical grounds. On the contrary, proponents of linear models generally admit that real world commodity supply and demand curves are almost certainly never linear [@brester2023equilibrium]. Proponents of the CES model generally argue that CES models are probably at least slightly more accurate than linear specifications [@voon1991calculation], but likewise offer no formal derivation of their model from theory. Rather, the defense of conventional models centers on the argument that the functional form is irrelevant for purposes of impact assessment.
+<!-- On the contrary, everyone involved in this literature acknowledges that the functional forms are specified primarily to facilitate calculations of consumer and producer surplus [@lindner1978supply; @alston1995science; @rose1980supplys]. -->
 
 >\single spacing "The pertinent question is whether the functional form used is an adequate approximation for the purpose. It turns out, empirically, that measures of total research benefits and their distribution between producers and consumers are quite insensitive to choices of functional form. They are much more sensitive to the related but separate choices concerning the nature of the research-induced supply curve shift and elasticities" [@alston1995science].
 
@@ -131,13 +129,13 @@ By the transitive property, then, their conclusion regarding impact assessment s
 
 A fourth document is also cited [@alston1990measuring], but is not peer reviewed and not, at the time of writing, readily available from the publisher. A subsequent peer reviewed article by Zhao et al. [-@zhao1997functional] cites the unavailable document as an annex to a technical report on R&D in the Australian wool industry. The main text of this report appears to have been published in a peer reviewed journal, but without the annex in question [@scobie1991returns]. In their own analysis, Zhao et al. [-@zhao1997functional] find that assessment of net benefits (economic surplus) is highly sensitive to misspecification of the functional form in the case of the CES specification, again contrary to the claim that impact assessments are insensitive to misspecification of the supply curve.
 
-They also find that impact assessment is insensitive to misspecification error when 1) the linear specification is assumed together with 2) a parallel shift, and assuming 3) the shift is small [@zhao1997functional]. Proponents and critics alike acknowledge that the empirical and theoretical grounds for assumptions 1 and 2 are narrow, at best [@lindner1978supply; @alston2009economic; @voon1991calculation; @rose1980supplys]. If the real shift is a pivot or mixture of pivot and shift, then Zhao et al.'s finding of insensitivity does not apply. Moreover, it is questionable whether the parallel supply curve shifts assumed in most economic surplus assessments of returns to agricultural R&D qualify as "small" [@hurley2014re; @alston2000research]. To know for sure, Zhao et al. [-@zhao1997functional] develop a method to calculate the upper bound on misspecification bias; but the present literature review finds no instance where this method has actually been implemented. Finally, Zhao et al. [-@zhao1997functional] acknowledge that linear supply curves imply a farm population consisting entirely of identical marginal farms, a condition never actually observed in any real farm population.
+They also find that impact assessment is insensitive to misspecification error when 1) the linear specification is assumed together with 2) a parallel shift, and assuming 3) the shift is small [@zhao1997functional]. Proponents and critics alike acknowledge that the empirical and theoretical grounds for assumptions 1 and 2 are narrow, at best [@lindner1978supply; @alston2009economic; @voon1991calculation; @rose1980supplys]. If the real shift is a pivot or mixture of pivot and shift, then Zhao et al.'s finding of insensitivity does not apply. Moreover, it is questionable whether the parallel supply curve shifts assumed in most economic surplus assessments of returns to agricultural R&D qualify as "small" [@hurley2014re; @alston2000research]. To know for sure, Zhao et al. [-@zhao1997functional] develop a method to calculate the upper bound on misspecification bias; but the present literature review finds no instance where this method has actually been implemented. Finally, Zhao et al. [-@zhao1997functional] acknowledge that their findings regarding linear misspecification are valid only insofar as farm populations consist entirely of identical marginal farms, a condition never actually observed in any real farm population.
 
 In synthesis, then, it is misleading to characterize the cited literature as supportive of Alston et al.'s [-@alston1995science] broad claim that impact assessments are insensitive to misspecification of the functional form of the supply curve. More accurately, the literature supports the much narrower claim that impact assessments are insensitive to misspecification when the linear specification is assumed together with a parallel shift, and when the real shift is also parallel; and when the shift is small, and when the farm population consists of identical marginal farms. Apart from this exceptionally implausible case identified by Zhao et al. [-@zhao1997functional], the literature indicates that impact assessments are highly sensitive to functional form, whether directly, as in the case of the CES function, or by the transitive property, i.e., through a supply curve shift which is mathematically prefigured by the functional form of the supply curve.
 
 ## Is it impossible to do any better?
 
-As a final line of defense, proponents of conventional aggregate supply curves argue that there is no alternative to their approach of arbitrarily assuming a functional form for supply curves and supply curve shifts, however implausible or grossly inaccurate they might be. In their highly influential book, e.g., Alston et al. [-@alston1995science] write:
+As a final line of defense, proponents of conventional aggregate supply curves argue that there is no alternative to their cavalier approach of arbitrarily assuming a functional form for supply curves and supply curve shifts, however implausible or grossly inaccurate they might be. Alston et al. [-@alston1995science] write:
 
 >"What does economic theory tell us about the nature of ...[research induced aggregate supply curve] shifts? Unfortunately, not very much. To be confident about this aspect of the problem would require either (a) precise econometric evidence or (b) detailed information on the effects on individual agents, details of industry structure including details on exit and entry of firms, and a complete theory of aggregation. This information is not available; assumptions are unavoidable".
 
@@ -145,26 +143,23 @@ As a final line of defense, proponents of conventional aggregate supply curves a
 The present work is effectively one long disagreement with this passage. The sweeping claim that economic theory does not tell us "very much" about the nature of aggregate supply curve shifts is especially perplexing. On the contrary, economic theory provides a set of microeconomic principles whence a firm level yield envelope is derived, whence "effects on individual agents", i.e., farm level response to exogenous shock, can be can modeled. Insofar as the phrase "complete theory of aggregation" refers to the specification of aggregate supply and demand curves, this too can be derived from theory by integrating individual effects over a suitable density function (i.e., Equation \ref{eq:sup1}). The firm yield model implies bounds on the domain of optimal output, such that the "exit and entry of firms" is accounted for by integrating over the domain of optimal behavior.
 <!-- (Similar bounds can be determined for optimal input use, whence an aggregate demand curve could be derived; but the focus here is limited to aggregate supply.) -->
 
-To be clear, the "precise econometric evidence or...detailed information" that the authors refer to is, indeed, generally not available; but the suggestion that economic theory offers nothing in its stead is mistaken. One of the key purposes of having a theory is to draw inference when detailed information is unavailable or otherwise provides no clear answer to our questions. And, yes, "assumptions are unavoidable"---but in the sense that standard microeconomic axioms 1-5 in the Introduction are unavoidable, not in the sense of exogenously assuming a supply response instead of deriving it endogenously from said axioms.
-
-It is not economic theory, then, but rather a mathematical formulation which, by construction, precludes endogenous modeling of the aggregate supply response to exogenous shocks, that tells us "not very much" about the the aggregate supply response to exogenous shocks.
+To be clear, the "precise econometric evidence or...detailed information" that the authors refer to is, indeed, generally not available; but the suggestion that economic theory offers nothing in its stead is mistaken. One of the key purposes of having a theory is to draw inference when detailed information is unavailable or otherwise provides no clear answer to our questions. And, yes, "assumptions are unavoidable"---but in the sense that axioms 1-5 in the Introduction are unavoidable, not in the sense of superimposing an exogenously assumed supply response on top of said axioms. Not economic theory, then, but rather a descriptive mathematical formulation which, by construction, precludes endogenous modeling of the aggregate supply response to exogenous shocks, is what tells us "not very much" about the the aggregate supply response to exogenous shocks.
 <!-- The authors themselves may have made little use of theory when they specified their linear aggregate supply and demand curves; but this does not mean that others are prohibited from doing so. -->
-
 
 ## The limited policy relevance of conventional forms
 
-Effective food-price and agricultural research policy formation requires careful assessment not only of the magnitude of net benefits of a given intervention, but also of resulting consumer-producer tradeoffs (the "food price dilemma"), as well as the distributional effects of the intervention across income levels. In recent decades, rural-urban migration, and hence rural employment (farm entry/exit), is also a major concern [@lall2006rural; @nori2020migration; @crush2013linking]. Proponents and critics alike acknowledge that conventional functional forms are ill suited to the assessment of any of these distributional issues [@alston2009economic; @alston1995science; @lindner1978supply; @rose1980supply; @wohlgenant1997nature]. The conventional approach also takes no account of commodity price risk and risk mitigating mechanisms, which have also received increasing attention in agriculture research and policy discussions [@bellemare2020producer; @byerlee2006managing].
+Effective policy formation requires careful assessment not only of the magnitude of net benefits of a given intervention, but also of their distribution across producers and consumers (the "food price dilemma"), and across income levels. Proponents and critics alike acknowledge that conventional functional forms are ill suited to the assessment of such distributional issues [@alston2009economic; @alston1995science; @lindner1978supply; @rose1980supply; @wohlgenant1997nature].
+
+More specifically, impact assessments based on a pivot of the linear or CES supply curve can result in consumer-producer tradeoffs, whereas assessments based on a linear parallel shift of the linear supply curve guarantee increases in both consumer and producer welfare [@alston2009economic]. With no clear theoretical or empirical premise upon which to recommend one set of results over another, little confidence can be attached to any of them. This is remarkable considering that the primary motive for conventional supply curve specifications is to facilitate the assessment of changes in consumer and producer surplus. It is also noteworthy that, of all the possible arbitrary configurations of supply curve and type of shift, most agricultural R&D impact assessments assume the one that, by construction, results in the highest net benefits and avoids any food-price dilemma [@hurley2014re; @alston2000research; @alston2009economic].
 <!-- mainly because they are not explicitly derived from a theoretical framework that maps model parameters to specific empirical economic phenomena. -->
-
-
-Effective food policy formation requires careful assessment not only of the magnitude of net benefits of a given intervention, but also of resulting consumer-producer tradeoffs (the "food price dilemma"), as well as the distributional effects of the intervention across income levels. In recent decades, rural-urban migration, and hence rural employment (farm entry/exit), is also a major concern []; as well as the overarching issue of smallholder price risk and risk-mitigating mechanisms [].
-
-Due to the fundamental disconnect between theory and functional form outlined above, conventional supply (and demand) curves are ill suited to the assessment of any of these issues. Impact assessment results regarding consumer-producer tradeoffs vary considerably with the assumed functional form and type of supply curve shift [@alston2009economic]. Specifically, assessments based on a pivot of the linear or CES supply curve can result in consumer-producer tradeoffs, whereas assessments based on a linear parallel shift of the linear supply curve guarantee increases in both consumer and producer welfare. With no clear theoretical or empirical premise upon which to recommend one set of results over another, little confidence can be attached to any of them. This is remarkable considering that the primary motive for the conventional supply curve specifications is to facilitate the assessment of changes in consumer and producer surplus. It is also noteworthy that, of all the possible arbitrary configurations of supply curve and type of shift, most agricultural R&D impact assessments assume the one that, by construction, guarantees no consumer-producer tradeoff and results in the highest net benefits [@hurley2014re; @alston2000research; @alston2009economic].
+<!-- Effective food policy formation requires careful assessment not only of the magnitude of net benefits of a given intervention, but also of resulting consumer-producer tradeoffs (the "food price dilemma"), as well as the distributional effects of the intervention across income levels. In recent decades, rural-urban migration, and hence rural employment (farm entry/exit), is also a major concern []; as well as the overarching issue of smallholder price risk and risk-mitigating mechanisms []. -->
+<!-- Due to the fundamental disconnect between theory and functional form outlined above,  Impact assessment results regarding consumer-producer tradeoffs vary considerably with the assumed functional form and type of supply curve shift [@alston2009economic].  -->
 <!-- conspicuous -->
 
-As for the assessment of impacts on income inequality, conventional models are ill suited because they either do not explicitly account for heterogeneous farm endowments (in the case of the CES curve), or, as noted earlier, assume a population of identically endowed marginal farms (in the case of the linear specification). In some sectors, one might reasonably justify the assumption of homogeneously endowed firms by invoking competitive long run equilibrium. Such arguments are strained in the primary sector, however, where one typically sees an abundance of heterogeneously endowed, inframarginal farms in operation. Wohlgenant [-@wohlgenant1997nature] demonstrates that the long run equilibrium supply curve cannot be linear under such circumstances, even if the supply curves of individual farms are all linear.
+As for the assessment of impacts on income inequality, conventional models are ill suited because, as noted earlier, they either do not explicitly account for heterogeneous farm endowments (in the case of the CES curve), or assume a population of identically endowed marginal farms (in the case of the linear specification). In some sectors, one might reasonably justify the assumption of homogeneously endowed firms by invoking competitive long run equilibrium. Such arguments are strained in the primary sector, however, where one typically sees an abundance of heterogeneously endowed, inframarginal farms in operation. (See Wohlgenant [-@wohlgenant1997nature] for a deeper treatment of this point.)
 
 Proponents of the conventional approach even go so far as to expressly discourage the assessment of distributional equity vis-a-vis agricultural research, arguing that such issues lie beyond its scope.
+<!-- Wohlgenant [-@wohlgenant1997nature] demonstrates that the long run equilibrium supply curve cannot be linear under such circumstances, even if the supply curves of individual farms are all linear. -->
 
 >"For many economists...the only defensible justification for government intervention in agricultural research, and the only legitimate and achievable objective of research, is the pursuit of economic efficiency. This is not to say that other objectives (such as...income distribution and food security) are illegitimate, irrelevant, or unimportant but that there are likely to be alternative, less costly ways to achieve these other objectives than by biasing the agricultural research portfolio away from programs that will maximize total national net income" [@alston1995science].
 
@@ -172,10 +167,16 @@ An underlying assumption here is that distributional equity and economic growth 
 
 The authors provide no references to indicate who they mean by "many economists"; and it is not readily obvious who they might have in mind. On the contrary, many economists think and/or have demonstrated econometrically that the exact opposite is true: agricultural research generally results in agricultural productivity growth, which goes hand in hand with poverty reduction [@rosegrant2001transforming; @ravallion1996important; @thorbecke1996multiplier; @fan2005rural; @bourguignon1998inequality; @timmer1997well; @gallup1998economic; @ravallion1999gowth; @ravallion2002has; @byerlee2009agriculture; @valdes2010reflections; @kydd2004agricultural; @world2007world; @de2020using; @de2022agriculture; @gollin2021two]. Publicly funded agricultural research since the 1960s has generally endeavored to align with pro-poor growth objectives, with mixed success [@thirtle2003impact; @adato2007agricultural; @hazell2001agricultural; @lipton2005family; @redclift1983production; @feleke2016assessing; @pingali1998impact; @mathur2003agricultural]. Moreover, it is now well documented that a nation's economic growth is generally more robust and sustainable in the measure that it is equitable [@partridge1997inequality; @easterly2007inequality; @berg2012makes; @ostry2015inequality; @berg2017inequality; @berg2018redistribution; @ostry2021growth]. Equity and sustainable growth are not mutually exclusive, but rather "two sides of the same coin" [@berg2017inequality].
 
+The lack of any accounting for farm entry/exit 
+
+Effective policy formation also requires careful  rural-urban migration, and hence rural employment (farm entry/exit), is also a major concern [@lall2006rural; @nori2020migration; @crush2013linking].  The conventional approach also takes no account of commodity price risk and risk mitigating mechanisms, which have also received increasing attention in agriculture research and policy discussions [@bellemare2020producer; @byerlee2006managing].
+
 By neglecting farm heterogeneity, the conventional approach also of course precludes decomposition of supply shifts into yield and entry/exit components. The 
 
 entry/exit and yield components [].
 price risk
+
+Conventional models also introduce awkward artifacts that further undermine their explanatory power. The CES function, by definition, implies that yield and entry/exit responses to price changes always offset each other precisely such that the elasticity of supply is constant. The linear aggregate supply curve implies the possibility of negative supply quantities and/or of farms producing for free. This either requires redefinition of the curve as a piecewise function---which further complicates interpretation in terms of Equation \ref{eq:sup1}---or compels us to regard the function as a local approximation to some inscrutable global function, with validity restricted to a small domain of convergence around the starting equilibrium point.
 
 
 ## Real consequences
@@ -559,7 +560,7 @@ E[Q(T)]|_{t = 0} &= N E[\theta] E[\lambda^{-\eta}] P(0)^{\eta} e^{\eta m_p T} \P
 <!-- \label{eq:upBnd2} -->
 <!-- \end{equation} -->
 
-To evaluate this expression, a suitable stochastic model must be assumed for $P(t)$ and $C^{\#}(t)$ follow. Within a given season, prices often follow a geometric Brownian motion (gBm). That is to say, changes in $P$ over a small time interval $\Delta t$ ($\Delta P = P(t + \Delta t) - P(t)$) are often accurately modeled by
+To evaluate this expression, a suitable stochastic model must be assumed for $P(t)$ and $C^{\#}(t)$. Within a given season, prices often follow a geometric Brownian motion (gBm). That is to say, changes in $P$ over a small time interval $\Delta t$ ($\Delta P = P(t + \Delta t) - P(t)$) are often accurately modeled by
 
 \begin{equation}
 \Delta P = \Delta P(t) m_p \Delta t - P(t) s_p \epsilon \sqrt{\Delta t}
@@ -756,7 +757,7 @@ z &= -\gamma = \frac{\ln\left(\frac{E \left[ \tilde{C}^{\#}(T) \right]\bigr|_{t 
 
 Recalling from Equations \ref{eq:lnChngP} that $\left(\eta m_p - \eta^2 \frac{s_p^2}{2} \right) T$ and $s_p^2 T$ are the mean and variance of the log change in price $\ln(P(T) / P(0))$, then the term $z$ is the standard score of the hypothetical log change in output price $\ln \left(E\left[\tilde{C}^{\#}(T)\bigr|_{t = 0} \right] / P(0) \right)$, scaled by the farm level price elasticity $\eta$. The term $\Phi(z)$, which captures farm entry/exit, is thus the probability that output price will fall from its value at planting time to or below the mean farm's expected cost per unit output (scaled by $\eta$). And the term $\Phi(-z)$, it follows, is the probability that output price will remain above the mean farm's expected cost per unit output (scaled by $\eta$). In simple terms, $\Phi(-z)$ is roughly the probability that the mean farm will be profitable.
 
-Here it is tempting to introduce a sixth axiom saying that farmers will only pursue a risky bet if the probability of profit is greater than that of a coin toss (i.e., greater than $50\%$), and to thereby limit the domain of $z$ to $(-\infty, 0)$. But this is left to the discretion of the reader. [There are cases when rational economic agents pursue "out of the money" bets.]
+Here it is tempting to introduce a sixth axiom saying that farmers will only pursue a risky bet if the probability of profit is greater than that of a coin toss (i.e., greater than $50\%$), and to thereby limit the domain of $z$ to $(-\infty, 0)$. But this is left to the discretion of the practitioner. [There are cases when rational economic agents pursue "out of the money" bets.]
 <!-- i.e., the log change in output price from its value at planting time ($P(0)$) to a value equal to the mean farm's expected cost per unit output, scaled by $\eta$. -->
 <!-- \begin{equation} -->
 <!-- \begin{split} -->
@@ -862,45 +863,7 @@ Finally, consider the derivative with respect to technology.
 \begin{equation}
 \end{equation}
 
-# An illustrative use case: Estimation of the aggregate supply curve using Kenya farm survey data
-
-Evaluation of Equation \ref{eq:sup4}, requires estimation of the parameters $\theta_x$, $\theta_w$, $\hat{\theta}_k$, the farm level output price elasticity of supply $\eta$, the farm production degree of homogeneity $h$, the mean farm's expected cost per unit output $E\left[\tilde{C}^{\#}(T)\right]\biggr|_{t = 0}$, 
-
-
-knowledge of control variables $k_i$ and ; estimation of the technology $\alpha_i$ and of the control variable elasticities $\kappa_i$, and $y_0$.
-
-Knowledge of the output price at time of planting $P(0)$, as well as the price seasonal growth rate $m_p$ and volatility $s_p$, and the length of the cropping season $T$ is also required. the number of farms in the population $N$ The mean farm's shadow price of budget $E[\lambda^{-\eta}]$.
-
-Below, an illusrative use case is presented ...for the ideal case where high quality farm survey data is available. The minimum data case is considered in the Discussion. the exogenous parameters of the aggregate supply curve are estimated based on Kenya maize farm data. Calculations of aggregate supply and the output price elasticity of supply using the estimated model are compared against empirical estimates. The comparison, in some limited sense, validates the model; but the main point here is to briefly explore some of the challenges faced when applying the method in a real world use case.
-
-The term $y_0 \theta_{\alpha} / \theta_{w}$ can  technology $\alpha_i$  the control variable elasticities $k_i$,  are estimated by straightforward OLS regression of either Equation \ref{eq:cobbDoug3} (in logs) or Equation \ref{eq:prodFn3}.
-
-
-$$
-E[Q(T)]|_{t = 0} = N E[\theta] E[\lambda^{-\eta}] P(0)^{\eta} e^{\eta m_p T} \Phi(-z) \:\:; \\
-z = -\gamma = \frac{\ln\left(\frac{E \left[ \tilde{C}^{\#}(T) \right]\bigr|_{t = 0}}{P(0)} \right)^{\eta} - \left(\eta m_p - \eta^2 \frac{s_p^2}{2} \right) T }{\eta s_p \sqrt{T}} \\
-\theta = \left( y_0 \frac{\theta_x}{\theta_w} \hat{\theta}_k \right)^{\frac{\eta}{h}}
-$$
-
-
-Parameterization of the aggregate supply curve derived above thus requires knowledge of the output price at time of planting $P(0)$, the price growth rate $m_p$ and volatility $s_p$, the length of the cropping season $T$, the number of farms in the population $N$, the output degree of homogeneity $h$, the mean farm's expected cost per unit output as evaluated at planting time $E[\tilde{C}^{\#}(T)]|_{t = 0}$, and the expected mean harvested output as evaluated at planting time $E[\tilde{q}^*(T)]\bigr|_{t = 0}$.
-
-## Data
-
-The farm data used below cover the 2007 main maize season on 942 farms in 20 different counties of Kenya. The data are a subset of a much larger panel covering the main and short seasons of multiple crops for the years 2000, 2004, 2007, and 2010, originally gathered by the Egerton University Tegemeo Institute of Agricultural Policy and Development in partnership with Michigan State University, under the auspices of a USAID project [@maizeData]. The data include detailed information on quantities of numerous types of organic and inorganic fertilizers, pest/plague control chemicals, and hired and family labor. A wide variety of agroclimatic, demographic, and infrastructural control variables, as well as input and output prices, are also included.
-summary statistics are provided in the appendix...variables on which focus...bin vars
-[as well as 2007 rainfall data... as well as the historical average rainfall. ...binary endowment variables...]
-This sort of a validation but not so much a validation...
-<!-- (graphics here or in Appendix) Summary statistics can be found in the Appendix. -->
-
-graphics: main input use, main labor types + who labors
-labor qty calculated over significant activities 
-cost calculated over significant expenditures - labor, fert, p&d 
-
-
-## Estimation
-
-Estimation 
+## Parameter estimation guidelines
 
 Parameterization of the aggregate supply curve derived above thus requires knowledge of the output price at time of planting $P(0)$, the price growth rate $m_p$ and volatility $s_p$, the length of the cropping season $T$, the number of farms in the population $N$, the output degree of homogeneity $h$, the mean farm's expected cost per unit output as evaluated at planting time $E[\tilde{C}^{\#}(T)]|_{t = 0}$, and the expected mean harvested output as evaluated at planting time $E[\tilde{q}^*(T)]\bigr|_{t = 0}$. The last of these may of course be further decomposed as $E[A] E[\tilde{y}(T)]\bigr|_{t = 0}$, where $E[A]$ is the mean farm size and $\tilde{y}(T)$ is just the $\tilde{y}$ from Equation \ref{eq:yConst}, with the time of evaluation (harvest) made explicit.
 
@@ -962,18 +925,74 @@ Given sufficient price data, the values of $m_p$ and $s_p$ should be estimated o
 An accurate value for $N$ will be difficult to estimate in populations where no recent farm census data is available. Note that $N$ is not necessary for evaluation of the price elasticity of aggregate supply and price risk elasticity of aggregate supply (Equations \ref{eq:pElasQagg} and \ref{eq:pRiskElasQagg}).
 
 
+# An illustrative use case: Estimation of the aggregate supply curve using Kenya farm survey data
+
+<!-- As an illustrative use case, the supply curve derived above is fitted on 2007 Kenya farm data; and the expected aggregate supply curve is calculated. The (expected) price elasticity of aggregate supply curve and producer participation are also calculated. -->
+
+<!-- The comparison, in some limited sense, validates the model; but the main point here is to briefly explore some of the challenges faced when applying the method in a real world use case. -->
+
+<!-- divergence maybe rooted in variation of output price, also because we don't really know EyStarT0 and EPT0, also because this is expected supply at planting, not actual supply at harvest...also does not account for short rains growing season (October-December) (but short rains harvest is small % of total, in 2021 it was about 250,000MT) -->
 
 
+<!-- Evaluation of Equation \ref{eq:sup4}, requires estimation of the parameters $\theta_x$, $\theta_w$, $\hat{\theta}_k$, the farm level output price elasticity of supply $\eta$, the farm production degree of homogeneity $h$, the mean farm's expected cost per unit output $E\left[\tilde{C}^{\#}(T)\right]\biggr|_{t = 0}$,  -->
 
 
+<!-- knowledge of control variables $k_i$ and ; estimation of the technology $\alpha_i$ and of the control variable elasticities $\kappa_i$, and $y_0$. -->
+
+<!-- Knowledge of the output price at time of planting $P(0)$, as well as the price seasonal growth rate $m_p$ and volatility $s_p$, and the length of the cropping season $T$ is also required. the number of farms in the population $N$ The mean farm's shadow price of budget $E[\lambda^{-\eta}]$. -->
+
+<!-- Below, an illusrative use case is presented ...for the ideal case where high quality farm survey data is available. The minimum data case is considered in the Discussion. the exogenous parameters of the aggregate supply curve are estimated based on Kenya maize farm data. Calculations of aggregate supply and the output price elasticity of supply using the estimated model are compared against empirical estimates. The comparison, in some limited sense, validates the model; but the main point here is to briefly explore some of the challenges faced when applying the method in a real world use case. -->
+
+<!-- The term $y_0 \theta_{\alpha} / \theta_{w}$ can  technology $\alpha_i$  the control variable elasticities $k_i$,  are estimated by straightforward OLS regression of either Equation \ref{eq:cobbDoug3} (in logs) or Equation \ref{eq:prodFn3}. -->
+
+
+<!-- $$ -->
+<!-- E[Q(T)]|_{t = 0} = N E[\theta] E[\lambda^{-\eta}] P(0)^{\eta} e^{\eta m_p T} \Phi(-z) \:\:; \\ -->
+<!-- z = -\gamma = \frac{\ln\left(\frac{E \left[ \tilde{C}^{\#}(T) \right]\bigr|_{t = 0}}{P(0)} \right)^{\eta} - \left(\eta m_p - \eta^2 \frac{s_p^2}{2} \right) T }{\eta s_p \sqrt{T}} \\ -->
+<!-- \theta = \left( y_0 \frac{\theta_x}{\theta_w} \hat{\theta}_k \right)^{\frac{\eta}{h}} -->
+<!-- $$ -->
+
+
+<!-- Parameterization of the aggregate supply curve derived above thus requires knowledge of the output price at time of planting $P(0)$, the price growth rate $m_p$ and volatility $s_p$, the length of the cropping season $T$, the number of farms in the population $N$, the output degree of homogeneity $h$, the mean farm's expected cost per unit output as evaluated at planting time $E[\tilde{C}^{\#}(T)]|_{t = 0}$, and the expected mean harvested output as evaluated at planting time $E[\tilde{q}^*(T)]\bigr|_{t = 0}$. -->
+
+<!-- ## Data -->
+
+
+<!-- For the present exercise,  -->
+<!-- summary statistics are provided in the appendix...variables on which focus...bin vars -->
+<!-- [as well as 2007 rainfall data... as well as the historical average rainfall. ...binary endowment variables...] -->
+<!-- This sort of a validation but not so much a validation... -->
+<!-- <!-- (graphics here or in Appendix) Summary statistics can be found in the Appendix. --> -->
+
+<!-- graphics: main input use, main labor types + who labors -->
+<!-- labor qty calculated over significant activities  -->
+<!-- cost calculated over significant expenditures - labor, fert, p&d  -->
 
 ## Illustrative use case: Data, specification, estimation
 
 
+Characterization of the data -- predominant ferttypes, price variation across districts, binary endowments
+Descriptive graphics [yield/qty histogram, dist level chem input prices and wage, family labor, rain anomaly, cost per acre] are presented in figure .... More detailed summary statistics breakdown in appendix.
+seed kg/acre not an input but a control variable representing planting density, which is a management decision/constraint
+field level aggregated up to farm level
+after estimation -- lambda rational farms
+constant $\tilde{y}$ is not the same for all farms, but varies depending upon how many binary endowments the farm has
+alternative model estimation included in appendix + some validation exercises -- tech share = cost share, implicit family wage
+Maize growing farms in 20 sub-counties (known as "districts" at the time of the survey) covering the main agricultural zones. [hired labor wage is given in KES/day, this is converted to a nominal hourly wage by dividing by 8.]
+Covers 18 labor activities, 16 excluding security and irrigation. wage varies considerably by activity and district. Main activities are 1st weeding, harvesting, planting, 1st ploughing, 2nd weeding, shelling, stooking
+
+
+## The farm level yield model
+
+Specification:
+Model is essentially a function of cost/acre, binary endowments (including the adoption of hybrid maize), management/agroclimatic/demographic control variables, and the prices of the main chemical inputs. Seed kg/acre is treated here as a management control variable, as opposed to a discretionary input, because it is effectively a measure of planting density, which is determined by agroclimatic constraints. Child family labor is likewise treated as a control variable because it effectively measures a poverty constraint as opposed to a discretionary management variable.
+
+Tried including farmer age, education, gender, maximum and minimum temperature, other types of family labor, and distance to market variables were also explored. But the coefficients on these variables were either statistically insignificant or introduced multicollinearity and/or missing data issues.
+
 
 For the purpose of parameterizing an aggregate supply curve, the data is required in order to have a mean yield ($E[y^*]$), average cost ($C^#$), and degree of homogeneity ($h$)....   The yield model in Equation \ref{eq:cobbDoug4} is specified as a function of cost per acre ($C^*$) and control variables ($k_i$).
 
-The continuous control variables $k_i$ are farm size (acres), seed quantity per acre, child family labor during planting (person-hours/acre), adult-equivalent household size (aehh07), and the 2007 main season rainfall. The cost per acre $C^*$ is the sum of all land prep and input (fertilizer, hired labor, and pesticide) costs. 
+The continuous control variables $k_i$ are farm size (acres), seed quantity per acre (planting density), child family labor during planting (person-hours/acre), adult-equivalent household size (aehh07), and the 2007 main season rainfall. The cost per acre $C^*$ is the sum of all land prep and input (seed, fertilizer, hired labor, and pesticide) costs.
 
 
 B and binary endowment variables ($b_i$), plus an error term $\epsilon$ assumed to be normally distributed with mean 0.
@@ -1025,7 +1044,16 @@ df_mod <- read.csv(thisFilepath, stringsAsFactors = F)
 colnames(df_mod) <- df_mod[nrow(df_mod), ]
 df_mod <- df_mod[-nrow(df_mod), ]
 df_mod[, -1] <- as.data.frame(apply(df_mod[, -1], 2, as.numeric))
-colnames(df_mod)[which(colnames(df_mod) == "Cstar")] <- "cost/acre"
+colnames(df_mod)[which(colnames(df_mod) == "Cstar")] <- "Cost/acre (KES/acre)"
+df_mod <- df_mod %>% rename(`Child family labor, planting (person-hrs/acre)` = `planting fam lab child (pers-hrs/acre)`,
+                            `Maize (KES/kg)` = P,
+                            `DAP fert (kg/acre)` = `dap (kg/acre)`,
+                            `DAP fert (KES/kg)` = `dap (KES/kg)`,
+                            `DAP fert (KES/acre)` = `dap (KES/acre)`,
+                            `Adult equivalent household size` = aehh07,
+                            `Farm size (acres)` = acres)
+colnames(df_mod) <- str_replace(colnames(df_mod), "^\\w{1}", toupper)
+colnames(df_mod) <- gsub("\\(KES/kg\\)", "price (KES/kg)", colnames(df_mod))
 #=======================================================================
 input_vars <- c(#"Total fam lab child (pers-hrs/acre)",
   #"Total fam lab (pers-hrs/acre)",
@@ -1057,14 +1085,14 @@ input_vars <- c(#"Total fam lab child (pers-hrs/acre)",
   #  "planting fam lab adult (pers-hrs/acre)",
   # "planting fam lab fem (pers-hrs/acre)",
   #"planting fam lab male (pers-hrs/acre)",
-  "planting fam lab child (pers-hrs/acre)",
+  "Child family labor, planting (person-hrs/acre)",
   #"planting wage labor (pers-hrs/acre)",
   #"Total synth. fert. (kg/acre)",
-  "seed (kg/acre)",
+  "Seed (kg/acre)",
   "Total CAN fert (kg/acre)",      
   "Total NPK fert (kg/acre)",  
   "Total UREA fert (kg/acre)",
-  "dap (kg/acre)",
+  "DAP fert (kg/acre)",
   #"UREA (46:0:0) (kg/acre)",
   #"CAN (26:0:0) (kg/acre)",
   # "NPK (23:23:23) (kg/acre)",
@@ -1081,7 +1109,7 @@ input_vars <- c(#"Total fam lab child (pers-hrs/acre)",
   "Total P&D chem (kg/acre)"
 )
 demog_vars <- c(#"age",
-  "aehh07"#,
+  "Adult equivalent household size"#,
   #"hhsize07"
   # "km to organic fert mkt",
   #"km to synth fert mkt",
@@ -1093,20 +1121,20 @@ clim_vars <- c("Rain anomaly"#,
                # "qwetxt",
                # "qwetit"
 )
-bin_vars <- c("adopter", #"gend",
+bin_vars <- c("Adopter", #"gend",
               #"irrigated",
               # "tenure: govt/communal/cooperative",
               # "tenure: owned by parent/relative", 
-              "tenure: owned with title deed",
+              "Tenure: owned with title deed",
               # "tenure: owned without title deed",
               # "tenure: rented",
               # "landprep: manual",
               # "landprep: none",
-              "landprep: oxen",
-              "landprep: tractor")
+              "Landprep: oxen",
+              "Landprep: tractor")
 #-----------------------------------------------------------------------
-costVars <- c("cost/acre", #"seed (KES/acre)",
-              "dap (KES/acre)",
+costVars <- c("Cost/acre (KES/acre)", #"seed (KES/acre)",
+              "DAP fert (KES/acre)",
               #"UREA (46:0:0) (KES/acre)",
               "Total CAN fert (KES/acre)",
               #"CAN (26:0:0) (KES/acre)",
@@ -1117,21 +1145,24 @@ costVars <- c("cost/acre", #"seed (KES/acre)",
               #"manure (KES/acre)",
               "Total P&D chem (KES/acre)"
 )
-priceVars <- gsub("acre", "kg", costVars[-1])
+priceVars <- gsub("\\(KES/acre\\)", "price (KES/kg)", costVars[-1])
 #priceVars <- c(priceVars, "harvesting (KES/hour)")
-priceVars <- priceVars[-which(priceVars == "Total UREA fert (KES/kg)")]
+priceVars <- priceVars[-which(priceVars == "Total UREA fert price (KES/kg)")]
 #-----------------------------------------------------------------------
 # # Remove farms not using any inputs (as these farms then have h=0)
 # indh0 <- which(rowSums(df_mod[, setdiff(input_vars, c("planting fam lab child (pers-hrs/acre)", "seed (kg/acre)"))]) == 0)
 # #length(indh0)
 # df_mod <- df_mod[-indh0, ]
 #-----------------------------------------------------------------------
-mod1Vars <- c("dist", "yield (kg/acre)", "acres",
+mod1Vars <- c("Dist", "Yield (kg/acre)", "Farm size (acres)",
               input_vars, bin_vars, demog_vars, clim_vars,
-              costVars, priceVars, "P")
+              costVars, priceVars, "Maize price (KES/kg)")
 df_mod1 <- df_mod[, mod1Vars]
-not_these <- which(colnames(df_mod1) %in% c("dist", costVars, priceVars, "P"))
-mod1 <- lm(`yield (kg/acre)`~., df_mod1[, -not_these])
+not_these <- which(colnames(df_mod1) %in% c("Dist", costVars, priceVars, "Maize price (KES/kg)"))
+# df_mod1 <- df_mod1 %>% rename(`Adult equivalent household size` = aehh07,
+#                               `DAP (kg/acre)` = `dap (kg/acre)`)
+mod1 <- lm(`Yield (kg/acre)`~., df_mod1[, -not_these])
+#summ(mod1)
 #summary(mod1)
 #sum(mod1$residuals^2)
 #plot(mod1$fitted.values, mod1$residuals)
@@ -1144,18 +1175,18 @@ coefsNegNames <- gsub("`", "", names(coefsNeg))
 inputsNegCoef <- coefsNegNames[which(coefsNegNames %in% input_vars)]
 inputsPosCoef <- setdiff(input_vars, inputsNegCoef)
 #-----------------------------------------------------------------------
-mod2Vars <- c("dist", "yield (kg/acre)", "cost/acre", "acres", "seed (kg/acre)", inputsNegCoef, bin_vars, demog_vars, clim_vars, priceVars)
-df_mod2 <- df_mod[, c(mod2Vars, "P")]
+mod2Vars <- c("Dist", "Yield (kg/acre)", "Cost/acre (KES/acre)", "Farm size (acres)", "Seed (kg/acre)", inputsNegCoef, bin_vars, demog_vars, clim_vars, priceVars)
+df_mod2 <- df_mod[, c(mod2Vars, "Maize price (KES/kg)")]
 #-----------------------------------------------------------------------
 # Get cStar and area before transforming
-cStar <- exp(df_mod2$`cost/acre`)
+cStar <- exp(df_mod2$`Cost/acre (KES/acre)`)
 muCstarSamp <- mean(cStar)
-lAcres <- df_mod2$acres
+lAcres <- df_mod2$`Farm size (acres)`
 mArea <- mean(lAcres)
 sArea <- sd(lAcres)
 muArea <- exp(mArea + sArea^2 / 2)
 #---------------------------------------------------------------------
-theseCols <- c("cost/acre", "acres", "seed (kg/acre)", demog_vars)
+theseCols <- c("Cost/acre (KES/acre)", "Farm size (acres)", "Seed (kg/acre)", demog_vars)
 thisFun <- function(x){out <- x - log(mean(exp(x))); return(out)}
 df_mod2[, theseCols] <- as.data.frame(apply(df_mod2[, theseCols], 2, thisFun))
 df_mod2[, priceVars] <- log(df_mod2[, priceVars])
@@ -1166,23 +1197,74 @@ for(i in 1:length(priceVars)){
       df_mod2[which(is.na(u)), priceVars[i]] <- 0
   }
 }
-not_these <- which(colnames(df_mod2) %in% c("P", "dist", costVars[-1]))
+not_these <- which(colnames(df_mod2) %in% c("Maize price (KES/kg)", "Dist", costVars[-1]))
 # naFn <- function(x){return(sum(is.na(x)))}
 # NaNfn <- function(x){return(sum(is.nan(x)))}
 # nNA <- apply(df_mod2, 2, naFn)
 # nNaN <- apply(df_mod2, 2, NaNfn)
-mod2 <- lm(`yield (kg/acre)`~., df_mod2[, -not_these])
-summary(mod2)
-sum(mod2$residuals^2)
-plot(mod2$fitted.values, mod1$residuals)
+mod2 <- lm(`Yield (kg/acre)`~., df_mod2[, -not_these])
+#summ(mod2)
+#summary(mod2)
+# sum(mod2$residuals^2)
+# plot(mod2$fitted.values, mod2$residuals)
 #car::vif(mod2)
-#View(df_mod2[which(mod2$residuals < -1.5), ])
-df_mod2$dist[which(mod2$residuals < -1)]
-df_mod2$dist[which(mod2$residuals > 1)]
-exp(df_mod2$acres[which(mod2$residuals < -1)])
-exp(df_mod2$acres[which(mod2$residuals > 1)])
-
-summ(mod2)
+# View(df_mod2[which(mod2$residuals < -1.5), ])
+# indOutlier <- which(mod2$residuals < -2)
+# df_mod2[indOutlier, c("Dist", "Yield (kg/acre)", "Farm size (acres)")]
+# df_mod2 <- df_mod2[-indOutlier, ]
+#======================================================================
+#======================================================================
+#======================================================================
+# Descriptive graphics
+dfLook <- df_mod2
+gatherCols <- colnames(dfLook)[-1]
+dfLook <- dfLook %>% gather_("var", "val", gatherCols)
+# Control vars
+controlVarsVec <- c("Seed (kg/acre)", "Adult equivalent household size", "Rain anomaly", "Child family labor, planting (person-hrs/acre)", "Cost/acre", "Farm size (acres)")
+dfPlot <- dfLook %>% subset(var == "Yield (kg/acre)")
+dfPlot$val <- exp(dfPlot$val)
+ggYd <- ggplot(dfPlot, aes(x = val)) +
+  geom_histogram(color = "black", fill = "white") +
+  facet_wrap(~var, scales = "free") + theme_bw() +
+  theme(axis.title = element_blank(),
+        #axis.title.y = element_text(size = axisTitleSize),
+        axis.text = element_text(size = axisTextSize),
+        strip.background = element_blank(),
+        strip.text = element_text(size = facetTitleSize))
+dfPlot <- dfLook %>% subset(var %in% controlVarsVec & val > 0)
+dfPlot$val <- exp(dfPlot$val)
+u <- dfPlot$var; dfPlot$var[grep("Adult equivalent", u)] <- "Adult equivalent\nhousehold size"
+u <- dfPlot$var; dfPlot$var[grep("Child family", u)] <- "Child fam lab, planting\n (pers-hrs/acre)"
+ggIndepVars <- ggplot(dfPlot, aes(x = val)) +
+  geom_histogram(color = "black", fill = "white") +
+  facet_wrap(~var, scales = "free") + theme_bw() +
+  theme(axis.title.x = element_blank(),
+        #axis.title.y = element_text(size = axisTitleSize),
+        axis.text = element_text(size = axisTextSize),
+        strip.background = element_blank(),
+        strip.text = element_text(size = facetTitleSize - 1))
+ggIndepVars + ggYd + plot_layout(widths = c(2, 1))
+# Input/output prices
+dfPlot <- dfLook %>% subset(var %in% priceVars & val > 0) %>% rename(`KES/kg` = val)
+dfPlot$var <- gsub(" \\(KES/kg\\)", "", dfPlot$var)
+ggInputPrices <- ggplot(dfPlot, aes(y = `KES/kg`)) +
+  geom_histogram(color = "black", fill = "white") +
+  facet_wrap(~var, scales = "free_y") + theme_bw() +
+  theme(axis.text = element_text(size = axisTextSize),
+        strip.background = element_blank(),
+        strip.text = element_text(size = facetTitleSize))
+dfPlot <- dfLook %>% subset(var == "Maize price (KES/kg)") %>%
+  group_by(Dist) %>% summarise(val = mean(val)) %>%
+  rename(`KES/kg` = val) %>% mutate(var = "Maize price")
+dfPlot$var <- gsub(" \\(KES/kg\\)", "", dfPlot$var)
+ggMaizePrice <- ggplot(dfPlot, aes(x = `KES/kg`, y = Dist)) +
+  geom_bar(stat = "identity", color = "black", fill = "white") + 
+    facet_wrap(~var, scales = "free_y") + theme_bw() +
+  theme(axis.title.y = element_blank(),
+        axis.text = element_text(size = axisTextSize),
+        strip.background = element_blank(),
+        strip.text = element_text(size = facetTitleSize))
+#ggInputPrices + ggMaizePrice + plot_layout(widths = c(2, 1))
 #======================================================================
 #======================================================================
 #======================================================================
@@ -1329,7 +1411,7 @@ gg <- gg + theme(axis.title = element_blank(),
                  plot.title = element_text(size = axisTitleSize, hjust = 0.5),
                  legend.position = "none")
 gg <- gg + geom_text(size = cellText_size)
-gg1 <- gg
+ggEndow1 <- gg
 #---
 gg <- ggplot(df_plot, aes(x = `Number of farms`, y = Type))
 gg <- gg + scale_y_discrete(limits = typeVec)
@@ -1342,11 +1424,68 @@ gg <- gg + theme(axis.title = element_blank(),
                  axis.text.x = element_text(size = axisTextSize),
                  #panel.grid = element_blank(),
                  plot.title = element_text(size = axisTitleSize, hjust = 0.5))
-gg2 <- gg
+ggEndow2 <- gg
 #---
-gg1 + gg2 + plot_layout(ncol = 2, widths = c(1/2, 1))
+
 
 ```
+
+## Data and transformation
+
+The data used below detail farm level input and output quantities and prices for the 2007 main maize season on 942 farms across 20 sub-counties in Kenya. The data are a subset of a panel covering the main and short seasons of multiple crops for the years 2000, 2004, 2007, and 2010, originally gathered by the Egerton University Tegemeo Institute of Agricultural Policy and Development in partnership with Michigan State University, under the auspices of a USAID project [@maizeData]. Apart from the usual inputs and outputs (fertilizer, P&D control chemicals, and hired labor), the data also include detailed information on family labor, agroclimatic factors, demography, and infrastructure.
+
+Descriptive histograms of the dependent and independent variables appearing in the farm level model are presented in Figure .... Bin vars in Figure... mean farm size is small, mean yield lognormally distributed, A more detailed description of the data and processing, including summary statistics, is given in Appendix 2.
+
+121 crops grown in the survey area, by far maize and beans, often intercropped together. Only farms reporting maize as their main crop are included for the present exercise. Only farms yd > 1kg/acre and cost > 0. [inappendix: yield from croplev07.dta, field07.dta, fert07.dta, labour07.dta, input07.dta (P&D control inputs) files, tampa_rain_96_07.dta (main07), climate.dta (qwetpre), main season only, Green maize production converted to dry maize equivalent by subtracting 15% of the production weight. Adopter if purchased or retained hybrid maize seed.]
+The survey reports 28 different types of organic and synthetic fertilizer types in use, only a small subset of which is applied in significant quantities: CAN, NPK, DAP, UREA, and manure. For the present exercise, different mixture ratios within any one of these main fertilizer categories (e.g., NPK (23:23:0) and NPK (18:14:12)) are aggregated. Pest and disease control chemical use (pesticide, insecticide, herbicide, fungicide) is similarly aggregated up to a single "P&D control chemical" variable. Reported in different units, harmonized to kg. Input prices are then calculated as the aggregate cost divided by the aggregate quantities. Rain anomaly is actual rainfall divided by the qwetpre
+
+adult equivalent household size 
+
+qwetpre is a climate model projection of rainfall during the rainiest three consecutive months of the year, i.e., the main rains season. It provides a benchmark based on which to measure how far actual rainfall diverges from expectation.
+
+
+cost divided by area, natural logs taken.
+The "prices" of aggregated input categories are calculated by dividing the value of the aggregate (calculated as qty x price) by the aggregate quantity.
+
+Cost/acre Cstar is defined df$`Total synth fert (KES/acre)` + 
+  df$`seed (KES/acre)` +
+  df$lpcost +
+  #df$`Non-land prep wage labor (KES/acre)` +
+  df$`Total P&D chem (KES/acre)`
+
+df$`Rain anomaly` <- df$main07 / df$qwetpre
+
+Graphics:
+main ferttypes used
+likewise pesticide/herbicide/fungicide
+Farm size
+Input and output prices vary considerably across districts.
+Wage differs considerably by activity and district
+Labor type breakdown who labors where
+binary endowment barchart
+
+```{r Figx1, fig.show = "hold", fig.width=5, fig.height=3, fig.align="center", fig.cap="\\label{fig:descriptHist1}Histograms of the dependent and continuous independent variables in the model, except for prices. Note that most farms do not employ child family labor. Zero values are excluded in the child family labor histogram to clarify the distribution of non-zero values.", echo = FALSE}
+
+ggIndepVars + ggYd + plot_layout(widths = c(2, 1))
+
+# ggsave(, "....tiff", width = 5, height = 3, dpi = 300)
+
+```
+
+
+```{r Figx3, fig.show = "hold", fig.width=5, fig.height=3, fig.align="center", fig.cap="\\label{fig:descriptHist2}Input prices (farm level) and maize price (county level).", echo = FALSE}
+
+ggInputPrices + ggMaizePrice + plot_layout(widths = c(2, 1))
+# ggsave(, "pricesBarChart.tiff", width = 5, height = 3, dpi = 300)
+
+```
+
+
+\ref{fig:descriptHist1}
+
+\ref{fig:descriptHist2}
+
+## Parameter estimation
 
 By Equation \ref{eq:yStarC}, the coefficient of `r round(hCoef, 3)` on logged cost/acre can be interpreted as the yield degree of homogeneity $h$. By Equation \ref{eq:PelastYstar}, the farm level price elasticity of supply then follows as `r round(etaCoef, 3)`.
 
@@ -1365,6 +1504,16 @@ Where $s_{\epsilon}^2$ is the variance of the error term $\epsilon$.
 ...lambda > h for most as expected, with truncated mean slightly less than 1...
 
 [additional tacit axioms---linear independence ]
+
+```{r Fig4, fig.show = "hold", fig.width=5, fig.height=3, fig.align="center", fig.cap="\\label{fig:ySampAvg}Yield evaluated at the sample means of the control variables, and with rainfall anomaly set to 1 (no divergence from historical rainfall), for farms with different binary endowments.", echo = FALSE}
+
+ggEndow1 + ggEndow2 + plot_layout(ncol = 2, widths = c(1/2, 1))
+
+# ggsave(, "endowmentsBarChart.tiff", width = 5, height = 3, dpi = 300)
+
+```
+
+Figure \ref{fig:ySampAvg}
 
 ## ...
 
