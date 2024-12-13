@@ -962,8 +962,7 @@ An accurate value for $N$ will be difficult to estimate in populations where no 
 <!-- summary statistics are provided in the appendix...variables on which focus...bin vars -->
 <!-- [as well as 2007 rainfall data... as well as the historical average rainfall. ...binary endowment variables...] -->
 <!-- This sort of a validation but not so much a validation... -->
-<!-- <!-- (graphics here or in Appendix) Summary statistics can be found in the Appendix. --> -->
-
+<!-- <!-- (graphics here or in Appendix) Summary statistics can be found in the Appendix. --> 
 <!-- graphics: main input use, main labor types + who labors -->
 <!-- labor qty calculated over significant activities  -->
 <!-- cost calculated over significant expenditures - labor, fert, p&d  -->
@@ -985,7 +984,7 @@ Covers 18 labor activities, 16 excluding security and irrigation. wage varies co
 ## The farm level yield model
 
 Specification:
-Model is essentially a function of cost/acre, binary endowments (including the adoption of hybrid maize), management/agroclimatic/demographic control variables, and the prices of the main chemical inputs. Seed kg/acre is treated here as a management control variable, as opposed to a discretionary input, because it is effectively a measure of planting density, which is determined by agroclimatic constraints. Child family labor is likewise treated as a control variable because it effectively measures a poverty constraint as opposed to a discretionary management variable.
+Model is essentially a function of cost/acre, binary endowments (including the adoption of hybrid maize), management/agroclimatic/demographic control variables, and the prices of the main chemical inputs.
 
 Tried including farmer age, education, gender, maximum and minimum temperature, other types of family labor, and distance to market variables were also explored. But the coefficients on these variables were either statistically insignificant or introduced multicollinearity and/or missing data issues.
 
@@ -999,7 +998,7 @@ B and binary endowment variables ($b_i$), plus an error term $\epsilon$ assumed 
 
 
 
-The binary endowments in the model are land tenure (whether or not the farmer owns their land), hybrid maize seed, oxen, and tractor. These variables take a value of $e$ if the endowment is present and $1$ otherwise, such that the coefficients $\beta_i$ are added to the intercept term $\beta_0$ on farms that have the endowment, and vanish otherwise.
+The binary endowments in the model are land tenure (whether or not the head of household holds a title deed to their land), hybrid maize seed, oxen, and tractor. These variables take a value of $e$ if the endowment is present and $1$ otherwise, such that the coefficients $\beta_i$ are added to the intercept term $\beta_0$ on farms that have the endowment, and vanish otherwise.
 
 The OLS estimation results are presented in Table 1. Excellent fit, low standard errors, reasonable R2, homoskedastic. A multicollinearity test revealed low vif score and hence linearly independent logged regressors.
 
@@ -1432,15 +1431,39 @@ ggEndow2 <- gg
 
 ## Data and transformation
 
-The data used below detail farm level input and output quantities and prices for the 2007 main maize season on 942 farms across 20 sub-counties in Kenya. The data are a subset of a panel covering the main and short seasons of multiple crops for the years 2000, 2004, 2007, and 2010, originally gathered by the Egerton University Tegemeo Institute of Agricultural Policy and Development in partnership with Michigan State University, under the auspices of a USAID project [@maizeData]. Apart from the usual inputs and outputs (fertilizer, P&D control chemicals, and hired labor), the data also include detailed information on family labor, agroclimatic factors, demography, and infrastructure.
+The farm data used in this pedagogical exercise are taken from a panel covering the main and short rains seasons for multiple crops across Kenya for the years 2000, 2004, 2007, and 2010, originally gathered by the Egerton University Tegemeo Institute of Agricultural Policy and Development in partnership with Michigan State University, under the auspices of a USAID project [@maizeData]. For the present exercise, only the 2007 main rains season maize farm data is used. Farms not reporting maize as their main crop or reporting zero maize production cost are excluded, resulting in a sample size of 942 maize farms across 20 counties. Full details regarding the data and its processing for the present exercise, including summary statistics, are provided in Appendix 2.
 
-Descriptive histograms of the dependent and independent variables appearing in the farm level model are presented in Figure .... Bin vars in Figure... mean farm size is small, mean yield lognormally distributed, A more detailed description of the data and processing, including summary statistics, is given in Appendix 2.
+The retained data details farm level input types, quantities, and costs, such that input prices can be calculated at farm level by dividing costs by quantities. The inputs included in this exercise are synthetic fertilizers and pest and disease (P&D) control chemicals. The fertilizers are diammonium phosphate (DAP), calcium ammonium nitrate (CAN), and nitrogen-phosphorous-potassium (NPK). Different mixture ratios under these headings are aggregated. For example, "NPK (23:23:0)", "NPK (18:14:12)", and all other NPK mixtures are aggregated to "Total NPK". Similarly, fungicide, herbicide, insecticide, and pesticide use is aggregated under a single "P&D control chemicals" variable. The price of each aggregate input is then calculated as the aggregate cost divided by the aggregate quantity. Input and output prices vary considerably across the population (Figure ...).
+
+To control for exogenous constraints/endowments, a range of binary and continuously valued control variables is included. The continuously valued control variables are farm size (acres), adult equivalent household size, rainfall anomaly, planting density (seed kg/acre), and child family labor (person-hours/acre). "Rainfall anomaly" captures rainfall divergence from expectation. It is calculated as the actual rainfall during the three months of the 2007 main season divided by an ex ante climate model projection over the same three months (see Appendix 2 for details). A rainfall anomaly value of 1, for example, would suggest that actual rainfall matched expectation. Planting density is treated as a control variable because it is typically determined by agroclimatic endowments/constraints such as soil conditions and cultivar. Child family labor is likewise treated as a control variable on the premise that it effectively measures a hard constraint (poverty), as opposed to a discretionary input. Descriptive histograms of these variables are presented in Figure ..., together with total cost/acre and maize yield. Note that the maize yield density exhibits a lognormal shape, in accordance with axiom 3.
+
+As explained in section..., all continuously valued independent variables are divided by their sample mean, such that the mean yield is equal to the constant ytilde in Equation.... A number of binary control variables are included such that ytilde varies across the population, not just the intercept. 
+
+The binary control variables included in this exercise are land tenure (whether or not the head of household holds a title deed to the land they are farming), adoption of hybrid maize, and land preparation endowments (oxen, tractor, or none). There are 14 distinct combinations of these four endowments occurring in the sample, including the "base" case of zero binary endowments. The base case, the ...ytilde  The prevalence of these 14 endowment configurations is summarized in the right panel of Figure ....
+
+
+
+<!-- Apart from the usual inputs and outputs (fertilizer, P&D control chemicals, and hired labor), the data also include detailed information on family labor, agroclimatic factors, demography, and infrastructure. -->
+
+Descriptive histograms of the continuously valued variables used in this exercise are presented in Figure ... 
+
+The fertilizer and P&D chemical input "prices" are calculated at farm level as the cost of each input divided by its quantity. The fertilizer data details several different mixtures within three main categories: 
+The maize price and input prices are 
+
+
+Prior to estimation all continuously valued variables except for rainfall anomaly are divided by their respective sample means and the natural log is taken. As explained in ... this transformation means that the mean logged yield is equivalent to the constant plus the binary endowments.
+
+[show equation?]
+
+Continuous independent variables are divided by their sample mean, such that their mean is 0.
+
+Several other input, infrastructural, demographic, and agroclimatic variables, including tribal affiliation, were explored in this exercise, but ultimately discarded due either 
 
 121 crops grown in the survey area, by far maize and beans, often intercropped together. Only farms reporting maize as their main crop are included for the present exercise. Only farms yd > 1kg/acre and cost > 0. [inappendix: yield from croplev07.dta, field07.dta, fert07.dta, labour07.dta, input07.dta (P&D control inputs) files, tampa_rain_96_07.dta (main07), climate.dta (qwetpre), main season only, Green maize production converted to dry maize equivalent by subtracting 15% of the production weight. Adopter if purchased or retained hybrid maize seed.]
 The survey reports 28 different types of organic and synthetic fertilizer types in use, only a small subset of which is applied in significant quantities: CAN, NPK, DAP, UREA, and manure. For the present exercise, different mixture ratios within any one of these main fertilizer categories (e.g., NPK (23:23:0) and NPK (18:14:12)) are aggregated. Pest and disease control chemical use (pesticide, insecticide, herbicide, fungicide) is similarly aggregated up to a single "P&D control chemical" variable. Reported in different units, harmonized to kg. Input prices are then calculated as the aggregate cost divided by the aggregate quantities. Rain anomaly is actual rainfall divided by the qwetpre
-
+the data are open access and available from Tegemeo Institute upon request, must be used in accordance with the provisions of the Tegemeo data policy.
 adult equivalent household size 
-
+tribal affiliation, gender of head of household, cell phone use, distance to market or nearest road, etc., but 
 qwetpre is a climate model projection of rainfall during the rainiest three consecutive months of the year, i.e., the main rains season. It provides a benchmark based on which to measure how far actual rainfall diverges from expectation.
 
 
