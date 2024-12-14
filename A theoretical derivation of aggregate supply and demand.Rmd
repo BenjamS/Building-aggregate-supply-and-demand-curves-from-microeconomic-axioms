@@ -925,7 +925,7 @@ Given sufficient price data, the values of $m_p$ and $s_p$ should be estimated o
 An accurate value for $N$ will be difficult to estimate in populations where no recent farm census data is available. Note that $N$ is not necessary for evaluation of the price elasticity of aggregate supply and price risk elasticity of aggregate supply (Equations \ref{eq:pElasQagg} and \ref{eq:pRiskElasQagg}).
 
 
-# An illustrative use case: Estimation of the aggregate supply curve using Kenya farm survey data
+# An illustrative use case: a parameterization of the maize aggregate supply curve in Kenya 
 
 <!-- As an illustrative use case, the supply curve derived above is fitted on 2007 Kenya farm data; and the expected aggregate supply curve is calculated. The (expected) price elasticity of aggregate supply curve and producer participation are also calculated. -->
 
@@ -967,54 +967,7 @@ An accurate value for $N$ will be difficult to estimate in populations where no 
 <!-- labor qty calculated over significant activities  -->
 <!-- cost calculated over significant expenditures - labor, fert, p&d  -->
 
-## Illustrative use case: Data, specification, estimation
-
-
-Characterization of the data -- predominant ferttypes, price variation across districts, binary endowments
-Descriptive graphics [yield/qty histogram, dist level chem input prices and wage, family labor, rain anomaly, cost per acre] are presented in figure .... More detailed summary statistics breakdown in appendix.
-seed kg/acre not an input but a control variable representing planting density, which is a management decision/constraint
-field level aggregated up to farm level
-after estimation -- lambda rational farms
-constant $\tilde{y}$ is not the same for all farms, but varies depending upon how many binary endowments the farm has
-alternative model estimation included in appendix + some validation exercises -- tech share = cost share, implicit family wage
-Maize growing farms in 20 sub-counties (known as "districts" at the time of the survey) covering the main agricultural zones. [hired labor wage is given in KES/day, this is converted to a nominal hourly wage by dividing by 8.]
-Covers 18 labor activities, 16 excluding security and irrigation. wage varies considerably by activity and district. Main activities are 1st weeding, harvesting, planting, 1st ploughing, 2nd weeding, shelling, stooking
-
-
-## The farm level yield model
-
-Specification:
-Model is essentially a function of cost/acre, binary endowments (including the adoption of hybrid maize), management/agroclimatic/demographic control variables, and the prices of the main chemical inputs.
-
-Tried including farmer age, education, gender, maximum and minimum temperature, other types of family labor, and distance to market variables were also explored. But the coefficients on these variables were either statistically insignificant or introduced multicollinearity and/or missing data issues.
-
-
-For the purpose of parameterizing an aggregate supply curve, the data is required in order to have a mean yield ($E[y^*]$), average cost ($C^#$), and degree of homogeneity ($h$)....   The yield model in Equation \ref{eq:cobbDoug4} is specified as a function of cost per acre ($C^*$) and control variables ($k_i$).
-
-The continuous control variables $k_i$ are farm size (acres), seed quantity per acre (planting density), child family labor during planting (person-hours/acre), adult-equivalent household size (aehh07), and the 2007 main season rainfall. The cost per acre $C^*$ is the sum of all land prep and input (seed, fertilizer, hired labor, and pesticide) costs.
-
-
-B and binary endowment variables ($b_i$), plus an error term $\epsilon$ assumed to be normally distributed with mean 0.
-
-
-
-The binary endowments in the model are land tenure (whether or not the head of household holds a title deed to their land), hybrid maize seed, oxen, and tractor. These variables take a value of $e$ if the endowment is present and $1$ otherwise, such that the coefficients $\beta_i$ are added to the intercept term $\beta_0$ on farms that have the endowment, and vanish otherwise.
-
-The OLS estimation results are presented in Table 1. Excellent fit, low standard errors, reasonable R2, homoskedastic. A multicollinearity test revealed low vif score and hence linearly independent logged regressors.
-
-Because the model is estimated in logs, the coefficients on the continuous variables may be interpreted as the control variable elasticities ($\kappa_i$). Note that the coefficient on acres is negative, affirming the inverse relation between farm size and yield found in numerous other studies [@muyanga2019revisiting; @larson2014should; @wassie2019revisiting; @gautam2019too; @kimhi2006plot]. The coefficient on child family labor during planting is also negative, confirming that this variable is better thought of as a hard constraint rather than a discretionary management variable.
-
-
-This is where we talk about the continuous and binary variables used in the model and how other specifications are certainly feasible... lots of management variables available, but not required because of Equation \ref{eq:yStarC}. Models including farmer age, education, gender, maximum and minimum temperature, other types of family labor, and distance to market variables were also explored. But the coefficients on these variables were either statistically insignificant or introduced multicollinearity and/or missing data issues. A model based on Equation \ref{eq:cobbDoug3} was also estimated (provided in the Appendix) to compare h via mod2 against h as sum of estimated output elasticities of inputs. As discussed in sec..., the mod1 h varies across farms...the mod 2 h is very close to the mean h of mod1.
-
-As discussed in section \ref{sec:ax12}, the independent continuous variables $k_i$ and $C^*$ are divided by their respective sample means $\tilde{k}_i$ and $\tilde{C}^*$ in order to facilitate interpretation of the constant $\tilde{y}$. (In the case of rainfall, $\tilde{k}_i$ is the historical average, not the sample average). The constant $\tilde{y}$ may then be interpreted as the farm yield evaluated at the sample mean of the continuous independent variables (at the historical mean in the case of rainfall). Insofar as the continuous independent variables are uncorrelated, moreover, then $E[\hat{y}^*] = \tilde{y} e^{s_{\epsilon}^2 / 2}$, where $s_{\epsilon}^2$ is the variance of the error $\epsilon$.
-
-But $E[\hat{y}^*]$ is the sample mean. 
-
-
-There are x distinct output prices reported in the data, ranging from x to x with a mean of x... mp and sp from FPMA.
-
-
+## Model Specification
 
 The yield model is specified in logs as a function of 
 
@@ -1031,8 +984,13 @@ This is just the yield function in Equation \ref{eq:yStarC} in logs, and adjuste
 
 Note that the constant $\tilde{y}$ is not the same for all farms, but varies depending upon how many binary endowments the farm has. The "base case" of $\tilde{y} = e^{\beta_0}$, represents the sample average yield on farms with neither land tenure nor hybrid maize nor use of oxen or tractors for land preparation. In the sample examined here, there are 14 unique values for $\tilde{y}$, summarized in Figure \ref{fig:ySampAvg}.
 
-In the Appendix it is shown that the model in Equation \ref{eq:cobbDoug3} is also estimated...see Appendix. The value of $x_i / \tilde{x}_i$ is set to $1$ on farms where the input is not applied, such that the term vanishes from the equation... The output elasticities of input $\alpha_i$ are summed... add up to $h$.
-<!-- appendix graphics: input use, family labor, sumstats table -->
+Model is essentially a function of cost/acre, binary endowments (including the adoption of hybrid maize), management/agroclimatic/demographic control variables, and the prices of the main chemical inputs.
+
+For the purpose of parameterizing an aggregate supply curve, the data is required in order to have a mean yield ($E[y^*]$), average cost ($C^#$), and degree of homogeneity ($h$)....   The yield model in Equation \ref{eq:cobbDoug4} is specified as a function of cost per acre ($C^*$) and control variables ($k_i$).
+
+The continuous control variables $k_i$ are farm size (acres), seed quantity per acre (planting density), child family labor during planting (person-hours/acre), adult-equivalent household size (aehh07), and the 2007 main season rainfall. The cost per acre $C^*$ is the sum of all land prep and input (seed, fertilizer, hired labor, and pesticide) costs.
+
+B and binary endowment variables ($b_i$), plus an error term $\epsilon$ assumed to be normally distributed with mean 0.
 
 ```{r Fig3, fig.show = "hold", fig.width = 5, fig.height=5, fig.align="center", fig.cap="\\label{fig:lognormalYd}", echo = FALSE}
 
@@ -1431,34 +1389,26 @@ ggEndow2 <- gg
 
 ## Data and transformation
 
-The farm data used in this pedagogical exercise are taken from a panel covering the main and short rains seasons for multiple crops across Kenya for the years 2000, 2004, 2007, and 2010, originally gathered by the Egerton University Tegemeo Institute of Agricultural Policy and Development in partnership with Michigan State University, under the auspices of a USAID project [@maizeData]. For the present exercise, only the 2007 main rains season maize farm data is used. Farms not reporting maize as their main crop or reporting zero maize production cost are excluded, resulting in a sample size of 942 maize farms across 20 counties. Full details regarding the data and its processing for the present exercise, including summary statistics, are provided in Appendix 2.
+The farm data used in this pedagogical exercise are taken from a panel covering the main and short rains seasons for multiple crops across Kenya for the years 2000, 2004, 2007, and 2010, originally gathered by the Egerton University Tegemeo Institute of Agricultural Policy and Development in partnership with Michigan State University, under the auspices of a USAID project [@maizeData]. For the present exercise, only the 2007 main rains season maize farm data is used. Farms not reporting maize as their main crop or reporting zero maize production cost are excluded, resulting in a sample size of 942 maize farms across 20 counties. The sample represents all major maize growing regions in the country. Full details regarding the data and its processing for the present exercise, including summary statistics, are provided in Appendix 2.
 
-The retained data details farm level input types, quantities, and costs, such that input prices can be calculated at farm level by dividing costs by quantities. The inputs included in this exercise are synthetic fertilizers and pest and disease (P&D) control chemicals. The fertilizers are diammonium phosphate (DAP), calcium ammonium nitrate (CAN), and nitrogen-phosphorous-potassium (NPK). Different mixture ratios under these headings are aggregated. For example, "NPK (23:23:0)", "NPK (18:14:12)", and all other NPK mixtures are aggregated to "Total NPK". Similarly, fungicide, herbicide, insecticide, and pesticide use is aggregated under a single "P&D control chemicals" variable. The price of each aggregate input is then calculated as the aggregate cost divided by the aggregate quantity. Input and output prices vary considerably across the population (Figure ...).
+Estimation of the yield model specified above requires data detailing maize yield, cost/acre, input prices, and continuous and binary control variables.
 
-To control for exogenous constraints/endowments, a range of binary and continuously valued control variables is included. The continuously valued control variables are farm size (acres), adult equivalent household size, rainfall anomaly, planting density (seed kg/acre), and child family labor (person-hours/acre). "Rainfall anomaly" captures rainfall divergence from expectation. It is calculated as the actual rainfall during the three months of the 2007 main season divided by an ex ante climate model projection over the same three months (see Appendix 2 for details). A rainfall anomaly value of 1, for example, would suggest that actual rainfall matched expectation. Planting density is treated as a control variable because it is typically determined by agroclimatic endowments/constraints such as soil conditions and cultivar. Child family labor is likewise treated as a control variable on the premise that it effectively measures a hard constraint (poverty), as opposed to a discretionary input. Descriptive histograms of these variables are presented in Figure ..., together with total cost/acre and maize yield. Note that the maize yield density exhibits a lognormal shape, in accordance with axiom 3.
+The retained data details farm level input types, quantities, and costs, such that input prices can be calculated at farm level by dividing costs by quantities. The inputs included in this exercise are synthetic fertilizers and pest and disease (P&D) control chemicals. The fertilizers are diammonium phosphate (DAP), calcium ammonium nitrate (CAN), and nitrogen-phosphorous-potassium (NPK). Different mixture ratios under NPK and CAN are aggregated. For example, "NPK (23:23:0)", "NPK (18:14:12)", and all other NPK mixtures are aggregated to "Total NPK". Similarly, fungicide, herbicide, insecticide, and pesticide use is aggregated under a single "P&D control chemicals" variable. The price of each aggregate input is then calculated as the aggregate cost divided by the aggregate quantity. Input and output prices vary considerably across the population (Figure ...).
+
+Cost/acre is calculated as the sum of the costs of land preparation, synthetic fertilizers (CAN, NPK, and DAP), P&D control chemicals, non-land preparation wage labor (mostly harvesting and shelling), and seed, divided by farm size. [do i say something about some costs not being represented by a price in the model?]
+
+To control for exogenous constraints/endowments, a range of binary and continuously valued control variables is included. The continuously valued control variables are farm size (acres), adult equivalent household size, rainfall anomaly, planting density (seed kg/acre), and child family labor (person-hours/acre). "Rainfall anomaly" captures rainfall divergence from expectation. It is calculated as the actual rainfall during the 2007 main rains season divided by an historical average over the same period (see Appendix 2 for details). A rainfall anomaly value of 1, for example, would suggest that rainfall matched expectation. Planting density is treated as a control variable because it is typically determined by agroclimatic endowments/constraints such as soil conditions and cultivar. Child family labor is likewise treated as a control variable on the premise that it effectively measures a hard constraint (poverty), as opposed to a discretionary input. Descriptive histograms of these variables are presented in Figure ..., together with total cost/acre and maize yield. Note that the maize yield density exhibits a lognormal shape, in accordance with axiom 3.
 
 As explained in section..., all continuously valued independent variables are divided by their sample mean, such that the mean yield is equal to the constant ytilde in Equation.... A number of binary control variables are included such that ytilde varies across the population, not just the intercept. 
 
-The binary control variables included in this exercise are land tenure (whether or not the head of household holds a title deed to the land they are farming), adoption of hybrid maize, and land preparation endowments (oxen, tractor, or none). There are 14 distinct combinations of these four endowments occurring in the sample, including the "base" case of zero binary endowments. The base case, the ...ytilde  The prevalence of these 14 endowment configurations is summarized in the right panel of Figure ....
+The binary control variables included in this exercise are land tenure (whether or not the head of household holds a title deed to the land they are farming), adoption of hybrid maize, and land preparation endowments (oxen, tractor, or none). There are 14 distinct combinations of these four endowments occurring in the sample, including the "base" case of zero binary endowments. The prevalence of these 14 endowment configurations is summarized in the right panel of Figure ....
 
 
 
-<!-- Apart from the usual inputs and outputs (fertilizer, P&D control chemicals, and hired labor), the data also include detailed information on family labor, agroclimatic factors, demography, and infrastructure. -->
 
-Descriptive histograms of the continuously valued variables used in this exercise are presented in Figure ... 
-
-The fertilizer and P&D chemical input "prices" are calculated at farm level as the cost of each input divided by its quantity. The fertilizer data details several different mixtures within three main categories: 
-The maize price and input prices are 
-
-
-Prior to estimation all continuously valued variables except for rainfall anomaly are divided by their respective sample means and the natural log is taken. As explained in ... this transformation means that the mean logged yield is equivalent to the constant plus the binary endowments.
-
-[show equation?]
-
-Continuous independent variables are divided by their sample mean, such that their mean is 0.
-
-Several other input, infrastructural, demographic, and agroclimatic variables, including tribal affiliation, were explored in this exercise, but ultimately discarded due either 
-
+Appendix 2:
+DAP (NPK, CAN, UREA?) application in line with recommended level of 50kg/acre
+farm size refers to maize fields only, excludes fields that are fallow or where other crops are grown
 121 crops grown in the survey area, by far maize and beans, often intercropped together. Only farms reporting maize as their main crop are included for the present exercise. Only farms yd > 1kg/acre and cost > 0. [inappendix: yield from croplev07.dta, field07.dta, fert07.dta, labour07.dta, input07.dta (P&D control inputs) files, tampa_rain_96_07.dta (main07), climate.dta (qwetpre), main season only, Green maize production converted to dry maize equivalent by subtracting 15% of the production weight. Adopter if purchased or retained hybrid maize seed.]
 The survey reports 28 different types of organic and synthetic fertilizer types in use, only a small subset of which is applied in significant quantities: CAN, NPK, DAP, UREA, and manure. For the present exercise, different mixture ratios within any one of these main fertilizer categories (e.g., NPK (23:23:0) and NPK (18:14:12)) are aggregated. Pest and disease control chemical use (pesticide, insecticide, herbicide, fungicide) is similarly aggregated up to a single "P&D control chemical" variable. Reported in different units, harmonized to kg. Input prices are then calculated as the aggregate cost divided by the aggregate quantities. Rain anomaly is actual rainfall divided by the qwetpre
 the data are open access and available from Tegemeo Institute upon request, must be used in accordance with the provisions of the Tegemeo data policy.
@@ -1479,13 +1429,24 @@ Cost/acre Cstar is defined df$`Total synth fert (KES/acre)` +
 df$`Rain anomaly` <- df$main07 / df$qwetpre
 
 Graphics:
-main ferttypes used
+main ferttypes used, fert kg/acre in line with recommendations, urea, manure
 likewise pesticide/herbicide/fungicide
 Farm size
 Input and output prices vary considerably across districts.
 Wage differs considerably by activity and district
 Labor type breakdown who labors where
 binary endowment barchart
+
+Characterization of the data -- predominant ferttypes, price variation across districts, binary endowments
+Descriptive graphics [yield/qty histogram, dist level chem input prices and wage, family labor, rain anomaly, cost per acre] are presented in figure .... More detailed summary statistics breakdown in appendix.
+seed kg/acre not an input but a control variable representing planting density, which is a management decision/constraint
+field level aggregated up to farm level
+after estimation -- lambda rational farms
+constant $\tilde{y}$ is not the same for all farms, but varies depending upon how many binary endowments the farm has
+alternative model estimation included in appendix + some validation exercises -- tech share = cost share, implicit family wage
+Maize growing farms in 20 sub-counties (known as "districts" at the time of the survey) covering the main agricultural zones. [hired labor wage is given in KES/day, this is converted to a nominal hourly wage by dividing by 8.]
+Covers 18 labor activities, 16 excluding security and irrigation. wage varies considerably by activity and district. Main activities are 1st weeding, harvesting, planting, 1st ploughing, 2nd weeding, shelling, stooking
+
 
 ```{r Figx1, fig.show = "hold", fig.width=5, fig.height=3, fig.align="center", fig.cap="\\label{fig:descriptHist1}Histograms of the dependent and continuous independent variables in the model, except for prices. Note that most farms do not employ child family labor. Zero values are excluded in the child family labor histogram to clarify the distribution of non-zero values.", echo = FALSE}
 
@@ -1509,6 +1470,28 @@ ggInputPrices + ggMaizePrice + plot_layout(widths = c(2, 1))
 \ref{fig:descriptHist2}
 
 ## Parameter estimation
+
+Tried including farmer age, education, gender, maximum and minimum temperature, other types of family labor, and distance to market variables were also explored. But the coefficients on these variables were either statistically insignificant or introduced multicollinearity and/or missing data issues.
+
+The binary endowments in the model are land tenure (whether or not the head of household holds a title deed to their land), hybrid maize seed, oxen, and tractor. These variables take a value of $e$ if the endowment is present and $1$ otherwise, such that the coefficients $\beta_i$ are added to the intercept term $\beta_0$ on farms that have the endowment, and vanish otherwise.
+
+The OLS estimation results are presented in Table 1. Excellent fit, low standard errors, reasonable R2, homoskedastic. A multicollinearity test revealed low vif score and hence linearly independent logged regressors.
+
+Because the model is estimated in logs, the coefficients on the continuous variables may be interpreted as the control variable elasticities ($\kappa_i$). Note that the coefficient on acres is negative, affirming the inverse relation between farm size and yield found in numerous other studies [@muyanga2019revisiting; @larson2014should; @wassie2019revisiting; @gautam2019too; @kimhi2006plot]. The coefficient on child family labor during planting is also negative, confirming that this variable is better thought of as a hard constraint rather than a discretionary management variable.
+
+
+This is where we talk about the continuous and binary variables used in the model and how other specifications are certainly feasible... lots of management variables available, but not required because of Equation \ref{eq:yStarC}. Models including farmer age, education, gender, maximum and minimum temperature, other types of family labor, and distance to market variables were also explored. But the coefficients on these variables were either statistically insignificant or introduced multicollinearity and/or missing data issues. A model based on Equation \ref{eq:cobbDoug3} was also estimated (provided in the Appendix) to compare h via mod2 against h as sum of estimated output elasticities of inputs. As discussed in sec..., the mod1 h varies across farms...the mod 2 h is very close to the mean h of mod1.
+
+As discussed in section \ref{sec:ax12}, the independent continuous variables $k_i$ and $C^*$ are divided by their respective sample means $\tilde{k}_i$ and $\tilde{C}^*$ in order to facilitate interpretation of the constant $\tilde{y}$. (In the case of rainfall, $\tilde{k}_i$ is the historical average, not the sample average). The constant $\tilde{y}$ may then be interpreted as the farm yield evaluated at the sample mean of the continuous independent variables (at the historical mean in the case of rainfall). Insofar as the continuous independent variables are uncorrelated, moreover, then $E[\hat{y}^*] = \tilde{y} e^{s_{\epsilon}^2 / 2}$, where $s_{\epsilon}^2$ is the variance of the error $\epsilon$.
+
+But $E[\hat{y}^*]$ is the sample mean. 
+
+
+There are x distinct output prices reported in the data, ranging from x to x with a mean of x... mp and sp from FPMA.
+
+
+In the Appendix it is shown that the model in Equation \ref{eq:cobbDoug3} is also estimated...see Appendix. The value of $x_i / \tilde{x}_i$ is set to $1$ on farms where the input is not applied, such that the term vanishes from the equation... The output elasticities of input $\alpha_i$ are summed... add up to $h$.
+<!-- appendix graphics: input use, family labor, sumstats table -->
 
 By Equation \ref{eq:yStarC}, the coefficient of `r round(hCoef, 3)` on logged cost/acre can be interpreted as the yield degree of homogeneity $h$. By Equation \ref{eq:PelastYstar}, the farm level price elasticity of supply then follows as `r round(etaCoef, 3)`.
 
@@ -1538,7 +1521,7 @@ ggEndow1 + ggEndow2 + plot_layout(ncol = 2, widths = c(1/2, 1))
 
 Figure \ref{fig:ySampAvg}
 
-## ...
+## Results
 
 ...have to get the population mean/sd from the truncated mean/sd...
 
@@ -1964,6 +1947,8 @@ gg
 
 # Discussion
 
+The exercise represents an ideal case where lots of data is available. Most use cases will not be like this.... 
+It is worth noting moreover that even if the conventional method had all this data at its disposal, would not improve the accuracy of the supply curve. That method has no way of integrating the data as it is ultimately a mathematization of guesswork and agronomic assertions.
 PE analysis, derivation of an aggregate demand curve would be analogous.
  the proposed model can be adapted to the data constraints, taking full advantage of the data when it is available, and adapting to the minimum data when it is not... in the minimum data case can revert to parsimonious estimate...
   ...in the case of expedient models by contrast having the data above wouldn't even be of any help when using the expedient model... no clear way of integrating it into the analysis...
