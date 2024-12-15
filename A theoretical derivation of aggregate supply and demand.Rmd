@@ -969,15 +969,41 @@ An accurate value for $N$ will be difficult to estimate in populations where no 
 
 ## Model Specification
 
-The yield model is specified in logs as a function of 
+For parameter estimation, Equation \ref{eq:yStarC} is natural logged, giving
+
 
 \begin{equation}
-\ln(\hat{y}) = \ln(\tilde{y}) + \sum_{i = 1}^{n_k} \kappa \ln \left(\frac{k_i}{\tilde{k}_i}\right) + h \ln \left( \frac{C^*}{\tilde} \right) + \epsilon \:\:;\;\;\; \ln(\hat{y}) = \beta_0 + \sum_i \beta_i \ln(b_i)
+\ln(y) = \ln(\tilde{y}) + h \ln \left(\frac{C^*}{\tilde{C}^*} \right) + \sum_{i = 1}^{n_k} \kappa_i \ln \left( \frac{k_i}{\tilde{k}_i} \right) + \sum_{i = 1}^{n_w} \alpha_i \ln(w_i)
+\label{eq:cobbDoug4}
+\end{equation}
+
+Where the shorthand $\tilde{y}$ has been introduced, defined
+
+\begin{equation}
+\tilde{y} = y_0 \theta_{\alpha} \left( \frac{\tilde{C}^*}{h} \right)^h
+\label{eq:yConst}
+\end{equation}
+
+
+
+\begin{equation}
+\ln(\hat{y}) = \ln(\tilde{y}) + \sum_{i = 1}^{n_k} \kappa \ln \left(\frac{k_i}{\tilde{k}_i}\right) + h \ln \left( \frac{C^*}{\tilde{C}^*} \right) + \epsilon \:\:;\;\;\; \ln(\tilde{y}) = \beta_0 + \sum_i \beta_i \ln(b_i)
 \label{eq:regMod}
 \end{equation}
 
-This is just the yield function in Equation \ref{eq:yStarC} in logs, and adjusted for estimation error $\epsilon$ and binary endowments $b_i$. 
-<!-- [This means that the constant $\hat{y}$ is not the same on all farms, but varies depending on which, if any, binary endowments are present. The "base case"...]  -->
+Where the estimation error $\epsilon$ has been introduced, and where binary endowments $b_i$ are made explicit and separated out from the base constant $\beta_0$. For the present exercise, the binary variables included in the model are land tenure (whether or not the head of household holds a title deed to the land they are farming), adoption of hybrid maize, use of oxen during land preparation, and use of a tractor during land preparation. Recall from section ... that binary endowments take a value of $e$ if the endowment is present, such that the corresponding effect $\beta_{i\neq0}$ is added to the base effect $\beta_0$; and $1$ otherwise, such that no effect is added. The base constant $\beta_0$ figures on all farms in the sample, whereas the $\beta_{i\neq0}$ figure only on farms with the respective endowment. The constant $\tilde{y}$ thus varies from farm to farm based on which endowments, if any, are present.
+
+The continuously valued control variables ($k_i$) included in the model are farm size (acres), adult equivalent household size, rainfall anomaly, planting density (seed kg/acre), and child family labor (person-hours/acre). "Rainfall anomaly" captures rainfall divergence from expectation. It is calculated as the actual rainfall during the 2007 main rains season divided by an historical average over the same period (see the next section for details). A rainfall anomaly value of 1, for example, would suggest that rainfall matched expectation. Planting density is treated as a control variable because it is typically determined by agroclimatic endowments/constraints such as soil conditions and cultivar. Child family labor is likewise treated as a control variable on the premise that it effectively measures a hard constraint (poverty), as opposed to a discretionary input.
+
+The farm maize production cost per acre ($C^*$) is 
+
+<!-- To control for exogenous constraints/endowments, a range of binary and continuously valued control variables is included. The continuously valued control variables are farm size (acres), adult equivalent household size, rainfall anomaly, planting density (seed kg/acre), and child family labor (person-hours/acre). "Rainfall anomaly" captures rainfall divergence from expectation. It is calculated as the actual rainfall during the 2007 main rains season divided by an historical average over the same period (see Appendix 2 for details). A rainfall anomaly value of 1, for example, would suggest that rainfall matched expectation. Planting density is treated as a control variable because it is typically determined by agroclimatic endowments/constraints such as soil conditions and cultivar. Child family labor is likewise treated as a control variable on the premise that it effectively measures a hard constraint (poverty), as opposed to a discretionary input. -->
+
+
+
+
+
+
 
 
 <!-- [recall from Equation \ref{eq:yConst} that the input variable elasticities $\alpha_i$ and input prices $w_i$ are implicit in the constant $\tilde{y}$, without requiring detailed information about either.] -->
@@ -1389,7 +1415,7 @@ ggEndow2 <- gg
 
 ## Data and transformation
 
-The farm data used in this pedagogical exercise are taken from a panel covering the main and short rains seasons for multiple crops across Kenya for the years 2000, 2004, 2007, and 2010, originally gathered by the Egerton University Tegemeo Institute of Agricultural Policy and Development in partnership with Michigan State University, under the auspices of a USAID project [@maizeData]. For the present exercise, only the 2007 main rains season maize farm data is used. Farms not reporting maize as their main crop or reporting zero maize production cost are excluded, resulting in a sample size of 942 maize farms across 20 counties. The sample represents all major maize growing regions in the country. Full details regarding the data and its processing for the present exercise, including summary statistics, are provided in Appendix 2.
+The farm data used in this pedagogical exercise come from a panel covering the main and short rains seasons for multiple crops across Kenya for the years 2000, 2004, 2007, and 2010, originally gathered by the Egerton University Tegemeo Institute of Agricultural Policy and Development in partnership with Michigan State University, under the auspices of a USAID project [@maizeData]. For the present exercise, only the 2007 main rains season maize farm data is used. Farms not reporting maize as their main crop or reporting zero maize production cost are excluded, resulting in a sample size of 942 maize farms across 20 counties. The sample represents all major maize growing regions in the country. Full details regarding the data and its processing for the present exercise, including summary statistics, are provided in Appendix 2.
 
 Estimation of the yield model specified above requires data detailing maize yield, cost/acre, input prices, and continuous and binary control variables.
 
@@ -1397,7 +1423,9 @@ The retained data details farm level input types, quantities, and costs, such th
 
 Cost/acre is calculated as the sum of the costs of land preparation, synthetic fertilizers (CAN, NPK, and DAP), P&D control chemicals, non-land preparation wage labor (mostly harvesting and shelling), and seed, divided by farm size. [do i say something about some costs not being represented by a price in the model?]
 
-To control for exogenous constraints/endowments, a range of binary and continuously valued control variables is included. The continuously valued control variables are farm size (acres), adult equivalent household size, rainfall anomaly, planting density (seed kg/acre), and child family labor (person-hours/acre). "Rainfall anomaly" captures rainfall divergence from expectation. It is calculated as the actual rainfall during the 2007 main rains season divided by an historical average over the same period (see Appendix 2 for details). A rainfall anomaly value of 1, for example, would suggest that rainfall matched expectation. Planting density is treated as a control variable because it is typically determined by agroclimatic endowments/constraints such as soil conditions and cultivar. Child family labor is likewise treated as a control variable on the premise that it effectively measures a hard constraint (poverty), as opposed to a discretionary input. Descriptive histograms of these variables are presented in Figure ..., together with total cost/acre and maize yield. Note that the maize yield density exhibits a lognormal shape, in accordance with axiom 3.
+ 
+
+exogenous constraints/endowments, a range of binary and continuously valued control variables is included. The continuously valued control variables are farm size (acres), adult equivalent household size, rainfall anomaly, planting density (seed kg/acre), and child family labor (person-hours/acre). Descriptive histograms of these variables are presented in Figure ..., together with total cost/acre and maize yield. Note that the maize yield density exhibits a lognormal shape, in accordance with axiom 3.
 
 As explained in section..., all continuously valued independent variables are divided by their sample mean, such that the mean yield is equal to the constant ytilde in Equation.... A number of binary control variables are included such that ytilde varies across the population, not just the intercept. 
 
@@ -1949,6 +1977,8 @@ gg
 
 The exercise represents an ideal case where lots of data is available. Most use cases will not be like this.... 
 It is worth noting moreover that even if the conventional method had all this data at its disposal, would not improve the accuracy of the supply curve. That method has no way of integrating the data as it is ultimately a mathematization of guesswork and agronomic assertions.
+Model Equation \ref{eq:yStarC} can be tailored to data availability. Any variables $k_i$ or $w_i$ not explicitly specified are implicitly absorbed into $\tilde{y}$, such that the model may be tailored to available data.
+
 PE analysis, derivation of an aggregate demand curve would be analogous.
  the proposed model can be adapted to the data constraints, taking full advantage of the data when it is available, and adapting to the minimum data when it is not... in the minimum data case can revert to parsimonious estimate...
   ...in the case of expedient models by contrast having the data above wouldn't even be of any help when using the expedient model... no clear way of integrating it into the analysis...
@@ -2067,7 +2097,7 @@ However, the authors here are objecting not to unitary elasticity of substitutio
 
 And thus agrees with Arrow et al.'s observations regarding the unlikelihood of "uniform substitutability".
 
-At the same time, it is true that the two factor Cobb-Douglas model implies a unitary elasticity of substitution. But the elasticity of substitution is not a measure of factor substitutability. It is a measure of how factor proportions change with substitutability. A unitary elasticity of substitution thus means that a $1\%$ change in substitutability ($dx_1/dx_2$) results in a $1\%$ change in the ratio $x_1/x_2$. In plain English: a change in substitutability of $x_1$ for $x_2$ results in a proportionate change in the substitution of $x_1$ for $x_2$. One may conjecture without controversy that most farm managers would consider this an eminently reasonable characterization of management decision-making.
+At the same time, it is true that the two factor Cobb-Douglas model implies a unitary elasticity of substitution. But the elasticity of substitution is not a measure of factor substitutability. It is a measure of how factor proportions change with substitutability. A unitary elasticity of substitution thus means that a $1\%$ change in substitutability ($dx_1/dx_2$) results in a $1\%$ change in the input usage ratio $x_1/x_2$. In plain English: a change in substitutability of $x_1$ for $x_2$ results in a proportionate change in the substitution of $x_1$ for $x_2$. One may conjecture without controversy that most farm managers would consider this an eminently reasonable characterization of management decision-making.
 
 Enduring objection 2 is that the Cobb-Douglas production elasticities $\alpha_i$ are constant, whereas intuition suggests that production elasticities are functions of inputs, and should thus vary with input use. To lift this "restriction", the translog production function was introduced, with production elasticities defined as Cobb-Douglas functions of the inputs.
 
@@ -2089,7 +2119,7 @@ And, so on for any order $\mathcal{\ell}$ of differentiation, ad infinitum,
 \frac{\partial^{\ell} y}{\partial x_i^{\ell}} = \frac{1}{h - \ell + 1}  \sum_{j}^{n} \frac{\partial^{\ell + 1} y}{\partial x_i^{\ell + 1} \partial x_j} x_j
 \end{equation}
 
-That is to say, for $h \neq 1$, the Cobb-Douglas production elasticities are not just functions of all inputs, but also of the $2^{nd}$, $3^{rd}$, $\dots$,$\infty^{th}$ order variation of production with respect to inputs, as well as the interactions of these implied in the successive orders of cross derivatives. That all this complex interaction should add up to a constant is a sign not of oversimplification, then, but of mathematical serendipity stemming from Axiom 1. The translog function, meanwhile, is not derived from any first principle and is not even a homogeneous function. Which, then, is the more restrictive model? translog also violates axiom 1.
+That is to say, for $h \neq 1$, the Cobb-Douglas production elasticities are not just functions of all inputs, but also of the $2^{nd}$, $3^{rd}$, $\dots$,$\infty^{th}$ order variation of production with respect to inputs, as well as the interactions of these implied in the successive orders of cross derivatives. That all this complex interaction should add up to a constant is a sign not of oversimplification, then, but of mathematical serendipity stemming from axiom 1. The translog function, meanwhile, is not derived from any first principle and is not even a homogeneous function. Which, then, is the more restrictive model? translog also violates axiom 1.
 
 It may be added that the economic principle of net-benefit maximization (cost minimization) implies that optimal input quantities are functions of prices and control variables, and are thus constant. In this sense, the translog production elasticities are also constant.
 
@@ -2229,12 +2259,12 @@ Because the ratios in parentheses are dimensionless, $y_0$ must have the same un
 
 Equation \ref{eq:cobbDoug3} is, of course, the Cobb-Douglas form. Outside of Economics, it would simply be referred to as a (multivariate) power law. Such forms are often good models of observed processes across a wide range of research contexts and disciplines. In Economics, the Cobb-Douglas form was widely used from the 1920s to 1950s on the basis of its good empirical fit, but fell into disrepute thereafter for its perceived lack a theoretical basis. Capalbo and Antle [-@capalbo2015agricultural] offer a succinct introduction to this vast discussion. The forgoing derivation of the Cobb-Douglas form from Axiom 1 in some measure redresses the lack of a theoretical basis. [Other perceived shortcomings of the form are briefly addressed in the Discussion. if there is enough space!] [Or: In the course of the derivation below, a number of theoretical strengths are brought to light---underrepresented or overlooked by textbook treatments---that cast doubt on the bad reputation as a "restrictive" model]
 
-The farm level yield model $y^*$ is then obtained by introducing Axiom 2.
+The farm level yield model $y^*$ is then obtained by introducing axiom 2.
 <!-- \begin{framed} -->
 <!--    \textbf{Axiom 2} \\ Farms apply inputs so as to maximize their net benefit subject to a budget constraint. -->
 <!-- \end{framed} -->
 
-Formally, Axiom 2 may be written
+Formally, axiom 2 may be written
 
 \begin{equation}
 y^* = y(\mathbf{x}^*; y_0, \tilde{\mathbf{x}}, \mathbf{k}, \tilde{\mathbf{k}}, \boldsymbol{\alpha}, \boldsymbol{\kappa}) \:;\:\: x^* = \text{argmax}_{\mathbf{x}}(P y - \lambda(C - B))
@@ -2261,7 +2291,7 @@ Where $\lambda$ is the farm budget shadow price, that is, the marginal benefit t
 \end{equation}
 <!-- The budget shadow price is an implicit measure of how each farm values cash for expenditures on farm inputs, and plays a central role in the aggregation step farther below. -->
 
-Standard textbook treatments of the first and second order conditions for Cobb-Douglas profit maximization are generally limited to the two input case (capital and labor) for the purpose of isoquant analysis, and omit the budget constraint. It is therefore necessary to take a moment to examine theses conditions for the more general case, and specific aims, at hand. The first order conditions for a maximum of $\mathcal{L}$ are
+Standard textbook treatments of the first and second order conditions for Cobb-Douglas profit maximization are generally limited to the two input case (capital and labor) for the purpose of isoquant analysis, and omit the budget constraint. It is therefore necessary to take a moment to examine these conditions for the more general case, and specific aims, at hand. The first order conditions for a maximum of $\mathcal{L}$ are
 
 \begin{equation}
 \begin{split}
@@ -2332,21 +2362,33 @@ y^* = y_0 \theta \left( \frac{C^*}{h} \right)^h
 \label{eq:yStarC}
 \end{equation}
 
+[
+Shdn't it be
+
+\begin{equation}
+y^* = y_0 \theta \left( \frac{C^*/\tilde{C}^*}{h} \right)^h
+\end{equation}
+
+?
+]
+
 The degree of homogeneity $h$ is thus also the scale elasticity of yield ($d \ln(y^*) / d \ln(C^*) = h$), as noted in the textbooks. This form is particularly useful for estimation, as it requires only the control variables $k_i$ and input cost $C^*$, as opposed to detailed information on all of the input quantities. That is, instead of estimating the model in Equation \ref{eq:cobbDoug3ln}, one estimates
 
 \begin{equation}
-\ln(y) = \ln(\tilde{y}) + h \ln \left(\frac{C^*}{\tilde{C}^*} \right) + \sum_{i = 1}^{n_k} \kappa_i \ln \left( \frac{k_i}{\tilde{k}_i} \right)
+\ln(y) = \ln(\tilde{y}) + h \ln \left(\frac{C^*}{\tilde{C}^*} \right) + \sum_{i = 1}^{n_k} \kappa_i \ln \left( \frac{k_i}{\tilde{k}_i} \right) + \sum_{i = 1}^{n_w} \alpha_i \ln(w_i)
 \label{eq:cobbDoug4}
 \end{equation}
 
 Where the shorthand $\tilde{y}$ has been introduced, defined
 
 \begin{equation}
-\tilde{y} = y_0 \frac{\theta_{\alpha}}{\theta_w} \left( \frac{\tilde{C}}{h} \right)^h
+\tilde{y} = y_0 \theta_{\alpha} \left( \frac{\tilde{C}^*}{h} \right)^h
 \label{eq:yConst}
 \end{equation}
 
-Such that the input elasticities $\alpha_i$ and prices $w_i$ are implicit in the fitted constant $\tilde{y}$ without requiring detailed information about input types and quantities. Moreover, letting the reference values $\tilde{C}^*$ and $\tilde{k}_i$ equal the mean of the cost per acre and control variables, respectively, then $\tilde{y}$ is equal to the mean yield. A further advantage of this form is that the fitted coefficient on $\ln(C^*)$ may be directly interpreted as $h$, valid for all farms in the sample. Estimation of the model in Equation \ref{eq:cobbDoug3}, on the other hand, requires the extra step of summation of the input elasticities $\alpha_i$ in order to arrive at $h$. This may result in varying $h$ across the sample, as not all farms necessarily apply all the inputs specified in the model.
+[Shdn't $\tilde{C}^*$ be in the denominator?]
+
+Such that the input elasticities $\alpha_i$ are implicit in the fitted constant $\tilde{y}$ without requiring detailed information about input types and quantities. Any control variables $k_i$ or input prices $w_i$ not explicitly specified are implicitly absorbed into $\tilde{y}$, such that the model may be tailored to available data. Moreover, letting the reference values $\tilde{C}^*$ and $\tilde{k}_i$ equal the mean of the cost per acre and control variables, respectively, then $\tilde{y}$ is equal to the mean yield. A further advantage of this form is that the fitted coefficient on $\ln(C^*)$ may be directly interpreted as $h$, valid for all farms in the sample. Estimation of the model in Equation \ref{eq:cobbDoug3}, on the other hand, requires the extra step of summation of the input elasticities $\alpha_i$ in order to arrive at $h$. This may result in varying $h$ across the sample, as not all farms necessarily apply all the inputs specified in the model.
 
 Finally, note also the similarity between Equations \ref{eq:yStarC} and \ref{eq:integrate_lny}. And note that
 
@@ -2354,7 +2396,7 @@ Finally, note also the similarity between Equations \ref{eq:yStarC} and \ref{eq:
 \frac{\partial \ln(y^*)}{\partial C^*} \sim \frac{1}{C^*}
 \end{equation}
 
-which is congruent to Axiom 1. The question arises, then, whether Axiom 2 requires axiom status, or whether it is implied by Axiom 1. But this is a question for pure logicians. Pending clarification, we continue to call it an Axiom.
+Which is congruent to axiom 1. The question arises, then, whether axiom 2 requires axiom status, or whether it is implied by axiom 1. But this is a question for logicians. Pending clarification, it remains an axiom for now.
 
 ### Marginal cost and cost per unit output
 <!-- Some important/underrepresented corollaries -->
