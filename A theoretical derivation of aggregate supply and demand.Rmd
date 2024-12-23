@@ -1195,6 +1195,64 @@ mod2 <- lm(`Yield (kg/acre)`~., df_mod2[, -not_these])
 # indOutlier <- which(mod2$residuals < -2)
 # df_mod2[indOutlier, c("Dist", "Yield (kg/acre)", "Farm size (acres)")]
 # df_mod2 <- df_mod2[-indOutlier, ]
+#---------------------------------------------------------------------
+# mod 3
+mod3Vars <- setdiff(mod2Vars, c(priceVars, "Child family labor, planting (person-hrs/acre)"))
+#mod3Vars <- setdiff(mod2Vars, c(priceVars))
+dfMod3 <- df_mod[, c(mod3Vars)]
+# u <- dfMod3$`Child family labor, planting (person-hrs/acre)`
+# dfMod3$`Child family labor, planting (person-hrs/acre)` <- ifelse(u == 0, NA, u)
+# notThese <- c("Dist", "Yield (kg/acre)", bin_vars, "Rain anomaly")
+# contIndVars <- setdiff(mod3Vars, notThese)
+# thisFun <- function(x){out <- x - log(mean(exp(x))); return(out)}
+# dfMod3[, contIndVars] <- as.data.frame(apply(dfMod3[, contIndVars], 2, thisFun))
+# #PerformanceAnalytics::chart.Correlation(dfMod3[, contIndVars])
+# colMeans(exp(dfMod3[, contIndVars]))
+mod3 <- lm(`Yield (kg/acre)`~., dfMod3[, -1])
+summ(mod3)
+#car::vif(mod3)
+plot(mod3$fitted.values, mod3$residuals)
+indRm <- which(abs(mod3$residuals) > 1.5)
+#View(dfMod3[indRm,]); length(indRm)
+mod3 <- lm(`Yield (kg/acre)`~., dfMod3[-indRm, -1])
+summ(mod3)
+plot(mod3$fitted.values, mod3$residuals)
+notThese <- c("Dist", "Yield (kg/acre)", "Cost/acre", bin_vars, "Rain anomaly")
+kVars <- setdiff(mod3Vars, notThese)
+names(mod3$coefficients) <- gsub("`", "", names(mod3$coefficients))
+alphaKvec <- mod3$coefficients[which(names(mod3$coefficients) %in% kVars)]
+matK <- dfMod3[, kVars] %>% as.matrix()
+lThetaKvec <- matK %*% alphaKvec
+hist(lThetaKvec)
+
+matKa <- matK %*% diag(alphaKvec)
+mVec <- colMeans(matKa)
+sVec <- apply(matKa, 2, sd)
+# Sample mean of thetaK very close to lognormal expectation, confirming lognormality of thetaK
+EthetaK <- exp(sum(c(mVec, sVec^2 / 2)))
+EthetaKsamp <- matK %*% alphaKvec %>% exp() %>% mean()
+#EthetaK/EthetaKsamp
+#EthetaKsamp2 <- matK %*% diag(alphaKvec) %>% colMeans() %>% sum() %>% exp()
+alphaCstar <- mod3$coefficients[which(names(mod3$coefficients) == "Cost/acre")]
+# Sample mean of Cost/acre very close to lognormal expectation
+EcStar <- exp(mean(alphaCstar * dfMod3$`Cost/acre`) + sd(alphaCstar * dfMod3$`Cost/acre`)^2 / 2)  
+EcStarSamp <- exp(alphaCstar * dfMod3$`Cost/acre`)  %>% mean()
+beta0 <- mod3$coefficients[1]
+g0 <- exp(beta0)
+y0 <- g0 * EthetaK * EcStar
+
+
+
+%>% colMeans() %>% sum() %>% exp()
+
+EthetaK <- mean(exp(lThetaKvec))
+EThetaK2 <- matK %*% diag(alphaKvec) %>% colMeans() %>% sum() %>% exp()
+kVecTilde <- exp(matK) %*% diag(1 / (colMeans(exp(matK))))
+colMeans(kVecTilde)
+hist(rowSums(log(kVecTilde)))
+hist(log(kVecTilde) %*% alphaKvec)
+mean(exp(log(kVecTilde) %*% alphaKvec))
+#exp(mean(log(kVecTilde) %*% alphaKvec))
 #======================================================================
 #======================================================================
 #======================================================================
@@ -2156,7 +2214,7 @@ sketch out extension to aggregate demand and PE analysis...computing Econ Surplu
 
 \pagebreak
 
-# Appendix
+# Appendix 1
 
 These mathematical derivation of the farm yield function are so rudimentary that it is questionable whether they should be given any space at all. They are included in the Appendix because 1) the initial step of deriving the unoptimized yield function from the law of diminishing marginal returns is novel, 2) textbook derivations of the optimized yield function from the axiom of profit maximization generally focus on the two input case (capital and labor) for purposes of isoquant analysis, whereas here the emphasis is on the modeling of multivariate yield; and 3) the widespread insistence on constant or increasing returns to scale together with profit maximization, upward sloping firm supply curves, and other commonly desired production function properties, without acknowledging the mathematical contradiction between the latter and the former, suggests a lack of familiarity with the mathematical implications of these axioms beyond a literary form, such that a review is relevant.
 
@@ -2218,7 +2276,7 @@ where $\boldsymbol{\alpha}$ is the vector of input elasticities corresponding to
 \end{matrix} \right]
 \end{equation}
 
-It is straightforward to see that equation \ref{eq:cobbDoug2} is a homogeneous (and thus also homothetic) function with degree of homogeneity $h$ equal to $\sum_i \alpha_i$. There is no need, then, to impose homogeneity as an additional Axiom. It follows from the Axiom of diminishing marginal returns.
+It is straightforward to see that equation \ref{eq:cobbDoug2} is a homogeneous (and thus also homothetic) function with degree of homogeneity $h$ equal to $\sum_i \alpha_i$. There is no need, then, to impose homogeneity as an additional axiom. It follows from the axiom of diminishing marginal returns.
 
 Empirical analysis involves exogenously given control variables ($k_i$), typically including demographic variables such as age, education, gender, household size, as well as agroclimatic variables such as temperature, rainfall, soil conditions, and so forth. Equation \ref{eq:cobbDoug} is thus henceforth rewritten as follows.
 <!-- (Analysis is said to be "ceteris paribus" when these variables are held constant at a particular value across the population.) -->
@@ -2235,7 +2293,7 @@ Interpretation of the constant $g_0$ is as difficult as one wants to make it. It
 $$
 \text{kg.} \times \: \text{acres}^{-1} \times \: \text{liters}^{-\alpha_{pest}} \times \: \text{kg.}^{-\alpha_{fert}} \times \: \text{manhours}^{-\alpha_{labor}} \times\: \\ \text{mm.}^{-\alpha_{rain}} \times\: \: \text{years}^{-\alpha_{age}} \times\: \text{num. persons}^{-\alpha_{HHsize}} \:;\:\: \alpha_{(var)} \in \mathbb{R}
 $$
-an alternative approach is to arbitrarily define $g_0$ in terms of another parameter that is expressed in intelligible units, and to work with this instead. For example, $g_0$ may be defined in terms of another parameter $\tilde{y}$ and fixed reference values $\tilde{k}_i$, $\tilde{x}_i$ that have the same units as the corresponding management and control variables $x_i$ and $k_i$.
+an alternative approach is to arbitrarily define $g_0$ in terms of another parameter that is expressed in intelligible units, and to work with this instead. For example, $g_0$ may be defined in terms of another parameter $y_0$ and fixed reference values $\tilde{k}_i$, $\tilde{x}_i$ that have the same units as the corresponding management and control variables $x_i$ and $k_i$.
 
 \begin{equation}
 g_0 = y_0 \prod_{i = 1}^{n_k} \tilde{k}_i^{-\kappa_i} \prod_{i = 1}^{n_x} \tilde{x}_i^{-\alpha_i}
@@ -2257,7 +2315,7 @@ Or, taking logs,
 
 Because the ratios in parentheses are dimensionless, $y_0$ must have the same units as $y$; and $y_0$ may be interpreted as the value of $y$ when all management and control variables equal their reference values. In the empirical study included here, for example, the reference values are set equal to the sample means, such that $y_0$ is the value of $y$ evaluated at the sample means of the input and control variables.
 
-Equation \ref{eq:cobbDoug3} is, of course, the Cobb-Douglas form. Outside of Economics, it would simply be referred to as a (multivariate) power law. Such forms are often good models of observed processes across a wide range of research contexts and disciplines. In Economics, the Cobb-Douglas form was widely used from the 1920s to 1950s on the basis of its good empirical fit, but fell into disrepute thereafter for its perceived lack a theoretical basis. Capalbo and Antle [-@capalbo2015agricultural] offer a succinct introduction to this vast discussion. The forgoing derivation of the Cobb-Douglas form from Axiom 1 in some measure redresses the lack of a theoretical basis. [Other perceived shortcomings of the form are briefly addressed in the Discussion. if there is enough space!] [Or: In the course of the derivation below, a number of theoretical strengths are brought to light---underrepresented or overlooked by textbook treatments---that cast doubt on the bad reputation as a "restrictive" model]
+Equation \ref{eq:cobbDoug3} is, of course, the Cobb-Douglas form. Outside of Economics, it would simply be referred to as a (multivariate) power law. Such forms are often good models of observed processes across a wide range of research contexts and disciplines. In Economics, the Cobb-Douglas form was widely used from the 1920s to 1950s on the basis of its good empirical fit, but fell into disrepute thereafter for its perceived lack a theoretical basis. Capalbo and Antle [-@capalbo2015agricultural] offer a succinct introduction to this vast discussion. The forgoing derivation of the Cobb-Douglas form from axiom 1 in some measure redresses the lack of a theoretical basis. A full defense against all of the criticisms levied against this form over the past seventy five years is a paper-, or perhaps book-, length project which will not be attempted here. [Other perceived shortcomings of the form are briefly addressed in the Discussion. if there is enough space!] [Or: In the course of the derivation below, a number of theoretical strengths are brought to light---underrepresented or overlooked by textbook treatments---that cast doubt on the bad reputation as a "restrictive" model]
 
 The farm level yield model $y^*$ is then obtained by introducing axiom 2.
 <!-- \begin{framed} -->
@@ -2313,7 +2371,7 @@ And the second order condition for a maximum is
 \label{eq:eqSOC}
 \end{equation}
 
-Where Euler's Theorem has been invoked in the second line of the condition. It follows that Axiom 2 requires $0 < h < 1$, i.e. diminishing returns to scale. Constant returns to scale ($h = 1$) imply the break-even point, while increasing returns to scale ($h > 1$) imply a loss. The farm yield function is thus globally concave in inputs. Constant and increasing returns, on the other hand, would imply global linearity and convexity, respectively.
+Where Euler's Theorem has been invoked in the second line of the condition. It follows that axiom 2 requires $0 < h < 1$, i.e. diminishing returns to scale. Constant returns to scale ($h = 1$) imply the break-even point, while increasing returns to scale ($h > 1$) imply a loss. The farm yield function is thus globally concave in inputs. Constant and increasing returns, on the other hand, would imply global linearity and convexity, respectively.
 
 The first order conditions may be solved for input demand $x_j^*$ as follows.
 
