@@ -1199,15 +1199,27 @@ mod2 <- lm(`Yield (kg/acre)`~., df_mod2[, -not_these])
 # mod 3
 mod3Vars <- setdiff(mod2Vars, c(priceVars, "Child family labor, planting (person-hrs/acre)"))
 #mod3Vars <- setdiff(mod2Vars, c(priceVars))
+# Let's drop some extreme values
+# Extremely high cost/acre often due to extremely small farm size
+hist(exp(df_mod$`Cost/acre (KES/acre)`), 40)
+indHiCost <- which(exp(df_mod$`Cost/acre (KES/acre)`) > 20000)
+indUnprofitable <- which(exp(df_mod$Rstar) / exp(df_mod$`Cost/acre (KES/acre)`)<0.75)
+# exp(df_mod$`Yield (kg/acre)`[indHiCost])
+# exp(df_mod$`Farm size (acres)`[indHiCost])
+# exp(df_mod$Rstar[indHiCost]) / exp(df_mod$`Cost/acre (KES/acre)`[indHiCost])
+# df_mod[which(!duplicated(df_mod$`Seed (kg/acre)`)),]%>%View
+# df_mod[indUnprofitable,]%>%View
+indRm <- unique(c(indHiCost, indUnprofitable))
 dfMod3 <- df_mod[, c(mod3Vars)]
+dfMod3 <- df_mod[-indRm, c(mod3Vars)]
 mod3 <- lm(`Yield (kg/acre)`~., dfMod3[, -1])
 summ(mod3)
+plot(mod3$fitted.values, mod3$residuals)
 #car::vif(mod3)
 # Clean: drop outliers with error outside of x stand devs
-plot(mod3$fitted.values, mod3$residuals)
-indRm <- which(abs(mod3$residuals) > 1.5)
-#View(dfMod3[indRm,]); length(indRm)
-dfMod3b <- dfMod3[-indRm, ]
+indRm <- which(abs(mod3$residuals) > 1)
+View(dfMod3[indRm,]); length(indRm)
+# dfMod3b <- dfMod3[-indRm, ]
 #======================================================================
 #======================================================================
 #======================================================================
@@ -1265,16 +1277,17 @@ ggIndepVars + ggYd + plot_layout(widths = c(2, 1))
 #======================================================================
 #======================================================================
 # Estimation
-mod3 <- lm(`Yield (kg/acre)`~., dfMod3b[, -1])
-summ(mod3)
-plot(mod3$fitted.values, mod3$residuals)
+# mod3 <- lm(`Yield (kg/acre)`~., dfMod3b[, -1])
+# summ(mod3)
+# plot(mod3$fitted.values, mod3$residuals)
 #----------------------------------------------------------------------
 # Post-estimation transformation of regression constant into expected value of yStar (y0)
-notThese <- c("Dist", "Yield (kg/acre)", "Cost/acre", bin_vars)
+notThese <- c("Dist", "Yield (kg/acre)", "Cost/acre (KES/acre)", "Farm size (acres)", bin_vars)
 kVars <- setdiff(mod3Vars, notThese)
 coefVec <- mod3$coefficients; coefNames <- gsub("`", "", names(coefVec))
 kappaVec <- coefVec[which(coefNames %in% kVars)]
-matK <- dfMod3b[-indRm, kVars] %>% as.matrix()
+matK <- dfMod3[, kVars] %>% as.matrix()
+#matK <- dfMod3b[-indRm, kVars] %>% as.matrix()
 # lThetaKvec <- matK %*% kappaVec
 # hist(lThetaKvec)
 #matKa <- matK %*% diag(kappaVec)
@@ -1282,95 +1295,13 @@ mVec <- colMeans(matK)
 sVec <- apply(matK, 2, sd)
 #thetaKref <- exp(sum(c(mVec, abs(kappaVec) * sVec^2 / 2)))
 # Note sample mean of thetaK very close to lognormal expectation, confirming lognormality of thetaK
-EthetaK <- exp(sum(c(mVec * kappaVec, kappaVec^2 * sVec^2 / 2)))
+muThetaK <- exp(sum(c(mVec * kappaVec, kappaVec^2 * sVec^2 / 2)))
 thetaKvec <- matK %*% kappaVec
-EthetaKsamp <- thetaKvec %>% exp() %>% mean()
-EthetaK/EthetaKsamp
+muThetaKsamp <- thetaKvec %>% exp() %>% mean()
+muThetaK/muThetaKsamp
 #EthetaKsamp2 <- matK %*% diag(kappaVec) %>% colMeans() %>% sum() %>% exp()
-h <- coefVec[which(coefNames == "Cost/acre")]
-# Sample mean of Cost/acre very close to lognormal expectation
-EcStarH <- exp(mean(h * dfMod3b$`Cost/acre`) + sd(h * dfMod3b$`Cost/acre`)^2 / 2)  
-EcStarHSamp <- exp(h * dfMod3b$`Cost/acre`)  %>% mean()
-EcStarH/EcStarHSamp
-beta0 <- coefVec[1]
-# Adjust for exogenous endowments/constraints
-kappaBins <- coefVec[which(coefNames %in% bin_vars)]
-dfBins <- dfMod3b[, bin_vars]
-beta0adj <- beta0 + as.matrix(dfBins) %*% kappaBins
-g0 <- exp(beta0adj)
-Eerr <- exp(sd(mod3$residuals)^2 / 2) #Don't forget to adjust for resids
-y0 <- g0 * EthetaK * EcStar * Eerr #Expected value of yStar
-#y0 %>% unique() %>% length # 14 endowment combos present
-# dfPlot <- data.frame(County = dfMod3b$Dist, y0)
-# ggplot(dfPlot, aes(x = y0)) + geom_histogram() + facet_wrap(~County)
-# exp(mean(dfMod3$`Yield (kg/acre)`) + sd(dfMod3$`Yield (kg/acre)`)^2/2)
-# mean(y0)
-#-----------------------------------------------------------------------
-# Create label vec for each of the 14 endowment combos
-dfBins$adopter <- ifelse(dfBins$Adopter == 1, "Hybrid", "0")
-dfBins$`Tenure: owned with title deed` <- ifelse(dfBins$`Tenure: owned with title deed` == 1, "Tenure", "0")
-dfBins$`Landprep: oxen` <- ifelse(dfBins$`Landprep: oxen` == 1, "Oxen", "0")
-dfBins$`Landprep: tractor` <- ifelse(dfBins$`Landprep: tractor` == 1, "Tractor", "0")
-endowVec <- apply(dfBinVar, 1, paste, collapse = " + ")
-endowVec <- gsub("0 \\+|\\+ 0", "", endowVec)
-endowVec <- gsub("   0", "Base", endowVec)
-endowVec[which(endowVec != "Base")] <- paste("Base +", endowVec[which(endowVec != "Base")])
-endowVec <- gsub("  ", " ", endowVec)
-endowVec <- trimws(endowVec)
-#---------------------------------------------------------------------
-# Graphic of prevalence of each endowment combo and its value
-cellText_size <- 2.5
-df_plot <- data.frame(Type = endowVec, y0 = round(y0, 1))
-df_plot$xx <- 1
-df_plot <- df_plot %>% group_by(Type) %>% summarise(`Number of farms` = sum(xx, na.rm = T), y0 = unique(y0)) %>% as.data.frame()
-df_plot$Element <- 1
-df_plot <- df_plot[order(df_plot$y0, decreasing = T), ]
-typeVec <- df_plot$Type
-# df_plot$Type <- factor(df_plot$Type, levels = df_plot$y0[order(df_plot$y0)], ordered = T)
-gg <- ggplot(df_plot, aes(x = Element, y = Type, fill = y0, label = y0))
-gg <- gg + scale_y_discrete(limits = typeVec)
-gg <- gg + geom_tile(alpha = 0)
-gg <- gg + labs(title = expression(tilde(y)))
-gg <- gg + theme_bw()
-gg <- gg + theme(axis.title = element_blank(),
-                 axis.text.x = element_blank(),
-                 axis.ticks.x = element_blank(),
-                 axis.text.y = element_text(size = axisTextSize),
-                 panel.grid = element_blank(),
-                 plot.title = element_text(size = axisTitleSize, hjust = 0.5),
-                 legend.position = "none")
-gg <- gg + geom_text(size = cellText_size)
-ggEndow1 <- gg
-#---
-gg <- ggplot(df_plot, aes(x = `Number of farms`, y = Type))
-gg <- gg + scale_y_discrete(limits = typeVec)
-gg <- gg + geom_col()
-gg <- gg + labs(title = "Number of farms")
-gg <- gg + theme_bw()
-gg <- gg + theme(axis.title = element_blank(),
-                 #axis.title.x = element_text(size = axisTitleSize),
-                 axis.text.y = element_blank(),
-                 axis.text.x = element_text(size = axisTextSize),
-                 #panel.grid = element_blank(),
-                 plot.title = element_text(size = axisTitleSize, hjust = 0.5))
-ggEndow2 <- gg
-#======================================================================
-# Compare mod3 with cost per unit output model
-dfMod4 <- df_mod[, c(mod3Vars)]
-dfMod4$`Cost/output` <- dfMod4$`Cost/acre` - dfMod4$`Yield (kg/acre)`
-dfMod4$`Cost/acre` <- NULL; dfMod4$`Rain anomaly` <- NULL
-mod4 <- lm(`Yield (kg/acre)`~., dfMod4[, -1])
-summ(mod4)
-#car::vif(mod3)
-# Clean: drop outliers with error outside of x stand devs
-plot(mod4$fitted.values, mod4$residuals)
-indRm <- which(abs(mod4$residuals) > 1.5)
-#View(dfMod3[indRm,]); length(indRm)
-dfMod4b <- dfMod4[-indRm, ]
-mod4b <- lm(`Yield (kg/acre)`~., dfMod4b[, -1])
-summ(mod4b)
-#======================================================================
-#======================================================================
+h <- coefVec[which(coefNames == "Cost/acre (KES/acre)")]; eta <- h / (1 - h)
+muThetaKnh <- exp(sum(c(eta / h * mVec * kappaVec, (eta / h)^2 * kappaVec^2 * sVec^2 / 2)))
 #======================================================================
 # Get mean price jump from county level monthly price data (downloaded from FAO GIEWS-FPMA Tool) and calculate lambda
 thisFile <- "Nakuru Eldoret monthly maize price.csv"
@@ -1441,13 +1372,184 @@ mP2008 <- mVec[3]
 sP2008 <- sVec[3]
 EPT02009 <- P02009 * exp(mP2008 * th)
 #---
-# dfEPT0 <- data.frame(Year = yrVec[-c(1, nYr)], EPT0 = EPT0hist[-1], mP = mVec[-c((nYr - 1), nYr)], sP = sVec[-c((nYr - 1), nYr)], Anomaly = anomVec[-1])
-EyStar1 <- const * kRn^kappaRn * (cStar / hCoef)^hCoef
-#EyStar0 <- exp(mod2$fitted.values - kappaRn * lkRn + sErr^2 / 2)
-EyStar0 <- exp(mod3$fitted.values + sd(mod3$residuals)^2 / 2)
-#EyStar1 - EyStar0
-EcSharp <- exp(dfMod3$`Cost/acre`) / EyStar0
+# # dfEPT0 <- data.frame(Year = yrVec[-c(1, nYr)], EPT0 = EPT0hist[-1], mP = mVec[-c((nYr - 1), nYr)], sP = sVec[-c((nYr - 1), nYr)], Anomaly = anomVec[-1])
+# EyStar1 <- const * kRn^kappaRn * (cStar / hCoef)^hCoef
+# #EyStar0 <- exp(mod2$fitted.values - kappaRn * lkRn + sErr^2 / 2)
+# EyStar0 <- exp(mod3$fitted.values + sd(mod3$residuals)^2 / 2)
+# #EyStar1 - EyStar0
+# EcSharp <- exp(dfMod3$`Cost/acre`) / EyStar0
+# lam <- EPT02007 / EcSharp * h
+#=============================================================================
+#---
+# Define root functions
+rootFnUp <- function(xIn, xUp, sXtrunc, mXtrunc){
+  sX <- xIn[1]
+  mX <- xIn[2]
+  zUp <- (log(xUp) - mX) / sX
+  probTerm <- dnorm(zUp) / pnorm(zUp)
+  slack_s <- sXtrunc^2 - sX^2 * (1 - zUp * probTerm - probTerm^2)
+  slack_m <- mXtrunc - mX + sX * probTerm
+  outVec <- c(slack_s, slack_m)
+  return(outVec)
+}
+# rootFnLo <- function(xIn, xLo, sXtrunc, mXtrunc){
+#   sX <- xIn[1]
+#   mX <- xIn[2]
+#   zLo <- (log(xLo) - mX) / sX
+#   probTerm <- dnorm(zLo) / pnorm(-zLo)
+#   slack_s <- sXtrunc^2 - sX^2 * (1 + zLo * probTerm - probTerm^2)
+#   slack_m <- mXtrunc - mX - sX * probTerm
+#   outVec <- c(slack_s, slack_m)
+#   return(outVec)
+# }
+#----------------------------------------------------------------------
+EyStarT0 <- exp(dfMod3$`Yield (kg/acre)`)# exp(mod3$fitted.values)# + sd(mod3$residuals)^2 / 2)
+#mean(EyStarT0)
+#EyStarT0 <- dfMod3$`Yield (kg/acre)`
+EcSharp <- exp(dfMod3$`Cost/acre (KES/acre)`) / EyStarT0
+#EcSharp <- exp(dfMod3b$`Cost/acre`) / EyStar0
+lEcSharp <- log(EcSharp)
 lam <- EPT02007 / EcSharp * h
+sum(lam > h) / length(lam)
+mEcSharpTrunc <- mean(lEcSharp); sEcSharpTrunc <- sd(lEcSharp)
+muEcSharpTrunc <- exp(mEcSharpTrunc + sEcSharpTrunc^2 / 2)
+xIn <- c(sEcSharpTrunc, mEcSharpTrunc)
+sol <- nleqslv::nleqslv(xIn, rootFnUp, jac = NULL,
+                        xUp = EPT02007,
+                        sXtrunc = sEcSharpTrunc,
+                        mXtrunc = mEcSharpTrunc)
+#sol
+sEcSharp <- sol$x[1]
+mEcSharp <- sol$x[2]
+muEcSharpT0 <- exp(mEcSharp + sEcSharp^2 / 2)
+muEcSharpT0n <- exp(eta * mEcSharp + eta^2 * sEcSharp^2 / 2)
+#---
+# Calculation of mean yield over whole population (y0 or muEyStarT0)
+# (Sample mean of yield is mean over a truncated population)
+# Use def of mean yield y0=v0*muThetaKnh*muEcSharpT0n
+# Mean yield varies with binary controls. Here is the mean with just the base constant
+# (i.e. all binaries = 0)
+alpha0 <- coefVec[1]
+v0base <- exp(alpha0)
+y0base <- v0base * muThetaKnh * muEcSharpT0n
+#y0base <- v0base * (muThetaK)^(eta / h) * muEcSharpT0n
+#---
+# Now calculate mean yield for all binary combinations
+# Adjust for exogenous endowments/constraints
+kappaBins <- coefVec[which(coefNames %in% bin_vars)]
+dfBins <- dfMod3[, bin_vars]
+#dfBins <- dfMod3b[, bin_vars]
+alpha0adj <- alpha0 + as.matrix(dfBins) %*% kappaBins
+v0 <- exp(alpha0adj)
+Eerr <- exp(sd(mod3$residuals)^2 / 2) #Don't forget to adjust for resids
+y0 <- v0 * muThetaKnh * muEcSharpT0n * Eerr
+muEcSharpTruncT0n <- exp(eta * mEcSharpTrunc + eta^2 * sEcSharpTrunc^2 / 2)
+y0 <- v0 * muThetaKnh * muEcSharpTruncT0n * Eerr
+
+mean(EyStarT0) #truncated sample mean
+mean(y0)
+# y0 <- g0 * EthetaK * EcStar * Eerr #Expected value of yStar
+y0 %>% unique() %>% length # 14 endowment combos present
+dfPlot <- data.frame(County = dfMod3$Dist, y0)
+#dfPlot <- data.frame(County = dfMod3b$Dist, y0)
+ggplot(dfPlot, aes(x = y0)) + geom_histogram() + facet_wrap(~County)
+exp(mean(dfMod3$`Yield (kg/acre)`) + sd(dfMod3$`Yield (kg/acre)`)^2/2)
+# mean(y0)
+#-----------------------------------------------------------------------
+# Create label vec for each of the 14 endowment combos
+dfBins$Adopter <- ifelse(dfBins$Adopter == 1, "Hybrid", "0")
+dfBins$`Tenure: owned with title deed` <- ifelse(dfBins$`Tenure: owned with title deed` == 1, "Tenure", "0")
+dfBins$`Landprep: oxen` <- ifelse(dfBins$`Landprep: oxen` == 1, "Oxen", "0")
+dfBins$`Landprep: tractor` <- ifelse(dfBins$`Landprep: tractor` == 1, "Tractor", "0")
+endowVec <- apply(dfBins, 1, paste, collapse = " + ")
+endowVec <- gsub("0 \\+|\\+ 0", "", endowVec)
+endowVec <- gsub("   0", "Base", endowVec)
+endowVec[which(endowVec != "Base")] <- paste("Base +", endowVec[which(endowVec != "Base")])
+endowVec <- gsub("  ", " ", endowVec)
+endowVec <- trimws(endowVec)
+endowVec <- gsub("  ", " ", endowVec)
+unique(endowVec)
+#---------------------------------------------------------------------
+# Graphic of prevalence of each endowment combo and its value
+cellText_size <- 2.5
+df_plot <- data.frame(Type = endowVec, y0 = round(y0, 1)) %>%
+  mutate(xx = 1) %>% group_by(Type) %>%
+  summarise(`Number of farms` = sum(xx, na.rm = T), y0 = unique(y0)) %>%
+  as.data.frame() %>%
+  mutate(`Pct of farms in sample` = `Number of farms` / sum(`Number of farms`) * 100) %>%
+  mutate(Element = 1) %>% arrange(y0) %>%
+  mutate(Type = factor(Type, Type))
+typeVec <- df_plot$Type
+# df_plot$Type <- factor(df_plot$Type, levels = df_plot$y0[order(df_plot$y0)], ordered = T)
+#gg <- ggplot(df_plot, aes(x = Element, y = Type, fill = y0, label = y0))
+gg <- ggplot(df_plot, aes(x = Element, y = Type, fill = y0, label = y0))
+#gg <- gg + scale_y_discrete(limits = typeVec)
+gg <- gg + geom_tile(alpha = 0)
+gg <- gg + labs(title = expression(y[0]))
+#gg <- gg + labs(title = expression(tilde(y)))
+gg <- gg + theme_bw()
+gg <- gg + theme(axis.title = element_blank(),
+                 axis.text.x = element_blank(),
+                 axis.ticks.x = element_blank(),
+                 axis.text.y = element_text(size = axisTextSize),
+                 panel.grid = element_blank(),
+                 plot.title = element_text(size = axisTitleSize, hjust = 0.5),
+                 legend.position = "none")
+gg <- gg + geom_text(size = cellText_size)
+ggEndow1 <- gg
+#---
+gg <- ggplot(df_plot, aes(x = `Pct of farms in sample`, y = Type))
+#gg <- gg + scale_y_discrete(limits = typeVec)
+gg <- gg + geom_col()
+gg <- gg + labs(title = "Pct of farms in smaple")
+gg <- gg + theme_bw()
+gg <- gg + theme(axis.title = element_blank(),
+                 #axis.title.x = element_text(size = axisTitleSize),
+                 axis.text.y = element_blank(),
+                 axis.text.x = element_text(size = axisTextSize),
+                 #panel.grid = element_blank(),
+                 plot.title = element_text(size = axisTitleSize, hjust = 0.5))
+ggEndow2 <- gg
+ggEndow1 + ggEndow2
+#======================================================================
+N <- 3000000
+hist(y0*1.8*3000000/1000)
+
+
+
+
+# mod3$coefficients
+# muA <- exp(0.78*mean(dfMod3$`Farm size (acres)`) + 0.78^2 * sd(dfMod3$`Farm size (acres)`)^2 / 2)
+
+# Compare mod3 with cost per unit output model
+# dfMod4 <- df_mod[, c(mod3Vars)]
+# dfMod4$`Cost/output` <- dfMod4$`Cost/acre` - dfMod4$`Yield (kg/acre)`
+# dfMod4$`Cost/acre` <- NULL; dfMod4$`Rain anomaly` <- NULL
+# mod4 <- lm(`Yield (kg/acre)`~., dfMod4[, -1])
+# summ(mod4)
+# #car::vif(mod3)
+# # Clean: drop outliers with error outside of x stand devs
+# plot(mod4$fitted.values, mod4$residuals)
+# indRm <- which(abs(mod4$residuals) > 1.5)
+# #View(dfMod3[indRm,]); length(indRm)
+# dfMod4b <- dfMod4[-indRm, ]
+# mod4b <- lm(`Yield (kg/acre)`~., dfMod4b[, -1])
+# summ(mod4b)
+#======================================================================
+#======================================================================
+#---------------------------------------------------------------------
+#---
+lEcSharpVec <- seq(-4, 7, length.out = length(lEcSharp))
+f <- dnorm(lEcSharpVec, mEcSharp, sEcSharp)
+dfPlot <- data.frame(f, lEcSharpVec)
+gg <- ggplot() + geom_histogram(data = data.frame(lEcSharp), aes(x = lEcSharp, y = 0.7*after_stat(count / sum(count))), bins = 13, color = "black", fill = "white") #+ scale_y_continuous(labels = scales::percent)
+gg <- gg + geom_line(data = dfPlot, aes(x = lEcSharpVec, y = f)) + geom_vline(xintercept = log(EPT02007), color = "red", lwd = 1) + theme_bw()
+# ggplot() + geom_line(data = dfPlot, aes(x = lEcSharpVec, y = f)) + geom_vline(xintercept = log(EPT02007), color = "red", lwd = 1) + theme_bw()
+EcSharpVec <- seq(0.0001, 40, length.out = length(EcSharp))
+f <- dlnorm(EcSharpVec, mEcSharp, sEcSharp)
+dfPlot <- data.frame(f, EcSharpVec)
+gg <- ggplot() + geom_histogram(data = data.frame(EcSharp), aes(x = EcSharp, y = 0.7*after_stat(count / sum(count))), bins = 45, color = "black", fill = "white") #+ scale_y_continuous(labels = scales::percent)
+gg <- gg + geom_line(data = dfPlot, aes(x = EcSharpVec, y = f)) + geom_vline(xintercept = EPT02007, color = "red", lwd = 1) + theme_bw()
 
 ```
 
@@ -1605,59 +1707,20 @@ The projection overestimates the eventual  is far off because of the 2008-2009 d
 
 ```{r Fig5, fig.show = "hold", fig.width = 5, fig.height=3, fig.align="center", fig.cap="\\label{fig:Qs2009}The ex-ante Kenya 2009 aggregate maize supply curve, parameterized based on the 2007 Kenya farm data. The shaded area around the curve...", echo = FALSE}
 
-# Define root functions
-rootFnUp <- function(xIn, xUp, sXtrunc, mXtrunc){
-  sX <- xIn[1]
-  mX <- xIn[2]
-  zUp <- (log(xUp) - mX) / sX
-  probTerm <- dnorm(zUp) / pnorm(zUp)
-  slack_s <- sXtrunc^2 - sX^2 * (1 - zUp * probTerm - probTerm^2)
-  slack_m <- mXtrunc - mX + sX * probTerm
-  outVec <- c(slack_s, slack_m)
-  return(outVec)
-}
-rootFnLo <- function(xIn, xLo, sXtrunc, mXtrunc){
-  sX <- xIn[1]
-  mX <- xIn[2]
-  zLo <- (log(xLo) - mX) / sX
-  probTerm <- dnorm(zLo) / pnorm(-zLo)
-  slack_s <- sXtrunc^2 - sX^2 * (1 + zLo * probTerm - probTerm^2)
-  slack_m <- mXtrunc - mX - sX * probTerm
-  outVec <- c(slack_s, slack_m)
-  return(outVec)
-}
-#----------------------------------------------------------------------
-EyStar0 <- exp(mod3$fitted.values + sd(mod3$residuals)^2 / 2)
-EcSharp <- exp(dfMod3b$`Cost/acre`) / EyStar0
-lEcSharp <- log(EcSharp)
-lam <- EPT02007 / EcSharp * h
-sum(lam > h) / length(lam)
-mEcSharpTrunc <- mean(lEcSharp); sEcSharpTrunc <- sd(lEcSharp)
-xIn <- c(sEcSharpTrunc, mEcSharpTrunc)
-sol <- nleqslv::nleqslv(xIn, rootFnUp, jac = NULL,
-                        xUp = EPT02007,
-                        sXtrunc = sEcSharpTrunc,
-                        mXtrunc = mEcSharpTrunc)
-#sol
-sEcSharp <- sol$x[1]
-mEcSharp <- sol$x[2]
-muEcSharpT0 <- exp(mEcSharp + sEcSharp^2 / 2)
-#---
-lEcSharpVec <- seq(-4, 7, length.out = length(lEcSharp))
-f <- dnorm(lEcSharpVec, mEcSharp, sEcSharp)
-dfPlot <- data.frame(f, lEcSharpVec)
-gg <- ggplot() + geom_histogram(data = data.frame(lEcSharp), aes(x = lEcSharp, y = 0.7*after_stat(count / sum(count))), bins = 13, color = "black", fill = "white") #+ scale_y_continuous(labels = scales::percent)
-gg <- gg + geom_line(data = dfPlot, aes(x = lEcSharpVec, y = f)) + geom_vline(xintercept = log(EPT02007), color = "red", lwd = 1) + theme_bw()
-# ggplot() + geom_line(data = dfPlot, aes(x = lEcSharpVec, y = f)) + geom_vline(xintercept = log(EPT02007), color = "red", lwd = 1) + theme_bw()
-EcSharpVec <- seq(0.0001, 40, length.out = length(EcSharp))
-f <- dlnorm(EcSharpVec, mEcSharp, sEcSharp)
-dfPlot <- data.frame(f, EcSharpVec)
-gg <- ggplot() + geom_histogram(data = data.frame(EcSharp), aes(x = EcSharp, y = 0.7*after_stat(count / sum(count))), bins = 45, color = "black", fill = "white") #+ scale_y_continuous(labels = scales::percent)
-gg <- gg + geom_line(data = dfPlot, aes(x = EcSharpVec, y = f)) + geom_vline(xintercept = EPT02007, color = "red", lwd = 1) + theme_bw()
 
 
 thetaK <- 
 EyStar0UpBnd <- e
+
+
+kNames <- c("Farm size (acres)", "seed (kg/acre)",
+            "Adult equivalent household size", "Rain anomaly")
+kVec <- mod3Coefs[which(coefsNames %in% kNames)]
+lkMat <- as.matrix(df_mod2[, kNames])
+betaK <- exp(lkMat %*% kVec)
+kappaRn <- mod2Coefs[which(coefsNames == "Rain anomaly")]
+lkRn <- as.matrix(df_mod2[, "Rain anomaly"])
+betaRn <- exp(lkRn * kappaRn)
 
 #---
 
