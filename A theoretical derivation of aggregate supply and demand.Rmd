@@ -1209,30 +1209,31 @@ indUnprofitable <- which(exp(df_mod$Rstar) / exp(df_mod$`Cost/acre (KES/acre)`)<
 # exp(df_mod$Rstar[indHiCost]) / exp(df_mod$`Cost/acre (KES/acre)`[indHiCost])
 # df_mod[which(!duplicated(df_mod$`Seed (kg/acre)`)),]%>%View
 # df_mod[indUnprofitable,]%>%View
-indRm <- unique(c(indHiCost, indUnprofitable))
-dfMod3 <- df_mod[, c(mod3Vars)]
+indRm <- indHiCost
+#indRm <- unique(c(indHiCost, indUnprofitable))
+#dfMod3 <- df_mod[, c(mod3Vars)]
 dfMod3 <- df_mod[-indRm, c(mod3Vars)]
 mod3 <- lm(`Yield (kg/acre)`~., dfMod3[, -1])
 summ(mod3)
 plot(mod3$fitted.values, mod3$residuals)
 #car::vif(mod3)
 # Clean: drop outliers with error outside of x stand devs
-indRm <- which(abs(mod3$residuals) > 1)
+indRm <- which(abs(mod3$residuals) > 1.1)
 View(dfMod3[indRm,]); length(indRm)
-# dfMod3b <- dfMod3[-indRm, ]
+dfMod3 <- dfMod3[-indRm, ]
 #======================================================================
 #======================================================================
 #======================================================================
 # Descriptive graphics
-dfLook <- dfMod3b
+dfLook <- dfMod3
 gatherCols <- colnames(dfLook)[-1]
 dfLook <- dfLook %>% gather_("var", "val", gatherCols)
 # Control vars
-controlVarsVec <- c("Seed (kg/acre)", "Adult equivalent household size", "Rain anomaly", "Child family labor, planting (person-hrs/acre)", "Cost/acre", "Farm size (acres)")
+controlVarsVec <- c("Seed (kg/acre)", "Adult equivalent household size", "Rain anomaly", "Cost/acre", "Farm size (acres)") #"Child family labor, planting (person-hrs/acre)"
 dfPlot <- dfLook %>% subset(var == "Yield (kg/acre)")
 dfPlot$val <- exp(dfPlot$val)
 ggYd <- ggplot(dfPlot, aes(x = val)) +
-  geom_histogram(color = "black", fill = "white") +
+  geom_histogram(color = "black", fill = "white", bins = 25) +
   facet_wrap(~var, scales = "free") + theme_bw() +
   theme(axis.title = element_blank(),
         #axis.title.y = element_text(size = axisTitleSize),
@@ -1242,16 +1243,16 @@ ggYd <- ggplot(dfPlot, aes(x = val)) +
 dfPlot <- dfLook %>% subset(var %in% controlVarsVec & val > 0)
 dfPlot$val <- exp(dfPlot$val)
 u <- dfPlot$var; dfPlot$var[grep("Adult equivalent", u)] <- "Adult equivalent\nhousehold size"
-u <- dfPlot$var; dfPlot$var[grep("Child family", u)] <- "Child fam lab, planting\n (pers-hrs/acre)"
+#u <- dfPlot$var; dfPlot$var[grep("Child family", u)] <- "Child fam lab, planting\n (pers-hrs/acre)"
 ggIndepVars <- ggplot(dfPlot, aes(x = val)) +
-  geom_histogram(color = "black", fill = "white") +
+  geom_histogram(color = "black", fill = "white", bins = 26) +
   facet_wrap(~var, scales = "free") + theme_bw() +
   theme(axis.title.x = element_blank(),
         #axis.title.y = element_text(size = axisTitleSize),
         axis.text = element_text(size = axisTextSize),
         strip.background = element_blank(),
         strip.text = element_text(size = facetTitleSize - 1))
-ggIndepVars + ggYd + plot_layout(widths = c(2, 1))
+ggIndepVars + ggYd + plot_layout(widths = c(2, 2))
 # # Input/output prices
 # dfPlot <- dfLook %>% subset(var %in% priceVars & val > 0) %>% rename(`KES/kg` = val)
 # dfPlot$var <- gsub(" \\(KES/kg\\)", "", dfPlot$var)
@@ -1282,7 +1283,7 @@ ggIndepVars + ggYd + plot_layout(widths = c(2, 1))
 # plot(mod3$fitted.values, mod3$residuals)
 #----------------------------------------------------------------------
 # Post-estimation transformation of regression constant into expected value of yStar (y0)
-notThese <- c("Dist", "Yield (kg/acre)", "Cost/acre (KES/acre)", "Farm size (acres)", bin_vars)
+notThese <- c("Dist", "Yield (kg/acre)", "Cost/acre (KES/acre)", bin_vars)
 kVars <- setdiff(mod3Vars, notThese)
 coefVec <- mod3$coefficients; coefNames <- gsub("`", "", names(coefVec))
 kappaVec <- coefVec[which(coefNames %in% kVars)]
@@ -1403,35 +1404,35 @@ rootFnUp <- function(xIn, xUp, sXtrunc, mXtrunc){
 #   return(outVec)
 # }
 #----------------------------------------------------------------------
-EyStarT0 <- exp(dfMod3$`Yield (kg/acre)`)# exp(mod3$fitted.values)# + sd(mod3$residuals)^2 / 2)
-#mean(EyStarT0)
-#EyStarT0 <- dfMod3$`Yield (kg/acre)`
-EcSharp <- exp(dfMod3$`Cost/acre (KES/acre)`) / EyStarT0
-#EcSharp <- exp(dfMod3b$`Cost/acre`) / EyStar0
-lEcSharp <- log(EcSharp)
-lam <- EPT02007 / EcSharp * h
-sum(lam > h) / length(lam)
-mEcSharpTrunc <- mean(lEcSharp); sEcSharpTrunc <- sd(lEcSharp)
-muEcSharpTrunc <- exp(mEcSharpTrunc + sEcSharpTrunc^2 / 2)
-xIn <- c(sEcSharpTrunc, mEcSharpTrunc)
-sol <- nleqslv::nleqslv(xIn, rootFnUp, jac = NULL,
-                        xUp = EPT02007,
-                        sXtrunc = sEcSharpTrunc,
-                        mXtrunc = mEcSharpTrunc)
-#sol
-sEcSharp <- sol$x[1]
-mEcSharp <- sol$x[2]
-muEcSharpT0 <- exp(mEcSharp + sEcSharp^2 / 2)
-muEcSharpT0n <- exp(eta * mEcSharp + eta^2 * sEcSharp^2 / 2)
+muEcStarT0hSamp <- mean(exp(dfMod3$`Cost/acre (KES/acre)`)^h)
+# EyStarT0 <- exp(dfMod3$`Yield (kg/acre)`)# exp(mod3$fitted.values)# + sd(mod3$residuals)^2 / 2)
+# #mean(EyStarT0)
+# #EyStarT0 <- dfMod3$`Yield (kg/acre)`
+# EcSharp <- exp(dfMod3$`Cost/acre (KES/acre)`) / EyStarT0
+# #EcSharp <- exp(dfMod3b$`Cost/acre`) / EyStar0
+# lEcSharp <- log(EcSharp)
+# lam <- EPT02007 / EcSharp * h
+# sum(lam > h) / length(lam)
+# mEcSharpTrunc <- mean(lEcSharp); sEcSharpTrunc <- sd(lEcSharp)
+# muEcSharpTrunc <- exp(mEcSharpTrunc + sEcSharpTrunc^2 / 2)
+# xIn <- c(sEcSharpTrunc, mEcSharpTrunc)
+# sol <- nleqslv::nleqslv(xIn, rootFnUp, jac = NULL,
+#                         xUp = EPT02007,
+#                         sXtrunc = sEcSharpTrunc,
+#                         mXtrunc = mEcSharpTrunc)
+# #sol
+# sEcSharp <- sol$x[1]
+# mEcSharp <- sol$x[2]
+# muEcSharpT0 <- exp(mEcSharp + sEcSharp^2 / 2)
+# muEcSharpT0n <- exp(eta * mEcSharp + eta^2 * sEcSharp^2 / 2)
 #---
-# Calculation of mean yield over whole population (y0 or muEyStarT0)
-# (Sample mean of yield is mean over a truncated population)
-# Use def of mean yield y0=v0*muThetaKnh*muEcSharpT0n
-# Mean yield varies with binary controls. Here is the mean with just the base constant
+# Define constant in terms of convenient known reference value y0, in this case sample mean yield.
+# Sample mean yield varies with binary controls. Here is the mean with just the base constant
 # (i.e. all binaries = 0)
 alpha0 <- coefVec[1]
 v0base <- exp(alpha0)
-y0base <- v0base * muThetaKnh * muEcSharpT0n
+#y0base <- v0base * muThetaKnh * muEcSharpT0n
+y0base <- v0base * muThetaK * muEcStarT0hSamp
 #y0base <- v0base * (muThetaK)^(eta / h) * muEcSharpT0n
 #---
 # Now calculate mean yield for all binary combinations
@@ -1441,19 +1442,19 @@ dfBins <- dfMod3[, bin_vars]
 #dfBins <- dfMod3b[, bin_vars]
 alpha0adj <- alpha0 + as.matrix(dfBins) %*% kappaBins
 v0 <- exp(alpha0adj)
-Eerr <- exp(sd(mod3$residuals)^2 / 2) #Don't forget to adjust for resids
-y0 <- v0 * muThetaKnh * muEcSharpT0n * Eerr
-muEcSharpTruncT0n <- exp(eta * mEcSharpTrunc + eta^2 * sEcSharpTrunc^2 / 2)
-y0 <- v0 * muThetaKnh * muEcSharpTruncT0n * Eerr
-
+#Eerr <- exp(sd(mod3$residuals)^2 / 2) #Don't forget to adjust for resids
+# y0 <- v0 * muThetaKnh * muEcSharpT0n * Eerr
+# muEcSharpTruncT0n <- exp(eta * mEcSharpTrunc + eta^2 * sEcSharpTrunc^2 / 2)
+#y0 <- v0 * muThetaKnh * muEcSharpTruncT0n * Eerr
+y0 <- v0 * muThetaK * muEcStarT0hSamp
 mean(EyStarT0) #truncated sample mean
 mean(y0)
 # y0 <- g0 * EthetaK * EcStar * Eerr #Expected value of yStar
 y0 %>% unique() %>% length # 14 endowment combos present
 dfPlot <- data.frame(County = dfMod3$Dist, y0)
 #dfPlot <- data.frame(County = dfMod3b$Dist, y0)
-ggplot(dfPlot, aes(x = y0)) + geom_histogram() + facet_wrap(~County)
-exp(mean(dfMod3$`Yield (kg/acre)`) + sd(dfMod3$`Yield (kg/acre)`)^2/2)
+#ggplot(dfPlot, aes(x = y0)) + geom_histogram() + facet_wrap(~County)
+#exp(mean(dfMod3$`Yield (kg/acre)`) + sd(dfMod3$`Yield (kg/acre)`)^2/2)
 # mean(y0)
 #-----------------------------------------------------------------------
 # Create label vec for each of the 14 endowment combos
@@ -1468,7 +1469,7 @@ endowVec[which(endowVec != "Base")] <- paste("Base +", endowVec[which(endowVec !
 endowVec <- gsub("  ", " ", endowVec)
 endowVec <- trimws(endowVec)
 endowVec <- gsub("  ", " ", endowVec)
-unique(endowVec)
+#unique(endowVec)
 #---------------------------------------------------------------------
 # Graphic of prevalence of each endowment combo and its value
 cellText_size <- 2.5
@@ -1501,7 +1502,7 @@ ggEndow1 <- gg
 gg <- ggplot(df_plot, aes(x = `Pct of farms in sample`, y = Type))
 #gg <- gg + scale_y_discrete(limits = typeVec)
 gg <- gg + geom_col()
-gg <- gg + labs(title = "Pct of farms in smaple")
+gg <- gg + labs(title = "Pct of farms in sample")
 gg <- gg + theme_bw()
 gg <- gg + theme(axis.title = element_blank(),
                  #axis.title.x = element_text(size = axisTitleSize),
@@ -1512,9 +1513,12 @@ gg <- gg + theme(axis.title = element_blank(),
 ggEndow2 <- gg
 ggEndow1 + ggEndow2
 #======================================================================
-N <- 3000000
-hist(y0*1.8*3000000/1000)
-
+mean(y0) * 2.5*10^6 /1000 * 0.8 # Agg Supply with 80% chance of mean farm making profit
+#Ok if it's a little low because omits short rains season
+#Note mean of y0 automatically weights the 14 configurations according to their prevalence in the sample--it's a weighted sum of the sample mean yields of each system
+# dfPlot <- data.frame(County = dfMod3$Dist, endowVec, xx = 1) %>% group_by(County) %>%
+#   mutate(n = sum(xx)) %>% subset(n >=30)
+# ggplot(dfPlot, aes(y = endowVec)) + geom_bar(stat = "count") + facet_wrap(~County)
 
 
 
