@@ -365,21 +365,219 @@ Below the agg sup curve is derived from axioms 1-5. First the farm production fu
 
 ## Derivation of the farm production function from axioms 1 and 2
 
-Axiom 1 gives us the farm yield function as a multivariate power law (better known to economists as the Cobb-Douglas form).
+Throughout much of written history, astute observers have noticed that the usefulness of increments in the quantity of a good is inversely proportional to amount of the input or good or service already acquired [@kauder1953genesis]. In 1738, Daniel Bernoulli put it this way:
+<!-- an input (in the case of producer yield functions) or good or service (in the case of consumer utility functions) -->
+
+>\singlespacing "In the absence of the unusual, the utility resulting from any small increase in wealth will be inversely proportionate to the quantity of goods previously possessed" [@bernoulli1954exposition].
+
+\doublespacing
+<!-- Today, this is known as the "law of diminishing marginal returns". -->
+<!-- \begin{framed} -->
+<!--    \textbf{Axiom 1} \\ The law of diminishing marginal returns. -->
+<!-- \end{framed} -->
+<!-- Formalization of Bernoulli's verbal statement of the law of diminishing marginal returns depends upon how one defines "small increase". If "small increase" means a marginal increase, then Bernoulli's statement can be written down as follows.^[Bernoulli himself could not have had "marginal increase" in mind per se, as calculus had not yet been invented.] -->
+
+Today, this is known as the "law of diminishing marginal returns". Bernoulli's statement is a consumer side formulation of the law. It can also has a producer side formulation: "In the absence of the unusual, the yield increase resulting from any small increase in a given input will be inversely proportionate to the quantity of the input already applied." With the aid of calculus (which was not available to Bernoulli), this may be formalized as follows.
 
 \begin{equation}
-y = y_0 \prod_{i = 1}^{n_k} \left( \frac{k_i}{\tilde{k}_i} \right)^{\kappa_i} \prod_{i = 1}^{n_x} \left( \frac{x_i}{\tilde{x}_i} \right)^{\alpha_i}
+\frac{\partial \ln(y)}{\partial x} \sim \frac{1}{x}
+\label{eq:dimUtilDefine}
+\end{equation}
+
+Where, to be clear, the term $\partial \ln(y) / \partial x$ is the [percentage change in yield?] change in total yield given a marginal increase in the quantity of good $x$, and "$\sim 1 / x$", means "inversely proportionate to the quantity of good $x$ already acquired". An expression $y(x)$ for the yield of good $x$ can then be obtained by integrating Bernoulli's statement.
+
+\begin{equation}
+\begin{split}
+\int \frac{\partial \ln(y)}{\partial x} \: dx &= \int \alpha \frac{d \ln(x)}{dx} \: dx \\
+\ln(y(x))  &= \alpha \ln(x) + k \\
+y(x) &= e^k x^{\alpha}
+\end{split}
+\label{eq:integrate_lny}
+\end{equation}
+
+Where the proportionality constant $\alpha = \partial \ln(y)/ \partial \ln(x)$ is the input elasticity of yield, i.e., the percentage change in yield given a $1$ percent increase in input $x$.
+
+In the multivariate case, an expression $y(\mathbf{x})$ for yield as a function of a vector of $n$ goods $\mathbf{x} = [x_1,x_2,...,x_n]$ can be obtained as follows.
+
+\begin{equation}
+\int \nabla_{\mathbf{x}} \ln(y) \cdot d \mathbf{x} = \int D(\boldsymbol{\alpha}) \nabla_{\mathbf{x}} \ln(\mathbf{x}) \cdot d \mathbf{x}
+\end{equation}
+
+\begin{equation}
+\begin{split}
+\ln(y(\mathbf{x})) &= \boldsymbol{\alpha} \cdot \ln(\mathbf{x}) + \alpha_0 \\
+y &= e^{\alpha_0} \prod_{i = 1}^{n} x_i^{\alpha_i}
+\end{split}
+\label{eq:cobbDoug}
+\end{equation}
+
+where $\boldsymbol{\alpha}$ is the vector of input elasticities corresponding to each $x_i$, the notation $D(\boldsymbol{\alpha})$ indicates a diagonal matrix with the elements of $\boldsymbol{\alpha}$ along its diagonal, and
+
+\begin{equation}
+\nabla_{\mathbf{x}} \ln(y) = \left[ \begin{matrix} \frac{\partial \ln(y)}{\partial x_1} \\
+\frac{\partial \ln(y)}{\partial x_2} \\
+\vdots \\
+\frac{\partial \ln(y)}{\partial x_n}
+\end{matrix} \right]
+\end{equation}
+
+It is straightforward to see that equation \ref{eq:cobbDoug2} is a homogeneous (and thus also homothetic) function with degree of homogeneity $h$ equal to $\sum_i \alpha_i$. There is no need, then, to impose homogeneity as an additional axiom. It follows from the axiom of diminishing marginal returns.
+
+Empirical analysis involves exogenously given control variables ($k_i$), typically including demographic variables such as age, education, gender, household size, as well as agroclimatic variables such as temperature, rainfall, soil conditions, and so forth. Equation \ref{eq:cobbDoug} is thus henceforth rewritten as follows.
+<!-- (Analysis is said to be "ceteris paribus" when these variables are held constant at a particular value across the population.) -->
+
+\begin{equation}
+y = g_0 \prod_{i = 1}^{n_k} k_i^{\kappa_i} \prod_{i = 1}^{n_x} x_i^{\alpha_i} \:\:;\:\:\: g_0 = e^{\alpha_0}
+\label{eq:cobbDoug2}
+\end{equation}
+
+Where the $\kappa_i$ are the control variable elasticities of yield. Because the control variables $k_i$ are non-discretionary, the corresponding elasticities $\kappa_i$ may take positive or negative values. The input elasticities $\alpha_i$, on the other hand, which correspond to discretionary management variables, are generally positive. For purposes of economic analysis, the degree of homogeneity is calculated only over the production elasticities corresponding to management variables ($h = \sum_i \alpha_i$, omitting the $\kappa_i$).
+<!-- However, there may arise cases where a variable does not fall neatly into either the management or control category. In the empirical analysis presented farther below, for example, the coefficient on child family labor takes a negative value. Labor is generally considered a discretionary management variable; but family labor, and especially child family labor, might, in some cases, better be considered a control variable, indicative of hard constraints beyond the farmers' discretion. -->
+<!-- Axiom 1 gives us the farm yield function as a multivariate power law (see Appendix for details of the derivation.) -->
+<!-- Where the $x_i$ are management inputs (fertilizer, etc.), the $k_i$ are control variables (demographic and agroclimatic variables, etc.), and the $\alpha_i$ and $\kappa_i$ are input and control variable elasticities of yield, respectively. The input elasticities of yield are also referred to collectively as the "technology". The product bounds $n_x$ and $n_k$ indicate the number of inputs and control variables, respectively. -->
+<!-- The variables $x_i$ and $k_i$ are assumed to be linearly independent and are divided by their population means ($\tilde{x}_i$, $\tilde{k}_i)$, such that $y_0$ may be interpreted as the mean yield.  -->
+
+This is, of course, the Cobb-Douglas form. Outside of Economics, it would simply be referred to as a (multivariate) power law. Such forms are often good models of observed processes across a wide range of research contexts and disciplines. In Economics, the Cobb-Douglas form was widely used from the 1920s to 1950s on the basis of its good empirical fit, but fell into disrepute thereafter for its perceived lack a theoretical basis. Capalbo and Antle [-@capalbo2015agricultural] offer a succinct introduction to this vast discussion. The forgoing derivation of the Cobb-Douglas form from axiom 1 in some measure redresses the lack of a theoretical basis. A full defense against all of the criticisms levied against this form over the past seventy five years is a book-length project that will not be attempted here.
+<!-- [Other perceived shortcomings of the form are briefly addressed in the Discussion. if there is enough space!] [Or: In the course of the derivation below, a number of theoretical strengths are brought to light---underrepresented or overlooked by textbook treatments---that cast doubt on the bad reputation as a "restrictive" model] -->
+
+Interpretation of the constant $g_0$ is as difficult as one wants to make it. It is, of course, usually called the "total factor productivity", and understood to represent the yield per unit "all inputs"---although a more accurate description would be yield per unit "all input and control variables, raised to various powers". For those not yet comfortable working in units of, say,
+
+$$
+\text{kg.} \times \: \text{acres}^{-1} \times \: \text{liters}^{-\alpha_{pest}} \times \: \text{kg.}^{-\alpha_{fert}} \times \: \text{manhours}^{-\alpha_{labor}} \times\: \\ \text{mm.}^{-\alpha_{rain}} \times\: \: \text{years}^{-\alpha_{age}} \times\: \text{num. persons}^{-\alpha_{HHsize}} \:;\:\: \alpha_{(var)} \in \mathbb{R}
+$$
+an alternative approach is to define $g_0$ in terms of a new parameter combined with judiciously chosen reference terms such that the new parameter has a meaningful interpretation and/or results in a more useful expression for yield. For present purposes, $g_0$ is defined as follows
+<!-- in terms of another constant $u_0$, the means $E[x_i]$, and the mean of    fixed reference values $\tilde{k}_i$, $\tilde{x}_i$ that have the same units as the corresponding management and control variables $x_i$ and $k_i$. -->
+<!-- Because the ratios in parentheses are dimensionless, $y_0$ must have the same units as $y$; and $y_0$ may be interpreted as the value of $y$ when all management and control variables equal their reference values. In the empirical study included here, for example, the reference values are set equal to the sample means, such that $y_0$ is the value of $y$ evaluated at the sample means of the input and control variables. -->
+
+\begin{equation}
+g_0 = \frac{u_0}{E[\prod_{i = 1}^{n_k} k_i^{\kappa_i}] \prod_{i = 1}^{n_x} E[x_i]^{\alpha_i}}
+\label{eq:u0_for_g0}
+\end{equation}
+
+Such that $y$ may be rewritten
+
+\begin{equation}
+y = u_0 \frac{k}{E[k]} \prod_{i = 1}^{n_x} \left( \frac{x_i}{E[x_i]} \right)^{\alpha_i} \:\:;\:\:\: k = \prod_{i = 1}^{n_k} k_i^{\kappa_i}
 \label{eq:cobbDoug3}
 \end{equation}
 
-Where the $x_i$ are management inputs (fertilizer, etc.), the $k_i$ are control variables (demographic and agroclimatic variables, etc.), and the $\alpha_i$ and $\kappa_i$ are input and control variable elasticities of yield, respectively. The input elasticities of yield are also referred to collectively as the "technology". The product bounds $n_x$ and $n_k$ indicate the number of inputs and control variables, respectively. The variables $x_i$ and $k_i$ are assumed to be linearly independent and are divided by their population means ($\tilde{x}_i$, $\tilde{k}_i)$, such that $y_0$ may be interpreted as the mean yield. (See Appendix for details of the derivation.)
+This substitution will soon be seen to facilitate interpretation and manipulation of the optimal yield function. But first the optimal yield must be derived from axiom 2. The introduction of axiom 2---profit maximization---gives the optimal inputs (see Appendix A1 for details).
 
-The introduction of axiom 2 then results in the profit maximizing farm yield function.
+...in passing...diminishing returns to scale. Constant returns to scale ($h = 1$) imply the break-even point, while increasing returns to scale ($h > 1$) imply a loss. The farm yield function is thus globally concave in inputs. Constant and increasing returns, on the other hand, would imply global linearity and convexity, respectively.
 
 \begin{equation}
-y^* = \left(y_0 \frac{\theta_{x}}{\theta_{w}}\theta_k \right)^{\frac{\eta}{h}} \left( \frac{P}{\lambda} \right)^{\eta} \:\:;\:\:\: \eta = \frac{h}{1 - h}
-\label{eq:YdEnvCompact0}
+x^*_i = \frac{y^* P \alpha_i}{\lambda w_i}
+\label{eq:inputDem1}
 \end{equation}
+
+Where $P$ is the output price, $w_i$ is the $i^{th}$ input price, $\lambda$ is the farm budget shadow price, and $y*$ is the optimal yield, i.e., the yield function in Equation \ref{eq:cobbDoug2} evaluated at the optimal inputs $x^*_i$. Multiplying this expression for $x^*_i$ by $w_i$ and summing both sides over $i$ gives an expression for optimal cost or expenditure ($C^*$).
+
+\begin{equation}
+C^* = R^* \frac{h}{\lambda} \:;\:\:\: R^* = y^* P
+\label{eq:cStar}
+\end{equation}
+
+Such that optimal input may be rewritten
+
+\begin{equation}
+x^*_i = \frac{C^* \alpha_i}{h w_i}
+\label{eq:inputDem2}
+\end{equation}
+
+By which it also follows
+
+\begin{equation}
+\frac{x^*_i}{E[x^*_i]} = \frac{C^*}{E[C^*]}
+\end{equation}
+
+Such that the optimal farm yield $y^*$ (Equation \ref{eq:cobbDoug3} evaluated at $x^*_i$) may be expressed
+
+\begin{equation}
+y^* = u_0 \frac{k}{E[k]} \left( \frac{C^*}{E[C^*]} \right)^h
+\end{equation}
+
+The expression can be simplified still further by taking the expectation and solving for $u_0$.
+
+\begin{equation}
+u_0 =  E[y^*] \frac{E[C^*]^h}{E[C^{*h}]}
+\end{equation}
+
+And then substituting this for $u_0$ in the yield expression.
+
+\begin{equation}
+y^* = E[y^*] \frac{k}{E[k]} \frac{C^{*h}}{E[C^{*h}]}
+\label{eq:YdEnvNeat}
+\end{equation}
+
+This expression is particularly useful for estimation, as it only requires information on the control variables $k_i$ and total cost $C^*$, and no information on individual input quantities, as would be required when estimating Equation \ref{eq:cobbDoug3}. Moreover, the estimated coefficient on logged farm cost may be directly interpreted as the degree of homogeneity for the population. When estimating the model in Equation \ref{eq:cobbDoug3}, by contrast, $h$ must be tallied by summing the estimated coefficients $\alpha_i$, and will likely vary across the population since not all farms necessarily apply all the inputs specified in the model.
+<!-- A further advantage of this form is that the fitted coefficient on $\ln(C^*)$ may be directly interpreted as $h$, valid for all farms in the sample. Estimation of the model in Equation \ref{eq:cobbDoug3}, on the other hand, requires the extra step of summation of the input elasticities $\alpha_i$ in order to arrive at $h$. This may result in varying $h$ across the sample, as not all farms necessarily apply all the inputs specified in the model. -->
+
+Noting that $C^* = C^{\#} y^*$, where $C^{\#}$ is defined as the cost per unit output, another useful expression is obtained by substituting $C^{\#} y^*$ for $C^*$ and solving for $y^*$, giving
+
+\begin{equation}
+y^* = E[y^*] \left( \frac{k}{E[k]} \right)^{\frac{\eta}{h}} \frac{C^{\# \eta}}{E[C^{\# h}]^{\frac{\eta}{h}}} \:\:\:;\:\:\:\: \eta = \frac{h}{1 - h}
+\end{equation}
+
+Taking the expectation and rearranging gives 
+
+\begin{equation}
+E[k]^{\frac{\eta}{h}} E[C^{\# h}]^{\frac{\eta}{h}} = E[k^{\frac{\eta}{h}}] E[C^{\# \eta}]
+\end{equation}
+
+Such that the previous expression simplifies to
+
+\begin{equation}
+y^* = E[y^*] \frac{k^{\frac{\eta}{h}}}{E[k^{\frac{\eta}{h}}]} \frac{C^{\# \eta}}{E[C^{\# \eta}]}
+\label{eq:YdEnvNeatSharp}
+\end{equation}
+
+This expression is useful for integrating farm production over the production density to arrive at aggregate supply because the argument $C^{\#}$ has a readily defined upper bound of integration at $P$. (By axiom 2, clearly $0 < C^{\#} < P$.) 
+
+This means that not all farms in the population participate in production. he population means $E[y^*]$ and $E[C^{\#}]$ do not correspond to the observed sample means. 
+
+area and yield not independent
+
+
+
+The conciseness of this expression being due to the judicious substitution in Equation \ref{eq:u0_for_g0}. If this substitution is not made, then evaluation of $y$ (Equation \ref{eq:cobbDoug2}) at $x^*_i$ works out to
+
+\begin{equation}
+y^* = \left(g_0 \prod_{i = 1}^{n_x} \left( \frac{\alpha_i}{w_i} \right)^{\alpha_i} k \right)^{\frac{1}{1 - h}} \left( \frac{P}{\lambda} \right)^{\frac{h}{1 - h}}
+\label{eq:YdEnvMessy}
+\end{equation}
+
+<!-- The degree of homogeneity $h$ is thus also the scale elasticity of yield ($d \ln(y^*) / d \ln(C^*) = h$), as noted in the textbooks. -->
+
+Equation \ref{eq:YdEnvMessy} is useful for inspecting the output price elasticity of farm supply, making sure they agree with expectation based on intuition and/or empirical observation. Letting $\eta$ denote the output price elasticity of farm supply, from Equation \ref{eq:YdEnvMessy}, it is clear that
+
+\begin{equation}
+\eta = \frac{\partial \ln(y^*)}{\partial \ln(P)} = \frac{h}{1 - h}
+\end{equation}
+
+To know if this expression agrees with intuition, it is necessary to determine the domain of $h$. By axiom 2 (Equation \ref{eq:cStar}), clearly $h$ must lie between $0$ and $1$. At $h = 1$ (constant returns to scale), profit is $0$, and $h$ greater than $1$ implies loss. Given the domain $0 < h < 1$, it follows that $\eta$ is strictly non-negative, in agreement with expectation. It follows, moreover, that farm supply is inelastic over $0 < h < 1/2$ and elastic over $1/2 < h < 1$. The price elasticity of supply at the farm level thus increases with improvements in technology, which many might consider an intuitive result. Finally, note that the standard assumption of unit homogeneity or constant returns to scale ($h = 1$) implies not only zero profit but also perfect elasticity, which is never observed empirically.
+
+The own and cross price elasticities of input demand may be inspected by examining Equations 
+\ref{eq:inputDem1} or \ref{eq:inputDem2}. 
+
+
+
+
+
+Note, moreover, assuming yield is lognormally distributed (axiom x) and that $C^*$ and $k$ are linearly independent,
+
+\begin{equation}
+E[y^*] = u_0 \frac{E[C^{*h}}{E[C^*]^h} = u_0 e^{\frac{s_c^2}{2}(h^2-h)}
+\end{qeuation}
+
+
+
+[[Cost *increases* with tech (h)]]
+
+[[pause and review MC = h/lambda AC basis of the conventional concept and insistence on marginal firms]]
+
+[[area and yd not independent. so when moving from yield to production fn can't just integrate over density of area. have to factor out the area component of yield and integrate it into area]]
+
+[[By axioms 1 and 2, then we get corrollaries: upward sloping farm supply, downward sloping input demand, concavity in inputs, marginal cost equals P/lambda, ]]
 
 Where $h = \sum_i \alpha_i$ is the farm yield degree of homogeneity, $P$ is the output price, $\lambda$ is the farm budget shadow price, and
 
@@ -387,7 +585,42 @@ Where $h = \sum_i \alpha_i$ is the farm yield degree of homogeneity, $P$ is the 
 \theta_x = \prod_i {\alpha_i}^{\alpha_i} \:\:\: \theta_w = \prod_i{w_i}^{\alpha_i} \:\:\:  \theta_k = \prod_i \left( \frac{k_i}{\tilde{k}_i} \right)^{\kappa_i}
 \end{equation}
 
-Where the $w_i$ are input prices. Note that $\eta$, the farm level output price elasticity of supply, is a function of the technology. The yield envelope---i.e., the budget constrained, profit maximizing farm yield in Equation \ref{eq:YdEnvCompact0}---is henceforth referred to simply as the farm yield. Likewise, "farm production function" henceforth refers to the budget constrained, profit maximizing production function $q^*$ obtained when $y^*$ is multiplied by the cultivated area $k_a$.
+Where the $w_i$ are input prices. Note that $\eta$, the farm level output price elasticity of supply, is a function of the technology. The yield envelope---i.e., the budget constrained, profit maximizing farm yield in Equation \ref{eq:YdEnvCompact0}---is henceforth referred to simply as the farm yield.
+
+
+
+
+
+
+
+
+
+
+
+
+Such that the yield function may be rewritten
+
+\begin{equation}
+y = u_0 \frac{\prod_{i = 1}^{n_k} k_i^{\kappa_i}}{E[\prod_{i = 1}^{n_k} k_i^{\kappa_i}]} \prod_{i = 1}^{n_x} \left( \frac{x_i}{E[x_i]} \right)^{\alpha_i}
+\label{eq:cobbDoug3b}
+\end{equation}
+<!-- \begin{equation} -->
+<!-- y = y_0 \prod_{i = 1}^{n_k} \left( \frac{k_i}{\tilde{k}_i} \right)^{\kappa_i} \prod_{i = 1}^{n_x} \left( \frac{x_i}{\tilde{x}_i} \right)^{\alpha_i} -->
+<!-- \label{eq:cobbDoug3} -->
+<!-- \end{equation} -->
+
+Or, taking logs,
+
+\begin{equation}
+\ln(y) = \ln(y_0) + \sum_{i = 1}^{n_k} \kappa_i \ln \left( \frac{k_i}{\tilde{k}_i} \right) + \sum_{i = 1}^{n_x} \alpha_i \ln \left( \frac{x_i}{\tilde{x}_i} \right)
+\label{eq:cobbDoug3bln}
+\end{equation}
+
+
+
+
+
+Likewise, "farm production function" henceforth refers to the budget constrained, profit maximizing production function $q^*$ obtained when $y^*$ is multiplied by the cultivated area $k_a$.
 
 \begin{equation}
 q^* = k_a y^* = k_a \left(y_0 \frac{\theta_{x}}{\theta_{w}}\theta_k \right)^{\frac{\eta}{h}} \left( \frac{C^{\#}}{h} \right)^{\eta}
@@ -460,18 +693,42 @@ Where the farm density $\rho()$ that appears in Equation \ref{eq:sup1} has been 
 4) Assuming that farms enter production only if they expect to make a profit (axiom 4), then cost per unit output cannot exceed output price, thus resolving the upper bound of this integral. Since cost cannot be negative, the lower bound is $0$. The domain of integration must then be $0 < C^{\#} < P$.
 
 \begin{equation}
-Q = N \left(y_0 \frac{\theta_x}{\theta_w} \right)^{\frac{\eta}{h}} E \left[\hat{\theta}_k^{\frac{\eta}{h}} \right] h^{-\eta} \int_{0}^{P} C^{\# \eta} f(C^{\#}) \: dC^{\#}
+Q &= N E[k_a] E[y^*] \frac{1}{E[C^{\# \eta}]} \int_{0}^{P} C^{\# \eta} f(C^{\#}) \: dC^{\#}
 \end{equation}
+<!-- &= N E[k_a] E[y^*] \frac{E[C^{\# \eta} | C^{\#} \leq P]}{E[C^{\# \eta}]} -->
 
-Because production is assumed to be lognormally distributed, $C^{\#}$ (and $\lambda$) must also be lognormally distributed. It can be shown, then, that the integral in the above expression resolves as follows.
+Because $y^*$ is lognormally distributed, then $C^{\# \eta}$ must also be lognormally distribtued, such that the integral in this expression resolves as follows (proof given in Appendix A2).
+<!--and $k$ and $C^{\# \eta}$ are independent, then $k$ and [$k$ and $C^{\# \eta}$ are independent by equation useful (i.e. b/c Csharp is not a function of k)] k is formerly theta_k -->
 
 \begin{equation}
+\int_{0}^{P} C^{\# \eta} f(C^{\#}) \: dC^{\#} = E[C^{\# \eta}] \Phi \left(\frac{\ln \left( \frac{E[C^{\# \eta}]}{P} \right) + \frac{s_{\#}^2}{2}}{s_{\#}} \right)
+\end{equation}
+
+Such that the aggregate supply equation reduces to
+
+\begin{equation}
+Q &= N E[k_a] E[y^*] \Phi \left(\frac{\ln \left( \frac{E[C^{\# \eta}]}{P} \right) + \frac{s_{\#}^2}{2}}{\eta s_{\#}} \right) \:;\:\:\: s_{\#}^2 = Var[\ln(C^{\#})]
+\end{equation}
+
+
+
+
+
+
+Where $\omega^2 = Var[\ln(v)]$ and $\Phi()$ is the standard cumulative normal distribution function. (See Appendix A2 for proof.)
+
+Because production is assumed to be lognormally distributed, $C^{\#}$ (and $\lambda$) must also be lognormally distributed. Substituting $v = C^{\# \eta}$ and $M = P^{\eta}$, into \ref{eq:keyResult} then,
+
+\begin{equation}
+E[C^{\# \eta} | C^{\# \eta} < P^{\eta}] = E[C^{\# \eta}] \Phi \left(\frac{\ln P - m_{\#}}{s_{\#} - \eta s_{\#}} \right)
+
+
+\right) + \frac{s_{\#}^2}{2}}{s_{\#}} \right)
+
 \int_{0}^{P} C^{\# \eta} f(C^{\#}) \: dC^{\#} = E \left[C^{\# \eta} \right] \Phi \left(\frac{\ln\left(\frac{P}{E \left[C^{\#} \right]} \right)^{\eta} - \frac{\eta^2}{2} Var \left[\ln \left(C^{\#} \right) \right]}{\eta \sqrt{Var \left[ \ln \left(C^{\#} \right) \right]}} \right)
 \end{equation}
 
-Where $\Phi()$ is the standard normal cumulative distribution function. (See Appendix for details.)
-
-The aggregate supply function thus reduces to the following tractable form.
+Where $\Phi()$ is the standard normal cumulative distribution function. (See Appendix A.2 for details.) The aggregate supply function thus reduces to the following tractable form.
 
 \begin{equation}
 \begin{split}
@@ -481,12 +738,12 @@ Q &= N \left(y_0 \frac{\theta_x}{\theta_w} \right)^{\frac{\eta}{h}} E \left[\hat
 \label{eq:sup2a}
 \end{equation}
 
-This can be rewritten in a few different ways by making substitutions based on the corollary in Equation \ref{eq:useful}. In the motivating context of the present work, one is generally interested in aggregate supply as a function of output price. For the rest of the article, then, the focus is on the form below, where the fraction $C^{\#} / h$ has been replaced with $P / \lambda$.
+<!-- This can be rewritten in a few different ways by making substitutions based on the corollary in Equation \ref{eq:useful}. In the motivating context of the present work, one is generally interested in aggregate supply as a function of output price. For the rest of the article, then, the focus is on the form below, where the fraction $C^{\#} / h$ has been replaced with $P / \lambda$. -->
 
-\begin{equation}
-Q = N \left( y_0 \frac{\theta_x}{\theta_w} \right)^{\frac{\eta}{h}} E \left[\hat{\theta}_k^{\frac{\eta}{h}} \right] E[\lambda^{-\eta}] P^{\eta} \Phi(\gamma)
-\label{eq:sup2b}
-\end{equation}
+<!-- \begin{equation} -->
+<!-- Q = N \left( y_0 \frac{\theta_x}{\theta_w} \right)^{\frac{\eta}{h}} E \left[\hat{\theta}_k^{\frac{\eta}{h}} \right] E[\lambda^{-\eta}] P^{\eta} \Phi(\gamma) -->
+<!-- \label{eq:sup2b} -->
+<!-- \end{equation} -->
 
 This is an aggregate supply curve that explicitly accounts for input prices, farm size, technology, and control variables ($\hat{\theta}$), as well as for output price and farm entry/exit in response to changes in output price. Farm entry/exit is captured by the term $\Phi(\gamma)$. The supply response to changes in technology is thus endogenously modeled.
 
@@ -494,73 +751,10 @@ This might be a suitable aggregate supply function in sectors characterized by h
 
 ## Derivation of the aggregate supply curve from the forgoing + axiom 5 
 
-Henceforth it is necessary to be more explicit in the treatment of output price $P$, yield $y^*$, and cost per unit output $C^{\#}$ as stochastic variables. Absent a forward contract, the output price at the time of harvest and sale $(t = T)$ is unknown to the farmer at the time of planting $(t = 0)$. Likewise, yield and cost per unit output are partly dependent upon stochastic processes occurring between planting and harvest (especially meteorological processes) which are unknown to the farmer at the time of planting. Wherever $P$, $y^*$, and $C^{\#}$ appear in the equations above, then, what is really meant is $E[P(T)]|_{t = 0}$, $E[y^*(T)]\bigr|_{t = 0}$, and $E[C^{\#}(T)]\bigr|_{t = 0}$---that is to say, what is meant is the values that the farmer expects $P$, $y^*$, and $C^{\#}$ to take at harvest/sale, as evaluated at planting time.
-<!-- Cost per unit output is likewise partly dependent upon possible unforeseen adversity after planting (e.g., pests & disease), and then it too must be considered a stochastic variable whose value is not known at the time of planting. -->
+Henceforth it is necessary to be more explicit in the treatment of output price $P$ as a stochastic variable. Absent a forward contract, the output price at the time of harvest and sale $(t = T)$ is unknown to the farmer at the time of planting $(t = 0)$. Wherever $P$ appears in the equations above, then, what is really meant is $E[P(T)]|_{t = 0}$. That is to say, what is meant is the value that the farmer expects $P$ to take at harvest/sale, as evaluated at planting time.
+<!-- Likewise, yield is partly dependent upon stochastic processes occurring between planting and harvest, especially meteorological processes, which are unknown to the farmer at the time of planting. Wherever $P$ and $y^*$ appear in the equations above, then, what is really meant is $E[P(T)]|_{t = 0}$ and $E[y^*(T)]\bigr|_{t = 0}$---that is to say, what is meant are the values that the farmer expects $P$ and $y^*$ to take at harvest/sale, as evaluated at planting time. -->
 
-In the aggregate supply function (Equation \ref{eq:sup2b}), the term $E \left[C^{\#} \right]$ is thus replaced with $E \left[E\left[C^{\#}(T) \right]\bigr|_{t = 0} \right]$, which is the population mean of expected cost per unit production at planting time. This is a double integral. By Fubini's theorem, the order of integration may be swapped, such that this may also be interpreted as the mean farm's expected cost as evaluated at planting time.
-
-\begin{equation}
-E\left[E\left[C^{\#}(T)\right]\biggr|_{t = 0}\right] = E\left[E\left[C^{\#}(T)\right]]\biggr|_{t = 0}\right]
-\end{equation}
-
-To avoid ugly and potentially ambiguous notation, the population mean of $C^{\#}(T)$ is henceforth denoted $\tilde{C}^{\#}(T)$. That is to say, $E\left[C^{\#}(T)\right] = \tilde{C}^{\#}(T)$, such that the mean farm's expected cost at planting time is henceforth rewritten $E\left[\tilde{C}^{\#}(T)\right]\biggr|_{t = 0}$.
-<!-- Cost per unit output $C^{\#}$ must likewise be replaced with $E\left[C^{\#}(T)\right]\biggr|_{t = 0}$, such that the population mean $E\left[C^{\#}\right]$ appearing in the aggregate supply function in Equation \ref{eq:sup2} must be replaced with -->
-<!-- \begin{equation} -->
-<!-- E\left[E\left[C^{\#}(T)\right]\biggr|_{t = 0}\right] -->
-<!-- \end{equation} -->
-<!-- This is the population mean of the expected  -->
-
-Making these substitutions for $P$ and $C^{\#}$ in Equation \ref{eq:sup2b}, then, the provisional aggregate supply function becomes an _expected_ aggregate supply function.
-
-\begin{equation}
-\begin{split}
-E[Q(T)]|_{t = 0} &= N E[\theta] E[\lambda^{-\eta}] P(0)^{\eta} e^{\eta m_p T} \Phi(\gamma) \:\:; \\
-\gamma &= \frac{\ln\left(\frac{E[P(T)]|_{t = 0}}{E \left[ \tilde{C}^{\#}(T) \right]\bigr|_{t = 0}} \right)^{\eta} - \frac{\eta^2}{2} Var \left[\ln \left( \tilde{C}^{\#}(T) \right) \right]}{\eta \sqrt{Var \left[\ln \left( \tilde{C}^{\#}(T) \right) \right]}} \\
-\theta &= \left( y_0 \frac{\theta_x}{\theta_w} \hat{\theta}_k \right)^{\frac{\eta}{h}}
-\end{split}
-\label{eq:sup3}
-\end{equation}
-<!-- reference justifying application of Fubini's thm here: -->
-<!-- https://stats.stackexchange.com/questions/412936/when-can-integration-and-expectation-be-exchanged -->
-<!-- \begin{equation} -->
-<!-- E\left[C^{\#}(T)\right]\biggr|_{t = 0} -->
-<!-- \end{equation} -->
-<!-- \begin{equation} -->
-<!-- E[E[q^*(T)]\bigr|_{t = 0}] = E[E[q^*(T)]]\bigr|_{t = 0} -->
-<!-- \label{eq:fubThm} -->
-<!-- \end{equation} -->
-<!-- And the other ugly term $Var[\ln(E[q^*(T)]\bigr|_{t = 0})]$ may likewise be rewritten -->
-<!-- \begin{equation} -->
-<!-- Var[\ln(E[q^*(T)]\bigr|_{t = 0})] = Var[\ln(E[q^*(T)])]\bigr|_{t = 0} -->
-<!-- \end{equation} -->
-<!-- To reduce the notational ugliness, the shorthand $\tilde{q}^*(T) = E[q^*(T)]$ is henceforth introduced, such that -->
-<!-- \begin{equation} -->
-<!-- \begin{split} -->
-<!-- E[E[q^*(T)]]\bigr|_{t = 0} &= E[\tilde{q}^*(T)]\bigr|_{t = 0} = \tilde{q}^*(0) e^{m_q T} \\ -->
-<!-- Var[\ln(E[q^*(T)])]\bigr|_{t = 0} &= Var[\ln(\tilde{q}^*(T))]\bigr|_{t = 0} = s_q^2 T -->
-<!-- \end{split} -->
-<!-- \end{equation} -->
-<!-- Where, recall from the previous section, $m_q = E[\Delta \tilde{q} / (\tilde{q} \Delta t)]$ and $s_q^2 = Var[\Delta \tilde{q} / (\tilde{q} \Delta t)]$. -->
-<!-- That is to say, expressions \ref{eq:YdEnvCompact0}-\ref{eq:upBnd} should be rewritten, respectively, -->
-<!-- \begin{equation} -->
-<!-- E[y^*]\bigr|_{t = 0} = (y_0 \theta)^{\frac{1}{1 - h}} \left( \frac{E[P(T)]\bigr|_{t = 0}}{\lambda} \right)^{\frac{h}{1 - h}} -->
-<!-- \label{eq:YdEnvCompact0b} -->
-<!-- \end{equation} -->
-<!-- \begin{equation} -->
-<!-- E[y^*]\bigr|_{t = 0} = y_0 \theta \left( \frac{C^*}{h} \right)^h -->
-<!-- \label{eq:yStarC0b} -->
-<!-- \end{equation} -->
-<!-- \begin{equation} -->
-<!-- \frac{E[P(T)]\bigr|_{t = 0}}{\lambda} = \frac{E[C^{\#}]\bigr|_{t = 0}}{h} -->
-<!-- \label{eq:lambda30b} -->
-<!-- \end{equation} -->
-<!-- and -->
-<!-- \begin{equation} -->
-<!-- E[C^{\#}(T)]\bigr_{t = 0} < E[P(T)]\bigr|_{t = 0} -->
-<!-- \label{eq:upBnd2} -->
-<!-- \end{equation} -->
-
-To evaluate this expression, a suitable stochastic model must be assumed for $P(t)$ and $C^{\#}(t)$. Within a given season, prices often follow a geometric Brownian motion (gBm). That is to say, changes in $P$ over a small time interval $\Delta t$ ($\Delta P = P(t + \Delta t) - P(t)$) are often accurately modeled by
+To parse $E[P(T)]|_{t = 0}$, a suitable stochastic model must be assumed for $P(t)$. Within a given season, prices often follow a geometric Brownian motion (gBm). That is to say, changes in $P$ over a small time interval $\Delta t$ ($\Delta P = P(t + \Delta t) - P(t)$) are often accurately modeled by
 
 \begin{equation}
 \Delta P = \Delta P(t) m_p \Delta t - P(t) s_p \epsilon \sqrt{\Delta t}
@@ -575,18 +769,16 @@ Var \left[\frac{\Delta P(T)}{P(T)} \right] &= s_{p}^2 \Delta t
 \end{split}
 \end{equation}
 
-(For a reference, see Hull [-@hull9thEdition].)
-
-Technically, $\Delta t$ is an instantaneous time interval, and hence $m_p$ is the expected instantaneous growth rate. In practice, it is often acceptable to treat $\Delta t$ as a finitely small, but judicious, time step. As a rule of thumb, $\Delta t$ should be as small as the resolution of the data will allow, while also ensuring a finite sample path with no jumps. Some examples of maize prices following a gBm are given in Figure \ref{fig:gBmPrice}.
-
-The expected value of $P(T)$ is
+Such that the expected value of $P(T)$ resolves as
 
 \begin{equation}
 E[P(T)]\bigr|_{t = 0} = P(0) e^{m_p T}
 \label{eq:EPT0}
 \end{equation}
 
-For what follows, it is also important to note that the log change of a gBm $\ln(P(T) / P(\hat{t}))$ is defined over any finite time interval for some starting time $\hat{t}<T$, and is also normally distributed, with mean and variance
+(For details, see Hull [-@hull9thEdition].)
+
+The choice of gBm as the stochastic model for $P(t)$ is axiom 5. For what follows, it is important to note that the log change of the gBm $\ln(P(T) / P(\hat{t}))$ is defined over any finite time interval for some starting time $\hat{t}<T$, and is also normally distributed, with mean and variance
 
 \begin{equation}
 \begin{split}
@@ -595,6 +787,11 @@ Var \left[\ln \left( \frac{P(T)}{P(\hat{t})} \right) \right] &= Var \left[\ln (P
 \label{eq:lnChngP}
 \end{split}
 \end{equation}
+
+For those unfamiliar with stochastic modeling but familiar with statistics, the choice of stochastic model may be roughly thought of as the choice of size distribution of changes in $P(t)$ per small time increment $\Delta t$. Selecting gBm as the stochastic model of $P(t)$ is tantamount to assuming that such changes are lognormally distributed. Some examples of maize prices following a gBm are given in Figure \ref{fig:gBmPrice}, accompanied by histograms of their log changes per time step. The histograms offer visual confirmation that price changes per time step are lognormally distributed, and that gBm is therefore a reasonable assumption.
+
+It is important to keep in mind that the price trajectory considered here is over a cropping season---from planting to harvest. When considered over multiple cropping seasons, prices typically exhibit cyclic or mean reverting behavior, which requires a more sophisticated stochastic model.
+<!-- Finally, note that $\Delta t$ is technically an instantaneous time interval, such that $m_p$ is the expected instantaneous growth rate. In practice, it is often acceptable to treat $\Delta t$ as a finitely small, but judicious, time step. As a rule of thumb, $\Delta t$ should be as small as the resolution of the data will allow, while also ensuring a finite sample path with no jumps. -->
 
 ```{r Fig1, fig.show = "hold", fig.width = 5, fig.height=5, fig.align="center", fig.cap="\\label{fig:gBmPrice}(Left) Maize price series from (top to bottom) Chicago, USA (CME, 2023), Johannesburg, RSA (JSE, 2023), and Eldoret market, Kenya (FPMA, 2023). (Right) The corresponding daily (monthly, in the case of Kenya) log changes exhibit the normal distribution typical of geometric Brownian motion.", echo = FALSE}
 
@@ -736,7 +933,28 @@ gg_ts + gg_hist + plot_layout(ncol = 2, widths = c(1, 1/3))
 
 ```
 
-It is important to keep in mind that the price trajectory considered here is over a cropping season---from planting to harvest. When considered over multiple cropping seasons, prices typically exhibit cyclic or mean reverting behavior, which requires a more sophisticated stochastic model.
+Given the stochastic definition of price, the relation between optimal expenditure and price (Equation \ref{eq:useful}) must be rewritten more carefully as follows.
+
+\begin{equation}
+\frac{E[C^{\#}(T)]\bigr|_{t = 0}}{h} = \frac{E[P(T)]\bigr|_{t = 0}}{\lambda}
+\label{eq:useful2}
+\end{equation}
+
+Optimal unit cost necessarily becomes a function of time here because it changes with expected price, which is a function of time. The critical time of interest is planting time $t = 0$, the time at or by which land preparation, seed, fertilizer, and any other necessary planting expenditure decisions are or have been made. The expectation $E[C^{\#}(T)]\bigr|_{t = 0}$ appears in the expression, as opposed to just $C^{\#}(0)$, because optimal unit cost also includes post planting expenditures such as pest and disease control, harvest, and post-harvest activities, which are generally unknown at planting time. Also, $C^{\#}(0)$ by definition depends upon yield, which is of course unkown until harvest.
+
+A further implication of Equation \ref{eq:useful2} that is critically important for the derivation of the aggregate supply curve below, is that $C^{\#}(t)$ must itself be a gBm with same parameters as $P(t)$. This follows from Ito's Lemma. A proof is given in Appendix 2.
+
+
+
+
+
+
+
+
+
+
+Optimal cost is an abstract stochastic variable referring to optimal course of action based on price, regardless of what the farmer has actually done. Unfortunately, the farmer is not at liberty to wait until harvest to see what the harvest price is and to then calculate their optimal expenditure based on this. At certain points in the cropping season, the farmer must optimize expenditures based on what they think the price will be.
+
 
 Assuming that output price follows a gBm (axiom 5), the stochastic model for $C^{\#}(t)$ follows directly from the gBm model for $P(t)$. That is to say, since ${C}^{\#}(t)$ and $P(t)$ are related by Equation \ref{eq:useful}, then, by Ito's lemma, $C^{\#}(t)$ must also follow a gBm with trend and volatility parameters ($m_c$, $s_c$) equal to those of the output price ($m_p$, $s_p$). (See Appendix for details.) It then follows trivially that the mean and variance of the log change $\ln(C^{\#}(T)/C^{\#}(\hat{t}))$ are equal to those of the log change in output price displayed in Equations \ref{eq:lnChngP}. This means that
 
@@ -744,6 +962,82 @@ Assuming that output price follows a gBm (axiom 5), the stochastic model for $C^
 Var \left[\ln \left( \tilde{C}^{\#}(T) \right) \right] = s_p^2 T 
 \label{eq:lnChngC}
 \end{equation}
+
+
+<!-- Cost per unit output is likewise partly dependent upon possible unforeseen adversity after planting (e.g., pests & disease), and then it too must be considered a stochastic variable whose value is not known at the time of planting. -->
+<!-- , yield $y^*$, and cost per unit output $C^{\#}$ -->
+<!-- and cost per unit output are -->
+<!-- , and $C^{\#}$ -->
+<!-- , and $E[C^{\#}(T)]\bigr|_{t = 0}$ -->
+<!-- and $C^{\#}$ -->
+
+In the aggregate supply function (Equation \ref{eq:sup2b}), the term $E \left[C^{\#} \right]$ is thus replaced with $E \left[E\left[C^{\#}(T) \right]\bigr|_{t = 0} \right]$, which is the population mean of expected cost per unit production at planting time. This is a double integral. By Fubini's theorem, the order of integration may be swapped, such that this may also be interpreted as the mean farm's expected cost as evaluated at planting time.
+
+\begin{equation}
+E\left[E\left[C^{\#}(T)\right]\biggr|_{t = 0}\right] = E\left[E\left[C^{\#}(T)\right]]\biggr|_{t = 0}\right]
+\end{equation}
+
+To avoid ugly and potentially ambiguous notation, the population mean of $C^{\#}(T)$ is henceforth denoted $\tilde{C}^{\#}(T)$. That is to say, $E\left[C^{\#}(T)\right] = \tilde{C}^{\#}(T)$, such that the mean farm's expected cost at planting time is henceforth rewritten $E\left[\tilde{C}^{\#}(T)\right]\biggr|_{t = 0}$.
+<!-- Cost per unit output $C^{\#}$ must likewise be replaced with $E\left[C^{\#}(T)\right]\biggr|_{t = 0}$, such that the population mean $E\left[C^{\#}\right]$ appearing in the aggregate supply function in Equation \ref{eq:sup2} must be replaced with -->
+<!-- \begin{equation} -->
+<!-- E\left[E\left[C^{\#}(T)\right]\biggr|_{t = 0}\right] -->
+<!-- \end{equation} -->
+<!-- This is the population mean of the expected  -->
+
+Making these substitutions for $P$ and $C^{\#}$ in Equation \ref{eq:sup2b}, then, the provisional aggregate supply function becomes an _expected_ aggregate supply function.
+
+\begin{equation}
+\begin{split}
+E[Q(T)]|_{t = 0} &= N E[\theta] E[\lambda^{-\eta}] P(0)^{\eta} e^{\eta m_p T} \Phi(\gamma) \:\:; \\
+\gamma &= \frac{\ln\left(\frac{E[P(T)]|_{t = 0}}{E \left[ \tilde{C}^{\#}(T) \right]\bigr|_{t = 0}} \right)^{\eta} - \frac{\eta^2}{2} Var \left[\ln \left( \tilde{C}^{\#}(T) \right) \right]}{\eta \sqrt{Var \left[\ln \left( \tilde{C}^{\#}(T) \right) \right]}} \\
+\theta &= \left( y_0 \frac{\theta_x}{\theta_w} \hat{\theta}_k \right)^{\frac{\eta}{h}}
+\end{split}
+\label{eq:sup3}
+\end{equation}
+<!-- reference justifying application of Fubini's thm here: -->
+<!-- https://stats.stackexchange.com/questions/412936/when-can-integration-and-expectation-be-exchanged -->
+<!-- \begin{equation} -->
+<!-- E\left[C^{\#}(T)\right]\biggr|_{t = 0} -->
+<!-- \end{equation} -->
+<!-- \begin{equation} -->
+<!-- E[E[q^*(T)]\bigr|_{t = 0}] = E[E[q^*(T)]]\bigr|_{t = 0} -->
+<!-- \label{eq:fubThm} -->
+<!-- \end{equation} -->
+<!-- And the other ugly term $Var[\ln(E[q^*(T)]\bigr|_{t = 0})]$ may likewise be rewritten -->
+<!-- \begin{equation} -->
+<!-- Var[\ln(E[q^*(T)]\bigr|_{t = 0})] = Var[\ln(E[q^*(T)])]\bigr|_{t = 0} -->
+<!-- \end{equation} -->
+<!-- To reduce the notational ugliness, the shorthand $\tilde{q}^*(T) = E[q^*(T)]$ is henceforth introduced, such that -->
+<!-- \begin{equation} -->
+<!-- \begin{split} -->
+<!-- E[E[q^*(T)]]\bigr|_{t = 0} &= E[\tilde{q}^*(T)]\bigr|_{t = 0} = \tilde{q}^*(0) e^{m_q T} \\ -->
+<!-- Var[\ln(E[q^*(T)])]\bigr|_{t = 0} &= Var[\ln(\tilde{q}^*(T))]\bigr|_{t = 0} = s_q^2 T -->
+<!-- \end{split} -->
+<!-- \end{equation} -->
+<!-- Where, recall from the previous section, $m_q = E[\Delta \tilde{q} / (\tilde{q} \Delta t)]$ and $s_q^2 = Var[\Delta \tilde{q} / (\tilde{q} \Delta t)]$. -->
+<!-- That is to say, expressions \ref{eq:YdEnvCompact0}-\ref{eq:upBnd} should be rewritten, respectively, -->
+<!-- \begin{equation} -->
+<!-- E[y^*]\bigr|_{t = 0} = (y_0 \theta)^{\frac{1}{1 - h}} \left( \frac{E[P(T)]\bigr|_{t = 0}}{\lambda} \right)^{\frac{h}{1 - h}} -->
+<!-- \label{eq:YdEnvCompact0b} -->
+<!-- \end{equation} -->
+<!-- \begin{equation} -->
+<!-- E[y^*]\bigr|_{t = 0} = y_0 \theta \left( \frac{C^*}{h} \right)^h -->
+<!-- \label{eq:yStarC0b} -->
+<!-- \end{equation} -->
+<!-- \begin{equation} -->
+<!-- \frac{E[P(T)]\bigr|_{t = 0}}{\lambda} = \frac{E[C^{\#}]\bigr|_{t = 0}}{h} -->
+<!-- \label{eq:lambda30b} -->
+<!-- \end{equation} -->
+<!-- and -->
+<!-- \begin{equation} -->
+<!-- E[C^{\#}(T)]\bigr_{t = 0} < E[P(T)]\bigr|_{t = 0} -->
+<!-- \label{eq:upBnd2} -->
+<!-- \end{equation} -->
+
+To evaluate this expression,
+
+
+
 
 Substituting the right hand sides of this and Equation \ref{eq:EPT0} into Equation \ref{eq:sup3} then results in the following form for expected aggregate supply.
 
@@ -1283,19 +1577,20 @@ ggIndepVars + ggYd + plot_layout(widths = c(2, 2))
 # plot(mod3$fitted.values, mod3$residuals)
 #----------------------------------------------------------------------
 # Post-estimation transformation of regression constant into expected value of yStar (y0)
-notThese <- c("Dist", "Yield (kg/acre)", "Cost/acre (KES/acre)", bin_vars)
-kVars <- setdiff(mod3Vars, notThese)
+# HAVE TO FACTOR OUT KRAIN BECAUSE IT IS AN EX POST VARIABLE!!!!
+# IMPORTANT TO NOTE IN TEXT THAT EXOG CONTROL VARS ARE FROM POV OF PLANTING TIME
+# --> A crude way of calculating expected yield is by evaluating ex-post yield
+# at kRain = 1, i.e. expecting rainfall to follow past pattern.
 coefVec <- mod3$coefficients; coefNames <- gsub("`", "", names(coefVec))
+kappaRn <- coefVec[which(coefNames == "Rain anomaly")]
+kRn <- exp(dfMod3$`Rain anomaly`)
+EyStarT0 <- exp(dfMod3$`Yield (kg/acre)`) * kRn^(-kappaRn)
+notThese <- c("Dist", "Yield (kg/acre)", "Cost/acre (KES/acre)", "Rain anomaly", bin_vars)
+kVars <- setdiff(mod3Vars, notThese)
 kappaVec <- coefVec[which(coefNames %in% kVars)]
 matK <- dfMod3[, kVars] %>% as.matrix()
-#matK <- dfMod3b[-indRm, kVars] %>% as.matrix()
-# lThetaKvec <- matK %*% kappaVec
-# hist(lThetaKvec)
-#matKa <- matK %*% diag(kappaVec)
 mVec <- colMeans(matK)
 sVec <- apply(matK, 2, sd)
-#thetaKref <- exp(sum(c(mVec, abs(kappaVec) * sVec^2 / 2)))
-# Note sample mean of thetaK very close to lognormal expectation, confirming lognormality of thetaK
 muThetaK <- exp(sum(c(mVec * kappaVec, kappaVec^2 * sVec^2 / 2)))
 thetaKvec <- matK %*% kappaVec
 muThetaKsamp <- thetaKvec %>% exp() %>% mean()
@@ -1381,50 +1676,10 @@ EPT02009 <- P02009 * exp(mP2008 * th)
 # EcSharp <- exp(dfMod3$`Cost/acre`) / EyStar0
 # lam <- EPT02007 / EcSharp * h
 #=============================================================================
-#---
-# Define root functions
-rootFnUp <- function(xIn, xUp, sXtrunc, mXtrunc){
-  sX <- xIn[1]
-  mX <- xIn[2]
-  zUp <- (log(xUp) - mX) / sX
-  probTerm <- dnorm(zUp) / pnorm(zUp)
-  slack_s <- sXtrunc^2 - sX^2 * (1 - zUp * probTerm - probTerm^2)
-  slack_m <- mXtrunc - mX + sX * probTerm
-  outVec <- c(slack_s, slack_m)
-  return(outVec)
-}
-# rootFnLo <- function(xIn, xLo, sXtrunc, mXtrunc){
-#   sX <- xIn[1]
-#   mX <- xIn[2]
-#   zLo <- (log(xLo) - mX) / sX
-#   probTerm <- dnorm(zLo) / pnorm(-zLo)
-#   slack_s <- sXtrunc^2 - sX^2 * (1 + zLo * probTerm - probTerm^2)
-#   slack_m <- mXtrunc - mX - sX * probTerm
-#   outVec <- c(slack_s, slack_m)
-#   return(outVec)
-# }
-#----------------------------------------------------------------------
 muEcStarT0hSamp <- mean(exp(dfMod3$`Cost/acre (KES/acre)`)^h)
 # EyStarT0 <- exp(dfMod3$`Yield (kg/acre)`)# exp(mod3$fitted.values)# + sd(mod3$residuals)^2 / 2)
 # #mean(EyStarT0)
 # #EyStarT0 <- dfMod3$`Yield (kg/acre)`
-# EcSharp <- exp(dfMod3$`Cost/acre (KES/acre)`) / EyStarT0
-# #EcSharp <- exp(dfMod3b$`Cost/acre`) / EyStar0
-# lEcSharp <- log(EcSharp)
-# lam <- EPT02007 / EcSharp * h
-# sum(lam > h) / length(lam)
-# mEcSharpTrunc <- mean(lEcSharp); sEcSharpTrunc <- sd(lEcSharp)
-# muEcSharpTrunc <- exp(mEcSharpTrunc + sEcSharpTrunc^2 / 2)
-# xIn <- c(sEcSharpTrunc, mEcSharpTrunc)
-# sol <- nleqslv::nleqslv(xIn, rootFnUp, jac = NULL,
-#                         xUp = EPT02007,
-#                         sXtrunc = sEcSharpTrunc,
-#                         mXtrunc = mEcSharpTrunc)
-# #sol
-# sEcSharp <- sol$x[1]
-# mEcSharp <- sol$x[2]
-# muEcSharpT0 <- exp(mEcSharp + sEcSharp^2 / 2)
-# muEcSharpT0n <- exp(eta * mEcSharp + eta^2 * sEcSharp^2 / 2)
 #---
 # Define constant in terms of convenient known reference value y0, in this case sample mean yield.
 # Sample mean yield varies with binary controls. Here is the mean with just the base constant
@@ -1519,6 +1774,95 @@ mean(y0) * 2.5*10^6 /1000 * 0.8 # Agg Supply with 80% chance of mean farm making
 # dfPlot <- data.frame(County = dfMod3$Dist, endowVec, xx = 1) %>% group_by(County) %>%
 #   mutate(n = sum(xx)) %>% subset(n >=30)
 # ggplot(dfPlot, aes(y = endowVec)) + geom_bar(stat = "count") + facet_wrap(~County)
+# Define agg supply curve/price elasticity of supply/price risk elasticity of supply function
+EQsFun <- function(EPT0, muEcSharpT0, h, muY0, muArea, mP, sP, th, Nf){
+  eta <- h / (1 - h)
+  PT0 <- EPT0 * exp(-mP * th)
+  z <- (eta * log(muEcSharpT0 / PT0) - (eta * mP - eta^2 * sP^2 / 2) * th) / (eta * sP * sqrt(th))
+  ProbProfitMeanFarm <- (1 - pnorm(z)) #Probability of mean farm making a profit (adjusted by eta)
+  EQsT0 <- muArea * Nf * muY0 * ProbProfitMeanFarm #Expected agg supply in kg
+  #------------Expected agg supply in million MT
+  EQsT0 <- EQsT0 * 10^-9
+  #------------Spot price elasticity of expected agg supply
+  etaP0EQsT0 <- dnorm(-z) / pnorm(-z) * 1 / (sP * sqrt(th))
+  #------------sP (price risk) elasticity of expected agg supply
+  # (But of limited significance since really want to know it at equilibrium
+  # PT0 and EcSharpT0, which change with sP)
+  etaSpEQsT0 <- -dnorm(-z) / pnorm(-z) * (eta * sqrt(th) - z / sP)
+  #eta <- -dnorm(-z) / pnorm(-z) * (eta * sP * sqrt(th) - z)
+  #------------
+  dfOut <- data.frame(EPT0, EQsT0, ProbProfitMeanFarm, etaP0EQsT0, etaSpEQsT0)
+  return(dfOut)
+}
+#----------------------------------------------------------------------
+# Define root function to solve for population EcSharpT0
+rootFnUp <- function(xIn, xUp, sXtrunc, mXtrunc){
+  sX <- xIn[1]
+  mX <- xIn[2]
+  zUp <- (log(xUp) - mX) / sX
+  probTerm <- dnorm(zUp) / pnorm(zUp)
+  slack_s <- sXtrunc^2 - sX^2 * (1 - zUp * probTerm - probTerm^2)
+  slack_m <- mXtrunc - mX + sX * probTerm
+  outVec <- c(slack_s, slack_m)
+  return(outVec)
+}
+# rootFnLo <- function(xIn, xLo, sXtrunc, mXtrunc){
+#   sX <- xIn[1]
+#   mX <- xIn[2]
+#   zLo <- (log(xLo) - mX) / sX
+#   probTerm <- dnorm(zLo) / pnorm(-zLo)
+#   slack_s <- sXtrunc^2 - sX^2 * (1 + zLo * probTerm - probTerm^2)
+#   slack_m <- mXtrunc - mX - sX * probTerm
+#   outVec <- c(slack_s, slack_m)
+#   return(outVec)
+# }
+EcSharpT0 <- exp(dfMod3$`Cost/acre (KES/acre)`) / EyStarT0
+lEcSharpT0 <- log(EcSharpT0)
+lam <- EPT02007 / EcSharpT0 * h
+sum(lam > h) / length(lam)
+mEcSharpT0trunc <- mean(lEcSharpT0); sEcSharpT0trunc <- sd(lEcSharpT0)
+muEcSharpT0trunc <- exp(mEcSharpT0trunc + sEcSharpT0trunc^2 / 2)
+xIn <- c(sEcSharpT0trunc, mEcSharpT0trunc)
+sol <- nleqslv::nleqslv(xIn, rootFnUp, jac = NULL,
+                        xUp = EPT02007,
+                        sXtrunc = sEcSharpT0trunc,
+                        mXtrunc = mEcSharpT0trunc)
+#sol
+sEcSharpT0 <- sol$x[1]
+mEcSharpT0 <- sol$x[2]
+muEcSharpT0 <- exp(mEcSharpT0 + sEcSharpT0^2 / 2)
+muEcSharpT0n <- exp(eta * mEcSharpT0 + eta^2 * sEcSharpT0^2 / 2)
+#----------------------------------------------------------------------
+muY0 <- mean(y0)
+muArea <- mean(exp(dfMod3$`Farm size (acres)`))
+EPT0vec <- seq(0.01, 20, length.out = 40)
+mP <- mP2006; sP <- sP2006; Nf <- 2.5*10^6
+dfEQsT0 <- EQsFun(EPT0vec, muEcSharpT0, h, muY0, muArea, mP, sP, th, Nf)
+
+gg <- ggplot(dfEQsT0, aes(x = EPT0, y = EQsT0))
+gg <- gg + geom_line()
+
+gg <- ggplot(dfEQsT0, aes(x = EPT0, y = etaP0EQsT0))
+gg <- gg + geom_line()
+
+
+  
+  
+    dfEQs <- data.frame(EPT0 = EPT0vec,
+                     EQs, EQsUp, EQsLo,
+                     etaAg, etaRisk,
+                     probPgtC = pnorm(-z))
+  colnames(dfQs) <- c("Expected price (KES/kg)", "Pct. of E[P(T)]",
+                      "Expected supply, normal rainfall\n(million metric tons)",
+                      "Expected supply, high rainfall\n(million metric tons)",
+                      "Expected supply, low rainfall\n(million metric tons)",
+                      "Price elasticity\nof supply",
+                      "Price risk elasticity\nof supply",
+                      "Participation (%)")
+  return(dfQs)
+}
+
+
 
 
 
@@ -1541,13 +1885,11 @@ mean(y0) * 2.5*10^6 /1000 * 0.8 # Agg Supply with 80% chance of mean farm making
 # summ(mod4b)
 #======================================================================
 #======================================================================
-#---------------------------------------------------------------------
-#---
-lEcSharpVec <- seq(-4, 7, length.out = length(lEcSharp))
-f <- dnorm(lEcSharpVec, mEcSharp, sEcSharp)
-dfPlot <- data.frame(f, lEcSharpVec)
-gg <- ggplot() + geom_histogram(data = data.frame(lEcSharp), aes(x = lEcSharp, y = 0.7*after_stat(count / sum(count))), bins = 13, color = "black", fill = "white") #+ scale_y_continuous(labels = scales::percent)
-gg <- gg + geom_line(data = dfPlot, aes(x = lEcSharpVec, y = f)) + geom_vline(xintercept = log(EPT02007), color = "red", lwd = 1) + theme_bw()
+lEcSharpT0vec <- seq(-4, 7, length.out = length(lEcSharpT0))
+f <- dnorm(lEcSharpT0vec, mEcSharpT0, sEcSharpT0)
+dfPlot <- data.frame(f, lEcSharpT0vec)
+gg <- ggplot() + geom_histogram(data = data.frame(lEcSharpT0), aes(x = lEcSharpT0, y = 0.7*after_stat(count / sum(count))), bins = 13, color = "black", fill = "white") #+ scale_y_continuous(labels = scales::percent)
+gg <- gg + geom_line(data = dfPlot, aes(x = lEcSharpT0vec, y = f)) + geom_vline(xintercept = log(EPT02007), color = "red", lwd = 1) + theme_bw()
 # ggplot() + geom_line(data = dfPlot, aes(x = lEcSharpVec, y = f)) + geom_vline(xintercept = log(EPT02007), color = "red", lwd = 1) + theme_bw()
 EcSharpVec <- seq(0.0001, 40, length.out = length(EcSharp))
 f <- dlnorm(EcSharpVec, mEcSharp, sEcSharp)
@@ -2227,109 +2569,18 @@ sketch out extension to aggregate demand and PE analysis...computing Econ Surplu
 
 \pagebreak
 
-# Appendix 1
+# Appendix A
+
+A.1
+## Derivation of the optimal yield function
 
 These mathematical derivation of the farm yield function are so rudimentary that it is questionable whether they should be given any space at all. They are included in the Appendix because 1) the initial step of deriving the unoptimized yield function from the law of diminishing marginal returns is novel, 2) textbook derivations of the optimized yield function from the axiom of profit maximization generally focus on the two input case (capital and labor) for purposes of isoquant analysis, whereas here the emphasis is on the modeling of multivariate yield; and 3) the widespread insistence on constant or increasing returns to scale together with profit maximization, upward sloping firm supply curves, and other commonly desired production function properties, without acknowledging the mathematical contradiction between the latter and the former, suggests a lack of familiarity with the mathematical implications of these axioms beyond a literary form, such that a review is relevant.
 
-## Derivation of the farm production function from Axioms 1 and 2 \label{sec:ax12}
+### Derivation of the farm production function from Axioms 1 and 2 \label{sec:ax12}
 
-Throughout much of written history, astute observers have noticed that the usefulness of increments in the quantity of a good is inversely proportional to amount of the input or good or service already acquired [@kauder1953genesis]. In 1738, Daniel Bernoulli put it this way:
-<!-- an input (in the case of producer yield functions) or good or service (in the case of consumer utility functions) -->
 
->\singlespacing "In the absence of the unusual, the utility resulting from any small increase in wealth will be inversely proportionate to the quantity of goods previously possessed" [@bernoulli1954exposition].
 
-\doublespacing
-<!-- Today, this is known as the "law of diminishing marginal returns". -->
-<!-- \begin{framed} -->
-<!--    \textbf{Axiom 1} \\ The law of diminishing marginal returns. -->
-<!-- \end{framed} -->
-<!-- Formalization of Bernoulli's verbal statement of the law of diminishing marginal returns depends upon how one defines "small increase". If "small increase" means a marginal increase, then Bernoulli's statement can be written down as follows.^[Bernoulli himself could not have had "marginal increase" in mind per se, as calculus had not yet been invented.] -->
-
-Today, this is known as the "law of diminishing marginal returns". Bernoulli's statement is a consumer side formulation of the law. It can also has a producer side formulation: "In the absence of the unusual, the yield increase resulting from any small increase in a given input will be inversely proportionate to the quantity of the input already applied." With the aid of calculus (which was not available to Bernoulli), this may be formalized as follows.
-
-\begin{equation}
-\frac{\partial \ln(y)}{\partial x} \sim \frac{1}{x}
-\label{eq:dimUtilDefine}
-\end{equation}
-
-Where, to be clear, the term $\partial \ln(y) / \partial x$ is the [percentage change in yield?] change in total yield given a marginal increase in the quantity of good $x$, and "$\sim 1 / x$", means "inversely proportionate to the quantity of good $x$ already acquired". An expression $y(x)$ for the yield of good $x$ can then be obtained by integrating Bernoulli's statement.
-
-\begin{equation}
-\begin{split}
-\int \frac{\partial \ln(y)}{\partial x} \: dx &= \int \alpha \frac{d \ln(x)}{dx} \: dx \\
-\ln(y(x))  &= \alpha \ln(x) + k \\
-y(x) &= e^k x^{\alpha}
-\end{split}
-\label{eq:integrate_lny}
-\end{equation}
-
-Where the proportionality constant $\alpha = \partial \ln(y)/ \partial \ln(x)$ is the input elasticity of yield, i.e., the percentage change in yield given a $1$ percent increase in input $x$.
-
-In the multivariate case, an expression $y(\mathbf{x})$ for yield as a function of a vector of $n$ goods $\mathbf{x} = [x_1,x_2,...,x_n]$ can be obtained as follows.
-
-\begin{equation}
-\int \nabla_{\mathbf{x}} \ln(y) \cdot d \mathbf{x} = \int D(\boldsymbol{\alpha}) \nabla_{\mathbf{x}} \ln(\mathbf{x}) \cdot d \mathbf{x}
-\end{equation}
-
-\begin{equation}
-\begin{split}
-\ln(y(\mathbf{x})) &= \boldsymbol{\alpha} \cdot \ln(\mathbf{x}) + \alpha_0 \\
-y &= e^{\alpha_0} \prod_{i = 1}^{n} x_i^{\alpha_i}
-\end{split}
-\label{eq:cobbDoug}
-\end{equation}
-
-where $\boldsymbol{\alpha}$ is the vector of input elasticities corresponding to each $x_i$, the notation $D(\boldsymbol{\alpha})$ indicates a diagonal matrix with the elements of $\boldsymbol{\alpha}$ along its diagonal, and
-
-\begin{equation}
-\nabla_{\mathbf{x}} \ln(y) = \left[ \begin{matrix} \frac{\partial \ln(y)}{\partial x_1} \\
-\frac{\partial \ln(y)}{\partial x_2} \\
-\vdots \\
-\frac{\partial \ln(y)}{\partial x_n}
-\end{matrix} \right]
-\end{equation}
-
-It is straightforward to see that equation \ref{eq:cobbDoug2} is a homogeneous (and thus also homothetic) function with degree of homogeneity $h$ equal to $\sum_i \alpha_i$. There is no need, then, to impose homogeneity as an additional axiom. It follows from the axiom of diminishing marginal returns.
-
-Empirical analysis involves exogenously given control variables ($k_i$), typically including demographic variables such as age, education, gender, household size, as well as agroclimatic variables such as temperature, rainfall, soil conditions, and so forth. Equation \ref{eq:cobbDoug} is thus henceforth rewritten as follows.
-<!-- (Analysis is said to be "ceteris paribus" when these variables are held constant at a particular value across the population.) -->
-
-\begin{equation}
-y = g_0 \prod_{i = 1}^{n_k} k_i^{\kappa_i} \prod_{i = 1}^{n_x} x_i^{\alpha_i} \:\:;\:\:\: g_0 = e^{\alpha_0}
-\label{eq:cobbDoug2}
-\end{equation}
-
-Where the $\kappa_i$ are the control variable elasticities of yield. Because the control variables $k_i$ are non-discretionary, the corresponding elasticities $\kappa_i$ may take positive or negative values. The input elasticities $\alpha_i$, on the other hand, which correspond to discretionary management variables, are generally positive. However, there may arise cases where a variable does not fall neatly into either the management or control category. In the empirical analysis presented farther below, for example, the coefficient on child family labor takes a negative value. Labor is generally considered a discretionary management variable; but family labor, and especially child family labor, might, in some cases, better be considered a control variable, indicative of hard constraints beyond the farmers' discretion. For purposes of economic analysis, the degree of homogeneity is calculated only over the production elasticities corresponding to management variables ($h = \sum_i \alpha_i$, omitting the $\kappa_i$).
-
-Interpretation of the constant $g_0$ is as difficult as one wants to make it. It is, of course, usually called the "total factor productivity", and understood to represent the yield per unit "all inputs"---although a more accurate description would be yield per unit "all input and control variables, raised to various powers". For those not yet comfortable working in units of, say,
-
-$$
-\text{kg.} \times \: \text{acres}^{-1} \times \: \text{liters}^{-\alpha_{pest}} \times \: \text{kg.}^{-\alpha_{fert}} \times \: \text{manhours}^{-\alpha_{labor}} \times\: \\ \text{mm.}^{-\alpha_{rain}} \times\: \: \text{years}^{-\alpha_{age}} \times\: \text{num. persons}^{-\alpha_{HHsize}} \:;\:\: \alpha_{(var)} \in \mathbb{R}
-$$
-an alternative approach is to arbitrarily define $g_0$ in terms of another parameter that is expressed in intelligible units, and to work with this instead. For example, $g_0$ may be defined in terms of another parameter $y_0$ and fixed reference values $\tilde{k}_i$, $\tilde{x}_i$ that have the same units as the corresponding management and control variables $x_i$ and $k_i$.
-
-\begin{equation}
-g_0 = y_0 \prod_{i = 1}^{n_k} \tilde{k}_i^{-\kappa_i} \prod_{i = 1}^{n_x} \tilde{x}_i^{-\alpha_i}
-\end{equation}
-
-Such that the yield function may be rewritten
-
-\begin{equation}
-y = y_0 \prod_{i = 1}^{n_k} \left( \frac{k_i}{\tilde{k}_i} \right)^{\kappa_i} \prod_{i = 1}^{n_x} \left( \frac{x_i}{\tilde{x}_i} \right)^{\alpha_i}
-\label{eq:cobbDoug3}
-\end{equation}
-
-Or, taking logs,
-
-\begin{equation}
-\ln(y) = \ln(y_0) + \sum_{i = 1}^{n_k} \kappa_i \ln \left( \frac{k_i}{\tilde{k}_i} \right) + \sum_{i = 1}^{n_x} \alpha_i \ln \left( \frac{x_i}{\tilde{x}_i} \right)
-\label{eq:cobbDoug3ln}
-\end{equation}
-
-Because the ratios in parentheses are dimensionless, $y_0$ must have the same units as $y$; and $y_0$ may be interpreted as the value of $y$ when all management and control variables equal their reference values. In the empirical study included here, for example, the reference values are set equal to the sample means, such that $y_0$ is the value of $y$ evaluated at the sample means of the input and control variables.
-
-Equation \ref{eq:cobbDoug3} is, of course, the Cobb-Douglas form. Outside of Economics, it would simply be referred to as a (multivariate) power law. Such forms are often good models of observed processes across a wide range of research contexts and disciplines. In Economics, the Cobb-Douglas form was widely used from the 1920s to 1950s on the basis of its good empirical fit, but fell into disrepute thereafter for its perceived lack a theoretical basis. Capalbo and Antle [-@capalbo2015agricultural] offer a succinct introduction to this vast discussion. The forgoing derivation of the Cobb-Douglas form from axiom 1 in some measure redresses the lack of a theoretical basis. A full defense against all of the criticisms levied against this form over the past seventy five years is a paper-, or perhaps book-, length project which will not be attempted here. [Other perceived shortcomings of the form are briefly addressed in the Discussion. if there is enough space!] [Or: In the course of the derivation below, a number of theoretical strengths are brought to light---underrepresented or overlooked by textbook treatments---that cast doubt on the bad reputation as a "restrictive" model]
-
+...
 The farm level yield model $y^*$ is then obtained by introducing axiom 2.
 <!-- \begin{framed} -->
 <!--    \textbf{Axiom 2} \\ Farms apply inputs so as to maximize their net benefit subject to a budget constraint. -->
@@ -2480,7 +2731,11 @@ The farm marginal cost readily follows from the scale elasticity of yield by com
 \label{eq:margCost1}
 \end{equation}
 
-Axioms 1 and 2 thus imply that marginal cost is proportionate to output price. This is a little different from the standard assertion that the two are equal. If they were equal, then this would be theoretical grounds upon which to presume that every farm has the same marginal cost, and then from here it is a short jump to presume that a given exogenous shock affects every farm's marginal cost identically .... but no, marginal cost varies with $\lambda$, which captures each farm's unique, subjective valuation of additional increments in production expenditure. [Even if it did not, it is invalid to assume that a shock would affect MC identically for all farms, and the authors recognize this anyway, and for this reason assume all farms marginal]
+Note the difference between this and the standard assertion that marginal cost must equal marginal revenue.
+
+This expression is the theoretical basis for considering that marginal cost 
+
+Axioms 1 and 2 thus imply that marginal cost is proportionate, but not equal, to output price. If they were equal, then this would constitute theoretical grounds upon which to presume that every farm has the same marginal cost; and then from there it would be a short jump to presume, as is often done, that a given exogenous shock affects every farm's marginal cost identically. But no, marginal cost varies with $\lambda$. In highly developed economic sectors, it may be that $\lambda$ is effectively determined by the lending rate, and is thus homogeneous across firms; but not in the primary sector. In the primary sector, heterogeneous endowments result in heterogeneous valuation of marginal increments in production expenditure (i.e. $\lambda$). This may be considered one of the hallmarks of the primary sector setting it apart from other sectors.
 
 Since $P = d R^* / d y^*$, this can be rearranged into another instructive expression for $\lambda$.
 <!-- constant marginal cost. (As mentioned in the introduction, this is well supported empirically [].) -->
@@ -2567,21 +2822,29 @@ whereby it is clear that the domain of $h$ implies negatively sloped own and cro
 <!-- (No lower bound is imposed by Axiom 3, and so the lower bound of $y^*$ just defaults to the physical lower bound $y^* > 0$.) -->
 
 
+A.2
+## Proof of equation \ref{eq:sup3}
 
-# Proof of equation \ref{eq:sup3}
+(The proof below closely follows that of Hull in the appendix to chapter 13 of his book [-@hull9thEdition].)
 
-Given a lognormally distributed random variable $u$, such that $\ln(u)$ is normally distributed with mean $m_u$ and variance $s_u^2$, then the expected value of $u$ is
-<!-- Where $p(q)$ is the probability density function of the random variable $q$. If $\ln(q)$ is normally distributed with mean $m_u$ and variance $s_u^2$, then -->
+By definition, for a random variable $v$ and a constant $M$,
 
 \begin{equation}
-E[u] = e^{m_u + \frac{s_u^2}{2}}
-\label{eq:muU}
+E[v | v < M] = \int_{-\infty}^{M} v p(v) \: dv
+\label{ev:def}
 \end{equation}
 
-And the probability density function of $u$ is
+Where $p(v)$ is the probability density function of the random variable $v$. If $\ln(v)$ is normally distributed with mean $\nu$ and variance $\omega^2$, then
 
 \begin{equation}
-f(u) = \frac{1}{u s_u} \phi \left(\frac{\ln(u) - m_u}{s_u} \right)
+E[v] = e^{\nu + \frac{\omega^2}{2}}
+\label{ev:muXT}
+\end{equation}
+
+and
+
+\begin{equation}
+p(v) = \frac{1}{v \omega} \phi \left(\frac{\ln(v) - \nu}{\omega} \right)
 \end{equation}
 
 Where $\phi()$ is the standard normal probability density function.
@@ -2589,59 +2852,84 @@ Where $\phi()$ is the standard normal probability density function.
 Now, introducing a change of variables,
 
 \begin{equation}
-p = \frac{\ln(u) - m_u}{s_u}
-\label{eq:subThis1}
+u = \frac{\ln(v) - \nu}{\omega}
+\label{ev:subThis1}
 \end{equation}
 
 Such that
 
 \begin{equation}
-\frac{dp}{du} = \frac{1}{u s_u}\: \rightarrow \: d u = u s_u dp
-\label{eq:subThis2}
+\frac{du}{d v} = \frac{1}{v \omega}\: \rightarrow \: d v = v \omega du
+\label{ev:subThis2}
 \end{equation}
 
-Then
+The definition in equation \ref{ev:def} resolves as follows.
 
 \begin{equation}
 \begin{split}
-\int_0^{\bar{u}} u f(u) \: du &= \int_0^{\frac{\ln(\bar{u}) - m_u}{s_u}} e^{s_u p + m_u} \phi(p) \: dp  \\
-&= \int_0^{\frac{\ln(\bar{u}) - m_u}{s_u}} e^{s_u p + m_u} \frac{1}{\sqrt{2 \pi}} e^{\frac{p^2}{2}} \: dp \\
-&= \frac{1}{\sqrt{2 \pi}} \int_0^{\frac{\ln(\bar{u}) - m_u}{s_u}} e^{p s_u + m_u -\frac{p^2}{2}} \: dp \\
-&= \frac{1}{\sqrt{2 \pi}} \int_0^{\frac{\ln(\bar{u}) - m_u}{s_u}} e^{-1 / 2 (p^2 - 2 p s_u - 2 m_u)} \: dp \\
-&= \frac{1}{\sqrt{2 \pi}} \int_0^{\frac{\ln(\bar{u}) - m_u}{s_u}} e^{-\frac{(p - s_u)^2}{2} + m_u + \frac{s_u^2}{2}} \: dp \\
-&= \frac{1}{\sqrt{2 \pi}} \int_0^{\frac{\ln(\bar{u}) - m_u}{s_u}} e^{-\frac{(p - s_u)^2}{2}} e^{m_u + \frac{s_u^2}{2}} \: dp \\
-&= e^{m_u + \frac{s_u^2}{2}} \frac{1}{\sqrt{2 \pi}} \int_0^{\frac{\ln(\bar{u}) - m_u}{s_u}} e^{-\frac{(p - s_u)^2}{2}} \: dp \\
-&= \frac{E[u]}{\sqrt{2 \pi}} \int_0^{\frac{\ln(\bar{u}) - m_u}{s_u}} e^{-\frac{(p - s_u)^2}{2}} \: dp \\
-&= E[u] \int_0^{\frac{\ln(\bar{u}) - m_u}{s_u}} \phi(p - s_u) \: dp \\
-&= E[u] \Phi \left(\frac{\ln(\bar{u}) - m_u}{s_u} - s_u \right)
+E[\max(v - M, 0)] &= \int_{\frac{\ln(M) - \nu}{\omega}}^{\infty} (e^{u \omega + \nu} - M) \phi(u) \: du \\
+&= \int_{\frac{\ln(M) - \nu}{\omega}}^{\infty} e^{u \omega + \nu} \phi(u) \: du - M \int_{\frac{\ln(M) - \nu}{\omega}}^{\infty} \phi(u) \: du \\
+&= \frac{1}{\svrt{2 \pi}} \int_{\frac{\ln(M) - \nu}{\omega}}^{\infty} e^{u \omega + \nu -\frac{u^2}{2}} \: du - M \Phi \left(-\frac{\ln(M) - \nu}{\omega} \right) \\
+&= \frac{1}{\svrt{2 \pi}} \int_{\frac{\ln(M) - \nu}{\omega}}^{\infty} e^{-\frac{(u - \omega)^2}{2} + \nu + \frac{\omega^2}{2}} \: du - M \Phi \left(-\frac{\ln(M) - \nu}{\omega} \right) \\
+&= e^{\nu + \frac{\omega^2}{2}} \frac{1}{\svrt{2 \pi}} \int_{\frac{\ln(M) - \nu}{\omega}}^{\infty} e^{-\frac{(u - \omega)^2}{2}} \: du - M \Phi \left(-\frac{\ln(M) - \nu}{\omega} \right) \\
+&= E[v] \Phi \left(- \frac{\ln(M) - \nu}{\omega} + \omega \right) - M \Phi \left(-\frac{\ln(M) - \nu}{\omega} \right)
 \end{split}
 \end{equation}
 
-Finally, rearranging equation \ref{eq:muU} into an expression for $m_u$
+Note that \ref{ev:muXT} can be rearranged into an expression for $\nu$.
 
 \begin{equation}
-m_u = \ln(E[u]) - \frac{s_u^2}{2}
+\nu = \ln(E[v]) - \omega^2 / 2
 \end{equation}
 
-And substituting this in for $m_u$ in the previous expression gives
+Substituting this for $\nu$ in the definition gives
 
 \begin{equation}
-\begin{split}
-\int_0^{\bar{u}} u f(u) \: du &= E[u] \Phi \left(\frac{\ln(\bar{u}) - \ln(E[u]) + \frac{s_u^2}{2} }{s_u} - s_u \right) \\
-&= \frac{E[u]} \Phi \left(\frac{\ln \left(\frac{\bar{u}}{E[u]} \right) - \frac{s_u^2}{2} }{s_u} \right)
-\end{split}
+E[\max(v - M, 0)] = E[v] \Phi \left(\frac{\ln \left( \frac{E[v]}{M} \right) + \frac{\omega^2}{2}}{\omega} \right) - M \Phi \left(-\frac{\ln \left( \frac{E[v]}{M} \right) - \frac{\omega^2}{2}}{\omega} \right)
 \end{equation}
 
-In Equation \ref{eq:sup3}, $u = E[q^*(T)]\bigr|_{t = 0}$, giving
-
-$$
-E[Q(T)]\bigr|_{t = 0} = N_f E[E[q^*(T)]\bigr|_{t = 0}] \Phi \left(\frac{\ln\left(\frac{E[\bar{q}^*(T)]|_{t = 0}}{E[E[q^*(T)]|_{t = 0}]}\right) - \frac{s_{EqT0}^2}{2}}{s_{EqT0}} \right) \:\:;\:\:\: s_{EqT0}^2 = Var[E[q^*(T)]\bigr|_{t = 0}]
-$$
-
-<!-- \blacksquare -->
+$\blacksquare$
 
 
+A.3
+# Proof that optimal unit cost is a geometric brownian motion with the same parameters as price
 
+Equation \ref{eq:useful2} implies
+
+\begin{equation}
+\frac{C^{\#}(t)}{h} = \frac{P(t)}{\lambda}
+\label{eq:useful2b}
+\end{equation}
+
+By Ito's Lemma, then,
+
+\begin{equation}
+\Delta C^{\#} = \left(\frac{\partial C^{\#}}{\partial t} + m_p P(t) \frac{\partial C^{\#}}{\partial P} +  \frac{1}{2} s_p^2 P(t)^2 \frac{\partial^2 C^{\#}}{\partial P^2}  \right) \Delta t + s_p P(t) \partial C^{\#}}{\partial P} \epsilon \sqrt{\Delta t}
+\label{eq:itoLem}
+\end{equation}
+
+Where $\epsilon$ is a normally distributed random variable with mean $0$ and standard deviation $1$. (For a reference see Hull [-@hull9thEdition].)
+
+By Equation \ref{eq:useful2b},
+
+\begin{equation}
+\frac{\partial C^{\#}}{\partial t} = 0 \:\:\:\: \frac{\partial C^{\#}}{\partial P} = \frac{C^{\#}}{P} \:\:\:\: \frac{\partial^2 C^{\#}}{\partial P^2} = 0
+\end{equation}
+
+Such that Equation \ref{eq:itoLem} thus resolves to
+
+\begin{equation}
+\Delta C^{\#} = m_p C^{\#} \Delta t + s_p C^{\#} \epsilon \sqrt{\Delta t}
+\end{equation}
+
+By which it follows that $E[C^{\#}(T)]\bigr|_{t = 0} = m_pT$ and $Var[C^{\#}(T)]\bigr|_{t = 0} = s^2_p T$.
+
+$\blacksquare$
+
+
+# Appendix B
+
+## Data details and preparation
 
 
 <!-- <!-- this can be rewritten --> -->
@@ -3111,3 +3399,74 @@ $$
 <!-- # # # ratio <- df_mod1$`Total UREA fert (KES/acre)` * aVec[which(names(aVec) == "`harvesting fam lab male (pers-hrs/acre)`")] / (df_mod1$`harvesting fam lab male (pers-hrs/acre)` * aVec[which(names(aVec) == "`Total UREA fert (kg/acre)`")]) -->
 <!-- # # # ratio <- df_mod1$`dap (KES/acre)` * aVec[which(names(aVec) == "`harvesting fam lab male (pers-hrs/acre)`")] / (df_mod1$`harvesting fam lab male (pers-hrs/acre)` * aVec[which(names(aVec) == "`dap (kg/acre)`")]) -->
 <!-- # # #hist(log(ratio)) -->
+
+
+<!-- Given a lognormally distributed random variable $u$, such that $\ln(u)$ is normally distributed with mean $m_u$ and variance $s_u^2$, then the expected value of $u$ is -->
+<!-- <!-- Where $p(q)$ is the probability density function of the random variable $q$. If $\ln(q)$ is normally distributed with mean $m_u$ and variance $s_u^2$, then --> -->
+
+<!-- \begin{equation} -->
+<!-- E[u] = e^{m_u + \frac{s_u^2}{2}} -->
+<!-- \label{eq:muU} -->
+<!-- \end{equation} -->
+
+<!-- And the probability density function of $u$ is -->
+
+<!-- \begin{equation} -->
+<!-- f(u) = \frac{1}{u s_u} \phi \left(\frac{\ln(u) - m_u}{s_u} \right) -->
+<!-- \end{equation} -->
+
+<!-- Where $\phi()$ is the standard normal probability density function. -->
+
+<!-- Now, introducing a change of variables, -->
+
+<!-- \begin{equation} -->
+<!-- p = \frac{\ln(u) - m_u}{s_u} -->
+<!-- \label{eq:subThis1} -->
+<!-- \end{equation} -->
+
+<!-- Such that -->
+
+<!-- \begin{equation} -->
+<!-- \frac{dp}{du} = \frac{1}{u s_u}\: \rightarrow \: d u = u s_u dp -->
+<!-- \label{eq:subThis2} -->
+<!-- \end{equation} -->
+
+<!-- Then -->
+
+<!-- \begin{equation} -->
+<!-- \begin{split} -->
+<!-- \int_0^{\bar{u}} u f(u) \: du &= \int_0^{\frac{\ln(\bar{u}) - m_u}{s_u}} e^{s_u p + m_u} \phi(p) \: dp  \\ -->
+<!-- &= \int_0^{\frac{\ln(\bar{u}) - m_u}{s_u}} e^{s_u p + m_u} \frac{1}{\sqrt{2 \pi}} e^{\frac{p^2}{2}} \: dp \\ -->
+<!-- &= \frac{1}{\sqrt{2 \pi}} \int_0^{\frac{\ln(\bar{u}) - m_u}{s_u}} e^{p s_u + m_u -\frac{p^2}{2}} \: dp \\ -->
+<!-- &= \frac{1}{\sqrt{2 \pi}} \int_0^{\frac{\ln(\bar{u}) - m_u}{s_u}} e^{-1 / 2 (p^2 - 2 p s_u - 2 m_u)} \: dp \\ -->
+<!-- &= \frac{1}{\sqrt{2 \pi}} \int_0^{\frac{\ln(\bar{u}) - m_u}{s_u}} e^{-\frac{(p - s_u)^2}{2} + m_u + \frac{s_u^2}{2}} \: dp \\ -->
+<!-- &= \frac{1}{\sqrt{2 \pi}} \int_0^{\frac{\ln(\bar{u}) - m_u}{s_u}} e^{-\frac{(p - s_u)^2}{2}} e^{m_u + \frac{s_u^2}{2}} \: dp \\ -->
+<!-- &= e^{m_u + \frac{s_u^2}{2}} \frac{1}{\sqrt{2 \pi}} \int_0^{\frac{\ln(\bar{u}) - m_u}{s_u}} e^{-\frac{(p - s_u)^2}{2}} \: dp \\ -->
+<!-- &= \frac{E[u]}{\sqrt{2 \pi}} \int_0^{\frac{\ln(\bar{u}) - m_u}{s_u}} e^{-\frac{(p - s_u)^2}{2}} \: dp \\ -->
+<!-- &= E[u] \int_0^{\frac{\ln(\bar{u}) - m_u}{s_u}} \phi(p - s_u) \: dp \\ -->
+<!-- &= E[u] \Phi \left(\frac{\ln(\bar{u}) - m_u}{s_u} - s_u \right) -->
+<!-- \end{split} -->
+<!-- \end{equation} -->
+
+<!-- Finally, rearranging equation \ref{eq:muU} into an expression for $m_u$ -->
+
+<!-- \begin{equation} -->
+<!-- m_u = \ln(E[u]) - \frac{s_u^2}{2} -->
+<!-- \end{equation} -->
+
+<!-- And substituting this in for $m_u$ in the previous expression gives -->
+
+<!-- \begin{equation} -->
+<!-- \begin{split} -->
+<!-- \int_0^{\bar{u}} u f(u) \: du &= E[u] \Phi \left(\frac{\ln(\bar{u}) - \ln(E[u]) + \frac{s_u^2}{2} }{s_u} - s_u \right) \\ -->
+<!-- &= \frac{E[u]} \Phi \left(\frac{\ln \left(\frac{\bar{u}}{E[u]} \right) - \frac{s_u^2}{2} }{s_u} \right) -->
+<!-- \end{split} -->
+<!-- \end{equation} -->
+
+<!-- In Equation \ref{eq:sup3}, $u = E[q^*(T)]\bigr|_{t = 0}$, giving -->
+
+<!-- $$ -->
+<!-- E[Q(T)]\bigr|_{t = 0} = N_f E[E[q^*(T)]\bigr|_{t = 0}] \Phi \left(\frac{\ln\left(\frac{E[\bar{q}^*(T)]|_{t = 0}}{E[E[q^*(T)]|_{t = 0}]}\right) - \frac{s_{EqT0}^2}{2}}{s_{EqT0}} \right) \:\:;\:\:\: s_{EqT0}^2 = Var[E[q^*(T)]\bigr|_{t = 0}] -->
+<!-- $$ -->
+
+<!-- $\blacksquare$ -->
