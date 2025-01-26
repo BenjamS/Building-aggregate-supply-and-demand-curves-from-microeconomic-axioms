@@ -520,6 +520,8 @@ Such that the estimated coefficient on logged farm cost may be directly interpre
 <!-- Moreover, once $v_0$ is estimated,  -->
 <!-- A further advantage of this form is that the fitted coefficient on $\ln(C^*)$ may be directly interpreted as $h$, valid for all farms in the sample. Estimation of the model in Equation \ref{eq:cobbDoug3}, on the other hand, requires the extra step of summation of the input elasticities $\alpha_i$ in order to arrive at $h$. This may result in varying $h$ across the sample, as not all farms necessarily apply all the inputs specified in the model. -->
 
+[Note somewhere that cost does not change exogenously but as a result of change in P, lambda, or tech (h)]
+
 To develop an expression for aggregate supply, it is useful to express $y^*$ in terms of cost per unit output---also commonly referred to as "average cost". Denoting this $C^{\#}$, then by definition,
 
 \begin{equation}
@@ -545,7 +547,7 @@ y^* = E[y^*] \frac{k^{\frac{\eta}{h}}}{E[k^{\frac{\eta}{h}}]} \frac{C^{\# \eta}}
 \label{eq:YdEnvNeatSharp}
 \end{equation}
 
-Farm production $q^*$ is defined as $y^*$ times area $k_a$.
+While this is a poor choice of econometric yield model (because cost per unit output is calculated as a function of yield, and would thus introduce an endogeneity problem if used in an OLS regression), it is an expedient way of deriving the aggregate supply function. Farm production $q^*$ is defined as $y^*$ times area $k_a$.
 
 \begin{equation}
 q^* = k_a y^*
@@ -582,75 +584,88 @@ Substituing the right hand side of this equation for the integral in the previou
 Q = N E[k_a] E[y^*] \Phi\left( \frac{\ln(P) - m_{\#}}{s_{\#}} - \eta s_{\#} \right)
 \end{equation}
 
+Here it is important to note that E[y] is not observed. The conditional mean E[y|c<p] is observed. The unconditional mean does not change with price but with technology or lambda. The conidtional mean changes with price, in addition to technology and lambda. So, given the relation between conditional and unconditional mean of a lognormally distributed variable, 
+
+...
+
+The previous expression can be rewritten
+
+...
+
+Note term is employment rate. This ok for spot estimate of supply. To make an aggregate curve.
+Different ways to estimate the unkowns depending upon data available. 
+
+Finally, necessary to account for the stochastic character of price...
 This might be a suitable aggregate supply function in sectors characterized by highly deterministic production processes, negligible delays between input decisions and output, and negligible output price volatility. However, it is not suited to the primary sector, where production is partly deterministic, partly a function of stochastic meteorological variables; where there is a significant delay between input decisions and output (i.e., the cropping season); and where output price volatility looms large in any management decision. In order to accommodate these features, a suitable assumption regarding the stochastic character of output price (axiom 5) is introduced in the next section; and the aggregate supply model derived above is modified accordingly. In addition to accommodating the stochastic character of farm production, the modified model resolves the term $\Phi(\gamma)$ into a surprisingly instructive and intuitive form.
 
 Note truncation, E[y*] not sample mean
 
-## Derivation of a provisional aggregate supply function from the forgoing + axioms 3 and 4
 
-The contours of an aggregate supply function begin to emerge into view when one considers what might happen if one of the farm production expressions above is substituted for $q^*$ in Equation \ref{eq:sup1}. In particular, it becomes clear that:
+<!-- ## Derivation of a provisional aggregate supply function from the forgoing + axioms 3 and 4 -->
 
-1) Insofar as prices are constant across the population, and insofar as $y_0$ and the technology $\alpha_i$ are estimated on farm survey data (and are thus constant across the farm population), then $y_0$, $P$, $h$, $\theta_x$, and $\theta_w$ are constants that factor out of the integral.
+<!-- The contours of an aggregate supply function begin to emerge into view when one considers what might happen if one of the farm production expressions above is substituted for $q^*$ in Equation \ref{eq:sup1}. In particular, it becomes clear that: -->
 
-2) Control variables, and thus $\hat{\theta}_k$, inevitably vary across the population. But if production is lognormally distributed (axiom 3), then it follows that $\hat{\theta}_k$ is independent of either $\lambda$ or $C^{\#}$, such that the population mean of $\hat{\theta}_k$ factors out of the integral.
+<!-- 1) Insofar as prices are constant across the population, and insofar as $y_0$ and the technology $\alpha_i$ are estimated on farm survey data (and are thus constant across the farm population), then $y_0$, $P$, $h$, $\theta_x$, and $\theta_w$ are constants that factor out of the integral. -->
 
-3) It follows from (1) and (2), and from the law of the unconscious statistician, that the integral with respect to $q^*$ reduces to an integral with respect to $\lambda$, $C^{\#}$, or $C^*$, depending upon which of the expressions for farm production is used. In the case of Equation \ref{eq:prodFn2}, e.g., Equation \ref{eq:sup1} can now be rewritten as follows.
+<!-- 2) Control variables, and thus $\hat{\theta}_k$, inevitably vary across the population. But if production is lognormally distributed (axiom 3), then it follows that $\hat{\theta}_k$ is independent of either $\lambda$ or $C^{\#}$, such that the population mean of $\hat{\theta}_k$ factors out of the integral. -->
 
-\begin{equation}
-Q = N \left(y_0 \frac{\theta_x}{\theta_w} \right)^{\frac{\eta}{h}} E \left[\theta_k^{\frac{\eta}{h}} \right] h^{-\eta} \int_{\underline{C}^{\#}}^{\overline{C}^{\#}} C^{\# \eta} f \left(C^{\#} \right) \: dC^{\#}
-\end{equation}
+<!-- 3) It follows from (1) and (2), and from the law of the unconscious statistician, that the integral with respect to $q^*$ reduces to an integral with respect to $\lambda$, $C^{\#}$, or $C^*$, depending upon which of the expressions for farm production is used. In the case of Equation \ref{eq:prodFn2}, e.g., Equation \ref{eq:sup1} can now be rewritten as follows. -->
 
-Where the farm density $\rho()$ that appears in Equation \ref{eq:sup1} has been rewritten in terms of the probability density $f()$ and the number of farms in the population $N$ (i.e., $\rho(C^{\#}) = N f(C^{\#})$).
+<!-- \begin{equation} -->
+<!-- Q = N \left(y_0 \frac{\theta_x}{\theta_w} \right)^{\frac{\eta}{h}} E \left[\theta_k^{\frac{\eta}{h}} \right] h^{-\eta} \int_{\underline{C}^{\#}}^{\overline{C}^{\#}} C^{\# \eta} f \left(C^{\#} \right) \: dC^{\#} -->
+<!-- \end{equation} -->
 
-4) Assuming that farms enter production only if they expect to make a profit (axiom 4), then cost per unit output cannot exceed output price, thus resolving the upper bound of this integral. Since cost cannot be negative, the lower bound is $0$. The domain of integration must then be $0 < C^{\#} < P$.
+<!-- Where the farm density $\rho()$ that appears in Equation \ref{eq:sup1} has been rewritten in terms of the probability density $f()$ and the number of farms in the population $N$ (i.e., $\rho(C^{\#}) = N f(C^{\#})$). -->
 
-\begin{equation}
-Q &= N E[k_a] E[y^*] \frac{1}{E[C^{\# \eta}]} \int_{0}^{P} C^{\# \eta} f(C^{\#}) \: dC^{\#}
-\end{equation}
-<!-- &= N E[k_a] E[y^*] \frac{E[C^{\# \eta} | C^{\#} \leq P]}{E[C^{\# \eta}]} -->
+<!-- 4) Assuming that farms enter production only if they expect to make a profit (axiom 4), then cost per unit output cannot exceed output price, thus resolving the upper bound of this integral. Since cost cannot be negative, the lower bound is $0$. The domain of integration must then be $0 < C^{\#} < P$. -->
 
-Because $y^*$ is lognormally distributed, then $C^{\# \eta}$ must also be lognormally distribtued, such that the integral in this expression resolves as follows (proof given in Appendix A2).
-<!--and $k$ and $C^{\# \eta}$ are independent, then $k$ and [$k$ and $C^{\# \eta}$ are independent by equation useful (i.e. b/c Csharp is not a function of k)] k is formerly theta_k -->
+<!-- \begin{equation} -->
+<!-- Q &= N E[k_a] E[y^*] \frac{1}{E[C^{\# \eta}]} \int_{0}^{P} C^{\# \eta} f(C^{\#}) \: dC^{\#} -->
+<!-- \end{equation} -->
+<!-- <!-- &= N E[k_a] E[y^*] \frac{E[C^{\# \eta} | C^{\#} \leq P]}{E[C^{\# \eta}]} -->
 
-\begin{equation}
-\int_{0}^{P} C^{\# \eta} f(C^{\#}) \: dC^{\#} = E[C^{\# \eta}] \Phi \left(\frac{\ln \left( \frac{E[C^{\# \eta}]}{P} \right) + \frac{s_{\#}^2}{2}}{s_{\#}} \right)
-\end{equation}
+<!-- Because $y^*$ is lognormally distributed, then $C^{\# \eta}$ must also be lognormally distribtued, such that the integral in this expression resolves as follows (proof given in Appendix A2). -->
+<!-- <!--and $k$ and $C^{\# \eta}$ are independent, then $k$ and [$k$ and $C^{\# \eta}$ are independent by equation useful (i.e. b/c Csharp is not a function of k)] k is formerly theta_k --> 
 
-Such that the aggregate supply equation reduces to
+<!-- \begin{equation} -->
+<!-- \int_{0}^{P} C^{\# \eta} f(C^{\#}) \: dC^{\#} = E[C^{\# \eta}] \Phi \left(\frac{\ln \left( \frac{E[C^{\# \eta}]}{P} \right) + \frac{s_{\#}^2}{2}}{s_{\#}} \right) -->
+<!-- \end{equation} -->
 
-\begin{equation}
-Q &= N E[k_a] E[y^*] \Phi \left(\frac{\ln \left( \frac{E[C^{\# \eta}]}{P} \right) + \frac{s_{\#}^2}{2}}{\eta s_{\#}} \right) \:;\:\:\: s_{\#}^2 = Var[\ln(C^{\#})]
-\end{equation}
+<!-- Such that the aggregate supply equation reduces to -->
 
-This might be a suitable aggregate supply function in sectors characterized by highly deterministic production processes, negligible delays between input decisions and output, and negligible output price volatility. However, it is not suited to the primary sector, where production is partly deterministic, partly a function of stochastic meteorological variables; where there is a significant delay between input decisions and output (i.e., the cropping season); and where output price volatility looms large in any management decision. In order to accommodate these features, a suitable assumption regarding the stochastic character of output price (axiom 5) is introduced in the next section; and the aggregate supply model derived above is modified accordingly. In addition to accommodating the stochastic character of farm production, the modified model resolves the term $\Phi(\gamma)$ into a surprisingly instructive and intuitive form.
+<!-- \begin{equation} -->
+<!-- Q &= N E[k_a] E[y^*] \Phi \left(\frac{\ln \left( \frac{E[C^{\# \eta}]}{P} \right) + \frac{s_{\#}^2}{2}}{\eta s_{\#}} \right) \:;\:\:\: s_{\#}^2 = Var[\ln(C^{\#})] -->
+<!-- \end{equation} -->
 
-
-
+<!-- This might be a suitable aggregate supply function in sectors characterized by highly deterministic production processes, negligible delays between input decisions and output, and negligible output price volatility. However, it is not suited to the primary sector, where production is partly deterministic, partly a function of stochastic meteorological variables; where there is a significant delay between input decisions and output (i.e., the cropping season); and where output price volatility looms large in any management decision. In order to accommodate these features, a suitable assumption regarding the stochastic character of output price (axiom 5) is introduced in the next section; and the aggregate supply model derived above is modified accordingly. In addition to accommodating the stochastic character of farm production, the modified model resolves the term $\Phi(\gamma)$ into a surprisingly instructive and intuitive form. -->
 
 
-Where $\omega^2 = Var[\ln(v)]$ and $\Phi()$ is the standard cumulative normal distribution function. (See Appendix A2 for proof.)
-
-Because production is assumed to be lognormally distributed, $C^{\#}$ (and $\lambda$) must also be lognormally distributed. Substituting $v = C^{\# \eta}$ and $M = P^{\eta}$, into \ref{eq:keyResult} then,
-
-\begin{equation}
-E[C^{\# \eta} | C^{\# \eta} < P^{\eta}] = E[C^{\# \eta}] \Phi \left(\frac{\ln P - m_{\#}}{s_{\#} - \eta s_{\#}} \right)
 
 
-\right) + \frac{s_{\#}^2}{2}}{s_{\#}} \right)
 
-\int_{0}^{P} C^{\# \eta} f(C^{\#}) \: dC^{\#} = E \left[C^{\# \eta} \right] \Phi \left(\frac{\ln\left(\frac{P}{E \left[C^{\#} \right]} \right)^{\eta} - \frac{\eta^2}{2} Var \left[\ln \left(C^{\#} \right) \right]}{\eta \sqrt{Var \left[ \ln \left(C^{\#} \right) \right]}} \right)
-\end{equation}
+<!-- Where $\omega^2 = Var[\ln(v)]$ and $\Phi()$ is the standard cumulative normal distribution function. (See Appendix A2 for proof.) -->
 
-Where $\Phi()$ is the standard normal cumulative distribution function. (See Appendix A.2 for details.) The aggregate supply function thus reduces to the following tractable form.
+<!-- Because production is assumed to be lognormally distributed, $C^{\#}$ (and $\lambda$) must also be lognormally distributed. Substituting $v = C^{\# \eta}$ and $M = P^{\eta}$, into \ref{eq:keyResult} then, -->
 
-\begin{equation}
-\begin{split}
-Q &= N \left(y_0 \frac{\theta_x}{\theta_w} \right)^{\frac{\eta}{h}} E \left[\hat{\theta}_k^{\frac{\eta}{h}} \right] \frac{E \left[C^{\# \eta}\right]}{h^{\eta}} \Phi(\gamma) \:\:; \\
-\gamma &= \frac{\ln\left(\frac{P}{E \left[C^{\#} \right]} \right)^{\eta} - \frac{\eta^2}{2} Var \left[\ln \left(C^{\#} \right) \right]}{\eta \sqrt{Var \left[\ln \left( C^{\#} \right) \right]}}
-\end{split}
-\label{eq:sup2a}
-\end{equation}
-<!-- This is an aggregate supply curve that explicitly accounts for input prices, farm size, technology, and control variables ($\hat{\theta}$), as well as for output price and farm entry/exit in response to changes in output price. Farm entry/exit is captured by the term $\Phi(\gamma)$. The supply response to changes in technology is thus endogenously modeled. -->
+<!-- \begin{equation} -->
+<!-- E[C^{\# \eta} | C^{\# \eta} < P^{\eta}] = E[C^{\# \eta}] \Phi \left(\frac{\ln P - m_{\#}}{s_{\#} - \eta s_{\#}} \right) -->
+
+
+<!-- \right) + \frac{s_{\#}^2}{2}}{s_{\#}} \right) -->
+
+<!-- \int_{0}^{P} C^{\# \eta} f(C^{\#}) \: dC^{\#} = E \left[C^{\# \eta} \right] \Phi \left(\frac{\ln\left(\frac{P}{E \left[C^{\#} \right]} \right)^{\eta} - \frac{\eta^2}{2} Var \left[\ln \left(C^{\#} \right) \right]}{\eta \sqrt{Var \left[ \ln \left(C^{\#} \right) \right]}} \right) -->
+<!-- \end{equation} -->
+
+<!-- Where $\Phi()$ is the standard normal cumulative distribution function. (See Appendix A.2 for details.) The aggregate supply function thus reduces to the following tractable form. -->
+
+<!-- \begin{equation} -->
+<!-- \begin{split} -->
+<!-- Q &= N \left(y_0 \frac{\theta_x}{\theta_w} \right)^{\frac{\eta}{h}} E \left[\hat{\theta}_k^{\frac{\eta}{h}} \right] \frac{E \left[C^{\# \eta}\right]}{h^{\eta}} \Phi(\gamma) \:\:; \\ -->
+<!-- \gamma &= \frac{\ln\left(\frac{P}{E \left[C^{\#} \right]} \right)^{\eta} - \frac{\eta^2}{2} Var \left[\ln \left(C^{\#} \right) \right]}{\eta \sqrt{Var \left[\ln \left( C^{\#} \right) \right]}} -->
+<!-- \end{split} -->
+<!-- \label{eq:sup2a} -->
+<!-- \end{equation} -->
+<!-- <!-- This is an aggregate supply curve that explicitly accounts for input prices, farm size, technology, and control variables ($\hat{\theta}$), as well as for output price and farm entry/exit in response to changes in output price. Farm entry/exit is captured by the term $\Phi(\gamma)$. The supply response to changes in technology is thus endogenously modeled. --> 
 
 ## Derivation of the aggregate supply curve from the forgoing + axiom 5 
 
@@ -1401,6 +1416,13 @@ mod3Vars <- setdiff(mod2Vars, c(priceVars, "Child family labor, planting (person
 hist(exp(df_mod$`Cost/acre (KES/acre)`), 40)
 indHiCost <- which(exp(df_mod$`Cost/acre (KES/acre)`) > 20000)
 indUnprofitable <- which(exp(df_mod$Rstar) / exp(df_mod$`Cost/acre (KES/acre)`)<0.75)
+
+cSharpTrunc <- df_mod$`Cost/acre (KES/acre)`/df_mod$`Yield (kg/acre)`
+hist(cSharpTrunc,25)
+cSharpTrunc
+hist(df_mod$`Yield (kg/acre)`)
+
+
 # exp(df_mod$`Yield (kg/acre)`[indHiCost])
 # exp(df_mod$`Farm size (acres)`[indHiCost])
 # exp(df_mod$Rstar[indHiCost]) / exp(df_mod$`Cost/acre (KES/acre)`[indHiCost])
@@ -1409,13 +1431,33 @@ indUnprofitable <- which(exp(df_mod$Rstar) / exp(df_mod$`Cost/acre (KES/acre)`)<
 indRm <- indHiCost
 #indRm <- unique(c(indHiCost, indUnprofitable))
 #dfMod3 <- df_mod[, c(mod3Vars)]
-dfMod3 <- df_mod[-indRm, c(mod3Vars)]
+maizeProvs <- c("Uasin Gishu", "Narok", "Nakuru", "Trans Nzoia", "Kakamega", "Bungoma", "Nandi")
+dfLook <- df_mod %>% subset(Dist %in% maizeProvs) %>% select(all_of(mod3Vars))
+hist(dfLook$`Yield (kg/acre)`)
+dfLook$cSharp <- dfLook$`Cost/acre (KES/acre)` / dfLook$`Yield (kg/acre)`
+hist(dfLook$cSharp)
+#dfMod3 <- df_mod[-indRm, c(mod3Vars)]
+dfMod3 <- df_mod[, mod3Vars]
+# kVars <- c("Seed (kg/acre)", "Farm size (acres)", "Rain anomaly", "Adult equivalent household size")
+# dfMod3$k <- dfMod3 %>% select(all_of(kVars)) %>% rowSums
+# dfMod3 <- dfMod3 %>% select(-all_of(kVars))
+dfMod3$cSharp <- dfMod3$`Cost/acre (KES/acre)` - dfMod3$`Yield (kg/acre)`
+dfMod3$`Yield (kg/acre)` <- NULL#; dfMod3$`Cost/acre (KES/acre)`
+#mod3 <- lm(`Yield (kg/acre)`~., dfMod3[, -1])
+dfMod3 <- dfMod3 %>% subset(cSharp < 2.5)
+mod3 <- truncreg::truncreg(cSharp~., dfMod3[, -1], point = 2.5, direction = "right")
+mod3 <- lm(cSharp~., dfMod3[, -1])
+summary(mod3)
+plot(mod3$fitted.values, mod3$residuals)
+1-mod3$coefficients[2]
 mod3 <- lm(`Yield (kg/acre)`~., dfMod3[, -1])
 summ(mod3)
-plot(mod3$fitted.values, mod3$residuals)
+
+
+
 #car::vif(mod3)
 # Clean: drop outliers with error outside of x stand devs
-indRm <- which(abs(mod3$residuals) > 1.1)
+indRm <- which(abs(mod3$residuals) > 1)
 View(dfMod3[indRm,]); length(indRm)
 dfMod3 <- dfMod3[-indRm, ]
 #======================================================================
@@ -1487,11 +1529,13 @@ ggIndepVars + ggYd + plot_layout(widths = c(2, 2))
 coefVec <- mod3$coefficients; coefNames <- gsub("`", "", names(coefVec))
 kappaRn <- coefVec[which(coefNames == "Rain anomaly")]
 kRn <- exp(dfMod3$`Rain anomaly`)
-EyStarT0 <- exp(dfMod3$`Yield (kg/acre)`) * kRn^(-kappaRn)
+# EyStarT0 <- exp(dfMod3$`Yield (kg/acre)`) * kRn^(-kappaRn)
+EyStarT0trunc <- exp(mod3$fitted.values) * kRn^(-kappaRn)
 notThese <- c("Dist", "Yield (kg/acre)", "Cost/acre (KES/acre)", "Rain anomaly", bin_vars)
 kVars <- setdiff(mod3Vars, notThese)
 kappaVec <- coefVec[which(coefNames %in% kVars)]
 matK <- dfMod3[, kVars] %>% as.matrix()
+kLook <- matK %*% rep(1, ncol(matK))
 mVec <- colMeans(matK)
 sVec <- apply(matK, 2, sd)
 muThetaK <- exp(sum(c(mVec * kappaVec, kappaVec^2 * sVec^2 / 2)))
@@ -1519,22 +1563,22 @@ df$`Log change` <- c(NA, diff(log(df$Price)))
 library(lubridate)
 yrVec <- unique(year(df$Date))
 nYr <- length(yrVec)
-th <- 5
+th <- 8
 mVec <- c()
 sVec <- c()
 P0vec <- c()
 EPT0hist <- c()
 anomVec <- c()
 for(i in 1:(nYr - 1)){
-  thisDate <- as.Date(paste0(as.character(yrVec[i]), "-03-01"))
+  thisDate <- as.Date(paste0(as.character(yrVec[i]), "-04-01"))
   indMY <- grep(thisDate, df$Date)
-  indMY <- indMY:(indMY + 11)
+  indMY <- indMY:(indMY + 8)
   this_m <- mean(df$`Log change`[indMY], na.rm = T)
   this_s <- sd(df$`Log change`[indMY], na.rm = T)
   mVec[i] <- this_m
   sVec[i] <- this_s
   #---
-  thisDate <- as.Date(paste0(as.character(yrVec[i]), "-03-01"))
+  thisDate <- as.Date(paste0(as.character(yrVec[i]), "-04-01"))
   indGrow <- grep(thisDate, df$Date)
   indGrow <- indGrow:(indGrow + th)
   P0 <- df$Price[indGrow[1]]
@@ -1579,7 +1623,15 @@ EPT02009 <- P02009 * exp(mP2008 * th)
 # EcSharp <- exp(dfMod3$`Cost/acre`) / EyStar0
 # lam <- EPT02007 / EcSharp * h
 #=============================================================================
-muEcStarT0hSamp <- mean(exp(dfMod3$`Cost/acre (KES/acre)`)^h)
+ProbProfit <- pnorm((log(EPT02007) - mP2006 * th) / (sP2006 * sqrt(th)) - eta * sP2006 * sqrt(th))
+EmploymentRate <- pnorm(log(EPT02007), mP2006 * th, sP2006 * sqrt(th))
+EyStarT0 <- EyStarT0trunc * EmploymentRate / ProbProfit
+
+#muEcStarT0hSamp <- mean(exp(dfMod3$`Cost/acre (KES/acre)`)^h)
+EcStarT0Samp <- exp(dfMod3$`Cost/acre (KES/acre)`)
+ErStarT0Dedu <- EyStarT0 * EPT02007
+EcSharpT0 <- EcStarT0Samp / EyStarT0
+lambda <- EPT02007 / EcSharpT0 * h
 # EyStarT0 <- exp(dfMod3$`Yield (kg/acre)`)# exp(mod3$fitted.values)# + sd(mod3$residuals)^2 / 2)
 # #mean(EyStarT0)
 # #EyStarT0 <- dfMod3$`Yield (kg/acre)`
@@ -1590,7 +1642,7 @@ muEcStarT0hSamp <- mean(exp(dfMod3$`Cost/acre (KES/acre)`)^h)
 alpha0 <- coefVec[1]
 v0base <- exp(alpha0)
 #y0base <- v0base * muThetaKnh * muEcSharpT0n
-y0base <- v0base * muThetaK * muEcStarT0hSamp
+EcStarT0base <- EyStarT0 / (muThetaK * v0base)
 #y0base <- v0base * (muThetaK)^(eta / h) * muEcSharpT0n
 #---
 # Now calculate mean yield for all binary combinations
@@ -1604,6 +1656,8 @@ v0 <- exp(alpha0adj)
 # y0 <- v0 * muThetaKnh * muEcSharpT0n * Eerr
 # muEcSharpTruncT0n <- exp(eta * mEcSharpTrunc + eta^2 * sEcSharpTrunc^2 / 2)
 #y0 <- v0 * muThetaKnh * muEcSharpTruncT0n * Eerr
+EcStarT0 <- EyStarT0 / (muThetaK * v0)
+
 y0 <- v0 * muThetaK * muEcStarT0hSamp
 mean(EyStarT0) #truncated sample mean
 mean(y0)
@@ -1703,9 +1757,9 @@ rootFnUp <- function(xIn, xUp, sXtrunc, mXtrunc){
   sX <- xIn[1]
   mX <- xIn[2]
   zUp <- (log(xUp) - mX) / sX
-  probTerm <- dnorm(zUp) / pnorm(zUp)
-  slack_s <- sXtrunc^2 - sX^2 * (1 - zUp * probTerm - probTerm^2)
-  slack_m <- mXtrunc - mX + sX * probTerm
+  invMillsRatio <- dnorm(zUp) / pnorm(zUp)
+  slack_s <- sXtrunc^2 - sX^2 * (1 - zUp * invMillsRatio - invMillsRatio^2)
+  slack_m <- mXtrunc - mX + sX * invMillsRatio
   outVec <- c(slack_s, slack_m)
   return(outVec)
 }
@@ -1719,11 +1773,12 @@ rootFnUp <- function(xIn, xUp, sXtrunc, mXtrunc){
 #   outVec <- c(slack_s, slack_m)
 #   return(outVec)
 # }
-EcSharpT0 <- exp(dfMod3$`Cost/acre (KES/acre)`) / EyStarT0
-lEcSharpT0 <- log(EcSharpT0)
-lam <- EPT02007 / EcSharpT0 * h
+
+EcSharpT0trunc <- exp(dfMod3$`Cost/acre (KES/acre)`) / EyStarT0trunc
+lEcSharpT0trunc <- log(EcSharpT0trunc)
+lam <- EPT02007 / EcSharpT0trunc * h
 sum(lam > h) / length(lam)
-mEcSharpT0trunc <- mean(lEcSharpT0); sEcSharpT0trunc <- sd(lEcSharpT0)
+mEcSharpT0trunc <- mean(lEcSharpT0trunc); sEcSharpT0trunc <- sd(lEcSharpT0trunc)
 muEcSharpT0trunc <- exp(mEcSharpT0trunc + sEcSharpT0trunc^2 / 2)
 xIn <- c(sEcSharpT0trunc, mEcSharpT0trunc)
 sol <- nleqslv::nleqslv(xIn, rootFnUp, jac = NULL,
@@ -1735,6 +1790,13 @@ sEcSharpT0 <- sol$x[1]
 mEcSharpT0 <- sol$x[2]
 muEcSharpT0 <- exp(mEcSharpT0 + sEcSharpT0^2 / 2)
 muEcSharpT0n <- exp(eta * mEcSharpT0 + eta^2 * sEcSharpT0^2 / 2)
+# Quick calculation of aggregate supply
+EmploymentRate <- pnorm((log(EPT02007) - mEcSharpT0) / sEcSharpT0)
+muEyStarT0trunc <- mean(EyStarT0trunc) / 1000
+N <- 2 * 10^6
+mufarmSize <- mean(exp(dfMod3$`Farm size (acres)`))
+N * mufarmSize * muEyStarT0trunc * EmploymentRate
+Qlo <- 0.5^kappaRn * N * mufarmSize * muEyStarT0trunc * EmploymentRate
 #----------------------------------------------------------------------
 muY0 <- mean(y0)
 muArea <- mean(exp(dfMod3$`Farm size (acres)`))
