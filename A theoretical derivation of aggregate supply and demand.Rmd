@@ -600,7 +600,7 @@ This might be a suitable aggregate supply function in sectors characterized by h
 
 Note truncation, E[y*] not sample mean
 
-
+Main thing is result that price is a dual space where solution can be found in the absence of farm data.
 <!-- ## Derivation of a provisional aggregate supply function from the forgoing + axioms 3 and 4 -->
 
 <!-- The contours of an aggregate supply function begin to emerge into view when one considers what might happen if one of the farm production expressions above is substituted for $q^*$ in Equation \ref{eq:sup1}. In particular, it becomes clear that: -->
@@ -858,7 +858,7 @@ Given the stochastic definition of price, the relation between optimal expenditu
 \label{eq:useful2}
 \end{equation}
 
-Optimal unit cost necessarily becomes a function of time here because it changes with expected price, which is a function of time. The critical time of interest is planting time $t = 0$, the time at or by which land preparation, seed, fertilizer, and any other necessary planting expenditure decisions are or have been made. The expectation $E[C^{\#}(T)]\bigr|_{t = 0}$ appears in the expression, as opposed to just $C^{\#}(0)$, because optimal unit cost also includes post planting expenditures such as pest and disease control, harvest, and post-harvest activities, which are generally unknown at planting time. Also, $C^{\#}(0)$ by definition depends upon yield, which is of course unkown until harvest.
+Optimal unit cost necessarily becomes a function of time here because it changes with expected price, which is a function of time. The critical time of interest is planting time $t = 0$, the time at or by which land preparation, seed, fertilizer, and any other necessary planting expenditure decisions are or have been made. The expectation $E[C^{\#}(T)]\bigr|_{t = 0}$ appears in the expression, as opposed to just $C^{\#}(0)$, because optimal unit cost also includes post planting expenditures such as pest and disease control, harvest, and post-harvest activities, which are generally unknown at planting time. Also, $C^{\#}(0)$ by definition depends upon yield, which is of course unknown until harvest.
 
 A further implication of Equation \ref{eq:useful2} that is critically important for the derivation of the aggregate supply curve below, is that $C^{\#}(t)$ must itself be a gBm with same parameters as $P(t)$. This follows from Ito's Lemma. A proof is given in Appendix 2.
 
@@ -1411,55 +1411,55 @@ mod2 <- lm(`Yield (kg/acre)`~., df_mod2[, -not_these])
 # mod 3
 mod3Vars <- setdiff(mod2Vars, c(priceVars, "Child family labor, planting (person-hrs/acre)"))
 #mod3Vars <- setdiff(mod2Vars, c(priceVars))
-# Let's drop some extreme values
-# Extremely high cost/acre often due to extremely small farm size
-hist(exp(df_mod$`Cost/acre (KES/acre)`), 40)
-indHiCost <- which(exp(df_mod$`Cost/acre (KES/acre)`) > 20000)
-indUnprofitable <- which(exp(df_mod$Rstar) / exp(df_mod$`Cost/acre (KES/acre)`)<0.75)
-
-cSharpTrunc <- df_mod$`Cost/acre (KES/acre)`/df_mod$`Yield (kg/acre)`
-hist(cSharpTrunc,25)
-cSharpTrunc
-hist(df_mod$`Yield (kg/acre)`)
-
-
-# exp(df_mod$`Yield (kg/acre)`[indHiCost])
-# exp(df_mod$`Farm size (acres)`[indHiCost])
-# exp(df_mod$Rstar[indHiCost]) / exp(df_mod$`Cost/acre (KES/acre)`[indHiCost])
-# df_mod[which(!duplicated(df_mod$`Seed (kg/acre)`)),]%>%View
-# df_mod[indUnprofitable,]%>%View
-indRm <- indHiCost
+# # Let's drop some extreme values
+# # Extremely high cost/acre often due to extremely small farm size
+# hist(exp(df_mod$`Cost/acre (KES/acre)`), 40)
+# indHiCost <- which(exp(df_mod$`Cost/acre (KES/acre)`) > 20000)
+# indUnprofitable <- which(exp(df_mod$Rstar) / exp(df_mod$`Cost/acre (KES/acre)`)<0.75)
+# cSharpTrunc <- df_mod$`Cost/acre (KES/acre)`/df_mod$`Yield (kg/acre)`
+# hist(cSharpTrunc,25)
+# cSharpTrunc
+# # exp(df_mod$`Yield (kg/acre)`[indHiCost])
+# # exp(df_mod$`Farm size (acres)`[indHiCost])
+# # exp(df_mod$Rstar[indHiCost]) / exp(df_mod$`Cost/acre (KES/acre)`[indHiCost])
+# # df_mod[which(!duplicated(df_mod$`Seed (kg/acre)`)),]%>%View
+# # df_mod[indUnprofitable,]%>%View
+# indRm <- indHiCost
 #indRm <- unique(c(indHiCost, indUnprofitable))
 #dfMod3 <- df_mod[, c(mod3Vars)]
-maizeProvs <- c("Uasin Gishu", "Narok", "Nakuru", "Trans Nzoia", "Kakamega", "Bungoma", "Nandi")
+hist(df_mod$`Yield (kg/acre)`)
+# Focus on provinces that have same or similar maize price
+dfLook <- df_mod %>% group_by(Dist) %>% summarize(`Maize price (KES/kg)` = mean(`Maize price (KES/kg)`))
+ggplot(dfLook,aes(x=`Maize price (KES/kg)`,y=Dist))+geom_bar(stat="identity")
+maizeProvs <- c("Uasin Gishu", "Nyeri", "Trans Nzoia", "Bungoma", "Kakamega", "Narok", "Laikipia", "Kitui", "Machakos")
 dfLook <- df_mod %>% subset(Dist %in% maizeProvs) %>% select(all_of(mod3Vars))
 hist(dfLook$`Yield (kg/acre)`)
-dfLook$cSharp <- dfLook$`Cost/acre (KES/acre)` / dfLook$`Yield (kg/acre)`
+dfLook$cSharp <- dfLook$`Cost/acre (KES/acre)` - dfLook$`Yield (kg/acre)`
 hist(dfLook$cSharp)
 #dfMod3 <- df_mod[-indRm, c(mod3Vars)]
 dfMod3 <- df_mod[, mod3Vars]
-# kVars <- c("Seed (kg/acre)", "Farm size (acres)", "Rain anomaly", "Adult equivalent household size")
-# dfMod3$k <- dfMod3 %>% select(all_of(kVars)) %>% rowSums
-# dfMod3 <- dfMod3 %>% select(-all_of(kVars))
-dfMod3$cSharp <- dfMod3$`Cost/acre (KES/acre)` - dfMod3$`Yield (kg/acre)`
-dfMod3$`Yield (kg/acre)` <- NULL#; dfMod3$`Cost/acre (KES/acre)`
-#mod3 <- lm(`Yield (kg/acre)`~., dfMod3[, -1])
-dfMod3 <- dfMod3 %>% subset(cSharp < 2.5)
-mod3 <- truncreg::truncreg(cSharp~., dfMod3[, -1], point = 2.5, direction = "right")
-mod3 <- lm(cSharp~., dfMod3[, -1])
-summary(mod3)
-plot(mod3$fitted.values, mod3$residuals)
-1-mod3$coefficients[2]
+#dfMod3 <- dfMod3 %>% subset(Dist %in% maizeProvs)
 mod3 <- lm(`Yield (kg/acre)`~., dfMod3[, -1])
 summ(mod3)
+# indSameP <- which(dfMod3$Dist %in% maizeProvs)
+# hist(mod3$fitted.values[indSameP])
+# lcSharpSameP <- (subset(dfMod3, Dist %in% maizeProvs)$`Cost/acre (KES/acre)` - mod3$fitted.values[indSameP])
+# hist(lcSharpSameP)
+# dfMod3$cSharp <- dfMod3$`Cost/acre (KES/acre)` - dfMod3$`Yield (kg/acre)`
+# dfMod3$`Yield (kg/acre)` <- NULL#; dfMod3$`Cost/acre (KES/acre)`
+# mod3 <- truncreg::truncreg(cSharp~., dfMod3[, -1], point = 2.5, direction = "right")
+# mod3 <- lm(cSharp~., dfMod3[, -1])
+# summary(mod3)
+# plot(mod3$fitted.values, mod3$residuals)
+# 1-mod3$coefficients[2]
 
 
 
 #car::vif(mod3)
-# Clean: drop outliers with error outside of x stand devs
-indRm <- which(abs(mod3$residuals) > 1)
-View(dfMod3[indRm,]); length(indRm)
-dfMod3 <- dfMod3[-indRm, ]
+# # Clean: drop outliers with error outside of x stand devs
+# indRm <- which(abs(mod3$residuals) > 1)
+# View(dfMod3[indRm,]); length(indRm)
+# dfMod3 <- dfMod3[-indRm, ]
 #======================================================================
 #======================================================================
 #======================================================================
@@ -1563,22 +1563,22 @@ df$`Log change` <- c(NA, diff(log(df$Price)))
 library(lubridate)
 yrVec <- unique(year(df$Date))
 nYr <- length(yrVec)
-th <- 8
+th <- 7
 mVec <- c()
 sVec <- c()
 P0vec <- c()
 EPT0hist <- c()
 anomVec <- c()
 for(i in 1:(nYr - 1)){
-  thisDate <- as.Date(paste0(as.character(yrVec[i]), "-04-01"))
+  thisDate <- as.Date(paste0(as.character(yrVec[i]), "-02-01"))
   indMY <- grep(thisDate, df$Date)
-  indMY <- indMY:(indMY + 8)
+  indMY <- indMY:(indMY + th)
   this_m <- mean(df$`Log change`[indMY], na.rm = T)
   this_s <- sd(df$`Log change`[indMY], na.rm = T)
   mVec[i] <- this_m
   sVec[i] <- this_s
   #---
-  thisDate <- as.Date(paste0(as.character(yrVec[i]), "-04-01"))
+  thisDate <- as.Date(paste0(as.character(yrVec[i]), "-02-01"))
   indGrow <- grep(thisDate, df$Date)
   indGrow <- indGrow:(indGrow + th)
   P0 <- df$Price[indGrow[1]]
@@ -1614,6 +1614,8 @@ P02009 <- P0vec[4]
 mP2008 <- mVec[3]
 sP2008 <- sVec[3]
 EPT02009 <- P02009 * exp(mP2008 * th)
+#mEcSharpT0 <- log(P02007) + (mP2006 - sP2006^2 / 2) * th + log(h)
+#sP2006 * sqrt(th)
 #---
 # # dfEPT0 <- data.frame(Year = yrVec[-c(1, nYr)], EPT0 = EPT0hist[-1], mP = mVec[-c((nYr - 1), nYr)], sP = sVec[-c((nYr - 1), nYr)], Anomaly = anomVec[-1])
 # EyStar1 <- const * kRn^kappaRn * (cStar / hCoef)^hCoef
@@ -1622,136 +1624,8 @@ EPT02009 <- P02009 * exp(mP2008 * th)
 # #EyStar1 - EyStar0
 # EcSharp <- exp(dfMod3$`Cost/acre`) / EyStar0
 # lam <- EPT02007 / EcSharp * h
+exp(mEcSharpT0 + sP2006^2 / 2 *th)
 #=============================================================================
-ProbProfit <- pnorm((log(EPT02007) - mP2006 * th) / (sP2006 * sqrt(th)) - eta * sP2006 * sqrt(th))
-EmploymentRate <- pnorm(log(EPT02007), mP2006 * th, sP2006 * sqrt(th))
-EyStarT0 <- EyStarT0trunc * EmploymentRate / ProbProfit
-
-#muEcStarT0hSamp <- mean(exp(dfMod3$`Cost/acre (KES/acre)`)^h)
-EcStarT0Samp <- exp(dfMod3$`Cost/acre (KES/acre)`)
-ErStarT0Dedu <- EyStarT0 * EPT02007
-EcSharpT0 <- EcStarT0Samp / EyStarT0
-lambda <- EPT02007 / EcSharpT0 * h
-# EyStarT0 <- exp(dfMod3$`Yield (kg/acre)`)# exp(mod3$fitted.values)# + sd(mod3$residuals)^2 / 2)
-# #mean(EyStarT0)
-# #EyStarT0 <- dfMod3$`Yield (kg/acre)`
-#---
-# Define constant in terms of convenient known reference value y0, in this case sample mean yield.
-# Sample mean yield varies with binary controls. Here is the mean with just the base constant
-# (i.e. all binaries = 0)
-alpha0 <- coefVec[1]
-v0base <- exp(alpha0)
-#y0base <- v0base * muThetaKnh * muEcSharpT0n
-EcStarT0base <- EyStarT0 / (muThetaK * v0base)
-#y0base <- v0base * (muThetaK)^(eta / h) * muEcSharpT0n
-#---
-# Now calculate mean yield for all binary combinations
-# Adjust for exogenous endowments/constraints
-kappaBins <- coefVec[which(coefNames %in% bin_vars)]
-dfBins <- dfMod3[, bin_vars]
-#dfBins <- dfMod3b[, bin_vars]
-alpha0adj <- alpha0 + as.matrix(dfBins) %*% kappaBins
-v0 <- exp(alpha0adj)
-#Eerr <- exp(sd(mod3$residuals)^2 / 2) #Don't forget to adjust for resids
-# y0 <- v0 * muThetaKnh * muEcSharpT0n * Eerr
-# muEcSharpTruncT0n <- exp(eta * mEcSharpTrunc + eta^2 * sEcSharpTrunc^2 / 2)
-#y0 <- v0 * muThetaKnh * muEcSharpTruncT0n * Eerr
-EcStarT0 <- EyStarT0 / (muThetaK * v0)
-
-y0 <- v0 * muThetaK * muEcStarT0hSamp
-mean(EyStarT0) #truncated sample mean
-mean(y0)
-# y0 <- g0 * EthetaK * EcStar * Eerr #Expected value of yStar
-y0 %>% unique() %>% length # 14 endowment combos present
-dfPlot <- data.frame(County = dfMod3$Dist, y0)
-#dfPlot <- data.frame(County = dfMod3b$Dist, y0)
-#ggplot(dfPlot, aes(x = y0)) + geom_histogram() + facet_wrap(~County)
-#exp(mean(dfMod3$`Yield (kg/acre)`) + sd(dfMod3$`Yield (kg/acre)`)^2/2)
-# mean(y0)
-#-----------------------------------------------------------------------
-# Create label vec for each of the 14 endowment combos
-dfBins$Adopter <- ifelse(dfBins$Adopter == 1, "Hybrid", "0")
-dfBins$`Tenure: owned with title deed` <- ifelse(dfBins$`Tenure: owned with title deed` == 1, "Tenure", "0")
-dfBins$`Landprep: oxen` <- ifelse(dfBins$`Landprep: oxen` == 1, "Oxen", "0")
-dfBins$`Landprep: tractor` <- ifelse(dfBins$`Landprep: tractor` == 1, "Tractor", "0")
-endowVec <- apply(dfBins, 1, paste, collapse = " + ")
-endowVec <- gsub("0 \\+|\\+ 0", "", endowVec)
-endowVec <- gsub("   0", "Base", endowVec)
-endowVec[which(endowVec != "Base")] <- paste("Base +", endowVec[which(endowVec != "Base")])
-endowVec <- gsub("  ", " ", endowVec)
-endowVec <- trimws(endowVec)
-endowVec <- gsub("  ", " ", endowVec)
-#unique(endowVec)
-#---------------------------------------------------------------------
-# Graphic of prevalence of each endowment combo and its value
-cellText_size <- 2.5
-df_plot <- data.frame(Type = endowVec, y0 = round(y0, 1)) %>%
-  mutate(xx = 1) %>% group_by(Type) %>%
-  summarise(`Number of farms` = sum(xx, na.rm = T), y0 = unique(y0)) %>%
-  as.data.frame() %>%
-  mutate(`Pct of farms in sample` = `Number of farms` / sum(`Number of farms`) * 100) %>%
-  mutate(Element = 1) %>% arrange(y0) %>%
-  mutate(Type = factor(Type, Type))
-typeVec <- df_plot$Type
-# df_plot$Type <- factor(df_plot$Type, levels = df_plot$y0[order(df_plot$y0)], ordered = T)
-#gg <- ggplot(df_plot, aes(x = Element, y = Type, fill = y0, label = y0))
-gg <- ggplot(df_plot, aes(x = Element, y = Type, fill = y0, label = y0))
-#gg <- gg + scale_y_discrete(limits = typeVec)
-gg <- gg + geom_tile(alpha = 0)
-gg <- gg + labs(title = expression(y[0]))
-#gg <- gg + labs(title = expression(tilde(y)))
-gg <- gg + theme_bw()
-gg <- gg + theme(axis.title = element_blank(),
-                 axis.text.x = element_blank(),
-                 axis.ticks.x = element_blank(),
-                 axis.text.y = element_text(size = axisTextSize),
-                 panel.grid = element_blank(),
-                 plot.title = element_text(size = axisTitleSize, hjust = 0.5),
-                 legend.position = "none")
-gg <- gg + geom_text(size = cellText_size)
-ggEndow1 <- gg
-#---
-gg <- ggplot(df_plot, aes(x = `Pct of farms in sample`, y = Type))
-#gg <- gg + scale_y_discrete(limits = typeVec)
-gg <- gg + geom_col()
-gg <- gg + labs(title = "Pct of farms in sample")
-gg <- gg + theme_bw()
-gg <- gg + theme(axis.title = element_blank(),
-                 #axis.title.x = element_text(size = axisTitleSize),
-                 axis.text.y = element_blank(),
-                 axis.text.x = element_text(size = axisTextSize),
-                 #panel.grid = element_blank(),
-                 plot.title = element_text(size = axisTitleSize, hjust = 0.5))
-ggEndow2 <- gg
-ggEndow1 + ggEndow2
-#======================================================================
-mean(y0) * 2.5*10^6 /1000 * 0.8 # Agg Supply with 80% chance of mean farm making profit
-#Ok if it's a little low because omits short rains season
-#Note mean of y0 automatically weights the 14 configurations according to their prevalence in the sample--it's a weighted sum of the sample mean yields of each system
-# dfPlot <- data.frame(County = dfMod3$Dist, endowVec, xx = 1) %>% group_by(County) %>%
-#   mutate(n = sum(xx)) %>% subset(n >=30)
-# ggplot(dfPlot, aes(y = endowVec)) + geom_bar(stat = "count") + facet_wrap(~County)
-# Define agg supply curve/price elasticity of supply/price risk elasticity of supply function
-EQsFun <- function(EPT0, muEcSharpT0, h, muY0, muArea, mP, sP, th, Nf){
-  eta <- h / (1 - h)
-  PT0 <- EPT0 * exp(-mP * th)
-  z <- (eta * log(muEcSharpT0 / PT0) - (eta * mP - eta^2 * sP^2 / 2) * th) / (eta * sP * sqrt(th))
-  ProbProfitMeanFarm <- (1 - pnorm(z)) #Probability of mean farm making a profit (adjusted by eta)
-  EQsT0 <- muArea * Nf * muY0 * ProbProfitMeanFarm #Expected agg supply in kg
-  #------------Expected agg supply in million MT
-  EQsT0 <- EQsT0 * 10^-9
-  #------------Spot price elasticity of expected agg supply
-  etaP0EQsT0 <- dnorm(-z) / pnorm(-z) * 1 / (sP * sqrt(th))
-  #------------sP (price risk) elasticity of expected agg supply
-  # (But of limited significance since really want to know it at equilibrium
-  # PT0 and EcSharpT0, which change with sP)
-  etaSpEQsT0 <- -dnorm(-z) / pnorm(-z) * (eta * sqrt(th) - z / sP)
-  #eta <- -dnorm(-z) / pnorm(-z) * (eta * sP * sqrt(th) - z)
-  #------------
-  dfOut <- data.frame(EPT0, EQsT0, ProbProfitMeanFarm, etaP0EQsT0, etaSpEQsT0)
-  return(dfOut)
-}
-#----------------------------------------------------------------------
 # Define root function to solve for population EcSharpT0
 rootFnUp <- function(xIn, xUp, sXtrunc, mXtrunc){
   sX <- xIn[1]
@@ -1763,6 +1637,164 @@ rootFnUp <- function(xIn, xUp, sXtrunc, mXtrunc){
   outVec <- c(slack_s, slack_m)
   return(outVec)
 }
+EyStarT0trunc <- exp(mod3$fitted.values)#kRn^-kappaRn * exp(mod3$fitted.values)
+EcStarT0trunc <- exp(dfMod3$`Cost/acre (KES/acre)`)
+EcSharpT0trunc <- EcStarT0trunc / EyStarT0trunc
+lEcSharpT0trunc <- log(EcSharpT0trunc)
+lamTrunc <- EPT02007 / EcSharpT0trunc * h
+sum(lamTrunc > h) / length(lamTrunc)
+#mEcSharpT0trunc <- mean(lcSharpSameP); sEcSharpT0trunc <- sd(lcSharpSameP)
+mEcSharpT0trunc <- mean(lEcSharpT0trunc); sEcSharpT0trunc <- sd(lEcSharpT0trunc)
+muEcSharpT0trunc <- exp(mEcSharpT0trunc + sEcSharpT0trunc^2 / 2)
+xIn <- c(sEcSharpT0trunc, mEcSharpT0trunc)
+sol <- nleqslv::nleqslv(xIn, rootFnUp, jac = NULL,
+                        xUp = 12,
+                        sXtrunc = sEcSharpT0trunc,
+                        mXtrunc = mEcSharpT0trunc)
+#sol
+sEcSharpT0 <- sol$x[1]
+mEcSharpT0 <- sol$x[2]
+muEcSharpT0 <- exp(mEcSharpT0 + sEcSharpT0^2 / 2)
+muEcSharpT0n <- exp(eta * mEcSharpT0 + eta^2 * sEcSharpT0^2 / 2)
+
+mLamba <- log(P02007) + (mP2006 - sP2006^2 / 2) * th + log(h) - mEcSharpT0
+mean(log(lamTrunc))
+
+ProbProfit <- pnorm((log(EPT02007) - mEcSharpT0) / (sEcSharpT0) - eta * sEcSharpT0)
+EmploymentRate <- pnorm((log(EPT02007) - mEcSharpT0) / sEcSharpT0)
+muEyStarT0trunc <- mean(EyStarT0trunc)
+muEyStarT0 <- muEyStarT0trunc * EmploymentRate / ProbProfit
+EcSharpT0nTrunc <- (exp(dfMod3$`Cost/acre (KES/acre)`) / EyStarT0trunc)^eta
+muEcSharpT0nTrunc <- mean(EcSharpT0nTrunc)
+muEcSharpT0n <- muEcSharpT0nTrunc * EmploymentRate / ProbProfit
+EyStarT0max <- muEyStarT0 * EPT02007^eta / muEcSharpT0n
+#----------------------------------------------------------------------------------------
+# Agg supply
+EQsFun <- function(EPT0, muEyStarT0, mEcSharpT0, sEcSharpT0, h, muArea, Nf){
+  # eta <- h / (1 - h)
+  # PT0 <- EPT0 * exp(-mP * th)
+  # z <- (eta * log(muEcSharpT0 / PT0) - (eta * mP - eta^2 * sP^2 / 2) * th) / (eta * sP * sqrt(th))
+  # ProbProfitMeanFarm <- (1 - pnorm(z)) #Probability of mean farm making a profit (adjusted by eta)
+  z <- (log(EPT0) - mEcSharpT0) / (sEcSharpT0) - eta * sEcSharpT0
+  ProbProfitMeanFarm <- pnorm(z)
+  EQsT0 <- muArea * Nf * muEyStarT0 * ProbProfitMeanFarm #Expected agg supply in kg
+  #------------Expected agg supply in million MT
+  EQsT0 <- EQsT0 * 10^-9
+  #------------Spot price elasticity of expected agg supply
+  etaP0EQsT0 <- dnorm(z) / pnorm(z) * 1 / (sP * sqrt(th))
+  #etaP0EQsT0 <- dnorm(-z) / pnorm(-z) * 1 / (sP * sqrt(th))
+  #------------sP (price risk) elasticity of expected agg supply
+  # (But of limited significance since really want to know it at equilibrium
+  # PT0 and EcSharpT0, which change with sP)
+  etaSpEQsT0 <- -dnorm(-z) / pnorm(-z) * (eta * sqrt(th) - z / sP)
+  #eta <- -dnorm(-z) / pnorm(-z) * (eta * sP * sqrt(th) - z)
+  #------------
+  dfOut <- data.frame(EPT0, EQsT0, ProbProfitMeanFarm, etaP0EQsT0, etaSpEQsT0)
+  return(dfOut)
+}
+
+EPT0vec <- seq(0.1, 23, length.out = 50)
+muArea <- mean(exp(dfMod3$`Farm size (acres)`))
+Nf <- 2*10^6
+dfEQsT0 <- EQsFun(EPT0vec, muEyStarT0, mEcSharpT0, sEcSharpT0, h, muArea, Nf)
+
+gg <- ggplot(dfEQsT0, aes(x = EPT0, y = EQsT0))
+gg <- gg + geom_line()
+
+gg <- ggplot(dfEQsT0, aes(x = EPT0, y = etaP0EQsT0))
+gg <- gg + geom_line()
+
+gg <- ggplot(dfEQsT0, aes(x = EPT0, y = ProbProfitMeanFarm))
+gg <- gg + geom_line()
+
+#----------------------------------------------------------------------------------------
+# # Define constant in terms of convenient known reference value y0, in this case sample mean yield.
+# # Sample mean yield varies with binary controls. Here is the mean with just the base constant
+# # (i.e. all binaries = 0)
+# alpha0 <- coefVec[1]
+# v0base <- exp(alpha0)
+# #y0base <- v0base * muThetaKnh * muEcSharpT0n
+# muEcStarT0hBase <- muEyStarT0 / (muThetaK * v0base)
+# #---
+# # Now calculate mean yield for all binary combinations
+# # Adjust for exogenous endowments/constraints
+# kappaBins <- coefVec[which(coefNames %in% bin_vars)]
+# dfBins <- dfMod3[, bin_vars]
+# #dfBins <- dfMod3b[, bin_vars]
+# alpha0adj <- alpha0 + as.matrix(dfBins) %*% kappaBins
+# v0 <- exp(alpha0adj)
+# muEcStarT0h <- muEyStarT0 / (muThetaK * v0)
+# y0 %>% unique() %>% length # 14 endowment combos present
+# dfPlot <- data.frame(County = dfMod3$Dist, y0)
+# #dfPlot <- data.frame(County = dfMod3b$Dist, y0)
+# #ggplot(dfPlot, aes(x = y0)) + geom_histogram() + facet_wrap(~County)
+# #exp(mean(dfMod3$`Yield (kg/acre)`) + sd(dfMod3$`Yield (kg/acre)`)^2/2)
+# # mean(y0)
+# #-----------------------------------------------------------------------
+# # Create label vec for each of the 14 endowment combos
+# dfBins$Adopter <- ifelse(dfBins$Adopter == 1, "Hybrid", "0")
+# dfBins$`Tenure: owned with title deed` <- ifelse(dfBins$`Tenure: owned with title deed` == 1, "Tenure", "0")
+# dfBins$`Landprep: oxen` <- ifelse(dfBins$`Landprep: oxen` == 1, "Oxen", "0")
+# dfBins$`Landprep: tractor` <- ifelse(dfBins$`Landprep: tractor` == 1, "Tractor", "0")
+# endowVec <- apply(dfBins, 1, paste, collapse = " + ")
+# endowVec <- gsub("0 \\+|\\+ 0", "", endowVec)
+# endowVec <- gsub("   0", "Base", endowVec)
+# endowVec[which(endowVec != "Base")] <- paste("Base +", endowVec[which(endowVec != "Base")])
+# endowVec <- gsub("  ", " ", endowVec)
+# endowVec <- trimws(endowVec)
+# endowVec <- gsub("  ", " ", endowVec)
+# #unique(endowVec)
+# #---------------------------------------------------------------------
+# # Graphic of prevalence of each endowment combo and its value
+# cellText_size <- 2.5
+# df_plot <- data.frame(Type = endowVec, y0 = round(y0, 1)) %>%
+#   mutate(xx = 1) %>% group_by(Type) %>%
+#   summarise(`Number of farms` = sum(xx, na.rm = T), y0 = unique(y0)) %>%
+#   as.data.frame() %>%
+#   mutate(`Pct of farms in sample` = `Number of farms` / sum(`Number of farms`) * 100) %>%
+#   mutate(Element = 1) %>% arrange(y0) %>%
+#   mutate(Type = factor(Type, Type))
+# typeVec <- df_plot$Type
+# # df_plot$Type <- factor(df_plot$Type, levels = df_plot$y0[order(df_plot$y0)], ordered = T)
+# #gg <- ggplot(df_plot, aes(x = Element, y = Type, fill = y0, label = y0))
+# gg <- ggplot(df_plot, aes(x = Element, y = Type, fill = y0, label = y0))
+# #gg <- gg + scale_y_discrete(limits = typeVec)
+# gg <- gg + geom_tile(alpha = 0)
+# gg <- gg + labs(title = expression(y[0]))
+# #gg <- gg + labs(title = expression(tilde(y)))
+# gg <- gg + theme_bw()
+# gg <- gg + theme(axis.title = element_blank(),
+#                  axis.text.x = element_blank(),
+#                  axis.ticks.x = element_blank(),
+#                  axis.text.y = element_text(size = axisTextSize),
+#                  panel.grid = element_blank(),
+#                  plot.title = element_text(size = axisTitleSize, hjust = 0.5),
+#                  legend.position = "none")
+# gg <- gg + geom_text(size = cellText_size)
+# ggEndow1 <- gg
+# #---
+# gg <- ggplot(df_plot, aes(x = `Pct of farms in sample`, y = Type))
+# #gg <- gg + scale_y_discrete(limits = typeVec)
+# gg <- gg + geom_col()
+# gg <- gg + labs(title = "Pct of farms in sample")
+# gg <- gg + theme_bw()
+# gg <- gg + theme(axis.title = element_blank(),
+#                  #axis.title.x = element_text(size = axisTitleSize),
+#                  axis.text.y = element_blank(),
+#                  axis.text.x = element_text(size = axisTextSize),
+#                  #panel.grid = element_blank(),
+#                  plot.title = element_text(size = axisTitleSize, hjust = 0.5))
+# ggEndow2 <- gg
+# ggEndow1 + ggEndow2
+#======================================================================
+mean(y0) * 2.5*10^6 /1000 * 0.8 # Agg Supply with 80% chance of mean farm making profit
+#Ok if it's a little low because omits short rains season
+#Note mean of y0 automatically weights the 14 configurations according to their prevalence in the sample--it's a weighted sum of the sample mean yields of each system
+# dfPlot <- data.frame(County = dfMod3$Dist, endowVec, xx = 1) %>% group_by(County) %>%
+#   mutate(n = sum(xx)) %>% subset(n >=30)
+# ggplot(dfPlot, aes(y = endowVec)) + geom_bar(stat = "count") + facet_wrap(~County)
+# Define agg supply curve/price elasticity of supply/price risk elasticity of supply function
+#----------------------------------------------------------------------
 # rootFnLo <- function(xIn, xLo, sXtrunc, mXtrunc){
 #   sX <- xIn[1]
 #   mX <- xIn[2]
@@ -1774,22 +1806,6 @@ rootFnUp <- function(xIn, xUp, sXtrunc, mXtrunc){
 #   return(outVec)
 # }
 
-EcSharpT0trunc <- exp(dfMod3$`Cost/acre (KES/acre)`) / EyStarT0trunc
-lEcSharpT0trunc <- log(EcSharpT0trunc)
-lam <- EPT02007 / EcSharpT0trunc * h
-sum(lam > h) / length(lam)
-mEcSharpT0trunc <- mean(lEcSharpT0trunc); sEcSharpT0trunc <- sd(lEcSharpT0trunc)
-muEcSharpT0trunc <- exp(mEcSharpT0trunc + sEcSharpT0trunc^2 / 2)
-xIn <- c(sEcSharpT0trunc, mEcSharpT0trunc)
-sol <- nleqslv::nleqslv(xIn, rootFnUp, jac = NULL,
-                        xUp = EPT02007,
-                        sXtrunc = sEcSharpT0trunc,
-                        mXtrunc = mEcSharpT0trunc)
-#sol
-sEcSharpT0 <- sol$x[1]
-mEcSharpT0 <- sol$x[2]
-muEcSharpT0 <- exp(mEcSharpT0 + sEcSharpT0^2 / 2)
-muEcSharpT0n <- exp(eta * mEcSharpT0 + eta^2 * sEcSharpT0^2 / 2)
 # Quick calculation of aggregate supply
 EmploymentRate <- pnorm((log(EPT02007) - mEcSharpT0) / sEcSharpT0)
 muEyStarT0trunc <- mean(EyStarT0trunc) / 1000
