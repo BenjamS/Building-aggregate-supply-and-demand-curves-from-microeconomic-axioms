@@ -584,7 +584,7 @@ Substituing the right hand side of this equation for the integral in the previou
 Q = N E[k_a] E[y^*] \Phi\left( \frac{\ln(P) - m_{\#}}{s_{\#}} - \eta s_{\#} \right)
 \end{equation}
 
-Here it is important to note that E[y] is not observed. The conditional mean E[y|c<p] is observed. The unconditional mean does not change with price but with technology or lambda. The conidtional mean changes with price, in addition to technology and lambda. So, given the relation between conditional and unconditional mean of a lognormally distributed variable, 
+Because of Axiom 4, the distribution of $C^{\#}$ is right truncated at $P$. Because $y^*$ is a function of $C^{\#}$, then $y^*$ is also truncated for given $k$. The population mean $E[y]$ is thus never observed except in the limit as $P$ becomes very large. The observed mean is the conditional mean $E[y^*|C^{\#} < P]$. The unconditional mean does not change with price but with technology or lambda. The conidtional mean changes with price, in addition to technology and lambda. So, given the relation between conditional and unconditional mean of a lognormally distributed variable, 
 
 ...
 
@@ -597,6 +597,8 @@ Different ways to estimate the unkowns depending upon data available.
 
 Finally, necessary to account for the stochastic character of price...
 This might be a suitable aggregate supply function in sectors characterized by highly deterministic production processes, negligible delays between input decisions and output, and negligible output price volatility. However, it is not suited to the primary sector, where production is partly deterministic, partly a function of stochastic meteorological variables; where there is a significant delay between input decisions and output (i.e., the cropping season); and where output price volatility looms large in any management decision. In order to accommodate these features, a suitable assumption regarding the stochastic character of output price (axiom 5) is introduced in the next section; and the aggregate supply model derived above is modified accordingly. In addition to accommodating the stochastic character of farm production, the modified model resolves the term $\Phi(\gamma)$ into a surprisingly instructive and intuitive form.
+
+mean log(lambda) = 0 might be a reasonable assumption
 
 Note truncation, E[y*] not sample mean
 
@@ -1505,13 +1507,13 @@ ggIndepVars + ggYd + plot_layout(widths = c(2, 2))
 #   group_by(Dist) %>% summarise(val = mean(val)) %>%
 #   rename(`KES/kg` = val) %>% mutate(var = "Maize price")
 # dfPlot$var <- gsub(" \\(KES/kg\\)", "", dfPlot$var)
-# ggMaizePrice <- ggplot(dfPlot, aes(x = `KES/kg`, y = Dist)) +
-#   geom_bar(stat = "identity", color = "black", fill = "white") + 
-#     facet_wrap(~var, scales = "free_y") + theme_bw() +
-#   theme(axis.title.y = element_blank(),
-#         axis.text = element_text(size = axisTextSize),
-#         strip.background = element_blank(),
-#         strip.text = element_text(size = facetTitleSize))
+ggMaizePrice <- ggplot(dfPlot, aes(x = `KES/kg`, y = Dist)) +
+  geom_bar(stat = "identity", color = "black", fill = "white") +
+    facet_wrap(~var, scales = "free_y") + theme_bw() +
+  theme(axis.title.y = element_blank(),
+        axis.text = element_text(size = axisTextSize),
+        strip.background = element_blank(),
+        strip.text = element_text(size = facetTitleSize))
 #ggInputPrices + ggMaizePrice + plot_layout(widths = c(2, 1))
 #======================================================================
 #======================================================================
@@ -1570,7 +1572,7 @@ P0vec <- c()
 EPT0hist <- c()
 anomVec <- c()
 for(i in 1:(nYr - 1)){
-  thisDate <- as.Date(paste0(as.character(yrVec[i]), "-02-01"))
+  thisDate <- as.Date(paste0(as.character(yrVec[i]), "-03-01"))
   indMY <- grep(thisDate, df$Date)
   indMY <- indMY:(indMY + th)
   this_m <- mean(df$`Log change`[indMY], na.rm = T)
@@ -1578,7 +1580,7 @@ for(i in 1:(nYr - 1)){
   mVec[i] <- this_m
   sVec[i] <- this_s
   #---
-  thisDate <- as.Date(paste0(as.character(yrVec[i]), "-02-01"))
+  thisDate <- as.Date(paste0(as.character(yrVec[i]), "-03-01"))
   indGrow <- grep(thisDate, df$Date)
   indGrow <- indGrow:(indGrow + th)
   P0 <- df$Price[indGrow[1]]
@@ -1601,30 +1603,19 @@ for(i in 1:(nYr - 1)){
   
 }
 
-# hist(anomVec)
+# hist(anomVec, 15)
 # hist(mVec)
 #---
 P02007 <- P0vec[2]
 mP2006 <- mVec[1]
 sP2006 <- sVec[1]
 #EPT02007 <- floor(P02007 * exp(mP2006 * th))
-EPT02007 <- P02007 * exp(mP2006 * th)
+EPT02007ElDoret <- P02007 * exp(mP2006 * th)
 #---
 P02009 <- P0vec[4]
 mP2008 <- mVec[3]
 sP2008 <- sVec[3]
 EPT02009 <- P02009 * exp(mP2008 * th)
-#mEcSharpT0 <- log(P02007) + (mP2006 - sP2006^2 / 2) * th + log(h)
-#sP2006 * sqrt(th)
-#---
-# # dfEPT0 <- data.frame(Year = yrVec[-c(1, nYr)], EPT0 = EPT0hist[-1], mP = mVec[-c((nYr - 1), nYr)], sP = sVec[-c((nYr - 1), nYr)], Anomaly = anomVec[-1])
-# EyStar1 <- const * kRn^kappaRn * (cStar / hCoef)^hCoef
-# #EyStar0 <- exp(mod2$fitted.values - kappaRn * lkRn + sErr^2 / 2)
-# EyStar0 <- exp(mod3$fitted.values + sd(mod3$residuals)^2 / 2)
-# #EyStar1 - EyStar0
-# EcSharp <- exp(dfMod3$`Cost/acre`) / EyStar0
-# lam <- EPT02007 / EcSharp * h
-exp(mEcSharpT0 + sP2006^2 / 2 *th)
 #=============================================================================
 # Define root function to solve for population EcSharpT0
 rootFnUp <- function(xIn, xUp, sXtrunc, mXtrunc){
@@ -1641,6 +1632,7 @@ EyStarT0trunc <- exp(mod3$fitted.values)#kRn^-kappaRn * exp(mod3$fitted.values)
 EcStarT0trunc <- exp(dfMod3$`Cost/acre (KES/acre)`)
 EcSharpT0trunc <- EcStarT0trunc / EyStarT0trunc
 lEcSharpT0trunc <- log(EcSharpT0trunc)
+EPT02007 <- mean(df_mod$`Maize price (KES/kg)`) * exp(-mP2006 * th)
 lamTrunc <- EPT02007 / EcSharpT0trunc * h
 sum(lamTrunc > h) / length(lamTrunc)
 #mEcSharpT0trunc <- mean(lcSharpSameP); sEcSharpT0trunc <- sd(lcSharpSameP)
@@ -1648,7 +1640,7 @@ mEcSharpT0trunc <- mean(lEcSharpT0trunc); sEcSharpT0trunc <- sd(lEcSharpT0trunc)
 muEcSharpT0trunc <- exp(mEcSharpT0trunc + sEcSharpT0trunc^2 / 2)
 xIn <- c(sEcSharpT0trunc, mEcSharpT0trunc)
 sol <- nleqslv::nleqslv(xIn, rootFnUp, jac = NULL,
-                        xUp = 12,
+                        xUp = EPT02007,
                         sXtrunc = sEcSharpT0trunc,
                         mXtrunc = mEcSharpT0trunc)
 #sol
@@ -1668,6 +1660,51 @@ EcSharpT0nTrunc <- (exp(dfMod3$`Cost/acre (KES/acre)`) / EyStarT0trunc)^eta
 muEcSharpT0nTrunc <- mean(EcSharpT0nTrunc)
 muEcSharpT0n <- muEcSharpT0nTrunc * EmploymentRate / ProbProfit
 EyStarT0max <- muEyStarT0 * EPT02007^eta / muEcSharpT0n
+#======================================================================
+# Graph truncated yield, cost per unit output distributions
+# shapiro.test(lEcSharpT0trunc)
+# car::qqPlot(lEcSharpT0trunc)
+xVec <- seq(0.001, 40, length.out = length(EcSharpT0trunc))
+fVec <- dlnorm(xVec, mEcSharpT0, sEcSharpT0)
+dfPlot <- data.frame(xVec, fVec)
+EPT02007min <-min(df_mod$`Maize price (KES/kg)`) 
+EPT02007max <-max(df_mod$`Maize price (KES/kg)`)
+gg <- ggplot() + geom_histogram(data = data.frame(EcSharpT0trunc), aes(x = EcSharpT0trunc, y = after_stat(count / sum(count))), bins = 35, color = "black", fill = "white") + scale_y_continuous(labels = scales::percent)
+gg <- gg + geom_line(data = dfPlot, aes(x = xVec, y = fVec))
+gg <- gg + scale_x_continuous(limits = c(0, 40))
+gg <- gg + geom_vline(xintercept = EPT02007, color = "red", linetype = "dashed")
+gg <- gg + annotate("rect", fill = "red", alpha = 0.25, 
+        xmin = EPT02007min, xmax = EPT02007max,
+        ymin = -Inf, ymax = Inf)
+gg <- gg + theme_bw()
+# Now EyStarT0
+xVec <- seq(0.001, 2500, length.out = length(EyStarT0trunc))
+fVec <- dlnorm(xVec, mEyStarT0, sEyStarT0)
+dfPlot <- data.frame(xVec, fVec)
+EyStarT0maxUp <- muEyStarT0 * max(exp(thetaKvec))^(eta / h) / muThetaKnh * EPT02007max^eta / muEcSharpT0n
+EyStarT0maxLo <- muEyStarT0 * min(exp(thetaKvec))^(eta / h) / muThetaKnh * EPT02007min^eta / muEcSharpT0n
+gg <- ggplot() + geom_histogram(data = data.frame(EyStarT0trunc), aes(x = EyStarT0trunc, y = after_stat(count / sum(count))), bins = 15, color = "black", fill = "white") #+ scale_y_continuous(labels = scales::percent)
+gg <- gg + geom_line(data = dfPlot, aes(x = xVec, y = fVec))
+gg <- gg + geom_vline(xintercept = EyStarT0max, color = "red", linetype = "dashed")
+gg <- gg + annotate("rect", fill = "red", alpha = 0.25, 
+        xmin = EyStarT0maxLo, xmax = EyStarT0maxUp,
+        ymin = -Inf, ymax = Inf)
+gg <- gg + theme_bw()
+
+
+
+
+# ggplot() + geom_line(data = dfPlot, aes(x = lEcSharpVec, y = f)) + geom_vline(xintercept = log(EPT02007), color = "red", lwd = 1) + theme_bw()
+xVec <- seq(0.0001, 40, length.out = length(EcSharp))
+f <- dlnorm(xVec, mEcSharp, sEcSharp)
+dfPlot <- data.frame(xVec, f)
+gg <- ggplot() + geom_histogram(data = data.frame(EcSharpT0), aes(x = EcSharp, y = 0.7*after_stat(count / sum(count))), bins = 45, color = "black", fill = "white") #+ scale_y_continuous(labels = scales::percent)
+gg <- gg + geom_line(data = dfPlot, aes(x = EcSharpVec, y = f)) + geom_vline(xintercept = EPT02007, color = "red", lwd = 1) + theme_bw()
+
+annotate("rect", fill = "red", alpha = 0.5, 
+        xmin = 1924, xmax = 1928 + 11/12,
+        ymin = -Inf, ymax = Inf) 
+
 #----------------------------------------------------------------------------------------
 # Agg supply
 EQsFun <- function(EPT0, muEyStarT0, mEcSharpT0, sEcSharpT0, h, muArea, Nf){
@@ -1675,7 +1712,7 @@ EQsFun <- function(EPT0, muEyStarT0, mEcSharpT0, sEcSharpT0, h, muArea, Nf){
   # PT0 <- EPT0 * exp(-mP * th)
   # z <- (eta * log(muEcSharpT0 / PT0) - (eta * mP - eta^2 * sP^2 / 2) * th) / (eta * sP * sqrt(th))
   # ProbProfitMeanFarm <- (1 - pnorm(z)) #Probability of mean farm making a profit (adjusted by eta)
-  z <- (log(EPT0) - mEcSharpT0) / (sEcSharpT0) - eta * sEcSharpT0
+  z <- (log(EPT0) - mEcSharpT0) / sEcSharpT0 - eta * sEcSharpT0
   ProbProfitMeanFarm <- pnorm(z)
   EQsT0 <- muArea * Nf * muEyStarT0 * ProbProfitMeanFarm #Expected agg supply in kg
   #------------Expected agg supply in million MT
@@ -1686,10 +1723,15 @@ EQsFun <- function(EPT0, muEyStarT0, mEcSharpT0, sEcSharpT0, h, muArea, Nf){
   #------------sP (price risk) elasticity of expected agg supply
   # (But of limited significance since really want to know it at equilibrium
   # PT0 and EcSharpT0, which change with sP)
-  etaSpEQsT0 <- -dnorm(-z) / pnorm(-z) * (eta * sqrt(th) - z / sP)
+  #etaSpEQsT0 <- -dnorm(-z) / pnorm(-z) * (eta * sqrt(th) - z / sP)
   #eta <- -dnorm(-z) / pnorm(-z) * (eta * sP * sqrt(th) - z)
   #------------
-  dfOut <- data.frame(EPT0, EQsT0, ProbProfitMeanFarm, etaP0EQsT0, etaSpEQsT0)
+  EmploymentRate <- pnorm((log(EPT0) - mEcSharpT0) / sEcSharpT0)
+  #------------
+  dfOut <- data.frame(EPT0, EQsT0, ProbProfitMeanFarm, etaP0EQsT0, EmploymentRate)# etaP0EQsT0, etaSpEQsT0)
+  colnames(dfOut) <- c("Expected price (KES/kg)", "Expected supply\n(million MT)",
+                       "Mean probability\nof profit", "Price elasticity\nof supply",
+                       "Employment rate")
   return(dfOut)
 }
 
@@ -1698,14 +1740,28 @@ muArea <- mean(exp(dfMod3$`Farm size (acres)`))
 Nf <- 2*10^6
 dfEQsT0 <- EQsFun(EPT0vec, muEyStarT0, mEcSharpT0, sEcSharpT0, h, muArea, Nf)
 
-gg <- ggplot(dfEQsT0, aes(x = EPT0, y = EQsT0))
+gg <- ggplot(dfEQsT0, aes(x = `Expected price (KES/kg)`, y = `Expected supply\n(million MT)`))
+gg <- gg + geom_line() + theme_bw()
+ggEQsT0 <- gg
+gg <- ggplot(dfEQsT0, aes(x = `Expected price (KES/kg)`, y = `Price elasticity\nof supply`))
+gg <- gg + geom_line() + theme_bw()
+ggEtaEPT0EQsT0a <- gg
+gg <- ggplot(dfEQsT0, aes(x = `Expected price (KES/kg)`, y = `Mean probability\nof profit`))
+ggProbProfit <- gg + geom_line() + theme_bw()
+gg <- ggplot(dfEQsT0, aes(x = `Expected price (KES/kg)`, y = `Employment rate`))
+ggEmployment <- gg + geom_line() + theme_bw()
+df_inset <- subset(dfEQsT0, `Expected price (KES/kg)` > (EPT02007 - 3) & `Expected price (KES/kg)` < EPT02007 + 3)
+gg <- ggplot(df_inset, aes(x = `Expected price (KES/kg)`, y = `Price elasticity\nof supply`))
 gg <- gg + geom_line()
+#gg <- gg + geom_hline(yintercept = 1, linetype = "dashed", color = "red")
+gg <- gg + geom_vline(xintercept = EPT02007)
+gg <- gg + theme_bw()
+gg <- gg + theme(axis.title = element_blank())
+ggEtaEPT0EQsT0b <- gg
+ggEtaEPT0EQsT0 <- ggEtaEPT0EQsT0a + annotation_custom(ggplotGrob(ggEtaEPT0EQsT0b),
+                                          xmin = 6, xmax = 20, 
+                                          ymin = 5, ymax = 11)
 
-gg <- ggplot(dfEQsT0, aes(x = EPT0, y = etaP0EQsT0))
-gg <- gg + geom_line()
-
-gg <- ggplot(dfEQsT0, aes(x = EPT0, y = ProbProfitMeanFarm))
-gg <- gg + geom_line()
 
 #----------------------------------------------------------------------------------------
 # # Define constant in terms of convenient known reference value y0, in this case sample mean yield.
@@ -1865,18 +1921,6 @@ gg <- gg + geom_line()
 # mod4b <- lm(`Yield (kg/acre)`~., dfMod4b[, -1])
 # summ(mod4b)
 #======================================================================
-#======================================================================
-lEcSharpT0vec <- seq(-4, 7, length.out = length(lEcSharpT0))
-f <- dnorm(lEcSharpT0vec, mEcSharpT0, sEcSharpT0)
-dfPlot <- data.frame(f, lEcSharpT0vec)
-gg <- ggplot() + geom_histogram(data = data.frame(lEcSharpT0), aes(x = lEcSharpT0, y = 0.7*after_stat(count / sum(count))), bins = 13, color = "black", fill = "white") #+ scale_y_continuous(labels = scales::percent)
-gg <- gg + geom_line(data = dfPlot, aes(x = lEcSharpT0vec, y = f)) + geom_vline(xintercept = log(EPT02007), color = "red", lwd = 1) + theme_bw()
-# ggplot() + geom_line(data = dfPlot, aes(x = lEcSharpVec, y = f)) + geom_vline(xintercept = log(EPT02007), color = "red", lwd = 1) + theme_bw()
-EcSharpVec <- seq(0.0001, 40, length.out = length(EcSharp))
-f <- dlnorm(EcSharpVec, mEcSharp, sEcSharp)
-dfPlot <- data.frame(f, EcSharpVec)
-gg <- ggplot() + geom_histogram(data = data.frame(EcSharp), aes(x = EcSharp, y = 0.7*after_stat(count / sum(count))), bins = 45, color = "black", fill = "white") #+ scale_y_continuous(labels = scales::percent)
-gg <- gg + geom_line(data = dfPlot, aes(x = EcSharpVec, y = f)) + geom_vline(xintercept = EPT02007, color = "red", lwd = 1) + theme_bw()
 
 ```
 
