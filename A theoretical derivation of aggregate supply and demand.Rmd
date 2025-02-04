@@ -584,7 +584,50 @@ Substituing the right hand side of this equation for the integral in the previou
 Q = N E[k_a] E[y^*] \Phi\left( \frac{\ln(P) - m_{\#}}{s_{\#}} - \eta s_{\#} \right)
 \end{equation}
 
-Because of Axiom 4, the distribution of $C^{\#}$ is right truncated at $P$. Because $y^*$ is a function of $C^{\#}$, then $y^*$ is also truncated for given $k$. The population mean $E[y]$ is thus never observed except in the limit as $P$ becomes very large. The observed mean is the conditional mean $E[y^*|C^{\#} < P]$. The unconditional mean does not change with price but with technology or lambda. The conidtional mean changes with price, in addition to technology and lambda. So, given the relation between conditional and unconditional mean of a lognormally distributed variable, 
+Because of Axiom 4, the distribution of $C^{\#}$ is right truncated at $P$. Because $y^*$ is a function of $C^{\#}$, then $y^*$ is also truncated for given $k$. The population mean $E[y]$ is thus never observed except in the limit as $P$ becomes very large. The observed mean is the conditional mean $E[y^*|C^{\#} < P]$. For any random variable $\ell$ with probability density $f(\ell)$ and cumulative distribution function $F(\ell)$, the conditional mean of $\ell$ right truncated at $\gamma$ is
+
+\begin{equation}
+E[\ell|\ell < \gamma] = \frac{\int_{0}^{\gamma} f(\ell) d \ell}{F(\gamma)}
+\end{equation}
+
+If $\ell$ is lognormally distributed, then this reduces to
+
+\begin{equation}
+E[\ell|\ell < \gamma] = E[\ell] \frac{\Phi \left(\frac{\ln(\gamma) - m_{\ell}}{s_{\ell}} - s_{\ell}\right)}{F(\frac{\ln(\gamma) - m_{\ell}}{s_{\ell}} \right))} \:\:;\:\:\: m_{\ell} = E[\ln(\ell)] \:\: s^2_{\ell} = Var[\ln(\ell)]
+\end{equation}
+
+Moreover, given conditional parameters $\tilde{m}_{\ell}$ and $\tilde{s}_{\ell}$ estimated from the observed truncated distribution, the unconditional parameters can be deduced by solving the following system of equations.
+
+\begin{equation}
+\begin{split}
+m_{\ell} &= \tilde{m}_{\ell} - \tilde{s}_{\ell} \frac{\phi(z)}{\Phi(z)} \\
+s_{\ell}^2 &= \tilde{s}_{\ell}^2 \left( 1 - z \frac{\phi(z)}{\Phi(z)} - \left( \frac{\phi(z)}{\Phi(z)} \right)^2   \right) \:\:;\:\:\: \frac{\ln(\gamma) - m_{\ell}}{s_{\ell}} \:\:\:;\:\: z = \frac{\ln(\gamma) - m_{\ell}}{s_{\ell}}
+\end{split}
+\end{equation}
+
+
+
+
+Substituting $C^{\# \eta}$ for $\ell$ and $P$ for $\gamma$,
+
+\begin{equation}
+E[C^{\# \eta} | C^{\#} < P] = E[C^{\# \eta}] \frac{\Phi \left(\frac{\ln(P) - m_{\#}}{s_{\#}} - \eta s_{\#}\right)}{F(\frac{\ln(P) - m_{\#}}{s_{\#}} \right))}
+\end{equation}
+<!-- \:\:;\:\:\: m_{\#} = E[\ln(C^{\#})] \:\: s^2_{\#} = Var[\ln(C^{\#})] -->
+
+The conditional mean of $y^*$ truncated at $C^{\#} < P$ can thus be parsed as follows.
+
+\begin{equation}
+\begin{split}
+E[y^*|C^{\#} < P] = E[y^*] = E \left[ E[y^*] \frac{k^{\eta + 1}}{E[k^{\eta + 1}]}\right] \frac{E[C^{\# \eta} | C^{\#} < P]}{E[C^{\# \eta}]} \\
+&= \frac{E[y^*]} \frac{\Phi \left( \frac{\ln(P) - m_{\#}}{s_{\#}} - \eta s_{\#} \right)}{\Phi\left( \frac{\ln(P) - m_{\#}}{s_{\#}} \right)}
+\end{split}
+\end{equation}
+
+
+
+
+The unconditional mean does not change with price but with technology or lambda. The conidtional mean changes with price, in addition to technology and lambda. So, given the relation between conditional and unconditional mean of a lognormally distributed variable, 
 
 ...
 
@@ -597,6 +640,8 @@ Different ways to estimate the unkowns depending upon data available.
 
 Finally, necessary to account for the stochastic character of price...
 This might be a suitable aggregate supply function in sectors characterized by highly deterministic production processes, negligible delays between input decisions and output, and negligible output price volatility. However, it is not suited to the primary sector, where production is partly deterministic, partly a function of stochastic meteorological variables; where there is a significant delay between input decisions and output (i.e., the cropping season); and where output price volatility looms large in any management decision. In order to accommodate these features, a suitable assumption regarding the stochastic character of output price (axiom 5) is introduced in the next section; and the aggregate supply model derived above is modified accordingly. In addition to accommodating the stochastic character of farm production, the modified model resolves the term $\Phi(\gamma)$ into a surprisingly instructive and intuitive form.
+
+choose the approach based on higher resolution data
 
 mean log(lambda) = 0 might be a reasonable assumption
 
