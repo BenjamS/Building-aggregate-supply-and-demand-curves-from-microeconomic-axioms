@@ -582,6 +582,7 @@ Substituing the right hand side of this equation for the integral in the previou
 
 \begin{equation}
 Q = N E[k_a] E[y^*] \Phi\left( \frac{\ln(P) - m_{\#}}{s_{\#}} - \eta s_{\#} \right)
+\label{eq:aggSupply1}
 \end{equation}
 
 In the evaluation of $Q$, it is important to keep in mind that $E[y^*]$, $m_{\#}$, and $s_{\#}$ are unconditional population parameters. That is to say, $E[y^*]$ refers to the mean yield given the participation of all farms in the population; and $m_{\#}$ and $s_{\#}$ refer to the mean and standard deviation of $\ln(C^{\#})$ given full participation, i.e. as $C^{\#}$ goes to infinity. But axiom 4 truncates the upper tail of the distribution of $C^{\#}$ at $P$. The observed parameters $\tilde{m}_{\#}$ and $\tilde{s}_{\#}$ are thus conditional.
@@ -612,7 +613,7 @@ The unconditional mean yield $E[y^*]$ can then be deduced considering that
 E[C^{\# \eta} | C^{\#} < P] = E[C^{\# \eta}] \frac{\Phi \left(\frac{\ln(P) - m_{\#}}{s_{\#}} - \eta s_{\#}\right)}{F(\frac{\ln(P) - m_{\#}}{s_{\#}} \right))}
 \end{equation}
 
-Such that conditional mean of $y^*$ truncated at $C^{\#} < P$ can be parsed as follows.
+Such that the conditional mean of $y^*$ truncated at $C^{\#} < P$ can be parsed as follows.
 
 \begin{equation}
 \begin{split}
@@ -622,7 +623,14 @@ E[y^*|C^{\#} < P] = E[y^*] = E \left[ E[y^*] \frac{k^{\eta + 1}}{E[k^{\eta + 1}]
 \end{equation}
 <!-- &\rightarrow E[y^*] = E[y^*|C^{\#} < P] = E[y^*] \frac{\Phi\left( \frac{\ln(P) - m_{\#}}{s_{\#}} \right)}{\Phi \left( \frac{\ln(P) - m_{\#}}{s_{\#}} - \eta s_{\#} \right)} -->
 
-Whence $E[y^*]$ follows as a function of observed or derived parameters $E[y^*|C^{\#} < P]$, $m_{\#}$, and $s_{\#}$.
+Whence $E[y^*]$ follows as a function of the observed or derived parameters $E[y^*|C^{\#} < P]$, $m_{\#}$, and $s_{\#}$. Note that it also follows from this expression that aggregate supply can be written
+
+\begin{equation}
+Q = N E[k_a] E[y^*|C^{\#} < P] \Phi\left( \frac{\ln(P) - m_{\#}}{s_{\#}} \right)
+\end{equation}
+
+Which may be useful for point estimates of aggregate supply along the curve since $E[y^*|C^{\#} < P]$ can be estimated from the observed yield distribution. This form is also instructive because the $\Phi()$ term has a straightforward interpretation as the fraction of the population participating in production, i.e. the farm employment rate. However, it is inconvenient for purposes of drawing the entire aggregate supply curve, as the observed $E[y^*|C^{\#} < P]$ is valid only for the $P$ at which it is measured. The unconditional mean yield $E[y^*]$, on the other hand, is constant for all $P$. For this reason, Equation \ref{eq:aggSupply1} is preferred. Moreover, the $\Phi()$ term in Equation \ref{eq:aggSupply1} turns out to have a meaningful economic interpretation once the stochastic character of price is taken into account, as shown below.
+
 <!-- \begin{equation} -->
 <!-- E[\ell|\ell < \gamma] = \frac{\int_{0}^{\gamma} f(\ell) d \ell}{F(\gamma)} -->
 <!-- \end{equation} -->
