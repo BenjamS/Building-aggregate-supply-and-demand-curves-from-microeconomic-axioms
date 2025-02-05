@@ -578,44 +578,41 @@ If $y^*$ is lognormally distributed (axiom 3), then $C^{\#}$ is also lognormally
 
 Where $\Phi()$ is the standard normal cumulative distribution function, $m_{\#} = E[\ln(C^{\#})]$, and $s^2_{\#} = Var[\ln(C^{\#})]$. (See Appendix A2 for a proof of this step.)
 
-Substituing the right hand side of this equation for the integral in the previous equation results in the following closed form expression for aggregate supply.
+Substituing the right hand side of this equation for the integral in the previous equation results in the following expression for aggregate supply.
 
 \begin{equation}
 Q = N E[k_a] E[y^*] \Phi\left( \frac{\ln(P) - m_{\#}}{s_{\#}} - \eta s_{\#} \right)
 \end{equation}
 
-Because of Axiom 4, the distribution of $C^{\#}$ is right truncated at $P$. Because $y^*$ is a function of $C^{\#}$, then $y^*$ is also truncated for given $k$. The population mean $E[y]$ is thus never observed except in the limit as $P$ becomes very large. The observed mean is the conditional mean $E[y^*|C^{\#} < P]$. For any random variable $\ell$ with probability density $f(\ell)$ and cumulative distribution function $F(\ell)$, the conditional mean of $\ell$ right truncated at $\gamma$ is
-
-\begin{equation}
-E[\ell|\ell < \gamma] = \frac{\int_{0}^{\gamma} f(\ell) d \ell}{F(\gamma)}
-\end{equation}
-
-If $\ell$ is lognormally distributed, then this reduces to
-
-\begin{equation}
-E[\ell|\ell < \gamma] = E[\ell] \frac{\Phi \left(\frac{\ln(\gamma) - m_{\ell}}{s_{\ell}} - s_{\ell}\right)}{F(\frac{\ln(\gamma) - m_{\ell}}{s_{\ell}} \right))} \:\:;\:\:\: m_{\ell} = E[\ln(\ell)] \:\: s^2_{\ell} = Var[\ln(\ell)]
-\end{equation}
-
-Moreover, given conditional parameters $\tilde{m}_{\ell}$ and $\tilde{s}_{\ell}$ estimated from the observed truncated distribution, the unconditional parameters can be deduced by solving the following system of equations.
+In the evaluation of $Q$, it is important to keep in mind that $E[y^*]$, $m_{\#}$, and $s_{\#}$ are unconditional population parameters. That is to say, $E[y^*]$ refers to the mean yield given the participation of all farms in the population; and $m_{\#}$ and $s_{\#}$ refer to the mean and standard deviation of $\ln(C^{\#})$ given full participation, i.e. as $C^{\#}$ goes to infinity. But axiom 4 truncates the upper tail of the distribution of $C^{\#}$ at $P$. The observed parameters $\tilde{m}_{\#}$ and $\tilde{s}_{\#}$ are thus conditional.
 
 \begin{equation}
 \begin{split}
-m_{\ell} &= \tilde{m}_{\ell} - \tilde{s}_{\ell} \frac{\phi(z)}{\Phi(z)} \\
-s_{\ell}^2 &= \tilde{s}_{\ell}^2 \left( 1 - z \frac{\phi(z)}{\Phi(z)} - \left( \frac{\phi(z)}{\Phi(z)} \right)^2   \right) \:\:;\:\:\: \frac{\ln(\gamma) - m_{\ell}}{s_{\ell}} \:\:\:;\:\: z = \frac{\ln(\gamma) - m_{\ell}}{s_{\ell}}
+\tilde{m}_{\#} = E[\ln(C^{\#}) | C^{\#} \leq P]
+\tilde{s}^2_{\#} = Var[\ln(C^{\#}) | C^{\#} \leq P]
 \end{split}
 \end{equation}
 
+Because $y^*$ is a function of $C^{\#}$, then (for given $k$) $y^*$ is also truncated; and so the observed mean yield is the conditional mean $E[y^*|C^{\#} < P]$.
+<!-- The unconditional  $E[y]$ is thus never observed except in the limit as $P$ becomes very large.-->
 
+The unconditional parameters $m_{\#}$ and $s_{\#}$ can be deduced from the conditional parameters $\tilde{m}_{\#}$ and $\tilde{s}_{\#}$ by numerically solving the following system of equations.
 
+\begin{equation}
+\begin{split}
+m_{\#} &= \tilde{m}_{\#} - \tilde{s}_{\#} \frac{\phi(z)}{\Phi(z)} \\
+s_{\#}^2 &= \tilde{s}_{\#}^2 \left( 1 - z \frac{\phi(z)}{\Phi(z)} - \left( \frac{\phi(z)}{\Phi(z)} \right)^2   \right) \:\:;\:\:\: \frac{\ln(\gamma) - m_{\#}}{s_{\#}} \:\:\:;\:\: z = \frac{\ln(\gamma) - m_{\#}}{s_{\#}}
+\end{split}
+\label{eq:cSharpUncondParams}
+\end{equation}
 
-Substituting $C^{\# \eta}$ for $\ell$ and $P$ for $\gamma$,
+The unconditional mean yield $E[y^*]$ can then be deduced considering that
 
 \begin{equation}
 E[C^{\# \eta} | C^{\#} < P] = E[C^{\# \eta}] \frac{\Phi \left(\frac{\ln(P) - m_{\#}}{s_{\#}} - \eta s_{\#}\right)}{F(\frac{\ln(P) - m_{\#}}{s_{\#}} \right))}
 \end{equation}
-<!-- \:\:;\:\:\: m_{\#} = E[\ln(C^{\#})] \:\: s^2_{\#} = Var[\ln(C^{\#})] -->
 
-The conditional mean of $y^*$ truncated at $C^{\#} < P$ can thus be parsed as follows.
+Such that conditional mean of $y^*$ truncated at $C^{\#} < P$ can be parsed as follows.
 
 \begin{equation}
 \begin{split}
@@ -623,10 +620,21 @@ E[y^*|C^{\#} < P] = E[y^*] = E \left[ E[y^*] \frac{k^{\eta + 1}}{E[k^{\eta + 1}]
 &= \frac{E[y^*]} \frac{\Phi \left( \frac{\ln(P) - m_{\#}}{s_{\#}} - \eta s_{\#} \right)}{\Phi\left( \frac{\ln(P) - m_{\#}}{s_{\#}} \right)}
 \end{split}
 \end{equation}
+<!-- &\rightarrow E[y^*] = E[y^*|C^{\#} < P] = E[y^*] \frac{\Phi\left( \frac{\ln(P) - m_{\#}}{s_{\#}} \right)}{\Phi \left( \frac{\ln(P) - m_{\#}}{s_{\#}} - \eta s_{\#} \right)} -->
 
-
-
-
+Whence $E[y^*]$ follows as a function of observed or derived parameters $E[y^*|C^{\#} < P]$, $m_{\#}$, and $s_{\#}$.
+<!-- \begin{equation} -->
+<!-- E[\ell|\ell < \gamma] = \frac{\int_{0}^{\gamma} f(\ell) d \ell}{F(\gamma)} -->
+<!-- \end{equation} -->
+<!-- If $\ell$ is lognormally distributed, then this reduces to -->
+<!-- \begin{equation} -->
+<!-- E[\ell|\ell < \gamma] = E[\ell] \frac{\Phi \left(\frac{\ln(\gamma) - m_{\ell}}{s_{\ell}} - s_{\ell}\right)}{F(\frac{\ln(\gamma) - m_{\ell}}{s_{\ell}} \right))} \:\:;\:\:\: m_{\ell} = E[\ln(\ell)] \:\: s^2_{\ell} = Var[\ln(\ell)] -->
+<!-- \label{eq:condMean} -->
+<!-- \end{equation} -->
+<!-- The unconditional mean yield can then be deduced from the known information $E[y^*|C^{\#} < P]$, $m_{\#}$, and $s_{\#}$ by considering that for any random variable $\ell$ with probability density $f(\ell)$ and cumulative distribution function $F(\ell)$, the conditional mean of $\ell$ with upper tail truncated at $\gamma$ is -->
+<!-- Moreover, given conditional parameters $\tilde{m}_{\ell}$ and $\tilde{s}_{\ell}$ estimated from the observed truncated distribution,  -->
+<!-- Substituting $C^{\# \eta}$ for $\ell$ and $P$ for $\gamma$ in Equation \ref{eq:condMean}, -->
+<!-- \:\:;\:\:\: m_{\#} = E[\ln(C^{\#})] \:\: s^2_{\#} = Var[\ln(C^{\#})] -->
 The unconditional mean does not change with price but with technology or lambda. The conidtional mean changes with price, in addition to technology and lambda. So, given the relation between conditional and unconditional mean of a lognormally distributed variable, 
 
 ...
@@ -639,7 +647,6 @@ Note term is employment rate. This ok for spot estimate of supply. To make an ag
 Different ways to estimate the unkowns depending upon data available. 
 
 Finally, necessary to account for the stochastic character of price...
-This might be a suitable aggregate supply function in sectors characterized by highly deterministic production processes, negligible delays between input decisions and output, and negligible output price volatility. However, it is not suited to the primary sector, where production is partly deterministic, partly a function of stochastic meteorological variables; where there is a significant delay between input decisions and output (i.e., the cropping season); and where output price volatility looms large in any management decision. In order to accommodate these features, a suitable assumption regarding the stochastic character of output price (axiom 5) is introduced in the next section; and the aggregate supply model derived above is modified accordingly. In addition to accommodating the stochastic character of farm production, the modified model resolves the term $\Phi(\gamma)$ into a surprisingly instructive and intuitive form.
 
 choose the approach based on higher resolution data
 
@@ -715,6 +722,10 @@ Main thing is result that price is a dual space where solution can be found in t
 <!-- <!-- This is an aggregate supply curve that explicitly accounts for input prices, farm size, technology, and control variables ($\hat{\theta}$), as well as for output price and farm entry/exit in response to changes in output price. Farm entry/exit is captured by the term $\Phi(\gamma)$. The supply response to changes in technology is thus endogenously modeled. --> 
 
 ## Derivation of the aggregate supply curve from the forgoing + axiom 5 
+
+This might be a suitable aggregate supply function in sectors characterized by highly deterministic production processes, negligible delays between input decisions and output, and negligible output price volatility. However, it is not suited to the primary sector, where production is partly a function of stochastic meteorological variables; where there is a significant delay between input decisions and output (i.e., the cropping season); and where output price volatility looms large in any management decision. In order to accommodate these hallmarks of agricultural supply, a suitable assumption regarding the stochastic character of output price (axiom 5) is introduced in the next section; and the aggregate supply model derived above is modified accordingly.
+<!-- In addition to accommodating the stochastic character of farm production, the modified model resolves the term $\Phi(\gamma)$ into a surprisingly instructive and intuitive form. -->
+
 
 Henceforth it is necessary to be more explicit in the treatment of output price $P$ as a stochastic variable. Absent a forward contract, the output price at the time of harvest and sale $(t = T)$ is unknown to the farmer at the time of planting $(t = 0)$. Wherever $P$ appears in the equations above, then, what is really meant is $E[P(T)]|_{t = 0}$. That is to say, what is meant is the value that the farmer expects $P$ to take at harvest/sale, as evaluated at planting time.
 <!-- Likewise, yield is partly dependent upon stochastic processes occurring between planting and harvest, especially meteorological processes, which are unknown to the farmer at the time of planting. Wherever $P$ and $y^*$ appear in the equations above, then, what is really meant is $E[P(T)]|_{t = 0}$ and $E[y^*(T)]\bigr|_{t = 0}$---that is to say, what is meant are the values that the farmer expects $P$ and $y^*$ to take at harvest/sale, as evaluated at planting time. -->
