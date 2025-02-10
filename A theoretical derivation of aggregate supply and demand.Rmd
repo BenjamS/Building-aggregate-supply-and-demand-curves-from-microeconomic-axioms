@@ -520,7 +520,7 @@ Such that the estimated coefficient on logged farm cost may be directly interpre
 <!-- Moreover, once $v_0$ is estimated,  -->
 <!-- A further advantage of this form is that the fitted coefficient on $\ln(C^*)$ may be directly interpreted as $h$, valid for all farms in the sample. Estimation of the model in Equation \ref{eq:cobbDoug3}, on the other hand, requires the extra step of summation of the input elasticities $\alpha_i$ in order to arrive at $h$. This may result in varying $h$ across the sample, as not all farms necessarily apply all the inputs specified in the model. -->
 
-## Integration of the farm production function based on axioms 3 and 4
+## Integration of the farm production function based on axioms 3 and 4 \label{sec:aggSupDeterm}
 
 The farm production function is just farm yield times area $k_a$.
 
@@ -965,29 +965,39 @@ Substituting the dual expressions for $m_{\#}$ and $s^2_{\#}$ in the $\Phi()$ te
 \begin{split}
 \Phi \left( \frac{\ln(E[P(T)]|_{t = 0}) - m_{\#}}{s_{\#}} - \eta s_{\#} \right) &= \Phi \left( \frac{\ln(P(0)) + m_p T - \ln(E[\tilde{C}^{\#}(T)^{\eta}]|_{t = 0}) + \eta \frac{s^2_p}{2} T}{s_p \sqrt{T}} - \eta s_p \sqrt{T} \right) \\
 &= \Phi \left( -\frac{\ln \left(\frac{E[\tilde{C}^{\#}(T)^{\eta}]|_{t = 0}}{P(0)} \right) - \left( m_p - \eta \frac{s^2_p}{2} \right) T}{s_p \sqrt{T}} \right) \\
-&= 1 - \Phi(z) \:\:;\:\:\: z = \frac{\ln \left(\frac{E[\tilde{C}^{\#}(T)^{\eta}]|_{t = 0}}{P(0)} \right) - \left( m_p - \eta \frac{s^2_p}{2} \right) T}{s_p \sqrt{T}} \\
-&= \text{Prob}(P^{\eta} \geq E[\tilde{C}^{\#}(T)^{\eta}]|_{t = 0})
+&= 1 - \Phi(z) \:\:;\:\:\: z = \frac{\ln \left(\frac{E[\tilde{C}^{\#}(T)^{\eta}]|_{t = 0}}{P(0)} \right) - \left( m_p - \eta \frac{s^2_p}{2} \right) T}{s_p \sqrt{T}}
 \end{split}
 \end{equation}
 
-By taking account of price stochasticity, then, the $\Phi()$ term in the aggregate supply function (Equation \ref{eq:aggSup2}) may be interpreted as the probability that the harvest output price (raised to $\eta$) will be greater than the mean farm's expected unit cost (raised to $\eta$). To see this, revisit Equations \ref{eq:lnChngP} and note that $z$ is just the standard score of logged output price evaluated at $\ln(E[\tilde{C}^{\#}(T)^{\eta}]|_{t = 0})$.
+But note that $z$ is just the standard score of logged output price evaluated at $\ln(E[\tilde{C}^{\#}(T)^{\eta}]|_{t = 0})$. (Recall Equations \ref{eq:lnChngP}.)
 
 \begin{equation}
 \begin{split}
 z &= \frac{\ln \left(\frac{E[\tilde{C}^{\#}(T)^{\eta}]|_{t = 0}}{P(0)} \right) - \left( m_p - \eta \frac{s^2_p}{2} \right) T}{s_p \sqrt{T}} \\
 &= \frac{\ln(E[\tilde{C}^{\#}(T)^{\eta}]|_{t = 0}) - \ln({P(0)) - \left( m_p - \eta \frac{s^2_p}{2} \right) T}{s_p \sqrt{T}} \\
-&= \frac{\ln(E[\tilde{C}^{\#}(T)^{\eta}]|_{t = 0}) - E[\ln(P(T))]|_{t = 0}}{s_p \sqrt{T}}
+&= \frac{\ln(E[\tilde{C}^{\#}(T)^{\eta}]|_{t = 0}) - E[\ln(P(T))]|_{t = 0}}{s_p \sqrt{T}} \\
+&\rightarrow 1 - \Phi(z) = \text{Prob}(P(T)^{\eta} \geq E[\tilde{C}^{\#}(T)^{\eta}]|_{t = 0})
 \end{split}
+\label{eq:probProfit}
 \end{equation}
 
-Because the adjustment $\eta$ is the output price elasticity of farm supply (PEFS), the probability term $1 - \Phi(z)$ is henceforth referred to as the PEFS-adjusted mean probability of profit. Substituting this for the $\Phi()$ term in Equation \ref{eq:aggSup2}, the aggregate supply function may be rewritten
+By taking account of price stochasticity, then, the $\Phi()$ term in the aggregate supply function (Equation \ref{eq:aggSup2}) may be interpreted as the probability that the harvest output price (raised to $\eta$) will be greater than the mean farm's expected unit cost (raised to $\eta$). Because the adjustment $\eta$ is the output price elasticity of farm supply (PEFS), the probability term $1 - \Phi(z)$ is henceforth referred to as the PEFS-adjusted mean probability of profit.
+
+Substituting this for the $\Phi()$ term in Equation \ref{eq:aggSup2}, the aggregate supply function may be rewritten
 
 \begin{equation}
 E[Q(T)]|_{t = 0} = N E[k_a] E[y^*(T)]|_{t = 0} (1 - \Phi(z)) \:\:;\:\:\: z = \frac{\ln \left(\frac{E[\tilde{C}^{\#}(T)^{\eta}]|_{t = 0}}{P(0)} \right) - \left( m_p - \eta \frac{s^2_p}{2} \right) T}{s_p \sqrt{T}}
 \label{eq:aggSup3}
 \end{equation}
 
-primal or dual...use the approach with higher resolution data...usually will be farm data. In practice, Equation \ref{eq:aggSup2} probably what gonna evaluate. but the dual is useful because it is a meaningful economic interpretation. lends itself to back of the envelope calculations in minimum data contexts since policy makers generally have or can reasonably formulate a rough idea of employment rate and probability of profit on the mean farm.
+Those familiar with financial analysis will notice a similarity between the PEFS-adjusted mean probability of profit and the first $\Phi()$ term in the Black-Scholes equation, which indicates the probability that a stock price will finish at or above the strike price at maturity---in other words, that a European call option will finish "in the money" [@hull9thEdition]. Farm planting and expenditure decisions are thus mathematically analogous to investment banking decisions. In particular, the farm expected unit expenditure decision is analogous to selecting a strike price, while planting with harvest date $T$ is analogous to buying a derivative on the crop output price at that strike with maturity date $T$. The only major differences between farming and investment banking then seem to be that farmers generally have a much better track record, do much more work, are paid much less, and receive no government bailout in bad years.
+<!-- Here it is tempting to introduce a sixth axiom saying that farmers will only pursue a risky bet if the probability of profit is greater than that of a coin toss (i.e., greater than $50\%$), and to thereby limit the domain of $z$ to $(-\infty, 0)$. But this is left to the discretion of the practitioner. [There are cases when rational economic agents pursue "out of the money" bets.] -->
+
+The main purpose of developing the stochastic price parameter formulation of aggregate supply above is to demonstrate that the $\Phi()$ term in aggregate supply has a meaningful economic interpretation as the PEFS-adjusted mean probability of profit. For purposes of evaluating aggregate supply, one should choose the formulation for which there exists higher resolution data. When farm data is available, evaluation via the farm population parameter formulation in Equation \ref{eq:aggSup2} is probably the best approach. In the absence of farm data, the stochastic price parameter formulation presents a second best approach if high resolution price data is available.
+<!-- either the the farm population parameter formulation (Equation \ref{eq:aggSup2}) or the stochastic price parameter formulation (Equation \ref{eq:aggSup3}) can be used. -->
+<!-- , taking care to estimate the unconditional population parameters $m_{\#}$ and $s_{\#}$ based on the observed conditional parameters as explained in section \ref{sec:aggSupDeterm}, -->
+
+Back of the envelope calculations in minimum data contexts since policy makers generally have or can reasonably formulate a rough idea of employment rate and probability of profit on the mean farm.
 
 ...an instructive form for conditional mean yield... 
 
@@ -995,7 +1005,6 @@ implies tradeoff map between employment rate and mean farm probability of profit
 
 Price elasticity of aggregate supply and other useful derivatives
 
-Those familiar with financial analysis might notice a similarity between $\Phi(z)$ and the first $\Phi()$ term (sometimes referred to as the $N_1$ term) in the Black-Scholes equation []... similar to risky bet in the money, out of the money, at the money. Here it is tempting to introduce a sixth axiom saying that farmers will only pursue a risky bet if the probability of profit is greater than that of a coin toss (i.e., greater than $50\%$), and to thereby limit the domain of $z$ to $(-\infty, 0)$. But this is left to the discretion of the practitioner. [There are cases when rational economic agents pursue "out of the money" bets.]
 
 <!-- # ```{r Fig2, fig.show = "hold", fig.width = 5, fig.height=5, fig.align="center", fig.cap="\\label{fig:gBmWeather}(Left) Daily average weather variable time series covering the 2018 maize long rains growing season in Eldoret, Kenya (NREL 2023). (Right) The corresponding daily log changes exhibit the normal distribution typical of geometric Brownian motion.", echo = FALSE} -->
 <!-- #Weather data from National Solar Radiation Database -->
