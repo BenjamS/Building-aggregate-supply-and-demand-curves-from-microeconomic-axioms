@@ -923,19 +923,21 @@ E[E[C^{\#}(T)]\bigr|_{t = 0}] = E[E[C^{\#}(T)]]\bigr|_{t = 0}
 \label{eq:fubThm}
 \end{equation}
 
-Which is a result that can also be reached by invoking Fubini's theorem. To be clear, this result states that the population mean of the optimal expected unit cost ($E[C^{\#}(T)]\bigr|_{t = 0}$) is equal to the optimal expected unit cost on the mean farm, i.e. the farm with $\lambda^{-1} = E[\lambda^{-1}]$. It therefore maps the mean of all $C^{\#}(t)$ trajectories in the farm population to the mean of possible random trajectories on a single farm (the farm where $\lambda^{-1} = E[\lambda^{-1}]$). An equivalent, perhaps clearer, way of writing the result is
+Which is a result that can also be reached by invoking Fubini's theorem. To be clear, this result states that the population mean of the optimal expected unit cost ($E[C^{\#}(T)]\bigr|_{t = 0}$) is equal to the optimal expected unit cost on the mean farm, i.e. the farm with $\lambda^{-1} = E[\lambda^{-1}]$. It therefore maps the mean of all $C^{\#}(t)$ trajectories in the farm population to the mean of possible random trajectories on a single farm (the farm where $\lambda^{-1} = E[\lambda^{-1}]$). Letting $\tilde{C}^{\#}(T)$ denote the unit cost on the mean farm (i.e. $\tilde{C}^{\#}(T) = C^{\#}(T)|_{\lambda^{-1} = E[\lambda^{-1}]}$, an equivalent, perhaps clearer, way of writing the result is
+<!-- reference justifying application of Fubini's thm here: -->
+<!-- https://stats.stackexchange.com/questions/412936/when-can-integration-and-expectation-be-exchanged -->
 <!-- [GRAPHIC showing equality of pop mean of expected future cSharp to expected cSharp on the mean farm (?)] -->
 
 \begin{equation}
-E[E[C^{\#}(T)]\bigr|_{t = 0}] = E[C^{\#}(T; E[\lambda^{-1}])]\bigr|_{t = 0}
+E[E[C^{\#}(T)]\bigr|_{t = 0}] = E[\tilde{C}^{\#}(T)]\bigr|_{t = 0}
 \label{eq:fubThm2}
 \end{equation}
 
 Where the righthand side has been rewritten to more clearly indicate future expectation on the single farm where $\lambda^{-1} = E[\lambda^{-1}]$.
 
-When switching from population mean to stochastic mean, the variance likewise switches from a population variance to a stochastic variance. Most importantly for what follows, this means replacing $Var[\ln(E[C^{\#}(T)]|_{t = 0})]$ (i.e. $s^2_{\#}$) with $Var[\ln(C^{\#}(T; E[\lambda^{-1}]))]|_{t = 0}$. 
+When switching from population mean to stochastic mean, the variance likewise switches from a population variance to a stochastic variance. Most importantly for what follows, this means replacing $Var[\ln(E[C^{\#}(T)]|_{t = 0})]$ (i.e. $s^2_{\#}$) with $Var[\ln(\tilde{C}^{\#}(T))]|_{t = 0}$. 
 
-To parse $Var[\ln(C^{\#}(T; E[\lambda^{-1}]))]|_{t = 0}$, note first that the optimal expected unit cost $E[C^{\#}(T)]\bigr|_{t = 0}$ is an abstract optimal target that farmers aim for, but that evolves before and after the actual farm expenditure that is "locked in" at planting based on the price information $P(0)$ available at that time. As an abstract target, then, optimal unit cost may be expressed
+To parse $Var[\ln(\tilde{C}^{\#}(T))]|_{t = 0}$, note first that the optimal expected unit cost $E[C^{\#}(T)]\bigr|_{t = 0}$ is an abstract optimal target that farmers aim for, but that evolves before and after the actual farm expenditure that is "locked in" at planting based on the price information $P(0)$ available at that time. As an abstract target, then, optimal unit cost may be expressed
 
 \begin{equation}
 C^{\#}(t) = P(t) \frac{h}{\lambda}
@@ -949,164 +951,52 @@ Because its evolution is proportional to output price, then, by Ito's Lemma, $C^
 \label{eq:sPTresult}
 \end{equation}
 
-And this is true for any value of $\lambda^{-1}$, including $\lambda^{-1} = E[\lambda^{-1}]$
-Now, by definition, $m_{\#} = \ln(E[C^{\#}(T)]|_{t = 0}) - s^2_{\#} / 2$. Given the results in Equations \ref{eq:fubThm2} and \ref{eq:sPTresult}, this has the following dual expression in stochastic space.
+And this is true for any value of $\lambda^{-1}$, including $\lambda^{-1} = E[\lambda^{-1}]$. Thus, when moving from farm population space to stochastic price space, $s^2_{\#}$ becomes $s^2_p T$.
+
+As for $m_{\#}$, recall that the $m_{\#}$ in the $\Phi()$ term in Equation \ref{eq:aggSup2} comes from the definition $E[C^{\# \eta}] = e^{\eta m_{\#} + \eta^2 s^2_{\#} / 2}$ such that $m_{\#} = \ln(E[C^{\# \eta}]) - \eta s^2_{\#} / 2$. The results in Equations \ref{eq:fubThm2} and \ref{eq:sPTresult} mean that $m_{\#}$ also has the following dual expression in stochastic price space.
 
 \begin{equation}
-m_{\#} = \ln(E[C^{\#}(T; E[\lambda^{-1}])]|_{t = 0}) - \frac{s^2_p}{2} T
+m_{\#} = \ln(E[\tilde{C}^{\#}(T)^{\eta}]|_{t = 0}) - \eta \frac{s^2_p}{2} T
 \end{equation}
 
-Substituting the righthand side of this in for $m_{\#}$ in Equation \ref{eq:aggSup2} gives
+Substituting the dual expressions for $m_{\#}$ and $s^2_{\#}$ in the $\Phi()$ term of Equation \ref{eq:aggSup2}, and substituting $P(0)e^{m_p T}$ for $E[P(T)]|_{t = 0}$ (via Equation \ref{eq:EPT0}), resolves the $\Phi()$ term into an economically meaningful expression.
 
 \begin{equation}
 \begin{split}
-E[Q(T)]|_{t = 0} &= N E[k_a] E[y^*(T)]|_{t = 0} \Phi \left( \frac{\ln(E[P(T)]|_{t = 0}) - \ln(E[C^{\#}(T; E[\lambda^{-1}])]|_{t = 0}) + \frac{s^2_p}{2} T}{s_p \sqrt{T}} - \eta s_p \sqrt{T} \right) \\
-&= N E[k_a] E[y^*(T)]|_{t = 0} \Phi \left( \frac{ \eta \ln \left(\frac{E[P(T)]|_{t = 0}}{E[C^{\#}(T; E[\lambda^{-1}])]|_{t = 0}} \right) - \eta \frac{s^2_p}{2} T}{\eta s_p \sqrt{T}} \right) \\
+\Phi \left( \frac{\ln(E[P(T)]|_{t = 0}) - m_{\#}}{s_{\#}} - \eta s_{\#} \right) &= \Phi \left( \frac{\ln(P(0)) + m_p T - \ln(E[\tilde{C}^{\#}(T)^{\eta}]|_{t = 0}) + \eta \frac{s^2_p}{2} T}{s_p \sqrt{T}} - \eta s_p \sqrt{T} \right) \\
+&= \Phi \left( -\frac{\ln \left(\frac{E[\tilde{C}^{\#}(T)^{\eta}]|_{t = 0}}{P(0)} \right) - \left( m_p - \eta \frac{s^2_p}{2} \right) T}{s_p \sqrt{T}} \right) \\
+&= 1 - \Phi(z) \:\:;\:\:\: z = \frac{\ln \left(\frac{E[\tilde{C}^{\#}(T)^{\eta}]|_{t = 0}}{P(0)} \right) - \left( m_p - \eta \frac{s^2_p}{2} \right) T}{s_p \sqrt{T}} \\
+&= \text{Prob}(P^{\eta} \geq E[\tilde{C}^{\#}(T)^{\eta}]|_{t = 0})
 \end{split}
 \end{equation}
 
-By Equation \ref{eq:EPT0}, $P(0)e^{m_p T}$ may be substituted for $E[P(T)]|_{t = 0}$, resulting in a highly instructive form for expected aggregate supply.
+By taking account of price stochasticity, then, the $\Phi()$ term in the aggregate supply function (Equation \ref{eq:aggSup2}) may be interpreted as the probability that the harvest output price (raised to $\eta$) will be greater than the mean farm's expected unit cost (raised to $\eta$). To see this, revisit Equations \ref{eq:lnChngP} and note that $z$ is just the standard score of logged output price evaluated at $\ln(E[\tilde{C}^{\#}(T)^{\eta}]|_{t = 0})$.
 
 \begin{equation}
 \begin{split}
-E[Q(T)]|_{t = 0} &= N E[k_a] E[y^*(T)]|_{t = 0} \Phi \left( \frac{ \ln \left(\frac{P(0)}{E[C^{\#}(T; E[\lambda^{-1}])]|_{t = 0}} \right) + m_p T - \frac{s^2_p}{2} T}{s_p \sqrt{T}} \right) \\
-&= N E[k_a] E[y^*(T)]|_{t = 0} \Phi \left( - \frac{ \ln \left(\frac{E[C^{\#}(T; E[\lambda^{-1}])]|_{t = 0}}{P(0)} \right) - \left(m_p - \frac{s^2_p}{2} \right) T}{s_p \sqrt{T}} \right) \\
-&= N E[k_a] E[y^*(T)]|_{t = 0} \text{Prob}(P(T) > E[C^{\#}(T)]|_{t = 0})
+z &= \frac{\ln \left(\frac{E[\tilde{C}^{\#}(T)^{\eta}]|_{t = 0}}{P(0)} \right) - \left( m_p - \eta \frac{s^2_p}{2} \right) T}{s_p \sqrt{T}} \\
+&= \frac{\ln(E[\tilde{C}^{\#}(T)^{\eta}]|_{t = 0}) - \ln({P(0)) - \left( m_p - \eta \frac{s^2_p}{2} \right) T}{s_p \sqrt{T}} \\
+&= \frac{\ln(E[\tilde{C}^{\#}(T)^{\eta}]|_{t = 0}) - E[\ln(P(T))]|_{t = 0}}{s_p \sqrt{T}}
 \end{split}
+\end{equation}
+
+Because the adjustment $\eta$ is the output price elasticity of farm supply (PEFS), the probability term $1 - \Phi(z)$ is henceforth referred to as the PEFS-adjusted mean probability of profit. Substituting this for the $\Phi()$ term in Equation \ref{eq:aggSup2}, the aggregate supply function may be rewritten
+
+\begin{equation}
+E[Q(T)]|_{t = 0} = N E[k_a] E[y^*(T)]|_{t = 0} (1 - \Phi(z)) \:\:;\:\:\: z = \frac{\ln \left(\frac{E[\tilde{C}^{\#}(T)^{\eta}]|_{t = 0}}{P(0)} \right) - \left( m_p - \eta \frac{s^2_p}{2} \right) T}{s_p \sqrt{T}}
 \label{eq:aggSup3}
 \end{equation}
 
-(To see how the last line follows from the previous line, revisit Equations \ref{eq:lnChngP}.) 
-
-Expected aggregate supply is thus expressible in terms of (unconditional) mean yield, mean farm size, the number of farms, and the probability that output price will exceed unit cost on the mean farm---i.e. the mean farm's probability of profit.
+primal or dual...use the approach with higher resolution data...usually will be farm data. In practice, Equation \ref{eq:aggSup2} probably what gonna evaluate. but the dual is useful because it is a meaningful economic interpretation. lends itself to back of the envelope calculations in minimum data contexts since policy makers generally have or can reasonably formulate a rough idea of employment rate and probability of profit on the mean farm.
 
 ...an instructive form for conditional mean yield... 
 
-primal or dual...use the approach with higher resolution data...usually will be farm data. In practice, Equation \ref{eq:aggSup2} probably what gonna evaluate. but the dual is useful because it is a meaningful economic interpretation. lends itself to back of the envelope calculations in minimum data contexts since policy makers generally have or can reasonably formulate a rough idea of employment rate and probability of profit on the mean farm.
-
 implies tradeoff map between employment rate and mean farm probability of profit [graph in kenya example]
 
+Price elasticity of aggregate supply and other useful derivatives
 
+Those familiar with financial analysis might notice a similarity between $\Phi(z)$ and the first $\Phi()$ term (sometimes referred to as the $N_1$ term) in the Black-Scholes equation []... similar to risky bet in the money, out of the money, at the money. Here it is tempting to introduce a sixth axiom saying that farmers will only pursue a risky bet if the probability of profit is greater than that of a coin toss (i.e., greater than $50\%$), and to thereby limit the domain of $z$ to $(-\infty, 0)$. But this is left to the discretion of the practitioner. [There are cases when rational economic agents pursue "out of the money" bets.]
 
-
-
-
-
-
-
-
-
-In the aggregate supply function (Equation \ref{eq:sup2b}), the term $E \left[C^{\#} \right]$ is thus replaced with $E \left[E\left[C^{\#}(T) \right]\bigr|_{t = 0} \right]$, which is the population mean of expected cost per unit production at planting time. This is a double integral. By Fubini's theorem, the order of integration may be swapped, such that this may also be interpreted as the mean farm's expected cost as evaluated at planting time.
-
-\begin{equation}
-E\left[E\left[C^{\#}(T)\right]\biggr|_{t = 0}\right] = E\left[E\left[C^{\#}(T)\right]]\biggr|_{t = 0}\right]
-\end{equation}
-
-To avoid ugly and potentially ambiguous notation, the population mean of $C^{\#}(T)$ is henceforth denoted $\tilde{C}^{\#}(T)$. That is to say, $E\left[C^{\#}(T)\right] = \tilde{C}^{\#}(T)$, such that the mean farm's expected cost at planting time is henceforth rewritten $E\left[\tilde{C}^{\#}(T)\right]\biggr|_{t = 0}$.
-<!-- unit cost $C^{\#}$ must likewise be replaced with $E\left[C^{\#}(T)\right]\biggr|_{t = 0}$, such that the population mean $E\left[C^{\#}\right]$ appearing in the aggregate supply function in Equation \ref{eq:sup2} must be replaced with -->
-<!-- \begin{equation} -->
-<!-- E\left[E\left[C^{\#}(T)\right]\biggr|_{t = 0}\right] -->
-<!-- \end{equation} -->
-<!-- This is the population mean of the expected  -->
-
-Making these substitutions for $P$ and $C^{\#}$ in Equation \ref{eq:sup2b}, then, the provisional aggregate supply function becomes an _expected_ aggregate supply function.
-
-\begin{equation}
-\begin{split}
-E[Q(T)]|_{t = 0} &= N E[\theta] E[\lambda^{-\eta}] P(0)^{\eta} e^{\eta m_p T} \Phi(\gamma) \:\:; \\
-\gamma &= \frac{\ln\left(\frac{E[P(T)]|_{t = 0}}{E \left[ \tilde{C}^{\#}(T) \right]\bigr|_{t = 0}} \right)^{\eta} - \frac{\eta^2}{2} Var \left[\ln \left( \tilde{C}^{\#}(T) \right) \right]}{\eta \sqrt{Var \left[\ln \left( \tilde{C}^{\#}(T) \right) \right]}} \\
-\theta &= \left( y_0 \frac{\theta_x}{\theta_w} \hat{\theta}_k \right)^{\eta + 1}
-\end{split}
-\label{eq:sup3}
-\end{equation}
-<!-- reference justifying application of Fubini's thm here: -->
-<!-- https://stats.stackexchange.com/questions/412936/when-can-integration-and-expectation-be-exchanged -->
-<!-- \begin{equation} -->
-<!-- E\left[C^{\#}(T)\right]\biggr|_{t = 0} -->
-<!-- \end{equation} -->
-<!-- \begin{equation} -->
-<!-- E[E[q^*(T)]\bigr|_{t = 0}] = E[E[q^*(T)]]\bigr|_{t = 0} -->
-<!-- \label{eq:fubThm} -->
-<!-- \end{equation} -->
-<!-- And the other ugly term $Var[\ln(E[q^*(T)]\bigr|_{t = 0})]$ may likewise be rewritten -->
-<!-- \begin{equation} -->
-<!-- Var[\ln(E[q^*(T)]\bigr|_{t = 0})] = Var[\ln(E[q^*(T)])]\bigr|_{t = 0} -->
-<!-- \end{equation} -->
-<!-- To reduce the notational ugliness, the shorthand $\tilde{q}^*(T) = E[q^*(T)]$ is henceforth introduced, such that -->
-<!-- \begin{equation} -->
-<!-- \begin{split} -->
-<!-- E[E[q^*(T)]]\bigr|_{t = 0} &= E[\tilde{q}^*(T)]\bigr|_{t = 0} = \tilde{q}^*(0) e^{m_q T} \\ -->
-<!-- Var[\ln(E[q^*(T)])]\bigr|_{t = 0} &= Var[\ln(\tilde{q}^*(T))]\bigr|_{t = 0} = s_q^2 T -->
-<!-- \end{split} -->
-<!-- \end{equation} -->
-<!-- Where, recall from the previous section, $m_q = E[\Delta \tilde{q} / (\tilde{q} \Delta t)]$ and $s_q^2 = Var[\Delta \tilde{q} / (\tilde{q} \Delta t)]$. -->
-<!-- That is to say, expressions \ref{eq:YdEnvCompact0}-\ref{eq:upBnd} should be rewritten, respectively, -->
-<!-- \begin{equation} -->
-<!-- E[y^*]\bigr|_{t = 0} = (y_0 \theta)^{\frac{1}{1 - h}} \left( \frac{E[P(T)]\bigr|_{t = 0}}{\lambda} \right)^{\frac{h}{1 - h}} -->
-<!-- \label{eq:YdEnvCompact0b} -->
-<!-- \end{equation} -->
-<!-- \begin{equation} -->
-<!-- E[y^*]\bigr|_{t = 0} = y_0 \theta \left( \frac{C^*}{h} \right)^h -->
-<!-- \label{eq:yStarC0b} -->
-<!-- \end{equation} -->
-<!-- \begin{equation} -->
-<!-- \frac{E[P(T)]\bigr|_{t = 0}}{\lambda} = \frac{E[C^{\#}]\bigr|_{t = 0}}{h} -->
-<!-- \label{eq:lambda30b} -->
-<!-- \end{equation} -->
-<!-- and -->
-<!-- \begin{equation} -->
-<!-- E[C^{\#}(T)]\bigr_{t = 0} < E[P(T)]\bigr|_{t = 0} -->
-<!-- \label{eq:upBnd2} -->
-<!-- \end{equation} -->
-
-To evaluate this expression,
-
-
-
-
-Substituting the right hand sides of this and Equation \ref{eq:EPT0} into Equation \ref{eq:sup3} then results in the following form for expected aggregate supply.
-
-\begin{equation}
-\begin{split}
-E[Q(T)]|_{t = 0} &= N E[\theta] E[\lambda^{-\eta}] P(0)^{\eta} e^{\eta m_p T} \Phi(-z) \:\:; \\
-z &= -\gamma = \frac{\ln\left(\frac{E \left[ \tilde{C}^{\#}(T) \right]\bigr|_{t = 0}}{P(0)} \right)^{\eta} - \left(\eta m_p - \eta^2 \frac{s_p^2}{2} \right) T }{\eta s_p \sqrt{T}}
-\end{split}
-\label{eq:sup4}
-\end{equation}
-
-Recalling from Equations \ref{eq:lnChngP} that $\left(\eta m_p - \eta^2 \frac{s_p^2}{2} \right) T$ and $s_p^2 T$ are the mean and variance of the log change in price $\ln(P(T) / P(0))$, then the term $z$ is the standard score of the hypothetical log change in output price $\ln \left(E\left[\tilde{C}^{\#}(T)\bigr|_{t = 0} \right] / P(0) \right)$, scaled by the farm level price elasticity $\eta$. The term $\Phi(z)$, which captures farm entry/exit, is thus the probability that output price will fall from its value at planting time to or below the mean farm's expected unit cost (scaled by $\eta$). And the term $\Phi(-z)$, it follows, is the probability that output price will remain above the mean farm's expected unit cost (scaled by $\eta$). In simple terms, $\Phi(-z)$ is roughly the probability that the mean farm will be profitable.
-
-Here it is tempting to introduce a sixth axiom saying that farmers will only pursue a risky bet if the probability of profit is greater than that of a coin toss (i.e., greater than $50\%$), and to thereby limit the domain of $z$ to $(-\infty, 0)$. But this is left to the discretion of the practitioner. [There are cases when rational economic agents pursue "out of the money" bets.]
-<!-- i.e., the log change in output price from its value at planting time ($P(0)$) to a value equal to the mean farm's expected unit cost, scaled by $\eta$. -->
-<!-- \begin{equation} -->
-<!-- \begin{split} -->
-<!-- E \left[\ln \left( \frac{C^{\#}(T)}{C^{\#}(\hat{t})} \right) \right] &= E \left[\ln \left( \frac{P(T)}{P(\hat{t})} \right) \right] \\ -->
-<!-- Var \left[\ln \left( \frac{C^{\#}(T)}{C^{\#}(\hat{t})} \right) \right] &= Var \left[\ln \left( C^{\#}(T) \right) \right] = Var \left[\ln(P(T)) \right] -->
-<!-- \end{split} -->
-<!-- \label{eq:lnChngC} -->
-<!-- \end{equation} -->
-<!-- \begin{equation} -->
-<!-- \begin{split} -->
-<!-- m_c \Delta t = E \left[\frac{\Delta C^{\#}(T)}{C^{\#}(T)} \right] &= m_{p} \Delta t  \\ -->
-<!-- s_c^2 \Delta t = Var \left[\frac{\Delta C^{\#}(T)}{C^{\#}(T)} \right] &= s_{p}^2 \Delta t -->
-<!-- \end{split} -->
-<!-- \end{equation} -->
-<!-- Because of the functional relation in Equation \ref{eq:lambda3}---which says that farms regulate their expenditure based on output price expectations---it can be shown by Ito's lemma that unit cost $C^{\#}$ is also a geometric Brownian motion with volatility $s_c$ equal to $s_p$. -->
-<!-- For present purposes, it is not necessary to specify a stochastic model for $y^*(t)$. However, in passing it is worth noting that, insofar as the meteorological variables on which $y^*(t)$ depends follow a gBm over the course of a given cropping season (as they appear to do, e.g., in Figure \ref{fig:gBmWeather}), then, again by Ito's lemma, $y^*(t)$ must also follow a gBm. -->
-<!-- The stochastic movement of $y^*(t)$ is slightly less straightforward. Unlike prices, yield is never directly observable except at $t = T$. While it is increasingly possible to make indirect observations of $y^*(t)$ for $t$ well before $T$ via remote sensing data [@wahab2018remote; @vallentin2022suitability; @ali2022crop], it is unlikely that it will ever be possible to check the value of $y^*(t)$ for $t$ close to $0$ (planting time) in the same way that one may check the spot price of a commodity $P(t)$. -->
-<!-- However, the specific question of whether or not $y^*(t)$ follows a geometric Brownian motion can be assessed in another way. Insofar as the stochastic movement of the meteorological variables on which yield depends biophysically follows a geometric Brownian motion, then, once again by Ito's lemma, it follows that $y^*(t)$ must also follow a geometric Brownian motion. The question then becomes whether or not the relevant meteorological variables (typically rainfall, temperature, and solar radiation) follow a gBm within a given cropping season. This is a much weaker assumption than the assumption that yield itself follows a gBm (see, e.g., Figure \ref{fig:gBmWeather}). -->
-<!-- Yield is a function of both deterministic and stochastic (mostly meteorological) variables. -->
-<!-- The assessment of the yield trend and volatility parameters $m_y$, $s_y$ in terms of trend and volatility parameters that can be estimated from observable meteorological variables is problematic, moreover, since this requires knowledge about the precise functional relation between these variables and yield. -->
-<!-- (Although see Wahab et al. [-@wahab2018remote], Vallentin et al. [-@vallentin2022suitability], and Ali et al. [-@ali2022crop].) -->
-<!-- For the present purpose, the relevance of $y^*(t)$ following a gBm lies in the relation between $y^*(t)$ and unit cost $C^{\#}$. Because $C^{\#}$ is a function of $y^*(t)$, and because this function is known (Equation \ref{eq:cSharp1}), then, by Ito's lemma, $C^{\#}$ must also follow a geometric Brownian motion with volatility $s_c$ equal to the yield volatility $s_y$. Moreover, Equation \ref{eq:lambda3} implies $s_c = s_p$; and thus, by transitivity, $s_y = s_p$. -->
-<!-- Denoting the mean and variance of the normally distributed changes $\Delta y^* / y^*$ as $m_y \Delta t$ and $s_y^2 \Delta t$, respectively, then Ito's lemma also reveals that the   -->
-<!-- ... -->
-<!-- Moreover, combining Equations \ref{eq:lambda3} and \ref{eq:YdEnvCompact} gives yet another instructive expression for $y^*$. -->
-<!-- \begin{equation} -->
-<!-- y^* = (y_0 \theta)^{\eta + 1} \left( \frac{C^{\#}}{\eta} \right)^{\eta} \:\:;\:\:\: \eta = \frac{h}{1 - h} -->
-<!-- \label{eq:yStarCsharp} -->
-<!-- \end{equation} -->
-<!-- This expression proves useful during parameterization of the aggregate supply curve farther below, but has limited predictive power since, by definition, $C^{\#}$ is not known until harvest. -->
 <!-- # ```{r Fig2, fig.show = "hold", fig.width = 5, fig.height=5, fig.align="center", fig.cap="\\label{fig:gBmWeather}(Left) Daily average weather variable time series covering the 2018 maize long rains growing season in Eldoret, Kenya (NREL 2023). (Right) The corresponding daily log changes exhibit the normal distribution typical of geometric Brownian motion.", echo = FALSE} -->
 <!-- #Weather data from National Solar Radiation Database -->
 <!-- #https://nsrdb.nrel.gov/data-viewer -->
