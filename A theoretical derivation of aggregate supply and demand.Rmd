@@ -661,6 +661,7 @@ Such that the conditional mean of $y^*$ truncated at $C^{\#} < P$ can be parsed 
 E[y^*|C^{\#} < P] = E[y^*] = E \left[ E[y^*] \frac{k^{\eta + 1}}{E[k^{\eta + 1}]}\right] \frac{E[C^{\# \eta} | C^{\#} < P]}{E[C^{\# \eta}]} \\
 &= \frac{E[y^*]} \frac{\Phi \left( \frac{\ln(P) - m_{\#}}{s_{\#}} - \eta s_{\#} \right)}{\Phi\left( \frac{\ln(P) - m_{\#}}{s_{\#}} \right)}
 \end{split}
+\label{eq:condMeanYd}
 \end{equation}
 <!-- &\rightarrow E[y^*] = E[y^*|C^{\#} < P] = E[y^*] \frac{\Phi\left( \frac{\ln(P) - m_{\#}}{s_{\#}} \right)}{\Phi \left( \frac{\ln(P) - m_{\#}}{s_{\#}} - \eta s_{\#} \right)} -->
 
@@ -694,7 +695,13 @@ Which may be useful for point estimates of aggregate supply along the curve sinc
 
 Equation \ref{eq:aggSup1} is a suitable aggregate supply function in sectors characterized by highly deterministic production processes, negligible delays between input decisions and output, and negligible output price volatility. However, it is not suited to the primary sector, where production is partly deterministic but also partly a function of stochastic meteorological variables; where there is a significant delay between input decisions and output (i.e., the cropping season); and where output price volatility looms large in any management decision. In order to accommodate these hallmarks of agricultural supply, it is necessary to be more explicit in the treatment of yield and output price as stochastic variables.
 
-To begin with, yield is partly a function of stochastic meteorological variables unknown at planting time. Wherever $y^*$ appears in the equations above, what is really meant is $E[y^*(T)]|_{t = 0}$---that is to say, the farm's expectation of what yield will be at harvest time ($t = T$) as evaluated at planting time ($t = 0$).
+To begin with, yield is partly a function of stochastic meteorological variables unknown at planting time. Wherever $y^*$ appears in the equations above, what is really meant is $E[y^*(T)]|_{t = 0}$---that is to say, the farm's expectation of what yield will be at harvest time ($t = T$) as evaluated at planting time ($t = 0$). The yield equation can now be written more carefully as follows.
+
+\begin{equation}
+E[y^*(T)]|_{t = 0} = E[E[y^*(T)]|_{t = 0}] \frac{k}{E[k]} \frac{C^{*h}}{E[C^{*h}]}
+\end{equation}
+
+Note that optimal farm expenditure per acre $C^*$ remains a deterministic variable. This is because $C^*$ primarily refers to land preparation, seed, fertilizer and chemical pest control. It may also  harvesting, and some post harvest activities (shelling, stooking, transport, etc.). The most significant of these costs are known (executed or planned) at planting time; and so $C^*$ can be treated deterministically.
 
 Absent a forward contract, the output sale price $P$ is also a stochastic variable unknown to the farmer at the time of planting. Wherever $P$ appears in the equations above, then, what is really meant is $E[P(T)]|_{t = 0}$---the value that the farmer expects $P$ to take at harvest/sale, as evaluated at planting time. To parse $E[P(T)]|_{t = 0}$, a suitable stochastic model must be assumed for $P(t)$. Within a given season, prices often follow a geometric Brownian motion (gBm). That is to say, changes in $P$ over a small time interval $\Delta t$ ($\Delta P = P(t + \Delta t) - P(t)$) are often accurately modeled by
 
@@ -875,14 +882,28 @@ gg_ts + gg_hist + plot_layout(ncol = 2, widths = c(1, 1/3))
 
 ```
 
-Substituting the stochastic terms developed above for $y^*$ and $P$ in the deterministic aggregate supply curve (Equation \ref{eq:aggSup1}), gives the _expected_ aggregate supply curve.
+Substituting the stochastic terms developed above for $y^*$ and $P$, the expressions for yield and aggregate supply can now be rewritten more carefully as follows.
+
+
+
+
+in the deterministic aggregate supply curve (Equation \ref{eq:aggSup1}), gives the _expected_ aggregate supply curve.
 
 \begin{equation}
 E[Q(T)]|_{t = 0} = N E[k_a] E[y^*(T)]|_{t = 0} \Phi \left( \frac{\ln(E[P(T)]|_{t = 0}) - m_{\#}}{s_{\#}} - \eta s_{\#} \right)
 \label{eq:aggSup2}
 \end{equation}
 
-This can be further refined into a more instructive expression by considering the stochastic character of optimal unit cost $C^{\#}$. Farm cost per acre $C^*$ typically includes land preparation, seed, fertilizer and chemical pest control, harvesting, and some post harvest activities (shelling, stooking, transport, etc.). The most significant of these costs are known (executed or planned) at planting time; and so $C^*$ can be treated deterministically. Optimal unit cost $C^{\#}$, on the other hand, must be treated as a stochastic variable. To see this, note that Equation \ref{eq:cStar} simplifies to
+Equation \ref{eq:condMeanYd}, relating the observed (conditional) mean and unconditional mean yield, must also be rewritten more carefully as follows.
+
+\begin{equation}
+\begin{split}
+E[E[y^*(T)]|_{t = 0} | E[C^{\#}(T)]|_{t = 0} < E[P(T)]|_{t = 0}] &= \frac{E[E[y^*(T)]|_{t = 0}]} \frac{\Phi \left( \frac{\ln(P) - m_{\#}}{s_{\#}} - \eta s_{\#} \right)}{\Phi\left( \frac{\ln(P) - m_{\#}}{s_{\#}} \right)} \\
+&= \frac{E[y^*]} \frac{\text{PEFS-adj. mean prob. of profit}}{\text{Farm employment rate}}
+\end{split}
+\end{equation}
+
+This can be further refined into a more instructive expression by considering the stochastic character of optimal unit cost $C^{\#}$. Farm cost per acre is deterministic, but optimal unit expenditure $C^{\#}$, on the other hand, must be treated as a stochastic variable. To see this, note that Equation \ref{eq:cStar} simplifies to
 
 \begin{equation}
 C^{\#} = \frac{P}{\lambda} h
@@ -989,13 +1010,18 @@ Substituting this for the $\Phi()$ term in Equation \ref{eq:aggSup2}, the aggreg
 E[Q(T)]|_{t = 0} = N E[k_a] E[y^*(T)]|_{t = 0} (1 - \Phi(z)) \:\:;\:\:\: z = \frac{\ln \left(\frac{E[\tilde{C}^{\#}(T)^{\eta}]|_{t = 0}}{P(0)} \right) - \left( m_p - \eta \frac{s^2_p}{2} \right) T}{s_p \sqrt{T}}
 \label{eq:aggSup3}
 \end{equation}
-
-Those familiar with financial analysis will notice a similarity between the PEFS-adjusted mean probability of profit and the first $\Phi()$ term in the Black-Scholes equation, which indicates the probability that a stock price will finish at or above the strike price at maturity---in other words, that a European call option will finish "in the money" [@hull9thEdition]. Farm planting and expenditure decisions are thus mathematically analogous to investment banking decisions. In particular, the farm expected unit expenditure decision is analogous to selecting a strike price, while planting with harvest date $T$ is analogous to buying a derivative on the crop output price at that strike with maturity date $T$. The only major differences between farming and investment banking then seem to be that farmers generally have a much better track record, do much more work, are paid much less, and receive no government bailout in bad years.
+<!-- Those familiar with financial analysis will notice a similarity between the PEFS-adjusted mean probability of profit and the first $\Phi()$ term in the Black-Scholes equation, which indicates the probability that a stock price will finish at or above the strike price at maturity---in other words, that a European call option will finish "in the money" [@hull9thEdition]. Farm planting and expenditure decisions are thus mathematically analogous to investment banking decisions. In particular, the farm expected unit expenditure decision is analogous to selecting a strike price, while planting with harvest date $T$ is analogous to buying a derivative on the crop output price at that strike with maturity date $T$. The only major differences between farming and investment banking then seem to be that farmers generally have a much better track record, do much more work, are paid much less, and receive no government bailout in bad years. -->
 <!-- Here it is tempting to introduce a sixth axiom saying that farmers will only pursue a risky bet if the probability of profit is greater than that of a coin toss (i.e., greater than $50\%$), and to thereby limit the domain of $z$ to $(-\infty, 0)$. But this is left to the discretion of the practitioner. [There are cases when rational economic agents pursue "out of the money" bets.] -->
 
-The main purpose of developing the stochastic price parameter formulation of aggregate supply above is to demonstrate that the $\Phi()$ term in aggregate supply has a meaningful economic interpretation as the PEFS-adjusted mean probability of profit. For purposes of evaluating aggregate supply, one should choose the formulation for which there exists higher resolution data. When farm data is available, evaluation via the farm population parameter formulation in Equation \ref{eq:aggSup2} is probably the best approach. In the absence of farm data, the stochastic price parameter formulation presents a second best approach if high resolution price data is available.
+The main purpose of developing the stochastic price parameter formulation of aggregate supply above is to demonstrate that the $\Phi()$ term in aggregate supply has a meaningful economic interpretation as the PEFS-adjusted mean probability of profit. For purposes of evaluating aggregate supply, the most appropriate formulation to work with is that for which the highest resolution data is available. When farm data is available, evaluation via the farm population parameter formulation in Equation \ref{eq:aggSup2} is probably the best approach. In the absence of farm data, the stochastic price parameter formulation presents a second best approach if high resolution price series data is available.
 <!-- either the the farm population parameter formulation (Equation \ref{eq:aggSup2}) or the stochastic price parameter formulation (Equation \ref{eq:aggSup3}) can be used. -->
 <!-- , taking care to estimate the unconditional population parameters $m_{\#}$ and $s_{\#}$ based on the observed conditional parameters as explained in section \ref{sec:aggSupDeterm}, -->
+
+In the absence of both farm and price data, back of the envelope calculations can be made based on the evaluator's sense of mean observed yield, the farm employment rate, and the PEFS adjusted mean probability of profit. That is to say, Equation 
+
+
+Whereby the evaluator may deduce the unconditional mean $E[]$  That is to say, the unconditional mean yield can be deduced from the estimate of observed (conditional) mean yield via .
+
 
 Back of the envelope calculations in minimum data contexts since policy makers generally have or can reasonably formulate a rough idea of employment rate and probability of profit on the mean farm.
 
