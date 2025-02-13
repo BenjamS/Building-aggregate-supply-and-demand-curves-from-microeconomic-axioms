@@ -696,43 +696,87 @@ Which may be useful for point estimates of aggregate supply along the curve sinc
 <!-- mean log(lambda) = 0 might be a reasonable assumption -->
 <!-- Main thing is result that price is a dual space where solution can be found in the absence of farm data. -->
 
-## Accounting for stochasticity 
+## Accounting for stochasticity, derivation of the expected aggregate supply curve based on axiom 5 
 
 Equation \ref{eq:aggSup1} is a suitable aggregate supply function in sectors characterized by highly deterministic production processes, negligible delays between input decisions and output, and negligible output price volatility. However, it is not suited to the primary sector, where production is partly deterministic but also partly a function of stochastic meteorological variables; where there is a significant delay between input decisions and output (i.e., the cropping season); and where output price volatility looms large in any management decision. In order to accommodate these hallmarks of agricultural supply, it is necessary to be more explicit in the treatment of yield and output price as stochastic variables.
 
-To begin with, yield is partly a function of stochastic meteorological variables unknown at planting time. Wherever $y^*$ appears in the equations above, what is really meant is $E[y^*(T)]|_{t = 0}$---that is to say, the farm's expectation of what yield will be at harvest time ($t = T$) as evaluated at planting time ($t = 0$). To begin with, the yield function in Equation \ref{eq:YdEnvNeat} becomes an _expected_ yield function.
+To begin with, yield is partly a function of stochastic meteorological variables unknown at planting time. Wherever $y^*$ appears in the equations above, what is really meant is $E[y^*(T)]|_{t = 0}$---that is to say, the farm's expectation of what yield will be at harvest time ($t = T$) as evaluated at planting time ($t = 0$).
 
 \begin{equation}
-E[y^*(T)]|_{t = 0} = E[E[y^*(T)]|_{t = 0}] \frac{k}{E[k]} \frac{C^{*h}}{E[C^{*h}]}
+E[y^*(T)]|_{t = 0} = E[E[y^*(T)]|_{t = 0}] E[k_m(T)]|_{t = 0} \frac{\hat{k}}{E[k]} \frac{C^{*h}}{E[C^{*h}]} \:\:;\:\:\: \hat{k} = \frac{k}{E[k_m(T)]|_{t = 0}}
 \label{eq:stochYd1}
 \end{equation}
+<!-- \:\:\: k_r(T) = k_{r1}^{\kappa_{r1}} k_{r2}^{\kappa_{r2}} \dots k_{rn_r}^{\kappa_{rn_r}} -->
 
-To be clear, the term $E[E[y^*(T)]|_{t = 0}]$ is the population mean of the expectation of the stochastic process $y^*(t)$. This can be rewritten in more expedient notation by evaluating the population mean of the expected yield equation at $t = T$, 
+Where the stochastic meteorological component $k_m(T)$ has been factored out of $k$ and made explicit. The component $k_m(T)$ is the product at harvest of any cumulative meteorological variables specified in the yield model, raised to their respective elasticities. For example, if the key meteorological variables are rainfall and solar radiation, then $k_m(T) = k_r(T)^{\kappa_r} k_s(T)^{\kappa_s}$, where $k_r(T)$ and $k_s(T)$ are cumulative rainfall and solar radiation at harvest.
+
+The term $E[E[y^*(T)]|_{t = 0}]$ is the population mean of the expectation of the stochastic process $y^*(t)$. This can be rewritten in more expedient notation by evaluating the population mean of the expected yield equation at $t = T$, 
 
 \begin{equation}
-y^*(T) = E[y^*(T)] \frac{k}{E[k]} \frac{C^{*h}}{E[C^{*h}]}
+y^*(T) = E[y^*(T)] k_m(T) \frac{\hat{k}}{E[k]} \frac{C^{*h}}{E[C^{*h}]}
 \end{equation}
 
 And then taking the stochastic expectation
 
 \begin{equation}
-E[y^*(T)]|_{t = 0} = E[E[y^*(T)]]|_{t = 0} \frac{k}{E[k]} \frac{C^{*h}}{E[C^{*h}]}
+E[y^*(T)]|_{t = 0} = E[E[y^*(T)]]|_{t = 0} E[k_m(T)]|_{t = 0} \frac{\hat{k}}{E[k]} \frac{C^{*h}}{E[C^{*h}]}
 \end{equation}
 
 By which it follows from this and Equation \ref{eq:stochYd1} that 
 
 \begin{equation}
 E[E[y^*(T)]|_{t = 0}] = E[E[y^*(T)]]|_{t = 0}
+\label{eq:EyStarFubiniThm}
 \end{equation}
 
-Which is a result that could also be reached by invoking Fubini's theorem. The result states that the population mean of the expectation of $y^*(T)$ is equal to the expectation of $y^*(T)$ on the mean farm---i.e., the farm where $k = E[k]$ and $C^{*h} = E[C^{*h}]$. The stochastic formulation of farm yield may thus be more clearly written
+Which is a result that can also be reached by invoking Fubini's theorem. The result states that the population mean of the expectation of $y^*(T)$ is equal to the expectation of $y^*(T)$ on the mean farm---i.e., the farm where $\hat{k} = E[\hat{k}]$ and $C^{*h} = E[C^{*h}]$. The stochastic formulation of farm yield may thus be more clearly written
+<!-- Given a suitable stochastic model for $k_m(t)$ such that $E[k_m(T)]|_{t = 0}$ can be parsed, this means that the population mean can be evaluated based on stochastic weather parameters when farm data is not available.Equation \ref{eq:EyStarFubiniThm}  -->
 
 \begin{equation}
-E[y^*(T)]|_{t = 0} = E[\tilde{y}^*(T)]|_{t = 0} \frac{k}{E[k]} \frac{C^{*h}}{E[C^{*h}]} \:\:;\:\:\: \tilde{y}^* = y^*(T)\bigr|_{k = E[k], C^{*h} = E[C^{*h}]}
+E[y^*(T)]|_{t = 0} = E[\tilde{y}^*(T)]|_{t = 0} E[k_m(T)]|_{t = 0} \frac{\hat{k}}{E[k]} \frac{C^{*h}}{E[C^{*h}]} \:\:;\:\:\: \tilde{y}^* = y^*(T)\bigr|_{\hat{k} = E[\hat{k}], C^{*h} = E[C^{*h}]}
 \label{eq:stochYd2}
 \end{equation}
 
 Note that optimal farm expenditure per acre $C^*$ remains a deterministic variable. This is because $C^*$ primarily refers to land preparation, seed, fertilizer and chemical pest control. It may also include harvest and some post harvest costs (e.g., shelling, stooking, transport), but the most significant cost components are typically known (executed or planned) at planting time.
+<!-- # ```{r Fig2, fig.show = "hold", fig.width = 5, fig.height=5, fig.align="center", fig.cap="\\label{fig:gBmWeather}(Left) Daily average weather variable time series covering the 2018 maize long rains growing season in Eldoret, Kenya (NREL 2023). (Right) The corresponding daily log changes exhibit the normal distribution typical of geometric Brownian motion.", echo = FALSE} -->
+<!-- #Weather data from National Solar Radiation Database -->
+<!-- #https://nsrdb.nrel.gov/data-viewer -->
+<!-- thisFolder <- "D:/OneDrive - CGIAR/Documents 1/CIAT 2/A theory of aggregate supply and demand/Eldoret weather data/" -->
+<!-- thisFile <- "NSRDB weather data Eldoret 2018 maize season.csv" -->
+<!-- thisFilePath <- paste0(thisFolder, thisFile) -->
+<!-- df <- read.csv(thisFilePath, stringsAsFactors = F) -->
+<!-- colnames(df)[ncol(df)] <- "Log change" -->
+<!-- df$Date <- as.Date(df$Date) -->
+<!-- gg <- ggplot(df, aes(x = Date, y = val)) -->
+<!-- gg <- gg + geom_line() -->
+<!-- gg <- gg + scale_x_date(breaks = scales::breaks_pretty(n = 8)) -->
+<!-- gg <- gg + facet_wrap(~var, ncol = 1, scales = "free_y", strip.position = "left") -->
+<!-- gg <- gg + labs(title = "Daily averages of key weather variables influencing crop yields\nEldoret, Kenya, 2018 maize growing season") -->
+<!-- gg <- gg + theme_bw() -->
+<!-- gg <- gg + theme(axis.title.x = element_text(size = axisTitleSize), -->
+<!--                  axis.title.y = element_blank(), -->
+<!--                  axis.text = element_text(size = axisTextSize), -->
+<!--                  strip.background = element_rect(fill = "white"), -->
+<!--                  strip.text = element_text(size = facetTitleSize), -->
+<!--                  plot.title = element_text(size = titleSize)) -->
+<!-- gg_line <- gg -->
+<!-- gg <- ggplot(df, aes(x = `Log change`)) -->
+<!-- gg <- gg + geom_histogram(color = 4, fill = "white", bins = 20) -->
+<!-- gg <- gg + facet_wrap(~var, ncol = 1, scales = "free") -->
+<!-- gg <- gg + labs(title = "Daily log change") -->
+<!-- gg <- gg + theme_bw() -->
+<!-- gg <- gg + theme(axis.title = element_blank(), -->
+<!--                  #axis.title.y = element_blank(), -->
+<!--                  #axis.title.x = element_text(size = axisTitleSize), -->
+<!--                  axis.text = element_text(size = axisTextSize), -->
+<!--                  strip.background = element_rect(fill = "white"), -->
+<!--                  strip.text = element_blank(), -->
+<!--                  plot.title = element_text(size = titleSize)) -->
+<!-- gg_hist <- gg -->
+<!-- gg_line + gg_hist + plot_layout(ncol = 2, widths = c(1, 1/3)) -->
+<!-- ``` -->
+<!-- [@jseData; @fpmaData; @cmeData; @nsrdbData] -->
+<!-- ---especially temperature, solar radiation, and humidity--- -->
 
 Absent a forward contract, the output sale price $P$ is a stochastic variable unknown to the farmer at the time of planting. Wherever $P$ appears in the equations above, then, what is really meant is $E[P(T)]|_{t = 0}$---the value that the farmer expects $P$ to take at harvest/sale, as evaluated at planting time. To parse $E[P(T)]|_{t = 0}$, a suitable stochastic model must be assumed for $P(t)$. Within a given season, prices often follow a geometric Brownian motion (gBm). That is to say, changes in $P$ over a small time interval $\Delta t$ ($\Delta P = P(t + \Delta t) - P(t)$) are often accurately modeled by
 
@@ -979,7 +1023,7 @@ E[E[C^{\#}(T)]\bigr|_{t = 0}] = E[E[C^{\#}(T)]]\bigr|_{t = 0}
 \label{eq:fubThm}
 \end{equation}
 
-Which is again a result that could also be reached by invoking Fubini's theorem. To be clear, the result states that the population mean of the optimal expected unit cost ($E[C^{\#}(T)]\bigr|_{t = 0}$) is equal to the optimal expected unit cost on the mean farm, i.e. the farm with $\lambda^{-1} = E[\lambda^{-1}]$. It therefore maps the mean of all $C^{\#}(t)$ trajectories in the farm population to the mean of possible random trajectories on a single farm (the farm where $\lambda^{-1} = E[\lambda^{-1}]$). Letting $\tilde{C}^{\#}(T)$ denote the unit cost on the mean farm (i.e. $\tilde{C}^{\#}(T) = C^{\#}(T)|_{\lambda^{-1} = E[\lambda^{-1}]}$, an equivalent, perhaps clearer, way of writing the result is
+Which is again a result that can also be reached by invoking Fubini's theorem. To be clear, the result states that the population mean of the optimal expected unit cost ($E[C^{\#}(T)]\bigr|_{t = 0}$) is equal to the optimal expected unit cost on the mean farm, i.e. the farm with $\lambda^{-1} = E[\lambda^{-1}]$. It therefore maps the mean of all $C^{\#}(t)$ trajectories in the farm population to the mean of possible random trajectories on a single farm (the farm where $\lambda^{-1} = E[\lambda^{-1}]$). Letting $\tilde{C}^{\#}(T)$ denote the unit cost on the mean farm (i.e. $\tilde{C}^{\#}(T) = C^{\#}(T)|_{\lambda^{-1} = E[\lambda^{-1}]}$, an equivalent, perhaps clearer, way of writing the result is
 <!-- reference justifying application of Fubini's thm here: -->
 <!-- https://stats.stackexchange.com/questions/412936/when-can-integration-and-expectation-be-exchanged -->
 <!-- [GRAPHIC showing equality of pop mean of expected future cSharp to expected cSharp on the mean farm (?)] -->
@@ -1076,97 +1120,96 @@ E[\tilde{y}^*(T)]|_{t = 0} &= E[y^*(T) | E[C^{\#}(T)]|_{t = 0} \leq P(T)]|_{t = 
 \end{equation}
 
 In the absence of both farm and price data, then, back of the envelope calculations can be made based on expert consensus regarding mean observed (conditional) yield, the farm employment rate, and the PEFS adjusted mean probability of profit.
-<!-- Those familiar with financial analysis will notice a similarity between the PEFS-adjusted mean probability of profit and the first $\Phi()$ term in the Black-Scholes equation, which indicates the probability that a stock price will finish at or above the strike price at maturity---in other words, that a European call option will finish "in the money" [@hull9thEdition]. Farm planting and expenditure decisions are thus mathematically analogous to investment banking decisions. In particular, the farm expected unit expenditure decision is analogous to selecting a strike price, while planting with harvest date $T$ is analogous to buying a derivative on the crop output price at that strike with maturity date $T$. The only major differences between farming and investment banking then seem to be that farmers generally have a much better track record, do much more work, are paid much less, and receive no government bailout in bad years. -->
-<!-- Here it is tempting to introduce a sixth axiom saying that farmers will only pursue a risky bet if the probability of profit is greater than that of a coin toss (i.e., greater than $50\%$), and to thereby limit the domain of $z$ to $(-\infty, 0)$. But this is left to the discretion of the practitioner. [There are cases when rational economic agents pursue "out of the money" bets.] -->
-<!-- The main purpose of developing the stochastic price parameter formulation of aggregate supply above is to demonstrate that the $\Phi()$ term in aggregate supply has a meaningful economic interpretation as the PEFS-adjusted mean probability of profit. -->
-<!-- either the the farm population parameter formulation (Equation \ref{eq:aggSup2}) or the stochastic price parameter formulation (Equation \ref{eq:aggSup3}) can be used. -->
-<!-- , taking care to estimate the unconditional population parameters $m_{\#}$ and $s_{\#}$ based on the observed conditional parameters as explained in section \ref{sec:aggSupDeterm}, -->
 
-
-
-implies tradeoff map between employment rate and mean farm probability of profit [graph in kenya example]
-
-Price elasticity of aggregate supply and other useful derivatives
-
-
-<!-- # ```{r Fig2, fig.show = "hold", fig.width = 5, fig.height=5, fig.align="center", fig.cap="\\label{fig:gBmWeather}(Left) Daily average weather variable time series covering the 2018 maize long rains growing season in Eldoret, Kenya (NREL 2023). (Right) The corresponding daily log changes exhibit the normal distribution typical of geometric Brownian motion.", echo = FALSE} -->
-<!-- #Weather data from National Solar Radiation Database -->
-<!-- #https://nsrdb.nrel.gov/data-viewer -->
-<!-- thisFolder <- "D:/OneDrive - CGIAR/Documents 1/CIAT 2/A theory of aggregate supply and demand/Eldoret weather data/" -->
-<!-- thisFile <- "NSRDB weather data Eldoret 2018 maize season.csv" -->
-<!-- thisFilePath <- paste0(thisFolder, thisFile) -->
-<!-- df <- read.csv(thisFilePath, stringsAsFactors = F) -->
-<!-- colnames(df)[ncol(df)] <- "Log change" -->
-<!-- df$Date <- as.Date(df$Date) -->
-<!-- gg <- ggplot(df, aes(x = Date, y = val)) -->
-<!-- gg <- gg + geom_line() -->
-<!-- gg <- gg + scale_x_date(breaks = scales::breaks_pretty(n = 8)) -->
-<!-- gg <- gg + facet_wrap(~var, ncol = 1, scales = "free_y", strip.position = "left") -->
-<!-- gg <- gg + labs(title = "Daily averages of key weather variables influencing crop yields\nEldoret, Kenya, 2018 maize growing season") -->
-<!-- gg <- gg + theme_bw() -->
-<!-- gg <- gg + theme(axis.title.x = element_text(size = axisTitleSize), -->
-<!--                  axis.title.y = element_blank(), -->
-<!--                  axis.text = element_text(size = axisTextSize), -->
-<!--                  strip.background = element_rect(fill = "white"), -->
-<!--                  strip.text = element_text(size = facetTitleSize), -->
-<!--                  plot.title = element_text(size = titleSize)) -->
-<!-- gg_line <- gg -->
-<!-- gg <- ggplot(df, aes(x = `Log change`)) -->
-<!-- gg <- gg + geom_histogram(color = 4, fill = "white", bins = 20) -->
-<!-- gg <- gg + facet_wrap(~var, ncol = 1, scales = "free") -->
-<!-- gg <- gg + labs(title = "Daily log change") -->
-<!-- gg <- gg + theme_bw() -->
-<!-- gg <- gg + theme(axis.title = element_blank(), -->
-<!--                  #axis.title.y = element_blank(), -->
-<!--                  #axis.title.x = element_text(size = axisTitleSize), -->
-<!--                  axis.text = element_text(size = axisTextSize), -->
-<!--                  strip.background = element_rect(fill = "white"), -->
-<!--                  strip.text = element_blank(), -->
-<!--                  plot.title = element_text(size = titleSize)) -->
-<!-- gg_hist <- gg -->
-<!-- gg_line + gg_hist + plot_layout(ncol = 2, widths = c(1, 1/3)) -->
-<!-- ``` -->
-<!-- [@jseData; @fpmaData; @cmeData; @nsrdbData] -->
-<!-- ---especially temperature, solar radiation, and humidity--- -->
-<!-- That is, farmers make their expenditure decision $C^*$ at planting time ($t = 0$) based on what they expect the values of $y^*$ and $P$ to be at harvest ($t = T$). -->
-
-## Some derivatives of interest to policy makers
-
-A few derivatives of the aggregate supply curve with respect to variables that are of general interest to policy makers are briefly explored below. First and foremost, the price elasticity of aggregate supply:
+The price elasticity of expected aggregate supply follows as
 
 \begin{equation}
 \begin{split}
-\frac{\partial \ln(E[Q(T)]|_{t = 0})}{\partial \ln(P(0))} &= \eta + \frac{\partial \ln (\Phi(-z))}{\partial(-z)} \frac{\partial (-z)}{\partial \ln(P(0))} \\
-&= \eta + \frac{\phi(-z)}{\Phi(-z)} \frac{1}{s_p \sqrt{T}}
+\frac{\partial \ln(E[Q(T)]|_{t = 0})}{\partial \ln(P(0))} &= \frac{d \ln (\Phi(-z))}{d (-z)} \frac{\partial (-z)}{\partial \ln(P(0))} \\
+&= \frac{\phi(-z)}{\Phi(-z)} \frac{1}{s_p \sqrt{T}}
 \end{split}
 \label{eq:pElasQagg}
 \end{equation}
 
-The output price elasticity of aggregate supply is thus the farm level elasticity $\eta$ plus a term capturing the effect of farm entry/exit in response to the price movement. Note that the entry/exit term is the slope of the log of the standard normal cumulative distribution function. As the mean farm's probability of profit approaches $100\%$, this term approaches zero, such that price elasticity of aggregate supply approaches the price elasticity of supply on an individual farm. Aggregate supply is inelastic/elastic if
+Whereby it is clear that, under axioms 1-5, price elasticity of expected aggregate supply changes with price, contrary to the assumption in many economic surplus analyses. It follows, moreover, that aggregate supply is elastic/inelastic if
 
 \begin{equation}
-\eta </> 1 - \frac{\phi(-z)}{\Phi(-z)} \frac{1}{s_p \sqrt{T}}
+s_p \sqrt{T} </> \frac{\phi(-z)}{\Phi(-z)}
 \end{equation}
 
-Such that the possibility of an elastic aggregate supply response to price movements becomes increasingly limited as farm participation approaches $100\%$.
+<!-- Note that the forgoing implies a map between farm employment rate and probability of profit which can be instructive in understanding farm entry/exit responsiveness to changes in price and technology. The example drawn in Figure \ref{fig:mapEmployProbProf} makes it clear that farm entry/exit becomes highly responsive to changes in the probability of profit as the degree of homogeneity (technology) increases past $0.5$. but mSharp changes with h so careful -->
 
-One of the many novelties of the derived form is that it allows for explicit inspection of the aggregate supply sensitivity to price volatility.
+<!-- # ```{r Fig2, fig.show = "hold", fig.width = 3, fig.height=3, fig.align="center", fig.cap="\\label{fig:mapEmployProbProf}Example map of the relation between farm employment rate and PEFS-adjusted mean probability of profit at different degrees of homogeneity. The parameters m_{\#} and s_{\#} are held constant at the values 0.92 and 1.13, respectively, which are taken from the Kenyan maize farm data examined farther below. Each line is plotted over a maize output price ranging from 0 to 100 Kenyan shillings (KES) per kg.", echo = FALSE} -->
+<!-- theseColors <- randomcoloR::distinctColorPalette(3) -->
+<!-- hVec <- c(0.25, 0.5, 0.75) -->
+<!-- listDf <- list() -->
+<!-- listEtaEQT0P0 <- list() -->
+<!-- mSharp <- 0.92; sSharp <- 1.13 -->
+<!-- EPT0 <- seq(0.01, 100, length.out = 500) -->
+<!-- for(i in 1:length(hVec)){ -->
+<!-- h <- hVec[i] -->
+<!-- eta <- h / (1 - h) -->
+<!-- zNeg <- (log(EPT0) - mSharp) / sSharp - eta * sSharp -->
+<!-- probProfit = pnorm(zNeg) -->
+<!-- employRate = pnorm(zNeg + eta * sSharp) -->
+<!-- etaEQT0P0 <- dnorm(zNeg) / pnorm(zNeg) * 1 / sSharp -->
+<!-- listDf[[i]] <- data.frame(etaEQT0P0, probProfit, employRate, EPT0, eta = as.character(eta), h = as.character(h)) -->
+<!-- } -->
+<!-- dfPlot <- do.call(rbind, listDf) %>% as.data.frame() -->
+<!-- gg <- ggplot(dfPlot, aes(x = probProfit, y = employRate, group = h, color = h)) -->
+<!-- gg <- gg + geom_line(lwd = 0.75) -->
+<!-- gg <- gg + scale_color_manual(values = theseColors) -->
+<!-- gg <- gg + labs(x = "PEFS-adj. mean probability of profit", y = "Farm employment rate", color = "Degree of homogeneity") -->
+<!-- gg <- gg + theme_bw() -->
+<!-- gg <- gg + theme(axis.title = element_text(size = axisTitleSize), -->
+<!--                  axis.text = element_text(size = axisTextSize), -->
+<!--                  legend.text = element_text(size = legendTextSize), -->
+<!--                  legend.title = element_text(size = axisTitleSize), -->
+<!--                  legend.position = "top") -->
+<!-- gg -->
+<!-- ``` -->
 
-\begin{equation}
-\frac{\partial \ln(E[Q(T)]|_{t = 0})}{\partial (s_p \sqrt{T})} = - \frac{\phi(-z)}{\Phi(-z)} \left(\eta -  \frac{z}{\eta s_p \sqrt{T}}\right)
-\label{eq:pRiskElasQagg}
-\end{equation}
+<!-- # ```{r Fig3, fig.show = "hold", fig.width = 3, fig.height=3, fig.align="center", fig.cap="\\label{fig:elastConcept}Price elasticity of expected aggregate supply plotted over output price (KES/kg).", echo = FALSE} -->
+<!-- gg <- ggplot(dfPlot, aes(x = EPT0, y = etaEQT0P0, group = h, color = h)) -->
+<!-- gg <- gg + geom_line(lwd = 0.75) -->
+<!-- gg <- gg + geom_hline(yintercept = 1, color = "red", linetype = "dashed") -->
+<!-- gg <- gg + coord_cartesian(ylim = c(0, 2.5)) -->
+<!-- gg <- gg + scale_color_manual(values = theseColors) -->
+<!-- gg <- gg + labs(x = "Output price at planting (KES/kg)", y = "Price elasticity of aggregate supply", color = "Degree of homogeneity") -->
+<!-- gg <- gg + theme_bw() -->
+<!-- gg <- gg + theme(axis.title = element_text(size = axisTitleSize), -->
+<!--                  axis.text = element_text(size = axisTextSize), -->
+<!--                  legend.text = element_text(size = legendTextSize), -->
+<!--                  legend.title = element_text(size = axisTitleSize), -->
+<!--                  legend.position = "top") -->
+<!-- gg -->
+<!-- ``` -->
+<!-- One of the many novelties of the derived form is that it allows for explicit inspection of the aggregate supply sensitivity to price volatility. -->
+<!-- \begin{equation} -->
+<!-- \frac{\partial \ln(E[Q(T)]|_{t = 0})}{\partial (s_p \sqrt{T})} = - \frac{\phi(-z)}{\Phi(-z)} \left(\eta -  \frac{z}{\eta s_p \sqrt{T}}\right) -->
+<!-- \label{eq:pRiskElasQagg} -->
+<!-- \end{equation} -->
+<!-- So long as $z$ is negative (and thus the mean farm's probability of profit greater than $50\%$), then this says that aggregate supply is decreasing in price volatility. -->
+<!-- Finally, consider the derivative with respect to technology. -->
+<!-- \begin{equation} -->
+<!-- \end{equation} -->
 
-So long as $z$ is negative (and thus the mean farm's probability of profit greater than $50\%$), then this says that aggregate supply is decreasing in price volatility.
+# Illustrative parameterization based on Kenyan farm data
 
-Finally, consider the derivative with respect to technology.
+As an illustrative example, the expected aggregate supply curve derived above from axioms 1-5 is parameterized based on 2007 Kenyan maize farm data in order to estimate 2008 expected aggregate supply. The data comes from... Cannot validate against FAO as FAO is post hoc, have to compare to the GIEWS 2008 June forecast.
 
-\begin{equation}
-\end{equation}
+Parameterization of the expected aggregate supply curve derived above requires knowledge of the expected harvest price at time of planting $E[P(T)]|_{t = 0}$, which can be calculated via Equation ... based on the price at planting $P(0)$ and length of cropping season $T$ if price series data is available by which to estimate $m_p$ and $s_p$. It also requires the number of farms in the population $N$, mean farm size $k_a$, the degree of homogeneity $h$. If calculating the PEFS-adj. mean probability of profit in the  in the farm population   the mean farm's expected unit cost as evaluated at planting time $E[\tilde{C}^{\#}(T)]|_{t = 0}$, and the expected mean harvested output as evaluated at planting time $E[\tilde{q}^*(T)]\bigr|_{t = 0}$. 
+<!-- The last of these may of course be further decomposed as $E[A] E[\tilde{y}(T)]\bigr|_{t = 0}$, where $E[A]$ is the mean farm size and $\tilde{y}(T)$ is just the $\tilde{y}$ from Equation \ref{eq:yConst}, with the time of evaluation (harvest) made explicit. -->
+
+In the present example, both farm data and some price series data from GIEWS is available. The price data is monthly data, with just 5 observations prior to 2008, and so is quite low resolution for purposes of estimating supply in 2008. The available farm data is comparatively high resolution, with 942 observations across most of the maize growing regions in the country. Therefore gonna estimate the PEFS-adj. mean probability of profit and h and unconditional yield from unconditional mSharp and sSharp  in farm population space.
+
+First estimate the unconditional means based on the observed conditional means cSharp
+
+
 
 ## Parameter estimation guidelines
 
-Parameterization of the aggregate supply curve derived above thus requires knowledge of the output price at time of planting $P(0)$, the price growth rate $m_p$ and volatility $s_p$, the length of the cropping season $T$, the number of farms in the population $N$, the output degree of homogeneity $h$, the mean farm's expected unit cost as evaluated at planting time $E[\tilde{C}^{\#}(T)]|_{t = 0}$, and the expected mean harvested output as evaluated at planting time $E[\tilde{q}^*(T)]\bigr|_{t = 0}$. The last of these may of course be further decomposed as $E[A] E[\tilde{y}(T)]\bigr|_{t = 0}$, where $E[A]$ is the mean farm size and $\tilde{y}(T)$ is just the $\tilde{y}$ from Equation \ref{eq:yConst}, with the time of evaluation (harvest) made explicit.
+
 
 When estimating $E[C_0^{\#}(T)]|_{t = 0}$ and $E[y^*(T)]\bigr|_{t = 0}$ based on farm survey data, it may be tempting to use the respective sample means. This would be erroneous on two counts: 1) The sample mean gives the actual values known post-harvest, whereas the model deduced above requires the farmers' expectation at planting time. And 2) axiom 3 ($E[C^{\#}(T)]\bigr|_{t = 0} < E[P(T)]\bigr|_{t = 0}$) implies that the sample means are taken over a truncated distribution.
 
@@ -3896,3 +3939,8 @@ $\blacksquare$
 <!-- , and $C^{\#}$ -->
 <!-- , and $E[C^{\#}(T)]\bigr|_{t = 0}$ -->
 <!-- and $C^{\#}$ -->
+<!-- Those familiar with financial analysis will notice a similarity between the PEFS-adjusted mean probability of profit and the first $\Phi()$ term in the Black-Scholes equation, which indicates the probability that a stock price will finish at or above the strike price at maturity---in other words, that a European call option will finish "in the money" [@hull9thEdition]. Farm planting and expenditure decisions are thus mathematically analogous to investment banking decisions. In particular, the farm expected unit expenditure decision is analogous to selecting a strike price, while planting with harvest date $T$ is analogous to buying a derivative on the crop output price at that strike with maturity date $T$. The only major differences between farming and investment banking then seem to be that farmers generally have a much better track record, do much more work, are paid much less, and receive no government bailout in bad years. -->
+<!-- Here it is tempting to introduce a sixth axiom saying that farmers will only pursue a risky bet if the probability of profit is greater than that of a coin toss (i.e., greater than $50\%$), and to thereby limit the domain of $z$ to $(-\infty, 0)$. But this is left to the discretion of the practitioner. [There are cases when rational economic agents pursue "out of the money" bets.] -->
+<!-- The main purpose of developing the stochastic price parameter formulation of aggregate supply above is to demonstrate that the $\Phi()$ term in aggregate supply has a meaningful economic interpretation as the PEFS-adjusted mean probability of profit. -->
+<!-- either the the farm population parameter formulation (Equation \ref{eq:aggSup2}) or the stochastic price parameter formulation (Equation \ref{eq:aggSup3}) can be used. -->
+<!-- , taking care to estimate the unconditional population parameters $m_{\#}$ and $s_{\#}$ based on the observed conditional parameters as explained in section \ref{sec:aggSupDeterm}, -->
