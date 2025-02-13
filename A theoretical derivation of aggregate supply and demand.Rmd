@@ -512,8 +512,8 @@ y^* = E[y^*] \frac{k}{E[k]} \frac{C^{*h}}{E[C^{*h}]}
 This expression is particularly useful as an econometric yield model, as it only requires information on the control variables $k_i$ and total cost $C^*$, and no information on individual input quantities, as would be required when estimating Equation \ref{eq:cobbDoug3}. Given farm data, one specifies the model
 
 \begin{equation}
-\hat{y}^* = v_0 k C^{*h} \:\:;\:\:\: v_0 = \frac{E[y^*]}{E[k] E[C^{*h}]}
-\label{eq:YdEnvReg}
+y^* = v_0 k C^{*h} \:\:;\:\:\: v_0 = \frac{E[y^*]}{E[k] E[C^{*h}]}e^{\epsilon}
+\label{eq:YdEnvReg1}
 \end{equation}
 
 Such that the estimated coefficient on logged farm cost may be directly interpreted as the degree of homogeneity for the population. When estimating the model in Equation \ref{eq:cobbDoug3}, by contrast, $h$ must be tallied by summing the estimated coefficients $\alpha_i$, and will likely vary across the population since not all farms necessarily apply all the inputs specified in the model.
@@ -555,7 +555,7 @@ Taking logs of this expression and repeatedly substituting $P y^*|_{C^* = \bar{C
 \ln(\bar{C}^*) = \ln(\bar{R}^*) &= \ln(P y^*|_{C^* = R^*}) = \ln(P v_0 k) + h \ln(R^*) \\
 &= \ln(P v_0 k) + h(\ln(P v_0 k) + h\ln(R^*)) \\
 &= \ln(P v_0 k) + h(\ln(P v_0 k) + h(\ln(P v_0 k) + h\ln(R^*))) \\
-&= \dots
+&= \cdots
 &= \ln(P v_0 k) \sum_{\nu = 0}^{\infty} h^{\nu} \\
 &= \frac{1}{1 - h} \ln(P v_0 k) = \frac{\eta}{h} \ln(P v_0 k)
 \end{split}
@@ -696,7 +696,7 @@ Which may be useful for point estimates of aggregate supply along the curve sinc
 <!-- mean log(lambda) = 0 might be a reasonable assumption -->
 <!-- Main thing is result that price is a dual space where solution can be found in the absence of farm data. -->
 
-## Accounting for stochasticity, derivation of the expected aggregate supply curve based on axiom 5 
+## Accounting for stochasticity, derivation of the expected aggregate supply curve based on axiom 5 \label{sec:acct4Stoch}
 
 Equation \ref{eq:aggSup1} is a suitable aggregate supply function in sectors characterized by highly deterministic production processes, negligible delays between input decisions and output, and negligible output price volatility. However, it is not suited to the primary sector, where production is partly deterministic but also partly a function of stochastic meteorological variables; where there is a significant delay between input decisions and output (i.e., the cropping season); and where output price volatility looms large in any management decision. In order to accommodate these hallmarks of agricultural supply, it is necessary to be more explicit in the treatment of yield and output price as stochastic variables.
 
@@ -737,7 +737,26 @@ E[y^*(T)]|_{t = 0} = E[\tilde{y}^*(T)]|_{t = 0} E[k_m(T)]|_{t = 0} \frac{\hat{k}
 \label{eq:stochYd2}
 \end{equation}
 
-Note that optimal farm expenditure per acre $C^*$ remains a deterministic variable. This is because $C^*$ primarily refers to land preparation, seed, fertilizer and chemical pest control. It may also include harvest and some post harvest costs (e.g., shelling, stooking, transport), but the most significant cost components are typically known (executed or planned) at planting time.
+Note that optimal farm expenditure per acre $C^*$ remains a deterministic variable. This is because $C^*$ primarily refers to land preparation, seed, fertilizer and chemical pest control. Some formulations of farm cost might also include some harvest post harvest labor costs (e.g., shelling, stooking, transport), but the main cost components are typically known (executed or planned) at planting time.
+
+For purposes of parameter estimation, expected yield is generally not observable. However, expected yield can be deduced from observed yield $y^*(T)$ by estimating Equation \ref{eq:stochYd2} at $t = T$ (in logs).
+<!-- \ref{eq:YdEnvReg1} becomes -->
+
+\begin{equation}
+\ln(y^*(T)) = \ln(v_0) + \sum_i^{n_k} \kappa_i \ln(k_i) + h \ln(C^*) + \epsilon
+\label{eq:lYdEnvReg2}
+\end{equation}
+
+And then interpreting the fitted values for yield as the logged expected yield. That is to say,
+
+\begin{equation}
+\ln(E[y^*(T)]|_{t = 0}) = \ln(y^*(T)) - \epsilon
+\end{equation}
+<!-- \begin{equation} -->
+<!-- E[y^*(T)]|_{t = 0} = v_0 E[k_m(T)]|_{t = 0} \hat{k} C^{*h} \:\:;\:\:\: v_0 = \frac{E[\tilde{y}^*(T)]|_{t = 0}}{E[k] E[C^{*h}]} -->
+<!-- \label{eq:YdEnvReg2} -->
+<!-- \end{equation} -->
+<!-- \:\:;\:\:\: v_0 = \frac{E[y^*]}{E[k] E[C^{*h}]}  -->
 <!-- # ```{r Fig2, fig.show = "hold", fig.width = 5, fig.height=5, fig.align="center", fig.cap="\\label{fig:gBmWeather}(Left) Daily average weather variable time series covering the 2018 maize long rains growing season in Eldoret, Kenya (NREL 2023). (Right) The corresponding daily log changes exhibit the normal distribution typical of geometric Brownian motion.", echo = FALSE} -->
 <!-- #Weather data from National Solar Radiation Database -->
 <!-- #https://nsrdb.nrel.gov/data-viewer -->
@@ -1194,11 +1213,42 @@ s_p \sqrt{T} </> \frac{\phi(-z)}{\Phi(-z)}
 <!-- \begin{equation} -->
 <!-- \end{equation} -->
 
-# Illustrative parameterization based on Kenyan farm data
+# An illustrative use case: a parameterization of the maize aggregate supply curve in Kenya
 
-As an illustrative example, the expected aggregate supply curve derived above from axioms 1-5 is parameterized based on 2007 Kenyan maize farm data in order to estimate 2008 expected aggregate supply. The data comes from... Cannot validate against FAO as FAO is post hoc, have to compare to the GIEWS 2008 June forecast.
+As an illustrative example, the expected aggregate supply curve derived above from axioms 1-5 is parameterized based on 2007 Kenyan maize farm data in order to evaluate 2008 expected aggregate supply. The farm data used in this pedagogical exercise come from a panel covering the main and short rains seasons for multiple crops across Kenya for the years 2000, 2004, 2007, and 2010, originally gathered by the Egerton University Tegemeo Institute of Agricultural Policy and Development in partnership with Michigan State University, under the auspices of a USAID project [@maizeData]. For the present exercise, only the 2007 main rains season maize farm data is used. The main rains season generally runs from March to August. Farms not reporting maize as their main crop or reporting zero maize production cost are excluded, resulting in a sample size of 942 maize farms across 20 counties. The sample represents all major maize growing regions in the country as well as some marginal regions. Full details regarding the data and its processing for the present exercise, including summary statistics, are provided in Appendix 2.
 
-Parameterization of the expected aggregate supply curve derived above requires knowledge of the expected harvest price at time of planting $E[P(T)]|_{t = 0}$, which can be calculated via Equation ... based on the price at planting $P(0)$ and length of cropping season $T$ if price series data is available by which to estimate $m_p$ and $s_p$. It also requires the number of farms in the population $N$, mean farm size $k_a$, the degree of homogeneity $h$. If calculating the PEFS-adj. mean probability of profit in the  in the farm population   the mean farm's expected unit cost as evaluated at planting time $E[\tilde{C}^{\#}(T)]|_{t = 0}$, and the expected mean harvested output as evaluated at planting time $E[\tilde{q}^*(T)]\bigr|_{t = 0}$. 
+To estimate parameters, Equation \ref{eq:lYdEnvReg2} is fit to the data. In this exercise, the constant $v_0$ includes endowment dummy variables that augment the constant on farms where the endowment is present.
+
+\begin{equation}
+y^*(T) = \ln(v_0) + \sum_i^{n_k} \kappa_i \ln(k_i) + h \ln(C^*) + \epsilon \:\:;\:\:\: \ln(v_0) = \beta_0 + \sum_{i = 1}^{n_b} \beta_i b_i
+\label{eq:lYdEnvReg3}
+\end{equation}
+
+The dummy endowment variables $b_i$ (which take a value of $1$ if the endowment is present and $0$ otherwise) are: use of oxen in land preparation, use of tractor in land preparation, adopter of hybrid seed, and land tenure. The control variables ($k_i$) are planting density (seed kg/acre), adult equivalent household size, farm size, and rainfall. The rainfall variable is 2007 main season rainfall divided by an historical benchmark, and so can be interpreted as the rainfall anomaly or departure from the historical benchmark. The farm expenditure $C^*$ includes the cost of synthetic fertilizer, land preparation, pest and disease control chemicals, and seed. The regression results are presented in Table 1.
+
+...
+
+As explained in section \ref{sec:acct4Stoch}, the expected yield $E[y^*(T)]|_{y = 0}$ is calculated as $y^*(T)e^{-\epsilon}$....also rainfall
+
+$y^*(T) \frac{E[k_r^{\kappa_r}]}{k_r^{\kappa_r}} e^{-\epsilon}$
+
+As discussed in section \ref{sec:acct4Stoch}, Equation \ref{eq:lYdEnvReg2} is fit to the data,
+and then the expected yield is estimated as $E[y^*(T)]|_{t = 0} = y^*(T) - \epsilon$. 
+
+
+
+\ln(v_0) = \beta_0 + \sum_{i = 1}^{n_b} \beta_i b_i
+
+To estimate the degree of homogeneity $h$, Equation \ref{eq:YdEnvReg2} is estimated in logs. 
+
+<!-- \:\:;\:\:\: v_0 = \frac{E[y^*]}{E[k] E[C^{*h}]}  -->
+
+
+
+
+The data comes from... Cannot validate against FAO as FAO is post hoc, have to compare to the GIEWS 2008 June forecast.
+
+Parameterization of the expected aggregate supply curve requires knowledge of the expected harvest price at time of planting $E[P(T)]|_{t = 0}$, which can be calculated via Equation ... based on the price at planting $P(0)$ and length of cropping season $T$ if price series data is available by which to estimate $m_p$ and $s_p$. It also requires the number of farms in the population $N$, mean farm size $k_a$, the degree of homogeneity $h$. If calculating the PEFS-adj. mean probability of profit in the  in the farm population   the mean farm's expected unit cost as evaluated at planting time $E[\tilde{C}^{\#}(T)]|_{t = 0}$, and the expected mean harvested output as evaluated at planting time $E[\tilde{q}^*(T)]\bigr|_{t = 0}$. 
 <!-- The last of these may of course be further decomposed as $E[A] E[\tilde{y}(T)]\bigr|_{t = 0}$, where $E[A]$ is the mean farm size and $\tilde{y}(T)$ is just the $\tilde{y}$ from Equation \ref{eq:yConst}, with the time of evaluation (harvest) made explicit. -->
 
 In the present example, both farm data and some price series data from GIEWS is available. The price data is monthly data, with just 5 observations prior to 2008, and so is quite low resolution for purposes of estimating supply in 2008. The available farm data is comparatively high resolution, with 942 observations across most of the maize growing regions in the country. Therefore gonna estimate the PEFS-adj. mean probability of profit and h and unconditional yield from unconditional mSharp and sSharp  in farm population space.
@@ -1269,7 +1319,7 @@ Given sufficient price data, the values of $m_p$ and $s_p$ should be estimated o
 An accurate value for $N$ will be difficult to estimate in populations where no recent farm census data is available. Note that $N$ is not necessary for evaluation of the price elasticity of aggregate supply and price risk elasticity of aggregate supply (Equations \ref{eq:pElasQagg} and \ref{eq:pRiskElasQagg}).
 
 
-# An illustrative use case: a parameterization of the maize aggregate supply curve in Kenya 
+
 
 cite the GIEWS 2007 forecast!!! validate against GIEWS forecast not FAO because the model is for EXPECTED agg supply, FAO is post harvest info.
 
@@ -1573,7 +1623,7 @@ hist(dfLook$cSharp)
 #dfMod3 <- df_mod[-indRm, c(mod3Vars)]
 dfMod3 <- df_mod[, mod3Vars]
 #dfMod3 <- dfMod3 %>% subset(Dist %in% maizeProvs)
-mod3 <- lm(`Yield (kg/acre)`~., dfMod3[, -1])
+mod3 <- lm(`Yield (kg/acre)` ~., dfMod3[, -1])
 summ(mod3)
 # indSameP <- which(dfMod3$Dist %in% maizeProvs)
 # hist(mod3$fitted.values[indSameP])
@@ -2058,7 +2108,6 @@ gg <- gg + geom_line()
 
 ## Data and transformation
 
-The farm data used in this pedagogical exercise come from a panel covering the main and short rains seasons for multiple crops across Kenya for the years 2000, 2004, 2007, and 2010, originally gathered by the Egerton University Tegemeo Institute of Agricultural Policy and Development in partnership with Michigan State University, under the auspices of a USAID project [@maizeData]. For the present exercise, only the 2007 main rains season maize farm data is used. Farms not reporting maize as their main crop or reporting zero maize production cost are excluded, resulting in a sample size of 942 maize farms across 20 counties. The sample represents all major maize growing regions in the country. Full details regarding the data and its processing for the present exercise, including summary statistics, are provided in Appendix 2.
 
 Estimation of the yield model specified above requires data detailing maize yield, cost/acre, input prices, and continuous and binary control variables.
 
