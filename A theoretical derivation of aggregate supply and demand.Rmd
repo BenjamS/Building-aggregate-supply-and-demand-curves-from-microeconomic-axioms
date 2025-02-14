@@ -32,6 +32,8 @@ knitr::opts_chunk$set(echo = FALSE,
 library(tidyverse)
 library(patchwork)
 library(scales)
+library(lubridate)
+library(randomcoloR)
 
 labelSize <- 2.5
 smallLabelSize <- 2
@@ -626,24 +628,24 @@ Q = N E[k_a] E[y^*] \Phi\left( \frac{\ln(P) - m_{\#}}{s_{\#}} - \eta s_{\#} \rig
 \label{eq:aggSup1}
 \end{equation}
 
-In the evaluation of $Q$, it is important to keep in mind that $E[y^*]$, $m_{\#}$, and $s_{\#}$ are unconditional population parameters. That is to say, $E[y^*]$ refers to the mean yield given the participation of all farms in the population; and $m_{\#}$ and $s_{\#}$ refer to the mean and standard deviation of $\ln(C^{\#})$ given full participation, i.e. as $C^{\#}$ goes to infinity. But axiom 3 truncates the upper tail of the distribution of $C^{\#}$ at $P$ (this follows directly from $C^* \leq R^*$). The observed parameters $\hat{m}_{\#}$ and $\hat{s}_{\#}$ are thus conditional.
+In the evaluation of $Q$, it is important to keep in mind that $E[y^*]$, $m_{\#}$, and $s_{\#}$ are unconditional population parameters. That is to say, $E[y^*]$ refers to the mean yield given the participation of all farms in the population; and $m_{\#}$ and $s_{\#}$ refer to the mean and standard deviation of $\ln(C^{\#})$ given full participation, i.e. as $C^{\#}$ goes to infinity. But axiom 3 truncates the upper tail of the distribution of $C^{\#}$ at $P$ (this follows directly from $C^* \leq R^*$). The observed parameters $\bar{m}_{\#}$ and $\hat{s}_{\#}$ are thus conditional.
 
 \begin{equation}
 \begin{split}
-\hat{m}_{\#} = E[\ln(C^{\#}) | C^{\#} \leq P]
-\hat{s}^2_{\#} = Var[\ln(C^{\#}) | C^{\#} \leq P]
+\bar{m}_{\#} = E[\ln(C^{\#}) | C^{\#} \leq P]
+\bar{s}^2_{\#} = Var[\ln(C^{\#}) | C^{\#} \leq P]
 \end{split}
 \end{equation}
 
 Because $y^*$ is a function of $C^{\#}$, then (for given $k$) $y^*$ is also truncated; and so the observed mean yield is the conditional mean $E[y^*|C^{\#} \leq P]$.
 <!-- The unconditional  $E[y]$ is thus never observed except in the limit as $P$ becomes very large.-->
 
-The unconditional parameters $m_{\#}$ and $s_{\#}$ can be deduced from the conditional parameters $\hat{m}_{\#}$ and $\hat{s}_{\#}$ by numerically solving the following system of equations.
+The unconditional parameters $m_{\#}$ and $s_{\#}$ can be deduced from the conditional parameters $\bar{m}_{\#}$ and $\bar{s}_{\#}$ by numerically solving the following system of equations.
 
 \begin{equation}
 \begin{split}
-m_{\#} &= \hat{m}_{\#} - \hat{s}_{\#} \frac{\phi(z)}{\Phi(z)} \\
-s_{\#}^2 &= \hat{s}_{\#}^2 \left( 1 - z \frac{\phi(z)}{\Phi(z)} - \left( \frac{\phi(z)}{\Phi(z)} \right)^2   \right) \:\:;\:\:\: \frac{\ln(\gamma) - m_{\#}}{s_{\#}} \:\:\:;\:\: z = \frac{\ln(\gamma) - m_{\#}}{s_{\#}}
+\bar{m}_{\#} &= m_{\#} - s_{\#} \frac{\phi(z)}{\Phi(z)} \\
+\bar{s}_{\#}^2 &= s_{\#}^2 \left( 1 - z \frac{\phi(z)}{\Phi(z)} - \left( \frac{\phi(z)}{\Phi(z)} \right)^2   \right) \:\:;\:\:\: z = \frac{\ln(\gamma) - m_{\#}}{s_{\#}}
 \end{split}
 \label{eq:cSharpUncondParams}
 \end{equation}
@@ -838,7 +840,7 @@ It is important to keep in mind that the price trajectory considered here is ove
 
 ```{r Fig1, fig.show = "hold", fig.width = 5, fig.height=5, fig.align="center", fig.cap="\\label{fig:gBmPrice}(Left) Maize price series from (top to bottom) Chicago, USA (CME, 2023), Johannesburg, RSA (JSE, 2023), and Eldoret market, Kenya (FPMA, 2023). (Right) The corresponding daily (monthly, in the case of Kenya) log changes exhibit the normal distribution typical of geometric Brownian motion.", echo = FALSE}
 
-thisFolder <- "D:/OneDrive - CGIAR/Documents 1/CIAT 2/A theory of aggregate supply and demand/"
+thisFolder <- "D:/OneDrive - CGIAR/Documents 1/CIAT 2/A theory of aggregate supply and demand/Price data/"
 thisFile <- "South Africa corn future price.csv"
 thisFilePath <- paste0(thisFolder, thisFile)
 df_raw <- read.csv(thisFilePath, stringsAsFactors = F)
@@ -847,26 +849,16 @@ df_raw <- df_raw[, keepCols]
 colnames(df_raw) <- c("Date", "Price")
 df_raw$Date <- as.Date(df_raw$Date, "%m/%d/%Y")
 df <- subset(df_raw, Date > "2017-11-01" &
-               Date < "2018-04-15")
+               Date < "2018-04-15") %>%
+  complete(Date = seq.Date(from = min(Date),
+                           to = max(Date), by = "day"))  %>%
+  filter(!(weekdays(Date) %in% c('Saturday','Sunday')))
+
+
 df$`Log change` <- c(NA, diff(log(df$Price)))
-#colnames(df)[2] <- "ZAR / kg."
-# gg <- ggplot(df, aes(x = Date, y = `ZAR / kg.`))
-# gg <- gg + geom_line()
-# gg <- gg + theme_bw()
-# gg <- gg + theme(axis.title.x = element_blank(),
-#                  axis.title.y = element_text(size = axisTitleSize),
-#                  axis.text = element_text(size = axisTextSize))
-# gg_sa <- gg
+#shapiro.test(df$`Log change`)
 df_sa <- df
-#df_sa$`ZAR / kg.` <- NULL
 df_sa$Place <- "South Africa"
-# gg <- ggplot(df, aes(x = `Log change`))
-# gg <- gg + geom_histogram(color = 4, fill = "white", bins = 15)
-# gg
-# mm <- mean(df$`Log daily return`, na.rm = T)
-# s <- sd(df$`Log daily return`, na.rm = T)
-# print(mm)
-# print(s)
 #-----------------------------------------------------------------
 thisFile <- "US corn future price.csv"
 thisFilePath <- paste0(thisFolder, thisFile)
@@ -876,56 +868,34 @@ df_raw <- df_raw[, keepCols]
 colnames(df_raw) <- c("Date", "Price")
 df_raw$Date <- as.Date(df_raw$Date, "%Y-%m-%d")
 df <- subset(df_raw, Date > "2018-03-31" &
-               Date < "2018-12-01")
+               Date < "2018-12-01") %>%
+  complete(Date = seq.Date(from = min(Date),
+                           to = max(Date), by = "day")) %>%
+  filter(!(weekdays(Date) %in% c('Saturday','Sunday')))
 df$Price <- df$Price / 100
 df$`Log change` <- c(NA, diff(log(df$Price)))
-#colnames(df)[2] <- "USD / bushel"
-# gg <- ggplot(df, aes(x = Date, y = `USD / bushel`))
-# gg <- gg + geom_line()
-# gg <- gg + theme_bw()
-# gg <- gg + theme(axis.title = element_text(size = axisTitleSize),
-#                  axis.text = element_text(size = axisTextSize))
-# gg_us <- gg
+#shapiro.test(df$`Log change`)
 df_us <- df
-#df_us$`USD / bushel` <- NULL
 df_us$Place <- "USA"
-# mm <- mean(df$`Log daily return`, na.rm = T)
-# s <- sd(df$`Log daily return`, na.rm = T)
-# print(mm)
-# print(s)
 #---------------------------------------------------------------
-thisFile <- "Nakuru Eldoret monthly maize price.csv"
+# https://data.humdata.org/organization/wfp?vocab_Topics=prices
+thisFile <- "Maize price Eldoret WFP.csv"
 thisFilePath <- paste0(thisFolder, thisFile)
-df_raw <- read.csv(thisFilePath, stringsAsFactors = F)
-keepCols <- c(1, 2)
-df_raw <- df_raw[, keepCols]
-df_raw <- as.data.frame(apply(df_raw, 2, rev))
-colnames(df_raw) <- c("Date", "Price")
-df_raw$Price <- as.numeric(df_raw$Price)
-df_raw$Date <- as.Date(df_raw$Date, "%m/%d/%Y")
-df <- subset(df_raw, Date >= "2008-03-01" &
-               Date <= "2019-08-01")
+dfRaw <- read.csv(thisFilePath, stringsAsFactors = F)
+dfRaw$Date <- row.names(dfRaw); dfRaw <- dfRaw[-1, ]; colnames(dfRaw)[1] <- "Price"
+dfRaw$Price <- round(as.numeric(dfRaw$Price), 2)
+dfRaw$Date <- my(dfRaw$Date)
+df <- dfRaw %>%
+  complete(Date = seq.Date(from = min(Date),
+                           to = max(Date), by = "month"))
 df$`Log change` <- c(NA, diff(log(df$Price)))
-#colnames(df)[2] <- "KES / kg."
-# gg <- ggplot(df, aes(x = Date, y = `KES / kg.`))
-# gg <- gg + geom_line()
-# gg <- gg + theme_bw()
-# gg <- gg + theme(axis.title.x = element_blank(),
-#                  axis.title.y = element_text(size = axisTitleSize),
-#                  axis.text = element_text(size = axisTextSize))
-# gg_ky <- gg
+#shapiro.test(df$`Log change`)
 df_ky <- df
-#df_ky$`KES / kg.` <- NULL
 df_ky$Place <- "Kenya"
-# gg <- ggplot(df, aes(x = `Log change`))
-# gg <- gg + geom_histogram(color = 4, fill = "white", bins = 20)
-# gg
-# mm <- mean(df$`Log daily return`, na.rm = T)
-# s <- sd(df$`Log daily return`, na.rm = T)
-# print(mm)
-# print(s)
+#----------------------------------------------------------------------------------------
+# Put it all together for graphic
 df_ts <- as.data.frame(do.call(rbind, list(df_us, df_sa, df_ky)))
-df_ts$Place <- gsub("Kenya", "Eldoret, Kenya\n2008-2019 (monthly)\nKES / kg.", df_ts$Place)
+df_ts$Place <- gsub("Kenya", "Eldoret, Kenya\n2006-2022 (monthly)\nKES / kg.", df_ts$Place)
 df_ts$Place <- gsub("USA", "Chicago, USA\n2018 growing season (daily)\nUSD / bushel", df_ts$Place)
 df_ts$Place <- gsub("South Africa", "Johannesburg, RSA\n2018 growing season (daily)\nZAR / kg.", df_ts$Place)
 gg <- ggplot(df_ts, aes(x = Date, y = Price))
@@ -936,7 +906,7 @@ gg <- gg + scale_x_date(breaks = scales::breaks_pretty(n = 8), labels = date_for
 gg <- gg + facet_wrap(~factor(Place,
                               levels = c("Chicago, USA\n2018 growing season (daily)\nUSD / bushel",
                                          "Johannesburg, RSA\n2018 growing season (daily)\nZAR / kg.",
-                                         "Eldoret, Kenya\n2008-2019 (monthly)\nKES / kg.")),
+                                         "Eldoret, Kenya\n2006-2022 (monthly)\nKES / kg.")),
                       ncol = 1, scales = "free", strip.position = "left")
 gg <- gg + labs(title = "Maize price series exhibiting geometric Brownian motion")
 gg <- gg + theme_bw()
@@ -948,14 +918,15 @@ gg <- gg + theme(axis.title.x = element_text(size = axisTitleSize),
                  plot.title = element_text(size = titleSize))
 gg_ts <- gg
 #---------------------------------------------------------------
+# Histograms of log changes
 # df_hist <- as.data.frame(do.call(rbind, list(df_sa, df_us, df_ky)))
 df_hist <- df_ts
 gg <- ggplot(df_hist, aes(x = `Log change`))
-gg <- gg + geom_histogram(color = 4, fill = "white", bins = 20)
+gg <- gg + geom_histogram(color = 4, fill = "white", bins = 15)
 gg <- gg + facet_wrap(~factor(Place,
                               levels = c("Chicago, USA\n2018 growing season (daily)\nUSD / bushel",
                                          "Johannesburg, RSA\n2018 growing season (daily)\nZAR / kg.",
-                                         "Eldoret, Kenya\n2008-2019 (monthly)\nKES / kg.")), ncol = 1, scales = "free")
+                                         "Eldoret, Kenya\n2006-2022 (monthly)\nKES / kg.")), ncol = 1, scales = "free")
 gg <- gg + labs(title = "Log change")
 gg <- gg + theme_bw()
 gg <- gg + theme(axis.title = element_blank(),
@@ -973,6 +944,8 @@ gg_ts + gg_hist + plot_layout(ncol = 2, widths = c(1, 1/3))
 #             BBD
 #             CCD")
 # wrap_plots(A = gg_ky, B = gg_sa, C = gg_us, D = gg_hist, design = design)
+
+
 
 ```
 
@@ -1220,202 +1193,16 @@ As an illustrative example, the expected aggregate supply curve derived above fr
 To estimate parameters, Equation \ref{eq:lYdEnvReg2} is fit to the data. In this exercise, the constant $v_0$ includes endowment dummy variables that augment the constant on farms where the endowment is present.
 
 \begin{equation}
-y^*(T) = \ln(v_0) + \sum_i^{n_k} \kappa_i \ln(k_i) + h \ln(C^*) + \epsilon \:\:;\:\:\: \ln(v_0) = \beta_0 + \sum_{i = 1}^{n_b} \beta_i b_i
+\ln(y^*(T)) = \ln(v_0) + \sum_i^{n_k} \kappa_i \ln(k_i) + h \ln(C^*) + \epsilon \:\:;\:\:\: \ln(v_0) = \beta_0 + \sum_{i = 1}^{n_b} \beta_i b_i
 \label{eq:lYdEnvReg3}
 \end{equation}
+<!-- \:\:;\:\:\: v_0 = \frac{E[y^*]}{E[k] E[C^{*h}]}  -->
 
 The dummy endowment variables $b_i$ (which take a value of $1$ if the endowment is present and $0$ otherwise) are: use of oxen in land preparation, use of tractor in land preparation, adopter of hybrid seed, and land tenure. The control variables ($k_i$) are planting density (seed kg/acre), adult equivalent household size, farm size, and rainfall. The rainfall variable is 2007 main season rainfall divided by an historical benchmark, and so can be interpreted as the rainfall anomaly or departure from the historical benchmark. The farm expenditure $C^*$ includes the cost of synthetic fertilizer, land preparation, pest and disease control chemicals, and seed. The regression results are presented in Table 1.
 
-...
-
-As explained in section \ref{sec:acct4Stoch}, the expected yield $E[y^*(T)]|_{y = 0}$ is calculated as $y^*(T)e^{-\epsilon}$....also rainfall
-
-$y^*(T) \frac{E[k_r^{\kappa_r}]}{k_r^{\kappa_r}} e^{-\epsilon}$
-
-As discussed in section \ref{sec:acct4Stoch}, Equation \ref{eq:lYdEnvReg2} is fit to the data,
-and then the expected yield is estimated as $E[y^*(T)]|_{t = 0} = y^*(T) - \epsilon$. 
-
-
-
-\ln(v_0) = \beta_0 + \sum_{i = 1}^{n_b} \beta_i b_i
-
-To estimate the degree of homogeneity $h$, Equation \ref{eq:YdEnvReg2} is estimated in logs. 
-
-<!-- \:\:;\:\:\: v_0 = \frac{E[y^*]}{E[k] E[C^{*h}]}  -->
-
-
-
-
-The data comes from... Cannot validate against FAO as FAO is post hoc, have to compare to the GIEWS 2008 June forecast.
-
-Parameterization of the expected aggregate supply curve requires knowledge of the expected harvest price at time of planting $E[P(T)]|_{t = 0}$, which can be calculated via Equation ... based on the price at planting $P(0)$ and length of cropping season $T$ if price series data is available by which to estimate $m_p$ and $s_p$. It also requires the number of farms in the population $N$, mean farm size $k_a$, the degree of homogeneity $h$. If calculating the PEFS-adj. mean probability of profit in the  in the farm population   the mean farm's expected unit cost as evaluated at planting time $E[\tilde{C}^{\#}(T)]|_{t = 0}$, and the expected mean harvested output as evaluated at planting time $E[\tilde{q}^*(T)]\bigr|_{t = 0}$. 
-<!-- The last of these may of course be further decomposed as $E[A] E[\tilde{y}(T)]\bigr|_{t = 0}$, where $E[A]$ is the mean farm size and $\tilde{y}(T)$ is just the $\tilde{y}$ from Equation \ref{eq:yConst}, with the time of evaluation (harvest) made explicit. -->
-
-In the present example, both farm data and some price series data from GIEWS is available. The price data is monthly data, with just 5 observations prior to 2008, and so is quite low resolution for purposes of estimating supply in 2008. The available farm data is comparatively high resolution, with 942 observations across most of the maize growing regions in the country. Therefore gonna estimate the PEFS-adj. mean probability of profit and h and unconditional yield from unconditional mSharp and sSharp  in farm population space.
-
-First estimate the unconditional means based on the observed conditional means cSharp
-
-
-
-## Parameter estimation guidelines
-
-
-
-When estimating $E[C_0^{\#}(T)]|_{t = 0}$ and $E[y^*(T)]\bigr|_{t = 0}$ based on farm survey data, it may be tempting to use the respective sample means. This would be erroneous on two counts: 1) The sample mean gives the actual values known post-harvest, whereas the model deduced above requires the farmers' expectation at planting time. And 2) axiom 3 ($E[C^{\#}(T)]\bigr|_{t = 0} < E[P(T)]\bigr|_{t = 0}$) implies that the sample means are taken over a truncated distribution.
-
-To redress count 1, the log-log model in either Equation \ref{eq:cobbDoug3Ln} or \ref{eq:cobbDoug4} can be estimated by OLS on farm survey data (taking the usual precautions to ensure homoscedasticity and linear independence of the regressors). If the fit is good, then each farm's expected yield at planting may then be reasonably approximated by evaluating the fitted model $\hat{y}^*$ at the farm's regressor values, with the exception of weather variables (and any other control variables whose values are known only post harvest), denoted $\mathbf{k}_{post}$, which should be set to their expected values ($\mathbf{\tilde{k}}_{post}$). That is, for each farm,
-<!-- the expected yield at planting time for a given farm $E[y^*(T)]\bigr|_{t = 0}$ can be assessed by estimating -->
-<!-- The fitted model then describes the behavior of all farms -->
-<!-- As discussed in section ... Equation \ref{eq:cobbDoug4} has the advantage of requiring less data, and giving a  -->
-
-\begin{equation}
-E[y^*(T)]\bigr|_{t = 0} \approx \hat{y}^*|_{\mathbf{k}_{post} = \mathbf{\tilde{k}}_{post}})
-\end{equation}
-
-Now, as discussed in the previous section, the population mean of $E[y^*(T)]\bigr|_{t = 0}$ may be considered equal to the expected value at planting time of the population mean harvested yield $\tilde{y}^*(T)$ (recall Equation \ref{eq:rubThm}). However, because of axiom 3, the sample mean of $E[y^*(T)]\bigr|_{t = 0}$ does not represent the population mean, but rather the mean over a truncated population, i.e. $E[\tilde{y}^*(T) | C^# < E[P(T)]\bigr|_{t = 0}]\bigr|_{t = 0}$.
-
-In order to arrive at the population mean and redress count 2, the sample mean of $C^{\#}$ is first calculated as follows.
-
-\begin{equation}
-E[C^{\#}(T) | E[C^{\#}(T)]\bigr|_{t = 0} < E[P(T)]\bigr|_{t = 0}]\bigr|_{t = T} = E\left[ frac{C^*}{y^*(T)} \right]
-\end{equation}
-
-Given the assumption of lognormally distributed yield (axiom ...), then, by linear independence of the OLS regressors, $C^{\#}(T)$ is also lognormally distributed, such that the unobserved mean and variance of the untruncated distribution of $\ln(C^{\#}(T))$ ($m_c$, $s_c^2$) can be implicitly calculated from the observed (i.e. sample) mean and variance ($\overline{m}_c$, $\overline{s}_c^2$) by the following standard formulae.
-
-\begin{equation}
-\begin{split}
-\overline{s}_c^2 &= s_c^2 \left( 1 - \overline(z) \frac{\phi(\overline{z})}{\Phi(\overline{z})} - \left( \frac{\phi(\overline{z})}{\Phi(\overline{z})} \right)^2   \right) \:\:;\:\:\: \frac{\ln(E[P(T)]\bigr|_{t = 0}) - m_c}{s_c} \\
-\overline{m}_c &= m_c - s_c \frac{\phi(\overline{z})}{\Phi(\overline{z})}
-\end{split}
-\end{equation}
-<!-- rootFnUp <- function(xIn, xUp, sXtrunc, mXtrunc){ -->
-<!--   sX <- xIn[1] -->
-<!--   mX <- xIn[2] -->
-<!--   zUp <- (log(xUp) - mX) / sX -->
-<!--   probTerm <- dnorm(zUp) / pnorm(zUp) -->
-<!--   slack_s <- sXtrunc^2 - sX^2 * (1 - zUp * probTerm - probTerm^2) -->
-<!--   slack_m <- mXtrunc - mX + sX * probTerm -->
-<!--   outVec <- c(slack_s, slack_m) -->
-<!--   return(outVec) -->
-<!-- } -->
-
-With $m_c$ and $s_c$ in hand, the mean unit cost over the untruncated population then follows as $E[C^{\#}(T)] = e^{m_c + s_c^2/2}$. Because Equation \ref{eq:yStarCsharp} is also a model for $y^*$, the mean expected yield taken over the untruncated distribution then follows as the mean over the truncated distribution (the sample mean) multiplied by a correction term.
-
-\begin{equation}
-\begin{split}
-E[\tilde{y}^*(T)]\bigr|_{t = 0} &= E[\tilde{y}^*(T) | C^# < E[P(T)]\bigr|_{t = 0}]\bigr|_{t = 0} \left( \frac{E[C^{\#}]}{E[C^{\#} | C^{\#} < E[P(T)]\bigr|_{t = 0}]} \right)^{\eta} \\
-&= E[\hat{y}^*(\mathbf{k}_{ante}, C^*)|_{\mathbf{k}_{post} = \tilde{\mathbf{k}}_{post}})] e^{\frac{s_{\epsilon}^2}{2}} \left( \frac{E[C^{\#}]}{E[C^{\#} | C^{\#} < E[P(T)]\bigr|_{t = 0}]} \right)^{\eta}
-\end{split}
-\end{equation}
-
-Where $s_{\epsilon}^2$ is the variance of the OLS estimation error and $h$ (implied in $\eta$) is the coefficient on $\ln(C^*)$.
-
-The output price $P(T)$ received by farmers after harvest might be reported in the same farm survey data used to estimate $E[\tilde{y}^*(T)]\bigr|_{t = 0}$. However, the model requires the price at planting time $P(0)$, as well as $m_p$ and $s_p$, which are generally not reported in farm surveys. In countries with well developed forward contracts markets, such information is often available from commodity exchanges. And even in regions with poorly developed farm-to-market linkages, price information is increasingly available from services like the FAO Food Price Monitoring and Analysis Tool, which is the source of the price series in the lower left panel of Figure \ref{fig:gBmPrice}.
-<!-- , often due to a large, entrenched intermediary market which thrives precisely on buyer-seller information asymmetry -->
-
-Given sufficient price data, the values of $m_p$ and $s_p$ should be estimated over a suitable timeframe. Assuming that farmers expect the output price to behave roughly as it did during the previous year, then $m_p$ and $s_p$ should be estimated over the previous year or growing season. However, this may not always be an appropriate assumption, particularly in volatile markets. It may be more suitable to average over multiple years, or to take the average of the parameters estimated over multiple growing seasons.
-<!-- , required to calculate the farmers' expected price (recall Equation \ref{eq:EPT0}) -->
-
-An accurate value for $N$ will be difficult to estimate in populations where no recent farm census data is available. Note that $N$ is not necessary for evaluation of the price elasticity of aggregate supply and price risk elasticity of aggregate supply (Equations \ref{eq:pElasQagg} and \ref{eq:pRiskElasQagg}).
-
-
-
-
-cite the GIEWS 2007 forecast!!! validate against GIEWS forecast not FAO because the model is for EXPECTED agg supply, FAO is post harvest info.
-
-<!-- As an illustrative use case, the supply curve derived above is fitted on 2007 Kenya farm data; and the expected aggregate supply curve is calculated. The (expected) price elasticity of aggregate supply curve and producer participation are also calculated. -->
-
-<!-- The comparison, in some limited sense, validates the model; but the main point here is to briefly explore some of the challenges faced when applying the method in a real world use case. -->
-
-<!-- divergence maybe rooted in variation of output price, also because we don't really know EyStarT0 and EPT0, also because this is expected supply at planting, not actual supply at harvest...also does not account for short rains growing season (October-December) (but short rains harvest is small % of total, in 2021 it was about 250,000MT) -->
-
-
-<!-- Evaluation of Equation \ref{eq:sup4}, requires estimation of the parameters $\theta_x$, $\theta_w$, $\hat{\theta}_k$, the farm level output price elasticity of supply $\eta$, the farm production degree of homogeneity $h$, the mean farm's expected unit cost $E\left[\tilde{C}^{\#}(T)\right]\biggr|_{t = 0}$,  -->
-
-
-<!-- knowledge of control variables $k_i$ and ; estimation of the technology $\alpha_i$ and of the control variable elasticities $\kappa_i$, and $y_0$. -->
-
-<!-- Knowledge of the output price at time of planting $P(0)$, as well as the price seasonal growth rate $m_p$ and volatility $s_p$, and the length of the cropping season $T$ is also required. the number of farms in the population $N$ The mean farm's shadow price of budget $E[\lambda^{-\eta}]$. -->
-
-<!-- Below, an illusrative use case is presented ...for the ideal case where high quality farm survey data is available. The minimum data case is considered in the Discussion. the exogenous parameters of the aggregate supply curve are estimated based on Kenya maize farm data. Calculations of aggregate supply and the output price elasticity of supply using the estimated model are compared against empirical estimates. The comparison, in some limited sense, validates the model; but the main point here is to briefly explore some of the challenges faced when applying the method in a real world use case. -->
-
-<!-- The term $y_0 \theta_{\alpha} / \theta_{w}$ can  technology $\alpha_i$  the control variable elasticities $k_i$,  are estimated by straightforward OLS regression of either Equation \ref{eq:cobbDoug3} (in logs) or Equation \ref{eq:prodFn3}. -->
-
-
-<!-- $$ -->
-<!-- E[Q(T)]|_{t = 0} = N E[\theta] E[\lambda^{-\eta}] P(0)^{\eta} e^{\eta m_p T} \Phi(-z) \:\:; \\ -->
-<!-- z = -\gamma = \frac{\ln\left(\frac{E \left[ \tilde{C}^{\#}(T) \right]\bigr|_{t = 0}}{P(0)} \right)^{\eta} - \left(\eta m_p - \eta^2 \frac{s_p^2}{2} \right) T }{\eta s_p \sqrt{T}} \\ -->
-<!-- \theta = \left( y_0 \frac{\theta_x}{\theta_w} \hat{\theta}_k \right)^{\eta + 1} -->
-<!-- $$ -->
-
-
-<!-- Parameterization of the aggregate supply curve derived above thus requires knowledge of the output price at time of planting $P(0)$, the price growth rate $m_p$ and volatility $s_p$, the length of the cropping season $T$, the number of farms in the population $N$, the output degree of homogeneity $h$, the mean farm's expected unit cost as evaluated at planting time $E[\tilde{C}^{\#}(T)]|_{t = 0}$, and the expected mean harvested output as evaluated at planting time $E[\tilde{q}^*(T)]\bigr|_{t = 0}$. -->
-
-<!-- ## Data -->
-
-
-<!-- For the present exercise,  -->
-<!-- summary statistics are provided in the appendix...variables on which focus...bin vars -->
-<!-- [as well as 2007 rainfall data... as well as the historical average rainfall. ...binary endowment variables...] -->
-<!-- This sort of a validation but not so much a validation... -->
-<!-- <!-- (graphics here or in Appendix) Summary statistics can be found in the Appendix. --> 
-<!-- graphics: main input use, main labor types + who labors -->
-<!-- labor qty calculated over significant activities  -->
-<!-- cost calculated over significant expenditures - labor, fert, p&d  -->
-
-## Model Specification
-
-For parameter estimation, Equation \ref{eq:yStarC} is natural logged, giving
-
-
-\begin{equation}
-\ln(y) = \ln(\tilde{y}) + h \ln \left(\frac{C^*}{\tilde{C}^*} \right) + \sum_{i = 1}^{n_k} \kappa_i \ln \left( \frac{k_i}{\tilde{k}_i} \right) + \sum_{i = 1}^{n_w} \alpha_i \ln(w_i)
-\label{eq:cobbDoug4}
-\end{equation}
-
-Where the shorthand $\tilde{y}$ has been introduced, defined
-
-\begin{equation}
-\tilde{y} = y_0 \theta_{\alpha} \left( \frac{\tilde{C}^*}{h} \right)^h
-\label{eq:yConst}
-\end{equation}
-
-
-
-\begin{equation}
-\ln(\hat{y}) = \ln(\tilde{y}) + \sum_{i = 1}^{n_k} \kappa \ln \left(\frac{k_i}{\tilde{k}_i}\right) + h \ln \left( \frac{C^*}{\tilde{C}^*} \right) + \epsilon \:\:;\;\;\; \ln(\tilde{y}) = \beta_0 + \sum_i \beta_i \ln(b_i)
-\label{eq:regMod}
-\end{equation}
-
-Where the estimation error $\epsilon$ has been introduced, and where binary endowments $b_i$ are made explicit and separated out from the base constant $\beta_0$. For the present exercise, the binary variables included in the model are land tenure (whether or not the head of household holds a title deed to the land they are farming), adoption of hybrid maize, use of oxen during land preparation, and use of a tractor during land preparation. Recall from section ... that binary endowments take a value of $e$ if the endowment is present, such that the corresponding effect $\beta_{i\neq0}$ is added to the base effect $\beta_0$; and $1$ otherwise, such that no effect is added. The base constant $\beta_0$ figures on all farms in the sample, whereas the $\beta_{i\neq0}$ figure only on farms with the respective endowment. The constant $\tilde{y}$ thus varies from farm to farm based on which endowments, if any, are present.
-
-The continuously valued control variables ($k_i$) included in the model are farm size (acres), adult equivalent household size, rainfall anomaly, planting density (seed kg/acre), and child family labor (person-hours/acre). "Rainfall anomaly" captures rainfall divergence from expectation. It is calculated as the actual rainfall during the 2007 main rains season divided by an historical average over the same period (see the next section for details). A rainfall anomaly value of 1, for example, would suggest that rainfall matched expectation. Planting density is treated as a control variable because it is typically determined by agroclimatic endowments/constraints such as soil conditions and cultivar. Child family labor is likewise treated as a control variable on the premise that it effectively measures a hard constraint (poverty), as opposed to a discretionary input.
-
-The farm maize production cost per acre ($C^*$) is 
-
-<!-- To control for exogenous constraints/endowments, a range of binary and continuously valued control variables is included. The continuously valued control variables are farm size (acres), adult equivalent household size, rainfall anomaly, planting density (seed kg/acre), and child family labor (person-hours/acre). "Rainfall anomaly" captures rainfall divergence from expectation. It is calculated as the actual rainfall during the 2007 main rains season divided by an historical average over the same period (see Appendix 2 for details). A rainfall anomaly value of 1, for example, would suggest that rainfall matched expectation. Planting density is treated as a control variable because it is typically determined by agroclimatic endowments/constraints such as soil conditions and cultivar. Child family labor is likewise treated as a control variable on the premise that it effectively measures a hard constraint (poverty), as opposed to a discretionary input. -->
-
-
-
-
-
-
-
-
-<!-- [recall from Equation \ref{eq:yConst} that the input variable elasticities $\alpha_i$ and input prices $w_i$ are implicit in the constant $\tilde{y}$, without requiring detailed information about either.] -->
-
-Note that the constant $\tilde{y}$ is not the same for all farms, but varies depending upon how many binary endowments the farm has. The "base case" of $\tilde{y} = e^{\beta_0}$, represents the sample average yield on farms with neither land tenure nor hybrid maize nor use of oxen or tractors for land preparation. In the sample examined here, there are 14 unique values for $\tilde{y}$, summarized in Figure \ref{fig:ySampAvg}.
-
-Model is essentially a function of cost/acre, binary endowments (including the adoption of hybrid maize), management/agroclimatic/demographic control variables, and the prices of the main chemical inputs.
-
-For the purpose of parameterizing an aggregate supply curve, the data is required in order to have a mean yield ($E[y^*]$), average cost ($C^#$), and degree of homogeneity ($h$)....   The yield model in Equation \ref{eq:cobbDoug4} is specified as a function of cost per acre ($C^*$) and control variables ($k_i$).
-
-The continuous control variables $k_i$ are farm size (acres), seed quantity per acre (planting density), child family labor during planting (person-hours/acre), adult-equivalent household size (aehh07), and the 2007 main season rainfall. The cost per acre $C^*$ is the sum of all land prep and input (seed, fertilizer, hired labor, and pesticide) costs.
-
-B and binary endowment variables ($b_i$), plus an error term $\epsilon$ assumed to be normally distributed with mean 0.
-
 ```{r Fig3, fig.show = "hold", fig.width = 5, fig.height=5, fig.align="center", fig.cap="\\label{fig:lognormalYd}", echo = FALSE}
 
+library(modelsummary)
 thisFolder <- "D:/OneDrive - CGIAR/Documents 1/CIAT 2/A theory of aggregate supply and demand/"
 thisFile <- "df_mod2007.csv"
 thisFilepath <- paste0(thisFolder, thisFile)
@@ -1611,42 +1398,59 @@ mod3Vars <- setdiff(mod2Vars, c(priceVars, "Child family labor, planting (person
 # indRm <- indHiCost
 #indRm <- unique(c(indHiCost, indUnprofitable))
 #dfMod3 <- df_mod[, c(mod3Vars)]
-hist(df_mod$`Yield (kg/acre)`)
+#hist(df_mod$`Yield (kg/acre)`)
 # Focus on provinces that have same or similar maize price
-dfLook <- df_mod %>% group_by(Dist) %>% summarize(`Maize price (KES/kg)` = mean(`Maize price (KES/kg)`))
-ggplot(dfLook,aes(x=`Maize price (KES/kg)`,y=Dist))+geom_bar(stat="identity")
-maizeProvs <- c("Uasin Gishu", "Nyeri", "Trans Nzoia", "Bungoma", "Kakamega", "Narok", "Laikipia", "Kitui", "Machakos")
-dfLook <- df_mod %>% subset(Dist %in% maizeProvs) %>% select(all_of(mod3Vars))
-hist(dfLook$`Yield (kg/acre)`)
-dfLook$cSharp <- dfLook$`Cost/acre (KES/acre)` - dfLook$`Yield (kg/acre)`
-hist(dfLook$cSharp)
+# dfLook <- df_mod %>% group_by(Dist) %>% summarize(`Maize price (KES/kg)` = mean(`Maize price (KES/kg)`))
+# ggplot(dfLook,aes(x=`Maize price (KES/kg)`,y=Dist))+geom_bar(stat="identity")
+# maizeProvs <- c("Uasin Gishu", "Nyeri", "Trans Nzoia", "Bungoma", "Kakamega", "Narok", "Laikipia", "Kitui", "Machakos")
+# dfLook <- df_mod %>% subset(Dist %in% maizeProvs) %>% select(all_of(mod3Vars))
+# hist(dfLook$`Yield (kg/acre)`)
+# dfLook$cSharp <- dfLook$`Cost/acre (KES/acre)` - dfLook$`Yield (kg/acre)`
+# hist(dfLook$cSharp)
 #dfMod3 <- df_mod[-indRm, c(mod3Vars)]
 dfMod3 <- df_mod[, mod3Vars]
 #dfMod3 <- dfMod3 %>% subset(Dist %in% maizeProvs)
 mod3 <- lm(`Yield (kg/acre)` ~., dfMod3[, -1])
-summ(mod3)
-# indSameP <- which(dfMod3$Dist %in% maizeProvs)
-# hist(mod3$fitted.values[indSameP])
-# lcSharpSameP <- (subset(dfMod3, Dist %in% maizeProvs)$`Cost/acre (KES/acre)` - mod3$fitted.values[indSameP])
-# hist(lcSharpSameP)
-# dfMod3$cSharp <- dfMod3$`Cost/acre (KES/acre)` - dfMod3$`Yield (kg/acre)`
-# dfMod3$`Yield (kg/acre)` <- NULL#; dfMod3$`Cost/acre (KES/acre)`
-# mod3 <- truncreg::truncreg(cSharp~., dfMod3[, -1], point = 2.5, direction = "right")
-# mod3 <- lm(cSharp~., dfMod3[, -1])
-# summary(mod3)
-# plot(mod3$fitted.values, mod3$residuals)
-# 1-mod3$coefficients[2]
-
-
-
+#summ(mod3)
 #car::vif(mod3)
-# # Clean: drop outliers with error outside of x stand devs
-# indRm <- which(abs(mod3$residuals) > 1)
-# View(dfMod3[indRm,]); length(indRm)
-# dfMod3 <- dfMod3[-indRm, ]
-#======================================================================
-#======================================================================
-#======================================================================
+
+# summary(mod3) %>% xtable() %>%
+# kable()
+
+#coefOrder <- gsub("`", "", unique(c(varsOve1a, varsOve1b, varsOve2a, varsOve2b, varsOve3)))
+modelsummary(mod3, output = "latex", statistic = "p.value",
+             estimate = "{estimate}{stars}")#, coef_map = coefOrder)
+#output = "markdown"
+#output = "kableExtra"
+#ouput="flextable"
+
+h <- mod3$coefficients[2]; eta <- h / (1 - h)
+hReport <- round(h, 2)
+etaReport <- round(eta, 2)
+
+```
+
+The estimated coefficient on logged cost per acre is statistically significant and indicates that the population yield degree of homogeneity is $h =$ `r hReport`, by which it follows immediately that the price elasticity of farm supply is $\eta = h / (1 - h) =$ `r etaReport`. The coefficients on the other regressors are also statistically significant and take values and signs that agree with intuition. Note that the coefficient on the farm size regressor is negative, affirming the inverse relation between farm size and yield found in numerous other studies [@muyanga2019revisiting; @larson2014should; @wassie2019revisiting; @gautam2019too; @kimhi2006plot].
+
+As explained in section \ref{sec:acct4Stoch}, the expected yield $E[y^*(T)]|_{y = 0}$ is calculated as $y^*(T) e^{-\epsilon} k_r^{-\kappa_r}$. The observed optimal expected unit cost is then calculated as $E[C^{\#}(T)]|_{t = 0} = C^* / E[y^*(T)]|_{y = 0}$. As explained in \ref{sec:aggSupDeterm}, axiom 3 truncates the distribution of (expected) optimal unit cost at the (expected) output price. The conditional parameters $\bar{m}_{\#}$ and $\bar{s}_{\#}$ are calculated from this observed, truncated distribution; and then the unconditional parameters $m_{\#}$ and $s_{\#}$ are calculated by solving simultaneous Equations \ref{eq:cSharpUncondParams}. In addition to $\bar{m}_{\#}$ and $\bar{s}_{\#}$, this requires an estimate of expected harvest price at planting time ($E[P(T)]|_{t = 0}$).
+
+The Kenya farm data includes the harvest output price as observed at harvest $P(T)$. Expected harvest price at planting can be calculated based on axiom 5 if high resolution price series data is available. The FAO Food Price Monitoring and Analysis Tool (v4) is an increasingly useful source of monthly and weekly cereal wholesale price series at key domestic marketplaces around the world, including the El Doret and Nakuru maize markets in Kenya. However, data prior to 2020 is sparse, and prior to 2007 there are only 9 consecutive monthly data points in 2005. This is too low a resolution to estimate the price drift and volatility parameters $m_p$ and $s_p$ with confidence. Instead, 
+
+
+long rains mar-may
+Generally how it works: If short rains (oct-dec) are bad, then price increases from planting to harvest, if short rains good, then price stays flat or goes down a little. In years where price increases over the main cropping season, volatility is also higher. Farmers planting in March of 2008 had just finished a poor short season of less than expected rain in oct-dec, and thus expected the maize price to increase from its spot price $P(0)$ at planting.
+
+In July of 2008, after a poor mar-may main rains season the Ministry of Agriculture estimated that the main season harvest would be 2.16 million MT (GIEWS 2008 brief).
+
+
+
+
+The data comes from... Cannot validate against FAO as FAO is post hoc, have to compare to the GIEWS 2008 June forecast.
+
+
+
+
+```{r}
 # Descriptive graphics
 dfLook <- dfMod3
 gatherCols <- colnames(dfLook)[-1]
@@ -1731,73 +1535,65 @@ h <- coefVec[which(coefNames == "Cost/acre (KES/acre)")]; eta <- h / (1 - h)
 muThetaKnh <- exp(sum(c(eta / h * mVec * kappaVec, (eta / h)^2 * kappaVec^2 * sVec^2 / 2)))
 #======================================================================
 # Get mean price jump from county level monthly price data (downloaded from FAO GIEWS-FPMA Tool) and calculate lambda
-thisFile <- "Nakuru Eldoret monthly maize price.csv"
-thisFilePath <- paste0(thisFolder, thisFile)
-df_raw <- read.csv(thisFilePath, stringsAsFactors = F)
-keepCols <- c(1, 2)
-df_raw <- df_raw[, keepCols]
-df_raw <- as.data.frame(apply(df_raw, 2, rev))
-colnames(df_raw) <- c("Date", "Price")
-df_raw$Price <- as.numeric(df_raw$Price)
-df_raw$Date <- as.Date(df_raw$Date, "%m/%d/%Y")
-df <- df_raw
-# df <- subset(df_raw, Date >= "2008-03-01" &
-#                Date <= "2019-08-01")
-df$`Log change` <- c(NA, diff(log(df$Price)))
-library(lubridate)
-yrVec <- unique(year(df$Date))
-nYr <- length(yrVec)
-th <- 7
-mVec <- c()
-sVec <- c()
-P0vec <- c()
-EPT0hist <- c()
-anomVec <- c()
-for(i in 1:(nYr - 1)){
-  thisDate <- as.Date(paste0(as.character(yrVec[i]), "-03-01"))
-  indMY <- grep(thisDate, df$Date)
-  indMY <- indMY:(indMY + th)
-  this_m <- mean(df$`Log change`[indMY], na.rm = T)
-  this_s <- sd(df$`Log change`[indMY], na.rm = T)
-  mVec[i] <- this_m
-  sVec[i] <- this_s
-  #---
-  thisDate <- as.Date(paste0(as.character(yrVec[i]), "-03-01"))
-  indGrow <- grep(thisDate, df$Date)
-  indGrow <- indGrow:(indGrow + th)
-  P0 <- df$Price[indGrow[1]]
-  PT <- df$Price[indGrow[1 + th]]
-  P0vec[i] <- P0 
-  #---
-  # print(year(df$Date[indGrow[1]]))
-  # print(paste("m = ", this_m))
-  # print(paste("s = ", this_s))
-  if(i > 1){
-    EPT0 <- P0 * exp(mVec[i - 1] * th)
-    thisAnomaly <- 100 * (EPT0 / PT - 1)
-    # print(paste("P0 = ", P0))
-    # print(paste("PT = ", PT))
-    # print(paste("EPT0 = ", EPT0))
-    # print(thisAnomaly)
-    EPT0hist[i] <- EPT0
-    anomVec[i] <- thisAnomaly
-  }
-  
+#https://www.fao.org/giews/food-prices/price-tool/en/
+#thisFile <- "Nakuru Eldoret monthly maize price.csv"
+mktVec <- c("Eldoret", "Nakuru", "Nairobi", "Mombassa", "Nyanza")
+fileVec <- paste("Maize price", mktVec, "WFP.csv")
+listDf <- list()
+for(i in 1:length(fileVec)){
+  thisFile <- fileVec[i]
+  thisFilePath <- paste0(thisFolder, thisFile)
+  dfRaw <- read.csv(thisFilePath, stringsAsFactors = F)
+  dfRaw$Date <- row.names(dfRaw); dfRaw <- dfRaw[-1, ]; colnames(dfRaw)[1] <- "Price"
+  dfRaw$Price <- round(as.numeric(dfRaw$Price), 2)
+  dfRaw$Mkt <- mktVec[i]
+  dfRaw$Date <- my(dfRaw$Date)
+  dfRaw$`Log change` <- c(NA, diff(log(dfRaw$Price)))
+  listDf[[i]] <- dfRaw
 }
+df <- do.call(rbind, listDf) %>% as.data.frame() %>% group_by(Mkt) %>%
+  complete(Date = seq.Date(from = min(Date),
+                           to = max(Date), by = "month")) %>%
+  mutate(year = year(Date),
+         month = month(Date)) %>% subset(year <= 2012 & month %in% c(2:9))
+#-------------------------------------------------------------------------------------
+theseColors <- distinctColorPalette(length(mktVec))
+gg <- ggplot(df, aes(x = factor(month.abb[month], levels = month.abb), y = Price, group = Mkt, color = Mkt))
+gg <- gg + geom_line(lwd = 0.75)
+gg <- gg + facet_wrap(~year)
+gg <- gg + scale_color_manual(values = theseColors)
+gg <- gg + theme_bw()
+gg <- gg + theme(axis.title = element_blank(),
+                 axis.text = element_text(size = axisTextSize),
+                 strip.background = element_rect(fill = "white"),
+                 #strip.text = element_blank(),
+                 plot.title = element_text(size = titleSize),
+                 legend.title = element_blank())
 
-# hist(anomVec, 15)
-# hist(mVec)
-#---
-P02007 <- P0vec[2]
-mP2006 <- mVec[1]
-sP2006 <- sVec[1]
-#EPT02007 <- floor(P02007 * exp(mP2006 * th))
-EPT02007ElDoret <- P02007 * exp(mP2006 * th)
-#---
-P02009 <- P0vec[4]
-mP2008 <- mVec[3]
-sP2008 <- sVec[3]
-EPT02009 <- P02009 * exp(mP2008 * th)
+
+dfHist <- df %>% subset(year %in% c(2008, 2011, 2012))
+gg <- ggplot(dfHist, aes(x = `Log change`))
+gg <- gg + geom_histogram(color = 4, fill = "white", bins = 10)
+#gg <- gg + facet_wrap(~Mkt, scales = "free")
+gg <- gg + labs(title = "Log change")
+gg <- gg + theme_bw()
+gg <- gg + theme(axis.title = element_blank(),
+                 axis.text = element_text(size = axisTextSize),
+                 #strip.background = element_rect(fill = "white"),
+                 strip.text = element_blank(),
+                 plot.title = element_text(size = titleSize))
+#-------------------------------------------------------------------------------------
+#shapiro.test(df$`Log change`)
+sum(is.na(dfHist$`Log change`) == F)
+mP <- mean(dfHist$`Log change`, na.rm = T)
+sP <- sd(dfHist$`Log change`, na.rm = T)
+timeHoriz <- 
+mP * timeHoriz
+sP * sqrt(timeHoriz)
+dfP0 <- df %>% subset(Date %in% as.Date(c("2008-03-01", "2008-02-01", "2008-04-01")))
+P0 <- mean(dfP0$Price, na.rm = T)
+EPT0 <- P0 * exp(mP * timeHoriz)
+
 #=============================================================================
 # Define root function to solve for population EcSharpT0
 rootFnUp <- function(xIn, xUp, sXtrunc, mXtrunc){
@@ -1814,15 +1610,15 @@ EyStarT0trunc <- exp(mod3$fitted.values)#kRn^-kappaRn * exp(mod3$fitted.values)
 EcStarT0trunc <- exp(dfMod3$`Cost/acre (KES/acre)`)
 EcSharpT0trunc <- EcStarT0trunc / EyStarT0trunc
 lEcSharpT0trunc <- log(EcSharpT0trunc)
-EPT02007 <- mean(df_mod$`Maize price (KES/kg)`) * exp(-mP2006 * th)
-lamTrunc <- EPT02007 / EcSharpT0trunc * h
+#EPT02007 <- mean(df_mod$`Maize price (KES/kg)`) * exp(-mP * timeHorizon)
+lamTrunc <- EPT0 / EcSharpT0trunc * h
 sum(lamTrunc > h) / length(lamTrunc)
 #mEcSharpT0trunc <- mean(lcSharpSameP); sEcSharpT0trunc <- sd(lcSharpSameP)
 mEcSharpT0trunc <- mean(lEcSharpT0trunc); sEcSharpT0trunc <- sd(lEcSharpT0trunc)
 muEcSharpT0trunc <- exp(mEcSharpT0trunc + sEcSharpT0trunc^2 / 2)
 xIn <- c(sEcSharpT0trunc, mEcSharpT0trunc)
 sol <- nleqslv::nleqslv(xIn, rootFnUp, jac = NULL,
-                        xUp = EPT02007,
+                        xUp = EPT0,
                         sXtrunc = sEcSharpT0trunc,
                         mXtrunc = mEcSharpT0trunc)
 #sol
@@ -1831,11 +1627,11 @@ mEcSharpT0 <- sol$x[2]
 muEcSharpT0 <- exp(mEcSharpT0 + sEcSharpT0^2 / 2)
 muEcSharpT0n <- exp(eta * mEcSharpT0 + eta^2 * sEcSharpT0^2 / 2)
 
-mLamba <- log(P02007) + (mP2006 - sP2006^2 / 2) * th + log(h) - mEcSharpT0
+mLamba <- log(P02007) + (mP - sP^2 / 2) * timeHoriz + log(h) - mEcSharpT0
 mean(log(lamTrunc))
 
-ProbProfit <- pnorm((log(EPT02007) - mEcSharpT0) / (sEcSharpT0) - eta * sEcSharpT0)
-EmploymentRate <- pnorm((log(EPT02007) - mEcSharpT0) / sEcSharpT0)
+ProbProfit <- pnorm((log(EPT0) - mEcSharpT0) / (sEcSharpT0) - eta * sEcSharpT0)
+EmploymentRate <- pnorm((log(EPT0) - mEcSharpT0) / sEcSharpT0)
 muEyStarT0trunc <- mean(EyStarT0trunc)
 muEyStarT0 <- muEyStarT0trunc * EmploymentRate / ProbProfit
 EcSharpT0nTrunc <- (exp(dfMod3$`Cost/acre (KES/acre)`) / EyStarT0trunc)^eta
@@ -2105,6 +1901,205 @@ gg <- gg + geom_line()
 #======================================================================
 
 ```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Parameterization of the expected aggregate supply curve requires knowledge of the expected harvest price at time of planting $E[P(T)]|_{t = 0}$, which can be calculated via Equation ... based on the price at planting $P(0)$ and length of cropping season $T$ if price series data is available by which to estimate $m_p$ and $s_p$. It also requires the number of farms in the population $N$, mean farm size $k_a$, the degree of homogeneity $h$. If calculating the PEFS-adj. mean probability of profit in the  in the farm population   the mean farm's expected unit cost as evaluated at planting time $E[\tilde{C}^{\#}(T)]|_{t = 0}$, and the expected mean harvested output as evaluated at planting time $E[\tilde{q}^*(T)]\bigr|_{t = 0}$. 
+<!-- The last of these may of course be further decomposed as $E[A] E[\tilde{y}(T)]\bigr|_{t = 0}$, where $E[A]$ is the mean farm size and $\tilde{y}(T)$ is just the $\tilde{y}$ from Equation \ref{eq:yConst}, with the time of evaluation (harvest) made explicit. -->
+
+In the present example, both farm data and some price series data from GIEWS is available. The price data is monthly data, with just 5 observations prior to 2008, and so is quite low resolution for purposes of estimating supply in 2008. The available farm data is comparatively high resolution, with 942 observations across most of the maize growing regions in the country. Therefore gonna estimate the PEFS-adj. mean probability of profit and h and unconditional yield from unconditional mSharp and sSharp  in farm population space.
+
+First estimate the unconditional means based on the observed conditional means cSharp
+
+
+
+## Parameter estimation guidelines
+
+
+
+When estimating $E[C_0^{\#}(T)]|_{t = 0}$ and $E[y^*(T)]\bigr|_{t = 0}$ based on farm survey data, it may be tempting to use the respective sample means. This would be erroneous on two counts: 1) The sample mean gives the actual values known post-harvest, whereas the model deduced above requires the farmers' expectation at planting time. And 2) axiom 3 ($E[C^{\#}(T)]\bigr|_{t = 0} < E[P(T)]\bigr|_{t = 0}$) implies that the sample means are taken over a truncated distribution.
+
+To redress count 1, the log-log model in either Equation \ref{eq:cobbDoug3Ln} or \ref{eq:cobbDoug4} can be estimated by OLS on farm survey data (taking the usual precautions to ensure homoscedasticity and linear independence of the regressors). If the fit is good, then each farm's expected yield at planting may then be reasonably approximated by evaluating the fitted model $\hat{y}^*$ at the farm's regressor values, with the exception of weather variables (and any other control variables whose values are known only post harvest), denoted $\mathbf{k}_{post}$, which should be set to their expected values ($\mathbf{\tilde{k}}_{post}$). That is, for each farm,
+<!-- the expected yield at planting time for a given farm $E[y^*(T)]\bigr|_{t = 0}$ can be assessed by estimating -->
+<!-- The fitted model then describes the behavior of all farms -->
+<!-- As discussed in section ... Equation \ref{eq:cobbDoug4} has the advantage of requiring less data, and giving a  -->
+
+\begin{equation}
+E[y^*(T)]\bigr|_{t = 0} \approx \hat{y}^*|_{\mathbf{k}_{post} = \mathbf{\tilde{k}}_{post}})
+\end{equation}
+
+Now, as discussed in the previous section, the population mean of $E[y^*(T)]\bigr|_{t = 0}$ may be considered equal to the expected value at planting time of the population mean harvested yield $\tilde{y}^*(T)$ (recall Equation \ref{eq:rubThm}). However, because of axiom 3, the sample mean of $E[y^*(T)]\bigr|_{t = 0}$ does not represent the population mean, but rather the mean over a truncated population, i.e. $E[\tilde{y}^*(T) | C^# < E[P(T)]\bigr|_{t = 0}]\bigr|_{t = 0}$.
+
+In order to arrive at the population mean and redress count 2, the sample mean of $C^{\#}$ is first calculated as follows.
+
+\begin{equation}
+E[C^{\#}(T) | E[C^{\#}(T)]\bigr|_{t = 0} < E[P(T)]\bigr|_{t = 0}]\bigr|_{t = T} = E\left[ frac{C^*}{y^*(T)} \right]
+\end{equation}
+
+Given the assumption of lognormally distributed yield (axiom ...), then, by linear independence of the OLS regressors, $C^{\#}(T)$ is also lognormally distributed, such that the unobserved mean and variance of the untruncated distribution of $\ln(C^{\#}(T))$ ($m_c$, $s_c^2$) can be implicitly calculated from the observed (i.e. sample) mean and variance ($\overline{m}_c$, $\overline{s}_c^2$) by the following standard formulae.
+
+\begin{equation}
+\begin{split}
+\overline{s}_c^2 &= s_c^2 \left( 1 - \overline(z) \frac{\phi(\overline{z})}{\Phi(\overline{z})} - \left( \frac{\phi(\overline{z})}{\Phi(\overline{z})} \right)^2   \right) \:\:;\:\:\: \frac{\ln(E[P(T)]\bigr|_{t = 0}) - m_c}{s_c} \\
+\overline{m}_c &= m_c - s_c \frac{\phi(\overline{z})}{\Phi(\overline{z})}
+\end{split}
+\end{equation}
+<!-- rootFnUp <- function(xIn, xUp, sXtrunc, mXtrunc){ -->
+<!--   sX <- xIn[1] -->
+<!--   mX <- xIn[2] -->
+<!--   zUp <- (log(xUp) - mX) / sX -->
+<!--   probTerm <- dnorm(zUp) / pnorm(zUp) -->
+<!--   slack_s <- sXtrunc^2 - sX^2 * (1 - zUp * probTerm - probTerm^2) -->
+<!--   slack_m <- mXtrunc - mX + sX * probTerm -->
+<!--   outVec <- c(slack_s, slack_m) -->
+<!--   return(outVec) -->
+<!-- } -->
+
+With $m_c$ and $s_c$ in hand, the mean unit cost over the untruncated population then follows as $E[C^{\#}(T)] = e^{m_c + s_c^2/2}$. Because Equation \ref{eq:yStarCsharp} is also a model for $y^*$, the mean expected yield taken over the untruncated distribution then follows as the mean over the truncated distribution (the sample mean) multiplied by a correction term.
+
+\begin{equation}
+\begin{split}
+E[\tilde{y}^*(T)]\bigr|_{t = 0} &= E[\tilde{y}^*(T) | C^# < E[P(T)]\bigr|_{t = 0}]\bigr|_{t = 0} \left( \frac{E[C^{\#}]}{E[C^{\#} | C^{\#} < E[P(T)]\bigr|_{t = 0}]} \right)^{\eta} \\
+&= E[\hat{y}^*(\mathbf{k}_{ante}, C^*)|_{\mathbf{k}_{post} = \tilde{\mathbf{k}}_{post}})] e^{\frac{s_{\epsilon}^2}{2}} \left( \frac{E[C^{\#}]}{E[C^{\#} | C^{\#} < E[P(T)]\bigr|_{t = 0}]} \right)^{\eta}
+\end{split}
+\end{equation}
+
+Where $s_{\epsilon}^2$ is the variance of the OLS estimation error and $h$ (implied in $\eta$) is the coefficient on $\ln(C^*)$.
+
+The output price $P(T)$ received by farmers after harvest might be reported in the same farm survey data used to estimate $E[\tilde{y}^*(T)]\bigr|_{t = 0}$. However, the model requires the price at planting time $P(0)$, as well as $m_p$ and $s_p$, which are generally not reported in farm surveys. In countries with well developed forward contracts markets, such information is often available from commodity exchanges. And even in regions with poorly developed farm-to-market linkages, price information is increasingly available from services like the FAO Food Price Monitoring and Analysis Tool, which is the source of the price series in the lower left panel of Figure \ref{fig:gBmPrice}.
+<!-- , often due to a large, entrenched intermediary market which thrives precisely on buyer-seller information asymmetry -->
+
+Given sufficient price data, the values of $m_p$ and $s_p$ should be estimated over a suitable timeframe. Assuming that farmers expect the output price to behave roughly as it did during the previous year, then $m_p$ and $s_p$ should be estimated over the previous year or growing season. However, this may not always be an appropriate assumption, particularly in volatile markets. It may be more suitable to average over multiple years, or to take the average of the parameters estimated over multiple growing seasons.
+<!-- , required to calculate the farmers' expected price (recall Equation \ref{eq:EPT0}) -->
+
+An accurate value for $N$ will be difficult to estimate in populations where no recent farm census data is available. Note that $N$ is not necessary for evaluation of the price elasticity of aggregate supply and price risk elasticity of aggregate supply (Equations \ref{eq:pElasQagg} and \ref{eq:pRiskElasQagg}).
+
+
+
+
+cite the GIEWS 2007 forecast!!! validate against GIEWS forecast not FAO because the model is for EXPECTED agg supply, FAO is post harvest info.
+
+<!-- As an illustrative use case, the supply curve derived above is fitted on 2007 Kenya farm data; and the expected aggregate supply curve is calculated. The (expected) price elasticity of aggregate supply curve and producer participation are also calculated. -->
+
+<!-- The comparison, in some limited sense, validates the model; but the main point here is to briefly explore some of the challenges faced when applying the method in a real world use case. -->
+
+<!-- divergence maybe rooted in variation of output price, also because we don't really know EyStarT0 and EPT0, also because this is expected supply at planting, not actual supply at harvest...also does not account for short rains growing season (October-December) (but short rains harvest is small % of total, in 2021 it was about 250,000MT) -->
+
+
+<!-- Evaluation of Equation \ref{eq:sup4}, requires estimation of the parameters $\theta_x$, $\theta_w$, $\hat{\theta}_k$, the farm level output price elasticity of supply $\eta$, the farm production degree of homogeneity $h$, the mean farm's expected unit cost $E\left[\tilde{C}^{\#}(T)\right]\biggr|_{t = 0}$,  -->
+
+
+<!-- knowledge of control variables $k_i$ and ; estimation of the technology $\alpha_i$ and of the control variable elasticities $\kappa_i$, and $y_0$. -->
+
+<!-- Knowledge of the output price at time of planting $P(0)$, as well as the price seasonal growth rate $m_p$ and volatility $s_p$, and the length of the cropping season $T$ is also required. the number of farms in the population $N$ The mean farm's shadow price of budget $E[\lambda^{-\eta}]$. -->
+
+<!-- Below, an illusrative use case is presented ...for the ideal case where high quality farm survey data is available. The minimum data case is considered in the Discussion. the exogenous parameters of the aggregate supply curve are estimated based on Kenya maize farm data. Calculations of aggregate supply and the output price elasticity of supply using the estimated model are compared against empirical estimates. The comparison, in some limited sense, validates the model; but the main point here is to briefly explore some of the challenges faced when applying the method in a real world use case. -->
+
+<!-- The term $y_0 \theta_{\alpha} / \theta_{w}$ can  technology $\alpha_i$  the control variable elasticities $k_i$,  are estimated by straightforward OLS regression of either Equation \ref{eq:cobbDoug3} (in logs) or Equation \ref{eq:prodFn3}. -->
+
+
+<!-- $$ -->
+<!-- E[Q(T)]|_{t = 0} = N E[\theta] E[\lambda^{-\eta}] P(0)^{\eta} e^{\eta m_p T} \Phi(-z) \:\:; \\ -->
+<!-- z = -\gamma = \frac{\ln\left(\frac{E \left[ \tilde{C}^{\#}(T) \right]\bigr|_{t = 0}}{P(0)} \right)^{\eta} - \left(\eta m_p - \eta^2 \frac{s_p^2}{2} \right) T }{\eta s_p \sqrt{T}} \\ -->
+<!-- \theta = \left( y_0 \frac{\theta_x}{\theta_w} \hat{\theta}_k \right)^{\eta + 1} -->
+<!-- $$ -->
+
+
+<!-- Parameterization of the aggregate supply curve derived above thus requires knowledge of the output price at time of planting $P(0)$, the price growth rate $m_p$ and volatility $s_p$, the length of the cropping season $T$, the number of farms in the population $N$, the output degree of homogeneity $h$, the mean farm's expected unit cost as evaluated at planting time $E[\tilde{C}^{\#}(T)]|_{t = 0}$, and the expected mean harvested output as evaluated at planting time $E[\tilde{q}^*(T)]\bigr|_{t = 0}$. -->
+
+<!-- ## Data -->
+
+
+<!-- For the present exercise,  -->
+<!-- summary statistics are provided in the appendix...variables on which focus...bin vars -->
+<!-- [as well as 2007 rainfall data... as well as the historical average rainfall. ...binary endowment variables...] -->
+<!-- This sort of a validation but not so much a validation... -->
+<!-- <!-- (graphics here or in Appendix) Summary statistics can be found in the Appendix. --> 
+<!-- graphics: main input use, main labor types + who labors -->
+<!-- labor qty calculated over significant activities  -->
+<!-- cost calculated over significant expenditures - labor, fert, p&d  -->
+
+## Model Specification
+
+For parameter estimation, Equation \ref{eq:yStarC} is natural logged, giving
+
+
+\begin{equation}
+\ln(y) = \ln(\tilde{y}) + h \ln \left(\frac{C^*}{\tilde{C}^*} \right) + \sum_{i = 1}^{n_k} \kappa_i \ln \left( \frac{k_i}{\tilde{k}_i} \right) + \sum_{i = 1}^{n_w} \alpha_i \ln(w_i)
+\label{eq:cobbDoug4}
+\end{equation}
+
+Where the shorthand $\tilde{y}$ has been introduced, defined
+
+\begin{equation}
+\tilde{y} = y_0 \theta_{\alpha} \left( \frac{\tilde{C}^*}{h} \right)^h
+\label{eq:yConst}
+\end{equation}
+
+
+
+\begin{equation}
+\ln(\hat{y}) = \ln(\tilde{y}) + \sum_{i = 1}^{n_k} \kappa \ln \left(\frac{k_i}{\tilde{k}_i}\right) + h \ln \left( \frac{C^*}{\tilde{C}^*} \right) + \epsilon \:\:;\;\;\; \ln(\tilde{y}) = \beta_0 + \sum_i \beta_i \ln(b_i)
+\label{eq:regMod}
+\end{equation}
+
+Where the estimation error $\epsilon$ has been introduced, and where binary endowments $b_i$ are made explicit and separated out from the base constant $\beta_0$. For the present exercise, the binary variables included in the model are land tenure (whether or not the head of household holds a title deed to the land they are farming), adoption of hybrid maize, use of oxen during land preparation, and use of a tractor during land preparation. Recall from section ... that binary endowments take a value of $e$ if the endowment is present, such that the corresponding effect $\beta_{i\neq0}$ is added to the base effect $\beta_0$; and $1$ otherwise, such that no effect is added. The base constant $\beta_0$ figures on all farms in the sample, whereas the $\beta_{i\neq0}$ figure only on farms with the respective endowment. The constant $\tilde{y}$ thus varies from farm to farm based on which endowments, if any, are present.
+
+The continuously valued control variables ($k_i$) included in the model are farm size (acres), adult equivalent household size, rainfall anomaly, planting density (seed kg/acre), and child family labor (person-hours/acre). "Rainfall anomaly" captures rainfall divergence from expectation. It is calculated as the actual rainfall during the 2007 main rains season divided by an historical average over the same period (see the next section for details). A rainfall anomaly value of 1, for example, would suggest that rainfall matched expectation. Planting density is treated as a control variable because it is typically determined by agroclimatic endowments/constraints such as soil conditions and cultivar. Child family labor is likewise treated as a control variable on the premise that it effectively measures a hard constraint (poverty), as opposed to a discretionary input.
+
+The farm maize production cost per acre ($C^*$) is 
+
+<!-- To control for exogenous constraints/endowments, a range of binary and continuously valued control variables is included. The continuously valued control variables are farm size (acres), adult equivalent household size, rainfall anomaly, planting density (seed kg/acre), and child family labor (person-hours/acre). "Rainfall anomaly" captures rainfall divergence from expectation. It is calculated as the actual rainfall during the 2007 main rains season divided by an historical average over the same period (see Appendix 2 for details). A rainfall anomaly value of 1, for example, would suggest that rainfall matched expectation. Planting density is treated as a control variable because it is typically determined by agroclimatic endowments/constraints such as soil conditions and cultivar. Child family labor is likewise treated as a control variable on the premise that it effectively measures a hard constraint (poverty), as opposed to a discretionary input. -->
+
+
+
+
+
+
+
+
+<!-- [recall from Equation \ref{eq:yConst} that the input variable elasticities $\alpha_i$ and input prices $w_i$ are implicit in the constant $\tilde{y}$, without requiring detailed information about either.] -->
+
+Note that the constant $\tilde{y}$ is not the same for all farms, but varies depending upon how many binary endowments the farm has. The "base case" of $\tilde{y} = e^{\beta_0}$, represents the sample average yield on farms with neither land tenure nor hybrid maize nor use of oxen or tractors for land preparation. In the sample examined here, there are 14 unique values for $\tilde{y}$, summarized in Figure \ref{fig:ySampAvg}.
+
+Model is essentially a function of cost/acre, binary endowments (including the adoption of hybrid maize), management/agroclimatic/demographic control variables, and the prices of the main chemical inputs.
+
+For the purpose of parameterizing an aggregate supply curve, the data is required in order to have a mean yield ($E[y^*]$), average cost ($C^#$), and degree of homogeneity ($h$)....   The yield model in Equation \ref{eq:cobbDoug4} is specified as a function of cost per acre ($C^*$) and control variables ($k_i$).
+
+The continuous control variables $k_i$ are farm size (acres), seed quantity per acre (planting density), child family labor during planting (person-hours/acre), adult-equivalent household size (aehh07), and the 2007 main season rainfall. The cost per acre $C^*$ is the sum of all land prep and input (seed, fertilizer, hired labor, and pesticide) costs.
+
+B and binary endowment variables ($b_i$), plus an error term $\epsilon$ assumed to be normally distributed with mean 0.
+
+
 
 ## Data and transformation
 
