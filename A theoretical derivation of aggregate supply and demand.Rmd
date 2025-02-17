@@ -34,6 +34,7 @@ library(patchwork)
 library(scales)
 library(lubridate)
 library(randomcoloR)
+library(modelsummary)
 
 labelSize <- 2.5
 smallLabelSize <- 2
@@ -43,6 +44,9 @@ legendTextSize <- 6
 axisTextSize <- 6
 axisTitleSize <- 7
 facetTitleSize <- 7
+
+mainFolder <- "D:/OneDrive - CGIAR/Documents 1/CIAT 2/A theory of aggregate supply and demand/"
+priceFolder <- "Price data/"
 
 ```
    <!-- Allows for analysis of price and technology impacts at specific centiles. -->
@@ -762,9 +766,9 @@ And then interpreting the fitted values for yield as the logged expected yield. 
 <!-- # ```{r Fig2, fig.show = "hold", fig.width = 5, fig.height=5, fig.align="center", fig.cap="\\label{fig:gBmWeather}(Left) Daily average weather variable time series covering the 2018 maize long rains growing season in Eldoret, Kenya (NREL 2023). (Right) The corresponding daily log changes exhibit the normal distribution typical of geometric Brownian motion.", echo = FALSE} -->
 <!-- #Weather data from National Solar Radiation Database -->
 <!-- #https://nsrdb.nrel.gov/data-viewer -->
-<!-- thisFolder <- "D:/OneDrive - CGIAR/Documents 1/CIAT 2/A theory of aggregate supply and demand/Eldoret weather data/" -->
+<!-- mainFolder <- "D:/OneDrive - CGIAR/Documents 1/CIAT 2/A theory of aggregate supply and demand/Eldoret weather data/" -->
 <!-- thisFile <- "NSRDB weather data Eldoret 2018 maize season.csv" -->
-<!-- thisFilePath <- paste0(thisFolder, thisFile) -->
+<!-- thisFilePath <- paste0(mainFolder, thisFile) -->
 <!-- df <- read.csv(thisFilePath, stringsAsFactors = F) -->
 <!-- colnames(df)[ncol(df)] <- "Log change" -->
 <!-- df$Date <- as.Date(df$Date) -->
@@ -840,9 +844,8 @@ It is important to keep in mind that the price trajectory considered here is ove
 
 ```{r Fig1, fig.show = "hold", fig.width = 5, fig.height=5, fig.align="center", fig.cap="\\label{fig:gBmPrice}(Left) Maize price series from (top to bottom) Chicago, USA (CME, 2023), Johannesburg, RSA (JSE, 2023), and Eldoret market, Kenya (FPMA, 2023). (Right) The corresponding daily (monthly, in the case of Kenya) log changes exhibit the normal distribution typical of geometric Brownian motion.", echo = FALSE}
 
-thisFolder <- "D:/OneDrive - CGIAR/Documents 1/CIAT 2/A theory of aggregate supply and demand/Price data/"
 thisFile <- "South Africa corn future price.csv"
-thisFilePath <- paste0(thisFolder, thisFile)
+thisFilePath <- paste0(mainFolder, priceFolder, thisFile)
 df_raw <- read.csv(thisFilePath, stringsAsFactors = F)
 keepCols <- c("DATE", "WHITE")
 df_raw <- df_raw[, keepCols]
@@ -861,7 +864,7 @@ df_sa <- df
 df_sa$Place <- "South Africa"
 #-----------------------------------------------------------------
 thisFile <- "US corn future price.csv"
-thisFilePath <- paste0(thisFolder, thisFile)
+thisFilePath <- paste0(mainFolder, priceFolder, thisFile)
 df_raw <- read.csv(thisFilePath, stringsAsFactors = F)
 keepCols <- c("date", "adjusted")
 df_raw <- df_raw[, keepCols]
@@ -880,7 +883,7 @@ df_us$Place <- "USA"
 #---------------------------------------------------------------
 # https://data.humdata.org/organization/wfp?vocab_Topics=prices
 thisFile <- "Maize price Eldoret WFP.csv"
-thisFilePath <- paste0(thisFolder, thisFile)
+thisFilePath <- paste0(mainFolder, priceFolder, thisFile)
 dfRaw <- read.csv(thisFilePath, stringsAsFactors = F)
 dfRaw$Date <- row.names(dfRaw); dfRaw <- dfRaw[-1, ]; colnames(dfRaw)[1] <- "Price"
 dfRaw$Price <- round(as.numeric(dfRaw$Price), 2)
@@ -1202,10 +1205,8 @@ The dummy endowment variables $b_i$ (which take a value of $1$ if the endowment 
 
 ```{r Fig3, fig.show = "hold", fig.width = 5, fig.height=5, fig.align="center", fig.cap="\\label{fig:lognormalYd}", echo = FALSE}
 
-library(modelsummary)
-thisFolder <- "D:/OneDrive - CGIAR/Documents 1/CIAT 2/A theory of aggregate supply and demand/"
 thisFile <- "df_mod2007.csv"
-thisFilepath <- paste0(thisFolder, thisFile)
+thisFilepath <- paste0(mainFolder, thisFile)
 df_mod <- read.csv(thisFilepath, stringsAsFactors = F)
 colnames(df_mod) <- df_mod[nrow(df_mod), ]
 df_mod <- df_mod[-nrow(df_mod), ]
@@ -1542,7 +1543,7 @@ fileVec <- paste("Maize price", mktVec, "WFP.csv")
 listDf <- list()
 for(i in 1:length(fileVec)){
   thisFile <- fileVec[i]
-  thisFilePath <- paste0(thisFolder, thisFile)
+  thisFilePath <- paste0(mainFolder, priceFolder, thisFile)
   dfRaw <- read.csv(thisFilePath, stringsAsFactors = F)
   dfRaw$Date <- row.names(dfRaw); dfRaw <- dfRaw[-1, ]; colnames(dfRaw)[1] <- "Price"
   dfRaw$Price <- round(as.numeric(dfRaw$Price), 2)
@@ -1569,10 +1570,9 @@ gg <- gg + theme(axis.title = element_blank(),
                  #strip.text = element_blank(),
                  plot.title = element_text(size = titleSize),
                  legend.title = element_blank())
-
-
-dfHist <- df %>% subset(year %in% c(2008, 2011, 2012))
-gg <- ggplot(dfHist, aes(x = `Log change`))
+upYrs <- c(2008, 2011, 2012)
+dfHistUp <- df %>% subset(year %in% upYrs)
+gg <- ggplot(dfHistUp, aes(x = `Log change`))
 gg <- gg + geom_histogram(color = 4, fill = "white", bins = 10)
 #gg <- gg + facet_wrap(~Mkt, scales = "free")
 gg <- gg + labs(title = "Log change")
@@ -1582,18 +1582,64 @@ gg <- gg + theme(axis.title = element_blank(),
                  #strip.background = element_rect(fill = "white"),
                  strip.text = element_blank(),
                  plot.title = element_text(size = titleSize))
+dfHistDown <- df %>% subset(!(year %in% upYrs))
+gg <- ggplot(dfHistDown, aes(x = `Log change`))
+gg <- gg + geom_histogram(color = 4, fill = "white", bins = 10)
+#gg <- gg + facet_wrap(~Mkt, scales = "free")
+gg <- gg + labs(title = "Log change")
+gg <- gg + theme_bw()
+gg <- gg + theme(axis.title = element_blank(),
+                 axis.text = element_text(size = axisTextSize),
+                 #strip.background = element_rect(fill = "white"),
+                 strip.text = element_blank(),
+                 plot.title = element_text(size = titleSize))
+
 #-------------------------------------------------------------------------------------
 #shapiro.test(df$`Log change`)
-sum(is.na(dfHist$`Log change`) == F)
-mP <- mean(dfHist$`Log change`, na.rm = T)
-sP <- sd(dfHist$`Log change`, na.rm = T)
-timeHoriz <- 
-mP * timeHoriz
-sP * sqrt(timeHoriz)
-dfP0 <- df %>% subset(Date %in% as.Date(c("2008-03-01", "2008-02-01", "2008-04-01")))
-P0 <- mean(dfP0$Price, na.rm = T)
-EPT0 <- P0 * exp(mP * timeHoriz)
+timeHoriz <- 6 #cropping season length in months (planting to harvest: March-August; planning to sale (?): February to September)
+sum(is.na(dfHistUp$`Log change`) == F) #sample size for up years
+sum(is.na(dfHistDown$`Log change`) == F) #sample size for down years
+mPup <- mean(dfHistUp$`Log change`, na.rm = T)
+sPup <- sd(dfHistUp$`Log change`, na.rm = T)
+mPup * timeHoriz
+sPup * sqrt(timeHoriz)
+mPDown <- mean(dfHistDown$`Log change`, na.rm = T)
+sPDown <- sd(dfHistDown$`Log change`, na.rm = T)
+mPDown * timeHoriz
+sPDown * sqrt(timeHoriz)
 
+df$yrType <- "down"; df$yrType[which(df$year %in% upYrs)] <- "up"
+dfP0 <- df %>% subset(month %in% c("2", "3", "4")) %>%
+  select(Mkt, Price, Date, month, yrType, year) %>%
+  rename(monthT0 = month, dateT0 = Date, P0 = Price) %>%
+  mutate(mktYr = paste(Mkt, year))
+dfP0March <- dfP0 %>% subset(monthT0 == 3 & !is.na(P0)) %>%
+  mutate(monthT0 = "March") %>% select(-dateT0)
+
+indNoMarch <- which(!(dfP0$mktYr %in% dfP0March$mktYr))
+dfP0notMarch <- dfP0[indNoMarch, ] %>% subset(!is.na(P0)) %>%
+  group_by(Mkt, year, yrType) %>% summarise(P0 = mean(P0)) %>% mutate(monthT0 = "near March")
+indUp <- which(dfP0notMarch$yrType == "up"); indDown <- which(dfP0notMarch$yrType == "down")
+dfP0notMarch$EPT0[indUp] <- dfP0notMarch$P0[indUp] * exp(mPup * timeHoriz)
+
+indUp <- which(dfP0March$yrType == "up"); indDown <- which(dfP0March$yrType == "down")
+dfP0March$EPT0[indUp] <- dfP0March$P0[indUp] * exp(mPup * timeHoriz)
+dfP0March$EPT0[indDown] <- dfP0March$P0[indDown] * exp(mPDown * timeHoriz)
+dfPT <- df %>% subset(month %in% c("7", "8", "9")) %>% select(Mkt, year, Price, month) %>%
+  rename(monthtT = month, PT = Price)
+dfPTaug <- dfPT
+dfAnomP0March <- merge(dfP0March, dfPT)
+dfAnomP0notMarch <- merge(dfP0notMarch, dfPT)
+dfAnomP0March$Anom <- (dfAnomP0March$EPT0 - dfAnomP0March$PT) / dfAnomP0March$PT * 100
+dfAnomP0notMarch$Anom <- (dfAnomP0notMarch$EPT0 - dfAnomP0notMarch$PT) / dfAnomP0notMarch$PT * 100
+hist(dfAnomP0March$Anom)
+hist(dfAnomP0notMarch$Anom)
+
+EPT02007 <- mean(dfP0March$EPT0[which(dfP0March$year == 2007)])
+# EPT02008 <- mean(dfP0March$EPT0[which(dfP0March$year == 2008)])
+# EPT02009 <- mean(dfP0March$EPT0[which(dfP0March$year == 2009)])
+# EPT02010 <- mean(dfP0March$EPT0[which(dfP0March$year == 2010)])
+P02007 <- mean(dfP0March$P0[which(dfP0March$year == 2007)])
 #=============================================================================
 # Define root function to solve for population EcSharpT0
 rootFnUp <- function(xIn, xUp, sXtrunc, mXtrunc){
@@ -1606,19 +1652,48 @@ rootFnUp <- function(xIn, xUp, sXtrunc, mXtrunc){
   outVec <- c(slack_s, slack_m)
   return(outVec)
 }
-EyStarT0trunc <- exp(mod3$fitted.values)#kRn^-kappaRn * exp(mod3$fitted.values)
+#----------------------------------------------------------------------------------------
+# Agg supply
+EQsFun <- function(EPT0, muEyStarT0, mEcSharpT0, sEcSharpT0, h, muArea, Nf, kappaRn){
+  z <- (log(EPT0) - mEcSharpT0) / sEcSharpT0 - eta * sEcSharpT0
+  ProbProfitMeanFarm <- pnorm(z)
+  #Expected agg supply in kg
+  EQsT0 <- muArea * Nf * muEyStarT0 * ProbProfitMeanFarm #assuming rainfall equals historical benchmark
+  EQsT0HiRn <- muArea * Nf * 1.5^kappaRn * muEyStarT0 * ProbProfitMeanFarm #assuming rainfall 50% higher than benchmark
+  EQsT0LoRn <- muArea * Nf * 0.5^kappaRn * muEyStarT0 * ProbProfitMeanFarm #Expected rainfall 50% lower than benchmark
+  #------------Expected agg supply in million MT
+  EQsT0 <- EQsT0 * 10^-9
+  EQsT0HiRn <- EQsT0HiRn * 10^-9
+  EQsT0LoRn <- EQsT0LoRn * 10^-9
+  #------------Spot price elasticity of expected agg supply
+  etaP0EQsT0 <- dnorm(z) / pnorm(z) * 1 / sEcSharpT0
+  #etaP0EQsT0 <- dnorm(z) / pnorm(z) * 1 / (sP * sqrt(timeHoriz))
+  #------------
+  EmploymentRate <- pnorm((log(EPT0) - mEcSharpT0) / sEcSharpT0)
+  #------------
+  dfOut <- data.frame(EPT0, EQsT0, EQsT0HiRn, EQsT0LoRn, etaP0EQsT0, ProbProfitMeanFarm,
+                      EmploymentRate)# etaP0EQsT0, etaSpEQsT0)
+  colnames(dfOut) <- c("Expected price (KES/kg)", "Expected supply\n(million MT)",
+                       "Expected supply, high rainfall\n(million MT)",
+                       "Expected supply, low rainfall\n(million MT)",
+                       "Price elasticity\nof supply",
+                       "PEFS-adj. mean probability\nof profit", "Employment rate")
+  return(dfOut)
+}
+#----------------------------------------------------------------------------------------
+EyStarT0trunc <- kRn^-kappaRn * exp(mod3$fitted.values)
 EcStarT0trunc <- exp(dfMod3$`Cost/acre (KES/acre)`)
 EcSharpT0trunc <- EcStarT0trunc / EyStarT0trunc
 lEcSharpT0trunc <- log(EcSharpT0trunc)
 #EPT02007 <- mean(df_mod$`Maize price (KES/kg)`) * exp(-mP * timeHorizon)
-lamTrunc <- EPT0 / EcSharpT0trunc * h
+lamTrunc <- EPT02007 / EcSharpT0trunc * h
 sum(lamTrunc > h) / length(lamTrunc)
 #mEcSharpT0trunc <- mean(lcSharpSameP); sEcSharpT0trunc <- sd(lcSharpSameP)
 mEcSharpT0trunc <- mean(lEcSharpT0trunc); sEcSharpT0trunc <- sd(lEcSharpT0trunc)
 muEcSharpT0trunc <- exp(mEcSharpT0trunc + sEcSharpT0trunc^2 / 2)
 xIn <- c(sEcSharpT0trunc, mEcSharpT0trunc)
 sol <- nleqslv::nleqslv(xIn, rootFnUp, jac = NULL,
-                        xUp = EPT0,
+                        xUp = EPT02007,
                         sXtrunc = sEcSharpT0trunc,
                         mXtrunc = mEcSharpT0trunc)
 #sol
@@ -1626,31 +1701,141 @@ sEcSharpT0 <- sol$x[1]
 mEcSharpT0 <- sol$x[2]
 muEcSharpT0 <- exp(mEcSharpT0 + sEcSharpT0^2 / 2)
 muEcSharpT0n <- exp(eta * mEcSharpT0 + eta^2 * sEcSharpT0^2 / 2)
-
-mLamba <- log(P02007) + (mP - sP^2 / 2) * timeHoriz + log(h) - mEcSharpT0
-mean(log(lamTrunc))
-
-ProbProfit <- pnorm((log(EPT0) - mEcSharpT0) / (sEcSharpT0) - eta * sEcSharpT0)
-EmploymentRate <- pnorm((log(EPT0) - mEcSharpT0) / sEcSharpT0)
+# mLamba <- log(P02007) + (mPDown - sPDown^2 / 2) * timeHoriz + log(h) - mEcSharpT0
+# mean(log(lamTrunc))
+# log(P02007) + (mPDown - sPDown^2 / 2) * timeHoriz + log(h) #mEcSharpT0
+ProbProfit <- pnorm((log(EPT02007) - mEcSharpT0) / (sEcSharpT0) - eta * sEcSharpT0)
+EmploymentRate <- pnorm((log(EPT02007) - mEcSharpT0) / sEcSharpT0)
 muEyStarT0trunc <- mean(EyStarT0trunc)
 muEyStarT0 <- muEyStarT0trunc * EmploymentRate / ProbProfit
 EcSharpT0nTrunc <- (exp(dfMod3$`Cost/acre (KES/acre)`) / EyStarT0trunc)^eta
 muEcSharpT0nTrunc <- mean(EcSharpT0nTrunc)
 muEcSharpT0n <- muEcSharpT0nTrunc * EmploymentRate / ProbProfit
 EyStarT0max <- muEyStarT0 * EPT02007^eta / muEcSharpT0n
+#-------------------------------------------------------------------------------------
+Nf <- 2 * 10^6; muArea <- mean(exp(dfMod3$`Farm size (acres)`))
+EPT0vec <- seq(0.1, 35, length.out = 50)
+dfOut <- EQsFun(EPT0vec, muEyStarT0, mEcSharpT0, sEcSharpT0, h, muArea, Nf, kappaRn)
+#gg <- ggplot(dfEQsT0, aes(x = `Expected price (KES/kg)`, y = `Expected supply\n(million MT)`))
+gg <- ggplot(dfOut)
+gg <- gg + geom_ribbon(aes(x = `Expected price (KES/kg)`,
+                           ymin = `Expected supply, low rainfall\n(million MT)`,
+                           ymax = `Expected supply, high rainfall\n(million MT)`),
+                       fill='blue',alpha=0.2)
+dfLine <- dfOut[, 1:4]; colnames(dfLine)[-1] <- c("Normal rainfall", "High rainfall", "Low rainfall")
+dfLine <- dfLine %>% gather(rainLev, `Expected supply\n(million metric tons)`, `Normal rainfall`:`Low rainfall`)
+gg <- gg + geom_line(data = dfLine, aes(x = `Expected price (KES/kg)`, y = `Expected supply\n(million metric tons)`, group = rainLev, color = rainLev))
+gg <- gg + scale_color_manual(values = c("green", "red", "black"))
+gg <- gg + geom_vline(xintercept = EPT02007)
+gg <- gg + theme_bw()
+gg <- gg + theme(axis.title.x = element_text(size = axisTextSize),
+                 legend.title = element_blank(),
+                 legend.text = element_text(size = legendTextSize),
+                 legend.position = "top")
+ggEQsT0 <- gg
+gg <- ggplot(dfOut, aes(x = `Expected price (KES/kg)`, y = `Price elasticity\nof supply`))
+gg <- gg + geom_line() + theme_bw()
+ggEtaEPT0EQsT0a <- gg
+gg <- ggplot(dfOut, aes(x = `Expected price (KES/kg)`, y = `PEFS-adj. mean probability\nof profit`))
+ggProbProfit <- gg + geom_line() + theme_bw()
+gg <- ggplot(dfOut, aes(x = `Expected price (KES/kg)`, y = `Employment rate`))
+ggEmployment <- gg + geom_line() + theme_bw()
+df_inset <- subset(dfOut, `Expected price (KES/kg)` > (EPT02007 - 3) & `Expected price (KES/kg)` < EPT02007 + 3)
+gg <- ggplot(df_inset, aes(x = `Expected price (KES/kg)`, y = `Price elasticity\nof supply`))
+gg <- gg + geom_line()
+#gg <- gg + geom_hline(yintercept = 1, linetype = "dashed", color = "red")
+gg <- gg + geom_vline(xintercept = EPT02007)
+gg <- gg + theme_bw()
+gg <- gg + theme(axis.title = element_blank())
+ggEtaEPT0EQsT0b <- gg
+ggEtaEPT0EQsT0 <- ggEtaEPT0EQsT0a + annotation_custom(ggplotGrob(ggEtaEPT0EQsT0b),
+                                          xmin = 6, xmax = 20, 
+                                          ymin = 5, ymax = 11)
+
+
+
+
+
+# gg <- ggplot(dfQs)
+# gg <- gg + geom_ribbon(aes(x = `Expected price (KES/kg)`,
+#                            ymin = `Expected supply, low rainfall\n(million metric tons)`,
+#                            ymax = `Expected supply, high rainfall\n(million metric tons)`),
+#                        fill='blue',alpha=0.2)
+# df_line <- dfQs[, c("Expected price (KES/kg)", "Expected supply, low rainfall\n(million metric tons)", "Expected supply, high rainfall\n(million metric tons)",
+#                     "Expected supply, normal rainfall\n(million metric tons)")]
+# colnames(df_line)[2:4] <- c("Low rainfall", "High rainfall", "Normal rainfall")
+# df_line <- df_line %>% gather(var, `Expected supply\n(million metric tons)`, `Low rainfall`:`Normal rainfall`)
+# gg <- gg + geom_line(data = df_line, aes(x = `Expected price (KES/kg)`, y = `Expected supply\n(million metric tons)`, group = var, color = var))
+# gg <- gg + scale_color_manual(values = c("green", "red", "black"))
+# gg <- gg + geom_vline(xintercept = EPT02007)
+# gg <- gg + theme_bw()
+# gg <- gg + theme(axis.title.x = element_text(size = axisTextSize),
+#                  legend.title = element_blank(),
+#                  legend.text = element_text(size = legendTextSize),
+#                  legend.position = "top")
+# ggQs <- gg
+#---
+# gg <- ggplot(dfQs, aes(x = `Expected price (KES/kg)`, y = `Price elasticity\nof supply`))
+# gg <- gg + geom_line()
+# gg <- gg + theme_bw()
+# ggElast <- gg
+# df_inset <- subset(dfQs, `Expected price (KES/kg)` > 7 & `Expected price (KES/kg)` < 11)
+# gg <- ggplot(df_inset, aes(x = `Expected price (KES/kg)`, y = `Price elasticity\nof supply`))
+# gg <- gg + geom_line()
+# gg <- gg + geom_hline(yintercept = 1, linetype = "dashed", color = "red")
+# gg <- gg + geom_vline(xintercept = EPT02007)
+# gg <- gg + theme_bw()
+# gg <- gg + theme(axis.title = element_blank())
+# ggElastInset <- gg
+# ggPelastQs <- ggElast + annotation_custom(ggplotGrob(ggElastInset),
+#                                           xmin = 6, xmax = 20, 
+#                                           ymin = 20, ymax = 70)
+# #----------
+# gg <- ggplot(dfQs, aes(x = `Expected price (KES/kg)`, y = `Participation (%)`))
+# gg <- gg + geom_line()
+# # gg <- gg + labs(y = expression(paste("Prob(", P(T)^eta, "> E[", C^[0](T), "]", ")")))
+# gg <- gg + theme_bw()
+# gg <- gg + theme(axis.title.x = element_blank())
+# ggProb <- gg
+# #----------
+# ggQs + ggProb + ggPelastQs + plot_layout(ncol = 1, heights = c(1, 1/4, 1))
+#----------------------------------------------------------------------
+# Expected aggregate supply maps
+fracVec <- seq(0.75, 1.2, length.out = 50)
+n <- length(fracVec)
+kRnVec <- seq(1 / 5, 3, length.out = n)
+list_df <- list()
+for(i in 1:n){
+  thisKrn <- kRnVec[i]
+  dfQs <- QsFun(muEyStarT0, EPT0ref = EPT02007,
+                fracVec, h = hCoef, kappaRn, muArea,
+                muEcSharpT0, mP = mP2006, sP = sP2006,
+                th, Nf, kRn = thisKrn)
+  dfQs$`Rainfall anomaly` <- thisKrn
+  list_df[[i]] <- dfQs
+}
+
+dfMap <- as.data.frame(do.call(rbind, list_df))
+colnames(dfMap)[3] <- "Expected supply\n(million metric tons)"
+gg <- ggplot(dfMap, aes(x = `Expected price (KES/kg)`,
+                        y = `Rainfall anomaly`, fill = `Participation (%)`))
+gg <- gg + geom_tile()
+gg
+
 #======================================================================
 # Graph truncated yield, unit cost distributions
 # shapiro.test(lEcSharpT0trunc)
 # car::qqPlot(lEcSharpT0trunc)
 xVec <- seq(0.001, 40, length.out = length(EcSharpT0trunc))
-fVec <- dlnorm(xVec, mEcSharpT0, sEcSharpT0)
+#fVec <- dlnorm(xVec, mEcSharpT0, sEcSharpT0)
+fVec <- dnorm(log(xVec), mEcSharpT0, sEcSharpT0)
 dfPlot <- data.frame(xVec, fVec)
-EPT02007min <-min(df_mod$`Maize price (KES/kg)`) 
-EPT02007max <-max(df_mod$`Maize price (KES/kg)`)
-gg <- ggplot() + geom_histogram(data = data.frame(EcSharpT0trunc), aes(x = EcSharpT0trunc, y = after_stat(count / sum(count))), bins = 35, color = "black", fill = "white") + scale_y_continuous(labels = scales::percent)
+# EPT0min <-min(df_mod$`Maize price (KES/kg)`) 
+# EPT0max <-max(df_mod$`Maize price (KES/kg)`)
+gg <- ggplot() + geom_histogram(data = data.frame(lEcSharpT0trunc), aes(x = lEcSharpT0trunc, y = after_stat(count / sum(count))), bins = 35, color = "black", fill = "white") + scale_y_continuous(labels = scales::percent)
 gg <- gg + geom_line(data = dfPlot, aes(x = xVec, y = fVec))
 gg <- gg + scale_x_continuous(limits = c(0, 40))
-gg <- gg + geom_vline(xintercept = EPT02007, color = "red", linetype = "dashed")
+gg <- gg + geom_vline(xintercept = log(EPT0), color = "red", linetype = "dashed")
 gg <- gg + annotate("rect", fill = "red", alpha = 0.25, 
         xmin = EPT02007min, xmax = EPT02007max,
         ymin = -Inf, ymax = Inf)
@@ -1679,66 +1864,11 @@ dfPlot <- data.frame(xVec, f)
 gg <- ggplot() + geom_histogram(data = data.frame(EcSharpT0), aes(x = EcSharp, y = 0.7*after_stat(count / sum(count))), bins = 45, color = "black", fill = "white") #+ scale_y_continuous(labels = scales::percent)
 gg <- gg + geom_line(data = dfPlot, aes(x = EcSharpVec, y = f)) + geom_vline(xintercept = EPT02007, color = "red", lwd = 1) + theme_bw()
 
-annotate("rect", fill = "red", alpha = 0.5, 
-        xmin = 1924, xmax = 1928 + 11/12,
-        ymin = -Inf, ymax = Inf) 
+# annotate("rect", fill = "red", alpha = 0.5, 
+#         xmin = 1924, xmax = 1928 + 11/12,
+#         ymin = -Inf, ymax = Inf) 
 
-#----------------------------------------------------------------------------------------
-# Agg supply
-EQsFun <- function(EPT0, muEyStarT0, mEcSharpT0, sEcSharpT0, h, muArea, Nf){
-  # eta <- h / (1 - h)
-  # PT0 <- EPT0 * exp(-mP * th)
-  # z <- (eta * log(muEcSharpT0 / PT0) - (eta * mP - eta^2 * sP^2 / 2) * th) / (eta * sP * sqrt(th))
-  # ProbProfitMeanFarm <- (1 - pnorm(z)) #Probability of mean farm making a profit (adjusted by eta)
-  z <- (log(EPT0) - mEcSharpT0) / sEcSharpT0 - eta * sEcSharpT0
-  ProbProfitMeanFarm <- pnorm(z)
-  EQsT0 <- muArea * Nf * muEyStarT0 * ProbProfitMeanFarm #Expected agg supply in kg
-  #------------Expected agg supply in million MT
-  EQsT0 <- EQsT0 * 10^-9
-  #------------Spot price elasticity of expected agg supply
-  etaP0EQsT0 <- dnorm(z) / pnorm(z) * 1 / (sP * sqrt(th))
-  #etaP0EQsT0 <- dnorm(-z) / pnorm(-z) * 1 / (sP * sqrt(th))
-  #------------sP (price risk) elasticity of expected agg supply
-  # (But of limited significance since really want to know it at equilibrium
-  # PT0 and EcSharpT0, which change with sP)
-  #etaSpEQsT0 <- -dnorm(-z) / pnorm(-z) * (eta * sqrt(th) - z / sP)
-  #eta <- -dnorm(-z) / pnorm(-z) * (eta * sP * sqrt(th) - z)
-  #------------
-  EmploymentRate <- pnorm((log(EPT0) - mEcSharpT0) / sEcSharpT0)
-  #------------
-  dfOut <- data.frame(EPT0, EQsT0, ProbProfitMeanFarm, etaP0EQsT0, EmploymentRate)# etaP0EQsT0, etaSpEQsT0)
-  colnames(dfOut) <- c("Expected price (KES/kg)", "Expected supply\n(million MT)",
-                       "Mean probability\nof profit", "Price elasticity\nof supply",
-                       "Employment rate")
-  return(dfOut)
-}
 
-EPT0vec <- seq(0.1, 23, length.out = 50)
-muArea <- mean(exp(dfMod3$`Farm size (acres)`))
-Nf <- 2*10^6
-dfEQsT0 <- EQsFun(EPT0vec, muEyStarT0, mEcSharpT0, sEcSharpT0, h, muArea, Nf)
-
-gg <- ggplot(dfEQsT0, aes(x = `Expected price (KES/kg)`, y = `Expected supply\n(million MT)`))
-gg <- gg + geom_line() + theme_bw()
-ggEQsT0 <- gg
-gg <- ggplot(dfEQsT0, aes(x = `Expected price (KES/kg)`, y = `Price elasticity\nof supply`))
-gg <- gg + geom_line() + theme_bw()
-ggEtaEPT0EQsT0a <- gg
-gg <- ggplot(dfEQsT0, aes(x = `Expected price (KES/kg)`, y = `Mean probability\nof profit`))
-ggProbProfit <- gg + geom_line() + theme_bw()
-gg <- ggplot(dfEQsT0, aes(x = `Expected price (KES/kg)`, y = `Employment rate`))
-ggEmployment <- gg + geom_line() + theme_bw()
-df_inset <- subset(dfEQsT0, `Expected price (KES/kg)` > (EPT02007 - 3) & `Expected price (KES/kg)` < EPT02007 + 3)
-gg <- ggplot(df_inset, aes(x = `Expected price (KES/kg)`, y = `Price elasticity\nof supply`))
-gg <- gg + geom_line()
-#gg <- gg + geom_hline(yintercept = 1, linetype = "dashed", color = "red")
-gg <- gg + geom_vline(xintercept = EPT02007)
-gg <- gg + theme_bw()
-gg <- gg + theme(axis.title = element_blank())
-ggEtaEPT0EQsT0b <- gg
-ggEtaEPT0EQsT0 <- ggEtaEPT0EQsT0a + annotation_custom(ggplotGrob(ggEtaEPT0EQsT0b),
-                                          xmin = 6, xmax = 20, 
-                                          ymin = 5, ymax = 11)
 
 
 #----------------------------------------------------------------------------------------
@@ -2400,9 +2530,9 @@ QsFun <- function(muEyStarT0, EPT0ref, fracVec, h, kappaRn, muArea,
 }
 #=====================================================================
 # Get FAO Kenya maize data for validation of Qs
-thisFolder
+mainFolder
 thisFile <- "FAO Kenya maize.csv"
-thisFilepath <- paste0(thisFolder, thisFile)
+thisFilepath <- paste0(mainFolder, thisFile)
 dfFAO <- read.csv(thisFilepath, stringsAsFactors = F)
 keepCols <- c("Area", "Element", "Item", "Year", "Unit", "Value")
 dfFAO <- dfFAO[, keepCols]
@@ -2462,71 +2592,6 @@ dfQs <- QsFun(muEyStarT0 = muEyStarT0,
               mP = mP2006, sP = sP2006,
               th, Nf)
 #---------------------------------------------------------------------
-gg <- ggplot(dfQs)
-gg <- gg + geom_ribbon(aes(x = `Expected price (KES/kg)`,
-                           ymin = `Expected supply, low rainfall\n(million metric tons)`,
-                           ymax = `Expected supply, high rainfall\n(million metric tons)`),
-                       fill='blue',alpha=0.2)
-df_line <- dfQs[, c("Expected price (KES/kg)", "Expected supply, low rainfall\n(million metric tons)", "Expected supply, high rainfall\n(million metric tons)",
-                    "Expected supply, normal rainfall\n(million metric tons)")]
-colnames(df_line)[2:4] <- c("Low rainfall", "High rainfall", "Normal rainfall")
-df_line <- df_line %>% gather(var, `Expected supply\n(million metric tons)`, `Low rainfall`:`Normal rainfall`)
-gg <- gg + geom_line(data = df_line, aes(x = `Expected price (KES/kg)`, y = `Expected supply\n(million metric tons)`, group = var, color = var))
-gg <- gg + scale_color_manual(values = c("green", "red", "black"))
-gg <- gg + geom_vline(xintercept = EPT02007)
-gg <- gg + theme_bw()
-gg <- gg + theme(axis.title.x = element_text(size = axisTextSize),
-                 legend.title = element_blank(),
-                 legend.text = element_text(size = legendTextSize),
-                 legend.position = "top")
-ggQs <- gg
-#---
-gg <- ggplot(dfQs, aes(x = `Expected price (KES/kg)`, y = `Price elasticity\nof supply`))
-gg <- gg + geom_line()
-gg <- gg + theme_bw()
-ggElast <- gg
-df_inset <- subset(dfQs, `Expected price (KES/kg)` > 7 & `Expected price (KES/kg)` < 11)
-gg <- ggplot(df_inset, aes(x = `Expected price (KES/kg)`, y = `Price elasticity\nof supply`))
-gg <- gg + geom_line()
-gg <- gg + geom_hline(yintercept = 1, linetype = "dashed", color = "red")
-gg <- gg + geom_vline(xintercept = EPT02007)
-gg <- gg + theme_bw()
-gg <- gg + theme(axis.title = element_blank())
-ggElastInset <- gg
-ggPelastQs <- ggElast + annotation_custom(ggplotGrob(ggElastInset),
-                                          xmin = 6, xmax = 20, 
-                                          ymin = 20, ymax = 70)
-#----------
-gg <- ggplot(dfQs, aes(x = `Expected price (KES/kg)`, y = `Participation (%)`))
-gg <- gg + geom_line()
-# gg <- gg + labs(y = expression(paste("Prob(", P(T)^eta, "> E[", C^[0](T), "]", ")")))
-gg <- gg + theme_bw()
-gg <- gg + theme(axis.title.x = element_blank())
-ggProb <- gg
-#----------
-ggQs + ggProb + ggPelastQs + plot_layout(ncol = 1, heights = c(1, 1/4, 1))
-#----------------------------------------------------------------------
-# Expected aggregate supply maps
-fracVec <- seq(0.75, 1.2, length.out = 50)
-n <- length(fracVec)
-kRnVec <- seq(1 / 5, 3, length.out = n)
-list_df <- list()
-for(i in 1:n){
-  thisKrn <- kRnVec[i]
-  dfQs <- QsFun(muEyStarT0, EPT0ref = EPT02007,
-                fracVec, h = hCoef, kappaRn, muArea,
-                muEcSharpT0, mP = mP2006, sP = sP2006,
-                th, Nf, kRn = thisKrn)
-  dfQs$`Rainfall anomaly` <- thisKrn
-  list_df[[i]] <- dfQs
-}
-
-dfMap <- as.data.frame(do.call(rbind, list_df))
-colnames(dfMap)[3] <- "Expected supply\n(million metric tons)"
-gg <- ggplot(dfMap, aes(x = `Expected price (KES/kg)`,
-                        y = `Rainfall anomaly`, fill = `Participation (%)`))
-gg <- gg + geom_tile()
-gg
 
 
 ```
