@@ -1441,13 +1441,39 @@ The Kenya farm data includes the harvest output price as observed at harvest $P(
 long rains mar-may
 Generally how it works: If short rains (oct-dec) are bad, then price increases from planting to harvest, if short rains good, then price stays flat or goes down a little. In years where price increases over the main cropping season, volatility is also higher. Farmers planting in March of 2008 had just finished a poor short season of less than expected rain in oct-dec, and thus expected the maize price to increase from its spot price $P(0)$ at planting.
 
-In July of 2008, after a poor mar-may main rains season the Ministry of Agriculture estimated that the main season harvest would be 2.16 million MT (GIEWS 2008 brief).
+GoK KFSSG 2011 long rains assessment - 85% of the national output is main season
+
+Nf: GoK KFSSG 2011 long rains assessment notes that 1.8 million hectares (4.45 million acres) are put to maize. Then have to consider harvested area will be less than planted area. mean farm size of about 2 acres --> Nf = 2 million
+
+2007 15 May assessment - long rains were delayed and short rains harvest delayed due to unseasonal extension of short rains into February, led to reduced main season planting [GIEWS/MoA 2007].
+
+2008 15 July assessment - after a poor mar-may main rains season and post election violence the Ministry of Agriculture estimated that the main season harvest would be 2.16 million MT (GIEWS/MoA 2008 brief). also input prices were higher
+
+2009 Aug - Severe drought and crop failure [MoA assessment cited in USDA FAS Commodity Intelligence Kenya maize Report, 1 Dec 2009
+https://ipad.fas.usda.gov/highlights/2009/12/kenya/#:~:text=In%20August%202009%2C%20Kenya's%20MoA,reduced%20crop%20prospects%20in%20October.]
+
+2010 5 Aug - Good rain, started 2 weeks early. 2.6. Farmers planted more due to the attractive prices seen in 2009. About 200,000 small farmers received seeds and fertilizer through the National Accelerated Agricultural Input Access Program. Some crop loss due to flooding.
+
+2011 3 Nov GIEWS - 2.25 less rain
+2011 GoK KFSSG 2.34 dismal rains
+
+2012 16 Jul - rains 2-4 weeks late, erratic, crop failure in some parts. About 1.4% of planted area was affected by lethal maize necrosis
+
+c("Kenya MoA 14 Jun 2006",
+                         "Kenya MoA 15 May 2007",
+                         "USDA 11 Sept 2007",
+                         "Kenya MoA 15 Jul 2008 (Post-election violence)")
+
+The data comes from... Cannot validate against FAO as FAO is post hoc. It's expected supply so have to compare to the GIEWS midseason forecast--although keep in mind the midseason update knows the rainfall.
+
+Price controls came into play during the 2009-2012 crisis
+Gov gave fert to some farmers
 
 
 
+No good info on the number of maize farms, can deduce from planted area. A common figure seen nowadays is 3 million [e.g. ...], extrapolating back to 2007, this  but if you look at planted area, it's more like 2 million.
 
-The data comes from... Cannot validate against FAO as FAO is post hoc, have to compare to the GIEWS 2008 June forecast.
-
+This is the short run curve, assumes mean farm size, number of farms, tech stay the same. 
 
 
 
@@ -1555,11 +1581,11 @@ for(i in 1:length(fileVec)){
 df <- do.call(rbind, listDf) %>% as.data.frame() %>% group_by(Mkt) %>%
   complete(Date = seq.Date(from = min(Date),
                            to = max(Date), by = "month")) %>%
-  mutate(year = year(Date),
-         month = month(Date)) %>% subset(year <= 2012 & month %in% c(2:9))
+  mutate(year = year(Date), month = month(Date))
+dfPlot <- df %>% subset(year <= 2012 & month %in% c(2:9))
 #-------------------------------------------------------------------------------------
 theseColors <- distinctColorPalette(length(mktVec))
-gg <- ggplot(df, aes(x = factor(month.abb[month], levels = month.abb), y = Price, group = Mkt, color = Mkt))
+gg <- ggplot(dfPlot, aes(x = factor(month.abb[month], levels = month.abb), y = Price, group = Mkt, color = Mkt))
 gg <- gg + geom_line(lwd = 0.75)
 gg <- gg + facet_wrap(~year)
 gg <- gg + scale_color_manual(values = theseColors)
@@ -1571,7 +1597,7 @@ gg <- gg + theme(axis.title = element_blank(),
                  plot.title = element_text(size = titleSize),
                  legend.title = element_blank())
 upYrs <- c(2008, 2011, 2012)
-dfHistUp <- df %>% subset(year %in% upYrs)
+dfHistUp <- dfPlot %>% subset(year %in% upYrs)
 gg <- ggplot(dfHistUp, aes(x = `Log change`))
 gg <- gg + geom_histogram(color = 4, fill = "white", bins = 10)
 #gg <- gg + facet_wrap(~Mkt, scales = "free")
@@ -1582,7 +1608,7 @@ gg <- gg + theme(axis.title = element_blank(),
                  #strip.background = element_rect(fill = "white"),
                  strip.text = element_blank(),
                  plot.title = element_text(size = titleSize))
-dfHistDown <- df %>% subset(!(year %in% upYrs))
+dfHistDown <- dfPlot %>% subset(!(year %in% upYrs))
 gg <- ggplot(dfHistDown, aes(x = `Log change`))
 gg <- gg + geom_histogram(color = 4, fill = "white", bins = 10)
 #gg <- gg + facet_wrap(~Mkt, scales = "free")
@@ -1593,7 +1619,6 @@ gg <- gg + theme(axis.title = element_blank(),
                  #strip.background = element_rect(fill = "white"),
                  strip.text = element_blank(),
                  plot.title = element_text(size = titleSize))
-
 #-------------------------------------------------------------------------------------
 #shapiro.test(df$`Log change`)
 timeHoriz <- 6 #cropping season length in months (planting to harvest: March-August; planning to sale (?): February to September)
@@ -1608,6 +1633,9 @@ sPDown <- sd(dfHistDown$`Log change`, na.rm = T)
 mPDown * timeHoriz
 sPDown * sqrt(timeHoriz)
 
+#upYrs <- c(upYrs, 2019)
+#df <- df %>% subset(year <= 2019)
+df <- dfPlot
 df$yrType <- "down"; df$yrType[which(df$year %in% upYrs)] <- "up"
 dfP0 <- df %>% subset(month %in% c("2", "3", "4")) %>%
   select(Mkt, Price, Date, month, yrType, year) %>%
@@ -1620,12 +1648,13 @@ indNoMarch <- which(!(dfP0$mktYr %in% dfP0March$mktYr))
 dfP0notMarch <- dfP0[indNoMarch, ] %>% subset(!is.na(P0)) %>%
   group_by(Mkt, year, yrType) %>% summarise(P0 = mean(P0)) %>% mutate(monthT0 = "near March")
 indUp <- which(dfP0notMarch$yrType == "up"); indDown <- which(dfP0notMarch$yrType == "down")
+dfP0notMarch$EPT0 <- NA
 dfP0notMarch$EPT0[indUp] <- dfP0notMarch$P0[indUp] * exp(mPup * timeHoriz)
 
 indUp <- which(dfP0March$yrType == "up"); indDown <- which(dfP0March$yrType == "down")
 dfP0March$EPT0[indUp] <- dfP0March$P0[indUp] * exp(mPup * timeHoriz)
 dfP0March$EPT0[indDown] <- dfP0March$P0[indDown] * exp(mPDown * timeHoriz)
-dfPT <- df %>% subset(month %in% c("7", "8", "9")) %>% select(Mkt, year, Price, month) %>%
+dfPT <- df %>% subset(month %in% c("8", "9", "10")) %>% select(Mkt, year, Price, month) %>%
   rename(monthtT = month, PT = Price)
 dfPTaug <- dfPT
 dfAnomP0March <- merge(dfP0March, dfPT)
@@ -1635,10 +1664,16 @@ dfAnomP0notMarch$Anom <- (dfAnomP0notMarch$EPT0 - dfAnomP0notMarch$PT) / dfAnomP
 hist(dfAnomP0March$Anom)
 hist(dfAnomP0notMarch$Anom)
 
+EPT02006 <- mean(dfP0March$EPT0[which(dfP0March$year == 2006)])
 EPT02007 <- mean(dfP0March$EPT0[which(dfP0March$year == 2007)])
-# EPT02008 <- mean(dfP0March$EPT0[which(dfP0March$year == 2008)])
-# EPT02009 <- mean(dfP0March$EPT0[which(dfP0March$year == 2009)])
-# EPT02010 <- mean(dfP0March$EPT0[which(dfP0March$year == 2010)])
+EPT02008 <- mean(dfP0March$EPT0[which(dfP0March$year == 2008)])
+EPT02009 <- mean(dfP0March$EPT0[which(dfP0March$year == 2009)])
+EPT02010 <- mean(dfP0March$EPT0[which(dfP0March$year == 2010)])
+EPT02011 <- mean(dfP0March$EPT0[which(dfP0March$year == 2011)])
+EPT02012 <- mean(dfP0March$EPT0[which(dfP0March$year == 2012)])
+# EPT02013 <- mean(dfP0March$EPT0[which(dfP0March$year == 2013)])
+# EPT02014 <- mean(dfP0March$EPT0[which(dfP0March$year == 2014)])
+# EPT02015 <- mean(dfP0March$EPT0[which(dfP0March$year == 2015)])
 P02007 <- mean(dfP0March$P0[which(dfP0March$year == 2007)])
 #=============================================================================
 # Define root function to solve for population EcSharpT0
@@ -1660,22 +1695,25 @@ EQsFun <- function(EPT0, muEyStarT0, mEcSharpT0, sEcSharpT0, h, muArea, Nf, kapp
   #Expected agg supply in kg
   EQsT0 <- muArea * Nf * muEyStarT0 * ProbProfitMeanFarm #assuming rainfall equals historical benchmark
   EQsT0HiRn <- muArea * Nf * 1.5^kappaRn * muEyStarT0 * ProbProfitMeanFarm #assuming rainfall 50% higher than benchmark
-  EQsT0LoRn <- muArea * Nf * 0.5^kappaRn * muEyStarT0 * ProbProfitMeanFarm #Expected rainfall 50% lower than benchmark
+  EQsT0LoRn1 <- muArea * Nf * 0.5^kappaRn * muEyStarT0 * ProbProfitMeanFarm #Expected rainfall 50% lower than benchmark
+  EQsT0LoRn2 <- muArea * Nf * 0.1^kappaRn * muEyStarT0 * ProbProfitMeanFarm #Expected rainfall 90% lower than benchmark
   #------------Expected agg supply in million MT
   EQsT0 <- EQsT0 * 10^-9
   EQsT0HiRn <- EQsT0HiRn * 10^-9
-  EQsT0LoRn <- EQsT0LoRn * 10^-9
+  EQsT0LoRn1 <- EQsT0LoRn1 * 10^-9
+  EQsT0LoRn2 <- EQsT0LoRn2 * 10^-9
   #------------Spot price elasticity of expected agg supply
   etaP0EQsT0 <- dnorm(z) / pnorm(z) * 1 / sEcSharpT0
   #etaP0EQsT0 <- dnorm(z) / pnorm(z) * 1 / (sP * sqrt(timeHoriz))
   #------------
   EmploymentRate <- pnorm((log(EPT0) - mEcSharpT0) / sEcSharpT0)
   #------------
-  dfOut <- data.frame(EPT0, EQsT0, EQsT0HiRn, EQsT0LoRn, etaP0EQsT0, ProbProfitMeanFarm,
-                      EmploymentRate)# etaP0EQsT0, etaSpEQsT0)
+  dfOut <- data.frame(EPT0, EQsT0, EQsT0HiRn, EQsT0LoRn1, EQsT0LoRn2, etaP0EQsT0,
+                      ProbProfitMeanFarm, EmploymentRate)# etaP0EQsT0, etaSpEQsT0)
   colnames(dfOut) <- c("Expected price (KES/kg)", "Expected supply\n(million MT)",
-                       "Expected supply, high rainfall\n(million MT)",
-                       "Expected supply, low rainfall\n(million MT)",
+                       "Expected supply, high rainfall (150%)\n(million MT)",
+                       "Expected supply, low rainfall (50%)\n(million MT)",
+                       "Expected supply, low rainfall (10%)\n(million MT)",
                        "Price elasticity\nof supply",
                        "PEFS-adj. mean probability\nof profit", "Employment rate")
   return(dfOut)
@@ -1713,25 +1751,58 @@ muEcSharpT0nTrunc <- mean(EcSharpT0nTrunc)
 muEcSharpT0n <- muEcSharpT0nTrunc * EmploymentRate / ProbProfit
 EyStarT0max <- muEyStarT0 * EPT02007^eta / muEcSharpT0n
 #-------------------------------------------------------------------------------------
-Nf <- 2 * 10^6; muArea <- mean(exp(dfMod3$`Farm size (acres)`))
-EPT0vec <- seq(0.1, 35, length.out = 50)
+muArea <- mean(exp(dfMod3$`Farm size (acres)`))
+Nf <- 1.9 * 10^6
+EPT0vec <- seq(0.1, 60, length.out = 50)
+# Ministry of Ag midseason expected main season maize harvest, million MT
+# Or USDA FAS GAIN report or Commodity Intelligence report
+# Long rains production accounts for 80% of national output (USDA FAS GAINS 2007)
+# Does long rains harvesting extend into September?
+# Note that these estimates are made after rainfall is known, hence should be close to the high
+# or low rainfall as appropriate
+EQsT2006Jun14MoA <- 2.7 #GIEWS
+#EQsT2007May15MoA <- 1.04 * 2.7 # GIEWS 3 total (short and main), up 4% from prev yr
+EQsT2007Sep11usda <- 2.56 # USDA FAS
+EQsT2008Jul15MoA <- 2.16 # GIEWSDrought, planted acres lower due to post election violence
+EQsT2009AugMoA <- 1.84 # GIEWS Severe drought, crop failure
+EQsT2010Aug5MoA <- 2.6 # GIEWS Good rain, started 2 weeks early
+EQsT2011Nov3MoA <- 2.34 # KFSSG Dismal rainfall outside of western Kenya
+EQsT2012Jul16MoA <- 2.4 # MLND outbreak, late start to rains
+#EQsT2013Jul16MoA <- 1.62 # GoK KFSSG Poorly distributed low rainfall, early cessation
+dfPoints <- data.frame(`Estimate entity\nand date` = c("14 Jun 2006 (GIEWS)",
+                         #"Kenya MoA 15 May 2007",
+                         "11 Sept 2007 (USDA)",
+                         "15 Jul 2008 (GIEWS)\n(Post-election violence, drought)",
+                         "Aug 2009\n(Severe drought, crop failure)",
+                         "5 Aug 2010 (GIEWS)",
+                         "3 Nov 2011 (KFSSG)\n(Drought)",
+                         "16 Jul 2012 (GIEWS)"),
+                       Val = c(EQsT2006Jun14MoA, #EQsT2007May15MoA,
+                               EQsT2007Sep11usda, EQsT2008Jul15MoA,
+                               EQsT2009AugMoA, EQsT2010Aug5MoA,
+                               EQsT2011Nov3MoA, EQsT2012Jul16MoA),
+                       EPT0 = c(EPT02006, EPT02007, EPT02008, EPT02009, EPT02010,
+                                EPT02011, EPT02012))
+colnames(dfPoints)[1] <- "Estimate entity\nand date"
 dfOut <- EQsFun(EPT0vec, muEyStarT0, mEcSharpT0, sEcSharpT0, h, muArea, Nf, kappaRn)
 #gg <- ggplot(dfEQsT0, aes(x = `Expected price (KES/kg)`, y = `Expected supply\n(million MT)`))
 gg <- ggplot(dfOut)
 gg <- gg + geom_ribbon(aes(x = `Expected price (KES/kg)`,
-                           ymin = `Expected supply, low rainfall\n(million MT)`,
-                           ymax = `Expected supply, high rainfall\n(million MT)`),
-                       fill='blue',alpha=0.2)
-dfLine <- dfOut[, 1:4]; colnames(dfLine)[-1] <- c("Normal rainfall", "High rainfall", "Low rainfall")
-dfLine <- dfLine %>% gather(rainLev, `Expected supply\n(million metric tons)`, `Normal rainfall`:`Low rainfall`)
+                           ymin = `Expected supply, low rainfall (10%)\n(million MT)`,
+                           ymax = `Expected supply, high rainfall (150%)\n(million MT)`),
+                       fill = 'blue', alpha = 0.2)
+dfLine <- dfOut[, 1:5]; colnames(dfLine)[-1] <- c("Normal rainfall", "High rainfall (150%)", "Low rainfall (50%)", "Extremely low rainfall (10%)")
+dfLine <- dfLine %>% gather(rainLev, `Expected supply\n(million metric tons)`, `Normal rainfall`:`Extremely low rainfall (10%)`)
 gg <- gg + geom_line(data = dfLine, aes(x = `Expected price (KES/kg)`, y = `Expected supply\n(million metric tons)`, group = rainLev, color = rainLev))
-gg <- gg + scale_color_manual(values = c("green", "red", "black"))
-gg <- gg + geom_vline(xintercept = EPT02007)
+gg <- gg + scale_color_manual(values = c("red", "green", "orange", "black"))
+#gg <- gg + geom_vline(xintercept = EPT02007)
+gg <- gg + geom_point(data = dfPoints, aes(x = EPT0, y = Val)) + ggrepel::geom_text_repel(data = dfPoints, aes(x = EPT0, y = Val, label = `Estimate entity\nand date`), size = 3, lineheight = 0.75)
 gg <- gg + theme_bw()
 gg <- gg + theme(axis.title.x = element_text(size = axisTextSize),
                  legend.title = element_blank(),
                  legend.text = element_text(size = legendTextSize),
                  legend.position = "top")
+
 ggEQsT0 <- gg
 gg <- ggplot(dfOut, aes(x = `Expected price (KES/kg)`, y = `Price elasticity\nof supply`))
 gg <- gg + geom_line() + theme_bw()
