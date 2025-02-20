@@ -1441,13 +1441,21 @@ The Kenya farm data includes the harvest output price as observed at harvest $P(
 long rains mar-may
 Generally how it works: If short rains (oct-dec) are bad, then price increases from planting to harvest, if short rains good, then price stays flat or goes down a little. In years where price increases over the main cropping season, volatility is also higher. Farmers planting in March of 2008 had just finished a poor short season of less than expected rain in oct-dec, and thus expected the maize price to increase from its spot price $P(0)$ at planting.
 
+Farmers base expectations of harvest price on most recent price movement, adaptive expectation [@onono2013response]. 
+Studies have generally found maize price elasticity of supply in Kenya to be far below unity [@abodi2021supply; @onono2013response; @olwande2009supply]. In one study,
+Onono et al.'s estimate of price elasticity of supply: 0.365 [@onono2013response], quite close to what the present model gives when evaluated at the expected price around 2006-2007.
+
+
 GoK KFSSG 2011 long rains assessment - 85% of the national output is main season
 
 Nf: GoK KFSSG 2011 long rains assessment notes that 1.8 million hectares (4.45 million acres) are put to maize. Then have to consider harvested area will be less than planted area. mean farm size of about 2 acres --> Nf = 2 million
 
-2007 15 May assessment - long rains were delayed and short rains harvest delayed due to unseasonal extension of short rains into February, led to reduced main season planting [GIEWS/MoA 2007].
+2006 14 Jun - Good rain [GIEWS].
 
-2008 15 July assessment - after a poor mar-may main rains season and post election violence the Ministry of Agriculture estimated that the main season harvest would be 2.16 million MT (GIEWS/MoA 2008 brief). also input prices were higher
+2007 15 May assessment - long rains were delayed and short rains harvest delayed due to unseasonal extension of short rains into February. This initially led to reduced main season planting, but then good rains came and planting increased. [GIEWS/MoA 2007].
+
+2008 15 July assessment - after a poor mar-may main rains season and post election violence the Ministry of Agriculture estimated that the main season harvest would be 2.16 million MT (GIEWS/MoA 2008 brief). also input prices were higher.
+100,000 ha not planted due to post election violence, west received normal rainfall but rest of main maize growing area received 20-80% of normal. (USDA FAS Commod Intel Report https://ipad.fas.usda.gov/highlights/2008/09/kenya/)
 
 2009 Aug - Severe drought and crop failure [MoA assessment cited in USDA FAS Commodity Intelligence Kenya maize Report, 1 Dec 2009
 https://ipad.fas.usda.gov/highlights/2009/12/kenya/#:~:text=In%20August%202009%2C%20Kenya's%20MoA,reduced%20crop%20prospects%20in%20October.]
@@ -1713,7 +1721,7 @@ EQsFun <- function(EPT0, muEyStarT0, mEcSharpT0, sEcSharpT0, h, muArea, Nf, kapp
   colnames(dfOut) <- c("Expected price (KES/kg)", "Expected supply\n(million MT)",
                        "Expected supply, high rainfall (150%)\n(million MT)",
                        "Expected supply, low rainfall (50%)\n(million MT)",
-                       "Expected supply, low rainfall (10%)\n(million MT)",
+                       "Expected supply, dismal rainfall (10%)\n(million MT)",
                        "Price elasticity\nof supply",
                        "PEFS-adj. mean probability\nof profit", "Employment rate")
   return(dfOut)
@@ -1762,15 +1770,15 @@ EPT0vec <- seq(0.1, 60, length.out = 50)
 # or low rainfall as appropriate
 EQsT2006Jun14MoA <- 2.7 #GIEWS
 #EQsT2007May15MoA <- 1.04 * 2.7 # GIEWS 3 total (short and main), up 4% from prev yr
-EQsT2007Sep11usda <- 2.56 # USDA FAS
-EQsT2008Jul15MoA <- 2.16 # GIEWSDrought, planted acres lower due to post election violence
+EQsT2007Sep11usda <- 2.6 # USDA FAS
+EQsT2008Jul15MoA <- 2.16 # MoA forecast (GIEWS 2008 report), also reported in USDA FAS Commod Intel Report - 100,000 ha not planted due to post election violence, west received normal rainfall but rest of main maize growing area received 20-80% of normal. https://ipad.fas.usda.gov/highlights/2008/09/kenya/
+EQsT2008sep17usda <- 2.55 # USDA FAS Commod Intel Report https://ipad.fas.usda.gov/highlights/2008/09/kenya/
 EQsT2009AugMoA <- 1.84 # GIEWS Severe drought, crop failure
 EQsT2010Aug5MoA <- 2.6 # GIEWS Good rain, started 2 weeks early
 EQsT2011Nov3MoA <- 2.34 # KFSSG Dismal rainfall outside of western Kenya
 EQsT2012Jul16MoA <- 2.4 # MLND outbreak, late start to rains
 #EQsT2013Jul16MoA <- 1.62 # GoK KFSSG Poorly distributed low rainfall, early cessation
 dfPoints <- data.frame(`Estimate entity\nand date` = c("14 Jun 2006 (GIEWS)",
-                         #"Kenya MoA 15 May 2007",
                          "11 Sept 2007 (USDA)",
                          "15 Jul 2008 (GIEWS)\n(Post-election violence, drought)",
                          "Aug 2009\n(Severe drought, crop failure)",
@@ -1791,7 +1799,7 @@ gg <- gg + geom_ribbon(aes(x = `Expected price (KES/kg)`,
                            ymin = `Expected supply, low rainfall (10%)\n(million MT)`,
                            ymax = `Expected supply, high rainfall (150%)\n(million MT)`),
                        fill = 'blue', alpha = 0.2)
-dfLine <- dfOut[, 1:5]; colnames(dfLine)[-1] <- c("Normal rainfall", "High rainfall (150%)", "Low rainfall (50%)", "Extremely low rainfall (10%)")
+dfLine <- dfOut[, 1:5]; colnames(dfLine)[-1] <- c("Normal rainfall", "High rainfall (150%)", "Low rainfall (50%)", "Dismal rainfall (10%)")
 dfLine <- dfLine %>% gather(rainLev, `Expected supply\n(million metric tons)`, `Normal rainfall`:`Extremely low rainfall (10%)`)
 gg <- gg + geom_line(data = dfLine, aes(x = `Expected price (KES/kg)`, y = `Expected supply\n(million metric tons)`, group = rainLev, color = rainLev))
 gg <- gg + scale_color_manual(values = c("red", "green", "orange", "black"))
