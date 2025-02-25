@@ -1,10 +1,9 @@
 ---
-title: A theoretical derivation of the aggregate supply curve accounting for farm entry and exit
+title: A theoretical derivation of the aggregate agricultural supply curve
 # author: "Benjamin Schiek"
 # date: "`r Sys.Date()`"
 abstract: |
-  Conventional models of the aggregate supply of agricultural commodities---specifically those often used in ex-ante impact assessments of policy and research shocks---do not endogenously model the supply response to technology (or any other exogenous) shocks, but rather 1) assume the farm level supply response as exogenously given based on agronomic information, and then 2) assume, as a matter of fiat, the mechanism by which the farm level response manifests at the aggregate level (whether it is a shift or pivot of the aggregate supply curve). Such models also do not account for farm heterogeneity---or, worse still, assume identical marginal farms---and do not account for farm entry/exit. For applications where these things matter, here a tractable aggregate supply model is formally derived from 6 weak axioms. The derived form allows for endogenous modeling of the supply response to exogenous shocks, including entry/exit. The model also accounts for price volatility, opening up a novel set of policy modeling possibilities.. also distributional issues can be addressed... As an illustrative use case, the model is estimated on Kenya farm survey data. Calculations of supply and price elasticity of supply agree with empirical estimates. Potential applications in policy impact assessment are briefly discussed.
-  [The term accounting for farm/entry exit turns out to be highly instructive and intuitive, as it is proportionate to the probability that the mean farm will make a profit at harvest.]
+  Conventional models of the aggregate supply of agricultural commodities---specifically those often used in ex-ante impact assessments of policy and research shocks---do not endogenously model the supply response to technology (or any other exogenous) shocks, but rather 1) assume the farm level supply response as exogenously given based on agronomic information, and then 2) assume, as a matter of fiat, the mechanism by which the farm level response manifests at the aggregate level (whether it is a shift or pivot of the aggregate supply curve). Such models also do not account for farm heterogeneity---or, worse still, assume identical marginal farms---and do not account for farm entry/exit. For applications where these things matter, here a tractable aggregate supply model is formally derived from 6 weak axioms. The derived form allows for endogenous modeling of the supply response to exogenous shocks. Unlike the conventional models, it is expressed in terms that have clear economic meaning---including price volatility and terms representing the farm employment rate and mean probability of profit---opening up a novel set of policy questions that can be formulated and addressed using the model. As an illustrative use case, the model is parameterized on Kenya farm data. The parameterized curve generally agrees with empirical estimates of aggregate supply. The price elasticity of supply curve is also examined and likewise found to agree with empirical estimates of price elasticity.
 header-includes:
   - \usepackage{geometry}
   - \geometry{top=1in,left=1in,bottom=1in,right=1in}
@@ -1444,10 +1443,7 @@ etaReport <- round(eta, 2)
 
 The estimated coefficient on logged cost per acre is statistically significant and indicates that the population yield degree of homogeneity is $h =$ `r hReport`, by which it follows immediately that the price elasticity of farm supply is $\eta = h / (1 - h) =$ `r etaReport`. The coefficients on the other regressors are also statistically significant and take values and signs that agree with intuition. Note that the coefficient on the farm size regressor is negative, affirming the inverse relation between farm size and yield found in numerous other studies [@muyanga2019revisiting; @larson2014should; @wassie2019revisiting; @gautam2019too; @kimhi2006plot].
 
-As explained in section \ref{sec:acct4Stoch}, the expected yield $E[y^*(T)]|_{y = 0}$ is calculated as $y^*(T) e^{-\epsilon} k_r^{-\kappa_r}$. The observed optimal expected unit cost is then calculated as $E[C^{\#}(T)]|_{t = 0} = C^* / E[y^*(T)]|_{y = 0}$. As explained in \ref{sec:aggSupDeterm}, axiom 3 truncates the distribution of (expected) optimal unit cost at the (expected) output price. The conditional parameters $\bar{m}_{\#}$ and $\bar{s}_{\#}$ are calculated from this observed, truncated distribution; and then the unconditional parameters $m_{\#}$ and $s_{\#}$ are calculated by solving simultaneous Equations \ref{eq:cSharpUncondParams}. In addition to $\bar{m}_{\#}$ and $\bar{s}_{\#}$, this requires an estimate of expected harvest price at planting time ($E[P(T)]|_{t = 0}$).
-The two remaining parameters required to plot the 
-
-No good info on the number of maize farms, can deduce from planted area. A common figure seen nowadays is 3 million [e.g. ...], extrapolating back to 2007, this  but if you look at planted area, it's more like 2 million.
+As explained in section \ref{sec:acct4Stoch}, the expected yield is calculated as $E[y^*(T)]|_{y = 0} = y^*(T) e^{-\epsilon} k_r^{-\kappa_r}$. The observed optimal expected unit cost is then calculated as $E[C^{\#}(T)]|_{t = 0} = C^* / E[y^*(T)]|_{y = 0}$. As explained in \ref{sec:aggSupDeterm}, axiom 3 truncates the distribution of (expected) optimal unit cost at the (expected) output price. The conditional parameters $\bar{m}_{\#}$ and $\bar{s}_{\#}$ are calculated from this observed, truncated distribution; and then the unconditional parameters $m_{\#}$ and $s_{\#}$ are calculated by solving simultaneous Equations \ref{eq:cSharpUncondParams}. In addition to $\bar{m}_{\#}$ and $\bar{s}_{\#}$, this requires an estimate of expected harvest price at planting time ($E[P(T)]|_{t = 0}$).
 
 The Kenya farm data includes the harvest output price as observed at harvest $P(T)$, but not $E[P(T)]|_{t = 0}$. Recall from Equation \ref{eq:EPT0} that calculation of $E[P(T)]|_{t = 0}$ requires the maize price at planting $P(0)$, the drift parameter $m_p$, and the time from planting to harvest $T$. In the present exercise, this information is taken from the World Food Program main season monthly price series plotted in Figure \ref{fig:mzP} [@WFPpriceData]. Given the monthly time step of the data, the time horizon from planting in March to the August-September harvest is $T = 6$. The price at planting $P(0)$ is averaged over the main maize markets. The drift parameter $m_p$ is then calculated as the mean log change from one month to another in all markets. Missing values are omitted from these calculations.
 
@@ -1610,15 +1606,22 @@ EPT02012 <- mean(dfP0March$EPT0[which(dfP0March$year == 2012)])
 # EPT02015 <- mean(dfP0March$EPT0[which(dfP0March$year == 2015)])
 P02007 <- mean(dfP0March$P0[which(dfP0March$year == 2007)])
 #=============================================================================
+# Mean farm size
+muArea <- mean(exp(dfMod3$`Farm size (acres)`))
+muAreaReport <- round(muArea, 2)
+# Number of farms
+Nf <- 2 * 10^6
 
 ```
+
+The two remaining parameters required are number of farms $N_f$ and mean farm size $k_a$. For mean farm size, the Kenya farm sample mean is used, giving $k_a =$ `r muArea` acres. The number of maize farms is more difficult to assess. One sometimes sees the figure $3$ million mentioned [e.g. @njeru2022maize], but this appears to be unsupported by any hard evidence. Here, a rough estimate is deduced by dividing planted area by mean farm size. The midseason reports examined for this exercise suggest that planted maize area during the period in question ranges between 3 and 4.5 million acres [@KFSSGJul2011]. Divided by $k_a$, this gives a range between $1.56$ and $2.34$ million farms. The figure $N_f = 2$ million is used as a rough estimate.
 
 The expected aggregate supply curve is evaluated at different expected rainfall levels in Figure \ref{fig:EaggQs}, top. The rainfall levels "high", "normal", "low", and "dismal" correspond to values of $k_r = 1.5$, $k_r = 1$, $k_r = 0.5$, and $k_r = 0.1$, respectively; which in turn represent expected rainfall that is 150% of the historical benchmark, in line with the historical benchmark, 50% of the historical benchmark, and 10% of the historical benchmark, respectively. The empirical supply estimates for the major drought years agree closely with the theoretical expected supply curve evaluated at the dismal rainfall level, while the estimates in normal or good rainfall years generally agree with the theoretical curve evaluated at the normal and high rainfall levels. The curve overshoots the 2010 estimate somewhat, possibly due to crop loss from flooding that year [@GIEWS5Aug2010]. The one major empirical divergence from the theoretical curve is 2009, an historic drought year [@MoApressRelease2009].
 
 The price elasticity of expected aggregate supply curve is presented in Figure \ref{fig:EaggQs}, bottom. Empirical estimates of the maize price elasticity of supply in Kenya generally range from $0.1$ to $0.365$ [@abodi2021supply; @onono2013response; @olwande2009supply], which is roughly the range of elasticities indicated by the theoretical curve for the years examined here.
 <!-- In one study, Onono et al.'s estimate of price elasticity of supply: 0.365 [@onono2013response] -->
 
-This is the short run curve, assumes mean farm size, number of farms, tech stay the same. 
+The expected aggregate supply and price elasticity curves parameterized in this exercise are "short run" curves. That is to say, they are valid only insofar as the values of their fitted parameters---$h$, $N_f$, $k_a$, $k$, $m_{\#}$, $s_{\#}$, $m_p$---are accurate. Empirical estimates for years well before or well after the year of the data used to estimate the parameters will likely diverge from the curve.
 
 ```{r Fig2, fig.show = "hold", fig.width = 5, fig.height=4, fig.align="left", fig.cap="\\label{fig:EaggQs}Expected aggregate supply", echo = FALSE}
 # Define root function to solve for population EcSharpT0
@@ -1720,8 +1723,6 @@ muEcSharpT0nTrunc <- mean(EcSharpT0nTrunc)
 muEcSharpT0n <- muEcSharpT0nTrunc * EmploymentRate / ProbProfit
 EyStarT0max <- muEyStarT0 * EPT02007^eta / muEcSharpT0n
 #-------------------------------------------------------------------------------------
-muArea <- mean(exp(dfMod3$`Farm size (acres)`))
-Nf <- 2 * 10^6
 dfOut <- EQsFun(EPT0vec, muEyStarT0, mEcSharpT0, sEcSharpT0, h, muArea, Nf, kappaRn)
 EPT0vec <- seq(0.1, 60, length.out = 50)
 EPT0EmpirVec = c(EPT02006, EPT02007, EPT02008, EPT02009, EPT02010, EPT02011, EPT02012)
@@ -1737,7 +1738,7 @@ gg <- gg + geom_ribbon(aes(x = `Expected price (KES/kg)`,
 dfLine <- dfOut[, 1:5]; colnames(dfLine)[-1] <- c("Normal rainfall", "High rainfall (150%)", "Low rainfall (50%)", "Dismal rainfall (10%)")
 dfLine <- dfLine %>% gather(rainLev, `Expected supply\n(million metric tons)`, `Normal rainfall`:`Dismal rainfall (10%)`)
 gg <- gg + geom_line(data = dfLine, aes(x = `Expected price (KES/kg)`, y = `Expected supply\n(million metric tons)`, group = rainLev, color = rainLev))
-gg <- gg + scale_color_manual(values = c("red", "green", "orange", "black"))
+gg <- gg + scale_color_manual(breaks = c("Normal rainfall", "High rainfall (150%)", "Low rainfall (50%)", "Dismal rainfall (10%)"), values = c("black", "green", "orange", "red"))
 #gg <- gg + geom_vline(xintercept = EPT02007)
 gg <- gg + geom_point(data = dfPoints, aes(x = EPT0, y = `Estimate\n(million MT)`)) + ggrepel::geom_text_repel(data = dfPoints, aes(x = EPT0, y = `Estimate\n(million MT)`, label = `Estimate date`), size = 3, lineheight = 0.75)
 gg <- gg + theme_bw()
@@ -1884,10 +1885,6 @@ ggEQsT0 / ggEtaEPT0EQsT0a
 # annotate("rect", fill = "red", alpha = 0.5,
 #         xmin = 1924, xmax = 1928 + 11/12,
 #         ymin = -Inf, ymax = Inf)
-
-
-
-
 #----------------------------------------------------------------------------------------
 # # Define constant in terms of convenient known reference value y0, in this case sample mean yield.
 # # Sample mean yield varies with binary controls. Here is the mean with just the base constant
