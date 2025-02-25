@@ -36,6 +36,7 @@ library(scales)
 library(lubridate)
 library(randomcoloR)
 library(modelsummary)
+library(flextable)
 
 labelSize <- 2.5
 smallLabelSize <- 2
@@ -1138,55 +1139,72 @@ s_p \sqrt{T} </> \frac{\phi(-z)}{\Phi(-z)}
 
 As an illustrative example, the expected aggregate supply curve derived above from axioms 1-5 is parameterized based on 2007 Kenyan maize farm data and compared against empirical estimates of expected aggregate supply for the years 2006-2012. The farm data used in this pedagogical exercise come from a panel covering the main and short rains seasons for multiple crops across Kenya for the years 2000, 2004, 2007, and 2010, originally gathered by the Egerton University Tegemeo Institute of Agricultural Policy and Development in partnership with Michigan State University, under the auspices of a USAID project [@maizeData]. For the present exercise, only the 2007 main rains season maize farm data is used. The main rains season generally runs from March to August. Farms not reporting maize as their main crop or reporting zero maize production cost are excluded, resulting in a sample size of 942 maize farms across 20 districts (nowadays referred to as "counties"). The sample represents all major maize growing regions in the country as well as some marginal regions. Full details regarding the data and its processing for the present exercise, including summary statistics, are provided in Appendix B.1.
 
-The empirical estimates of aggregate supply for the years 2006-2012 are mostly taken from FAO Global Information and Early Warning System (GIEWS) reports published in the middle or towards the end of the main maize cropping season in each respective year---prior to harvest but after planted area and main season rainfall are known. These estimates are summarized in Table 1.
+The empirical estimates of aggregate supply for the years 2006-2012 are taken from commodity intelligence reports published in mid to late season---prior to harvest but after planted area and main season rainfall are known. These estimates, summarized in Table 1, cover some of Kenya's worst drought years in living memory.
 
-```{r}
-
+```{r, out.width='\\textwidth', echo = FALSE}
 # Ministry of Ag midseason expected main season maize harvest, million MT
 # Or USDA FAS GAIN report or Commodity Intelligence report
 # Long rains production accounts for 80% of national output (USDA FAS GAINS 2007)
 # Does long rains harvesting extend into September?
 # Note that these estimates are made after rainfall is known, hence should be close to the high
 # or low rainfall as appropriate
-EQsT2006Jun14MoA <- 2.7 #GIEWS
+EQsT2006Jun14giews<- 2.7 #GIEWS
 #EQsT2007May15MoA <- 1.04 * 2.7 # GIEWS 3 total (short and main), up 4% from prev yr
-EQsT2007Sep11usda <- 2.6 # USDA FAS
-EQsT2008Jul15MoA <- 2.16 # MoA forecast (GIEWS 2008 report), also reported in USDA FAS Commod Intel Report - 100,000 ha not planted due to post election violence, west received normal rainfall but rest of main maize growing area received 20-80% of normal. https://ipad.fas.usda.gov/highlights/2008/09/kenya/
-EQsT2008sep17usda <- 2.55 # USDA FAS Commod Intel Report https://ipad.fas.usda.gov/highlights/2008/09/kenya/
-EQsT2009AugMoA <- 1.84 # GIEWS Severe drought, crop failure
-EQsT2010Aug5MoA <- 2.6 # GIEWS Good rain, started 2 weeks early
-EQsT2011Nov3MoA <- 2.34 # KFSSG Dismal rainfall outside of western Kenya
-EQsT2012Jul16MoA <- 2.4 # MLND outbreak, late start to rains
+EQsT2007Jun28usda <- 2.6 # USDA FAS
+EQsT2008Jul15giews <- 2.16 # MoA forecast (GIEWS 2008 report), also reported in USDA FAS Commod Intel Report - 100,000 ha not planted due to post election violence, west received normal rainfall but rest of main maize growing area received 20-80% of normal. https://ipad.fas.usda.gov/highlights/2008/09/kenya/
+#EQsT2008sep17usda <- 2.55 # USDA FAS Commod Intel Report https://ipad.fas.usda.gov/highlights/2008/09/kenya/
+EQsT2009Aug11MoA <- 1.84 # Minister of Ag press release, Severe drought, crop failure
+EQsT2010Aug5giews <- 2.6 # GIEWS Good rain, started 2 weeks early
+EQsT2011Nov3kfssg <- 2.34 # KFSSG Dismal rainfall outside of western Kenya
+EQsT2012Jul16giews <- 2.4 # MLND outbreak, late start to rains
 #EQsT2013Jul16MoA <- 1.62 # GoK KFSSG Poorly distributed low rainfall, early cessation
-EQsTvec <- c(EQsT2006Jun14MoA, EQsT2007Sep11usda, EQsT2008Jul15MoA,
-             EQsT2009AugMoA, EQsT2010Aug5MoA, EQsT2011Nov3MoA, EQsT2012Jul16MoA)
-reportDate <- c("14 Jun 2006 (GIEWS)", "11 Sept 2007 (USDA)",
-                "15 Jul 2008 (GIEWS)\n(Post-election violence, drought)",
-                "Aug 2009\n(Severe drought, crop failure)",
-                "5 Aug 2010 (GIEWS)",
-                "3 Nov 2011 (KFSSG)\n(Drought)",
-                "16 Jul 2012 (GIEWS)")
-citeVec <- c("FAO GIEWS 2006", "USDA 2007", "FAO GIEWS 2008", "FAO GIEWS 2009",
-             "FAO GIEWS 2010", "KFSSG 2011", "FAO GIEWS 2012")
+EQsTvec <- c(EQsT2006Jun14giews, EQsT2007Jun28usda, EQsT2008Jul15giews,
+             EQsT2009Aug11MoA, EQsT2010Aug5giews, EQsT2011Nov3kfssg, EQsT2012Jul16giews)
+reportDate <- c("14 Jun 2006",
+                "28 Jun 2007",
+                "15 Jul 2008",
+                "11 Aug 2009",
+                "5 Aug 2010",
+                "July 2011",
+                "16 Jul 2012")
+citeVec <- c("FAO Global Information and Early Warning System 2006",
+             "USDA Foreign Agricultural Service 2007",
+             "FAO Global Information and Early Warning System 2008",
+             "Minister of Agriculture 2009",
+             "FAO Global Information and Early Warning System 2010",
+             "Kenya Food Security Steering Group 2011",
+             "FAO Global Information and Early Warning System 2012")
 commentVec <- c("Normal rainfall",
                 "Normal rainfall",
                 "Post-election violence, drought",
                 "Severe drought, crop failure",
-                "Good rains that came early, but some crops loss due to flooding",
+                "Good rains that came early, but some crop loss due to flooding",
                 "Dismal rainfall except in west Kenya",
                 "Rains started late, maize lethal necrosis outbreak")
 dfPoints <- data.frame(`Estimate date` = reportDate,
                        `Estimate (million MT)` = EQsTvec,
                        Reference = citeVec,
                        Comments = commentVec)
-colnames(dfPoints) <- c("Estimate date", "Estimate (million MT)", "Reference", "Comments")
+colnames(dfPoints) <- c("Estimate date", "Estimate\n(million MT)", "Reference", "Comments")
 
-knitr::kable(dfPoints)#, format = "html")
+set_flextable_defaults(
+  font.size = 9#, #theme_fun = theme_vanilla,
+  #padding = 6
+  )
+  #background.color = "#EFEFEF")
+ft <- flextable(dfPoints) %>% set_caption("Table 1: Empirical estimates of main season maize harvest 2006-2012") %>% autofit()
+ft
 
 ```
+[-@GIEWS14Jun2006]
+[-@USDA28Jun2007]
+[-@GIEWS15Jul2008]
+[-@MoApressRelease2009]
+[-@GIEWS5Aug2010]
+[-@KFSSGJul2011]
+[-@GIEWS16Jul2012]
 
-
-To parameterize the expected aggregate supply curve, Equation \ref{eq:lYdEnvReg2} is fit to the data. In this exercise, the constant $v_0$ includes endowment dummy variables that augment the constant on farms where the endowment is present.
+To parameterize the expected aggregate supply curve, Equation \ref{eq:lYdEnvReg2} is fit to the farm data. In this exercise, the constant $v_0$ includes endowment dummy variables that augment the constant on farms where the endowment is present.
 
 \begin{equation}
 \ln(y^*(T)) = \ln(v_0) + \sum_i^{n_k} \kappa_i \ln(k_i) + h \ln(C^*) + \epsilon \:\:;\:\:\: \ln(v_0) = \beta_0 + \sum_{i = 1}^{n_b} \beta_i b_i
@@ -1413,7 +1431,7 @@ mod3 <- lm(`Yield (kg/acre)` ~., dfMod3[, -1])
 
 #coefOrder <- gsub("`", "", unique(c(varsOve1a, varsOve1b, varsOve2a, varsOve2b, varsOve3)))
 modelsummary(mod3, output = "latex", statistic = "p.value",
-             estimate = "{estimate}{stars}")#, coef_map = coefOrder)
+             estimate = "{estimate}{stars}", title = "Table 2: Farm yield regression results")#, coef_map = coefOrder)
 #output = "markdown"
 #output = "kableExtra"
 #ouput="flextable"
@@ -1427,46 +1445,27 @@ etaReport <- round(eta, 2)
 The estimated coefficient on logged cost per acre is statistically significant and indicates that the population yield degree of homogeneity is $h =$ `r hReport`, by which it follows immediately that the price elasticity of farm supply is $\eta = h / (1 - h) =$ `r etaReport`. The coefficients on the other regressors are also statistically significant and take values and signs that agree with intuition. Note that the coefficient on the farm size regressor is negative, affirming the inverse relation between farm size and yield found in numerous other studies [@muyanga2019revisiting; @larson2014should; @wassie2019revisiting; @gautam2019too; @kimhi2006plot].
 
 As explained in section \ref{sec:acct4Stoch}, the expected yield $E[y^*(T)]|_{y = 0}$ is calculated as $y^*(T) e^{-\epsilon} k_r^{-\kappa_r}$. The observed optimal expected unit cost is then calculated as $E[C^{\#}(T)]|_{t = 0} = C^* / E[y^*(T)]|_{y = 0}$. As explained in \ref{sec:aggSupDeterm}, axiom 3 truncates the distribution of (expected) optimal unit cost at the (expected) output price. The conditional parameters $\bar{m}_{\#}$ and $\bar{s}_{\#}$ are calculated from this observed, truncated distribution; and then the unconditional parameters $m_{\#}$ and $s_{\#}$ are calculated by solving simultaneous Equations \ref{eq:cSharpUncondParams}. In addition to $\bar{m}_{\#}$ and $\bar{s}_{\#}$, this requires an estimate of expected harvest price at planting time ($E[P(T)]|_{t = 0}$).
+The two remaining parameters required to plot the 
 
-The Kenya farm data includes the harvest output price as observed at harvest $P(T)$, but not $E[P(T)]|_{t = 0}$. Recall from Equation \ref{eq:EPT0} that calculation of $E[P(T)]|_{t = 0}$ requires the maize price at planting $P(0)$, the drift parameter $m_p$, and the time from planting to harvest $T$. In the present exercise, this information is taken from the World Food Program main season monthly price series plotted in Figure \ref{fig:mzP} [@WFPpriceData]. The price at planting in March $P(0)$ is calculated as the average across the main maize markets. The drift parameter $m_p$ is then calculated as the mean log change from one month to another. Missing values are omitted from these calculations.
+No good info on the number of maize farms, can deduce from planted area. A common figure seen nowadays is 3 million [e.g. ...], extrapolating back to 2007, this  but if you look at planted area, it's more like 2 million.
 
-When calculating $m_p$, it is important to take note of price dynamics peculiar to the market in question. In Kenya, the short rains maize crop is harvested about a month before the main season crop is planted. If the short rains harvest is good, then the maize price tends to remain flat during the main season or decrease a little. If the short rains harvest is poor, then the price tends to trend upwards during the main season and to be a little more volatile. This is reflected in Figure \ref{fig:mzP}, where the price series in 2008, 2009, 2011, and 2012---all drought years---are upward trending, following a poor short rains season; and where the series are flat during the other years, when rainfall was normal. To accommodate this dichotomy, $m_P$ is calculated separately for bad short rain years and good short rain years. For years beginning with a bad short rains harvest, $E[P(T)]|_{t = 0}$ is calculated using the $m_p$ calculated over the price series in bad short rains years. For years beginning with a good short rains harvest, $E[P(T)]|_{t = 0}$ is calculated using the $m_p$ calculated over the series in good short rains years.
-<!-- Farmers base expectations of harvest price on most recent price movement, adaptive expectation [@onono2013response].  -->
-the time horizon is T = 6; muArea is...
+The Kenya farm data includes the harvest output price as observed at harvest $P(T)$, but not $E[P(T)]|_{t = 0}$. Recall from Equation \ref{eq:EPT0} that calculation of $E[P(T)]|_{t = 0}$ requires the maize price at planting $P(0)$, the drift parameter $m_p$, and the time from planting to harvest $T$. In the present exercise, this information is taken from the World Food Program main season monthly price series plotted in Figure \ref{fig:mzP} [@WFPpriceData]. Given the monthly time step of the data, the time horizon from planting in March to the August-September harvest is $T = 6$. The price at planting $P(0)$ is averaged over the main maize markets. The drift parameter $m_p$ is then calculated as the mean log change from one month to another in all markets. Missing values are omitted from these calculations.
 
-
-
-
-GoK KFSSG 2011 long rains assessment - 85% of the national output is main season
-
-Nf: GoK KFSSG 2011 long rains assessment notes that 1.8 million hectares (4.45 million acres) are put to maize. Then have to consider harvested area will be less than planted area. mean farm size of about 2 acres --> Nf = 2 million
-
-2006 14 Jun - Good rain [GIEWS].
-
-2007 15 May assessment - long rains were delayed and short rains harvest delayed due to unseasonal extension of short rains into February. This initially led to reduced main season planting, but then good rains came and planting increased. [GIEWS/MoA 2007].
-
-2008 15 July assessment - after a poor mar-may main rains season and post election violence the Ministry of Agriculture estimated that the main season harvest would be 2.16 million MT (GIEWS/MoA 2008 brief). also input prices were higher.
-100,000 ha not planted due to post election violence, west received normal rainfall but rest of main maize growing area received 20-80% of normal. (USDA FAS Commod Intel Report https://ipad.fas.usda.gov/highlights/2008/09/kenya/)
-
-2009 Aug - Severe drought and crop failure [MoA assessment cited in USDA FAS Commodity Intelligence Kenya maize Report, 1 Dec 2009
-https://ipad.fas.usda.gov/highlights/2009/12/kenya/#:~:text=In%20August%202009%2C%20Kenya's%20MoA,reduced%20crop%20prospects%20in%20October.]
-
-2010 5 Aug - Good rain, started 2 weeks early. 2.6. Farmers planted more due to the attractive prices seen in 2009. About 200,000 small farmers received seeds and fertilizer through the National Accelerated Agricultural Input Access Program. Some crop loss due to flooding.
-
-2011 3 Nov GIEWS - 2.25 less rain
-2011 GoK KFSSG 2.34 dismal rains
-
-2012 16 Jul - rains 2-4 weeks late, erratic, crop failure in some parts. About 1.4% of planted area was affected by lethal maize necrosis
-
-c("Kenya MoA 14 Jun 2006",
-                         "Kenya MoA 15 May 2007",
-                         "USDA 11 Sept 2007",
-                         "Kenya MoA 15 Jul 2008 (Post-election violence)")
-
-The data comes from... Cannot validate against FAO as FAO is post hoc. It's expected supply so have to compare to the GIEWS midseason forecast--although keep in mind the midseason update knows the rainfall.
-
-Price controls came into play during the 2009-2012 crisis
-Gov gave fert to some farmers
+When calculating $m_p$, it is important to take note of price dynamics peculiar to the market in question. In Kenya, the short rains maize crop is harvested about a month before the main season crop is planted. If the short rains harvest is good, then the maize price tends to remain flat during the main season or decrease a little. If the short rains harvest is poor, then the price tends to trend upwards during the main season and to be a little more volatile. This is reflected in Figure \ref{fig:mzP}, where the price series in 2008, 2009, 2011, and 2012 are upward trending. It is known that the main season followed a poor short rains harvest in these years. In the other years, the price series are flat because the short rains harvest was normal. To accommodate this dichotomy, $m_P$ is calculated separately for bad short rain years and good short rain years. For years beginning with a bad short rains harvest, the expected price ($E[P(T)]|_{t = 0}$) is calculated using the "bad short rains" $m_p$, while expected price in years beginning with a good short rains harvest is calculated using the "good short rains" $m_p$. <!-- Farmers base expectations of harvest price on most recent price movement, adaptive expectation [@onono2013response].  -->
+<!-- GoK KFSSG 2011 long rains assessment - 85% of the national output is main season -->
+<!-- Nf: GoK KFSSG 2011 long rains assessment notes that 1.8 million hectares (4.45 million acres) are put to maize. Then have to consider harvested area will be less than planted area. mean farm size of about 2 acres -> Nf = 2 million -->
+<!-- 2006 14 Jun - Good rain [GIEWS]. -->
+<!-- 2007 15 May assessment - long rains were delayed and short rains harvest delayed due to unseasonal extension of short rains into February. This initially led to reduced main season planting, but then good rains came and planting increased. [GIEWS/MoA 2007]. -->
+<!-- 2008 15 July assessment - after a poor mar-may main rains season and post election violence the Ministry of Agriculture estimated that the main season harvest would be 2.16 million MT (GIEWS/MoA 2008 brief). also input prices were higher. -->
+<!-- 100,000 ha not planted due to post election violence, west received normal rainfall but rest of main maize growing area received 20-80% of normal. (USDA FAS Commod Intel Report https://ipad.fas.usda.gov/highlights/2008/09/kenya/) -->
+<!-- 2009 Aug - Severe drought and crop failure [MoA assessment cited in USDA FAS Commodity Intelligence Kenya maize Report, 1 Dec 2009 -->
+<!-- https://ipad.fas.usda.gov/highlights/2009/12/kenya/#:~:text=In%20August%202009%2C%20Kenya's%20MoA,reduced%20crop%20prospects%20in%20October.] -->
+<!-- 2010 5 Aug - Good rain, started 2 weeks early. 2.6. Farmers planted more due to the attractive prices seen in 2009. About 200,000 small farmers received seeds and fertilizer through the National Accelerated Agricultural Input Access Program. Some crop loss due to flooding. -->
+<!-- 2011 3 Nov GIEWS - 2.25 less rain -->
+<!-- 2011 GoK KFSSG 2.34 dismal rains -->
+<!-- 2012 16 Jul - rains 2-4 weeks late, erratic, crop failure in some parts. About 1.4% of planted area was affected by lethal maize necrosis -->
+<!-- Price controls came into play during the 2009-2012 crisis -->
+<!-- Gov gave fert to some farmers -->
 
 ```{r Fig1, fig.show = "hold", fig.width = 5, fig.height=3, fig.align="left", fig.cap="\\label{fig:mzP}Maize monthly price series during main season (March-August) at primary markets in Kenya. Price data are from the World Food Program.", echo = FALSE}
 #======================================================================
@@ -1525,9 +1524,10 @@ gg <- gg + theme_bw()
 gg <- gg + theme(axis.title = element_blank(),
                  axis.text = element_text(size = axisTextSize),
                  strip.background = element_rect(fill = "white"),
-                 #strip.text = element_blank(),
+                 strip.text = element_text(size = facetTitleSize),
                  plot.title = element_text(size = titleSize),
-                 legend.title = element_blank())
+                 legend.title = element_blank(),
+                 legend.text = element_text(size = legendTextSize))
 gg <- shift_legend2(gg)
 gg <- ggplotify::as.ggplot(gg)
 gg
@@ -1613,19 +1613,12 @@ P02007 <- mean(dfP0March$P0[which(dfP0March$year == 2007)])
 
 ```
 
-No good info on the number of maize farms, can deduce from planted area. A common figure seen nowadays is 3 million [e.g. ...], extrapolating back to 2007, this  but if you look at planted area, it's more like 2 million.
-
-The expected aggregate supply curve is evaluated at different expected rainfall levels in Figure \ref{fig:EaggQs}, top. The rainfall levels "high", "normal", "low", and "dismal" correspond to values of $k_r = 1.5$, $k_r = 1$, $k_r = 0.5$, and $k_r = 0.1$, respectively; which in turn represent expected rainfall that is 150% of the historical benchmark, in line with the historical benchmark, 50% of the historical benchmark, and 10% of the historical benchmark, respectively. The empirical estimates for the major drought years agree closely with the dismal rainfall expected aggregate supply curve, while the estimates in normal or good rainfall years generally agree with the theoretical expected aggregate supply curve evaluated at the normal and high rainfall levels. The curve overshoots the 2010 estimate somewhat, possibly due to crop loss that resulted from flooding that year [2010giews]. The one major empirical divergence from the theoretical curve is 2009, an historic drought year [2009giews].
+The expected aggregate supply curve is evaluated at different expected rainfall levels in Figure \ref{fig:EaggQs}, top. The rainfall levels "high", "normal", "low", and "dismal" correspond to values of $k_r = 1.5$, $k_r = 1$, $k_r = 0.5$, and $k_r = 0.1$, respectively; which in turn represent expected rainfall that is 150% of the historical benchmark, in line with the historical benchmark, 50% of the historical benchmark, and 10% of the historical benchmark, respectively. The empirical supply estimates for the major drought years agree closely with the theoretical expected supply curve evaluated at the dismal rainfall level, while the estimates in normal or good rainfall years generally agree with the theoretical curve evaluated at the normal and high rainfall levels. The curve overshoots the 2010 estimate somewhat, possibly due to crop loss from flooding that year [@GIEWS5Aug2010]. The one major empirical divergence from the theoretical curve is 2009, an historic drought year [@MoApressRelease2009].
 
 The price elasticity of expected aggregate supply curve is presented in Figure \ref{fig:EaggQs}, bottom. Empirical estimates of the maize price elasticity of supply in Kenya generally range from $0.1$ to $0.365$ [@abodi2021supply; @onono2013response; @olwande2009supply], which is roughly the range of elasticities indicated by the theoretical curve for the years examined here.
 <!-- In one study, Onono et al.'s estimate of price elasticity of supply: 0.365 [@onono2013response] -->
 
 This is the short run curve, assumes mean farm size, number of farms, tech stay the same. 
-
-
-
-
-
 
 ```{r Fig2, fig.show = "hold", fig.width = 5, fig.height=4, fig.align="left", fig.cap="\\label{fig:EaggQs}Expected aggregate supply", echo = FALSE}
 # Define root function to solve for population EcSharpT0
@@ -1729,39 +1722,11 @@ EyStarT0max <- muEyStarT0 * EPT02007^eta / muEcSharpT0n
 #-------------------------------------------------------------------------------------
 muArea <- mean(exp(dfMod3$`Farm size (acres)`))
 Nf <- 2 * 10^6
-EPT0vec <- seq(0.1, 60, length.out = 50)
-# Ministry of Ag midseason expected main season maize harvest, million MT
-# Or USDA FAS GAIN report or Commodity Intelligence report
-# Long rains production accounts for 80% of national output (USDA FAS GAINS 2007)
-# Does long rains harvesting extend into September?
-# Note that these estimates are made after rainfall is known, hence should be close to the high
-# or low rainfall as appropriate
-EQsT2006Jun14MoA <- 2.7 #GIEWS
-#EQsT2007May15MoA <- 1.04 * 2.7 # GIEWS 3 total (short and main), up 4% from prev yr
-EQsT2007Sep11usda <- 2.6 # USDA FAS
-EQsT2008Jul15MoA <- 2.16 # MoA forecast (GIEWS 2008 report), also reported in USDA FAS Commod Intel Report - 100,000 ha not planted due to post election violence, west received normal rainfall but rest of main maize growing area received 20-80% of normal. https://ipad.fas.usda.gov/highlights/2008/09/kenya/
-EQsT2008sep17usda <- 2.55 # USDA FAS Commod Intel Report https://ipad.fas.usda.gov/highlights/2008/09/kenya/
-EQsT2009AugMoA <- 1.84 # GIEWS Severe drought, crop failure
-EQsT2010Aug5MoA <- 2.6 # GIEWS Good rain, started 2 weeks early
-EQsT2011Nov3MoA <- 2.34 # KFSSG Dismal rainfall outside of western Kenya
-EQsT2012Jul16MoA <- 2.4 # MLND outbreak, late start to rains
-#EQsT2013Jul16MoA <- 1.62 # GoK KFSSG Poorly distributed low rainfall, early cessation
-dfPoints <- data.frame(`Estimate entity\nand date` = c("14 Jun 2006 (GIEWS)",
-                         "11 Sept 2007 (USDA)",
-                         "15 Jul 2008 (GIEWS)\n(Post-election violence, drought)",
-                         "Aug 2009\n(Severe drought, crop failure)",
-                         "5 Aug 2010 (GIEWS)",
-                         "3 Nov 2011 (KFSSG)\n(Drought)",
-                         "16 Jul 2012 (GIEWS)"),
-                       Val = c(EQsT2006Jun14MoA, #EQsT2007May15MoA,
-                               EQsT2007Sep11usda, EQsT2008Jul15MoA,
-                               EQsT2009AugMoA, EQsT2010Aug5MoA,
-                               EQsT2011Nov3MoA, EQsT2012Jul16MoA),
-                       EPT0 = c(EPT02006, EPT02007, EPT02008, EPT02009, EPT02010,
-                                EPT02011, EPT02012))
-colnames(dfPoints)[1] <- "Estimate entity\nand date"
 dfOut <- EQsFun(EPT0vec, muEyStarT0, mEcSharpT0, sEcSharpT0, h, muArea, Nf, kappaRn)
-#------------------------------------------------------------------------------------------
+EPT0vec <- seq(0.1, 60, length.out = 50)
+EPT0EmpirVec = c(EPT02006, EPT02007, EPT02008, EPT02009, EPT02010, EPT02011, EPT02012)
+dfPoints$EPT0 <- EPT0EmpirVec
+#-------------------------------------------------------------------------------------
 # Expected aggregate supply curve
 #gg <- ggplot(dfEQsT0, aes(x = `Expected price (KES/kg)`, y = `Expected supply\n(million MT)`))
 gg <- ggplot(dfOut)
@@ -1774,7 +1739,7 @@ dfLine <- dfLine %>% gather(rainLev, `Expected supply\n(million metric tons)`, `
 gg <- gg + geom_line(data = dfLine, aes(x = `Expected price (KES/kg)`, y = `Expected supply\n(million metric tons)`, group = rainLev, color = rainLev))
 gg <- gg + scale_color_manual(values = c("red", "green", "orange", "black"))
 #gg <- gg + geom_vline(xintercept = EPT02007)
-gg <- gg + geom_point(data = dfPoints, aes(x = EPT0, y = Val)) + ggrepel::geom_text_repel(data = dfPoints, aes(x = EPT0, y = Val, label = `Estimate entity\nand date`), size = 3, lineheight = 0.75)
+gg <- gg + geom_point(data = dfPoints, aes(x = EPT0, y = `Estimate\n(million MT)`)) + ggrepel::geom_text_repel(data = dfPoints, aes(x = EPT0, y = `Estimate\n(million MT)`, label = `Estimate date`), size = 3, lineheight = 0.75)
 gg <- gg + theme_bw()
 gg <- gg + theme(axis.title = element_text(size = axisTitleSize),
                  axis.text = element_text(size = axisTextSize),
