@@ -285,10 +285,10 @@ This is, of course, the Cobb-Douglas form. Outside of Economics, it would simply
 <!-- [Other perceived shortcomings of the form are briefly addressed in the Discussion. if there is enough space!] [Or: In the course of the derivation below, a number of theoretical strengths are brought to light---underrepresented or overlooked by textbook treatments---that cast doubt on the bad reputation as a "restrictive" model] -->
 
 Interpretation of the constant $g_0$ is as difficult as one wants to make it. It is, of course, usually called the "total factor productivity", and understood to represent the yield per unit "all inputs"---although a more accurate description would be yield per unit "all input and control variables, raised to various powers". For those not yet comfortable working in units of, say,
-
 $$
-\text{kg.} \times \: \text{acres}^{-1} \times \: \text{liters}^{-\alpha_{pest}} \times \: \text{kg.}^{-\alpha_{fert}} \times \: \text{manhours}^{-\alpha_{labor}} \times\: \\ \text{mm.}^{-\alpha_{rain}} \times\: \: \text{years}^{-\alpha_{age}} \times\: \text{num. persons}^{-\alpha_{HHsize}} \:;\:\: \alpha_{(var)} \in \mathbb{R}
+\text{kg.} \times \: \text{acres}^{-1} \times \: \text{liters}^{-\alpha_{pest}} \times \: \text{kg.}^{-\alpha_{fert}} \times \: \text{manhours}^{-\alpha_{labor}} \times\: \\ \text{mm.}^{-\alpha_{rain}} \times\: \text{num. persons}^{-\alpha_{HHsize}} \:;\:\: \alpha_{(var)} \in \mathbb{R}
 $$
+<!-- \: \text{years}^{-\alpha_{age}} \times\: -->
 an alternative approach is to define $g_0$ in terms of a new parameter combined with judiciously chosen reference terms such that the new parameter has a meaningful interpretation and/or results in a more useful expression for yield. For present purposes, $g_0$ is defined as follows
 <!-- in terms of another constant $u_0$, the means $E[x_i]$, and the mean of    fixed reference values $\tilde{k}_i$, $\tilde{x}_i$ that have the same units as the corresponding management and control variables $x_i$ and $k_i$. -->
 <!-- Because the ratios in parentheses are dimensionless, $y_0$ must have the same units as $y$; and $y_0$ may be interpreted as the value of $y$ when all management and control variables equal their reference values. In the empirical study included here, for example, the reference values are set equal to the sample means, such that $y_0$ is the value of $y$ evaluated at the sample means of the input and control variables. -->
@@ -307,7 +307,7 @@ y = u_0 \frac{k}{E[k]} \prod_{i = 1}^{n_x} \left( \frac{x_i}{E[x_i]} \right)^{\a
 
 This substitution will soon be seen to facilitate interpretation and manipulation of the optimal yield function. But first the optimal yield must be derived from axiom 2. The introduction of axiom 2---profit maximization---gives the optimal inputs (see Appendix A1 for details).
 
-...in passing...diminishing returns to scale. Constant returns to scale ($h = 1$) imply the break-even point, while increasing returns to scale ($h > 1$) imply a loss. The farm yield function is thus globally concave in inputs. Constant and increasing returns, on the other hand, would imply global linearity and convexity, respectively. \eta (PEFS) explained here constant increasing returns also imply flat/downward slpoing farm supply curves...input price elasticity in appendix.
+...in passing...diminishing returns to scale. Constant returns to scale ($h = 1$) imply the break-even point, while increasing returns to scale ($h > 1$) imply a loss. The farm yield function is thus globally concave in inputs. Constant and increasing returns, on the other hand, would imply global linearity and convexity, respectively. $\eta$ (PEFS) explained here constant increasing returns also imply flat/downward slpoing farm supply curves...input price elasticity in appendix.
 
 \begin{equation}
 x^*_i = \frac{y^* P \alpha_i}{\lambda w_i}
@@ -400,7 +400,7 @@ Taking logs of this expression and repeatedly substituting $P y^*|_{C^* = \bar{C
 \ln(\bar{C}^*) = \ln(\bar{R}^*) &= \ln(P y^*|_{C^* = R^*}) = \ln(P v_0 k) + h \ln(R^*) \\
 &= \ln(P v_0 k) + h(\ln(P v_0 k) + h\ln(R^*)) \\
 &= \ln(P v_0 k) + h(\ln(P v_0 k) + h(\ln(P v_0 k) + h\ln(R^*))) \\
-&= \cdots
+&= \cdots \\
 &= \ln(P v_0 k) \sum_{\nu = 0}^{\infty} h^{\nu} \\
 &= \frac{1}{1 - h} \ln(P v_0 k) = \frac{\eta}{h} \ln(P v_0 k)
 \end{split}
@@ -452,7 +452,7 @@ And
 \begin{split}
 Var[\ln(C^*)] &= \frac{1}{(1 - h)^2} Var[\ln(C^{\#})] \\
 s^2_c &= \frac{1}{(1 - h)^2} s^2_{\#} \:\:;\:\:\: s^2_{\#} = Var[\ln(C^{\#})] \\
-&\rightarrow s_c = frac{\eta}{h} s_{\#}
+&\rightarrow s_c = \frac{\eta}{h} s_{\#}
 \end{split}
 \end{equation}
 
@@ -462,6 +462,7 @@ Substituting these new expressions in for $m_c$ and $s_c$ in Equation \ref{eq:in
 \begin{split}
 \int_{0}^{(P v_0 k)^{\eta / h}} C^{* h} \rho(C^*) d C^* &= E[C^{* h}] \Phi \left( \frac{\eta \ln(P v_0 k) - \eta m_c}{\eta s_c} - \eta s_c \right) \\
 &= E[C^{* h}] \Phi \left( \frac{\ln(P v_0 k) - m_c}{s_c} - \eta s_c \right)
+\end{split}
 \end{equation}
 
 Substituing the right hand side of this equation for the integral in Equation \ref{eq:aggSupStep} results in the following expression for aggregate supply.
