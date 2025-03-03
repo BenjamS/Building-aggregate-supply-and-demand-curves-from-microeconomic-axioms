@@ -373,7 +373,7 @@ y^* = E[y^*] \frac{k}{E[k]} \frac{C^{*h}}{E[C^{*h}]}
 This expression for optimal farm yield---henceforth referred to simply as the farm yield---is particularly useful as an econometric yield model, as it only requires information on the control variables $k_i$ and total cost $C^*$, and no information on individual input quantities, as would be required when estimating Equation \ref{eq:cobbDoug3}. Given farm data, one specifies the model
 
 \begin{equation}
-y^* = v_0 k C^{*h} \:\:;\:\:\: v_0 = \frac{E[y^*]}{E[k] E[C^{*h}]}e^{\epsilon}
+y^* = v_0 k C^{*h}e^{\epsilon} \:\:;\:\:\: v_0 = \frac{E[y^*]}{E[k] E[C^{*h}]}
 \label{eq:YdEnvReg1}
 \end{equation}
 
@@ -450,7 +450,7 @@ If $y^*$ is lognormally distributed (axiom 4), then $C^*$ is also lognormally di
 \label{eq:keyResult}
 \end{equation}
 
-Where $\Phi()$ is the standard normal cumulative distribution function. (See Appendix A.2 for a proof.)
+Where $\Phi()$ is the standard normal cumulative distribution function. (See Appendix A.4 for a proof.)
 
 Substituting $\chi = C^{* h}$ and $\zeta = \bar{C}^*$, 
 
@@ -518,7 +518,7 @@ The unconditional parameters $m_{\#}$ and $s_{\#}$ can be deduced from the condi
 \label{eq:cSharpUncondParams}
 \end{equation}
 
-The unconditional mean yield $E[y^*]$ can then be deduced considering that
+Where $\phi()$ is the standard normal probability density function. The unconditional mean yield $E[y^*]$ can then be deduced considering that
 
 \begin{equation}
 E[C^{\# \eta} | C^{\#} \leq P] = E[C^{\# \eta}] \frac{\Phi \left(\frac{\ln(P) - m_{\#}}{s_{\#}} - \eta s_{\#}\right)}{\Phi \left( \frac{\ln(P) - m_{\#}}{s_{\#}} \right))}
@@ -670,10 +670,10 @@ And then interpreting the fitted values for yield as the logged expected yield. 
 Absent a forward contract, the output sale price $P$ is a stochastic variable unknown to the farmer at the time of planting. Wherever $P$ appears in the equations above, then, what is really meant is $E[P(T)]|_{t = 0}$---the value that the farmer expects $P$ to take at harvest/sale, as evaluated at planting time. To parse $E[P(T)]|_{t = 0}$, a suitable stochastic model must be assumed for $P(t)$. Within a given season, prices often follow a geometric Brownian motion (gBm). That is to say, changes in $P$ over a small time interval $\Delta t$ ($\Delta P = P(t + \Delta t) - P(t)$) are often accurately modeled by
 
 \begin{equation}
-\Delta P = \Delta P(t) m_p \Delta t - P(t) s_p \epsilon \sqrt{\Delta t}
+\Delta P = P(t) m_p \Delta t - P(t) s_p \varepsilon \sqrt{\Delta t}
 \end{equation}
 
-Where $\epsilon$ is a normally distributed random variable with mean $0$ and variance $1$, such that the arithmetic change $\Delta P / P$ is normally distributed with mean and variance
+Where $\varepsilon$ is a normally distributed random variable with mean $0$ and variance $1$, such that the arithmetic change $\Delta P / P$ is normally distributed with mean and variance
 
 \begin{equation}
 \begin{split}
@@ -1009,7 +1009,7 @@ s_p \sqrt{T} </> \frac{\phi(-z)}{\Phi(-z)}
 
 # An illustrative use case: a parameterization of the maize aggregate supply curve in Kenya
 
-As an illustrative example, the expected aggregate supply curve derived above from axioms 1-5 is parameterized based on 2007 Kenyan maize farm data and compared against empirical estimates of expected aggregate supply for the years 2006-2012. The farm data used in this pedagogical exercise come from a panel covering the main and short rains seasons for multiple crops across Kenya for the years 1997, 2000, 2004, 2007, and 2010, originally gathered by the Egerton University Tegemeo Institute of Agricultural Policy and Development in partnership with Michigan State University, under the auspices of a USAID project [@maizeData]. For the present exercise, only the 2007 main rains season maize farm data is used. The main rains season generally runs from March to August. Farms not reporting maize as their main crop or reporting zero maize production cost are excluded, resulting in a sample size of 942 maize farms across 20 districts (nowadays referred to as "counties"). The sample represents all major maize growing regions in the country as well as some marginal regions. Full details regarding the data and its processing for the present exercise, including summary statistics, are provided in Appendix B.1.
+As an illustrative example, the expected aggregate supply curve derived above from axioms 1-5 is parameterized based on 2007 Kenyan maize farm data and compared against empirical estimates of expected aggregate supply for the years 2006-2012. The farm data used in this pedagogical exercise come from a panel covering the main and short rains seasons for multiple crops across Kenya for the years 1997, 2000, 2004, 2007, and 2010, originally gathered by the Egerton University Tegemeo Institute of Agricultural Policy and Development in partnership with Michigan State University, under the auspices of a USAID project [@maizeData]. For the present exercise, only the 2007 main rains season maize farm data is used. The main season in Kenya generally runs from March to August. Farms not reporting maize as their main crop or reporting zero maize production cost are excluded, resulting in a sample size of 942 maize farms across 20 districts (nowadays referred to as "counties"). The sample represents all major maize growing regions in the country. Full details regarding the data and its processing for the present exercise, including summary statistics, are provided in Appendix B.
 
 The empirical estimates of aggregate supply for the years 2006-2012 are taken from commodity intelligence reports published in mid to late season---prior to harvest but after planted area and main season rainfall are known. These estimates, summarized in Table 1, cover some of Kenya's worst drought years in living memory.
 
@@ -1027,7 +1027,7 @@ EQsT2006Jun14giews<- 2.7 #GIEWS
 EQsT2007Jun28usda <- 2.6 # USDA FAS
 EQsT2008Jul15giews <- 2.16 # MoA forecast (GIEWS 2008 report), also reported in USDA FAS Commod Intel Report - 100,000 ha not planted due to post election violence, west received normal rainfall but rest of main maize growing area received 20-80% of normal. https://ipad.fas.usda.gov/highlights/2008/09/kenya/
 #EQsT2008sep17usda <- 2.55 # USDA FAS Commod Intel Report https://ipad.fas.usda.gov/highlights/2008/09/kenya/
-EQsT2009Aug11MoA <- 1.84 # Minister of Ag press release, Severe drought, crop failure
+EQsT2009Aug11MoA <- 1.84 # Minister of Ag press release, Severe drought, crop failure 1.9# USAID 29 Sept 2009
 EQsT2010Aug5giews <- 2.6 # GIEWS Good rain, started 2 weeks early
 EQsT2011Nov3kfssg <- 2.34 # KFSSG Dismal rainfall outside of western Kenya
 EQsT2012Jul16giews <- 2.4 # MLND outbreak, late start to rains
@@ -1353,7 +1353,7 @@ When calculating $m_p$, it is important to take note of price dynamics peculiar 
 <!-- Gov gave fert to some farmers -->
 
 \singlespacing
-```{r Fig2, fig.show = "hold", fig.width = 5, fig.height=3, fig.align="center", fig.cap="\\label{fig:mzP}Maize monthly price series during main season (March-August) at primary markets in Kenya. Price data are from the World Food Program.", echo = FALSE}
+```{r Fig2, fig.show = "hold", fig.width = 5, fig.height=3, fig.align="center", fig.cap="\\label{fig:mzP}Maize monthly price series during main season (March-August) at primary markets in Kenya. Price data are from the World Food Program (WFP 2025).", echo = FALSE}
 #======================================================================
 # Get mean price jump from county level monthly price data
 # (downloaded from WFP https://data.humdata.org/organization/wfp?vocab_Topics=prices)
@@ -1404,16 +1404,19 @@ theseColors <- distinctColorPalette(length(mktVec))
 gg <- ggplot(dfPlot, aes(x = factor(month.abb[month], levels = month.abb), y = Price, group = Mkt, color = Mkt))
 gg <- gg + geom_line(lwd = 0.75)
 gg <- gg + facet_wrap(~year, nrow = 2)
-gg <- gg + labs(x = "Maize price (KES / kg.)")
+gg <- gg + labs(x = "Maize price (KES / kg.)", color = "Market")
 gg <- gg + scale_color_manual(values = theseColors)
 gg <- gg + theme_bw()
+#gg <- gg + guides(color = guide_legend(byrow = TRUE))
 gg <- gg + theme(axis.title = element_blank(),
                  axis.text = element_text(size = axisTextSize),
                  strip.background = element_rect(fill = "white"),
                  strip.text = element_text(size = facetTitleSize),
                  plot.title = element_text(size = titleSize),
-                 legend.title = element_blank(),
+#                 legend.spacing.y = unit(0.5, 'cm'),
+                 legend.title = element_text(size = legendTextSize),
                  legend.text = element_text(size = legendTextSize))
+#gg <- gg + guides(colour = guide_legend(title.position = "left"))
 gg <- shift_legend2(gg)
 gg <- ggplotify::as.ggplot(gg)
 #---------------------------------------------------------------------------------
@@ -1666,9 +1669,6 @@ ggEtaEPT0EQsT0a <- gg
 #-------------------------------------------------------------------------------------------
 ggEQsT0 / ggEtaEPT0EQsT0a
 #-------------------------------------------------------------------------------------------
-
-
-
 # gg <- ggplot(dfQs)
 # gg <- gg + geom_ribbon(aes(x = `Expected price (KES/kg)`,
 #                            ymin = `Expected supply, low rainfall\n(million metric tons)`,
@@ -1917,6 +1917,52 @@ ggEQsT0 / ggEtaEPT0EQsT0a
 
 # Discussion
 
+## The research induced supply curve shift
+
+The impact of yield scaling technologies and/or management practices on aggregate supply can be represented through perturbations of the unconditional mean expected yield term $E[\tilde{y}^*(T)]|_{t = 0}$. Recall from Equation \ref{eq:muYstarU0} that the unconditional mean expected yield can be defined (in stochastic terms),
+
+\begin{equation}
+E[\tilde{y}^*(T)]|_{t = 0} = u_0 \frac{E[C^{*h}]}{E[C^*]^h}
+\end{equation}
+
+Yield scaling interventions can thus be represented by perturbations of $u_0$. This is tantamount to adding a dummy endowment variable to the yield model in Equation \ref{eq:lYdEnvReg3}. In the pedagogical example above, the use of tractors during land preparation and adoption of hybrid maize seed may be considered yield scaling interventions that alter the value of $u_0$ on adopting farms.
+
+The aggregate impact of such interventions hinges critically on the adoption rate. In Appendix C it is shown that axioms 1 and 2 imply the following technology adoption condition.
+
+\begin{equation}
+R^* ( \partial \ln(E[P(T)]|_{t = 0}) - \mathbf{\alpha} {'} \partial \ln(\mathbf{w}) + \partial \ln(g_0) ) + \lambda \partial B > 0
+\label{eq:adoptCond}
+\end{equation}
+
+Where the term $\partial B / \partial u_0$ represents any subsidies or fixed costs entailed in the technology package. In the absence of subsidies/fixed costs, the condition simplifies to
+
+\begin{equation}
+\partial \ln(g_0) > \mathbf{\alpha} {'} \partial \ln(\mathbf{w}) - \partial \ln(E[P(T)]|_{t = 0})
+\label{eq:adoptCondSimp}
+\end{equation}
+
+Widespread adoption of yield scaling enhancements tends to boost production and thus lower output price while at the same time increasing input demand and thus increasing input prices. Hence the expectation is that $\partial \ln(E[P]|_{t = 0}) < 0$ and $\partial \ln(\mathbf{w}) > 0$. In words, then, the adoption condition says that a farm stands to increase its net benefit through adoption of yield scaling technology only if the resulting percentage increase in TFP ($g_0$) is greater than the corresponding percentage decrease in output price minus the corresponding percentage increase in input prices scaled by their respective input elasticities $\alpha_i$.
+
+Note the resemblance between this and the "price/productivity tightrope" argument formulated by Lipton.
+
+>\singlespacing "New science usually raises farm supply of outputs and demand for inputs. That makes outputs cheaper and inputs more expensive; hence the ratio of farm output prices to input prices falls. Do small and poor farmers gain? If, and only if, this science-induced fall in their relative farm prices is slower than the science-induced rise in their conversion ratio of physical inputs into physical outputs (that is, TFP)" [-@lipton2005family].
+
+\doublespacing
+
+The only substantive difference between Lipton's argument and the condition in Equation \ref{eq:adoptCondSimp} is that the percentage increases in input prices in the latter are scaled by their respective elasticities ($\alpha_i$). And of course the more complete version of the adoption condition in Equation \ref{eq:adoptCond} differs from Lipton by also including the subsidy/fixed cost term.
+
+The percentage increase in TFP due to adoption varies with the binary endowments already present on the farm. In the example above, a farm with just the basal endowment $b_0$ that adopts hybrid maize stands to increase TFP by $100\times(e^{b_0} + e^{b_{hybrid}}) / e^{b_0} =$ `r `.
+
+This means that the adoption rate is endogenously calculated .
+
+## Price volatility, distributional effects
+
+Can go beyond the research induced supply curve shift to examine ... and multiple effects at the same time.... mean prob of profit vs. farm employment
+
+# Conclusion
+
+Conventional approach is exogenously determine adoption rate by expert opinion. Here adoption rate is endogenous to the theoretical framework.
+
 Have accumulated many departures from the conventional wisdom along the way that are important to point out. (and yet few would argue with axioms 1 and 2)
 Take a moment to take stock of the many contradictions between the statements generated so far by these two very uncontroversial axioms and the conventional wisdom.
 --strictly decreasing returns to scale, else downward sloping supply, breakeven or loss, and unbounded optimal expenditure and constant 100% employment regardless of price, no market exit or entry in response to price
@@ -1932,14 +1978,6 @@ map between employment rate and PEFS adj mean prob of profit
 caveats: t=0 and T may differ across the population, prices differ across the population... the bigger the geographical scope, the more the difference. At subnational scales the differences will be small. I.e. the more homogeneous the agroclimatic environment and market, the smaller the difference.
 
 
-## The research induced supply curve shift
-
-There are two ways to introduce a research-induced supply curve shift. A new technology or management practice that scales yield can be introduced by shocking the unconditional mean expected yield. Recall from Equation \ref{eq:muYstarU0} that the unconditional mean expected yield can be defined (in stochastic terms),
-
-\begin{equation}
-E[\tilde{y}^*(T)]|_{t = 0} = u_0 \frac{E[C^{*h}]}{E[C^*]^h}
-\end{equation}
-
 Specifically, then, the scaling shift can be modeled by shocking the parameter $u_0$. This results in an unambiguous increase in aggregate supply. That is to say, it is straightforward to see that
 
 \begin{equation}
@@ -1949,117 +1987,91 @@ Specifically, then, the scaling shift can be modeled by shocking the parameter $
 
 Evaluating the lagrangian at $y^*$ gives the optimal farm profit or net benefit.
 
-\begin{equation}
-\mathcal{L}^* = R^* + \lambda (B - C^*) \:\:;\:\:\: R^* = P y^*
-\end{equation}
-
-By Equation \ref{eq:cStar}, this reduces to
-
-\begin{equation}
-\mathcal{L}^* = R^* (1 - h) + \lambda B \:\:;\:\:\: R^* = P y^*
-\end{equation}
 
 The adoption condition for a new scaling technology is $\frac{\partial \mathcal{L}^*}{\partial u_0}$.
 
-\begin{equation}
-\frac{\partial \mathcal{L}^*}{\partial u_0} = R^* (1 - h) \left(\frac{\partial \ln(P)}{\partial u_0} - \frac{\partial \ln(y^*)}{\partial u_0} \right) + \lambda \frac{\partial B}{\partial u_0} > 0
-\end{equation}
+In the theoretical framework derived here, the adoption rate follows endogenously from the farm net benefit (profit) envelope.
 
-The term $\partial B / \partial u_0$ represents any subsidies included in the technology package to encourage adoption. In the absence of subsidies, the adoption condition simplifies to
+<!-- To model the effect of technologies that increase input efficiency, the     Another approach is to introduce a  -->
 
-\begin{equation}
-\frac{\partial \ln(y^*)}{\partial u_0} > -\frac{\partial \ln(P)}{\partial u_0}
-\end{equation}
+<!-- Substituting $E[C^{\#}(T)]|_{t = 0} E[y^*(T)]|_{t = 0}$ for $C^*$ in the expected farm yield (Equation \ref{eq:stochYd2}) and solving for $E[y^*(T)]|_{t = 0}$ gives the expected yield in terms of unit cost. -->
 
+<!-- \begin{equation} -->
+<!-- E[y^*(T)]|_{t = 0} = E[\tilde{y}^*(T)]|_{t = 0} \left( \frac{\hat{k}}{E[k]} \right)^{\eta + 1} \frac{E[C^{\#}(T)]|_{t = 0}^{\eta}}{E[\tilde{C}^{\#}(T)^{\eta}]|_{t = 0}} -->
+<!-- \label{eq:stochYd3} -->
+<!-- \end{equation} -->
 
+<!-- <!-- (Detailed steps given in Appendix 2C.) -->
+<!-- An expression for $s^2_c$ then follows as -->
 
-To model the effect of technologies that increase input efficiency, the     Another approach is to introduce a 
+<!-- \begin{equation} -->
+<!-- \begin{split} -->
+<!-- C^* &= E[C^{\#}(T)]|_{t = 0} E[y^*(T)]|_{t = 0} \\ -->
+<!-- &= E[\tilde{y}^*(T)]|_{t = 0} \left( \frac{\hat{k}}{E[k]} \right)^{\eta + 1} \frac{E[C^{\#}(T)]|_{t = 0}^{\eta + 1}}{E[\tilde{C}^{\#}(T)^{\eta}]|_{t = 0}} -->
+<!-- &\rightarrow s^2_c = Var[\ln(C^*)] = (\eta + 1)^2 (s^2_k + s^2_{\#}) \:\:;\:\:\: s^2_k = Var[\ln(\hat{k})] -->
+<!-- \end{split} -->
+<!-- \end{equation} -->
 
-Substituting $E[C^{\#}(T)]|_{t = 0} E[y^*(T)]|_{t = 0}$ for $C^*$ in the expected farm yield (Equation \ref{eq:stochYd2}) and solving for $E[y^*(T)]|_{t = 0}$ gives the expected yield in terms of unit cost.
+<!-- Now, rewriting the unconditional mean expected yield (Equation \ref{eq:muYstarU0}) in stochastic terms, -->
 
-\begin{equation}
-E[y^*(T)]|_{t = 0} = E[\tilde{y}^*(T)]|_{t = 0} \left( \frac{\hat{k}}{E[k]} \right)^{\eta + 1} \frac{E[C^{\#}(T)]|_{t = 0}^{\eta}}{E[\tilde{C}^{\#}(T)^{\eta}]|_{t = 0}}
-\label{eq:stochYd3}
-\end{equation}
+<!-- \begin{equation} -->
+<!-- E[\tilde{y}^*(T)]|_{t = 0} = u_0 \frac{E[C^{*h}]}{E[C^*]^h} -->
+<!-- \end{equation} -->
 
-<!-- (Detailed steps given in Appendix 2C.) -->
-An expression for $s^2_c$ then follows as
+<!-- And recalling that $E[y^*(T)]|_{t = 0}$ and thus $C^*$ are assumed to be lognormally distributed, this reduces to -->
 
-\begin{equation}
-\begin{split}
-C^* &= E[C^{\#}(T)]|_{t = 0} E[y^*(T)]|_{t = 0} \\
-&= E[\tilde{y}^*(T)]|_{t = 0} \left( \frac{\hat{k}}{E[k]} \right)^{\eta + 1} \frac{E[C^{\#}(T)]|_{t = 0}^{\eta + 1}}{E[\tilde{C}^{\#}(T)^{\eta}]|_{t = 0}}
-&\rightarrow s^2_c = Var[\ln(C^*)] = (\eta + 1)^2 (s^2_k + s^2_{\#}) \:\:;\:\:\: s^2_k = Var[\ln(\hat{k})]
-\end{split}
-\end{equation}
+<!-- \begin{equation} -->
+<!-- \begin{split} -->
+<!-- E[\tilde{y}^*(T)]|_{t = 0} &= u_0 \frac{e^{hm_c + h^2 \frac{s^2_c}{2}}}{e^{hm_c + h \frac{s^2_c}{2}}} = u_0 e^{\frac{s^2_c}{2}(h^2 - h)} \\ -->
+<!-- &= u_0 e^{\frac{1}{2} (\eta + 1)^2 (s^2_k + s^2_{\#}) (h^2 - h)} -->
+<!-- \end{split} -->
+<!-- \label{eq:muYdStoch1} -->
+<!-- \end{equation} -->
 
-Now, rewriting the unconditional mean expected yield (Equation \ref{eq:muYstarU0}) in stochastic terms,
+<!-- It follows, then, -->
 
-\begin{equation}
-E[\tilde{y}^*(T)]|_{t = 0} = u_0 \frac{E[C^{*h}]}{E[C^*]^h}
-\end{equation}
+<!-- \begin{equation} -->
+<!-- \frac{\partial \ln(E[\tilde{y}^*(T)]|_{t = 0})}{\partial h} = s^2_c\left(h - \frac{1}{2} \right) -->
+<!-- \begin{cases} -->
+<!-- < 0, & \text{if $h$ < 1 / 2} \\ -->
+<!-- = 0, & \text{if $h$ = 1 / 2} \\ -->
+<!-- > 0, & \text{if $h$ > 1 / 2} -->
+<!-- \end{cases} -->
+<!-- \end{equation} -->
 
-And recalling that $E[y^*(T)]|_{t = 0}$ and thus $C^*$ are assumed to be lognormally distributed, this reduces to
+<!-- The unconditional mean yield increases with technology only if $h > 1 / 2$. Implies a critical threshold on one side of which a subsitence or cost saving mentality predominates---the farmer reasons that they can achieve the same level of income by producing, and thus spending, less---whereas for $h > 1 / 2$ the entrepreneurial mentality takes hold---the farmer reasons that they can raise their income level  -->
+<!-- the marginal value of less effort, more free time is greater than that of increased income. Beyond the critical value of 1/2 the opposite is true. -->
+<!-- \begin{equation} -->
+<!-- \begin{split} -->
+<!-- \frac{\partial \ln(E[Q(T)]|_{t = 0})}{\partial h} &= \frac{\partial \ln(E[y^*(T)]|_{t = 0})}{\partial h} + \frac{\partial \ln(\Phi(-z))}{\partial h} \\ -->
+<!-- &= s^2_c \left(h - \frac{1}{2} \right) + \frac{\phi(-z)}{\Phi(-z)} \frac{\partial (-z)}{\partial h} \\ -->
+<!-- &= s^2_c \left(h - \frac{1}{2} \right) - \frac{\phi(-z)}{\Phi(-z)} \frac{\partial (-z)}{\partial h} s_{\#} (\eta + 1)^2 -->
+<!-- \end{split} -->
+<!-- \end{equation} -->
 
-\begin{equation}
-\begin{split}
-E[\tilde{y}^*(T)]|_{t = 0} &= u_0 \frac{e^{hm_c + h^2 \frac{s^2_c}{2}}}{e^{hm_c + h \frac{s^2_c}{2}}} = u_0 e^{\frac{s^2_c}{2}(h^2 - h)} \\
-&= u_0 e^{\frac{1}{2} (\eta + 1)^2 (s^2_k + s^2_{\#}) (h^2 - h)}
-\end{split}
-\label{eq:muYdStoch1}
-\end{equation}
+<!-- Now, recalling Equation \ref{eq:stochYd2}, and substituting $E[C^{\#}(T)]|_{t = 0} E[y^*(T)]|_{t = 0}$ for $C^*$, note that stochastic yield resolves as a function of $E[C^{\#}(T)]|_{t = 0}$. -->
 
-It follows, then,
+<!-- \begin{equation} -->
+<!-- \begin{split} -->
+<!-- E[y^*(T)]|_{t = 0} &= E[\tilde{y}^*(T)]|_{t = 0} E[k_m(T)]|_{t = 0} \frac{\hat{k}}{E[k]} \frac{(E[C^{\#}(T)]|_{t = 0} E[y^*(T)]|_{t = 0})^{h}}{E[\tilde{C}^{\#}(T)]|_{t = 0} E[\tilde{y}^*(T)]|_{t = 0}^{*h}} \:\:;\:\:\: \tilde{y}^*(T) = y^*(T)\bigr|_{\hat{k} = E[\hat{k}], C^{*h} = E[C^{*h}]} \:\: \tilde{C}^{\#}(T) = E[C^{\#}(T)] \\ -->
+<!-- E[y^*(T)]|_{t = 0}^{1 - h} &= E[\tilde{y}^*(T)]|_{t = 0}^{1 - h} \frac{\hat{k}}{E[k]} \frac{E[y^*(T)]|_{t = 0}}{E[\tilde{C}^{\#}(T)]|_{t = 0}} \\ -->
+<!-- E[y^*(T)]|_{t = 0} &= E[\tilde{y}^*(T)]|_{t = 0} \left( \frac{\hat{k}}{E[k]} \right)^{1/(1 - h)} \frac{E[C^{\#}(T)]|_{t = 0}}{E[\tilde{C}^{\#}(T)]|_{t = 0}} -->
+<!-- \end{split} -->
+<!-- \end{equation} -->
 
-\begin{equation}
-\frac{\partial \ln(E[\tilde{y}^*(T)]|_{t = 0})}{\partial h} = s^2_c\left(h - \frac{1}{2} \right)
-\begin{cases}
-< 0, & \text{if $h$ < 1 / 2} \\
-= 0, & \text{if $h$ = 1 / 2} \\
-> 0, & \text{if $h$ > 1 / 2}
-\end{cases}
-\end{equation}
+<!-- C^* = E[\tilde{y}^*(T)]|_{t = 0} \frac{k}{E[k]} -->
 
+<!-- It follows that -->
 
+<!-- \begin{equation} -->
+<!-- \frac{\ln(\partial E[Q(T)]|_{t = 0})}{\partial h} \begin{cases} -->
+<!-- < 0, & \text{if $h$ < 1 / 2} \\ -->
+<!-- = 0, & \text{if $h$ = 1 / 2} \\ -->
+<!-- > 0, & \text{if $h$ > 1 / 2} -->
+<!-- \end{cases} -->
+<!-- \end{equation} -->
 
-
-The unconditional mean yield increases with technology only if $h > 1 / 2$. Implies a critical threshold on one side of which a subsitence or cost saving mentality predominates---the farmer reasons that they can achieve the same level of income by producing, and thus spending, less---whereas for $h > 1 / 2$ the entrepreneurial mentality takes hold---the farmer reasons that they can raise their income level 
-
-the marginal value of less effort, more free time is greater than that of increased income. Beyond the critical value of 1/2 the opposite is true.
-
-
-\begin{equation}
-\begin{split}
-\frac{\partial \ln(E[Q(T)]|_{t = 0})}{\partial h} &= \frac{\partial \ln(E[y^*(T)]|_{t = 0})}{\partial h} + \frac{\partial \ln(\Phi(-z))}{\partial h} \\
-&= s^2_c \left(h - \frac{1}{2} \right) + \frac{\phi(-z)}{\Phi(-z)} \frac{\partial (-z)}{\partial h} \\
-&= s^2_c \left(h - \frac{1}{2} \right) - \frac{\phi(-z)}{\Phi(-z)} \frac{\partial (-z)}{\partial h} s_{\#} (\eta + 1)^2
-\end{split}
-\end{equation}
-
-Now, recalling Equation \ref{eq:stochYd2}, and substituting $E[C^{\#}(T)]|_{t = 0} E[y^*(T)]|_{t = 0}$ for $C^*$, note that stochastic yield resolves as a function of $E[C^{\#}(T)]|_{t = 0}$.
-
-\begin{equation}
-\begin{split}
-E[y^*(T)]|_{t = 0} &= E[\tilde{y}^*(T)]|_{t = 0} E[k_m(T)]|_{t = 0} \frac{\hat{k}}{E[k]} \frac{(E[C^{\#}(T)]|_{t = 0} E[y^*(T)]|_{t = 0})^{h}}{E[\tilde{C}^{\#}(T)]|_{t = 0} E[\tilde{y}^*(T)]|_{t = 0}^{*h}} \:\:;\:\:\: \tilde{y}^*(T) = y^*(T)\bigr|_{\hat{k} = E[\hat{k}], C^{*h} = E[C^{*h}]} \:\: \tilde{C}^{\#}(T) = E[C^{\#}(T)] \\
-E[y^*(T)]|_{t = 0}^{1 - h} &= E[\tilde{y}^*(T)]|_{t = 0}^{1 - h} \frac{\hat{k}}{E[k]} \frac{E[y^*(T)]|_{t = 0}}{E[\tilde{C}^{\#}(T)]|_{t = 0}} \\
-E[y^*(T)]|_{t = 0} &= E[\tilde{y}^*(T)]|_{t = 0} \left( \frac{\hat{k}}{E[k]} \right)^{1/(1 - h)} \frac{E[C^{\#}(T)]|_{t = 0}}{E[\tilde{C}^{\#}(T)]|_{t = 0}}
-\end{split}
-\end{equation}
-
-
-C^* = E[\tilde{y}^*(T)]|_{t = 0} \frac{k}{E[k]}
-
-
-It follows that
-
-\begin{equation}
-\frac{\ln(\partial E[Q(T)]|_{t = 0})}{\partial h} \begin{cases}
-< 0, & \text{if $h$ < 1 / 2} \\
-= 0, & \text{if $h$ = 1 / 2} \\
-> 0, & \text{if $h$ > 1 / 2}
-\end{cases}
-\end{equation}
-
+<!-- In the conventional approach to ex-ante impact assessment, the technology adoption rate is exogenously specified based on expert opinion. -->
 
 
 # References {-}
@@ -2097,6 +2109,7 @@ The Lagrangian is then
 
 \begin{equation}
 \mathcal{L} = Py - \lambda (C - B)
+\label{eq:lagrangian}
 \end{equation}
 
 Where $\lambda$ is the farm budget shadow price, that is, the marginal benefit to the farm of a marginal increase in budget.
@@ -2173,6 +2186,7 @@ y^* &= y|_{x_i = x^*_i} = g_0 \prod_{i = 1}^{n_k} k_i^{\kappa_i} \prod_{i = 1}^{
 &= g_0 \prod_{i = 1}^{n_k} k_i^{\kappa_i} \prod_{i = 1}^{n_x} \left( \frac{y^* P \alpha_i}{\lambda w_i} \right)^{\alpha_i}
 &\rightarrow y^* = \left( g_0 \prod_{i = 1}^{n_k} k_i^{\kappa_i} \prod_{i = 1}^{n_x} \frac{\alpha_i}{w_i} \right)^{1 / (1 - h)} \left( \frac{P}{\lambda} \right)^{h / (1 - h)}
 \end{split}
+\label{eq:yStarAlt}
 \end{equation}
 
 Hence the yield derivative with respect to input price works out to
@@ -2486,6 +2500,47 @@ gg <- gg + geom_text(aes(label = val), size = labelSize) +
 
 ```
 
+# Appendix C: Derivation of the technology adoption condition in Equation \ref{eq:adoptCond}
+
+The farm profit lagrangian in Equation \ref{eq:lagrangian} evaluated at $y^*$ gives the farm profit envelope.
+
+\begin{equation}
+\mathcal{L}^* = R^* + \lambda (B - C^*)
+\end{equation}
+
+By Equation \ref{eq:cStar}, this reduces to
+
+\begin{equation}
+\mathcal{L}^* = R^* (1 - h) + \lambda B
+\end{equation}
+
+Assuming that farms will adopt a new yield scaling technology only if they expect it to increase their net benefit, the adoption condition is $\partial \ln(y^*)/\partial u_0 > 0$. That is,
+
+\begin{equation}
+\frac{\partial \mathcal{L}}{\partial u_0} = R^* (1 - h) \left( \frac{\partial \ln(P)}{\partial u_0} + \frac{\partial \ln(y^*)}{\partial u_0} \right) + \lambda \frac{\partial B}{\partial u_0} > 0
+\end{equation}
+
+Considering the conventional expression for optimal yield (Equation \ref{eq:yStarAlt}), the yield derivative resolves as follows.
+
+\begin{equation}
+\frac{\partial \ln(y^*)}{\partial u_0} = \frac{h}{1 - h} \frac{\partial \ln(P)}{\partial u_0} + \frac{1}{1 - h} \left(\frac{\partial \ln(g_0)}{\partial u_0 } - \mathbf{\alpha} {'} \frac{\partial \ln(\mathbf{w})}{\partial u_0} \right)
+\end{equation}
+
+Substituting this into the adoption condition and simplifying,
+
+\begin{equation}
+\frac{\partial \mathcal{L}}{\partial u_0} = R^* \left( \frac{\partial \ln(P)}{\partial u_0} - \mathbf{\alpha} {'} \frac{\partial \ln(\mathbf{w})}{\partial u_0} + \frac{\partial \ln(g_0)}{\partial u_0 } \right) + \lambda \frac{\partial B}{\partial u_0} > 0
+\end{equation}
+
+Which further reduces to
+
+\begin{equation}
+R^* ( \partial \ln(E[P(T)]|_{t = 0}) - \mathbf{\alpha} {'} \partial \ln(\mathbf{w}) + \partial \ln(g_0) ) + \lambda \partial B > 0
+\end{equation}
+
+Where $P$ has been replaced with its stochastic expression.
+
+\blacksquare
 
 <!-- #==================================================================================== -->
 <!-- #==================================================================================== -->
@@ -3852,9 +3907,6 @@ how to implement in minimum data contexts...
 
 Also agrees with Lipton...
 
-Lipton says... .
-
->\singlespacing "New science usually raises farm supply of outputs and demand for inputs. That makes outputs cheaper and inputs more expensive; hence the ratio of farm output prices to input prices falls. Do small and poor farmers gain? If, and only if, this science-induced fall in their relative farm prices is slower than the science-induced rise in their conversion ratio of physical inputs into physical outputs (that is, TFP)" [-@lipton2005family].
 
 the mapping defaults to the subjective preferences of the modeler, which in turn prefigures the results of the impact assessment.  ...arbitrarily set by modeler...in the name of expedience, then, petitio principii. an assumed result dressed up in mathematical symbols. [In lit review: The most famous example is whether an improved variety does a shift or pivot of the supply curve. Results depend critically on this choice...conflict of interest.] Counterveiling changes in prices...Lipton.
 
