@@ -1778,42 +1778,42 @@ ggEQsT0 / ggEtaEPT0EQsT0a
 #         xmin = 1924, xmax = 1928 + 11/12,
 #         ymin = -Inf, ymax = Inf)
 #----------------------------------------------------------------------------------------
-# # Define constant in terms of convenient known reference value y0, in this case sample mean yield.
-# # Sample mean yield varies with binary controls. Here is the mean with just the base constant
-# # (i.e. all binaries = 0)
-# alpha0 <- coefVec[1]
-# v0base <- exp(alpha0)
-# #y0base <- v0base * muThetaKnh * muEcSharpT0n
-# muEcStarT0hBase <- muEyStarT0 / (muThetaK * v0base)
-# #---
-# # Now calculate mean yield for all binary combinations
-# # Adjust for exogenous endowments/constraints
-# kappaBins <- coefVec[which(coefNames %in% bin_vars)]
-# dfBins <- dfMod3[, bin_vars]
-# #dfBins <- dfMod3b[, bin_vars]
-# alpha0adj <- alpha0 + as.matrix(dfBins) %*% kappaBins
-# v0 <- exp(alpha0adj)
-# muEcStarT0h <- muEyStarT0 / (muThetaK * v0)
-# y0 %>% unique() %>% length # 14 endowment combos present
-# dfPlot <- data.frame(County = dfMod3$Dist, y0)
-# #dfPlot <- data.frame(County = dfMod3b$Dist, y0)
-# #ggplot(dfPlot, aes(x = y0)) + geom_histogram() + facet_wrap(~County)
-# #exp(mean(dfMod3$`Yield (kg/acre)`) + sd(dfMod3$`Yield (kg/acre)`)^2/2)
-# # mean(y0)
-# #-----------------------------------------------------------------------
-# # Create label vec for each of the 14 endowment combos
-# dfBins$Adopter <- ifelse(dfBins$Adopter == 1, "Hybrid", "0")
-# dfBins$`Tenure: owned with title deed` <- ifelse(dfBins$`Tenure: owned with title deed` == 1, "Tenure", "0")
-# dfBins$`Landprep: oxen` <- ifelse(dfBins$`Landprep: oxen` == 1, "Oxen", "0")
-# dfBins$`Landprep: tractor` <- ifelse(dfBins$`Landprep: tractor` == 1, "Tractor", "0")
-# endowVec <- apply(dfBins, 1, paste, collapse = " + ")
-# endowVec <- gsub("0 \\+|\\+ 0", "", endowVec)
-# endowVec <- gsub("   0", "Base", endowVec)
-# endowVec[which(endowVec != "Base")] <- paste("Base +", endowVec[which(endowVec != "Base")])
-# endowVec <- gsub("  ", " ", endowVec)
-# endowVec <- trimws(endowVec)
-# endowVec <- gsub("  ", " ", endowVec)
-# #unique(endowVec)
+# Define constant in terms of convenient known reference value y0, in this case sample mean yield.
+# Sample mean yield varies with binary controls. Here is the mean with just the base constant
+# (i.e. all binaries = 0)
+beta0 <- coefVec[1]
+v0base <- exp(beta0)
+#y0base <- v0base * muThetaKnh * muEcSharpT0n
+#muEcStarT0hBase <- muEyStarT0 / (muThetaK * v0base)
+#---
+# Now calculate mean yield for all binary combinations
+# Adjust for exogenous endowments/constraints
+kappaBins <- coefVec[which(coefNames %in% bin_vars)]
+dfBins <- dfMod3[, bin_vars]
+#dfBins <- dfMod3b[, bin_vars]
+beta0adj <- beta0 + as.matrix(dfBins) %*% kappaBins
+v0 <- exp(beta0adj)
+muEcStarT0h <- muEyStarT0 / (muThetaK * v0)
+y0 %>% unique() %>% length # 14 endowment combos present
+dfPlot <- data.frame(County = dfMod3$Dist, y0)
+#dfPlot <- data.frame(County = dfMod3b$Dist, y0)
+#ggplot(dfPlot, aes(x = y0)) + geom_histogram() + facet_wrap(~County)
+#exp(mean(dfMod3$`Yield (kg/acre)`) + sd(dfMod3$`Yield (kg/acre)`)^2/2)
+# mean(y0)
+#-----------------------------------------------------------------------
+# Create label vec for each of the 14 endowment combos
+dfBins$Adopter <- ifelse(dfBins$Adopter == 1, "Hybrid", "0")
+dfBins$`Tenure: owned with title deed` <- ifelse(dfBins$`Tenure: owned with title deed` == 1, "Tenure", "0")
+dfBins$`Landprep: oxen` <- ifelse(dfBins$`Landprep: oxen` == 1, "Oxen", "0")
+dfBins$`Landprep: tractor` <- ifelse(dfBins$`Landprep: tractor` == 1, "Tractor", "0")
+endowVec <- apply(dfBins, 1, paste, collapse = " + ")
+endowVec <- gsub("0 \\+|\\+ 0", "", endowVec)
+endowVec <- gsub("   0", "Base", endowVec)
+endowVec[which(endowVec != "Base")] <- paste("Base +", endowVec[which(endowVec != "Base")])
+endowVec <- gsub("  ", " ", endowVec)
+endowVec <- trimws(endowVec)
+endowVec <- gsub("  ", " ", endowVec)
+#unique(endowVec)
 # #---------------------------------------------------------------------
 # # Graphic of prevalence of each endowment combo and its value
 # cellText_size <- 2.5
@@ -1955,9 +1955,13 @@ The percentage increase in TFP due to adoption varies with the binary endowments
 
 This means that the adoption rate is endogenously calculated .
 
+introducing technology shock by perturbing h is harder and ambiguous.
+
 ## Price volatility, distributional effects
 
 Can go beyond the research induced supply curve shift to examine ... and multiple effects at the same time.... mean prob of profit vs. farm employment
+can also look at shocks to continuous endowments k, rainfall etc.
+
 
 # Conclusion
 
