@@ -298,8 +298,9 @@ This is, of course, the Cobb-Douglas form. Outside of Economics, it would simply
 
 Interpretation of the constant $g_0$ is as difficult as one wants to make it. It is, of course, usually called the "total factor productivity", and understood to represent the yield per unit "all inputs"---although a more accurate description would be yield per unit "all input and control variables, raised to various powers". For those not yet comfortable working in units of, say,
 $$
-\text{kg.} \times \: \text{acres}^{-1} \times \: \text{liters}^{-\alpha_{pest}} \times \: \text{kg.}^{-\alpha_{fert}} \times \: \text{manhours}^{-\alpha_{labor}} \times\: \\ \text{mm.}^{-\alpha_{rain}} \times\: \text{num. persons}^{-\alpha_{HHsize}} \:;\:\: \alpha_{(var)} \in \mathbb{R}
+\text{kg.} \times \: \text{acres}^{-1} \times \: \text{liters}^{-\alpha_{pest}} \times \: \text{kg.}^{-\alpha_{fert}} \times \: \text{manhours}^{-\alpha_{labor}} \times\: \\ \text{mm.}^{-\alpha_{rain}} \times\: \text{num. persons}^{-\alpha_{HHsize}}
 $$
+ <!-- \:;\:\: \alpha_{(var)} \in \mathbb{R} -->
 <!-- \: \text{years}^{-\alpha_{age}} \times\: -->
 an alternative approach is to define $g_0$ in terms of a new parameter ($u_0$) combined with judiciously chosen reference terms such that the new parameter has a meaningful interpretation and/or results in a more useful expression for yield. For present purposes, $g_0$ is defined as follows
 <!-- in terms of another constant $u_0$, the means $E[x_i]$, and the mean of    fixed reference values $\tilde{k}_i$, $\tilde{x}_i$ that have the same units as the corresponding management and control variables $x_i$ and $k_i$. -->
@@ -354,6 +355,7 @@ Such that the optimal farm yield $y^*$ (Equation \ref{eq:cobbDoug3} evaluated at
 
 \begin{equation}
 y^* = u_0 \frac{k}{E[k]} \left( \frac{C^*}{E[C^*]} \right)^h
+\label{eq:YdEnvNeat0}
 \end{equation}
 
 The expression can be simplified still further by taking the expectation and solving for $u_0$.
@@ -370,14 +372,14 @@ y^* = E[y^*] \frac{k}{E[k]} \frac{C^{*h}}{E[C^{*h}]}
 \label{eq:YdEnvNeat}
 \end{equation}
 
-This expression for optimal farm yield---henceforth referred to simply as the farm yield---is particularly useful as an econometric yield model, as it only requires information on the control variables $k_i$ and total cost $C^*$, and no information on individual input quantities, as would be required when estimating Equation \ref{eq:cobbDoug3}. Given farm data, one specifies the model
+This expression for optimal farm yield---henceforth referred to simply as the farm yield---is particularly useful as an econometric yield model, as it only requires information on the control variables $k_i$ and total cost $C^*$, and no information on individual input quantities, as would be required when estimating Equations \ref{eq:cobbDoug2} or \ref{eq:cobbDoug3}. Given farm data, one specifies the model
 
 \begin{equation}
 y^* = v_0 k C^{*h}e^{\epsilon} \:\:;\:\:\: v_0 = \frac{E[y^*]}{E[k] E[C^{*h}]}
 \label{eq:YdEnvReg1}
 \end{equation}
 
-(Where $\epsilon$ is the error term.) Such that the estimated coefficient on logged farm cost may be directly interpreted as the degree of homogeneity for the population. When estimating the model in Equation \ref{eq:cobbDoug3}, by contrast, $h$ must be tallied by summing the estimated coefficients $\alpha_i$, and will likely vary across the population since not all farms necessarily apply all the inputs specified in the model.
+(Where $\epsilon$ is the error term.) Such that the estimated coefficient on logged farm cost may be directly interpreted as the degree of homogeneity for the population. When estimating the model in Equations \ref{eq:cobbDoug2} or \ref{eq:cobbDoug3}, by contrast, $h$ must be tallied by summing the estimated coefficients $\alpha_i$, and will likely vary across the population since not all farms necessarily apply all the inputs specified in the model.
 
 In Appendices A.2 and A.3 it is shown that axioms 1 and 2 imply the degree of homogeneity $h$ must exhibit strictly decreasing returns to scale ($0 < h < 1$), whereby it also follows that farm yield is globally concave in inputs, and that the farm supply curve is positively sloped. It is also shown that the output price elasticity of farm supply ($\eta$) is
 
@@ -409,6 +411,7 @@ Q &= N \int_{\underline{q}^*}^{\bar{q}^*} \rho(q^*) dq^* \\
 &= N E[k_a] \frac{E[y^*]}{E[k] E[C^{* h}]} \int_{0}^{\infty} k \int_{0}^{\bar{C}^{*}} C^{*h} \rho(C*) dC^* \rho(k) dk \\
 &= N E[k_a] \frac{E[y^*]}{E[C^{* h}]} \int_{0}^{\bar{C}^*} C^{* h} \rho(C^*)
 \end{split}
+\label{eq:aggSupStep}
 \end{equation}
 
 Axiom 3 states that farms enter production only if they expect to make non-negative profit. Mathematically, this means $C^* \leq R^*$, which implies the following upper bound on optimal expenditure.
@@ -430,23 +433,28 @@ Taking logs of this expression and repeatedly substituting $P y^*|_{C^* = \bar{C
 \end{split}
 \end{equation}
 
-Where the geometric series converges to the last equation only because axioms 1 and 2 constrain $h$ to $[0,1]$ (decreasing returns ot scale). Assuming constant or increasing returns to scale ($h \in (1, \infty)$) would result in a divergent infinite sum and thus unbounded $C^*$.
+Where the geometric series converges to the last equation only because axioms 1 and 2 constrain $h$ to $(0,1)$ (decreasing returns ot scale). Assuming constant or increasing returns to scale ($h \in (1, \infty)$) would result in a divergent infinite sum and thus unbounded $C^*$.
 
-Given the domain of homogeneity $h \in [0,1]$, the upper bound on cost for given $k$ can thus be expressed
+Given the domain of homogeneity $h \in (0,1)$, the upper bound on cost for given $k$ can thus be expressed
 
 \begin{equation}
-\bar{C}^*(k) = (P v_0 k)^{\eta / h}
+\bar{C}^*(k) = (P v_0 k)^{\eta + 1}
 \end{equation}
 
+And so aggregate supply for given $k$ can be expressed
+
 \begin{equation}
-Q = N E[k_a] \frac{E[y^*]}{E[C^{* h}]} \int_{0}^{(P v_0 k)^{\eta / h}} C^{* h} \rho(C^*) dC^*
+Q(k) = N E[k_a] \frac{E[y^*]}{E[C^*(k)^h]} \int_{0}^{(P v_0 k)^{\eta + 1}} C^*(k)^h \rho(C^*(k)) dC^*(k)
 \label{eq:aggSupStep}
 \end{equation}
 
 If $y^*$ is lognormally distributed (axiom 4), then $C^*$ is also lognormally distributed. For any lognormally distributed variable $\chi$ and upper bound $\zeta$, it can be shown that
 
 \begin{equation}
-\int_{0}^{\zeta} \chi \rho(\chi) d\chi = E[\chi] \Phi\left( \frac{\ln(\zeta) - m_{\chi}}{s_{\chi}} - s_{\chi} \right) \:\:;\:\:\: m_{\chi} = E[\ln(\chi)] \:\: s^2_{\chi} = Var[\ln(\chi)]
+\begin{split}
+\int_{0}^{\zeta} \chi \rho(\chi) d\chi &= E[\chi] \Phi\left( \frac{\ln(\zeta) - m_{\chi}}{s_{\chi}} - s_{\chi} \right) \:\:; \\ 
+&m_{\chi} = E[\ln(\chi)] \:\:\: s^2_{\chi} = Var[\ln(\chi)]
+\end{split}
 \label{eq:keyResult}
 \end{equation}
 
@@ -465,9 +473,10 @@ But note that $C^*$ can be expressed $C^* = C^{\#} y^*$, where $C^{\#}$ is the o
 \begin{split}
 C^* = C^{\#} y^* &= C^{\#} v_0 k C^{*h} \\
 &\rightarrow C^* = (C^{\#} v_0 k)^{\frac{1}{1 - h}} \\
-&\Rightarrow E[\ln(C^*)] = \frac{1}{1 - h} (E[\ln(C^{\#})] + \ln(v_0 k)) \\
+&\Rightarrow E[\ln(C^*(k))] = \frac{1}{1 - h} (E[\ln(C^{\#})] + \ln(v_0 k)) \\
 & m_c = \frac{\eta}{h} (m_{\#} + \ln(v_0 k))  \:\:;\:\:\: m_{\#} = E[\ln(C^{\#})]
 \end{split}
+\label{eq:mCk}
 \end{equation}
 
 And
@@ -500,8 +509,8 @@ In the evaluation of $Q$, it is important to keep in mind that $E[y^*]$, $m_{\#}
 
 \begin{equation}
 \begin{split}
-\bar{m}_{\#} = E[\ln(C^{\#}) | C^{\#} \leq P]
-\bar{s}^2_{\#} = Var[\ln(C^{\#}) | C^{\#} \leq P]
+\bar{m}_{\#} &= E[\ln(C^{\#}) | C^{\#} \leq P] \\
+\bar{s}^2_{\#} &= Var[\ln(C^{\#}) | C^{\#} \leq P]
 \end{split}
 \end{equation}
 
@@ -885,7 +894,7 @@ E[E[C^{\#}(T)]\bigr|_{t = 0}] = E[E[C^{\#}(T)]]\bigr|_{t = 0}
 \label{eq:fubThm}
 \end{equation}
 
-Which is again a result that can also be reached by invoking Fubini's theorem. To be clear, the result states that the population mean of the optimal expected unit cost ($E[C^{\#}(T)]\bigr|_{t = 0}$) is equal to the optimal expected unit cost on the mean farm, i.e. the farm with $\lambda^{-1} = E[\lambda^{-1}]$. It therefore maps the mean of all $C^{\#}(t)$ trajectories in the farm population to the mean of possible random trajectories on a single farm (the farm where $\lambda^{-1} = E[\lambda^{-1}]$). Letting $\tilde{C}^{\#}(T)$ denote the unit cost on the mean farm (i.e. $\tilde{C}^{\#}(T) = C^{\#}(T)|_{\lambda^{-1} = E[\lambda^{-1}]}$, an equivalent, perhaps clearer, way of writing the result is
+Which is again a result that can also be reached by invoking Fubini's theorem. To be clear, the result states that the population mean of the optimal expected unit cost ($E[C^{\#}(T)]\bigr|_{t = 0}$) is equal to the optimal expected unit cost on the mean farm, i.e. the farm with $\lambda^{-1} = E[\lambda^{-1}]$. It therefore maps the mean of all $C^{\#}(t)$ trajectories in the farm population to the mean of possible random trajectories on a single farm (the farm where $\lambda^{-1} = E[\lambda^{-1}]$). Letting $\tilde{C}^{\#}(T)$ denote the unit cost on the mean farm (i.e. $\tilde{C}^{\#}(T) = C^{\#}(T)|_{\lambda^{-1} = E[\lambda^{-1}]}$), an equivalent, perhaps clearer, way of writing the result is
 <!-- reference justifying application of Fubini's thm here: -->
 <!-- https://stats.stackexchange.com/questions/412936/when-can-integration-and-expectation-be-exchanged -->
 <!-- [GRAPHIC showing equality of pop mean of expected future cSharp to expected cSharp on the mean farm (?)] -->
@@ -1077,10 +1086,23 @@ ft
 ```
 \doublespacing
 
-To parameterize the expected aggregate supply curve, Equation \ref{eq:lYdEnvReg2} is fit to the farm data. In this exercise, the constant $v_0$ includes endowment dummy variables that augment the constant on farms where the endowment is present.
+To parameterize the expected aggregate supply curve, Equation \ref{eq:lYdEnvReg2} is fit to the farm data. In applied cases such as this, it is helpful to note that $v_0$ may be expressed
 
 \begin{equation}
-\ln(y^*(T)) = \ln(v_0) + \sum_i^{n_k} \kappa_i \ln(k_i) + h \ln(C^*) + \epsilon \:\:;\:\:\: \ln(v_0) = \beta_0 + \sum_{i = 1}^{n_b} \beta_i b_i
+\begin{split}
+v_0 &= \frac{u_0}{E[k] E[C^*]^h} \\
+&= g_0 \frac{\prod_i^{n_x}E[x_i]^{\alpha_i}}{E[C^*]^h} \\
+&= g_0 \frac{1}{h}\prod_i^{n_x} \left( \frac{\alpha_i}{w_i} \right)^{\alpha_i}
+\end{split}
+\end{equation}
+
+Where the last line follows from the input demand expression in Equation \ref{eq:inputDem2}. In this exercise, moreover, the TFP constant $g_0$ includes endowment dummy variables that augment the constant on farms where the endowment is present.
+
+\begin{equation}
+\begin{split}
+\ln(y^*(T)) &= \ln(v_0) + \sum_i^{n_k} \kappa_i \ln(k_i) + h \ln(C^*) + \epsilon \:\:;\:\:\: \ln(v_0) = \sum_i^{n_x} \ln \left( \frac{\alpha_i}{w_i} \right)^{\alpha_i} - \ln(h) + \ln(g_0) \\
+&\ln(g_0) = \beta_0 + \sum_{i = 1}^{n_b} \beta_i b_i
+\end{split}
 \label{eq:lYdEnvReg3}
 \end{equation}
 <!-- \:\:;\:\:\: v_0 = \frac{E[y^*]}{E[k] E[C^{*h}]}  -->
@@ -1778,6 +1800,100 @@ ggEQsT0 / ggEtaEPT0EQsT0a
 #         xmin = 1924, xmax = 1928 + 11/12,
 #         ymin = -Inf, ymax = Inf)
 #----------------------------------------------------------------------------------------
+#======================================================================
+# rootFnLo <- function(xIn, xLo, sXtrunc, mXtrunc){
+#   sX <- xIn[1]
+#   mX <- xIn[2]
+#   zLo <- (log(xLo) - mX) / sX
+#   probTerm <- dnorm(zLo) / pnorm(-zLo)
+#   slack_s <- sXtrunc^2 - sX^2 * (1 + zLo * probTerm - probTerm^2)
+#   slack_m <- mXtrunc - mX - sX * probTerm
+#   outVec <- c(slack_s, slack_m)
+#   return(outVec)
+# }
+```
+\doublespacing
+
+# Discussion
+
+## The research induced supply curve shift
+
+The impact of yield scaling technologies and/or management practices on aggregate supply can be represented through perturbations of the TFP parameter ($g_0$). This is tantamount to adding a dummy endowment variable to the yield model in Equation \ref{eq:lYdEnvReg3}. In the pedagogical example above, the use of tractors during land preparation and adoption of hybrid maize seed may be considered yield scaling interventions that increase the value of $g_0$ on adopting farms.
+<!-- unconditional mean expected yield term $E[\tilde{y}^*(T)]|_{t = 0}$. Recall from Equation \ref{eq:muYstarU0} that the unconditional mean expected yield can be defined (in stochastic terms), -->
+<!-- \begin{equation} -->
+<!-- E[\tilde{y}^*(T)]|_{t = 0} = u_0 \frac{E[C^{*h}]}{E[C^*]^h} -->
+<!-- \end{equation} -->
+<!-- Yield scaling interventions can thus be represented by perturbations of $u_0$.  -->
+
+The aggregate impact of such interventions hinges critically on the adoption rate. In Appendix C it is shown that axioms 1 and 2 imply the following technology adoption condition.
+
+\begin{equation}
+\partial \ln(E[P(T)]|_{t = 0}) - \mathbf{\alpha} {'} \partial \ln(\mathbf{w}) + \partial \ln(g_0) + \frac{h}{C^*} \partial B > 0
+\label{eq:adoptCond}
+\end{equation}
+
+Where the term $\partial B$ represents subsidies, switching costs, or any other exogenous mitigating circumstances entailed in the adoption of the technology package. In the absence of such circumstances, the condition simplifies to
+
+\begin{equation}
+\partial \ln(g_0) > \mathbf{\alpha} {'} \partial \ln(\mathbf{w}) - \partial \ln(E[P(T)]|_{t = 0})
+\label{eq:adoptCondSimp}
+\end{equation}
+
+Widespread adoption of yield scaling enhancements tends to boost production and thus lower output price while at the same time increasing input demand and thus input prices. Hence the expectation is that $\partial \ln(E[P]|_{t = 0}) < 0$ and $\partial \ln(\mathbf{w}) > 0$. In words, then, the adoption condition says that a farm stands to increase its net benefit through adoption of yield scaling technology only if the resulting percentage increase in TFP ($g_0$) is greater than the corresponding percentage decrease in output price minus the corresponding percentage increase in input prices scaled by their respective input elasticities $\alpha_i$. Note the resemblance between this and the "price/productivity tightrope" argument formulated by Lipton [-@lipton2005family].
+
+>\singlespacing "New science usually raises farm supply of outputs and demand for inputs. That makes outputs cheaper and inputs more expensive; hence the ratio of farm output prices to input prices falls. Do small and poor farmers gain? If, and only if, this science-induced fall in their relative farm prices is slower than the science-induced rise in their conversion ratio of physical inputs into physical outputs (that is, TFP)."
+
+\doublespacing
+
+The only substantive difference between Lipton's argument and the condition in Equation \ref{eq:adoptCondSimp} is that the percentage increases in input prices in the latter are scaled by their respective elasticities ($\alpha_i$). And of course the more complete version of the adoption condition in Equation \ref{eq:adoptCond} differs from Lipton by also including the subsidy/fixed cost term.
+
+The alpha_i can be calculated from cost shares
+
+Now, given a new yield enhancing binary endowment $\beta_5$ (representing, for example, improved seed and practices), the percentage change in TFP on farms that implement the new technology may be calculated as
+
+\begin{equation}
+\begin{split}
+\partial \ln(g^i_0) \approx \frac{g^i_0' - g^i_0}{g^i_0} \:\:; \:\:\: g^i_0' = g^i_0 e^{\beta_5 b_5} \:\: \forall i
+&= e^{\beta_k} - 1
+\end{split}
+\end{equation}
+
+Say $\beta_5 = 0.3$. Then $\partial \ln(g_0) = 0.35$, and so, by the criterion in Equation \ref{eq:adoptCondSimp} adoption in the absence of subsidies will increase farm net benefit if the associated percentage decrease in output price plus the $\alpha_i$-scaled increase in input prices is less than $35\%$. If the $\alpha_i$-adjusted output-input price ratio decrease is greater than $35\%$, then the subsidy term $h / C^* \partial B$ required to make adoption profitable is the margin by which it is greater. Note that the required subsidy $\partial B$ will vary across farms based on $C^*$. The factor $h / C^*$, which may also be written $\lambda / E[R^*(T)]|_{t = 0}$, represents each farm's marginal valuation of the subsidy. This implies that the subsidy is relatively more valuable to farms with relatively lower expenditure, and is thus generally consistent with the law of diminishing marginal returns.
+
+The Lipton condition formalized in Equation \ref{eq:adoptCondSimp} implies that adoption will be either $0\%$ or $100\%$. Empirically, this is almost never observed. Adoption rates tend to fall somewhere between $0\%$ and $100\%$. Within the theoretical framework developed here, this means that the subsidy/cost term is important. The increased input demand associated with adoption implies in and of itself that, without subsidies, $\partial B < 0$. And, of course, every major green revolution success story has involved subsidies of one kind or another to offset the required increase in input expenditure, and then some, such that $\partial B > 0$ [].
+<!-- Assuming farms spend their whole farm budget ($B = C^*$), then the subsidy term simplifies to $h \partial \ln(C^*)$ and the adoption condition can be rewritten -->
+
+Solving Inequality \ref{eq:adoptCond} for $C^*$ gives the upper bound on
+
+
+For positive values of $\partial B$, Equation \ref{eq:adoptCond} implies that the adoption rate $A$ may be calculated as
+<!-- \begin{equation} -->
+<!-- \partial \ln(C^*) < \frac{1}{h} (\partial \ln(g_0) + \partial \ln(E[P(T)]|_{t = 0}) - \mathbf{\alpha} {'} \partial \ln(\mathbf{w})) -->
+<!-- \label{eq:adoptCond2} -->
+<!-- \end{equation} -->
+
+\begin{equation}
+\begin{split}
+A &= \int_0^{1 / h (\partial \ln(g_0) + \partial \ln(E[P(T)]|_{t = 0}) - \mathbf{\alpha} {'} \partial \ln(\mathbf{w}))} \phi \left(\frac{\lnC^* - m_c}{s_c} \right) d \ln(C^*) \\
+&= \Phi \left(\frac{1 / h (\partial \ln(g_0) + \partial \ln(E[P(T)]|_{t = 0}) - \mathbf{\alpha} {'} \partial \ln(\mathbf{w})) - m_c}{s_c}\right)
+\end{split}
+\end{equation}
+<!-- \partial \ln(E[P(T)]|_{t = 0}) - \mathbf{\alpha} {'} \partial \ln(\mathbf{w}) + \partial \ln(g_0) -->
+
+Recalling from Equation \ref{eq:mCk} that $C^* = (v_0 k C^{\#})^{1 / (1 - h)}$, then $m_c = 1 / (1 - h)(\ln(v_0) + m_k + m_{\#})$ and $s_c^2 = 1 / (1 - h)^2 (s_k^2 + s_{\#}^2)$ (where $m_k = E[\ln(k)]$ and $s_k^2 = Var[\ln(k)]$), then this reduces to
+<!-- ; and from Equation \ref{eq:useful2} that $m_{\#} = \ln(E[P(T)]|_{t = 0}) - m_{\lambda}$ (where $m_{\lambda} = E[\ln(\lambda)]$) -->
+
+\begin{equation}
+\begin{split}
+A = \Phi \left(\frac{(1 - h) / h (\partial \ln(g_0) + \partial \ln(E[P(T)]|_{t = 0}) - \mathbf{\alpha} {'} \partial \ln(\mathbf{w})) - (\ln(v_0) + m_k + m_{\#})}{\sqrt{s_k^2 + s_{\#}^2}}\right)
+\end{split}
+\end{equation}
+
+
+When binary endowments vary across the population, as in the Kenya example above, the value of $g_0$ varies from farm to farm. Each value of $g_0$ effectively identifies a binary endowment stratum of the population. In such cases, the supply aggregation step in Equation \ref{eq:aggSupStep} effectively averages aggregate supply across all strata. In the Kenya example, there are 14 distinct values of $g_0$, corresponding to 14 distinct combinations of the four binary endowment variables with the regression constant $\beta_0$ (Figure ...).
+
+```{r}
+
 # Define constant in terms of convenient known reference value y0, in this case sample mean yield.
 # Sample mean yield varies with binary controls. Here is the mean with just the base constant
 # (i.e. all binaries = 0)
@@ -1788,7 +1904,15 @@ v0base <- exp(beta0)
 #---
 # Now calculate mean yield for all binary combinations
 # Adjust for exogenous endowments/constraints
+bin_vars <- gsub(":", " -", bin_vars)
 kappaBins <- coefVec[which(coefNames %in% bin_vars)]
+names(kappaBins) <- gsub("`", "", names(kappaBins))
+# vHybrid <- exp(kappaBins["Adopter"])
+# vTractor <- exp(kappaBins["Landprep - tractor"])
+# vTenure <- exp(kappaBins["Tenure - owned with title deed"])
+# round((v0base + vHybrid) / v0base * 100, 2)
+# round((v0base + vTractor + vHybrid) / (v0base + vTractor) * 100, 2)
+# round((v0base + vTenure + vTractor + vHybrid) / (v0base + vTenure) * 100, 2)
 dfBins <- dfMod3[, bin_vars]
 #dfBins <- dfMod3b[, bin_vars]
 beta0adj <- beta0 + as.matrix(dfBins) %*% kappaBins
@@ -1814,148 +1938,69 @@ endowVec <- gsub("  ", " ", endowVec)
 endowVec <- trimws(endowVec)
 endowVec <- gsub("  ", " ", endowVec)
 #unique(endowVec)
-# #---------------------------------------------------------------------
-# # Graphic of prevalence of each endowment combo and its value
-# cellText_size <- 2.5
-# df_plot <- data.frame(Type = endowVec, y0 = round(y0, 1)) %>%
-#   mutate(xx = 1) %>% group_by(Type) %>%
-#   summarise(`Number of farms` = sum(xx, na.rm = T), y0 = unique(y0)) %>%
-#   as.data.frame() %>%
-#   mutate(`Pct of farms in sample` = `Number of farms` / sum(`Number of farms`) * 100) %>%
-#   mutate(Element = 1) %>% arrange(y0) %>%
-#   mutate(Type = factor(Type, Type))
-# typeVec <- df_plot$Type
-# # df_plot$Type <- factor(df_plot$Type, levels = df_plot$y0[order(df_plot$y0)], ordered = T)
-# #gg <- ggplot(df_plot, aes(x = Element, y = Type, fill = y0, label = y0))
-# gg <- ggplot(df_plot, aes(x = Element, y = Type, fill = y0, label = y0))
-# #gg <- gg + scale_y_discrete(limits = typeVec)
-# gg <- gg + geom_tile(alpha = 0)
-# gg <- gg + labs(title = expression(y[0]))
-# #gg <- gg + labs(title = expression(tilde(y)))
-# gg <- gg + theme_bw()
-# gg <- gg + theme(axis.title = element_blank(),
-#                  axis.text.x = element_blank(),
-#                  axis.ticks.x = element_blank(),
-#                  axis.text.y = element_text(size = axisTextSize),
-#                  panel.grid = element_blank(),
-#                  plot.title = element_text(size = axisTitleSize, hjust = 0.5),
-#                  legend.position = "none")
-# gg <- gg + geom_text(size = cellText_size)
-# ggEndow1 <- gg
-# #---
-# gg <- ggplot(df_plot, aes(x = `Pct of farms in sample`, y = Type))
-# #gg <- gg + scale_y_discrete(limits = typeVec)
-# gg <- gg + geom_col()
-# gg <- gg + labs(title = "Pct of farms in sample")
-# gg <- gg + theme_bw()
-# gg <- gg + theme(axis.title = element_blank(),
-#                  #axis.title.x = element_text(size = axisTitleSize),
-#                  axis.text.y = element_blank(),
-#                  axis.text.x = element_text(size = axisTextSize),
-#                  #panel.grid = element_blank(),
-#                  plot.title = element_text(size = axisTitleSize, hjust = 0.5))
-# ggEndow2 <- gg
-# ggEndow1 + ggEndow2
-#======================================================================
-#mean(y0) * 2.5*10^6 /1000 * 0.8 # Agg Supply with 80% chance of mean farm making profit
-#Ok if it's a little low because omits short rains season
-#Note mean of y0 automatically weights the 14 configurations according to their prevalence in the sample--it's a weighted sum of the sample mean yields of each system
-# dfPlot <- data.frame(County = dfMod3$Dist, endowVec, xx = 1) %>% group_by(County) %>%
-#   mutate(n = sum(xx)) %>% subset(n >=30)
-# ggplot(dfPlot, aes(y = endowVec)) + geom_bar(stat = "count") + facet_wrap(~County)
-# Define agg supply curve/price elasticity of supply/price risk elasticity of supply function
-#----------------------------------------------------------------------
-# rootFnLo <- function(xIn, xLo, sXtrunc, mXtrunc){
-#   sX <- xIn[1]
-#   mX <- xIn[2]
-#   zLo <- (log(xLo) - mX) / sX
-#   probTerm <- dnorm(zLo) / pnorm(-zLo)
-#   slack_s <- sXtrunc^2 - sX^2 * (1 + zLo * probTerm - probTerm^2)
-#   slack_m <- mXtrunc - mX - sX * probTerm
-#   outVec <- c(slack_s, slack_m)
-#   return(outVec)
-# }
+#---------------------------------------------------------------------
+# Graphic of prevalence of each endowment combo and its value
+cellText_size <- 2.5
+df_plot <- data.frame(Type = endowVec, y0 = round(y0, 1)) %>%
+  mutate(xx = 1) %>% group_by(Type) %>%
+  summarise(`Number of farms` = sum(xx, na.rm = T), y0 = unique(y0)) %>%
+  as.data.frame() %>%
+  mutate(`Pct of farms in sample` = `Number of farms` / sum(`Number of farms`) * 100) %>%
+  mutate(Element = 1) %>% arrange(y0) %>%
+  mutate(Type = factor(Type, Type))
+typeVec <- df_plot$Type
+# df_plot$Type <- factor(df_plot$Type, levels = df_plot$y0[order(df_plot$y0)], ordered = T)
+#gg <- ggplot(df_plot, aes(x = Element, y = Type, fill = y0, label = y0))
+gg <- ggplot(df_plot, aes(x = Element, y = Type, fill = y0, label = y0))
+#gg <- gg + scale_y_discrete(limits = typeVec)
+gg <- gg + geom_tile(alpha = 0)
+gg <- gg + labs(title = expression(y[0]))
+#gg <- gg + labs(title = expression(tilde(y)))
+gg <- gg + theme_bw()
+gg <- gg + theme(axis.title = element_blank(),
+                 axis.text.x = element_blank(),
+                 axis.ticks.x = element_blank(),
+                 axis.text.y = element_text(size = axisTextSize),
+                 panel.grid = element_blank(),
+                 plot.title = element_text(size = axisTitleSize, hjust = 0.5),
+                 legend.position = "none")
+gg <- gg + geom_text(size = cellText_size)
+ggEndow1 <- gg
+#---
+gg <- ggplot(df_plot, aes(x = `Pct of farms in sample`, y = Type))
+#gg <- gg + scale_y_discrete(limits = typeVec)
+gg <- gg + geom_col()
+gg <- gg + labs(title = "Pct of farms in sample")
+gg <- gg + theme_bw()
+gg <- gg + theme(axis.title = element_blank(),
+                 #axis.title.x = element_text(size = axisTitleSize),
+                 axis.text.y = element_blank(),
+                 axis.text.x = element_text(size = axisTextSize),
+                 #panel.grid = element_blank(),
+                 plot.title = element_text(size = axisTitleSize, hjust = 0.5))
+ggEndow2 <- gg
+ggEndow1 + ggEndow2
 
-# Quick calculation of aggregate supply
-# EmploymentRate <- pnorm((log(EPT02007) - mEcSharpT0) / sEcSharpT0)
-# muEyStarT0trunc <- mean(EyStarT0trunc) / 1000
-# N <- 2 * 10^6
-# mufarmSize <- mean(exp(dfMod3$`Farm size (acres)`))
-# N * mufarmSize * muEyStarT0trunc * EmploymentRate
-# Qlo <- 0.5^kappaRn * N * mufarmSize * muEyStarT0trunc * EmploymentRate
-# #----------------------------------------------------------------------
-# muY0 <- mean(y0)
-# muArea <- mean(exp(dfMod3$`Farm size (acres)`))
-# EPT0vec <- seq(0.01, 20, length.out = 40)
-# mP <- mP2006; sP <- sP2006; Nf <- 2.5*10^6
-# dfEQsT0 <- EQsFun(EPT0vec, muEcSharpT0, h, muY0, muArea, mP, sP, th, Nf)
-# 
-# gg <- ggplot(dfEQsT0, aes(x = EPT0, y = EQsT0))
-# gg <- gg + geom_line()
-# 
-# gg <- ggplot(dfEQsT0, aes(x = EPT0, y = etaP0EQsT0))
-# gg <- gg + geom_line()
-# 
-# 
-#   
-#   
-#     dfEQs <- data.frame(EPT0 = EPT0vec,
-#                      EQs, EQsUp, EQsLo,
-#                      etaAg, etaRisk,
-#                      probPgtC = pnorm(-z))
-#   colnames(dfQs) <- c("Expected price (KES/kg)", "Pct. of E[P(T)]",
-#                       "Expected supply, normal rainfall\n(million metric tons)",
-#                       "Expected supply, high rainfall\n(million metric tons)",
-#                       "Expected supply, low rainfall\n(million metric tons)",
-#                       "Price elasticity\nof supply",
-#                       "Price risk elasticity\nof supply",
-#                       "Participation (%)")
-#   return(dfQs)
-# }
+
 ```
-\doublespacing
 
-# Discussion
-
-## The research induced supply curve shift
-
-The impact of yield scaling technologies and/or management practices on aggregate supply can be represented through perturbations of the unconditional mean expected yield term $E[\tilde{y}^*(T)]|_{t = 0}$. Recall from Equation \ref{eq:muYstarU0} that the unconditional mean expected yield can be defined (in stochastic terms),
+Denoting each distinct value of $g_0$ as $g^i_0$, the average of $g_0$ is effectively a population weighted sum of the $g^i_0$.
 
 \begin{equation}
-E[\tilde{y}^*(T)]|_{t = 0} = u_0 \frac{E[C^{*h}]}{E[C^*]^h}
+E[g_0] = \sum_i \frac{N_i}{N} g^i_0
 \end{equation}
 
-Yield scaling interventions can thus be represented by perturbations of $u_0$. This is tantamount to adding a dummy endowment variable to the yield model in Equation \ref{eq:lYdEnvReg3}. In the pedagogical example above, the use of tractors during land preparation and adoption of hybrid maize seed may be considered yield scaling interventions that alter the value of $u_0$ on adopting farms.
+Where $N_i$ is the number of farms in the $i^{th}$ binary endowment stratum.
 
-The aggregate impact of such interventions hinges critically on the adoption rate. In Appendix C it is shown that axioms 1 and 2 imply the following technology adoption condition.
 
-\begin{equation}
-R^* ( \partial \ln(E[P(T)]|_{t = 0}) - \mathbf{\alpha} {'} \partial \ln(\mathbf{w}) + \partial \ln(g_0) ) + \lambda \partial B > 0
-\label{eq:adoptCond}
-\end{equation}
 
-Where the term $\partial B / \partial u_0$ represents any subsidies or fixed costs entailed in the technology package. In the absence of subsidies/fixed costs, the condition simplifies to
 
-\begin{equation}
-\partial \ln(g_0) > \mathbf{\alpha} {'} \partial \ln(\mathbf{w}) - \partial \ln(E[P(T)]|_{t = 0})
-\label{eq:adoptCondSimp}
-\end{equation}
-
-Widespread adoption of yield scaling enhancements tends to boost production and thus lower output price while at the same time increasing input demand and thus increasing input prices. Hence the expectation is that $\partial \ln(E[P]|_{t = 0}) < 0$ and $\partial \ln(\mathbf{w}) > 0$. In words, then, the adoption condition says that a farm stands to increase its net benefit through adoption of yield scaling technology only if the resulting percentage increase in TFP ($g_0$) is greater than the corresponding percentage decrease in output price minus the corresponding percentage increase in input prices scaled by their respective input elasticities $\alpha_i$.
-
-Note the resemblance between this and the "price/productivity tightrope" argument formulated by Lipton.
-
->\singlespacing "New science usually raises farm supply of outputs and demand for inputs. That makes outputs cheaper and inputs more expensive; hence the ratio of farm output prices to input prices falls. Do small and poor farmers gain? If, and only if, this science-induced fall in their relative farm prices is slower than the science-induced rise in their conversion ratio of physical inputs into physical outputs (that is, TFP)" [-@lipton2005family].
-
-\doublespacing
-
-The only substantive difference between Lipton's argument and the condition in Equation \ref{eq:adoptCondSimp} is that the percentage increases in input prices in the latter are scaled by their respective elasticities ($\alpha_i$). And of course the more complete version of the adoption condition in Equation \ref{eq:adoptCond} differs from Lipton by also including the subsidy/fixed cost term.
-
-The percentage increase in TFP due to adoption varies with the binary endowments already present on the farm. In the example above, a farm with just the basal endowment $b_0$ that adopts hybrid maize stands to increase TFP by $100\times(e^{b_0} + e^{b_{hybrid}}) / e^{b_0} =$ `r `.
 
 This means that the adoption rate is endogenously calculated .
 
-introducing technology shock by perturbing h is harder and ambiguous.
+introducing technology shock by perturbing h is harder and ambiguous. also can look at shifts resulting from changes to k. also shifts due to changes in input price
+
+
 
 ## Price volatility, distributional effects
 
@@ -1966,6 +2011,8 @@ can also look at shocks to continuous endowments k, rainfall etc.
 # Conclusion
 
 Conventional approach is exogenously determine adoption rate by expert opinion. Here adoption rate is endogenous to the theoretical framework.
+
+minimum data contexts
 
 Have accumulated many departures from the conventional wisdom along the way that are important to point out. (and yet few would argue with axioms 1 and 2)
 Take a moment to take stock of the many contradictions between the statements generated so far by these two very uncontroversial axioms and the conventional wisdom.
@@ -2521,28 +2568,41 @@ By Equation \ref{eq:cStar}, this reduces to
 Assuming that farms will adopt a new yield scaling technology only if they expect it to increase their net benefit, the adoption condition is $\partial \ln(y^*)/\partial u_0 > 0$. That is,
 
 \begin{equation}
-\frac{\partial \mathcal{L}}{\partial u_0} = R^* (1 - h) \left( \frac{\partial \ln(P)}{\partial u_0} + \frac{\partial \ln(y^*)}{\partial u_0} \right) + \lambda \frac{\partial B}{\partial u_0} > 0
+\frac{\partial \mathcal{L}}{\partial \ln(g_0)} = E[R^*(T)]|_{t = 0} (1 - h) \left( \frac{\partial \ln(P)}{\partial u_0} + \frac{\partial \ln(y^*)}{\partial u_0} \right) + \lambda \frac{\partial B}{\partial u_0} > 0
 \end{equation}
 
-Considering the conventional expression for optimal yield (Equation \ref{eq:yStarAlt}), the yield derivative resolves as follows.
+The yield derivative resolves by substituting $P y^* h/\lambda$ for $C^*$ in Equation \ref{eq:YdEnvNeat0} and differentiating with repect to $\ln(g_0)$.
 
 \begin{equation}
-\frac{\partial \ln(y^*)}{\partial u_0} = \frac{h}{1 - h} \frac{\partial \ln(P)}{\partial u_0} + \frac{1}{1 - h} \left(\frac{\partial \ln(g_0)}{\partial u_0 } - \mathbf{\alpha} {'} \frac{\partial \ln(\mathbf{w})}{\partial u_0} \right)
+\begin{split}
+\frac{\partial \ln(y^*)}{\partial \ln(g_0)} &= 1 - \mathbf{\alpha} {'} \frac{\partial \ln(\mathbf{w})}{\partial \ln(g_0)} + h \frac{\partial \ln(P)}{\partial \ln(g_0)} + h \frac{\partial \ln(y^*)}{\partial \ln(g_0)} \\
+&\rightarrow \frac{\partial \ln(y^*)}{\partial \ln(g_0)} = \frac{1}{1 - h} \left( 1 - \mathbf{\alpha} {'} \frac{\partial \ln(\mathbf{w})}{\partial \ln(g_0)} + \frac{\partial \ln(P)}{\partial \ln(g_0)} \right)
+\end{split}
 \end{equation}
 
 Substituting this into the adoption condition and simplifying,
 
 \begin{equation}
-\frac{\partial \mathcal{L}}{\partial u_0} = R^* \left( \frac{\partial \ln(P)}{\partial u_0} - \mathbf{\alpha} {'} \frac{\partial \ln(\mathbf{w})}{\partial u_0} + \frac{\partial \ln(g_0)}{\partial u_0 } \right) + \lambda \frac{\partial B}{\partial u_0} > 0
+\frac{\partial \mathcal{L}}{\partial \ln(g_0)} = \frac{1 - \mathbf{\alpha} {'} \frac{\partial \ln(\mathbf{w})}{\partial u_0}} + \partial \ln(P)}{\partial \ln(g_0)} \right) + \frac{\lambda}{R^*} \frac{\partial B}{\partial u_0} > 0
 \end{equation}
 
 Which further reduces to
 
 \begin{equation}
-R^* ( \partial \ln(E[P(T)]|_{t = 0}) - \mathbf{\alpha} {'} \partial \ln(\mathbf{w}) + \partial \ln(g_0) ) + \lambda \partial B > 0
+\partial \ln(P) - \mathbf{\alpha} {'} \partial \ln(\mathbf{w}) + \partial \ln(g_0)  + \frac{\lambda}{R^*} \partial B > 0
 \end{equation}
 
-Where $P$ has been replaced with its stochastic expression.
+Or, substituting $h / C^*$ for $\lambda / R^*$,
+
+\begin{equation}
+\partial \ln(P) - \mathbf{\alpha} {'} \partial \ln(\mathbf{w}) + \partial \ln(g_0)  + \frac{h}{C^*} \partial B > 0
+\end{equation}
+
+And, in stochastic terms,
+
+\begin{equation}
+\partial \ln(E[P(T)]|_{t = 0}) - \mathbf{\alpha} {'} \partial \ln(\mathbf{w}) + \partial \ln(g_0)  + \frac{h}{C^*} \partial B > 0
+\end{equation}
 
 \blacksquare
 
