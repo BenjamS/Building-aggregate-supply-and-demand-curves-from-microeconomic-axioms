@@ -379,7 +379,7 @@ y^* = v_0 k C^{*h}e^{\epsilon} \:\:;\:\:\: v_0 = \frac{E[y^*]}{E[k] E[C^{*h}]}
 \label{eq:YdEnvReg1}
 \end{equation}
 
-(Where $\epsilon$ is the error term.) Such that the estimated coefficient on logged farm cost may be directly interpreted as the degree of homogeneity for the population. When estimating the model in Equations \ref{eq:cobbDoug2} or \ref{eq:cobbDoug3}, by contrast, $h$ must be tallied by summing the estimated coefficients $\alpha_i$, and will likely vary across the population since not all farms necessarily apply all the inputs specified in the model. The term $v_0$, moreover, is arguably a more meaningful measure of TFP than $g_0$ since inputs are expressed in identical units of cost.
+(Where $\epsilon$ is the error term.) Such that the estimated coefficient on logged farm cost may be directly interpreted as the degree of homogeneity for the population. When estimating the model in Equations \ref{eq:cobbDoug2} or \ref{eq:cobbDoug3}, by contrast, $h$ must be tallied by summing the estimated coefficients $\alpha_i$, and will likely vary across the population since not all farms necessarily apply all the inputs specified in the model. The term $v_0$, moreover, remains a measure of TFP, one where inputs are expressed in identical units of cost.
 
 In Appendices A.2 and A.3 it is shown that axioms 1 and 2 imply the degree of homogeneity $h$ must exhibit strictly decreasing returns to scale ($0 < h < 1$), whereby it also follows that farm yield is globally concave in inputs, and that the farm supply curve is positively sloped. It is also shown that the output price elasticity of farm supply ($\eta$) is
 
@@ -579,26 +579,35 @@ Which may be useful for point estimates of aggregate supply along the curve sinc
 
 Equation \ref{eq:aggSup1} is a suitable aggregate supply function in sectors characterized by highly deterministic production processes, negligible delays between input decisions and output, and negligible output price volatility. However, it is not suited to the primary sector, where production is partly deterministic but also partly a function of stochastic meteorological variables; where there is a significant delay between input decisions and output (i.e., the cropping season); and where output price volatility looms large in any management decision. In order to accommodate these hallmarks of agricultural supply, it is necessary to be more explicit in the treatment of yield and output price as stochastic variables.
 
-To begin with, yield is partly a function of stochastic meteorological variables unknown at planting time. Wherever $y^*$ appears in the equations above, what is really meant is $E[y^*(T)]|_{t = 0}$---that is to say, the farm's expectation of what yield will be at harvest time ($t = T$) as evaluated at planting time ($t = 0$).
+To begin with, yield is partly a function of stochastic meteorological variables unknown at planting time. Wherever $y^*$ appears in the equations above, what is really meant is $E[y^*(T)]|_{t = 0}$---that is to say, the farm's expectation of what yield will be at harvest time ($t = T$) as evaluated at planting time ($t = 0$). This expected yield is generally not observable. However, an expression for $E[y^*(T)]|_{t = 0}$ can be derived by taking the expectation of the observed yield at harvest ($y^*(T)$). First, consider observed yield.
 
 \begin{equation}
-E[y^*(T)]|_{t = 0} = E[E[y^*(T)]|_{t = 0}] E[k_m(T)]|_{t = 0} \frac{\hat{k}}{E[k]} \frac{C^{*h}}{E[C^{*h}]} \:\:;\:\:\: \hat{k} = \frac{k}{E[k_m(T)]|_{t = 0}}
+y^*(T) = y^*(T) = E[y^*(T)] \frac{k_m(T)^{\kappa_m}}{E[k_m(T)^{\kappa_m}]} \frac{k'}{E[k']} \frac{C^{*h}}{E[C^{*h}]} \:\:;\:\:\: k' = \frac{k}{k_m(T)^{\kappa_m}}
+\end{equation}
+
+Where the stochastic meteorological component $k_m(T)^{\kappa_m}$ has been factored out of $k$ and made explicit. The component $k_m(T)$ may be a single stochastic meteorological component such as total rainfall by harvest, or it may represent a product of cumulative meteorological variables raised to their respective elasticities. For example, if the key meteorological variables are rainfall and solar radiation, then $k_m(T)^{\kappa_m} = k_r(T)^{\kappa_r} k_s(T)^{\kappa_s}$, where $k_r(T)$ and $k_s(T)$ are cumulative rainfall and solar radiation at harvest.
+
+Taking the stochastic expectation,
+
+\begin{equation}
+E[y^*(T)]|_{t = 0} = E[E[y^*(T)]|_{t = 0}] \frac{E[k_m(T)^{\kappa_m}]|_{t = 0}}{E[k_m(T)^{\kappa_m}]} \frac{k'}{E[k']} \frac{C^{*h}}{E[C^{*h}]}
 \label{eq:stochYd1}
 \end{equation}
 <!-- \:\:\: k_r(T) = k_{r1}^{\kappa_{r1}} k_{r2}^{\kappa_{r2}} \dots k_{rn_r}^{\kappa_{rn_r}} -->
 
-Where the stochastic meteorological component $k_m(T)$ has been factored out of $k$ and made explicit. The component $k_m(T)$ is the product at harvest of any cumulative meteorological variables specified in the yield model, raised to their respective elasticities. For example, if the key meteorological variables are rainfall and solar radiation, then $k_m(T) = k_r(T)^{\kappa_r} k_s(T)^{\kappa_s}$, where $k_r(T)$ and $k_s(T)$ are cumulative rainfall and solar radiation at harvest.
+The term $E[E[y^*(T)]|_{t = 0}]$ is the population mean of the expectation of the stochastic process $y^*(t)$. By Fubini's theorem ... This can be rewritten in more expedient notation by evaluating the population mean of the expected yield equation at $t = T$, 
 
-The term $E[E[y^*(T)]|_{t = 0}]$ is the population mean of the expectation of the stochastic process $y^*(t)$. This can be rewritten in more expedient notation by evaluating the population mean of the expected yield equation at $t = T$, 
+
+
 
 \begin{equation}
-y^*(T) = E[y^*(T)] k_m(T) \frac{\hat{k}}{E[k]} \frac{C^{*h}}{E[C^{*h}]}
+y^*(T) = E[y^*(T)] \frac{k_m(T)^{\kappa_m}}{E[k_m(T)^{\kappa_m}]} \frac{k'}{E[k']} \frac{C^{*h}}{E[C^{*h}]}
 \end{equation}
 
 And then taking the stochastic expectation
 
 \begin{equation}
-E[y^*(T)]|_{t = 0} = E[E[y^*(T)]]|_{t = 0} E[k_m(T)]|_{t = 0} \frac{\hat{k}}{E[k]} \frac{C^{*h}}{E[C^{*h}]}
+E[y^*(T)]|_{t = 0} = E[E[y^*(T)]]|_{t = 0} \frac{E[k_m(T)^{\kappa_m}]|_{t = 0}}{E[k_m(T)^{\kappa_m}]} \frac{k'}{E[k']} \frac{C^{*h}}{E[C^{*h}]}
 \end{equation}
 
 By which it follows from this and Equation \ref{eq:stochYd1} that 
@@ -608,29 +617,43 @@ E[E[y^*(T)]|_{t = 0}] = E[E[y^*(T)]]|_{t = 0}
 \label{eq:EyStarFubiniThm}
 \end{equation}
 
-Which is a result that can also be reached by invoking Fubini's theorem. The result states that the population mean of the expectation of $y^*(T)$ is equal to the expectation of $y^*(T)$ on the mean farm---i.e., the farm where $\hat{k} = E[\hat{k}]$ and $C^{*h} = E[C^{*h}]$. The stochastic formulation of farm yield may thus be more clearly written
+Which is a result that can also be reached by invoking Fubini's theorem. The result states that the population mean of the expectation of $y^*(T)$ is equal to the expectation of $y^*(T)$ on the mean farm---i.e., the farm where $k' = E[k']$ and $C^{*h} = E[C^{*h}]$. The stochastic formulation of farm yield may thus be more clearly written
 <!-- Given a suitable stochastic model for $k_m(t)$ such that $E[k_m(T)]|_{t = 0}$ can be parsed, this means that the population mean can be evaluated based on stochastic weather parameters when farm data is not available.Equation \ref{eq:EyStarFubiniThm}  -->
 
 \begin{equation}
-E[y^*(T)]|_{t = 0} = E[\tilde{y}^*(T)]|_{t = 0} E[k_m(T)]|_{t = 0} \frac{\hat{k}}{E[k]} \frac{C^{*h}}{E[C^{*h}]} \:\:;\:\:\: \tilde{y}^* = y^*(T)\bigr|_{\hat{k} = E[\hat{k}], C^{*h} = E[C^{*h}]}
+\begin{split}
+E[y^*(T)]|_{t = 0} &= E[\tilde{y}^*(T)]|_{t = 0} \frac{E[k_m(T)]|_{t = 0}}{E[\tilde{k}_m(T)]|_{t = 0}} \frac{k'}{E[k']} \frac{C^{*h}}{E[C^{*h}]} \:\:;\:\:\: \tilde{y}^*(T) = y^*(T)\bigr|_{k'} = E[k'], \:\:\: C^{*h} = E[C^{*h}]} \\
+&= v_0 k' \frac{E[k_m(T)]|_{t = 0}}{E[\tilde{k}_m(T)]|_{t = 0}} C^{*h} \:\:;\:\:\: v_0 = \frac{E[\tilde{y}^*(T)]|_{t = 0}}{E[k'] E[C^{*h}]}
+\end{split}
 \label{eq:stochYd2}
 \end{equation}
 
 Note that optimal farm expenditure per acre $C^*$ remains a deterministic variable. This is because $C^*$ primarily refers to land preparation, seed, fertilizer and chemical pest control. Some formulations of farm cost might also include some harvest post harvest labor costs (e.g., shelling, stooking, transport), but the main cost components are typically known (executed or planned) at planting time.
 
-For purposes of parameter estimation, expected yield is generally not observable. However, expected yield can be deduced from observed yield $y^*(T)$ by estimating Equation \ref{eq:stochYd2} at $t = T$ (in logs).
+For purposes of parameter estimation, expected yield is generally not observable. However, noting that
+
+\begin{equation}
+E[y^*(T)]|_{t = 0} = \frac{E[\tilde{y}^*(T)]|_{t = 0}}{\tilde{y}^*(T)} \left( \frac{E[k_m(T)]|_{t = 0}}{k_m(T)} \right)^{\kappa_m} y^*(T)
+\label{eq:EyStarFromYT}
+\end{equation}
+
+Expected yield can be deduced from observed yield $y^*(T)$ by estimating Equation \ref{eq:stochYd2} at $t = T$ (in logs),
 <!-- \ref{eq:YdEnvReg1} becomes -->
 
 \begin{equation}
-\ln(y^*(T)) = \ln(v_0) + \sum_i^{n_k} \kappa_i \ln(k_i) + h \ln(C^*) + \epsilon
+\ln(y^*(T)) = \ln(v_0) + \kappa_m \ln(k_m(T)) + \sum_{i \neq m}^{n_{k'}} \kappa_i \ln(k_i) + h \ln(C^*) + \epsilon
 \label{eq:lYdEnvReg2}
 \end{equation}
 
-And then interpreting the fitted values for yield as the logged expected yield. That is to say,
-
-\begin{equation}
-\ln(E[y^*(T)]|_{t = 0}) = \ln(y^*(T)) - \epsilon
-\end{equation}
+And then evaluating Equation \ref{eq:EyStarFromYT} at the fitted values of $y^*(T)$, and at the expected meteorological conditions of interest.
+<!-- \begin{equation} -->
+<!-- \begin{split} -->
+<!-- \ln(E[y^*(T)]|_{t = 0}) &= \widehat{\ln(y^*(T))} - \kappa_m \ln(k_m(T)) + \kappa_m \ln(E[k_m(T)]|_{t = 0}) \\ -->
+<!-- &= \ln(y^*(T)) - \kappa_m \ln(k_m(T)) + \kappa_m \ln(E[k_m(T)]|_{t = 0}) - \epsilon \\ -->
+<!-- &\rightarrow E[y^*(T)]|_{t = 0} = \left( \frac{E[k_m(T)]|_{t = 0}}{k_m(T)} \right)^{\kappa_m} y^*(T) e^{-\epsilon} -->
+<!-- \end{split} -->
+<!-- \label{eq:EyStarT0fromYhat} -->
+<!-- \end{equation} -->
 <!-- \begin{equation} -->
 <!-- E[y^*(T)]|_{t = 0} = v_0 E[k_m(T)]|_{t = 0} \hat{k} C^{*h} \:\:;\:\:\: v_0 = \frac{E[\tilde{y}^*(T)]|_{t = 0}}{E[k] E[C^{*h}]} -->
 <!-- \label{eq:YdEnvReg2} -->
@@ -1016,9 +1039,11 @@ Whereby it is clear that, under axioms 1-5, price elasticity of expected aggrega
 s_p \sqrt{T} </> \frac{\phi(-z)}{\Phi(-z)}
 \end{equation}
 
-# An illustrative use case: a parameterization of the maize aggregate supply curve in Kenya
+# An illustrative use case: the maize aggregate supply curve in Kenya
 
-As an illustrative example, the expected aggregate supply curve derived above from axioms 1-5 is parameterized based on 2007 Kenyan maize farm data and compared against empirical estimates of expected aggregate supply for the years 2006-2012. The farm data used in this pedagogical exercise come from a panel covering the main and short rains seasons for multiple crops across Kenya for the years 1997, 2000, 2004, 2007, and 2010, originally gathered by the Egerton University Tegemeo Institute of Agricultural Policy and Development in partnership with Michigan State University, under the auspices of a USAID project [@maizeData]. For the present exercise, only the 2007 main rains season maize farm data is used. The main season in Kenya generally runs from March to August. Farms not reporting maize as their main crop or reporting zero maize production cost are excluded, resulting in a sample size of 942 maize farms across 20 districts (nowadays referred to as "counties"). The sample represents all major maize growing regions in the country. Full details regarding the data and its processing for the present exercise, including summary statistics, are provided in Appendix B.
+## Parameterization of Kenya's maize aggregate supply curve and comparison to empirical estimates
+
+As an illustrative example, the expected aggregate supply curve derived above from axioms 1-5 is parameterized based on 2007 Kenyan maize farm data and compared against empirical estimates of expected aggregate supply for the years 2006-2012. The farm data used in this pedagogical exercise come from a panel covering the main and short rains seasons for multiple crops across Kenya for the years 1997, 2000, 2004, 2007, and 2010, originally gathered by the Egerton University Tegemeo Institute of Agricultural Policy and Development in partnership with Michigan State University, under the auspices of a USAID project [@maizeData]. For the present exercise, only the 2007 main rains season maize farm data is used. The main season in Kenya generally runs from March to August or September. Farms not reporting maize as their main crop or reporting zero maize production cost are excluded, resulting in a sample size of 942 maize farms across 20 districts (nowadays referred to as "counties"). The sample represents all major maize growing regions in the country. Full details regarding the data and its processing for the present exercise, including summary statistics, are provided in Appendix B.
 
 The empirical estimates of aggregate supply for the years 2006-2012 are taken from commodity intelligence reports published in mid to late season---prior to harvest but after planted area and main season rainfall are known. These estimates, summarized in Table 1, cover some of Kenya's worst drought years in living memory.
 
@@ -1109,7 +1134,7 @@ Where the last line follows from the input demand expression in Equation \ref{eq
 \end{equation}
 <!-- \:\:;\:\:\: v_0 = \frac{E[y^*]}{E[k] E[C^{*h}]}  -->
 
-The dummy endowment variables $b_i$ (which take a value of $1$ if the endowment is present and $0$ otherwise) are: use of oxen in land preparation, use of tractor in land preparation, adopter of hybrid seed, and land tenure. The control variables ($k_i$) are planting density (seed kg/acre), adult equivalent household size, farm size, and rainfall. The rainfall variable is 2007 main season rainfall divided by an historical benchmark, and so can be interpreted as the rainfall anomaly or departure from the historical benchmark. The farm expenditure $C^*$ includes the cost of synthetic fertilizer, land preparation, pest and disease control chemicals, and seed. The regression results are presented in Table 2.
+The dummy endowment variables $b_i$ (which take a value of $1$ if the endowment is present and $0$ otherwise) are: use of oxen in land preparation, use of tractor in land preparation, use of hybrid seed, and land tenure. The control variables ($k_i$) are planting density (seed kg/acre), adult equivalent household size, farm size, and rainfall. The rainfall variable is 2007 main season rainfall divided by an historical benchmark, and so can be interpreted as the rainfall anomaly or departure from the historical benchmark. The farm expenditure $C^*$ includes the cost of synthetic fertilizer, land preparation, pest and disease control chemicals, and seed. The regression results are presented in Table 2.
 
 \pagebreak
 
@@ -1321,8 +1346,9 @@ mod3Vars <- setdiff(mod2Vars, c(priceVars, "Child family labor, planting (person
 # hist(dfLook$cSharp)
 #dfMod3 <- df_mod[-indRm, c(mod3Vars)]
 dfMod3 <- df_mod[, mod3Vars]
-#dfMod3 <- dfMod3 %>% subset(Dist %in% maizeProvs)
-indDum <- which(colnames(dfMod3) %in% c("Tenure: owned with title deed", "Landprep: tractor", "Landprep: oxen", "Adopter"))
+colnames(dfMod3) <- gsub("Adopter", "Hybrid seed", colnames(dfMod3))
+colnames(dfMod3) <- gsub("Seed \\(kg/acre\\)", "Planting density (kg seed/acre)", colnames(dfMod3))
+indDum <- which(colnames(dfMod3) %in% c("Tenure: owned with title deed", "Landprep: tractor", "Landprep: oxen", "Hybrid seed"))
 notThese <- c(1, indDum)
 colnames(dfMod3)[-notThese] <- paste0("ln[", colnames(dfMod3)[-notThese], "]")
 colnames(dfMod3) <- gsub(":", " -", colnames(dfMod3))
@@ -1356,183 +1382,19 @@ etaReport <- round(eta, 2)
 
 The estimated coefficient on logged cost per acre is statistically significant and indicates that the population yield degree of homogeneity is $h =$ `r hReport`, by which it follows immediately that the price elasticity of farm supply is $\eta = h / (1 - h) =$ `r etaReport`. The coefficients on the other regressors are also statistically significant and take values and signs that agree with intuition. Note that the coefficient on the farm size regressor is negative, affirming the inverse relation between farm size and yield found in numerous other studies [@muyanga2019revisiting; @larson2014should; @wassie2019revisiting; @gautam2019too; @kimhi2006plot].
 
-Because the binary endowments $b_i$ vary across the population, the value of $v_0$ also varies. Each value of $v_0$ effectively designates a binary endowment stratum of the population. In the present example, there are 14 distinct values of $v_0$, corresponding to 14 distinct combinations of the $\beta_i b_i$. The supply aggregation step in Equation \ref{eq:aggSupStep} effectively averages aggregate supply across all strata. Denoting each distinct value of $v_0$ as $v^i_0$, the average $v_0$ is effectively a population weighted sum of the $v^i_0$.
+As explained in Equation \ref{eq:EyStarT0fromYhat}, the expected yield is calculated as
 
 \begin{equation}
-E[v_0] = \sum_i \frac{N_i}{N} v^i_0
+E[y^*(T)]|_{y = 0} = \left( \frac{E[k_r(T)]|_{t = 0}}{E[k_r]_i} \right)^{\kappa_r} y^*(T) e^{-\epsilon}
 \end{equation}
 
-Where $N_i / N$ is the fraction of farms in the $i^{th}$ binary endowment stratum.
-
-The mean expenditure per acre and harvest yield depend on $v^i_0$ and thus likewise vary across binary endowment strata. Because $C^*$ is lognormally distributed (by axiom 4), then the mean expenditure for the $i^{th}$ stratum may be calculated as $E[C^*]_i = e^{m^i_c + \frac{s^2_c}{2}}$, where $m^i_c$ and $s_c$ can be parsed by recalling from Equation \ref{eq:mCk} that $C^* = (v_0 k C^{\#})^{1 / (1 - h)}$, such that
-
 \begin{equation}
-\begin{split}
-m^i_c &= \frac{1}{1 - h}(\ln(v^i_0) + m_k + m_{\#}) \:\:;\:\:\: m_k = E[\ln(k)] \:\: s_k^2 = Var[\ln(k)] \\
-s_c^2 &= \frac{1}{(1 - h)^2} (s_k^2 + s_{\#}^2)
-\end{split}
-\label{eq:mCsC}
-\end{equation}
-
-The mean harvest yield for each stratum then follows from the first of Equations \ref{eq:v0forms} as $E[y^*(T)]_i = v^i_0 E[k] E[C^{*h}]_i$ (where $E[C^{*h}]_i = e^{h m^i_c + h^2\frac{s^2_c}{2}}$). The TFP parameter for each stratum ($g^i_0$) can likewise be calculated from the last of Equations \ref{eq:v0forms} given the input elasticities $\alpha_i$.
-
-The $alpha_i$ can either be directly estimated by fitting Equation \ref{eq:cobbDoug2} or \ref{eq:cobbDoug3} to the farm data, or calculated based on cost share data and the value of $h$ estimated using Equation \ref{eq:lYdEnvReg2}. The latter approach takes advantage of an instructive corollary following immediately from input demand (Equation \ref{eq:inputdem2}), which states that input cost shares ($C^*_i / C^*$) are equal to their respective technology shares ($\alpha_i/h$).
-
-\begin{equation}
-\frac{C^*_i}{C^*} = \frac{\alpha_i}{h} \:\:;\:\:\: C^*_i = w_i x^*_i
-\end{equation}
-
-Given an estimate for $h$ and input cost share data, then, $\alpha_i = h C^*_i / C^*$ can be calculated for each $i$.
-
-```{r, echo = FALSE}
-
-alphaCAN <- h * exp(df_mod1$`Total CAN fert (kg/acre)`) * df_mod1$`Total CAN fert price (KES/kg)` / exp(df_mod1$`Cost/acre (KES/acre)`)
-hist(alphaCAN[alphaCAN > 0 & alphaCAN < 1], 25)
-mean(alphaCAN[alphaCAN > 0])
-
-alphaNPK <- h * exp(df_mod1$`Total NPK fert (kg/acre)`) * df_mod1$`Total NPK fert price (KES/kg)` / exp(df_mod1$`Cost/acre (KES/acre)`)
-hist(alphaNPK[alphaNPK > 0 & alphaNPK < 1], 20)
-mean(alphaNPK[alphaNPK > 0])
-
-alphaDAP <- h * exp(df_mod1$`DAP fert (kg/acre)`) * df_mod1$`DAP fert price (KES/kg)` / exp(df_mod1$`Cost/acre (KES/acre)`)
-hist(alphaDAP[alphaDAP > 0 & alphaDAP < 1], 20)
-mean(alphaDAP[alphaDAP > 0])
-
-alphaUREA <- h * df_mod1$`Total UREA fert (KES/acre)` / exp(df_mod1$`Cost/acre (KES/acre)`)
-hist(alphaUREA[alphaUREA > 0 & alphaUREA < 1], 20)
-mean(alphaUREA[alphaUREA > 0])
-
-
-
-```
-
-\begin{equation}
-\begin{split}
-E[C^*] &= e^{m_c + \frac{s^2_c}{2}} \\
-&= e^{\frac{1}{1 - h}(\ln(v_0) + m_k + m_{\#}) + \frac{1}{(1 - h)^2} \frac{s^2_k + s_{\#}^2}{2}}
+E[y^*(T)]|_{t = 0} = \left( \frac{E[k_r(T)]|_{t = 0}}{k_r(T)} \right)^{\kappa_r} y^*(T) e^{-\epsilon} 
+\label{eq:EyStarFromYT}
 \end{equation}
 
 
-3,   and so the adoption rate can be written in terms of known parameters.
-
-
-
-(Figure \ref{fig:v0strata}).
-
-, and hence of $g_0$,
-
-\singlespacing
-```{r Fig4, fig.show = "hold", fig.width = 6, fig.height=3, fig.align="center", fig.cap="\\label{fig:v0strata}(Left) The mean cost, mean yield, and TFP (v0) for each of the 14 different combinations of binary endowments present in the Kenya farm data; and (right) their respective prevalance in the population.", echo = FALSE}
-
-# Define constant in terms of convenient known reference value y0, in this case sample mean yield.
-# Sample mean yield varies with binary controls. Here is the mean with just the base constant
-# (i.e. all binaries = 0)
-beta0plusAlphaWhterm <- coefVec[1]
-v0base <- exp(beta0plusAlphaWhterm)
-#y0base <- v0base * muThetaKnh * muEcSharpT0n
-#muEcStarT0hBase <- muEyStarT0 / (muThetaK * v0base)
-#---
-# Now calculate mean yield for all binary combinations
-# Adjust for exogenous endowments/constraints
-bin_vars <- gsub(":", " -", bin_vars)
-kappaBins <- coefVec[which(coefNames %in% bin_vars)]
-names(kappaBins) <- gsub("`", "", names(kappaBins))
-# vHybrid <- exp(kappaBins["Adopter"])
-# vTractor <- exp(kappaBins["Landprep - tractor"])
-# vTenure <- exp(kappaBins["Tenure - owned with title deed"])
-# round((v0base + vHybrid) / v0base * 100, 2)
-# round((v0base + vTractor + vHybrid) / (v0base + vTractor) * 100, 2)
-# round((v0base + vTenure + vTractor + vHybrid) / (v0base + vTenure) * 100, 2)
-dfBins <- dfMod3[, bin_vars]
-#dfBins <- dfMod3b[, bin_vars]
-beta0adj <- beta0plusAlphaWhterm + as.matrix(dfBins) %*% kappaBins
-v0 <- exp(beta0adj)
-# muEcStarT0h <- muEyStarT0 / (muThetaK * v0)
-#v0 %>% unique() %>% length # 14 endowment combos present
-dfPlot <- data.frame(County = dfMod3$Dist, v0)
-#dfPlot <- data.frame(County = dfMod3b$Dist, y0)
-#ggplot(dfPlot, aes(x = y0)) + geom_histogram() + facet_wrap(~County)
-#exp(mean(dfMod3$`Yield (kg/acre)`) + sd(dfMod3$`Yield (kg/acre)`)^2/2)
-# mean(y0)
-#-----------------------------------------------------------------------
-# Create label vec for each of the 14 endowment combos
-dfBins$Adopter <- ifelse(dfBins$Adopter == 1, "Hybrid", "0")
-dfBins$`Tenure - owned with title deed` <- ifelse(dfBins$`Tenure - owned with title deed` == 1, "Tenure", "0")
-dfBins$`Landprep - oxen` <- ifelse(dfBins$`Landprep - oxen` == 1, "Oxen", "0")
-dfBins$`Landprep - tractor` <- ifelse(dfBins$`Landprep - tractor` == 1, "Tractor", "0")
-endowVec <- apply(dfBins, 1, paste, collapse = " + ")
-endowVec <- gsub("0 \\+|\\+ 0", "", endowVec)
-endowVec <- gsub("   0", "Base", endowVec)
-endowVec[which(endowVec != "Base")] <- paste("Base +", endowVec[which(endowVec != "Base")])
-endowVec <- gsub("  ", " ", endowVec)
-endowVec <- trimws(endowVec)
-endowVec <- gsub("  ", " ", endowVec)
-#unique(endowVec)
-#---------------------------------------------------------------------
-# Graphic of prevalence of each endowment combo and its value
-cellText_size <- 2.5
-df_plot <- data.frame(Type = endowVec, v0 = round(v0, 1)) %>%
-  mutate(xx = 1) %>% group_by(Type) %>%
-  summarise(`Number of farms` = sum(xx, na.rm = T), v0 = unique(v0)) %>%
-  as.data.frame() %>%
-  mutate(`Pct of farms in sample` = `Number of farms` / sum(`Number of farms`) * 100) %>%
-  arrange(v0) %>%
-  mutate(Type = factor(Type, Type))
-typeVec <- df_plot$Type
-mK <- sum(mKvec)
-sK <- sqrt(sum(sKvec^2))
-v0strat <- df_plot$v0
-mC <- log(v0strat) + mK + mEcSharpT0
-sC <- 1 / (1 - h) * sqrt(sK^2 + sEcSharpT0^2)
-Ek <- exp(mK + sK^2 / 2)
-muCstar <- exp(mC + sC^2 / 2)
-EcStarh <- exp(h * mC + h^2 * sC^2 / 2)
-muYstarT <- v0strat * Ek * EcStarh
-df_plot$`Mean yield` <- round(muYstarT, 1)
-df_plot$`Mean cost/acre` <- round(muCstar, 1)
-df_plot <- df_plot %>% rename(`TFP (v0)` = v0) %>%
-  relocate(`TFP (v0)`, `Mean cost/acre`, `Mean yield`) %>%
-  gather(var, val, `TFP (v0)`:`Mean yield`)
-
-#df_plot$Type <- factor(df_plot$Type, levels = df_plot$`TFP (v0)`[order(df_plot$`TFP (v0)`)], ordered = T)
-#gg <- ggplot(df_plot, aes(x = Element, y = Type, fill = y0, label = y0))
-gg <- ggplot(df_plot, aes(x = var, y = Type, fill = val, label = val))
-gg <- gg + scale_y_discrete(limits = typeVec)
-gg <- gg + geom_tile(alpha = 0)
-#gg <- gg + labs(title = expression(v[0]))
-gg <- gg + scale_x_discrete(position = "top")
-gg <- gg + theme_bw()
-gg <- gg + theme(axis.title = element_blank(),
-                 axis.text.x = element_text(size = axisTextSize),
-                 axis.ticks.x = element_blank(),
-                 axis.text.y = element_text(size = axisTextSize),
-                 panel.grid = element_blank(),
-                 plot.title = element_text(size = axisTitleSize, hjust = 0.5),
-                 legend.position = "none")
-gg <- gg + geom_text(size = cellText_size)
-ggEndow1 <- gg
-#---
-gg <- ggplot(df_plot, aes(x = `Pct of farms in sample`, y = Type))
-#gg <- gg + scale_y_discrete(limits = typeVec)
-gg <- gg + geom_col()
-gg <- gg + labs(title = "Pct of farms in sample")
-gg <- gg + theme_bw()
-gg <- gg + theme(axis.title = element_blank(),
-                 #axis.title.x = element_text(size = axisTitleSize),
-                 axis.text.y = element_blank(),
-                 axis.text.x = element_text(size = axisTextSize),
-                 #panel.grid = element_blank(),
-                 plot.title = element_text(size = axisTitleSize, hjust = 0.5))
-ggEndow2 <- gg
-ggEndow1 + ggEndow2
-
-
-```
-\doublespacing
-
-
-
-As explained in section \ref{sec:acct4Stoch}, the expected yield is calculated as $E[y^*(T)]|_{y = 0} = y^*(T) e^{-\epsilon} k_r^{-\kappa_r}$. The observed optimal expected unit cost is then calculated as $E[C^{\#}(T)]|_{t = 0} = C^* / E[y^*(T)]|_{y = 0}$. As explained in \ref{sec:aggSupDeterm}, axiom 3 truncates the distribution of (expected) optimal unit cost at the (expected) output price. The conditional parameters $\bar{m}_{\#}$ and $\bar{s}_{\#}$ are calculated from this observed, truncated distribution; and then the unconditional parameters $m_{\#}$ and $s_{\#}$ are calculated by solving simultaneous Equations \ref{eq:cSharpUncondParams}. In addition to $\bar{m}_{\#}$ and $\bar{s}_{\#}$, this requires an estimate of expected harvest price at planting time ($E[P(T)]|_{t = 0}$).
+The observed optimal expected unit cost is then calculated as $E[C^{\#}(T)]|_{t = 0} = C^* / E[y^*(T)]|_{y = 0}$. As explained in \ref{sec:aggSupDeterm}, axiom 3 truncates the distribution of (expected) optimal unit cost at the (expected) output price. The conditional parameters $\bar{m}_{\#}$ and $\bar{s}_{\#}$ are calculated from this observed, truncated distribution; and then the unconditional parameters $m_{\#}$ and $s_{\#}$ are calculated by solving simultaneous Equations \ref{eq:cSharpUncondParams}. In addition to $\bar{m}_{\#}$ and $\bar{s}_{\#}$, this requires an estimate of expected harvest price at planting time ($E[P(T)]|_{t = 0}$).
 
 The Kenya farm data includes the harvest output price as observed at harvest $P(T)$, but not $E[P(T)]|_{t = 0}$. Recall from Equation \ref{eq:EPT0} that calculation of $E[P(T)]|_{t = 0}$ requires the maize price at planting $P(0)$, the drift parameter $m_p$, and the time from planting to harvest $T$. In the present exercise, this information is taken from the World Food Program main season monthly price series plotted in Figure \ref{fig:mzP} [@WFPpriceData]. Given the monthly time step of the data, the time horizon from planting in March to the August-September harvest is $T = 6$. The price at planting $P(0)$ is averaged over the main maize markets. The drift parameter $m_p$ is then calculated as the mean log change from one month to another in all markets. Missing values are omitted from these calculations.
 
@@ -1992,11 +1854,9 @@ ggEQsT0 / ggEtaEPT0EQsT0a
 ```
 \doublespacing
 
-# Discussion
-
 ## The research induced supply curve shift
 
-The impact of yield scaling technologies and/or management practices on aggregate supply can be represented through perturbations of the TFP parameter ($g_0$). This is tantamount to adding a dummy endowment variable to the yield model in Equation \ref{eq:lYdEnvReg3}. The four endowmwnt dummies included in the pedagogical example above may be considered yield scaling interventions that increase the value of $g_0$ on adopting farms.
+The impact of yield scaling technologies and/or management practices on aggregate supply can be represented through perturbations of the TFP parameter ($g_0$). This is tantamount to adding a dummy endowment variable to the yield model in Equation \ref{eq:lYdEnvReg3}. The four endowmwnt dummies included in the Kenya maize example may be considered yield scaling interventions that increase the value of $g_0$ on adopting farms.
 <!-- unconditional mean expected yield term $E[\tilde{y}^*(T)]|_{t = 0}$. Recall from Equation \ref{eq:muYstarU0} that the unconditional mean expected yield can be defined (in stochastic terms), -->
 <!-- \begin{equation} -->
 <!-- E[\tilde{y}^*(T)]|_{t = 0} = u_0 \frac{E[C^{*h}]}{E[C^*]^h} -->
@@ -2020,7 +1880,7 @@ Where the term $\partial B$ represents subsidies, costs, or any other exogenous 
 \label{eq:adoptCondSimp}
 \end{equation}
 
-Widespread adoption of yield scaling enhancements tends to boost production and thus lower output price while at the same time increasing input demand and thus input prices. Hence the expectation is that $\partial \ln(E[P]|_{t = 0}) < 0$ and $\partial \ln(\mathbf{w}) > 0$. In words, then, the adoption condition says that a farm stands to increase its net benefit through adoption of yield scaling technology only if the resulting percentage increase in TFP ($g_0$) is greater than the corresponding percentage decrease in output price minus the corresponding percentage increase in input prices scaled by their respective input elasticities $\alpha_i$.
+Widespread adoption of yield scaling enhancements tends to boost production and thus lower output price while at the same time increasing input demand and thus input prices. Hence the expectation is that $\partial \ln(E[P]|_{t = 0}) < 0$, $\partial \ln(\mathbf{w}) > 0$, and thus $\partial \nu < 0$. In words, then, the adoption condition says that a farm stands to increase its net benefit through adoption of yield scaling technology only if the resulting percentage increase in TFP ($g_0$) is greater than the corresponding percentage decrease in output price minus the corresponding percentage increase in input prices scaled by their respective input elasticities $\alpha_i$.
 
 Note the resemblance between the adoption condition in Inequality \ref{eq:adoptCondSimp} and the "price/productivity tightrope" argument formulated by Lipton [-@lipton2005family].
 
@@ -2034,19 +1894,19 @@ Now, given a new yield enhancing binary endowment $\beta_5$ (representing, for e
 
 \begin{equation}
 \begin{split}
-\partial \ln(g^i_0) \approx \frac{g^i_0' - g^i_0}{g^i_0} \:\:; \:\:\: g^i_0' = g^i_0 e^{\beta_5 b_5} \:\: \forall i
+\partial \ln(g_0) \approx \frac{g_0' - g_0}{g_0} \:\:; \:\:\: g_0' = g_0 e^{\beta_5 b_5} \:\: \forall i
 &= e^{\beta_k} - 1
 \end{split}
 \end{equation}
 
-Say $\beta_5 = 0.3$. Then $\partial \ln(g_0) = 0.35$, and so, by the criterion in Inequality \ref{eq:adoptCondSimp} adoption in the absence of exogenous subsidies/costs will increase farm net benefit if the associated percentage decrease in output price plus the $\alpha_i$-scaled increase in input prices is less than $35\%$. If the $\alpha_i$-adjusted output-input price ratio decrease is greater than $35\%$, then the subsidy term $h / C^* \partial B$ required to make adoption profitable is the margin by which it is greater. Note that the required subsidy $\partial B$ will vary across farms based on $C^*$. The factor $h / C^*$, which may also be written $\lambda / E[R^*(T)]|_{t = 0}$, represents each farm's marginal valuation of the subsidy; and implies that the subsidy is relatively more valuable to farms with relatively lower expenditure. Solving Inequality \ref{eq:adoptCond} for $C^*$ gives the maximum expenditure level for which adoption is profitable if the (absolute value of the) $\alpha_i$-adjusted output-input price ratio decrease is greater than the increase in TFP ($|\partial \ln(\nu)| > \partial \ln(g_0)$).
+Say $\beta_5 = 0.3$. Then $\partial \ln(g_0) = 0.35$, and so, by the criterion in Inequality \ref{eq:adoptCondSimp} adoption in the absence of exogenous subsidies/costs will increase farm net benefit if the associated percentage decrease in output price plus the $\alpha_i$-scaled increase in input prices (i.e. $\partial \ln(\nu)$) is less than $35\%$. If the $\alpha_i$-adjusted output-input price ratio decrease is greater than $35\%$, then the subsidy term $h / C^* \partial B$ required to make adoption profitable is the margin by which it is greater. Note that the required subsidy $\partial B$ will vary across farms based on $C^*$. The factor $h / C^*$, which may also be written $\lambda / E[R^*(T)]|_{t = 0}$, represents each farm's marginal valuation of the subsidy; and implies that the subsidy is relatively more valuable to farms with relatively lower expenditure. Solving Inequality \ref{eq:adoptCond} for $C^*$ gives the maximum expenditure level for which adoption is profitable if the (absolute value of the) $\alpha_i$-adjusted output-input price ratio decrease is greater than the increase in TFP ($|\partial \ln(\nu)| > \partial \ln(g_0)$).
 
 \begin{equation}
 C^* < \frac{-h \partial B}{\partial \ln(\nu) + \partial \ln(g_0)}
 \label{eq:cStarAdopt}
 \end{equation}
 
-If $\partial B=0$, then Inequality \ref{eq:adoptCond} implies that adoption will be either $0\%$ or $100\%$. Empirically, this is almost never observed. Adoption rates tend to fall somewhere between $0\%$ and $100\%$. Within the theoretical framework developed here, this means that the subsidy/cost term $\partial B$ is generally not zero. The increased input demand associated with adoption implies in and of itself that, without subsidies, $\partial B < 0$. And, of course, every major green revolution success story has involved subsidies of one kind or another to offset the required increase in input expenditure, and then some, such that $\partial B > 0$ [].
+If $\partial B=0$, then Inequality \ref{eq:adoptCond} implies that adoption will be either $0\%$ or $100\%$. Empirically, this is almost never observed. Adoption rates tend to fall somewhere between $0\%$ and $100\%$. The increased input demand associated with new technology adoption implies in and of itself that, without subsidies, $\partial B < 0$. And, of course, every major green revolution success story has involved subsidies of one kind or another to offset the required increase in input expenditure, and then some []. Within the theoretical framework developed here, this means that the net subsidy term $\partial B$ is generally positive.
 <!-- Assuming farms spend their whole farm budget ($B = C^*$), then the subsidy term simplifies to $h \partial \ln(C^*)$ and the adoption condition can be rewritten -->
 
 Given the upper bound on $C^*$ for adoption (Equation \ref{eq:cStarAdopt}) and recalling that axiom 4 implies lognormally distributed $C^*$, the adoption rate $A$ when $\partial B > 0$ and $|\partial \ln(\nu)| > \partial \ln(g_0)$ can be calculated as
@@ -2057,25 +1917,204 @@ A &= \int_0^{\frac{-h \partial B}{\partial \ln(\nu) + \partial \ln(g_0)}} \phi(\
 &= \Phi\left( \frac{\frac{-h \partial B}{\partial \ln(\nu) + \partial \ln(g_0)} - m_c}{s_c} \right)
 \end{split}
 \end{equation}
-<!-- \partial \ln(E[P(T)]|_{t = 0}) - \mathbf{\alpha} {'} \partial \ln(\mathbf{w}) + \partial \ln(g_0) -->
-<!-- A &= \int_0^{1 / h (\partial \ln(g_0) + \partial \ln(E[P(T)]|_{t = 0}) - \mathbf{\alpha} {'} \partial \ln(\mathbf{w}))} \phi \left(\frac{\lnC^* - m_c}{s_c} \right) d \ln(C^*) \\ -->
-<!-- &= \Phi \left(\frac{1 / h (\partial \ln(g_0) + \partial \ln(E[P(T)]|_{t = 0}) - \mathbf{\alpha} {'} \partial \ln(\mathbf{w})) - m_c}{s_c}\right) -->
 
-Recalling from Equation \ref{eq:mCk} that $C^* = (v_0 k C^{\#})^{1 / (1 - h)}$, then $m_c = 1 / (1 - h)(\ln(v_0) + m_k + m_{\#})$ and $s_c^2 = 1 / (1 - h)^2 (s_k^2 + s_{\#}^2)$ (where $m_k = E[\ln(k)]$ and $s_k^2 = Var[\ln(k)]$); and so the adoption rate can be written in terms of known parameters.
-<!-- ; and from Equation \ref{eq:useful2} that $m_{\#} = \ln(E[P(T)]|_{t = 0}) - m_{\lambda}$ (where $m_{\lambda} = E[\ln(\lambda)]$) -->
+To parse $m_c$ and $s_c$, recall from Equation \ref{eq:mCk} that $C^* = (v_0 k C^{\#})^{1 / (1 - h)}$, such that
 
 \begin{equation}
-A = \Phi\left( \frac{\frac{-h (1 - h) \partial B}{\partial \ln(\nu) + \partial \ln(g_0)} - (\ln(v_0) + m_k + m_{\#})}{\sqrt{s_k^2 + s_{\#}^2}} \right)
-\label{eq:adoptRate}
+\begin{split}
+m_c &= \frac{1}{1 - h}(\ln(v_0) + m_k + m_{\#}) \:\:;\:\:\: m_k = E[\ln(k)] \:\: s_k^2 = Var[\ln(k)] \\
+s_c^2 &= \frac{1}{(1 - h)^2} (s_k^2 + s_{\#}^2)
+\end{split}
+\label{eq:mCsC}
 \end{equation}
-<!-- P/\mathbf{w}^{\boldsymbol{\alpha}} -->
-<!-- &= \Phi\left( \frac{\frac{-h (1 - h) \partial B}{\partial \ln(P/\mathbf{w}^{\boldsymbol{\alpha}}) + \partial \ln(g_0)} - (\ln(g_0) + \sum_i^{n_x} \alpha_i\ln(\alpha_i / w_i) - h\ln(h) + m_k + m_{\#})}{\sqrt{s_k^2 + s_{\#}^2}} \right) -->
-<!-- $$ -->
-<!-- \Phi\left( \frac{\frac{-h (1 - h) \partial B}{\partial \ln(\mathcal{\nu}) + \partial \ln(g_0)} - (\ln(v_0) + m_k + m_{\#})}{\sqrt{s_k^2 + s_{\#}^2}} \right) -->
-<!-- $$ -->
+<!-- Recalling from Equation \ref{eq:mCk} that $C^* = (v_0 k C^{\#})^{1 / (1 - h)}$, then $m_c = 1 / (1 - h)(\ln(v_0) + m_k + m_{\#})$ and $s_c^2 = 1 / (1 - h)^2 (s_k^2 + s_{\#}^2)$ (where $m_k = E[\ln(k)]$ and $s_k^2 = Var[\ln(k)]$); and so the adoption rate can be written in terms of known parameters. -->
+<!-- ; and from Equation \ref{eq:useful2} that $m_{\#} = \ln(E[P(T)]|_{t = 0}) - m_{\lambda}$ (where $m_{\lambda} = E[\ln(\lambda)]$) -->
+<!-- \begin{equation} -->
+<!-- A = \Phi\left( \frac{\frac{-h (1 - h) \partial B}{\partial \ln(\nu) + \partial \ln(g_0)} - (\ln(v_0) + m_k + m_{\#})}{\sqrt{s_k^2 + s_{\#}^2}} \right) -->
+<!-- \label{eq:adoptRate} -->
+<!-- \end{equation} -->
 
+Now, because the binary endowments $b_i$ vary across the population, the value of $v_0$ also varies. In the Kenya example, there are 14 distinct values of $v_0$, corresponding to 14 distinct combinations of the $\beta_i b_i$. The supply aggregation step in Equation \ref{eq:aggSupStep} effectively averages aggregate supply across all binary endowment strata. Denoting the value of each distinct combination as $v_{0i}$, the average $v_0$ is effectively a population weighted sum of the $v_{0i}$.
+<!-- Each value of $v_0$ effectively identifies a binary endowment stratum of the population. -->
+
+\begin{equation}
+v_0 = \sum_i \frac{N_i}{N} v_{0i}
+\end{equation}
+
+Where $N_i / N$ is the fraction of farms in the $i^{th}$ binary endowment stratum.
+
+In passing, note that mean cost and yield disaggregated by stratum ($E[C_i^*]$, $E[y_i^*(T)]$), can be evaluated as follows.
+
+\begin{equation}
+\begin{split}
+E[C_i^*] &= e^{m_{ci} + \frac{s^2_c}{2}} \:\:;\:\:\: m_{ci} = \frac{1}{1 - h}(\ln(v_{0i}) + m_k + m_{\#})  \\
+&= v_{0i}^{\frac{1}{1 - h}} e^{\frac{1}{1 - h}(m_k + m_{\#}) + \frac{1}{(1 - h)^2} \frac{s^2_k + s_{\#}^2}{2}}
+\end{split}
+\end{equation}
+
+And
+
+\begin{equation}
+E[y_i^*(T)] = v_{0i} E[k] E[C_i^{*h}]E[e^{\epsilon}]_i
+\end{equation}
+
+Where $E[e^{\epsilon}]_i$ refers to the regression errors of farms in the $i^{th}$ stratum. The ex-ante expected mean yield $E[\tilde{y}_i^*(T)]|_{t = 0}$ can also be deduced as in Equation \ref{eq:EyStarT0fromYhat}.
+<!-- , since it is calculated based on the fitted value of $v_{0i}$ -->
+
+\begin{equation}
+E[\tilde{y}_i^*(T)]|_{t = 0} = \left( \frac{E[k_r(T)]|_{t = 0}}{E[k_r]_i} \right)^{\kappa_r} E[y_i^*(T) E[e^{-\epsilon}]_i
+\end{equation}
+
+
+The mean harvest yield for each stratum then follows from the first of Equations \ref{eq:v0forms} as $E[y^*(T)]_i = v_{0i} E[k] E[C^{*h}]_i$ (where $E[C^{*h}]_i = e^{h m_{ci} + h^2\frac{s^2_c}{2}}$).
+<!-- The TFP parameter for each stratum ($g_{0i}$) can likewise be calculated from the last of Equations \ref{eq:v0forms} given the input elasticities $\alpha_i$. -->
+
+\begin{equation}
+\begin{split}
+E[C^*]_i &= e^{m_{ci} + \frac{s^2_c}{2}} \\
+&= v_{0i}^{\frac{1}{1 - h}} e^{\frac{1}{1 - h}(m_k + m_{\#}) + \frac{1}{(1 - h)^2} \frac{s^2_k + s_{\#}^2}{2}}
+\end{split}
+\end{equation}
 
 Because the adoption rate is partly a function of $v_0$, and because $v_0$ varies across strata, then the adoption rate must also vary across strata. Equation \ref{eq:adoptRate} indicates that the adoption rate will be higher in strata with lower starting $v_0$, _ceteris paribus_.
+
+
+(Figure \ref{fig:v0strata}).
+
+, and hence of $g_0$,
+
+\singlespacing
+```{r Fig4, fig.show = "hold", fig.width = 6, fig.height=3, fig.align="center", fig.cap="\\label{fig:v0strata}(Left) The mean cost, mean yield, and TFP (v0) for each of the 14 different combinations of binary endowments present in the Kenya farm data; and (right) their respective prevalance in the population.", echo = FALSE}
+
+# Define constant in terms of convenient known reference value y0, in this case sample mean yield.
+# Sample mean yield varies with binary controls. Here is the mean with just the base constant
+# (i.e. all binaries = 0)
+beta0plusAlphaWhterm <- coefVec[1]
+v0base <- exp(beta0plusAlphaWhterm)
+#y0base <- v0base * muThetaKnh * muEcSharpT0n
+#muEcStarT0hBase <- muEyStarT0 / (muThetaK * v0base)
+#---
+# Now calculate mean yield for all binary combinations
+# Adjust for exogenous endowments/constraints
+bin_vars <- gsub(":", " -", bin_vars)
+kappaBins <- coefVec[which(coefNames %in% bin_vars)]
+names(kappaBins) <- gsub("`", "", names(kappaBins))
+# vHybrid <- exp(kappaBins["Adopter"])
+# vTractor <- exp(kappaBins["Landprep - tractor"])
+# vTenure <- exp(kappaBins["Tenure - owned with title deed"])
+# round((v0base + vHybrid) / v0base * 100, 2)
+# round((v0base + vTractor + vHybrid) / (v0base + vTractor) * 100, 2)
+# round((v0base + vTenure + vTractor + vHybrid) / (v0base + vTenure) * 100, 2)
+dfBins <- dfMod3[, bin_vars]
+#dfBins <- dfMod3b[, bin_vars]
+beta0adj <- beta0plusAlphaWhterm + as.matrix(dfBins) %*% kappaBins
+v0 <- exp(beta0adj)
+# muEcStarT0h <- muEyStarT0 / (muThetaK * v0)
+#v0 %>% unique() %>% length # 14 endowment combos present
+# dfPlot <- data.frame(County = dfMod3$Dist, v0)
+#dfPlot <- data.frame(County = dfMod3b$Dist, y0)
+#ggplot(dfPlot, aes(x = y0)) + geom_histogram() + facet_wrap(~County)
+#exp(mean(dfMod3$`Yield (kg/acre)`) + sd(dfMod3$`Yield (kg/acre)`)^2/2)
+# mean(y0)
+#-----------------------------------------------------------------------
+# Create label vec for each of the 14 endowment combos
+dfBins$Adopter <- ifelse(dfBins$Adopter == 1, "Hybrid", "0")
+dfBins$`Tenure - owned with title deed` <- ifelse(dfBins$`Tenure - owned with title deed` == 1, "Tenure", "0")
+dfBins$`Landprep - oxen` <- ifelse(dfBins$`Landprep - oxen` == 1, "Oxen", "0")
+dfBins$`Landprep - tractor` <- ifelse(dfBins$`Landprep - tractor` == 1, "Tractor", "0")
+endowVec <- apply(dfBins, 1, paste, collapse = " + ")
+endowVec <- gsub("0 \\+|\\+ 0", "", endowVec)
+endowVec <- gsub("   0", "Base", endowVec)
+endowVec[which(endowVec != "Base")] <- paste("Base +", endowVec[which(endowVec != "Base")])
+endowVec <- gsub("  ", " ", endowVec)
+endowVec <- trimws(endowVec)
+endowVec <- gsub("  ", " ", endowVec)
+#unique(endowVec)
+#---------------------------------------------------------------------
+# Graphic of prevalence of each endowment combo and its value
+cellText_size <- 2.5
+dfPlot <- data.frame(Type = endowVec, v0 = round(v0, 1)) %>%
+  mutate(xx = 1) %>% group_by(Type) %>%
+  summarise(`Number of farms` = sum(xx, na.rm = T), v0 = unique(v0)) %>%
+  as.data.frame() %>%
+  mutate(`Pct of farms in sample` = `Number of farms` / sum(`Number of farms`) * 100) %>%
+  arrange(v0) %>%
+  mutate(Type = factor(Type, Type))
+typeVec <- dfPlot$Type
+mK <- sum(mKvec)
+sK <- sqrt(sum(sKvec^2))
+v0strat <- dfPlot$v0
+mC <- log(v0strat) + mK + mEcSharpT0
+sC <- 1 / (1 - h) * sqrt(sK^2 + sEcSharpT0^2)
+Ek <- exp(mK + sK^2 / 2)
+muCstar <- exp(mC + sC^2 / 2)
+EcStarh <- exp(h * mC + h^2 * sC^2 / 2)
+muYstarT <- v0strat * Ek * EcStarh
+betaNew <- 0.3
+dlng0 <- exp(betaNew) - 1
+dlnNu <- -0.4
+dB <- 2
+cStarMaxAdopt <- -h * dB / (dlnNu + dlng0)
+z <- (cStarMaxAdopt - mC) / sC
+adoptRateStrat <- pnorm(z)
+# A = \Phi\left( \frac{\frac{-h (1 - h) \partial B}{\partial \ln(\nu) + \partial \ln(g_0)} - (\ln(v_0) + m_k + m_{\#})}{\sqrt{s_k^2 + s_{\#}^2}} \right)
+dfPlot$`Mean yield` <- round(muYstarT, 1)
+dfPlot$`Mean cost/acre` <- round(muCstar, 1)
+dfPlot$`Adoption rate` <- round(adoptRateStrat, 2)
+dfPlot <- dfPlot %>% rename(`TFP (v0)` = v0) %>%
+  relocate(`TFP (v0)`, `Mean cost/acre`, `Adoption rate`) %>%
+  gather(var, val, `TFP (v0)`:`Mean yield`)
+
+#dfPlot$Type <- factor(dfPlot$Type, levels = dfPlot$`TFP (v0)`[order(dfPlot$`TFP (v0)`)], ordered = T)
+#gg <- ggplot(dfPlot, aes(x = Element, y = Type, fill = y0, label = y0))
+gg <- ggplot(dfPlot, aes(x = var, y = Type, fill = val, label = val))
+gg <- gg + scale_y_discrete(limits = typeVec)
+gg <- gg + geom_tile(alpha = 0)
+#gg <- gg + labs(title = expression(v[0]))
+gg <- gg + scale_x_discrete(position = "top")
+gg <- gg + theme_bw()
+gg <- gg + theme(axis.title = element_blank(),
+                 axis.text.x = element_text(size = axisTextSize),
+                 axis.ticks.x = element_blank(),
+                 axis.text.y = element_text(size = axisTextSize),
+                 panel.grid = element_blank(),
+                 plot.title = element_text(size = axisTitleSize, hjust = 0.5),
+                 legend.position = "none")
+gg <- gg + geom_text(size = cellText_size)
+ggEndow1 <- gg
+#---
+gg <- ggplot(dfPlot, aes(x = `Pct of farms in sample`, y = Type))
+#gg <- gg + scale_y_discrete(limits = typeVec)
+gg <- gg + geom_col()
+gg <- gg + labs(title = "Pct of farms in sample")
+gg <- gg + theme_bw()
+gg <- gg + theme(axis.title = element_blank(),
+                 #axis.title.x = element_text(size = axisTitleSize),
+                 axis.text.y = element_blank(),
+                 axis.text.x = element_text(size = axisTextSize),
+                 #panel.grid = element_blank(),
+                 plot.title = element_text(size = axisTitleSize, hjust = 0.5))
+ggEndow2 <- gg
+ggEndow1 + ggEndow2
+
+
+dfPlot %>% group_by(var) %>% summarise(val = mean(val))
+muEyStarT0
+
+dfCheck <- data.frame(Type = endowVec, v0 = round(v0, 1),
+                      yd = exp(dfMod3$`ln[Yield (kg/acre)]` - mod3$residuals - kRn * dfMod3$`ln[Rain anomaly]`),
+                      cost = exp(dfMod3$`ln[Cost/acre (KES/acre)]`)) %>%
+  group_by(Type) %>% summarise(muYd = mean(yd),
+                               muCost = mean(cost),
+                               v0 = mean(v0)) %>%
+  arrange(v0)
+
+
+```
+\doublespacing
+
+
+
 
 Say that the new binary endowment is targeted at 
 
@@ -2107,7 +2146,10 @@ Can go beyond the research induced supply curve shift to examine ... and multipl
 can also look at shocks to continuous endowments k, rainfall etc., many of these simultaneously...
 
 
-# Conclusion
+# Discussion and conclusion
+all the things we couldn't get to
+
+the percentage shift $\partial \nu$ will ultimately depend upon the change in equilibrium price, which requires the demand curve... no space here but demand curve will look like an aggregate input demand curve.
 
 Conventional approach is exogenously determine adoption rate by expert opinion. Here adoption rate is endogenous to the theoretical framework.
 
@@ -4082,3 +4124,32 @@ can also address questions of how the same result might be achieved through inte
 
 
 sketch out extension to aggregate demand and PE analysis...computing Econ Surplus, change in net benefit as alternative to ES
+
+
+<!-- The $alpha_i$ can either be directly estimated by fitting Equation \ref{eq:cobbDoug2} or \ref{eq:cobbDoug3} to the farm data, or calculated based on cost share data and the value of $h$ estimated using Equation \ref{eq:lYdEnvReg2}. The latter approach takes advantage of an instructive corollary following immediately from input demand (Equation \ref{eq:inputdem2}), which states that input cost shares ($C^*_i / C^*$) are equal to their respective technology shares ($\alpha_i/h$). -->
+
+<!-- \begin{equation} -->
+<!-- \frac{C^*_i}{C^*} = \frac{\alpha_i}{h} \:\:;\:\:\: C^*_i = w_i x^*_i -->
+<!-- \end{equation} -->
+
+<!-- Given an estimate for $h$ and input cost share data, then, $\alpha_i = h C^*_i / C^*$ can be calculated for each $i$. -->
+
+<!-- # ```{r, echo = FALSE} -->
+
+<!-- alphaCAN <- h * exp(df_mod1$`Total CAN fert (kg/acre)`) * df_mod1$`Total CAN fert price (KES/kg)` / exp(df_mod1$`Cost/acre (KES/acre)`) -->
+<!-- hist(alphaCAN[alphaCAN > 0 & alphaCAN < 1], 25) -->
+<!-- mean(alphaCAN[alphaCAN > 0]) -->
+
+<!-- alphaNPK <- h * exp(df_mod1$`Total NPK fert (kg/acre)`) * df_mod1$`Total NPK fert price (KES/kg)` / exp(df_mod1$`Cost/acre (KES/acre)`) -->
+<!-- hist(alphaNPK[alphaNPK > 0 & alphaNPK < 1], 20) -->
+<!-- mean(alphaNPK[alphaNPK > 0]) -->
+
+<!-- alphaDAP <- h * exp(df_mod1$`DAP fert (kg/acre)`) * df_mod1$`DAP fert price (KES/kg)` / exp(df_mod1$`Cost/acre (KES/acre)`) -->
+<!-- hist(alphaDAP[alphaDAP > 0 & alphaDAP < 1], 20) -->
+<!-- mean(alphaDAP[alphaDAP > 0]) -->
+
+<!-- alphaUREA <- h * df_mod1$`Total UREA fert (KES/acre)` / exp(df_mod1$`Cost/acre (KES/acre)`) -->
+<!-- hist(alphaUREA[alphaUREA > 0 & alphaUREA < 1], 20) -->
+<!-- mean(alphaUREA[alphaUREA > 0]) -->
+
+<!-- ``` -->
