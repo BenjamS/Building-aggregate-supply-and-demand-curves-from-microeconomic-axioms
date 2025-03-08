@@ -582,7 +582,11 @@ Equation \ref{eq:aggSup1} is a suitable aggregate supply function in sectors cha
 To begin with, yield is partly a function of stochastic meteorological variables unknown at planting time. Wherever $y^*$ appears in the equations above, what is really meant is $E[y^*(T)]|_{t = 0}$---that is to say, the farm's expectation of what yield will be at harvest time ($t = T$) as evaluated at planting time ($t = 0$). This expected yield is generally not observable. However, an expression for $E[y^*(T)]|_{t = 0}$ can be derived by taking the expectation of the observed yield at harvest ($y^*(T)$). First, consider observed yield.
 
 \begin{equation}
-y^*(T) = y^*(T) = E[y^*(T)] \frac{k_m(T)^{\kappa_m}}{E[k_m(T)^{\kappa_m}]} \frac{k'}{E[k']} \frac{C^{*h}}{E[C^{*h}]} \:\:;\:\:\: k' = \frac{k}{k_m(T)^{\kappa_m}}
+\begin{split}
+y^*(T) &= y^*(T) = E[y^*(T)] \frac{k_m(T)^{\kappa_m}}{E[k_m(T)^{\kappa_m}]} \frac{k'}{E[k]} \frac{C^{*h}}{E[C^{*h}]} \:\:;\:\:\: k' = k_m(T)^{-\kappa_m} k \\
+&= v_0 \frac{k_m(T)^{\kappa_m}}{E[k_m(T)^{\kappa_m}]} k' C^{*h} \:\:;\:\:\: v_0 = \frac{E[y^*(T)]}{E[k] E[C^{*h}]}
+\end{split}
+\label{eq:yStarT}
 \end{equation}
 
 Where the stochastic meteorological component $k_m(T)^{\kappa_m}$ has been factored out of $k$ and made explicit. The component $k_m(T)$ may be a single stochastic meteorological component such as total rainfall by harvest, or it may represent a product of cumulative meteorological variables raised to their respective elasticities. For example, if the key meteorological variables are rainfall and solar radiation, then $k_m(T)^{\kappa_m} = k_r(T)^{\kappa_r} k_s(T)^{\kappa_s}$, where $k_r(T)$ and $k_s(T)$ are cumulative rainfall and solar radiation at harvest.
@@ -590,12 +594,34 @@ Where the stochastic meteorological component $k_m(T)^{\kappa_m}$ has been facto
 Taking the stochastic expectation,
 
 \begin{equation}
-E[y^*(T)]|_{t = 0} = E[E[y^*(T)]|_{t = 0}] \frac{E[k_m(T)^{\kappa_m}]|_{t = 0}}{E[k_m(T)^{\kappa_m}]} \frac{k'}{E[k']} \frac{C^{*h}}{E[C^{*h}]}
-\label{eq:stochYd1}
+E[y^*(T)]|_{t = 0} = E[\tilde{y}^*(T)]|_{t = 0} E[k_m(T)^{\kappa_m}]|_{t = 0} \frac{k'}{E[k]} \frac{C^{*h}}{E[C^{*h}]} \:\:;\:\:\: \tilde{y}^*(T) = E[y^*(T)]
+\label{eq:EyStarT0}
 \end{equation}
 <!-- \:\:\: k_r(T) = k_{r1}^{\kappa_{r1}} k_{r2}^{\kappa_{r2}} \dots k_{rn_r}^{\kappa_{rn_r}} -->
 
-The term $E[E[y^*(T)]|_{t = 0}]$ is the population mean of the expectation of the stochastic process $y^*(t)$. By Fubini's theorem ... This can be rewritten in more expedient notation by evaluating the population mean of the expected yield equation at $t = T$, 
+Combining the previous two equations gives a formula for calculating expected yield at a specific expected meteorological condiion $E[k_m(T)^{\kappa_m}]|_{t = 0}$ based on observed yield $y^*(T)$ and meteorology $k_m(T)^{\kappa_m}$.
+
+\begin{equation}
+E[y^*(T)]|_{t = 0} = \frac{E[\tilde{y}^*(T)]|_{t = 0}}{\tilde{y}^*(T)} y^*(T) \frac{E[k_m(T)^{\kappa_m}]|_{t = 0}}{k_m(T)^{\kappa_m}}
+\label{eq:stochYd1}
+\end{equation}
+
+Because the unconditional mean yield does not change $\tilde{y}^*(T) = E[\tilde{y}^*(T)]|_{t = 0}$,
+
+\begin{equation}
+E[y^*(T)]|_{t = 0} = \frac{E[k_m(T)^{\kappa_m}]|_{t = 0}}{k_m(T)^{\kappa_m}} y^*(T)
+\label{eq:stochYd1}
+\end{equation}
+
+
+The term $E[E[y^*(T)]|_{t = 0}]$ is the population mean of the expectation of the stochastic process $y^*(t)$.  This can be rewritten in more expedient notation by evaluating the population mean of both sides, 
+By Fubini's theorem ...
+
+\begin{equation}
+E[E[y^*(T)]|_{t = 0}] = E[E[y^*(T)]]|_{t = 0}
+\label{eq:EyStarFubiniThm}
+\end{equation}
+
 
 
 
