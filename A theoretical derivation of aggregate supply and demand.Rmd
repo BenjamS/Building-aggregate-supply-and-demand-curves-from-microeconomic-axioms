@@ -1437,19 +1437,29 @@ E[\tilde{y}^*(T; k_r(T))|\theta]|_{t = 0} = \frac{E[E[k_r(T)^{\kappa_r}]]|_{t = 
 <!-- E[y^*(T; k_r(T))|\theta] = E[\hat{y}^*] \:\:;\:\:\: \hat{y}^* = y_{obs}^* e^{-\epsilon} -->
 <!-- \end{equation} -->
 
-To estimate $m_{\#}$ and $s_{\#}$, note from Equations \ref{eq:mCk} that the conditional parameters $\bar{m}_{\#}$ and $\bar{s}_{\#}$ can be estimated from the data as follows.
+To estimate $m_{\#}$ and $s_{\#}$, note that the second line of Equations \ref{eq:mCk} (rewritten in stochastic terms) can be rearranged as an expression for $E[C^{\#}(T)]|_{t = 0}$.
+
+\begin{equation}
+E[C^{\#}(T)]|_{t = 0} = \frac{C^{* 1 - h}}{v_0 k}
+\end{equation}
+
+Such that the conditional parameters $\bar{m}_{\#}$ and $\bar{s}_{\#}$ can be estimated from the data as follows.
+<!-- To parse $m_c$ and $s_c$, recall from Equation \ref{eq:mCk} that $C^* = (v_0 k C^{\#})^{1 / (1 - h)}$, such that -->
 
 \begin{equation}
 \begin{split}
 \bar{m}_{\#} &= (1 - h) \bar{m}_c - m_k - \ln(v_0) \\
-\bar{s}_{\#}^2 &= (1 - h)^2 \bar{m}_c^2 - m_k^2
+\bar{s}_{\#}^2 &= (1 - h)^2 \bar{m}_c^2 - m_k^2 \\
+& \bar{m}_c = E[\ln(C^*)| \theta] \:\:\:\: \bar{s}_c^2 = Var[\ln(C^*)| \theta]
+\end{split}
+\label{eq:paramsCondCsharp}
 \end{equation}
 
 The unconditional parameters $m_{\#}$ and $s_{\#}$ are then calculated by solving simultaneous Equations \ref{eq:cSharpUncondParams}. In addition to $\bar{m}_{\#}$ and $\bar{s}_{\#}$, this requires an estimate of expected harvest price at planting time ($E[P(T)]|_{t = 0}$).
 
 The Kenya farm data includes the harvest output price as observed at harvest $P(T)$, but not $E[P(T)]|_{t = 0}$. Recall from Equation \ref{eq:EPT0} that calculation of $E[P(T)]|_{t = 0}$ requires the maize price at planting $P(0)$, the drift parameter $m_p$, and the time from planting to harvest $T$. In the present exercise, this information is taken from the World Food Program main season monthly price series plotted in Figure \ref{fig:mzP} [@WFPpriceData]. Given the monthly time step of the data, the time horizon from planting in March to the August-September harvest is $T = 6$. The price at planting $P(0)$ is averaged over the main maize markets. The drift parameter $m_p$ is then calculated as the mean log change from one month to another in all markets. Missing values are omitted from these calculations.
 
-When calculating $m_p$, it is important to take note of price dynamics peculiar to the market in question. In Kenya, the short rains maize crop is harvested about a month before the main season crop is planted. If the short rains harvest is good, then the maize price tends to remain flat during the main season or decrease a little. If the short rains harvest is poor, then the price tends to trend upwards during the main season and to be a little more volatile. This is reflected in Figure \ref{fig:mzP}, where the price series in 2008, 2009, 2011, and 2012 are upward trending. It is known that the main season followed a poor short rains harvest in these years. In the other years, the price series are flat because the short rains harvest was normal. To accommodate this dichotomy, $m_P$ is calculated separately for bad short rain years and good short rain years. For years beginning with a bad short rains harvest, the expected price ($E[P(T)]|_{t = 0}$) is calculated using the "bad short rains" $m_p$, while expected price in years beginning with a good short rains harvest is calculated using the "good short rains" $m_p$.
+When calculating $m_p$, it is important to take note of price dynamics peculiar to the market in question. In Kenya, the short rains maize crop is harvested about a month before the main season crop is planted. If the short rains harvest is good, then the maize price tends to remain flat during the main season or decrease a little. If the short rains harvest is poor, then the price tends to trend upwards during the main season and to be a little more volatile. This is reflected in Figure \ref{fig:mzP}, where the price series in 2008, 2009, 2011, and 2012 are upward trending. It is known that the main season followed a poor short rains harvest in these years. In the other years, the price series are flat because the short rains harvest was normal. To accommodate this dichotomy, $m_P$ is calculated separately for bad short rain years and good short rain years. For years beginning with a bad short rains harvest, the expected price is calculated using the "bad short rains" $m_p$, while expected price in years beginning with a good short rains harvest is calculated using the "good short rains" $m_p$.
 <!-- \begin{equation} -->
 <!-- \begin{split} -->
 <!-- E[E[C^{\#}(T)]|_{t = 0}| \theta] &= E \left[ \frac{C^*}{E[y^*(T; k_m(T))]|_{t = 0}}  \right] \\ -->
@@ -1626,24 +1636,9 @@ P02007 <- mean(dfP0March$P0[which(dfP0March$year == 2007)])
 muArea <- mean(exp(dfMod3$`ln[Farm size (acres)]`))
 muAreaReport <- round(muArea, 2)
 # Number of farms
-Nf <- 2.1 * 10^6
-
-```
-\doublespacing
-
-Once $m_{\#}$ and $s_{\#}$ are calculated, the expected unconditional mean yield ($E[\tilde{y}^*(T; k_m(T))]|_{t = 0}$) follows from Equation \ref{eq:condMeanYd2}. In this exercise, the expected unconditional mean yield is evaluated at for different expected rainfall levels: $E[E[k_r(T)^{\kappa_r}]]|_{t = 0} = 1.5^{\kappa_r}, \: 1^{\kappa_r}, \: 0.5^{\kappa_r}, \: 0.1^{\kappa_r}$. These values correspond to expected rainfall that is 150% of the historical benchmark ("high"), in line with the historical benchmark ("normal"), 50% of the historical benchmark ("low"), and 10% of the historical benchmark ("dismal"), respectively.
-
-The two remaining parameters required to evaluate expected aggregate supply in Equation \ref{eq:aggSup2} are number of farms $N$ and mean farm size $k_a$. For mean farm size, the Kenya farm sample mean is used, giving $k_a =$ `r muAreaReport` acres. The number of maize farms is more difficult to assess. One sometimes sees the figure $3$ million mentioned [e.g. @njeru2022maize], but this appears to be unsupported by any hard evidence. Here, a rough estimate is deduced by dividing planted area by mean farm size. The midseason reports examined for this exercise suggest that planted maize area during the period in question ranges between 3 and 4.5 million acres [@KFSSGJul2011]. Divided by $k_a$, this gives a range between $1.56$ and $2.34$ million farms. The figure $N = 2.1$ million is used as a rough estimate.
-
-With all parameters estimated, the theoretical expected aggregate supply curve developed in the sections above is plotted at the four expected rainfall levels, with empirical aggregate supply estimates overlaid, in Figure \ref{fig:EaggQs}. The empirical estimates for the major drought years agree closely with the theoretical expected supply curve evaluated at the dismal rainfall level, while the estimates in normal or good rainfall years generally agree with the theoretical curve evaluated at the normal and high rainfall levels. The curve overshoots the 2010 estimate somewhat, possibly due to crop loss from flooding that year [@GIEWS5Aug2010]. The one major empirical divergence from the theoretical curve is 2009, an historic drought year [@MoApressRelease2009].
-
-The price elasticity of expected aggregate supply curve is presented in Figure \ref{fig:EaggQs}, bottom. Empirical estimates of the maize price elasticity of supply in Kenya generally range from $0.1$ to $0.365$ [@abodi2021supply; @onono2013response; @olwande2009supply], which is roughly the range of elasticities indicated by the theoretical curve for the years examined here.
-<!-- In one study, Onono et al.'s estimate of price elasticity of supply: 0.365 [@onono2013response] -->
-
-The expected aggregate supply and price elasticity curves parameterized in this exercise are "short run" curves. That is to say, they are valid only insofar as the values of their fitted parameters---$h$, $N$, $k_a$, $k$, $m_{\#}$, $s_{\#}$, $m_p$---are accurate. Empirical estimates for years well before or well after the year of the data used to estimate the parameters will thus diverge from the curve.
-
-\singlespacing
-```{r Fig3, fig.show = "hold", fig.width = 5, fig.height=5, fig.align="center", fig.cap="\\label{fig:EaggQs}(Top) The theoretical expected aggregate maize supply curve fitted to 2007 Kenya long rains maize season data, plotted against empirical estimates of expected aggregate supply for the years 2006-2012. (Bottom) The corresponding theoretical price elasticity of expected aggregate supply curve.", echo = FALSE}
+NfReport <- 2
+Nf <- NfReport * 10^6
+#=============================================================================
 # Define root function to solve for population EcSharpT0
 rootFnUp <- function(xIn, xUp, sXtrunc, mXtrunc){
   sX <- xIn[1]
@@ -1655,8 +1650,114 @@ rootFnUp <- function(xIn, xUp, sXtrunc, mXtrunc){
   outVec <- c(slack_s, slack_m)
   return(outVec)
 }
+#-----------------------------------------------------------------------------
+# Define constant in terms of convenient known reference value y0, in this case sample mean yield.
+# Sample mean yield varies with binary controls. Here is the mean with just the base constant
+# (i.e. all binaries = 0)
+coefVec <- mod3$coefficients; coefNames <- gsub("`", "", names(coefVec))
+beta0plusAlphaWhterm <- coefVec[1]
+v0base <- exp(beta0plusAlphaWhterm)
+#y0base <- v0base * muThetaKnh * muEcSharpT0n
+#muEcStarT0hBase <- muEyStarT0 / (muThetaK * v0base)
+#---
+# Now calculate mean yield for all binary combinations
+# Adjust for exogenous endowments/constraints
+bin_vars <- gsub(":", " -", bin_vars)
+bin_vars <- gsub("Adopter", "Hybrid seed", bin_vars)
+kappaBins <- coefVec[which(coefNames %in% bin_vars)]
+names(kappaBins) <- gsub("`", "", names(kappaBins))
+dfBins <- dfMod3[, bin_vars]
+beta0adj <- beta0plusAlphaWhterm + as.matrix(dfBins) %*% kappaBins
+v0 <- exp(beta0adj)
+# muEcStarT0h <- muEyStarT0 / (muThetaK * v0)
+#v0 %>% unique() %>% length # 14 endowment combos present
+# dfPlot <- data.frame(County = dfMod3$Dist, v0)
+#dfPlot <- data.frame(County = dfMod3b$Dist, y0)
+#ggplot(dfPlot, aes(x = y0)) + geom_histogram() + facet_wrap(~County)
+#exp(mean(dfMod3$`Yield (kg/acre)`) + sd(dfMod3$`Yield (kg/acre)`)^2/2)
+# mean(y0)
 #----------------------------------------------------------------------------------------
-# Agg supply
+# HAVE TO FACTOR OUT KRAIN BECAUSE IT IS AN EX POST VARIABLE!!!!
+# IMPORTANT TO NOTE IN TEXT THAT EXOG CONTROL VARS ARE FROM POV OF PLANTING TIME
+# --> A crude way of calculating expected yield is by evaluating ex-post yield
+# at kRain = 1, i.e. expecting rainfall to follow past pattern.
+kappaRn <- coefVec[which(coefNames == "ln[Rain anomaly]")]
+kRn <- exp(dfMod3$`ln[Rain anomaly]`)
+# EyStarT0 <- exp(dfMod3$`Yield (kg/acre)`) * kRn^(-kappaRn)
+EyStarT0trunc <- exp(mod3$fitted.values) * kRn^(-kappaRn)
+notThese <- c("Dist", "ln[Yield (kg/acre)]", "ln[Cost/acre (KES/acre)]", bin_vars)# "ln[Rain anomaly]", 
+lnMod3Vars <- coefOrder
+kVars <- setdiff(lnMod3Vars, notThese)
+#kVars <- kVars[-grep("Tenure|Landprep", kVars)]
+kappaVec <- coefVec[which(coefNames %in% kVars)]
+matK <- dfMod3[, kVars] %>% as.matrix()
+kLook <- matK %*% rep(1, ncol(matK))
+mKvec <- matK %*% diag(kappaVec) %>% colMeans()
+sKvec <- matK %*% diag(kappaVec) %>% apply(2, sd)
+mK <- sum(mKvec)
+sK <- sqrt(sum(sKvec^2))
+mCstarTrunc <- mean(dfMod3$`ln[Cost/acre (KES/acre)]`)
+sCstarTrunc <- sd(dfMod3$`ln[Cost/acre (KES/acre)]`)
+# muThetaK <- exp(sum(c(mVec * kappaVec, kappaVec^2 * sVec^2 / 2)))
+# thetaKvec <- matK %*% kappaVec
+# muThetaKsamp <- thetaKvec %>% exp() %>% mean()
+#muThetaK/muThetaKsamp
+#EthetaKsamp2 <- matK %*% diag(kappaVec) %>% colMeans() %>% sum() %>% exp()
+# muThetaKnh <- exp(sum(c(eta / h * mVec * kappaVec, (eta / h)^2 * kappaVec^2 * sVec^2 / 2)))
+#--------------------------------------------------------------------------
+mEcSharpT0trunc <- (1 - h) * mCstarTrunc - mK - mean(beta0adj)
+sEcSharpT0trunc <- sqrt((1 - h)^2 * sCstarTrunc^2 - sK^2)
+muEcSharpT0Trunc <- exp(mEcSharpT0trunc + sEcSharpT0trunc^2 / 2)
+EyStarT0trunc <- kRn^-kappaRn * exp(mod3$fitted.values)
+cStarTrunc <- exp(dfMod3$`ln[Cost/acre (KES/acre)]`)
+xIn <- c(sEcSharpT0trunc, mEcSharpT0trunc)
+sol <- nleqslv::nleqslv(xIn, rootFnUp, jac = NULL,
+                        xUp = EPT02007,
+                        sXtrunc = sEcSharpT0trunc,
+                        mXtrunc = mEcSharpT0trunc)
+#sol
+sEcSharpT0 <- sol$x[1]
+mEcSharpT0 <- sol$x[2]
+muEcSharpT0 <- exp(mEcSharpT0 + sEcSharpT0^2 / 2)
+muEcSharpT0n <- exp(eta * mEcSharpT0 + eta^2 * sEcSharpT0^2 / 2)
+# Now can calculate unconditional cStar parameters
+mCstar <- 1 / (1 - h) * (mean(beta0adj) + mK + mEcSharpT0)
+sCstar <- 1 / (1 - h) * sqrt(sK^2 + sEcSharpT0^2)
+muCstar <- exp(mCstar + sCstar^2 / 2)
+muCstarh <- exp(h * mCstar + h^2 * sCstar^2 / 2)
+muK <- exp(mK + sK^2 / 2)
+muEyStarT0check <- mean(v0 * muK) * muCstarh
+# mLamba <- log(P02007) + (mPDown - sPDown^2 / 2) * timeHoriz + log(h) - mEcSharpT0
+# mean(log(lamTrunc))
+# log(P02007) + (mPDown - sPDown^2 / 2) * timeHoriz + log(h) #mEcSharpT0
+ProbProfit <- pnorm((log(EPT02007) - mEcSharpT0) / (sEcSharpT0) - eta * sEcSharpT0)
+EmploymentRate <- pnorm((log(EPT02007) - mEcSharpT0) / sEcSharpT0)
+muEyStarT0trunc <- mean(EyStarT0trunc)
+muEyStarT0 <- muEyStarT0trunc * EmploymentRate / ProbProfit
+# EcSharpT0nTrunc <- (exp(dfMod3$`ln[Cost/acre (KES/acre)]`) / EyStarT0trunc)^eta
+# muEcSharpT0nTrunc <- mean(EcSharpT0nTrunc)
+# muEcSharpT0n <- muEcSharpT0nTrunc * EmploymentRate / ProbProfit
+# EyStarT0max <- muEyStarT0 * EPT02007^eta / muEcSharpT0n
+```
+\doublespacing
+
+Calculation of $m_{\#}$ and $s_{\#}$ requires the expected price at planting for 2007, the same year as the farm data used to estimate $\bar{m}_{\#}$ and $\bar{s}_{\#}$. The short rains harvest in 2007 was normal and so the "good short rains" estimate of $m_p$, and March 2007 price  is used to calculate $E[P(T)]|_{t = 0} = P(0) e^{m_p T}$ (where $P(0)$ is the price at planting in March).
+
+Once $m_{\#}$ and $s_{\#}$ are calculated, the expected unconditional mean yield ($E[\tilde{y}^*(T; k_m(T))]|_{t = 0}$) follows from Equation \ref{eq:condMeanYd2}. In the process, the farm employment rate is calculated as `r round(EmploymentRate, 2)` and the PEFS adjusted mean probability of profit is calculated as `r round(ProbProfit, 2)`. The expected unconditional mean yield is evaluated at four different expected rainfall levels: $E[E[k_r(T)^{\kappa_r}]]|_{t = 0} = 1.5^{\kappa_r}, \: 1^{\kappa_r}, \: 0.5^{\kappa_r}, \: 0.1^{\kappa_r}$. These values correspond to expected rainfall that is 150% of the historical benchmark ("high"), in line with the historical benchmark ("normal"), 50% of the historical benchmark ("low"), and 10% of the historical benchmark ("dismal"), respectively.
+
+The two remaining parameters required to evaluate expected aggregate supply in Equation \ref{eq:aggSup2} are number of farms $N$ and mean farm size $k_a$. For mean farm size, the Kenya farm sample mean is used, giving $k_a =$ `r muAreaReport` acres. The number of maize farms is more difficult to assess. One sometimes sees the figure $3$ million mentioned [e.g. @njeru2022maize], but this appears to be unsupported by any hard evidence. Here, a rough estimate is deduced by dividing planted area by mean farm size. The midseason reports examined for this exercise suggest that planted main season maize area during the period in question ranges between 3 and 4.5 million acres [@KFSSGJul2011]. Divided by $k_a$, this gives a range between $1.56$ and $2.34$ million farms. The figure $N =$ `r NfReport` million is used as a rough estimate.
+
+With all the necessary parameters estimated, the theoretical expected aggregate supply curve developed in the sections above is plotted at the four expected rainfall levels, with empirical aggregate supply estimates overlaid, in the top panel of Figure \ref{fig:EaggQs}. The empirical estimates for the major drought years agree closely with the theoretical expected supply curve evaluated at the "dismal" rainfall level, while the estimates in normal or good rainfall years generally agree with the theoretical curve evaluated at the "normal" and "high" rainfall levels. The curve overshoots the 2010 estimate somewhat, possibly due to crop loss from flooding that year [@GIEWS5Aug2010]. The one major empirical divergence from the theoretical curve is 2009, an historic drought year [@MoApressRelease2009].
+
+The price elasticity of expected aggregate supply curve is presented in Figure \ref{fig:EaggQs}, bottom. Empirical estimates of the maize price elasticity of supply in Kenya generally range from $0.1$ to $0.365$ [@abodi2021supply; @onono2013response; @olwande2009supply], which is roughly the range of elasticities indicated by the theoretical curve for the years examined here.
+<!-- In one study, Onono et al.'s estimate of price elasticity of supply: 0.365 [@onono2013response] -->
+
+The expected aggregate supply and price elasticity curves parameterized in this exercise are "short run" curves. That is to say, they are valid only insofar as the values of their fitted parameters---$h$, $N$, $k_a$, $k$, $m_{\#}$, $s_{\#}$, $m_p$---are accurate. Empirical estimates for years well before or well after the year of the data used to estimate the parameters will thus diverge from the curve.
+
+\singlespacing
+```{r Fig3, fig.show = "hold", fig.width = 5, fig.height=5, fig.align="center", fig.cap="\\label{fig:EaggQs}(Top) The theoretical expected aggregate maize supply curve fitted to 2007 Kenya long rains maize season data, plotted against empirical estimates of expected aggregate supply for the years 2006-2012. (Bottom) The corresponding theoretical price elasticity of expected aggregate supply curve.", echo = FALSE}
+#----------------------------------------------------------------------------------------
+# Define expected agg supply function
 EQsFun <- function(EPT0, muEyStarT0, mEcSharpT0, sEcSharpT0, h, muArea, Nf, kappaRn){
   z <- (log(EPT0) - mEcSharpT0) / sEcSharpT0 - eta * sEcSharpT0
   ProbProfitMeanFarm <- pnorm(z)
@@ -1686,95 +1787,6 @@ EQsFun <- function(EPT0, muEyStarT0, mEcSharpT0, sEcSharpT0, h, muArea, Nf, kapp
                        "PEFS-adj. mean probability\nof profit", "Employment rate")
   return(dfOut)
 }
-#----------------------------------------------------------------------------------------
-# HAVE TO FACTOR OUT KRAIN BECAUSE IT IS AN EX POST VARIABLE!!!!
-# IMPORTANT TO NOTE IN TEXT THAT EXOG CONTROL VARS ARE FROM POV OF PLANTING TIME
-# --> A crude way of calculating expected yield is by evaluating ex-post yield
-# at kRain = 1, i.e. expecting rainfall to follow past pattern.
-coefVec <- mod3$coefficients; coefNames <- gsub("`", "", names(coefVec))
-kappaRn <- coefVec[which(coefNames == "ln[Rain anomaly]")]
-kRn <- exp(dfMod3$`ln[Rain anomaly]`)
-# EyStarT0 <- exp(dfMod3$`Yield (kg/acre)`) * kRn^(-kappaRn)
-EyStarT0trunc <- exp(mod3$fitted.values) * kRn^(-kappaRn)
-notThese <- c("Dist", "ln[Yield (kg/acre)]", "ln[Cost/acre (KES/acre)]", bin_vars)# "ln[Rain anomaly]", 
-lnMod3Vars <- coefOrder
-kVars <- setdiff(lnMod3Vars, notThese)
-#kVars <- kVars[-grep("Tenure|Landprep", kVars)]
-kappaVec <- coefVec[which(coefNames %in% kVars)]
-matK <- dfMod3[, kVars] %>% as.matrix()
-kLook <- matK %*% rep(1, ncol(matK))
-mKvec <- matK %*% diag(kappaVec) %>% colMeans()
-sKvec <- matK %*% diag(kappaVec) %>% apply(2, sd)
-mK <- sum(mKvec)
-sK <- sqrt(sum(sKvec^2))
-mEcStarTrunc <- mean(dfMod3$`ln[Cost/acre (KES/acre)]`)
-sEcStarTrunc <- sd(dfMod3$`ln[Cost/acre (KES/acre)]`)
-# muThetaK <- exp(sum(c(mVec * kappaVec, kappaVec^2 * sVec^2 / 2)))
-# thetaKvec <- matK %*% kappaVec
-# muThetaKsamp <- thetaKvec %>% exp() %>% mean()
-#muThetaK/muThetaKsamp
-#EthetaKsamp2 <- matK %*% diag(kappaVec) %>% colMeans() %>% sum() %>% exp()
-# muThetaKnh <- exp(sum(c(eta / h * mVec * kappaVec, (eta / h)^2 * kappaVec^2 * sVec^2 / 2)))
-#--------------------------------------------------------------------------
-# Define constant in terms of convenient known reference value y0, in this case sample mean yield.
-# Sample mean yield varies with binary controls. Here is the mean with just the base constant
-# (i.e. all binaries = 0)
-beta0plusAlphaWhterm <- coefVec[1]
-v0base <- exp(beta0plusAlphaWhterm)
-#y0base <- v0base * muThetaKnh * muEcSharpT0n
-#muEcStarT0hBase <- muEyStarT0 / (muThetaK * v0base)
-#---
-# Now calculate mean yield for all binary combinations
-# Adjust for exogenous endowments/constraints
-bin_vars <- gsub(":", " -", bin_vars)
-bin_vars <- gsub("Adopter", "Hybrid seed", bin_vars)
-kappaBins <- coefVec[which(coefNames %in% bin_vars)]
-names(kappaBins) <- gsub("`", "", names(kappaBins))
-dfBins <- dfMod3[, bin_vars]
-beta0adj <- beta0plusAlphaWhterm + as.matrix(dfBins) %*% kappaBins
-v0 <- exp(beta0adj)
-# muEcStarT0h <- muEyStarT0 / (muThetaK * v0)
-#v0 %>% unique() %>% length # 14 endowment combos present
-# dfPlot <- data.frame(County = dfMod3$Dist, v0)
-#dfPlot <- data.frame(County = dfMod3b$Dist, y0)
-#ggplot(dfPlot, aes(x = y0)) + geom_histogram() + facet_wrap(~County)
-#exp(mean(dfMod3$`Yield (kg/acre)`) + sd(dfMod3$`Yield (kg/acre)`)^2/2)
-# mean(y0)
-#--------------------------------------------------------------------------
-mEcSharpT0Trunc <- (1 - h) * mEcStarTrunc - mK - mean(beta0adj)
-sEcSharpT0Trunc <- sqrt((1 - h)^2 * sEcStarTrunc^2 - sK^2)
-muEcSharpT0Trunc <- exp(mEcSharpT0Trunc + sEcSharpT0Trunc^2 / 2)
-EyStarT0trunc <- kRn^-kappaRn * exp(mod3$fitted.values)
-EcStarT0trunc <- exp(dfMod3$`ln[Cost/acre (KES/acre)]`)
-EcSharpT0trunc <- EcStarT0trunc / EyStarT0trunc
-lEcSharpT0trunc <- log(EcSharpT0trunc)
-#EPT02007 <- mean(df_mod$`Maize price (KES/kg)`) * exp(-mP * timeHorizon)
-lamTrunc <- EPT02007 / EcSharpT0trunc * h
-#sum(lamTrunc > h) / length(lamTrunc)
-#mEcSharpT0trunc <- mean(lcSharpSameP); sEcSharpT0trunc <- sd(lcSharpSameP)
-#mEcSharpT0trunc <- mean(lEcSharpT0trunc); sEcSharpT0trunc <- sd(lEcSharpT0trunc)
-#muEcSharpT0trunc <- exp(mEcSharpT0trunc + sEcSharpT0trunc^2 / 2)
-xIn <- c(sEcSharpT0trunc, mEcSharpT0trunc)
-sol <- nleqslv::nleqslv(xIn, rootFnUp, jac = NULL,
-                        xUp = EPT02007,
-                        sXtrunc = sEcSharpT0trunc,
-                        mXtrunc = mEcSharpT0trunc)
-#sol
-sEcSharpT0 <- sol$x[1]
-mEcSharpT0 <- sol$x[2]
-muEcSharpT0 <- exp(mEcSharpT0 + sEcSharpT0^2 / 2)
-muEcSharpT0n <- exp(eta * mEcSharpT0 + eta^2 * sEcSharpT0^2 / 2)
-# mLamba <- log(P02007) + (mPDown - sPDown^2 / 2) * timeHoriz + log(h) - mEcSharpT0
-# mean(log(lamTrunc))
-# log(P02007) + (mPDown - sPDown^2 / 2) * timeHoriz + log(h) #mEcSharpT0
-ProbProfit <- pnorm((log(EPT02007) - mEcSharpT0) / (sEcSharpT0) - eta * sEcSharpT0)
-EmploymentRate <- pnorm((log(EPT02007) - mEcSharpT0) / sEcSharpT0)
-muEyStarT0trunc <- mean(EyStarT0trunc)
-muEyStarT0 <- muEyStarT0trunc * EmploymentRate / ProbProfit
-# EcSharpT0nTrunc <- (exp(dfMod3$`ln[Cost/acre (KES/acre)]`) / EyStarT0trunc)^eta
-# muEcSharpT0nTrunc <- mean(EcSharpT0nTrunc)
-# muEcSharpT0n <- muEcSharpT0nTrunc * EmploymentRate / ProbProfit
-# EyStarT0max <- muEyStarT0 * EPT02007^eta / muEcSharpT0n
 #-------------------------------------------------------------------------------------
 EPT0vec <- seq(0.1, 60, length.out = 50)
 dfOut <- EQsFun(EPT0vec, muEyStarT0, mEcSharpT0, sEcSharpT0, h, muArea, Nf, kappaRn)
@@ -1969,7 +1981,7 @@ The aggregate impact of such interventions hinges critically on the adoption rat
 \label{eq:adoptCond}
 \end{equation}
 
-Where the term $\partial B$ represents subsidies, costs, or any other exogenous mitigating circumstances, per unit area, entailed in the adoption of the technology package. In the absence of such mitigating circumstances, the condition simplifies to
+Where the term $\partial B$ represents the marginal subsidies, costs, or any other exogenous mitigating circumstances, per unit area, entailed in the adoption of the technology package. In the absence of such mitigating circumstances, the condition simplifies to
 
 \begin{equation}
 \partial \ln(g_0) > -\partial \ln(\nu)
@@ -1978,7 +1990,7 @@ Where the term $\partial B$ represents subsidies, costs, or any other exogenous 
 
 Widespread adoption of yield scaling enhancements tends to boost production and thus lower output price while at the same time increasing input demand and thus input prices. Hence the expectation is that $\partial \ln(E[P]|_{t = 0}) < 0$, $\partial \ln(\mathbf{w}) > 0$, and thus $\partial \nu < 0$. In words, then, the adoption condition says that a farm stands to increase its net benefit through adoption of yield scaling technology only if the resulting percentage increase in TFP ($g_0$) is greater than the corresponding percentage decrease in output price minus the corresponding percentage increase in input prices scaled by their respective input elasticities $\alpha_i$.
 
-Note the resemblance between the adoption condition in Inequality \ref{eq:adoptCondSimp} and the "price/productivity tightrope" argument formulated by Lipton [-@lipton2005family].
+Note the resemblance between the adoption condition in Inequality \ref{eq:adoptCondSimp} and the "price/productivity tightrope" condition formulated by Lipton [-@lipton2005family].
 
 >\singlespacing "New science usually raises farm supply of outputs and demand for inputs. That makes outputs cheaper and inputs more expensive; hence the ratio of farm output prices to input prices falls. Do small and poor farmers gain? If, and only if, this science-induced fall in their relative farm prices is slower than the science-induced rise in their conversion ratio of physical inputs into physical outputs (that is, TFP)."
 
@@ -1995,7 +2007,7 @@ Now, given a new yield enhancing binary endowment $\beta_5$ (representing, for e
 \end{split}
 \end{equation}
 
-Say $\beta_5 = 0.3$. Then $\partial \ln(g_0) = 0.35$, and so, by the criterion in Inequality \ref{eq:adoptCondSimp} adoption in the absence of exogenous subsidies/costs will increase farm net benefit if the associated percentage decrease in output price plus the $\alpha_i$-scaled increase in input prices (i.e. $\partial \ln(\nu)$) is less than $35\%$. If the $\alpha_i$-adjusted output-input price ratio decrease is greater than $35\%$, then the subsidy term $h / C^* \partial B$ required to make adoption profitable is the margin by which it is greater. Note that the required subsidy $\partial B$ will vary across farms based on $C^*$. The factor $h / C^*$, which may also be written $\lambda / E[R^*(T)]|_{t = 0}$, represents each farm's marginal valuation of the subsidy; and implies that the subsidy is relatively more valuable to farms with relatively lower expenditure. Solving Inequality \ref{eq:adoptCond} for $C^*$ gives the maximum expenditure level for which adoption is profitable if the (absolute value of the) $\alpha_i$-adjusted output-input price ratio decrease is greater than the increase in TFP ($|\partial \ln(\nu)| > \partial \ln(g_0)$).
+Say $\beta_5 = 0.3$. Then $\partial \ln(g_0) = 0.35$, and so, by the criterion in Inequality \ref{eq:adoptCondSimp} adoption in the absence of exogenous subsidies/costs will increase farm net benefit if the associated percentage decrease in output price plus the $\alpha_i$-scaled increase in input prices (i.e. $\partial \ln(\nu)$) is less than $35\%$. If the $\alpha_i$-adjusted output-input price ratio decrease is greater than $35\%$, then the net subsidy term $h / C^* \partial B$ required to make adoption profitable is the margin by which it is greater. Note that the required subsidy $\partial B$ will vary across farms based on $C^*$. The factor $h / C^*$, which may also be written $\lambda / E[R^*(T)]|_{t = 0}$, represents each farm's marginal valuation of the subsidy; and implies that the subsidy is relatively more valuable to farms with relatively lower expenditure. Solving Inequality \ref{eq:adoptCond} for $C^*$ gives the maximum expenditure level for which adoption is profitable if the (absolute value of the) $\alpha_i$-adjusted output-input price ratio decrease is greater than the increase in TFP ($|\partial \ln(\nu)| > \partial \ln(g_0)$).
 
 \begin{equation}
 C^* < \frac{-h \partial B}{\partial \ln(\nu) + \partial \ln(g_0)}
@@ -2014,7 +2026,8 @@ A &= \int_0^{\frac{-h \partial B}{\partial \ln(\nu) + \partial \ln(g_0)}} \phi \
 \end{split}
 \end{equation}
 
-To parse $m_c$ and $s_c$, recall from Equation \ref{eq:mCk} that $C^* = (v_0 k C^{\#})^{1 / (1 - h)}$, such that
+To calculate $m_c$ and $s_c$, note that Equations \ref{eq:paramsCondCsharp} can be rearranged into expressions for $\bar{m}_c$ and $\bar{s}_c$, whence the expression for the unconditional parameters follows immediately.
+<!-- can be calculated recall from Equation \ref{eq:mCk} that $C^* = (v_0 k E[C^{\#}(T)]|_{t = 0})^{1 / (1 - h)}$, such that -->
 
 \begin{equation}
 \begin{split}
@@ -2037,13 +2050,11 @@ Now, because the binary endowments $b_i$ vary across the population, the value o
 v_0 = \sum_i \frac{N_i}{N} v_{0i}
 \end{equation}
 
-Where $N_i / N$ is the fraction of farms in the $i^{th}$ binary endowment stratum.
-
-In passing, note that mean cost and yield disaggregated by stratum ($E[C_i^*]$, $E[y_i^*(T)]$), can be evaluated as follows.
+Where $N_i / N$ is the fraction of farms in the $i^{th}$ binary endowment stratum. The conditional or unconditional mean yield and cost disaggregated by stratum ($E[C_i^*]$, $E[y_i^*(T)]$), can be evaluated as follows.
 
 \begin{equation}
 \begin{split}
-E[C_i^*] &= e^{m_{ci} + \frac{s^2_c}{2}} \:\:;\:\:\: m_{ci} = \frac{1}{1 - h}(\ln(v_{0i}) + m_k + m_{\#})  \\
+E[C_i^*| \theta] &= e^{\bar{m}_{ci} + \frac{\bar{s}^2_c}{2}} \:\:;\:\:\: \bar{m}_{ci} = \frac{1}{1 - h}(\ln(v_{0i}) + m_k + \bar{m}_{\#})  \\
 &= v_{0i}^{\frac{1}{1 - h}} e^{\frac{1}{1 - h}(m_k + m_{\#}) + \frac{1}{(1 - h)^2} \frac{s^2_k + s_{\#}^2}{2}}
 \end{split}
 \end{equation}
@@ -2051,7 +2062,7 @@ E[C_i^*] &= e^{m_{ci} + \frac{s^2_c}{2}} \:\:;\:\:\: m_{ci} = \frac{1}{1 - h}(\l
 And
 
 \begin{equation}
-E[y_i^*(T)] = v_{0i} E[k] E[C_i^{*h}]E[e^{\epsilon}]_i
+E[y_i^*(T)] = v_{0i} E[k] E[C_i^{*h}] E[e^{\epsilon}]_i
 \end{equation}
 
 Where $E[e^{\epsilon}]_i$ refers to the regression errors of farms in the $i^{th}$ stratum. The ex-ante expected mean yield $E[\tilde{y}_i^*(T)]|_{t = 0}$ can also be deduced as in Equation \ref{eq:EyStarT0fromYhat}.
@@ -2072,12 +2083,21 @@ E[C^*]_i &= e^{m_{ci} + \frac{s^2_c}{2}} \\
 \end{split}
 \end{equation}
 
-Because the adoption rate is partly a function of $v_0$, and because $v_0$ varies across strata, then the adoption rate must also vary across strata. Equation \ref{eq:adoptRate} indicates that the adoption rate will be higher in strata with lower starting $v_0$, _ceteris paribus_.
+Because the adoption rate is partly a function of $v_0$, and because $v_0$ varies across strata, then the adoption rate must also vary across strata. Equation \ref{eq:adoptRate} indicates that the adoption rate will be higher in strata with lower starting $v_0$, _ceteris paribus_. The adoption rate for the whole population is then
 
+\begin{equation}
+A = \sum_i \frac{N_i}{N} A_i
+\end{equation}
 
-(Figure \ref{fig:v0strata}).
+Where
 
-, and hence of $g_0$,
+\begin{equation}
+A_i = \Phi\left( \frac{\frac{-h \partial B}{\partial \ln(\nu) + \partial \ln(g_0)} - m_{ci}}{s_c}
+\end{equation}
+
+The adoption rate for the hypothetical new technology described above ($\beta_5 = 0.3$), assuming a 40% decrease in the $\alpha_i$-adjusted output-input price ratio, with a marginal net subsidy per acre of $\partial B = 2.5$, is presented in Figure \ref{fig:v0strata} alongside the mean yield, cost, and TFP ($v_0$), disaggregated by stratum.
+
+EcSharpT0 DOESN"T CHANGE WITH g0, v0!!! Changes with h. EcSharpT0 = EPT0 * h / lambda
 
 \singlespacing
 
@@ -2085,7 +2105,7 @@ Because the adoption rate is partly a function of $v_0$, and because $v_0$ varie
 
 #-----------------------------------------------------------------------
 # Create label vec for each of the 14 endowment combos
-dfBins$Adopter <- ifelse(dfBins$Adopter == 1, "Hybrid", "0")
+dfBins$`Hybrid seed` <- ifelse(dfBins$`Hybrid seed` == 1, "Hybrid", "0")
 dfBins$`Tenure - owned with title deed` <- ifelse(dfBins$`Tenure - owned with title deed` == 1, "Tenure", "0")
 dfBins$`Landprep - oxen` <- ifelse(dfBins$`Landprep - oxen` == 1, "Oxen", "0")
 dfBins$`Landprep - tractor` <- ifelse(dfBins$`Landprep - tractor` == 1, "Tractor", "0")
@@ -2108,33 +2128,37 @@ dfPlot <- data.frame(Type = endowVec, v0 = round(v0, 1)) %>%
   arrange(v0) %>%
   mutate(Type = factor(Type, Type))
 typeVec <- dfPlot$Type
-mK <- sum(mKvec)
-sK <- sqrt(sum(sKvec^2))
 v0strat <- dfPlot$v0
-mC <- log(v0strat) + mK + mEcSharpT0
-sC <- 1 / (1 - h) * sqrt(sK^2 + sEcSharpT0^2)
+mCstari <- 1 / (1 - h) * (log(v0strat) + mK + mEcSharpT0)
 Ek <- exp(mK + sK^2 / 2)
-muCstar <- exp(mC + sC^2 / 2)
-EcStarh <- exp(h * mC + h^2 * sC^2 / 2)
-muYstarT <- v0strat * Ek * EcStarh
+muCstari <- exp(mCstari + sCstar^2 / 2)
+muCstarih <- exp(h * mCstari + h^2 * sCstar^2 / 2)
+muYstarTicheck <- mean(v0strat * muK) * muCstarih
+muYstarTi <- v0strat * Ek * muCstarih
+# EcSharpT0 DOESN"T CHANGE WITH g0, v0!!! Changes with h. EcSharpT0 = EPT0 * h / lambda
+# mEcSharpT0trunc <- (1 - h) * mCstarTrunc - mK - beta0adj
+# sEcSharpT0trunc <- sqrt((1 - h)^2 * sCstarTrunc^2 - sK^2)
+# muEcSharpT0Trunc <- exp(mEcSharpT0trunc + sEcSharpT0trunc^2 / 2)
 betaNew <- 0.3
 dlng0 <- exp(betaNew) - 1
 dlnNu <- -0.4
-dB <- 2
+dB <- 2.5
 cStarMaxAdopt <- -h * dB / (dlnNu + dlng0)
-z <- (cStarMaxAdopt - mC) / sC
+z <- (cStarMaxAdopt - mCstari) / sCstar
 adoptRateStrat <- pnorm(z)
+stratPct <- dfPlot$`Pct of farms in sample`/100
+adoptRateTotal <- sum(adoptRateStrat * stratPct)
 # A = \Phi\left( \frac{\frac{-h (1 - h) \partial B}{\partial \ln(\nu) + \partial \ln(g_0)} - (\ln(v_0) + m_k + m_{\#})}{\sqrt{s_k^2 + s_{\#}^2}} \right)
-dfPlot$`Mean yield` <- round(muYstarT, 1)
-dfPlot$`Mean cost/acre` <- round(muCstar, 1)
-dfPlot$`Adoption rate` <- round(adoptRateStrat, 2)
-dfPlot <- dfPlot %>% rename(`TFP (v0)` = v0) %>%
-  relocate(`TFP (v0)`, `Mean cost/acre`, `Adoption rate`) %>%
-  gather(var, val, `TFP (v0)`:`Mean yield`)
+dfPlot$`Mean yield\n(kg/acre)` <- round(muYstarTi, 1)
+dfPlot$`Mean cost/acre\n(KES)` <- round(muCstari, 1)
+dfPlot$`Adoption rate\n(%)` <- 100 * round(adoptRateStrat, 3)
+dfPlot1 <- dfPlot %>% rename(`TFP (v0)` = v0) %>%
+  relocate(`Type`, `TFP (v0)`, `Mean cost/acre\n(KES)`, `Adoption rate\n(%)`) %>%
+  select(`Type`, `TFP (v0)`, `Mean cost/acre\n(KES)`, `Mean yield\n(kg/acre)`, `Adoption rate\n(%)`) %>% gather(var, val, `TFP (v0)`:`Adoption rate\n(%)`)
 
 #dfPlot$Type <- factor(dfPlot$Type, levels = dfPlot$`TFP (v0)`[order(dfPlot$`TFP (v0)`)], ordered = T)
 #gg <- ggplot(dfPlot, aes(x = Element, y = Type, fill = y0, label = y0))
-gg <- ggplot(dfPlot, aes(x = var, y = Type, fill = val, label = val))
+gg <- ggplot(dfPlot1, aes(x = var, y = Type, fill = val, label = val))
 gg <- gg + scale_y_discrete(limits = typeVec)
 gg <- gg + geom_tile(alpha = 0)
 #gg <- gg + labs(title = expression(v[0]))
@@ -2161,20 +2185,18 @@ gg <- gg + theme(axis.title = element_blank(),
                  axis.text.x = element_text(size = axisTextSize),
                  #panel.grid = element_blank(),
                  plot.title = element_text(size = axisTitleSize, hjust = 0.5))
-ggEndow2 <- gg
-ggEndow1 + ggEndow2
-
-
-dfPlot %>% group_by(var) %>% summarise(val = mean(val))
-muEyStarT0
-
-dfCheck <- data.frame(Type = endowVec, v0 = round(v0, 1),
-                      yd = exp(dfMod3$`ln[Yield (kg/acre)]` - mod3$residuals - kRn * dfMod3$`ln[Rain anomaly]`),
-                      cost = exp(dfMod3$`ln[Cost/acre (KES/acre)]`)) %>%
-  group_by(Type) %>% summarise(muYd = mean(yd),
-                               muCost = mean(cost),
-                               v0 = mean(v0)) %>%
-  arrange(v0)
+# ggEndow2 <- gg
+# ggEndow1 + ggEndow2
+# dfPlot %>% group_by(var) %>% summarise(val = mean(val))
+# muEyStarT0
+# dfCheck <- data.frame(Type = endowVec, v0 = round(v0, 1),
+#                       yd = exp(dfMod3$`ln[Yield (kg/acre)]` - mod3$residuals - kRn
+#                                dfMod3$`ln[Rain anomaly]`),
+#                       cost = exp(dfMod3$`ln[Cost/acre (KES/acre)]`)) %>%
+#   group_by(Type) %>% summarise(muYd = mean(yd),
+#                                muCost = mean(cost),
+#                                v0 = mean(v0)) %>%
+#   arrange(v0)
 
 
 ```
@@ -2185,18 +2207,31 @@ dfCheck <- data.frame(Type = endowVec, v0 = round(v0, 1),
 
 Say that the new binary endowment is targeted at 
 
-```{r}
+```{r, echo = F}
 
-betaNew <- 0.3
-dlng0 <- exp(betaNew) - 1
-dlnNu <- -0.4
-dB <- 2
-# sEcSharpT0
-# mEcSharpT0
+nRes <- 30
+dlnNuVec <- seq(-0.5, -0.35, length.out = nRes)
+dBvec <- seq(2, 3.5, length.out = nRes)
+matAdopt <- matrix(NA, nRes, nRes)
+for(j in 1:nRes){
+    dlnNu <- dlnNuVec[j]
+for(i in 1:nRes){
+  dB <- dBvec[i]
+  cStarMaxAdopt <- -h * dB / (dlnNu + dlng0)
+  z <- (cStarMaxAdopt - mCstari) / sCstar
+adoptRateStrat <- pnorm(z)
+matAdopt[i, j] <- sum(adoptRateStrat * stratPct)
+}
+}
+dfAdopt <- as.data.frame(matAdopt)
+colnames(dfAdopt) <- paste("dB =", round(dBvec, 2)); gatherCols <- colnames(dfAdopt)
+dfAdopt$dlnNu <- paste("dlnNu =", round(dlnNuVec, 2))
+dfPlot <- dfAdopt %>% gather_("dB", "adoptRate", gatherCols)
+gg <- ggplot(dfPlot, aes(x = dB, y = dlnNu, fill = adoptRate))
+gg <- gg + geom_tile()
+gg
 
-cStarMaxAdopt <- -h * dB / (dlnNu + dlng0)
-z <- (cStarMaxAdopt - mC) / sC
-pnorm(z)
+
 
 # A = \Phi\left( \frac{\frac{-h (1 - h) \partial B}{\partial \ln(\nu) + \partial \ln(g_0)} - (\ln(v_0) + m_k + m_{\#})}{\sqrt{s_k^2 + s_{\#}^2}} \right)
 
@@ -3034,8 +3069,6 @@ And, in stochastic terms,
 
 <!-- 6) The farm budget shadow price $\lambda$ -->
 <!-- The steps followed above more or less align with the standard derivation of the Cobb-Douglas yield envelope found in textbooks , with the important exception of the invocation of Euler's homogeneous function theorem in equation \ref{eq:eulerInvokd}. -->
-
-
 
 <!-- \begin{equation} -->
 <!-- \frac{\partial \ln(y^*)}{\partial \ln(w_i)} = \frac{-\alpha_v}{1 - h} -->
