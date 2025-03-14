@@ -1408,6 +1408,9 @@ h <- mod3$coefficients[2]; eta <- h / (1 - h)
 hReport <- round(h, 2)
 etaReport <- round(eta, 2)
 
+rm(df_mod1, df_mod2, df_hist, df_ky, df_raw, df_sa, df_ts, df_us, dfRaw)
+rm(mod1, mod2, listDf)
+
 ```
 \doublespacing
 
@@ -2185,8 +2188,8 @@ gg <- gg + theme(axis.title = element_blank(),
                  axis.text.x = element_text(size = axisTextSize),
                  #panel.grid = element_blank(),
                  plot.title = element_text(size = axisTitleSize, hjust = 0.5))
-# ggEndow2 <- gg
-# ggEndow1 + ggEndow2
+ggEndow2 <- gg
+ggEndow1 + ggEndow2
 # dfPlot %>% group_by(var) %>% summarise(val = mean(val))
 # muEyStarT0
 # dfCheck <- data.frame(Type = endowVec, v0 = round(v0, 1),
@@ -2207,11 +2210,15 @@ gg <- gg + theme(axis.title = element_blank(),
 
 Say that the new binary endowment is targeted at 
 
-```{r, echo = F}
+```{r Fig5, fig.show = "hold", fig.width = 5, fig.height=3, fig.align="center", fig.cap="\\label{fig:adoptMap}....", echo = FALSE}
+
+rm(dfPlot, dfPlot1)
+
+gc()
 
 nRes <- 30
 dlnNuVec <- seq(-0.5, -0.35, length.out = nRes)
-dBvec <- seq(2, 3.5, length.out = nRes)
+dBvec <- seq(1, 8, length.out = nRes)
 matAdopt <- matrix(NA, nRes, nRes)
 for(j in 1:nRes){
     dlnNu <- dlnNuVec[j]
@@ -2223,14 +2230,43 @@ adoptRateStrat <- pnorm(z)
 matAdopt[i, j] <- sum(adoptRateStrat * stratPct)
 }
 }
+rm(cStarMaxAdopt, adoptRateStrat)
+#image(matAdopt)
 dfAdopt <- as.data.frame(matAdopt)
-colnames(dfAdopt) <- paste("dB =", round(dBvec, 2)); gatherCols <- colnames(dfAdopt)
-dfAdopt$dlnNu <- paste("dlnNu =", round(dlnNuVec, 2))
+colnames(dfAdopt) <- round(dBvec, 2) # paste("dB =", round(dBvec, 2))
+gatherCols <- colnames(dfAdopt)
+dfAdopt$dlnNu <- round(dlnNuVec, 2) #paste("dlnNu =", round(dlnNuVec, 2))
 dfPlot <- dfAdopt %>% gather_("dB", "adoptRate", gatherCols)
-gg <- ggplot(dfPlot, aes(x = dB, y = dlnNu, fill = adoptRate))
-gg <- gg + geom_tile()
+dfPlot$dB <- as.numeric(dfPlot$dB)
+gg <- ggplot(dfPlot, aes(x = dB, y = dlnNu, z = adoptRate, fill = adoptRate))
+gg <- gg + geom_tile() + geom_contour()
+gg <- gg + theme_bw()
 gg
 
+gc()
+
+#Works:
+# nRes <- 30
+# dlnNuVec <- seq(-0.5, -0.35, length.out = nRes)
+# dBvec <- seq(2, 3.5, length.out = nRes)
+# matAdopt <- matrix(NA, nRes, nRes)
+# for(j in 1:nRes){
+#     dlnNu <- dlnNuVec[j]
+# for(i in 1:nRes){
+#   dB <- dBvec[i]
+#   cStarMaxAdopt <- -h * dB / (dlnNu + dlng0)
+#   z <- (cStarMaxAdopt - mCstari) / sCstar
+# adoptRateStrat <- pnorm(z)
+# matAdopt[i, j] <- sum(adoptRateStrat * stratPct)
+# }
+# }
+# dfAdopt <- as.data.frame(matAdopt)
+# colnames(dfAdopt) <- paste("dB =", round(dBvec, 2)); gatherCols <- colnames(dfAdopt)
+# dfAdopt$dlnNu <- paste("dlnNu =", round(dlnNuVec, 2))
+# dfPlot <- dfAdopt %>% gather_("dB", "adoptRate", gatherCols)
+# gg <- ggplot(dfPlot, aes(x = dB, y = dlnNu, fill = adoptRate))
+# gg <- gg + geom_tile()
+# gg
 
 
 # A = \Phi\left( \frac{\frac{-h (1 - h) \partial B}{\partial \ln(\nu) + \partial \ln(g_0)} - (\ln(v_0) + m_k + m_{\#})}{\sqrt{s_k^2 + s_{\#}^2}} \right)
