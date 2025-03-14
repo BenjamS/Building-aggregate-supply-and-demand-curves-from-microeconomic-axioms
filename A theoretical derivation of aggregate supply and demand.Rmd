@@ -2104,7 +2104,7 @@ A_i &= \Phi\left( \frac{\frac{-h \partial B}{\partial \ln(\nu) + \partial \ln(g_
 & m_{ci} = \frac{1}{1 - h}(\ln(v_0^i) + m_k + m_{\#})
 \end{equation}
 
-The percentage change in aggregate supply given a 1% change in TFP, assuming 100% adoption, follows from Equation ...
+The percentage change in aggregate supply given a 1% change in TFP, assuming 100% adoption, follows from Equation \ref{eq:aggSup2}.
 
 \begin{equation}
 \frac{\partial \ln(E[Q(T)]|_{t = 0})}{\partial \ln(g_0)} = \frac{\partial \ln E[y^*(T; k_m(T))]|_{t = 0}}{\partial \ln(g_0)}
@@ -2113,7 +2113,7 @@ The percentage change in aggregate supply given a 1% change in TFP, assuming 100
 The change given adoption rate $A$ between $0-100$% is
 
 \begin{equation}
-\frac{\partial \ln(E[Q(T)]|_{t = 0})}{\partial \ln(g_0)} = A \frac{\partial \ln E[y^*(T; k_m(T))]|_{t = 0}}{\partial \ln(g_0)}
+\frac{\partial \ln(E[Q(T)]|_{t = 0})}{\partial \ln(g_0)} = A \frac{\partial \ln E[y^*(T; k_m(T))]|_{t = 0}}{\partial \ln(g_0)} = \frac{1}{1 - h} \left( 1 - \boldsymbol{\alpha} ' \frac{\partial \ln(\mathbf{w})}{\partial \ln(g_0)} \right)
 \end{equation}
 
 
