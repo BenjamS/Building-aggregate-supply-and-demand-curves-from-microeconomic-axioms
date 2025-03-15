@@ -379,7 +379,7 @@ y^* = v_0 k C^{*h}e^{\epsilon} \:\:;\:\:\: v_0 = \frac{E[y^*]}{E[k] E[C^{*h}]}
 \label{eq:YdEnvReg1}
 \end{equation}
 
-(Where $\epsilon$ is the error term.) Such that the estimated coefficient on logged farm cost may be directly interpreted as the degree of homogeneity for the population. When estimating the model in Equations \ref{eq:cobbDoug2} or \ref{eq:cobbDoug3}, by contrast, $h$ must be tallied by summing the estimated coefficients $\alpha_i$, and will likely vary across the population since not all farms necessarily apply all the inputs specified in the model. The term $v_0$, moreover, remains a measure of TFP, one where inputs are expressed in identical units of cost.
+(Where $\epsilon$ is the error term.) Such that the estimated coefficient on logged farm cost may be directly interpreted as the degree of homogeneity for the population. When estimating the model in Equations \ref{eq:cobbDoug2} or \ref{eq:cobbDoug3}, by contrast, $h$ must be tallied by summing the estimated coefficients $\alpha_i$, and will likely vary across the population since not all farms necessarily apply all the inputs specified in the model. The new term $v_0$, moreover, is arguably a more meaningful measure of TFP than $g_0$, since inputs are expressed in identical units of cost. It is henceforth referred to as the expenditure TFP.
 
 In Appendices A.2 and A.3 it is shown that axioms 1 and 2 imply the degree of homogeneity $h$ must exhibit strictly decreasing returns to scale ($0 < h < 1$), whereby it also follows that farm yield is globally concave in inputs, and that the farm supply curve is positively sloped. It is also shown that the output price elasticity of farm supply ($\eta$) is
 
@@ -1967,15 +1967,18 @@ ggEQsT0 / ggEtaEPT0EQsT0a
 
 ## The research induced supply curve shift
 
-The impact of yield scaling technologies and/or management practices on aggregate supply can be represented through perturbations of the TFP parameter ($g_0$). This is tantamount to adding a dummy endowment variable to the yield model in Equation \ref{eq:lYdEnvReg3}. The four endowmwnt dummies included in the Kenya maize example may be considered yield scaling interventions that increase the value of $g_0$ on adopting farms.
-<!-- unconditional mean expected yield term $E[\tilde{y}^*(T)]|_{t = 0}$. Recall from Equation \ref{eq:muYstarU0} that the unconditional mean expected yield can be defined (in stochastic terms), -->
-<!-- \begin{equation} -->
-<!-- E[\tilde{y}^*(T)]|_{t = 0} = u_0 \frac{E[C^{*h}]}{E[C^*]^h} -->
-<!-- \end{equation} -->
-<!-- Yield scaling interventions can thus be represented by perturbations of $u_0$.  -->
+The impact of yield scaling technologies and/or management practices on aggregate supply can be represented through perturbations of the TFP parameter ($g_0$). This is tantamount to adding a dummy endowment variable to the yield model in Equation \ref{eq:lYdEnvReg3}. The four endowmwnt dummies included in the Kenya maize example may be considered yield scaling interventions that increase the value of $g_0$ on adopting farms. The percentage increase in TFP given the introduction of a new intervention $\beta_5 b_5$ (representing, for example, improved seed and practices), on farms that implement the new technology (where $b_5 = 1$) may be calculated as
 
-The percentage changes in farm level expenditure TFP ($v_0$), expenditure per acre, and yield given a 1 percentage change in $g_0$ follow from Equations \ref{eq:v0forms}, \ref{eq:mCk}, and
-\ref{eq:yStarT}, respectively.
+\begin{equation}
+\begin{split}
+\partial \ln(g_0) &\approx \frac{g_0' - g_0}{g_0} \:\:; \:\:\: g_0' = g_0 e^{\beta_5 b_5}
+&\approx e^{\beta_5} - 1
+\end{split}
+\end{equation}
+
+Note that the increase in TFP is the same regardless of the starting value of $g_0$, which varies across the population because the binary endowments $b_{i \in [1,4]}$ vary.
+
+The resulting percentage changes in farm level expenditure TFP ($v_0$), expenditure per acre, and yield given a 1 percentage change in $g_0$ follow from Equations \ref{eq:v0forms}, \ref{eq:mCk}, and \ref{eq:yStarT}, respectively.
 
 \begin{equation}
 \frac{\partial \ln(v_0)}{\partial \ln(g_0)} = 1 - \boldsymbol{\alpha} ' \frac{\partial \ln(\mathbf{w})}{\partial \ln(g_0)}
@@ -2014,7 +2017,7 @@ Note the resemblance between the adoption condition in Inequality \ref{eq:adoptC
 
 The only substantive difference between Lipton's condition and the condition in Inequality \ref{eq:adoptCondSimp} is that the percentage increases in input prices in the latter are scaled by their respective elasticities ($\alpha_i$). And of course the more complete version of the adoption condition in Inequality \ref{eq:adoptCond} differs from Lipton by also including the exogenous marginal net subsidy term.
 
-If the $\alpha_i$-adjusted output-input price ratio decrease is greater than the increase in TFP (), then the net subsidy term $h / C^* \partial B$ required to make adoption profitable is the margin by which it is greater. Note that the required subsidy $\partial B$ will vary across farms based on $C^*$. The factor $h / C^*$, which may also be written $\lambda / E[R^*(T)]|_{t = 0}$, represents each farm's marginal valuation of the subsidy; and implies that the subsidy is relatively more valuable to farms with relatively lower expenditure. Solving Inequality \ref{eq:adoptCond} for $C^*$ gives the maximum expenditure level for which adoption is profitable if the (absolute value of the) $\alpha_i$-adjusted output-input price ratio decrease is greater than the increase in TFP ($|\partial \ln(\nu)| > \partial \ln(g_0)$).
+If the $\alpha_i$-adjusted output-input price ratio decrease is greater than the increase in TFP ($g_0$), then the margin by which it is greater is the net subsidy term $h / C^* \partial B$ required to make adoption profitable. Note that the required marginal net subsidy $\partial B$ will vary across farms based on $C^*$. The factor $h / C^*$, which may also be written $\lambda / E[R^*(T)]|_{t = 0}$, represents each farm's marginal valuation of the subsidy; and implies that the subsidy is relatively more valuable to farms with relatively lower expenditure. Solving Inequality \ref{eq:adoptCond} for $C^*$ gives the maximum expenditure level for which adoption is profitable if the (absolute value of the) $\alpha_i$-adjusted output-input price ratio decrease is greater than the increase in TFP ($|\partial \ln(\nu)| > \partial \ln(g_0)$).
 
 \begin{equation}
 C^* < \frac{-h \partial B}{\partial \ln(\nu) + \partial \ln(g_0)}
@@ -2050,14 +2053,14 @@ s_c^2 &= \frac{1}{(1 - h)^2} (s_k^2 + s_{\#}^2)
 <!-- \label{eq:adoptRate} -->
 <!-- \end{equation} -->
 
-Now, because the binary endowments $b_i$ vary across the population, the value of $v_0$ also varies. In the Kenya example, there are 14 distinct values of $v_0$, corresponding to 14 distinct combinations of the $\beta_i b_i$. The supply aggregation step in Equation \ref{eq:aggSupStep} averages aggregate supply across all binary endowment strata. Denoting the value of each distinct combination as $v_{0i}$, the average $v_0$ is effectively a population weighted sum of the $v_{0i}$.
+Because the binary endowments $b_i$ vary across the population, the value of $g_0$ (and hence of $v_0$) also varies. In the Kenya example, there are 14 distinct values of $v_0$, corresponding to 14 distinct combinations of the $\beta_i b_i$. The supply aggregation step in Equation \ref{eq:aggSupStep} averages aggregate supply across all binary endowment strata. Denoting the value of each distinct combination as $v_{0i}$, the average $v_0$ is effectively a population weighted sum of the $v_{0i}$.
 <!-- Each value of $v_0$ effectively identifies a binary endowment stratum of the population. -->
 
 \begin{equation}
 v_0 = \sum_i \frac{N_i}{N} v_{0i}
 \end{equation}
 
-Where $N_i / N$ is the fraction of farms in the $i^{th}$ binary endowment stratum. The conditional mean yield and cost disaggregated by stratum ($E[C^*| \theta]_i$, $E[y^*(T)| \theta]_i$), can be evaluated as follows.
+Where $N_i / N$ is the fraction of farms in the $i^{th}$ binary endowment stratum. The conditional mean cost and yield disaggregated by stratum ($E[C^*| \theta]_i$, $E[y^*(T)| \theta]_i$), can be evaluated as follows.
 
 \begin{equation}
 \begin{split}
@@ -2107,26 +2110,20 @@ A_i &= \Phi\left( \frac{\frac{-h \partial B}{\partial \ln(\nu) + \partial \ln(g_
 The percentage change in aggregate supply given a 1% change in TFP, assuming 100% adoption, follows from Equation \ref{eq:aggSup2}.
 
 \begin{equation}
-\frac{\partial \ln(E[Q(T)]|_{t = 0})}{\partial \ln(g_0)} = \frac{\partial \ln E[y^*(T; k_m(T))]|_{t = 0}}{\partial \ln(g_0)}
+\frac{\partial \ln(E[Q(T)]|_{t = 0})}{\partial \ln(g_0)} = \frac{\partial \ln E[y^*(T; k_m(T))]|_{t = 0}}{\partial \ln(g_0)} = \frac{1}{1 - h} \left( 1 - \boldsymbol{\alpha} ' \frac{\partial \ln(\mathbf{w})}{\partial \ln(g_0)} \right)
 \end{equation}
 
 The change given adoption rate $A$ between $0-100$% is
 
 \begin{equation}
-\frac{\partial \ln(E[Q(T)]|_{t = 0})}{\partial \ln(g_0)} = A \frac{\partial \ln E[y^*(T; k_m(T))]|_{t = 0}}{\partial \ln(g_0)} = \frac{1}{1 - h} \left( 1 - \boldsymbol{\alpha} ' \frac{\partial \ln(\mathbf{w})}{\partial \ln(g_0)} \right)
+\frac{\partial \ln(E[Q(T)]|_{t = 0})}{\partial \ln(g_0)} = A \frac{\partial \ln E[y^*(T; k_m(T))]|_{t = 0}}{\partial \ln(g_0)} = \frac{A}{1 - h} \left( 1 - \boldsymbol{\alpha} ' \frac{\partial \ln(\mathbf{w})}{\partial \ln(g_0)} \right)
 \end{equation}
 
+The welfare impact change in net benefit...
 
 
-, given a new yield enhancing binary endowment $\beta_5$ (representing, for example, improved seed and practices), the percentage change in TFP on farms that implement the new technology may be calculated as
 
-\begin{equation}
-\begin{split}
-\partial \ln(g_0) &\approx \frac{g_0' - g_0}{g_0} \:\:; \:\:\: g_0' = g_0 e^{\beta_5 b_5}
-&\approx e^{\beta_k} - 1
-\end{split}
-\end{equation}
-<!-- \:\: \forall i -->
+
 
 Say $\beta_5 = 0.3$. Then $\partial \ln(g_0) = 0.35$, and so, by the criterion in Inequality \ref{eq:adoptCondSimp} adoption in the absence of exogenous subsidies/costs will increase farm net benefit if the associated percentage decrease in output price plus the $\alpha_i$-scaled increase in input prices (i.e. $\partial \ln(\nu)$) is less than $35\%$. 
 The adoption rate for the hypothetical new technology described above ($\beta_5 = 0.3$), assuming a 40% decrease in the $\alpha_i$-adjusted output-input price ratio, with a marginal net subsidy per acre of $\partial B = 2.5$, is presented in Figure \ref{fig:v0strata} alongside the mean yield, cost, and TFP ($v_0$), disaggregated by stratum.
@@ -2178,7 +2175,7 @@ dB <- 2.5
 cStarMaxAdopt <- -h * dB / (dlnNu + dlng0)
 z <- (cStarMaxAdopt - mCstari) / sCstar
 adoptRateStrat <- pnorm(z)
-stratPct <- dfPlot$`Pct of farms in sample`/100
+stratPct <- dfPlot$`Pct of farms in sample` / 100
 adoptRateTotal <- sum(adoptRateStrat * stratPct)
 # A = \Phi\left( \frac{\frac{-h (1 - h) \partial B}{\partial \ln(\nu) + \partial \ln(g_0)} - (\ln(v_0) + m_k + m_{\#})}{\sqrt{s_k^2 + s_{\#}^2}} \right)
 dfPlot$`Mean yield\n(kg/acre)` <- round(muYstarTi, 1)
@@ -2246,14 +2243,17 @@ rm(dfPlot, dfPlot1)
 gc()
 
 nRes <- 50
-dlnNuVec <- seq(-0.5, -0.35, length.out = nRes)
-dBvec <- seq(1, 8, length.out = nRes)
+# dlAw <- seq(0.05, 0.35, length.out = nRes)
+# dlP <- seq(-0.01, -0.35, length.out = nRes)
+# dlNuVec <- dlP / dlAw
+dlNuVec <- seq(-0.65, -0.35, length.out = nRes)
+dBvec <- seq(1, 15, length.out = nRes)
 matAdopt <- matrix(NA, nRes, nRes)
 for(j in 1:nRes){
-    dlnNu <- dlnNuVec[j]
+    dlNu <- dlNuVec[j]
 for(i in 1:nRes){
   dB <- dBvec[i]
-  cStarMaxAdopt <- -h * dB / (dlnNu + dlng0)
+  cStarMaxAdopt <- -h * dB / (dlNu + dlng0)
   z <- (cStarMaxAdopt - mCstari) / sCstar
 adoptRateStrat <- pnorm(z)
 matAdopt[i, j] <- sum(adoptRateStrat * stratPct)
@@ -2264,10 +2264,10 @@ rm(cStarMaxAdopt, adoptRateStrat)
 dfAdopt <- as.data.frame(matAdopt)
 colnames(dfAdopt) <- round(dBvec, 2) # paste("dB =", round(dBvec, 2))
 gatherCols <- colnames(dfAdopt)
-dfAdopt$dlnNu <- round(dlnNuVec, 2) #paste("dlnNu =", round(dlnNuVec, 2))
+dfAdopt$dlNu <- round(dlNuVec, 2) #paste("dlnNu =", round(dlnNuVec, 2))
 dfPlot <- dfAdopt %>% gather_("dB", "adoptRate", gatherCols)
 dfPlot$dB <- as.numeric(dfPlot$dB)
-gg <- ggplot(dfPlot, aes(x = dlnNu, y = dB, z = adoptRate, fill = adoptRate, group = 1))
+gg <- ggplot(dfPlot, aes(x = dlNu, y = dB, z = adoptRate, fill = adoptRate, group = 1))
 gg <- gg + geom_tile()# + geom_contour()
 gg <- gg + theme_bw()
 gg
@@ -2303,6 +2303,17 @@ dfx$adoptRate <- round(dfx$adoptRate, 2)
 
 # A = \Phi\left( \frac{\frac{-h (1 - h) \partial B}{\partial \ln(\nu) + \partial \ln(g_0)} - (\ln(v_0) + m_k + m_{\#})}{\sqrt{s_k^2 + s_{\#}^2}} \right)
 
+
+```
+
+```{r, echo=FALSE}
+
+#EPT0vec <- seq(0.1, 60, length.out = 50)
+aDotdlW <- 0.15
+muEyStarT0new <- 1 / (1 - h) * (dlng0 - aDotdlW)
+dfOut <- EQsFun(EPT0vec, muEyStarT0new, mEcSharpT0, sEcSharpT0, h, muArea, Nf, kappaRn)
+EPT0EmpirVec = c(EPT02006, EPT02007, EPT02008, EPT02009, EPT02010, EPT02011, EPT02012)
+dfPoints$EPT0 <- EPT0EmpirVec
 
 ```
 
