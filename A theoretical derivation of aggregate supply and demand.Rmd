@@ -428,7 +428,7 @@ Taking logs of this expression and repeatedly substituting $P y^*|_{C^* = \bar{C
 &= \ln(P v_0 k) + h(\ln(P v_0 k) + h\ln(R^*)) \\
 &= \ln(P v_0 k) + h(\ln(P v_0 k) + h(\ln(P v_0 k) + h\ln(R^*))) \\
 &= \cdots \\
-&= \ln(P v_0 k) \sum_{\nu = 0}^{\infty} h^{\nu} \\
+&= \ln(P v_0 k) \sum_{j = 0}^{\infty} h^{j} \\
 &= \frac{1}{1 - h} \ln(P v_0 k) = (\frac{\eta}{h}) \ln(P v_0 k)
 \end{split}
 \end{equation}
@@ -448,11 +448,11 @@ Q(k) = N E[k_a] \frac{E[y^*]}{E[C^*(k)^h]} \int_{0}^{(P v_0 k)^{\frac{\eta}{h}}}
 \label{eq:aggSupStep}
 \end{equation}
 
-If $y^*$ is lognormally distributed (axiom 4), then $C^*$ is also lognormally distributed. For any lognormally distributed variable $\chi$ and upper bound $\zeta$, it can be shown that
+If $y^*$ is lognormally distributed (axiom 4), then $C^*$ is also lognormally distributed. For any lognormally distributed variable $\chi$ and upper bound $\xi$, it can be shown that
 
 \begin{equation}
 \begin{split}
-\int_{0}^{\zeta} \chi \rho(\chi) d\chi &= E[\chi] \Phi\left( \frac{\ln(\zeta) - m_{\chi}}{s_{\chi}} - s_{\chi} \right) \:\:; \\ 
+\int_{0}^{\xi} \chi \rho(\chi) d\chi &= E[\chi] \Phi\left( \frac{\ln(\xi) - m_{\chi}}{s_{\chi}} - s_{\chi} \right) \:\:; \\ 
 &m_{\chi} = E[\ln(\chi)] \:\:\: s^2_{\chi} = Var[\ln(\chi)]
 \end{split}
 \label{eq:keyResult}
@@ -460,7 +460,7 @@ If $y^*$ is lognormally distributed (axiom 4), then $C^*$ is also lognormally di
 
 Where $\Phi()$ is the standard normal cumulative distribution function. (See Appendix A.4 for a proof.)
 
-Substituting $\chi = C^{* h}$ and $\zeta = \bar{C}^*$, 
+Substituting $\chi = C^{* h}$ and $\xi = \bar{C}^*$, 
 
 \begin{equation}
 \begin{split}
@@ -1967,7 +1967,7 @@ ggEQsT0 / ggEtaEPT0EQsT0a
 
 ## The research induced supply curve shift
 
-The impact of yield scaling technologies and/or management practices on aggregate supply can be represented through perturbations of the TFP parameter ($g_0$). This is tantamount to adding a dummy endowment variable to the yield model in Equation \ref{eq:lYdEnvReg3}. The four endowmwnt dummies included in the Kenya maize example may be considered yield scaling interventions that increase the value of $g_0$ on adopting farms. The percentage increase in TFP given the introduction of a new intervention $\beta_5 b_5$ (representing, for example, improved seed and practices), on farms that implement the new technology (where $b_5 = 1$) may be calculated as
+The impact of yield scaling technologies and/or management practices on aggregate supply can be represented through perturbations of the TFP parameter ($g_0$). This is tantamount to adding a dummy endowment variable to the yield model in Equation \ref{eq:lYdEnvReg3}. The four endowmwnt dummies included in the Kenya maize example may be considered yield scaling interventions that increase the value of $g_0$ on adopting farms. The percentage increase in TFP given the introduction of a new intervention $\beta_5 b_5$ (representing, for example, improved seed and practices), on farms that implement the new technology (farms where $b_5 = 1$) may be calculated as
 
 \begin{equation}
 \begin{split}
@@ -1987,6 +1987,20 @@ The resulting percentage changes in farm level expenditure TFP ($v_0$), expendit
 \begin{equation}
 \frac{\partial \ln(C^*)}{\partial \ln(g_0)} = \frac{\partial \ln(y^*(T))}{\partial \ln(g_0)} = \frac{1}{1 - h}
 \end{equation}
+
+--
+We note that the change in expenditure, unconditional mean expenditure, yield, and expected unconditional mean yield follow from Equations ..., and are all the same.
+
+\begin{equation}
+\begin{split}
+\frac{\partial \ln(C^*)}{\partial \ln(g_0)} &= \frac{\partial \ln(E[C^*])}{\partial \ln(g_0)} = \frac{\partial \ln(y^*(T))}{\partial \ln(g_0)} = \frac{\partial \ln(E[\tilde{y}^*(T; k_m(T))]|_{t = 0})}{\partial \ln(g_0)} \\
+&= \frac{1}{1 - h} \left( 1 - \boldsymbol{\alpha} ' \frac{\partial \ln(\mathbf{w})}{\partial \ln(g_0)} \right)
+\end{split}
+\label{eq:ddlng0}
+\end{equation}
+
+Where the last equality follows noting that $u_0 = v_0 E[k] E[C^*]^h$.
+--
 
 Note from Equation \ref{eq:useful2} that expected optimal unit expenditure does not vary with changes in $g_0$.
 
@@ -2017,7 +2031,7 @@ Note the resemblance between the adoption condition in Inequality \ref{eq:adoptC
 
 The only substantive difference between Lipton's condition and the condition in Inequality \ref{eq:adoptCondSimp} is that the percentage increases in input prices in the latter are scaled by their respective elasticities ($\alpha_i$). And of course the more complete version of the adoption condition in Inequality \ref{eq:adoptCond} differs from Lipton by also including the exogenous marginal net subsidy term.
 
-If the $\alpha_i$-adjusted output-input price ratio decrease is greater than the increase in TFP ($g_0$), then the margin by which it is greater is the net subsidy term $h / C^* \partial B$ required to make adoption profitable. Note that the required marginal net subsidy $\partial B$ will vary across farms based on $C^*$. The factor $h / C^*$, which may also be written $\lambda / E[R^*(T)]|_{t = 0}$, represents each farm's marginal valuation of the subsidy; and implies that the subsidy is relatively more valuable to farms with relatively lower expenditure. Solving Inequality \ref{eq:adoptCond} for $C^*$ gives the maximum expenditure level for which adoption is profitable if the (absolute value of the) $\alpha_i$-adjusted output-input price ratio decrease is greater than the increase in TFP ($|\partial \ln(\nu)| > \partial \ln(g_0)$).
+If the efficiency adjusted output-input price ratio decrease is greater than the increase in TFP ($g_0$), then the margin by which it is greater is the net subsidy term $h / C^* \partial B$ required to make adoption profitable. Note that the required marginal net subsidy $\partial B$ will vary across farms based on $C^*$. The factor $h / C^*$, which may also be written $\lambda / E[R^*(T)]|_{t = 0}$, represents each farm's marginal valuation of the subsidy; and implies that the subsidy is relatively more valuable to farms with relatively lower expenditure. Solving Inequality \ref{eq:adoptCond} for $C^*$ gives the maximum expenditure level for which adoption is profitable if the (absolute value of the) efficiency adjusted output-input price ratio decrease is greater than the increase in TFP ($|\partial \ln(\nu)| > \partial \ln(g_0)$).
 
 \begin{equation}
 C^* < \frac{-h \partial B}{\partial \ln(\nu) + \partial \ln(g_0)}
@@ -2027,12 +2041,12 @@ C^* < \frac{-h \partial B}{\partial \ln(\nu) + \partial \ln(g_0)}
 If $\partial B=0$, then Inequality \ref{eq:adoptCond} implies that adoption will be either $0\%$ or $100\%$. Empirically, this is almost never observed. Adoption rates tend to fall somewhere between $0\%$ and $100\%$. The increased input demand associated with new technology adoption implies in and of itself that, without subsidies, $\partial B < 0$. And, of course, every major green revolution success story has involved subsidies of one kind or another to offset the required increase in input expenditure, and then some []. Within the theoretical framework developed here, this means that the marginal net subsidy $\partial B$ is generally positive.
 <!-- Assuming farms spend their whole farm budget ($B = C^*$), then the subsidy term simplifies to $h \partial \ln(C^*)$ and the adoption condition can be rewritten -->
 
-Given the upper bound on $C^*$ for adoption (Equation \ref{eq:cStarAdopt}) and recalling that axiom 4 implies lognormally distributed $C^*$, the adoption rate $A$ when $\partial B > 0$ and $|\partial \ln(\nu)| > \partial \ln(g_0)$ can be calculated as
+Denoting the upper adoption bound on $C^*$ (Equation \ref{eq:cStarAdopt}) as $\bar{\bar{C^*}}$ and recalling that axiom 4 implies lognormally distributed $C^*$, the adoption rate $A$ when $\partial B > 0$ and $|\partial \ln(\nu)| > \partial \ln(g_0)$ can be calculated as
 
 \begin{equation}
 \begin{split}
-A &= \int_0^{\frac{-h \partial B}{\partial \ln(\nu) + \partial \ln(g_0)}} \phi \left(\frac{\ln(C^*) - m_c}{s_c} \right) d \ln(C^*) \\
-&= \Phi\left( \frac{\frac{-h \partial B}{\partial \ln(\nu) + \partial \ln(g_0)} - m_c}{s_c} \right)
+A &= \int_0^{\bar{\bar{C^*}}} \phi \left(\frac{\ln(C^*) - m_c}{s_c} \right) d \ln(C^*) \:\:;\:\:\: \bar{\bar{C^*}} = \frac{-h \partial B}{\partial \ln(\nu) + \partial \ln(g_0)} \\
+&= \Phi\left( \frac{\bar{\bar{C^*}} - m_c}{s_c} \right)
 \end{split}
 \end{equation}
 
@@ -2053,7 +2067,16 @@ s_c^2 &= \frac{1}{(1 - h)^2} (s_k^2 + s_{\#}^2)
 <!-- \label{eq:adoptRate} -->
 <!-- \end{equation} -->
 
-Because the binary endowments $b_i$ vary across the population, the value of $g_0$ (and hence of $v_0$) also varies. In the Kenya example, there are 14 distinct values of $v_0$, corresponding to 14 distinct combinations of the $\beta_i b_i$. The supply aggregation step in Equation \ref{eq:aggSupStep} averages aggregate supply across all binary endowment strata. Denoting the value of each distinct combination as $v_{0i}$, the average $v_0$ is effectively a population weighted sum of the $v_{0i}$.
+<!-- Note that this is the adoption rate of farms already participating in production. The number of adopting farms is thus -->
+
+<!-- \begin{equation} -->
+<!-- \begin{split} -->
+<!-- N_{adopt} &= \text{Adoption rate} \times \text{Farm employment rate} \times N \\ -->
+<!-- &= A \Phi \left( \frac{\ln(E[P(T)]|_{t = 0}) - m_{\#}}{s_{\#}} - \eta s_{\#} \right) N -->
+<!-- \end{split} -->
+<!-- \end{equation} -->
+
+Now, because the binary endowments $b_i$ vary across the population, the value of $g_0$ (and hence of $v_0$) also varies. In the Kenya example, there are 14 distinct values of $v_0$, corresponding to 14 distinct combinations of the $\beta_i b_i$. The supply aggregation step in Equation \ref{eq:aggSupStep} averages aggregate supply across all binary endowment strata. Denoting the value of each distinct combination as $v_{0i}$, the average $v_0$ is effectively a population weighted sum of the $v_{0i}$.
 <!-- Each value of $v_0$ effectively identifies a binary endowment stratum of the population. -->
 
 \begin{equation}
@@ -2104,23 +2127,106 @@ Where
 \begin{equation}
 \begin{split}
 A_i &= \Phi\left( \frac{\frac{-h \partial B}{\partial \ln(\nu) + \partial \ln(g_0)} - m_{ci}}{s_c} \\
-& m_{ci} = \frac{1}{1 - h}(\ln(v_0^i) + m_k + m_{\#})
+& m_{ci} = \frac{1}{1 - h}(\ln(v_{0i}) + m_k + m_{\#})
 \end{equation}
 
-The percentage change in aggregate supply given a 1% change in TFP, assuming 100% adoption, follows from Equation \ref{eq:aggSup2}.
+<!-- The percentage change in aggregate supply given a 1% change in TFP follows from Equations \ref{eq:aggSup2} and \ref{eq:ddlng0}, -->
+
+<!-- \begin{equation} -->
+<!-- \begin{split} -->
+<!-- \frac{\partial \ln(E[Q(T)]|_{t = 0})}{\partial \ln(g_0)} = \frac{\partial \ln E[\tilde{y}^*(T; k_m(T))]|_{t = 0}}{\partial \ln(g_0)} \\ -->
+<!-- &= \frac{1}{1 - h} \left( 1 - \boldsymbol{\alpha} ' \frac{\partial \ln(\mathbf{w})}{\partial \ln(g_0)} \right) -->
+<!-- \end{split} -->
+<!-- \end{equation} -->
+
+The total increase in aggregate supply for each stratum can be evaluated by integrating the change in farm production over the density of adopting farms $(0, \bar{\bar{y^*}})$ where $\bar{\bar{y^*}} = y^*(\bar{\bar{C^*}})$.
+<!-- Recalling that $\partial \ln(y^*(T; k_m(T))) = \partial \ln(C^*)$, this can be parsed as follows. -->
+<!-- E[y^*(T; k_m(T))]|_{t = 0} -->
+<!-- \partial y^*(T, k_m(T)) = \Delta y^*(T, k_m(T)) -->
+<!-- $\partial q^*(T) = k_a \partial y^*(T; k_m(T))$ -->
+
+To reduce clutter, the following shorthand is used
 
 \begin{equation}
-\frac{\partial \ln(E[Q(T)]|_{t = 0})}{\partial \ln(g_0)} = \frac{\partial \ln E[y^*(T; k_m(T))]|_{t = 0}}{\partial \ln(g_0)} = \frac{1}{1 - h} \left( 1 - \boldsymbol{\alpha} ' \frac{\partial \ln(\mathbf{w})}{\partial \ln(g_0)} \right)
+\begin{split}
+y^* &= E[y(T; k_m(T))] \bigr|_{t = 0} \\
+C^{\#} &= E[C^{\#}(T)] \bigr|_{t = 0}
+\end{split}
 \end{equation}
-
-The change given adoption rate $A$ between $0-100$% is
 
 \begin{equation}
-\frac{\partial \ln(E[Q(T)]|_{t = 0})}{\partial \ln(g_0)} = A \frac{\partial \ln E[y^*(T; k_m(T))]|_{t = 0}}{\partial \ln(g_0)} = \frac{A}{1 - h} \left( 1 - \boldsymbol{\alpha} ' \frac{\partial \ln(\mathbf{w})}{\partial \ln(g_0)} \right)
+\begin{split}
+\Delta Q(v_{0i}) &= N_i \int_0^{\bar{\bar{y^*}}} k_a \partial \y^* \rho(y^*) dy^* \\
+&= N_i E[k_a] \int_0^{\bar{\bar{y^*}}} y^* \partial \ln(y^*) \rho(y^*) dy^* \\
+&= N_i E[k_a] \frac{1}{1 - h}(\partial \ln(g_0) - \boldsymbol{\alpha} ' \partial \ln(mathbf{w})) \int_0^{\bar{\bar{y^*}}} y^* \rho(y^*) dy^* \\
+&= N_i E[k_a] \frac{1}{1 - h}(\partial \ln(g_0) - \boldsymbol{\alpha} ' \partial \ln(mathbf{w})) v_{0i} E[k] \int_0^{\bar{\bar{C^*}}} C^{*h} \rho(C^*) dC^* \\
+&= N_i E[k_a] \frac{1}{1 - h}(\partial \ln(g_0) - \boldsymbol{\alpha} ' \partial \ln(mathbf{w})) v_{0i} E[k] E[C^{*h}] \Phi \left( \frac{\ln(\bar{\bar{C^*}}) - m_c}{s_c} - h s_c  \right)
+\end{split}
 \end{equation}
 
-The welfare impact change in net benefit...
+Where the last line follows from Equation .... Recalling that $v_{0i} - E[y^*]_i / (E[k] E[C^{*h}]_i)$, this further reduces to
 
+\begin{equation}
+\begin{split}
+\Delta Q(v_{0i}) &= N_i E[k_a] \frac{1}{1 - h}(\partial \ln(g_0) - \boldsymbol{\alpha} ' \partial \ln(mathbf{w})) E[y^*]_i \Phi \left( \frac{\ln(\bar{\bar{C^*}}) - m_{ci}}{s_c} - h s_c  \right)
+\end{split}
+\end{equation}
+
+Recall that from ... that the $\Phi$ term reduces to
+
+\begin{equation}
+\begin{split}
+\Delta Q(v_{0i}) &= N_i E[k_a] \frac{1}{1 - h}(\partial \ln(g_0) - \boldsymbol{\alpha} ' \partial \ln(mathbf{w})) E[y^*]_i \Phi \left( \frac{\ln(\bar{\bar{C^*}}) - m_{ci}}{s_c} - h s_c  \right) \\
+&= N_i E[k_a] \frac{1}{1 - h}(\partial \ln(g_0) - \boldsymbol{\alpha} ' \partial \ln(mathbf{w})) E[\tilde{y}^*(T, k_m(T))]_i (1 - \Phi ( \zeta ) \:\:;\:\:\: \zeta = \frac{\ln \left( \frac{E[\tilde{C}^{\#}(T)]|_{t = 0}}{\bar{\bar{C^{\#}(0)}}} \right) - \left( m_p - \eta \frac{s_p^2}{2} \right) T}{s_p \sqrt{T}}
+\end{split}
+\end{equation}
+
+The term $1 - \Phi(\zeta)$ may be interpreted as the PEFS-adjusted mean probability that, by harvest, adoption will prove to be more profitable than not adopting. For purposes of evaluation given farm data, the Phi term better evaluated as...
+
+The total change in aggregate welfare can be evaluated by integrating the change in farm level welfare $\partial \mathcal{L}(C^*)$ over the density of adopting farms.
+
+\begin{equation}
+\partial \mathcal{L}(C^*) =  \frac{P}{C^{\#}} (\partial \ln(\nu) + \partial \ln(g_0)) ( C^* + \bar{\bar{C^*}} )
+\end{equation}
+
+\begin{equation}
+\begin{split}
+\psi(v_{0i}) &= \int_0^{\bar{\bar{C^*}}} \partial \mathcal{L}(C^*) \rho(C^*) d C^* \\
+&= N_i \frac{P}{C^{\#}} (\partial \ln(\nu) + \partial \ln(g_0)) \int_0^{\bar{\bar{C^*}}} ( C^* + \bar{\bar{C^*}} ) \rho(C^*) d C^* \\
+&= 
+\end{split}
+\end{equation}
+
+
+
+
+\begin{equation}
+\frac{E[C^{\#}]}{\bar{\bar{C^{\#}}}} = \left(\frac{-h \partial B}{\partial \nu + \partial g_0}\right)^{h - 1} E[C^{*1 - h}]_i
+\end{equation}
+
+
+
+\begin{equation}
+\partial \ln(E[Q(T)]|_{t = 0}) = N E[k_a] \int_0^{\frac{-h \partial B}{\partial \ln(\nu) + \partial \ln(g_0)}} \partial \ln(C^*) \rho(C^*) d C^* = N E[k_a] \frac{A}{1 - h} \left(\partial \ln(g_0) - \boldsymbol{\alpha} ' \partial \ln(\mathbf{w}))
+\end{equation}
+
+The new aggregate supply curve ($E[Q(T)]|_{t = 0}'$) can then be evaluated as
+
+\begin{equation}
+E[Q(T)]|_{t = 0}' = E[Q(T)]|_{t = 0} (1 + \partial \ln(E[Q(T)]|_{t = 0}))
+\end{equation}
+
+In Appendix ..., it is shown that the total welfare impact ($\psi$) of this shift can be evaluated by integrating the normalized change in net benefit over the domain of adopting farms.
+<!-- $\partial \mathcal{L}^* / \lambda$ -->
+
+\begin{equation}
+\begin{split}
+\psi &= \int_0^{\frac{-h \partial B}{\partial \ln(\nu) + \partial \ln(g_0)}} \left( \frac{C^*}{h} (\partial \ln(\nu) + \partial \ln(g_0)) + \partial B \right) \rho(C^*) d C^* \\
+&= (\partial \ln(\nu) + \partial \ln(g_0)) \frac{E[C^*]}{h} \Phi \left( \frac{-h \partial B}{\partial \ln(\nu) + \partial \ln(g_0)} - m_c}{s_c} - s_c \right) + A \partial B
+\end{split}
+\end{equation}
+
+<!-- \Phi \left( \frac{\ln(E[P(T)]|_{t = 0}) - m_{\#}}{s_{\#}} - \eta s_{\#} \right) -->
 
 
 
@@ -2171,9 +2277,9 @@ muYstarTi <- v0strat * Ek * muCstarih
 betaNew <- 0.3
 dlng0 <- exp(betaNew) - 1
 dlnNu <- -0.4
-dB <- 2.5
+dB <- 1500
 cStarMaxAdopt <- -h * dB / (dlnNu + dlng0)
-z <- (cStarMaxAdopt - mCstari) / sCstar
+z <- (log(cStarMaxAdopt) - mCstari) / sCstar
 adoptRateStrat <- pnorm(z)
 stratPct <- dfPlot$`Pct of farms in sample` / 100
 adoptRateTotal <- sum(adoptRateStrat * stratPct)
@@ -2239,24 +2345,24 @@ Say that the new binary endowment is targeted at
 ```{r Fig5, fig.show = "hold", fig.width = 5, fig.height=3, fig.align="center", fig.cap="\\label{fig:adoptMap}....", echo = FALSE}
 
 rm(dfPlot, dfPlot1)
-
 gc()
-
-nRes <- 50
+# Adoption rate map
+nRes <- 20
 # dlAw <- seq(0.05, 0.35, length.out = nRes)
 # dlP <- seq(-0.01, -0.35, length.out = nRes)
 # dlNuVec <- dlP / dlAw
-dlNuVec <- seq(-0.65, -0.35, length.out = nRes)
-dBvec <- seq(1, 15, length.out = nRes)
+dlNuVec <- seq(-0.65, -0.36, length.out = nRes)
+dBvec <- seq(600, 3600, length.out = nRes)
 matAdopt <- matrix(NA, nRes, nRes)
 for(j in 1:nRes){
     dlNu <- dlNuVec[j]
 for(i in 1:nRes){
   dB <- dBvec[i]
   cStarMaxAdopt <- -h * dB / (dlNu + dlng0)
-  z <- (cStarMaxAdopt - mCstari) / sCstar
+  lCstarMaxAdopt <- log(cStarMaxAdopt)
+  z <- (lCstarMaxAdopt - mCstari) / sCstar
 adoptRateStrat <- pnorm(z)
-matAdopt[i, j] <- sum(adoptRateStrat * stratPct)
+matAdopt[i, j] <- round(sum(adoptRateStrat * stratPct), 2) * 100
 }
 }
 rm(cStarMaxAdopt, adoptRateStrat)
@@ -2268,52 +2374,63 @@ dfAdopt$dlNu <- round(dlNuVec, 2) #paste("dlnNu =", round(dlnNuVec, 2))
 dfPlot <- dfAdopt %>% gather_("dB", "adoptRate", gatherCols)
 dfPlot$dB <- as.numeric(dfPlot$dB)
 gg <- ggplot(dfPlot, aes(x = dlNu, y = dB, z = adoptRate, fill = adoptRate, group = 1))
-gg <- gg + geom_tile()# + geom_contour()
+gg <- gg + geom_tile(alpha = 1) + geom_contour()
+gg <- gg + metR::geom_text_contour(aes(z = adoptRate), stroke = 0.15)
+gg <- gg + scale_fill_gradient(low = "coral", high = "cyan")
+#gg <- gg + geom_text(aes(label = adoptRate), size = labelSize)
+gg <- gg + labs(fill = "Adoption rate (%)", x = "Decrease in output input price ratio (%)",
+                y = "Net subsidy (KES/acre)")
 gg <- gg + theme_bw()
+gg <- gg + theme(axis.text = element_text(size = axisTextSize),
+                 axis.title = element_text(size = axisTitleSize),
+                 legend.title = element_text(size = axisTitleSize),
+                 legend.text = element_text(size = axisTextSize),
+                 legend.position = "top")
 gg
 
 gc()
 
+
 dfx <- dfPlot
 dfx$adoptRate <- round(dfx$adoptRate, 2)
+#===========================================================================
+# Supply curve shift
+dlNu <- -0.4
+dlEPT0 <-  -0.15
+aDotdlW <- dlEPT0 - dlNu
+dlmuEyStarT0 <- 1 / (1 - h) * (dlng0 - aDotdlW)
+dB <- 2000
+cStarMaxAdopt <- -h * dB / (dlNu + dlng0)
+lCstarMaxAdopt <- log(cStarMaxAdopt)
+z <- (lCstarMaxAdopt - mCstari) / sCstar
+adoptRateStrat <- pnorm(z)
+adoptRate <- sum(adoptRateStrat * stratPct)
+#dfOut <- EQsFun(EPT0vec, muEyStarT0, mEcSharpT0, sEcSharpT0, h, muArea, Nf, kappaRn)
+gatherCols <- colnames(dfPlot)[-1]
+dfPlot <- dfOut %>% select(`Expected price (KES/kg)`, `Expected supply\n(million MT)`) %>%
+  mutate(newCurve = `Expected supply\n(million MT)` * (1 + adoptRate * dlmuEyStarT0)) %>%
+  gather_("curve", "val", gatherCols)
 
-#Works:
-# nRes <- 30
-# dlnNuVec <- seq(-0.5, -0.35, length.out = nRes)
-# dBvec <- seq(2, 3.5, length.out = nRes)
-# matAdopt <- matrix(NA, nRes, nRes)
-# for(j in 1:nRes){
-#     dlnNu <- dlnNuVec[j]
-# for(i in 1:nRes){
-#   dB <- dBvec[i]
-#   cStarMaxAdopt <- -h * dB / (dlnNu + dlng0)
-#   z <- (cStarMaxAdopt - mCstari) / sCstar
-# adoptRateStrat <- pnorm(z)
-# matAdopt[i, j] <- sum(adoptRateStrat * stratPct)
-# }
-# }
-# dfAdopt <- as.data.frame(matAdopt)
-# colnames(dfAdopt) <- paste("dB =", round(dBvec, 2)); gatherCols <- colnames(dfAdopt)
-# dfAdopt$dlnNu <- paste("dlnNu =", round(dlnNuVec, 2))
-# dfPlot <- dfAdopt %>% gather_("dB", "adoptRate", gatherCols)
-# gg <- ggplot(dfPlot, aes(x = dB, y = dlnNu, fill = adoptRate))
-# gg <- gg + geom_tile()
-# gg
+gg <- ggplot(dfPlot, aes(x = `Expected price (KES/kg)`, y = val, color = curve, group = curve))
+gg <- gg + geom_line()
+gg
 
+# gg <- gg + scale_color_manual(breaks = c("Normal rainfall", "High rainfall (150%)", "Low rainfall (50%)", "Dismal rainfall (10%)"), values = c("black", "green", "orange", "red"))
 
-# A = \Phi\left( \frac{\frac{-h (1 - h) \partial B}{\partial \ln(\nu) + \partial \ln(g_0)} - (\ln(v_0) + m_k + m_{\#})}{\sqrt{s_k^2 + s_{\#}^2}} \right)
+#===========================================================================
+# Welfare impact
+wf <- adoptRate * N * (1 / h * (dlNu + dlng0))
+
 
 
 ```
 
+$\overset{a}{\bar{C}^*}$
+
+
 ```{r, echo=FALSE}
 
 #EPT0vec <- seq(0.1, 60, length.out = 50)
-aDotdlW <- 0.15
-muEyStarT0new <- 1 / (1 - h) * (dlng0 - aDotdlW)
-dfOut <- EQsFun(EPT0vec, muEyStarT0new, mEcSharpT0, sEcSharpT0, h, muArea, Nf, kappaRn)
-EPT0EmpirVec = c(EPT02006, EPT02007, EPT02008, EPT02009, EPT02010, EPT02011, EPT02012)
-dfPoints$EPT0 <- EPT0EmpirVec
 
 ```
 
@@ -2681,10 +2798,10 @@ For any lognormally distributed $\chi$, the probability density function $\rho(\
 \rho(\chi) = \frac{1}{\sqrt{2\pi} s_{\chi}} e^{-\frac{(\ln(\chi) - m_{\chi})^2}{2 s^2_{\chi}}} \:\:;\:\:\: m_{\chi} = E[\ln(\chi)] \:\:\: s^2_{\chi} = Var[\ln(\chi)]
 \end{equation}
 
-So for a given constant upper bound $\chi \leq \zeta$,
+So for a given constant upper bound $\chi \leq \xi$,
 
 \begin{equation}
-\int_{0}^{\zeta} \chi \rho(\chi) \: d\chi = \frac{1}{\sqrt{2\pi} s_{\chi}} \int_{0}^{P} \chi e^{-\frac{(\ln(\chi) - m_{\chi})^2}{2 s^2_{\chi}}} d \ln(\chi)
+\int_{0}^{\xi} \chi \rho(\chi) \: d\chi = \frac{1}{\sqrt{2\pi} s_{\chi}} \int_{0}^{P} \chi e^{-\frac{(\ln(\chi) - m_{\chi})^2}{2 s^2_{\chi}}} d \ln(\chi)
 \label{eq:proofStep1}
 \end{equation}
 
@@ -2698,8 +2815,8 @@ Equation \ref{eq:proofStep1} resolves as follows.
 
 \begin{equation}
 \begin{split}
-\int_{0}^{\zeta} \chi \rho(\chi) \: d\chi &= \frac{1}{\sqrt{2\pi}} \int_{0}^{\frac{\ln(\zeta) - m_{\chi}}{s_{\chi}}} e^{(\gamma s_{\chi} + m_{\chi}) } e^{-\frac{\gamma^2}{2}} d \gamma \\
-&= \frac{1}{\sqrt{2\pi}} \int_{0}^{\frac{\ln(\zeta) - m_{\chi}}{s_{\chi}}} e^{-1/2[\gamma^2 - 2 \gamma s_{\chi}  - 2 m_{\chi} ]} d \gamma
+\int_{0}^{\xi} \chi \rho(\chi) \: d\chi &= \frac{1}{\sqrt{2\pi}} \int_{0}^{\frac{\ln(\xi) - m_{\chi}}{s_{\chi}}} e^{(\gamma s_{\chi} + m_{\chi}) } e^{-\frac{\gamma^2}{2}} d \gamma \\
+&= \frac{1}{\sqrt{2\pi}} \int_{0}^{\frac{\ln(\xi) - m_{\chi}}{s_{\chi}}} e^{-1/2[\gamma^2 - 2 \gamma s_{\chi}  - 2 m_{\chi} ]} d \gamma
 \end{split}
 \end{equation}
 
@@ -2717,10 +2834,10 @@ So the integral can be rewritten
 
 \begin{equation}
 \begin{split}
-\frac{1}{\sqrt{2\pi}} \int_{0}^{\frac{\ln(\zeta) - m_{\chi}}{s_{\chi}}} e^{-\frac{(\gamma - s_{\chi} )^2}{2} + m_{\chi}  + \frac{s^2_{\chi}}{2} ^2} d \gamma \\
-&= \frac{1}{\sqrt{2\pi}} e^{m_{\chi}  + \frac{s^2_{\chi}}{2} ^2} \int_{0}^{\frac{\ln(\zeta) - m_{\chi}}{s_{\chi}}} e^{-\frac{(\gamma - s_{\chi} )^2}{2}} d \gamma \\
-&= \frac{E[\chi]}{\sqrt{2\pi}} \int_{0}^{\frac{\ln(\zeta) - m_{\chi}}{s_{\chi}}} e^{-\frac{(\gamma - s_{\chi} )^2}{2}} d \gamma \\
-&= E[\chi] \Phi \left(\frac{\ln(\zeta) - m_{\chi}}{s_{\chi}} - s_{\chi}  \right)
+\frac{1}{\sqrt{2\pi}} \int_{0}^{\frac{\ln(\xi) - m_{\chi}}{s_{\chi}}} e^{-\frac{(\gamma - s_{\chi} )^2}{2} + m_{\chi}  + \frac{s^2_{\chi}}{2} ^2} d \gamma \\
+&= \frac{1}{\sqrt{2\pi}} e^{m_{\chi}  + \frac{s^2_{\chi}}{2} ^2} \int_{0}^{\frac{\ln(\xi) - m_{\chi}}{s_{\chi}}} e^{-\frac{(\gamma - s_{\chi} )^2}{2}} d \gamma \\
+&= \frac{E[\chi]}{\sqrt{2\pi}} \int_{0}^{\frac{\ln(\xi) - m_{\chi}}{s_{\chi}}} e^{-\frac{(\gamma - s_{\chi} )^2}{2}} d \gamma \\
+&= E[\chi] \Phi \left(\frac{\ln(\xi) - m_{\chi}}{s_{\chi}} - s_{\chi}  \right)
 \end{split}
 \end{equation}
 
