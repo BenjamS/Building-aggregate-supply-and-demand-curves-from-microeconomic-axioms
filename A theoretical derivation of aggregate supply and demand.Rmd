@@ -1423,195 +1423,6 @@ rm(mod1, mod2, listDf)
 
 The estimated coefficient on logged cost per acre is statistically significant and indicates that the population yield degree of homogeneity is $h =$ `r hReport`, by which it follows immediately that the price elasticity of farm supply is $\eta = h / (1 - h) =$ `r etaReport`. The coefficients on the other regressors are also statistically significant and take values and signs that agree with intuition. Note that the coefficient on the farm size regressor is negative, affirming the inverse relation between farm size and yield found in numerous other studies [@muyanga2019revisiting; @larson2014should; @wassie2019revisiting; @gautam2019too; @kimhi2006plot].
 
-Now, because the binary endowments $b_i$ vary across the population, the value of $g_0$ (and hence of $v_0$) also varies. In the Kenya example, there are 14 distinct values of $v_0$, corresponding to 14 distinct combinations of the $\beta_i b_i$. The supply aggregation step in Equation \ref{eq:aggSupStep} averages aggregate supply across all binary endowment strata. Denoting the value of each distinct combination as $v_{0i}$, the average $v_0$ is effectively a population weighted sum of the $v_{0i}$.
-<!-- Each value of $v_0$ effectively identifies a binary endowment stratum of the population. -->
-
-\begin{equation}
-v_0 = \sum_i \frac{N_i}{N} v_{0i}
-\end{equation}
-
-Where $N_i / N$ is the fraction of farms in the $i^{th}$ binary endowment stratum. The conditional mean cost and yield disaggregated by stratum ($E[C^*| \theta]_i$, $E[y^*(T)| \theta]_i$), can be evaluated as follows.
-
-\begin{equation}
-\begin{split}
-E[C^*| \theta]_i &= e^{\bar{m}_{ci} + \frac{\bar{s}^2_c}{2}} \:\:;\:\:\: \bar{m}_{ci} = \frac{1}{1 - h}(\ln(v_{0i}) + m_k + \bar{m}_{\#})  \\
-&= v_{0i}^{\frac{1}{1 - h}} e^{\frac{1}{1 - h}(m_k + \bar{m}_{\#}) + \frac{1}{(1 - h)^2} \frac{s^2_k + \bar{s}_{\#}^2}{2}}
-\end{split}
-\end{equation}
-
-And
-
-\begin{equation}
-E[\hat{y}^*(T, k_m(T))]^i|_{t = 0} = v_{0i} E[k] E[C^{*h}]_i
-\label{eq:v0i}
-\end{equation}
-<!-- E[e^{\epsilon}]_i -->
-<!-- Where $E[e^{\epsilon}]_i$ is the mean of the exponential function of the regression error of farms in the $i^{th}$ stratum. -->
-
-The stratified ex-ante expected mean yield $E[\tilde{y}^*(T)]|_{t = 0}^i$ can also be deduced as in Equation \ref{eq:EyStarT0fromYhat}.
-<!-- , since it is calculated based on the fitted value of $v_{0i}$ -->
-
-\begin{equation}
-E[\tilde{y}^*(T)]|_{t = 0}^i = \left( \frac{E[k_r(T)]|_{t = 0}}{E[k_r]_i} \right)^{\kappa_r} E[y_i^*(T) E[e^{-\epsilon}]_i
-\end{equation}
-
-<!-- The mean harvest yield for each stratum then follows from the first of Equations \ref{eq:v0forms} as $E[y^*(T)]_i = v_{0i} E[k] E[C^{*h}]_i$ (where $E[C^{*h}]_i = e^{h m_{ci} + h^2\frac{s^2_c}{2}}$). -->
-<!-- The TFP parameter for each stratum ($g_{0i}$) can likewise be calculated from the last of Equations \ref{eq:v0forms} given the input elasticities $\alpha_i$. -->
-<!-- \begin{equation} -->
-<!-- \begin{split} -->
-<!-- E[C^*]_i &= e^{m_{ci} + \frac{s^2_c}{2}} \\ -->
-<!-- &= v_{0i}^{\frac{1}{1 - h}} e^{\frac{1}{1 - h}(m_k + m_{\#}) + \frac{1}{(1 - h)^2} \frac{s^2_k + s_{\#}^2}{2}} -->
-<!-- \end{split} -->
-<!-- \end{equation} -->
-
-```{r Fig4, fig.show = "hold", fig.width = 6, fig.height=3, fig.align="center", fig.cap="\\label{fig:v0strata}(Left) The mean cost, mean yield, and TFP (v0) for each of the 14 different combinations of binary endowments present in the Kenya farm data; and (right) their respective prevalance in the population.", echo = FALSE}
-#-----------------------------------------------------------------------
-# Define constant in terms of convenient known reference value y0, in this case sample mean yield.
-# Sample mean yield varies with binary controls. Here is the mean with just the base constant
-# (i.e. all binaries = 0)
-coefVec <- mod3$coefficients; coefNames <- gsub("`", "", names(coefVec))
-beta0plusAlphaWhterm <- coefVec[1]
-v0base <- exp(beta0plusAlphaWhterm)
-#y0base <- v0base * muThetaKnh * muEcSharpT0n
-#muEcStarT0hBase <- muEyStarT0 / (muThetaK * v0base)
-#---
-# Now calculate mean yield for all binary combinations
-# Adjust for exogenous endowments/constraints
-bin_vars <- gsub(":", " -", bin_vars)
-bin_vars <- gsub("Adopter", "Hybrid seed", bin_vars)
-kappaBins <- coefVec[which(coefNames %in% bin_vars)]
-names(kappaBins) <- gsub("`", "", names(kappaBins))
-dfBins <- dfMod3[, bin_vars]
-beta0adj <- beta0plusAlphaWhterm + as.matrix(dfBins) %*% kappaBins
-v0 <- exp(beta0adj)
-# muEcStarT0h <- muEyStarT0 / (muThetaK * v0)
-#v0 %>% unique() %>% length # 14 endowment combos present
-# dfPlot <- data.frame(County = dfMod3$Dist, v0)
-#dfPlot <- data.frame(County = dfMod3b$Dist, y0)
-#ggplot(dfPlot, aes(x = y0)) + geom_histogram() + facet_wrap(~County)
-#exp(mean(dfMod3$`Yield (kg/acre)`) + sd(dfMod3$`Yield (kg/acre)`)^2/2)
-# mean(y0)
-#--------------------------------------------------------------------------
-# Create label vec for each of the 14 endowment combos
-dfBins$`Hybrid seed` <- ifelse(dfBins$`Hybrid seed` == 1, "Hybrid", "0")
-dfBins$`Tenure - owned with title deed` <- ifelse(dfBins$`Tenure - owned with title deed` == 1, "Tenure", "0")
-dfBins$`Landprep - oxen` <- ifelse(dfBins$`Landprep - oxen` == 1, "Oxen", "0")
-dfBins$`Landprep - tractor` <- ifelse(dfBins$`Landprep - tractor` == 1, "Tractor", "0")
-endowVec <- apply(dfBins, 1, paste, collapse = " + ")
-endowVec <- gsub("0 \\+|\\+ 0", "", endowVec)
-endowVec <- gsub("   0", "Base", endowVec)
-endowVec[which(endowVec != "Base")] <- paste("Base +", endowVec[which(endowVec != "Base")])
-endowVec <- gsub("  ", " ", endowVec)
-endowVec <- trimws(endowVec)
-endowVec <- gsub("  ", " ", endowVec)
-#unique(endowVec)
-#---------------------------------------------------------------------
-# Graphic of prevalence of each endowment combo and its value
-cellText_size <- 2.5
-dfStrat <- data.frame(Type = endowVec, v0 = round(v0, 1)) %>%
-  mutate(xx = 1) %>% group_by(Type) %>%
-  summarise(`Number of farms` = sum(xx, na.rm = T), v0 = unique(v0)) %>%
-  as.data.frame() %>%
-  mutate(`Pct of farms in sample` = `Number of farms` / sum(`Number of farms`) * 100) %>%
-  arrange(v0) %>% mutate(Type = factor(Type, Type))
-stratPct <- dfStrat$`Pct of farms in sample` / 100
-v0strat <- dfStrat$v0
-muV0 <- sum(v0strat * stratPct)
-# popRow <- data.frame(Type = "Population mean", `Number of Farms` = length(v0),
-#                      v0 = round(muV0, 1), NA)
-# colnames(popRow) <- colnames(dfStrat)
-#dfStrat <- dfStrat %>% rbind(popRow)
-#dfStrat <- dfStrat %>% mutate(Type = factor(Type, Type))
-typeVec <- dfStrat$Type
-mCstari <- 1 / (1 - h) * (log(v0strat) + mEcSharpT0)
-#mCstari <- 1 / (1 - h) * (log(v0strat) + mK + mEcSharpT0)
-muK <- exp(mK + sK^2 / 2)
-muCstari <- exp(mCstari + sCstar^2 / 2)
-muCstarih <- exp(h * mCstari + h^2 * sCstar^2 / 2)
-muYstarTicheck <- mean(v0strat * muK) * muCstarih
-muYstarTi <- v0strat * muK * muCstarih
-muYstarT <- sum(muYstarTi * stratPct)
-muCstar <- sum(muCstari * stratPct)
-#---
-# dfStrat$`Mean yield\n(kg/acre)` <- round(c(muYstarTi, muYstarT), 1)
-# dfStrat$`Mean cost/area\n(KES/acre)` <- round(c(muCstari, muCstar), 1)
-dfStrat$`Mean yield\n(kg/acre)` <- round(muYstarTi, 1)
-dfStrat$`Mean cost/area\n(KES/acre)` <- round(muCstari, 1)
-dfTab <- dfStrat %>% rename(`TFP (v0)` = v0) %>%
-  relocate(`Type`, `TFP (v0)`, `Mean cost/area\n(KES/acre)`, `Mean yield\n(kg/acre)`) %>%
-  select(`Type`, `TFP (v0)`, `Mean cost/area\n(KES/acre)`, `Mean yield\n(kg/acre)`) %>% gather(var, val, `TFP (v0)`:`Mean yield\n(kg/acre)`)
-gg <- ggplot(dfTab, aes(x = var, y = Type, fill = val, label = val))
-gg <- gg + scale_y_discrete(limits = typeVec)
-gg <- gg + geom_tile(alpha = 0)
-#gg <- gg + labs(title = expression(v[0]))
-gg <- gg + scale_x_discrete(position = "top")
-gg <- gg + theme_bw()
-gg <- gg + theme(axis.title = element_blank(),
-                 axis.text.x = element_text(size = axisTextSize),
-                 axis.ticks.x = element_blank(),
-                 axis.text.y = element_text(size = axisTextSize),
-                 panel.grid = element_blank(),
-                 plot.title = element_text(size = axisTitleSize, hjust = 0.5),
-                 legend.position = "none")
-gg <- gg + geom_text(size = cellText_size)
-ggEndow1 <- gg
-#---
-gg <- ggplot(dfStrat, aes(x = `Pct of farms in sample`, y = Type))
-#gg <- gg + scale_y_discrete(limits = typeVec)
-gg <- gg + geom_col()
-gg <- gg + labs(title = "Pct of farms in sample")
-gg <- gg + scale_x_continuous(position = "top")
-gg <- gg + theme_bw()
-gg <- gg + theme(axis.title = element_blank(),
-                 #axis.title.x = element_text(size = axisTitleSize),
-                 axis.text.y = element_blank(),
-                 axis.text.x = element_text(size = axisTextSize),
-                 #panel.grid = element_blank(),
-                 plot.title = element_text(size = axisTitleSize, hjust = 0.5))
-ggEndow2 <- gg
-#ggEndow1 + ggEndow2
-
-#colnames(dfPlot1)
-dfPopRow <- data.frame(Type = "Population mean",
-                       var = c("TFP (v0)", "Mean cost/area\n(KES/acre)",
-                               "Mean yield\n(kg/acre)"),
-                       val = c(round(muV0, 1), round(muCstar, 1), round(muYstarT, 1)))
-gg <- ggplot(dfPopRow, aes(x = var, y = Type, fill = val, label = val))
-#gg <- gg + scale_y_discrete(limits = typeVec)
-gg <- gg + geom_tile(alpha = 0)
-#gg <- gg + labs(title = expression(v[0]))
-#gg <- gg + scale_x_discrete(position = "top")
-gg <- gg + theme_bw()
-gg <- gg + theme(axis.title = element_blank(),
-                 axis.text.x = element_blank(),
-                 axis.ticks.x = element_blank(),
-                 axis.text.y = element_text(size = axisTextSize),
-                 panel.grid = element_blank(),
-                 plot.title = element_text(size = axisTitleSize, hjust = 0.5),
-                 legend.position = "none")
-gg <- gg + geom_text(size = cellText_size)
-ggEndowPop <- gg
-
-dfBlank <- data.frame(Type = NA,
-                       var = c(NA, NA, NA),
-                       val = c(NA, NA, NA))
-gg <- ggplot(dfBlank, aes(x = var, y = Type, fill = val, label = val))
-gg <- gg + geom_tile(alpha = 0)
-gg <- gg + theme_bw()
-gg <- gg + theme(axis.title = element_blank(),
-                 axis.text = element_blank(),
-                 axis.ticks = element_blank(),
-                 panel.grid = element_blank(),
-                 panel.border = element_blank(),
-                 legend.position = "none")
-ggBlank <- gg
-  
-
-(ggEndow1 / ggEndowPop + plot_layout(heights = c(1, 1 / 14))) | (ggEndow2 / ggBlank + plot_layout(heights = c(1, 1 / 14)))
-
-
-```
-
 To evaluate the expected unconditional mean yield term ($E[\tilde{y}^*(T)]|_{t = 0}$) and parameters $m_{\#}$, $s_{\#}$ appearing in the expected aggregate supply expression (Equation \ref{eq:aggSup2}), first the mean fitted values for yield ($\hat{y}^*$) are interpreted as the observed conditional mean yield.
 <!-- the fitted values for yield ($\hat{y}^*$) are interpreted as the observed conditional mean yield. -->
 <!-- \begin{equation} -->
@@ -1849,7 +1660,47 @@ rootFnUp <- function(xIn, xUp, sXtrunc, mXtrunc){
   outVec <- c(slack_s, slack_m)
   return(outVec)
 }
-#-----------------------------------------------------------------------------
+#=============================================================================
+# Define constant in terms of convenient known reference value y0, in this case sample mean yield.
+# Sample mean yield varies with binary controls. Here is the mean with just the base constant
+# (i.e. all binaries = 0)
+coefVec <- mod3$coefficients; coefNames <- gsub("`", "", names(coefVec))
+beta0plusAlphaWhterm <- coefVec[1]
+v0base <- exp(beta0plusAlphaWhterm)
+#y0base <- v0base * muThetaKnh * muEcSharpT0n
+#muEcStarT0hBase <- muEyStarT0 / (muThetaK * v0base)
+#---
+# Now calculate mean yield for all binary combinations
+# Adjust for exogenous endowments/constraints
+bin_vars <- gsub(":", " -", bin_vars)
+bin_vars <- gsub("Adopter", "Hybrid seed", bin_vars)
+kappaBins <- coefVec[which(coefNames %in% bin_vars)]
+names(kappaBins) <- gsub("`", "", names(kappaBins))
+dfBins <- dfMod3[, bin_vars]
+beta0adj <- beta0plusAlphaWhterm + as.matrix(dfBins) %*% kappaBins
+v0 <- exp(beta0adj)
+# muEcStarT0h <- muEyStarT0 / (muThetaK * v0)
+#v0 %>% unique() %>% length # 14 endowment combos present
+# dfPlot <- data.frame(County = dfMod3$Dist, v0)
+#dfPlot <- data.frame(County = dfMod3b$Dist, y0)
+#ggplot(dfPlot, aes(x = y0)) + geom_histogram() + facet_wrap(~County)
+#exp(mean(dfMod3$`Yield (kg/acre)`) + sd(dfMod3$`Yield (kg/acre)`)^2/2)
+# mean(y0)
+#--------------------------------------------------------------------------
+# Create label vec for each of the 14 endowment combos
+dfBins$`Hybrid seed` <- ifelse(dfBins$`Hybrid seed` == 1, "Hybrid", "0")
+dfBins$`Tenure - owned with title deed` <- ifelse(dfBins$`Tenure - owned with title deed` == 1, "Tenure", "0")
+dfBins$`Landprep - oxen` <- ifelse(dfBins$`Landprep - oxen` == 1, "Oxen", "0")
+dfBins$`Landprep - tractor` <- ifelse(dfBins$`Landprep - tractor` == 1, "Tractor", "0")
+endowVec <- apply(dfBins, 1, paste, collapse = " + ")
+endowVec <- gsub("0 \\+|\\+ 0", "", endowVec)
+endowVec <- gsub("   0", "Base", endowVec)
+endowVec[which(endowVec != "Base")] <- paste("Base +", endowVec[which(endowVec != "Base")])
+endowVec <- gsub("  ", " ", endowVec)
+endowVec <- trimws(endowVec)
+endowVec <- gsub("  ", " ", endowVec)
+#unique(endowVec)
+#=============================================================================
 # HAVE TO FACTOR OUT KRAIN BECAUSE IT IS AN EX POST VARIABLE!!!!
 # IMPORTANT TO NOTE IN TEXT THAT EXOG CONTROL VARS ARE FROM POV OF PLANTING TIME
 # --> A crude way of calculating expected yield is by evaluating ex-post yield
@@ -1918,6 +1769,158 @@ Calculation of $m_{\#}$ and $s_{\#}$ requires the expected price at planting for
 
 Once $m_{\#}$ and $s_{\#}$ are calculated, the expected unconditional mean yield ($E[\tilde{y}^*(T; k_m(T))]|_{t = 0}$) follows from Equation \ref{eq:condMeanYd2}. In the process, the farm employment rate is calculated as `r round(EmploymentRate, 2)` and the PEFS adjusted mean probability of profit is calculated as `r round(ProbProfit, 2)`. The expected unconditional mean yield is evaluated at four different expected rainfall levels: $E[E[k_r(T)^{\kappa_r}]]|_{t = 0} = 1.5^{\kappa_r}, \: 1^{\kappa_r}, \: 0.5^{\kappa_r}, \: 0.1^{\kappa_r}$. These values correspond to expected rainfall that is 150% of the historical benchmark ("high"), in line with the historical benchmark ("normal"), 50% of the historical benchmark ("low"), and 10% of the historical benchmark ("dismal"), respectively.
 
+Note in passing that, because the binary endowments $b_i$ vary across the population, the value of $g_0$ (and hence of $v_0$) also varies. In the present example, there are 14 distinct values of $v_0$, corresponding to 14 distinct combinations of the $\beta_i b_i$. The supply aggregation step in Equation \ref{eq:aggSupStep} averages aggregate supply across all binary endowment strata. Denoting the value of each distinct combination as $v_{0i}$, the average $v_0$ is effectively a population weighted sum of the $v_{0i}$.
+<!-- Each value of $v_0$ effectively identifies a binary endowment stratum of the population. -->
+
+\begin{equation}
+v_0 = \sum_i \frac{N_i}{N} v_{0i}
+\end{equation}
+
+Where $N_i / N$ is the fraction of farms in the $i^{th}$ binary endowment stratum.
+
+The conditional mean cost and yield disaggregated by stratum ($E[C^*| \theta]_i$, $E[y^*(T)| \theta]_i$), can be evaluated as follows.
+
+\begin{equation}
+\begin{split}
+E[C^*| \theta]_i &= e^{\bar{m}_{ci} + \frac{\bar{s}^2_c}{2}} \:\:;\:\:\: \bar{m}_{ci} = \frac{1}{1 - h}(\ln(v_{0i}) + m_k + \bar{m}_{\#})  \\
+&= v_{0i}^{\frac{1}{1 - h}} e^{\frac{1}{1 - h}(m_k + \bar{m}_{\#}) + \frac{1}{(1 - h)^2} \frac{s^2_k + \bar{s}_{\#}^2}{2}}
+\end{split}
+\end{equation}
+
+And
+
+\begin{equation}
+E[\hat{y}^*(T, k_m(T))]^i|_{t = 0} = v_{0i} E[k] E[C^{*h}| \theta]_i
+\label{eq:v0i}
+\end{equation}
+<!-- E[e^{\epsilon}]_i -->
+<!-- Where $E[e^{\epsilon}]_i$ is the mean of the exponential function of the regression error of farms in the $i^{th}$ stratum. -->
+
+The stratified ex-ante expected mean yield $E[\tilde{y}^*(T)]|_{t = 0}^i$ can also be deduced as in Equation \ref{eq:EyStarT0fromYhat}.
+<!-- , since it is calculated based on the fitted value of $v_{0i}$ -->
+
+\begin{equation}
+E[\tilde{y}^*(T)]|_{t = 0}^i = \left( \frac{E[k_r(T)]|_{t = 0}}{E[k_r]_i} \right)^{\kappa_r} E[y_i^*(T) E[e^{-\epsilon}]_i
+\end{equation}
+
+<!-- The mean harvest yield for each stratum then follows from the first of Equations \ref{eq:v0forms} as $E[y^*(T)]_i = v_{0i} E[k] E[C^{*h}]_i$ (where $E[C^{*h}]_i = e^{h m_{ci} + h^2\frac{s^2_c}{2}}$). -->
+<!-- The TFP parameter for each stratum ($g_{0i}$) can likewise be calculated from the last of Equations \ref{eq:v0forms} given the input elasticities $\alpha_i$. -->
+<!-- \begin{equation} -->
+<!-- \begin{split} -->
+<!-- E[C^*]_i &= e^{m_{ci} + \frac{s^2_c}{2}} \\ -->
+<!-- &= v_{0i}^{\frac{1}{1 - h}} e^{\frac{1}{1 - h}(m_k + m_{\#}) + \frac{1}{(1 - h)^2} \frac{s^2_k + s_{\#}^2}{2}} -->
+<!-- \end{split} -->
+<!-- \end{equation} -->
+
+```{r Fig3, fig.show = "hold", fig.width = 6, fig.height=3, fig.align="center", fig.cap="\\label{fig:v0strata}(Left) The mean observed cost, yield, and TFP (v0) for each of the 14 different combinations of binary endowments present in the Kenya farm data; and (right) their respective prevalance in the population.", echo = FALSE}
+#---------------------------------------------------------------------
+# Graphic of prevalence of each endowment combo and its value
+cellText_size <- 2.5
+dfStrat <- data.frame(Type = endowVec, v0 = round(v0, 1)) %>%
+  mutate(xx = 1) %>% group_by(Type) %>%
+  summarise(`Number of farms` = sum(xx, na.rm = T), v0 = unique(v0)) %>%
+  as.data.frame() %>%
+  mutate(`Pct of farms in sample` = `Number of farms` / sum(`Number of farms`) * 100) %>%
+  arrange(v0) %>% mutate(Type = factor(Type, Type))
+stratPct <- dfStrat$`Pct of farms in sample` / 100
+v0strat <- dfStrat$v0
+muV0 <- sum(v0strat * stratPct)
+# popRow <- data.frame(Type = "Population mean", `Number of Farms` = length(v0),
+#                      v0 = round(muV0, 1), NA)
+# colnames(popRow) <- colnames(dfStrat)
+#dfStrat <- dfStrat %>% rbind(popRow)
+#dfStrat <- dfStrat %>% mutate(Type = factor(Type, Type))
+#-----------------------------------------------------------------------------
+typeVec <- dfStrat$Type
+mCstari <- 1 / (1 - h) * (log(v0strat) + mEcSharpT0)
+#mCstari <- 1 / (1 - h) * (log(v0strat) + mK + mEcSharpT0)
+muK <- exp(mK + sK^2 / 2)
+muCstari <- exp(mCstari + sCstar^2 / 2)
+muCstarih <- exp(h * mCstari + h^2 * sCstar^2 / 2)
+muYstarTicheck <- mean(v0strat * muK) * muCstarih
+muYstarTi <- v0strat * muK * muCstarih
+muYstarT <- sum(muYstarTi * stratPct)
+muCstar <- sum(muCstari * stratPct)
+#---
+# dfStrat$`Mean yield\n(kg/acre)` <- round(c(muYstarTi, muYstarT), 1)
+# dfStrat$`Mean cost/area\n(KES/acre)` <- round(c(muCstari, muCstar), 1)
+dfStrat$`Mean yield\n(kg/acre)` <- round(muYstarTi, 1)
+dfStrat$`Mean cost/area\n(KES/acre)` <- round(muCstari, 1)
+dfTab <- dfStrat %>% rename(`TFP (v0)` = v0) %>%
+  relocate(`Type`, `TFP (v0)`, `Mean cost/area\n(KES/acre)`, `Mean yield\n(kg/acre)`) %>%
+  select(`Type`, `TFP (v0)`, `Mean cost/area\n(KES/acre)`, `Mean yield\n(kg/acre)`) %>% gather(var, val, `TFP (v0)`:`Mean yield\n(kg/acre)`)
+gg <- ggplot(dfTab, aes(x = var, y = Type, fill = val, label = val))
+gg <- gg + scale_y_discrete(limits = typeVec)
+gg <- gg + geom_tile(alpha = 0)
+#gg <- gg + labs(title = expression(v[0]))
+gg <- gg + scale_x_discrete(position = "top")
+gg <- gg + theme_bw()
+gg <- gg + theme(axis.title = element_blank(),
+                 axis.text.x = element_text(size = axisTextSize),
+                 axis.ticks.x = element_blank(),
+                 axis.text.y = element_text(size = axisTextSize),
+                 panel.grid = element_blank(),
+                 plot.title = element_text(size = axisTitleSize, hjust = 0.5),
+                 legend.position = "none")
+gg <- gg + geom_text(size = cellText_size)
+ggEndow1 <- gg
+#---
+gg <- ggplot(dfStrat, aes(x = `Pct of farms in sample`, y = Type))
+#gg <- gg + scale_y_discrete(limits = typeVec)
+gg <- gg + geom_col()
+gg <- gg + labs(title = "Pct of farms in sample")
+gg <- gg + scale_x_continuous(position = "top")
+gg <- gg + theme_bw()
+gg <- gg + theme(axis.title = element_blank(),
+                 #axis.title.x = element_text(size = axisTitleSize),
+                 axis.text.y = element_blank(),
+                 axis.text.x = element_text(size = axisTextSize),
+                 #panel.grid = element_blank(),
+                 plot.title = element_text(size = axisTitleSize, hjust = 0.5))
+ggEndow2 <- gg
+#ggEndow1 + ggEndow2
+
+#colnames(dfPlot1)
+dfPopRow <- data.frame(Type = "Population mean",
+                       var = c("TFP (v0)", "Mean cost/area\n(KES/acre)",
+                               "Mean yield\n(kg/acre)"),
+                       val = c(round(muV0, 1), round(muCstar, 1), round(muYstarT, 1)))
+gg <- ggplot(dfPopRow, aes(x = var, y = Type, fill = val, label = val))
+#gg <- gg + scale_y_discrete(limits = typeVec)
+gg <- gg + geom_tile(alpha = 0)
+#gg <- gg + labs(title = expression(v[0]))
+#gg <- gg + scale_x_discrete(position = "top")
+gg <- gg + theme_bw()
+gg <- gg + theme(axis.title = element_blank(),
+                 axis.text.x = element_blank(),
+                 axis.ticks.x = element_blank(),
+                 axis.text.y = element_text(size = axisTextSize),
+                 panel.grid = element_blank(),
+                 plot.title = element_text(size = axisTitleSize, hjust = 0.5),
+                 legend.position = "none")
+gg <- gg + geom_text(size = cellText_size)
+ggEndowPop <- gg
+
+dfBlank <- data.frame(Type = NA,
+                       var = c(NA, NA, NA),
+                       val = c(NA, NA, NA))
+gg <- ggplot(dfBlank, aes(x = var, y = Type, fill = val, label = val))
+gg <- gg + geom_tile(alpha = 0)
+gg <- gg + theme_bw()
+gg <- gg + theme(axis.title = element_blank(),
+                 axis.text = element_blank(),
+                 axis.ticks = element_blank(),
+                 panel.grid = element_blank(),
+                 panel.border = element_blank(),
+                 legend.position = "none")
+ggBlank <- gg
+  
+
+(ggEndow1 / ggEndowPop + plot_layout(heights = c(1, 1 / 14))) | (ggEndow2 / ggBlank + plot_layout(heights = c(1, 1 / 14)))
+
+
+```
+
 The two remaining parameters required to evaluate expected aggregate supply in Equation \ref{eq:aggSup2} are number of farms $N$ and mean farm size $k_a$. For mean farm size, the Kenya farm sample mean is used, giving $k_a =$ `r muAreaReport` acres. The number of maize farms is more difficult to assess. One sometimes sees the figure $3$ million mentioned [e.g. @njeru2022maize], but this appears to be unsupported by any hard evidence. Here, a rough estimate is deduced by dividing planted area by mean farm size. The midseason reports examined for this exercise suggest that planted main season maize area during the period in question ranges between 3 and 4.5 million acres [@KFSSGJul2011]. Divided by $k_a$, this gives a range between $1.56$ and $2.34$ million farms. The figure $N =$ `r NfReport` million is used as a rough estimate.
 
 With all the necessary parameters estimated, the theoretical expected aggregate supply curve developed in the sections above is plotted at the four expected rainfall levels, with empirical aggregate supply estimates overlaid, in the top panel of Figure \ref{fig:EaggQs}. The empirical estimates for the major drought years agree closely with the theoretical expected supply curve evaluated at the "dismal" rainfall level, while the estimates in normal or good rainfall years generally agree with the theoretical curve evaluated at the "normal" and "high" rainfall levels. The curve overshoots the 2010 estimate somewhat, possibly due to crop loss from flooding that year [@GIEWS5Aug2010]. The one major empirical divergence from the theoretical curve is 2009, an historic drought year [@MoApressRelease2009].
@@ -1925,10 +1928,12 @@ With all the necessary parameters estimated, the theoretical expected aggregate 
 The price elasticity of expected aggregate supply curve is presented in Figure \ref{fig:EaggQs}, bottom. Empirical estimates of the maize price elasticity of supply in Kenya generally range from $0.1$ to $0.365$ [@abodi2021supply; @onono2013response; @olwande2009supply], which is roughly the range of elasticities indicated by the theoretical curve for the years examined here.
 <!-- In one study, Onono et al.'s estimate of price elasticity of supply: 0.365 [@onono2013response] -->
 
+Given the sensitivity of aggregate supply to meteorological conditions, the notion of a single supply "curve" is misleading. It is more accurate to a speak of a supply bracket or "ribbon" bounded on top and bottom by the best and worst case meteorological scenarios---in this case the curves corresponding to high and dismal rainfall.
+
 The expected aggregate supply and price elasticity curves parameterized in this exercise are "short run" curves. That is to say, they are valid only insofar as the values of their fitted parameters---$h$, $N$, $k_a$, $k$, $m_{\#}$, $s_{\#}$, $m_p$---are accurate. Empirical estimates for years well before or well after the year of the data used to estimate the parameters will thus diverge from the curve.
 
 \singlespacing
-```{r Fig3, fig.show = "hold", fig.width = 5, fig.height=5, fig.align="center", fig.cap="\\label{fig:EaggQs}(Top) The theoretical expected aggregate maize supply curve fitted to 2007 Kenya long rains maize season data, plotted against empirical estimates of expected aggregate supply for the years 2006-2012. (Bottom) The corresponding theoretical price elasticity of expected aggregate supply curve.", echo = FALSE}
+```{r Fig4, fig.show = "hold", fig.width = 5, fig.height=5, fig.align="center", fig.cap="\\label{fig:EaggQs}(Top) The theoretical expected aggregate maize supply curve fitted to 2007 Kenya long rains maize season data, plotted against empirical estimates of expected aggregate supply for the years 2006-2012. (Bottom) The corresponding theoretical price elasticity of expected aggregate supply curve.", echo = FALSE}
 #----------------------------------------------------------------------------------------
 # Define expected agg supply function
 EQsFun <- function(EPT0, muEyStarT0, mEcSharpT0, sEcSharpT0, h, muArea, Nf, kappaRn){
@@ -2135,7 +2140,7 @@ ggEQsT0 / ggEtaEPT0EQsT0a
 ```
 \doublespacing
 
-## The research induced supply curve shift
+## The research induced supply ribbon shift
 
 The impact of yield scaling technologies and/or management practices on aggregate supply can be represented through perturbations of the TFP parameter ($g_0$). This is tantamount to adding a dummy endowment variable to the yield model in Equation \ref{eq:lYdEnvReg3}. The four endowmwnt dummies included in the Kenya maize example may be considered yield scaling interventions that increase the value of $g_0$ on adopting farms. The percentage increase in TFP given the introduction of a new intervention $\beta_5 b_5$ (representing, for example, improved seed and practices), on farms that implement the new technology (farms where $b_5 = 1$) may be calculated as
 
@@ -2432,92 +2437,19 @@ The total change in aggregate net benefit summed across all strata then follows 
 Say $\beta_5 = 0.3$. Then $\partial \ln(g_0) = 0.35$, and so, by the criterion in Inequality \ref{eq:adoptCondSimp} adoption in the absence of exogenous subsidies/costs will increase farm net benefit if the associated percentage decrease in output price plus the $\alpha_i$-scaled increase in input prices (i.e. $\partial \ln(\nu)$) is less than $35\%$. 
 The adoption rate for the hypothetical new technology described above ($\beta_5 = 0.3$), assuming a 40% decrease in the $\alpha_i$-adjusted output-input price ratio, with a net subsidy per acre of $\partial B = 2.5$, is presented in Figure \ref{fig:v0strata} alongside the mean yield, cost, and TFP ($v_0$), disaggregated by stratum.
 
+The pct change in v0 TFP, yield, and expenditure...
+
 \singlespacing
 
-```{r Fig5, fig.show = "hold", fig.width = 6, fig.height=3, fig.align="center", fig.cap="\\label{fig:v0strata}(Left) The adoption rate, change in welfare, and change in supply for each of the 14 different combinations of binary endowments present in the Kenya farm data; and (right) their respective prevalance in the population.", echo = FALSE}
+```{r Fig5, fig.show = "hold", fig.width = 6, fig.height=3, fig.align="center", fig.cap="\\label{fig:v0strata}(Left) The adoption rate, change in welfare, and change in supply for each of the 14 different combinations of binary endowments present in the Kenya farm data; and (right) the research induced expected aggregate supply ribbon shift, where the dotted lines represent the new normal and dismal rainfall bounds of the aggregate supply ribbon.... given subsidy x and price ration decrease y.", echo = FALSE}
 
-# #-----------------------------------------------------------------------
-# # Create label vec for each of the 14 endowment combos
-# dfBins$`Hybrid seed` <- ifelse(dfBins$`Hybrid seed` == 1, "Hybrid", "0")
-# dfBins$`Tenure - owned with title deed` <- ifelse(dfBins$`Tenure - owned with title deed` == 1, "Tenure", "0")
-# dfBins$`Landprep - oxen` <- ifelse(dfBins$`Landprep - oxen` == 1, "Oxen", "0")
-# dfBins$`Landprep - tractor` <- ifelse(dfBins$`Landprep - tractor` == 1, "Tractor", "0")
-# endowVec <- apply(dfBins, 1, paste, collapse = " + ")
-# endowVec <- gsub("0 \\+|\\+ 0", "", endowVec)
-# endowVec <- gsub("   0", "Base", endowVec)
-# endowVec[which(endowVec != "Base")] <- paste("Base +", endowVec[which(endowVec != "Base")])
-# endowVec <- gsub("  ", " ", endowVec)
-# endowVec <- trimws(endowVec)
-# endowVec <- gsub("  ", " ", endowVec)
-# #unique(endowVec)
-# #---------------------------------------------------------------------
-# # Graphic of prevalence of each endowment combo and its value
-# cellText_size <- 2.5
-# dfPlot <- data.frame(Type = endowVec, v0 = round(v0, 1)) %>%
-#   mutate(xx = 1) %>% group_by(Type) %>%
-#   summarise(`Number of farms` = sum(xx, na.rm = T), v0 = unique(v0)) %>%
-#   as.data.frame() %>%
-#   mutate(`Pct of farms in sample` = `Number of farms` / sum(`Number of farms`) * 100) %>%
-#   arrange(v0) %>%
-#   mutate(Type = factor(Type, Type))
-# stratPct <- dfPlot$`Pct of farms in sample` / 100
-# typeVec <- dfPlot$Type
-# v0strat <- dfPlot$v0
-# mCstari <- 1 / (1 - h) * (log(v0strat) + mEcSharpT0)
-# #mCstari <- 1 / (1 - h) * (log(v0strat) + mK + mEcSharpT0)
-# muK <- exp(mK + sK^2 / 2)
-# muCstari <- exp(mCstari + sCstar^2 / 2)
-# muCstarih <- exp(h * mCstari + h^2 * sCstar^2 / 2)
-# muYstarTicheck <- mean(v0strat * muK) * muCstarih
-# muYstarTi <- v0strat * muK * muCstarih
-# muYstarT <- sum(muYstarTi * stratPct)
-# muCstar <- sum(muCstari * stratPct)
-# # EcSharpT0 DOESN"T CHANGE WITH g0, v0!!! Changes with h. EcSharpT0 = EPT0 * h / lambda
-# # mEcSharpT0trunc <- (1 - h) * mCstarTrunc - mK - beta0adj
-# # sEcSharpT0trunc <- sqrt((1 - h)^2 * sCstarTrunc^2 - sK^2)
-# # muEcSharpT0Trunc <- exp(mEcSharpT0trunc + sEcSharpT0trunc^2 / 2)
-# dfPlot$`Mean yield\n(kg/acre)` <- round(muYstarTi, 1)
-# dfPlot$`Mean cost/acre\n(KES)` <- round(muCstari, 1)
-# dfPlot1 <- dfPlot %>% rename(`TFP (v0)` = v0) %>%
-#   relocate(`Type`, `TFP (v0)`, `Mean cost/acre\n(KES)`, `Mean yield\n(kg/acre)`) %>%
-#   select(`Type`, `TFP (v0)`, `Mean cost/acre\n(KES)`, `Mean yield\n(kg/acre)`) %>% gather(var, val, `TFP (v0)`:`Mean yield\n(kg/acre)`)
-# gg <- ggplot(dfPlot1, aes(x = var, y = Type, fill = val, label = val))
-# gg <- gg + scale_y_discrete(limits = typeVec)
-# gg <- gg + geom_tile(alpha = 0)
-# #gg <- gg + labs(title = expression(v[0]))
-# gg <- gg + scale_x_discrete(position = "top")
-# gg <- gg + theme_bw()
-# gg <- gg + theme(axis.title = element_blank(),
-#                  axis.text.x = element_text(size = axisTextSize),
-#                  axis.ticks.x = element_blank(),
-#                  axis.text.y = element_text(size = axisTextSize),
-#                  panel.grid = element_blank(),
-#                  plot.title = element_text(size = axisTitleSize, hjust = 0.5),
-#                  legend.position = "none")
-# gg <- gg + geom_text(size = cellText_size)
-# ggEndow1 <- gg
-# #---
-# gg <- ggplot(dfPlot, aes(x = `Pct of farms in sample`, y = Type))
-# #gg <- gg + scale_y_discrete(limits = typeVec)
-# gg <- gg + geom_col()
-# gg <- gg + labs(title = "Pct of farms in sample")
-# gg <- gg + theme_bw()
-# gg <- gg + theme(axis.title = element_blank(),
-#                  #axis.title.x = element_text(size = axisTitleSize),
-#                  axis.text.y = element_blank(),
-#                  axis.text.x = element_text(size = axisTextSize),
-#                  #panel.grid = element_blank(),
-#                  plot.title = element_text(size = axisTitleSize, hjust = 0.5))
-# ggEndow2 <- gg
-# ggEndow1 + ggEndow2
-
-
-
-betaNew <- 0.3
-dlng0 <- exp(betaNew) - 1
+# betaNew <- 0.2
+# dlng0 <- exp(betaNew) - 1
+dlng0 <- 0.2
+betaNew <- log(dlng0 + 1)
 aDotdlw <- 0.2; dlP <- -0.20
 dlnNu <- dlP - aDotdlw
-dB <- 500
+dB <- 800
 cStarMaxAdopt <- -h * dB / (dlnNu + dlng0)
 z <- (log(cStarMaxAdopt) - mCstari) / sCstar
 adoptRateStrat <- pnorm(z)
@@ -2528,7 +2460,7 @@ probProfAdopt <- pnorm(phiArg)
 dPsiStrat <- stratPct * Nf * muArea * muYstarTi * EPT02007 * (dlnNu + dlng0) * (probProfAdopt - cStarMaxAdopt / muCstarih * adoptRateStrat)
 dPsiStrat <- dPsiStrat * 10^-9 # in billions KES
 dPsi <- sum(dPsiStrat)
-dPsi / 67.32 # 2007 USD exchange rate
+#dPsi / 67.32 # 2007 USD exchange rate
 dlnNuh <- h * dlP - aDotdlw
 dQStrat <- stratPct * Nf * muArea * muYstarTi * (dlnNuh + dlng0) / (1 - h) * probProfAdopt
 # \Delta Q_i &= N_i E[k_a] E[y^*]_i \frac{1}{1 - h}(\partial \ln(g_0) - \boldsymbol{\alpha} ' \partial \ln(mathbf{w})) \Phi \left( \frac{\ln(\bar{\bar{C^*}}) - m_{ci}}{s_c} - h s_c  \right)
@@ -2547,12 +2479,12 @@ dlMuCstar <- 1 / (1 - h) * (dlnNu + dlng0)
 #   arrange(v0) %>%
 #   mutate(Type = factor(Type, Type))
 
-dfStrat$`Adoption rate\n(%)` <- 100 * round(adoptRateStrat, 3)
-dfStrat$`Change in welfare\n(Billion KES)` <- round(dPsiStrat, 2)
-dfStrat$`Change in supply\n(1000 MT)` <- round(dQStrat, 2)
+dfStrat$`Adoption\nrate\n(%)` <- 100 * round(adoptRateStrat, 3)
+dfStrat$`Change in aggregate\nproducer welfare\n(billion KES)` <- round(dPsiStrat, 2)
+dfStrat$`Change in\nsupply\n(1000 MT)` <- round(dQStrat, 2)
 dfTab <- dfStrat %>% rename(`TFP (v0)` = v0) %>%
-  select(`Type`, `Adoption rate\n(%)`, `Change in welfare\n(Billion KES)`, `Change in supply\n(1000 MT)`) %>%
-  relocate(`Type`, `Adoption rate\n(%)`, `Change in welfare\n(Billion KES)`, `Change in supply\n(1000 MT)`) %>% gather(var, val, `Adoption rate\n(%)`:`Change in supply\n(1000 MT)`)
+  select(`Type`, `Adoption\nrate\n(%)`, `Change in aggregate\nproducer welfare\n(billion KES)`, `Change in\nsupply\n(1000 MT)`) %>%
+  relocate(`Type`, `Adoption\nrate\n(%)`, `Change in aggregate\nproducer welfare\n(billion KES)`, `Change in\nsupply\n(1000 MT)`) %>% gather(var, val, `Adoption\nrate\n(%)`:`Change in\nsupply\n(1000 MT)`)
 
 #dfPlot$Type <- factor(dfPlot$Type, levels = dfPlot$`TFP (v0)`[order(dfPlot$`TFP (v0)`)], ordered = T)
 #gg <- ggplot(dfPlot, aes(x = Element, y = Type, fill = y0, label = y0))
@@ -2588,7 +2520,39 @@ gg <- gg + theme(axis.title = element_blank(),
 gg <- gg + geom_text(size = cellText_size)
 ggShiftPop <- gg
 
-ggShift / ggShiftPop + plot_layout(heights = c(1, 1 / 14))
+#===========================================================================
+# Supply curve shift
+
+# gg <- ggplot(dfOut)
+# gg <- gg + geom_ribbon(aes(x = `Expected price (KES/kg)`,
+#                            ymin = `Expected supply, dismal rainfall (10%)\n(million MT)`,
+#                            ymax = `Expected supply, high rainfall (150%)\n(million MT)`),
+#                        fill = 'blue', alpha = 0.2)
+dfLine <- dfOut[, 1:5]; colnames(dfLine)[-1] <- c("Normal rainfall", "High rainfall (150%)", "Low rainfall (50%)", "Dismal rainfall (10%)")
+dfLine <- dfLine %>% gather(rainLev, `Expected supply\n(million metric tons)`, `Normal rainfall`:`Dismal rainfall (10%)`) %>%
+  subset(rainLev %in% c("Normal rainfall", "Dismal rainfall (10%)"))
+gg <- ggplot(dfLine)
+gg <- gg + geom_line(aes(x = `Expected price (KES/kg)`, y = `Expected supply\n(million metric tons)`, group = rainLev, color = rainLev))
+gg <- gg + scale_color_manual(breaks = c("Normal rainfall", "Dismal rainfall (10%)"), values = c("black", "red"))
+
+dfShift <- dfLine %>% mutate(`Expected supply\n(million metric tons)` = `Expected supply\n(million metric tons)` + dQ * 10^-3) %>% mutate(x = "The research induced\nsupply ribbon shift")
+gg <- gg + geom_line(data = dfShift, aes(x = `Expected price (KES/kg)`, y = `Expected supply\n(million metric tons)`, group = rainLev, color = rainLev), linetype = "dashed")
+gg <- gg + facet_wrap(~x, strip.position = "right")
+gg <- gg + scale_color_manual(breaks = c("Normal rainfall", "Dismal rainfall (10%)"), values = c("black", "red"))
+#gg <- gg + labs(title = "The research induced supply ribbon shift")
+gg <- gg + theme_bw()
+gg <- gg + theme(axis.title = element_text(size = axisTitleSize),
+                 axis.text = element_text(size = axisTextSize),
+                 legend.title = element_blank(),
+                 legend.text = element_text(size = legendTextSize),
+                 legend.position = "top",
+                 strip.text = element_text(size = axisTitleSize),
+                 strip.background = element_blank())
+ggEQsT0Shift <- gg
+
+
+
+(ggShift / ggShiftPop + plot_layout(heights = c(1, 1 / 14))) | (ggEQsT0Shift)
 
 
 # gg <- ggplot(dfPlot, aes(x = `Pct of farms in sample`, y = Type))
@@ -2621,10 +2585,11 @@ ggShift / ggShiftPop + plot_layout(heights = c(1, 1 / 14))
 
 
 
+can then do the same analysis for a wide range of price and subsidy scenarios
 
-Say that the new binary endowment is targeted at 
 
-```{r Fig5, fig.show = "hold", fig.width = 5, fig.height=3, fig.align="center", fig.cap="\\label{fig:adoptMap}....", echo = FALSE}
+
+```{r Fig5, fig.show = "hold", fig.width = 7, fig.height=3, fig.align="center", fig.cap="\\label{fig:decisionMaps}Decision support heat maps of the (left to right) adoption rate, change in aggregate supply, and aggregate producer welfare, for different 'coordinates' of net subsidy and output-input price decrease given the release of a technology package in Kenya that increases maize TFP by 20%. The ratio of change in input to change in output price is fixed at 0.75 in these maps.", echo = FALSE}
 
 rm(dfPlot, dfPlot1)
 gc()
@@ -2633,41 +2598,48 @@ nRes <- 20
 # dlAw <- seq(0.05, 0.35, length.out = nRes)
 # dlP <- seq(-0.01, -0.35, length.out = nRes)
 # dlNuVec <- dlP / dlAw
-dlNuVec <- seq(-0.65, -0.36, length.out = nRes)
-dBvec <- seq(100, 1600, length.out = nRes)
+nuRatio <- 0.75
+aDotdlwVec <- seq(0.25, 0.45, length.out = nRes)
+dlP <- -nuRatio * aDotdlwVec
+#dlNuVec <- seq(-0.65, -0.36, length.out = nRes)
+dlNuVec <- rev(-aDotdlwVec + dlP)
+dlNuhVec <- rev(-aDotdlwVec + h * dlP)
+dBvec <- seq(400, 1100, length.out = nRes)
 matAdopt <- matrix(NA, nRes, nRes)
 matDq <- matrix(NA, nRes, nRes)
 matDpsi <- matrix(NA, nRes, nRes)
 for(j in 1:nRes){
     dlNu <- dlNuVec[j]
+    dlNuh <- dlNuhVec[j]
 for(i in 1:nRes){
   #---
   dB <- dBvec[i]
-  cStarMaxAdopt <- -h * dB / (dlNu + dlng0)
+  cStarMaxAdopt <- -h * dB / (dlng0 + dlNu)
   lCstarMaxAdopt <- log(cStarMaxAdopt)
   z <- (lCstarMaxAdopt - mCstari) / sCstar
-adoptRateStrat <- pnorm(z)
+  adoptRateStrat <- pnorm(z)
+  adoptRateTotal <- sum(adoptRateStrat * stratPct)
 #---
 phiArg <- (log(cStarMaxAdopt) - mCstari) / sCstar - h * sCstar
 probProfAdopt <- pnorm(phiArg)
-dPsiStrat <- stratPct * Nf * muArea * muYstarTi * EPT02007 * (dlnNu + dlng0) * (probProfAdopt - cStarMaxAdopt / muCstarih * adoptRateStrat)
+dPsiStrat <- stratPct * Nf * muArea * muYstarTi * EPT02007 * (dlng0 + dlNu) * (probProfAdopt - cStarMaxAdopt / muCstarih * adoptRateStrat)
 dPsiStrat <- dPsiStrat * 10^-9 # in billions KES
 dPsi <- sum(dPsiStrat)
-#dPsi / 67.32 # 2007 USD exchange rate
-# dlnNuh <- h * dlP - aDotdlw
-# dQStrat <- stratPct * Nf * muArea * muYstarTi * (dlnNuh + dlng0) / (1 - h) * probProfAdopt
-# # \Delta Q_i &= N_i E[k_a] E[y^*]_i \frac{1}{1 - h}(\partial \ln(g_0) - \boldsymbol{\alpha} ' \partial \ln(mathbf{w})) \Phi \left( \frac{\ln(\bar{\bar{C^*}}) - m_{ci}}{s_c} - h s_c  \right)
-# dQStrat <- 10^-3 * dQStrat # in MT
-# dQStrat <- 10^-3 * dQStrat # in 1000 MT
-# dQ <- sum(dQStrat)
-
-#matDq[i, j] <- round(dQ, 3)
+# dPsiNet <- dPsi - dB * adoptRateTotal * Nf * muArea * 10^-9
+# dPsi / 67.32 # 2007 USD exchange rate
+#---
+dQStrat <- stratPct * Nf * muArea * muYstarTi * (dlng0 + dlnNuh) / (1 - h) * probProfAdopt
+# \Delta Q_i &= N_i E[k_a] E[y^*]_i \frac{1}{1 - h}(\partial \ln(g_0) - \boldsymbol{\alpha} ' \partial \ln(mathbf{w})) \Phi \left( \frac{\ln(\bar{\bar{C^*}}) - m_{ci}}{s_c} - h s_c  \right)
+dQStrat <- 10^-3 * dQStrat # in MT
+dQStrat <- 10^-3 * dQStrat # in 1000 MT
+dQ <- sum(dQStrat)
+#---
+matDq[i, j] <- round(dQ, 3)
 matDpsi[i, j] <- round(dPsi, 3)
-matAdopt[i, j] <- round(sum(adoptRateStrat * stratPct), 3) * 100
+matAdopt[i, j] <- round(adoptRateTotal, 3) * 100
 }
 }
-rm(cStarMaxAdopt, adoptRateStrat)
-#image(matAdopt)
+
 dfAdopt <- as.data.frame(matAdopt)
 colnames(dfAdopt) <- round(dBvec, 2) # paste("dB =", round(dBvec, 2))
 gatherCols <- colnames(dfAdopt)
@@ -2686,8 +2658,9 @@ gg <- gg + theme(axis.text = element_text(size = axisTextSize),
                  axis.title = element_text(size = axisTitleSize),
                  legend.title = element_text(size = axisTitleSize),
                  legend.text = element_text(size = axisTextSize),
-                 legend.position = "top")
-gg
+                 legend.position = "top",
+                 legend.title.position = "top")
+ggAdopt <- gg
 
 
 dfMat <- as.data.frame(matDpsi)
@@ -2697,62 +2670,59 @@ dfMat$dlNu <- round(dlNuVec, 2) #paste("dlnNu =", round(dlnNuVec, 2))
 dfPlot <- dfMat %>% gather_("dB", "adoptRate", gatherCols)
 dfPlot$dB <- as.numeric(dfPlot$dB)
 gg <- ggplot(dfPlot, aes(x = dlNu, y = dB, z = adoptRate, fill = adoptRate, group = 1))
-gg <- gg + geom_tile(alpha = 1) + geom_contour(binwidth = 1000)
+gg <- gg + geom_tile(alpha = 1) + geom_contour()
 gg <- gg + metR::geom_text_contour(aes(z = adoptRate),
                                    #breaks = seq(100, 3000, length.out = 6),
                                    stroke = 0.15)
 gg <- gg + scale_fill_gradient(low = "coral", high = "cyan")
 #gg <- gg + geom_text(aes(label = adoptRate), size = labelSize)
-gg <- gg + labs(fill = "Change in welfare (Billion KES)", x = "Decrease in output input price ratio (%)",
+gg <- gg + labs(fill = "Change in aggregate\nproducer welfare (billion KES)", x = "Decrease in output input price ratio (%)",
                 y = "Net subsidy (KES/acre)")
 gg <- gg + theme_bw()
 gg <- gg + theme(axis.text = element_text(size = axisTextSize),
-                 axis.title = element_text(size = axisTitleSize),
+                 axis.title.x = element_text(size = axisTitleSize),
+                 axis.title.y = element_blank(),
                  legend.title = element_text(size = axisTitleSize),
                  legend.text = element_text(size = axisTextSize),
-                 legend.position = "top")
-gg
+                 legend.position = "top",
+                 legend.title.position = "top")
+ggDpsi <- gg
+
+dfMat <- as.data.frame(matDq)
+colnames(dfMat) <- round(dBvec, 2) # paste("dB =", round(dBvec, 2))
+gatherCols <- colnames(dfMat)
+dfMat$dlNu <- round(dlNuVec, 2) #paste("dlnNu =", round(dlnNuVec, 2))
+dfPlot <- dfMat %>% gather_("dB", "adoptRate", gatherCols)
+dfPlot$dB <- as.numeric(dfPlot$dB)
+gg <- ggplot(dfPlot, aes(x = dlNu, y = dB, z = adoptRate, fill = adoptRate, group = 1))
+gg <- gg + geom_tile(alpha = 1) + geom_contour()
+gg <- gg + metR::geom_text_contour(aes(z = adoptRate),
+                                   #breaks = seq(100, 3000, length.out = 6),
+                                   stroke = 0.15)
+gg <- gg + scale_fill_gradient(low = "coral", high = "cyan")
+#gg <- gg + geom_text(aes(label = adoptRate), size = labelSize)
+gg <- gg + labs(fill = "Change in aggregate supply (1000 MT)", x = "Decrease in output input price ratio (%)",
+                y = "Net subsidy (KES/acre)")
+gg <- gg + theme_bw()
+gg <- gg + theme(axis.text = element_text(size = axisTextSize),
+                 axis.title.x = element_text(size = axisTitleSize),
+                 axis.title.y = element_blank(),
+                 legend.title = element_text(size = axisTitleSize),
+                 legend.text = element_text(size = axisTextSize),
+                 legend.position = "top",
+                 legend.title.position = "top")
+ggDq <- gg
 
 
-
-
+ggAdopt | ggDq | ggDpsi
 
 gc()
-
-
-#===========================================================================
-# Supply curve shift
-dlNu <- -0.4
-dlEPT0 <-  -0.15
-aDotdlW <- dlEPT0 - dlNu
-dlmuEyStarT0 <- 1 / (1 - h) * (dlng0 - aDotdlW)
-dB <- 2000
-cStarMaxAdopt <- -h * dB / (dlNu + dlng0)
-lCstarMaxAdopt <- log(cStarMaxAdopt)
-z <- (lCstarMaxAdopt - mCstari) / sCstar
-adoptRateStrat <- pnorm(z)
-adoptRate <- sum(adoptRateStrat * stratPct)
-#dfOut <- EQsFun(EPT0vec, muEyStarT0, mEcSharpT0, sEcSharpT0, h, muArea, Nf, kappaRn)
-gatherCols <- colnames(dfPlot)[-1]
-dfPlot <- dfOut %>% select(`Expected price (KES/kg)`, `Expected supply\n(million MT)`) %>%
-  mutate(newCurve = `Expected supply\n(million MT)` * (1 + adoptRate * dlmuEyStarT0)) %>%
-  gather_("curve", "val", gatherCols)
-
-gg <- ggplot(dfPlot, aes(x = `Expected price (KES/kg)`, y = val, color = curve, group = curve))
-gg <- gg + geom_line()
-gg
-
-# gg <- gg + scale_color_manual(breaks = c("Normal rainfall", "High rainfall (150%)", "Low rainfall (50%)", "Dismal rainfall (10%)"), values = c("black", "green", "orange", "red"))
-
-#===========================================================================
-# Welfare impact
-wf <- adoptRate * N * (1 / h * (dlNu + dlng0))
 
 
 
 ```
 
-$\overset{a}{\bar{C}^*}$
+<!-- $\overset{a}{\bar{C}^*}$ -->
 
 
 ```{r, echo=FALSE}
@@ -2772,6 +2742,14 @@ can also look at shocks to continuous endowments k, rainfall etc., many of these
 
 
 # Discussion and conclusion
+
+this a direct measure of welfare.
+can do same analysis focusing on specific strata.
+could examine the supply and welfare impact if hybrid maize adopted in strata where not yet adopted
+this is comparative statics. welfare has to be discounted according to release/adoption period. welfare and subsidy incur year by year
+have to think of supply not as curve but as a supply channel or ribbon or interval.
+have not considered the role of price volatility
+
 all the things we couldn't get to
 
 the percentage shift $\partial \nu$ will ultimately depend upon the change in equilibrium price, which requires the demand curve... no space here but demand curve will look like an aggregate input demand curve.
