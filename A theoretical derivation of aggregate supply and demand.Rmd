@@ -379,7 +379,7 @@ y^* = v_0 k C^{*h}e^{\epsilon} \:\:;\:\:\: v_0 = \frac{E[y^*]}{E[k] E[C^{*h}]}
 \label{eq:YdEnvReg1}
 \end{equation}
 
-(Where $\epsilon$ is the error term.) Such that the estimated coefficient on logged farm cost may be directly interpreted as the degree of homogeneity for the population. When estimating the model in Equations \ref{eq:cobbDoug2} or \ref{eq:cobbDoug3}, by contrast, $h$ must be tallied by summing the estimated coefficients $\alpha_i$, and will likely vary across the population since not all farms necessarily apply all the inputs specified in the model. The new term $v_0$, moreover, is arguably a more meaningful measure of TFP than $g_0$, since inputs are expressed in identical units of cost. It is henceforth referred to as the expenditure TFP.
+(Where $\epsilon$ is the error term.) Such that the estimated coefficient on logged farm cost may be directly interpreted as the degree of homogeneity for the population. When estimating the model in Equations \ref{eq:cobbDoug2} or \ref{eq:cobbDoug3}, by contrast, $h$ must be tallied by summing the estimated coefficients $\alpha_i$, and will likely vary across the population since not all farms necessarily apply all the inputs specified in the model. The new term $v_0$, moreover, is arguably a more meaningful measure of TFP than $g_0$, since inputs are expressed in identical units of cost. It is henceforth referred to as the "expenditure TFP".
 
 In Appendices A.2 and A.3 it is shown that axioms 1 and 2 imply the degree of homogeneity $h$ must exhibit strictly decreasing returns to scale ($0 < h < 1$), whereby it also follows that farm yield is globally concave in inputs, and that the farm supply curve is positively sloped. It is also shown that the output price elasticity of farm supply ($\eta$) is
 
@@ -1914,7 +1914,7 @@ gg <- gg + theme(axis.title = element_blank(),
                  panel.border = element_blank(),
                  legend.position = "none")
 ggBlank <- gg
-  
+
 
 (ggEndow1 / ggEndowPop + plot_layout(heights = c(1, 1 / 14))) | (ggEndow2 / ggBlank + plot_layout(heights = c(1, 1 / 14)))
 
@@ -1925,12 +1925,12 @@ The two remaining parameters required to evaluate expected aggregate supply in E
 
 With all the necessary parameters estimated, the theoretical expected aggregate supply curve developed in the sections above is plotted at the four expected rainfall levels, with empirical aggregate supply estimates overlaid, in the top panel of Figure \ref{fig:EaggQs}. The empirical estimates for the major drought years agree closely with the theoretical expected supply curve evaluated at the "dismal" rainfall level, while the estimates in normal or good rainfall years generally agree with the theoretical curve evaluated at the "normal" and "high" rainfall levels. The curve overshoots the 2010 estimate somewhat, possibly due to crop loss from flooding that year [@GIEWS5Aug2010]. The one major empirical divergence from the theoretical curve is 2009, an historic drought year [@MoApressRelease2009].
 
-The price elasticity of expected aggregate supply curve is presented in Figure \ref{fig:EaggQs}, bottom. Empirical estimates of the maize price elasticity of supply in Kenya generally range from $0.1$ to $0.365$ [@abodi2021supply; @onono2013response; @olwande2009supply], which is roughly the range of elasticities indicated by the theoretical curve for the years examined here.
+The price elasticity of expected aggregate supply curve is presented in the bottom panel of Figure \ref{fig:EaggQs}. Empirical estimates of the maize price elasticity of supply in Kenya generally range from $0.1$ to $0.365$ [@abodi2021supply; @onono2013response; @olwande2009supply], which is roughly the range of elasticities indicated by the theoretical curve for the years examined here.
 <!-- In one study, Onono et al.'s estimate of price elasticity of supply: 0.365 [@onono2013response] -->
 
-Given the sensitivity of aggregate supply to meteorological conditions, the notion of a single supply "curve" is misleading. It is more accurate to a speak of a supply bracket or "ribbon" bounded on top and bottom by the best and worst case meteorological scenarios---in this case the curves corresponding to high and dismal rainfall.
+A key message emerging from these results is that aggregate supply varies widely with meteorological conditions. It is thus highly misleading to speak of a single supply "curve". Rather, individual supply curves represent specific meteorological scenarios within a broad range of such scenarios. It is thus more accurate to speak of a supply range or "ribbon" bounded by supply curves on top and bottom representing best and worst case meteorological scenarios, respectively.
 
-The expected aggregate supply and price elasticity curves parameterized in this exercise are "short run" curves. That is to say, they are valid only insofar as the values of their fitted parameters---$h$, $N$, $k_a$, $k$, $m_{\#}$, $s_{\#}$, $m_p$---are accurate. Empirical estimates for years well before or well after the year of the data used to estimate the parameters will thus diverge from the curve.
+Finally, it is important to keep in mind that the expected aggregate supply and price elasticity curves parameterized in this exercise are "short run" curves in the sense that they are valid only insofar as the values of their fitted parameters---$h$, $N$, $k_a$, $k$, $m_{\#}$, $s_{\#}$, $m_p$---are accurate. Empirical estimates for years well before or well after the year of the data used to estimate the parameters can be expected to diverge from the curve.
 
 \singlespacing
 ```{r Fig4, fig.show = "hold", fig.width = 5, fig.height=5, fig.align="center", fig.cap="\\label{fig:EaggQs}(Top) The theoretical expected aggregate maize supply curve fitted to 2007 Kenya long rains maize season data, plotted against empirical estimates of expected aggregate supply for the years 2006-2012. (Bottom) The corresponding theoretical price elasticity of expected aggregate supply curve.", echo = FALSE}
@@ -2142,7 +2142,7 @@ ggEQsT0 / ggEtaEPT0EQsT0a
 
 ## The research induced supply ribbon shift
 
-The impact of yield scaling technologies and/or management practices on aggregate supply can be represented through perturbations of the TFP parameter ($g_0$). This is tantamount to adding a dummy endowment variable to the yield model in Equation \ref{eq:lYdEnvReg3}. The four endowmwnt dummies included in the Kenya maize example may be considered yield scaling interventions that increase the value of $g_0$ on adopting farms. The percentage increase in TFP given the introduction of a new intervention $\beta_5 b_5$ (representing, for example, improved seed and practices), on farms that implement the new technology (farms where $b_5 = 1$) may be calculated as
+The impact of yield scaling technologies and/or management practices on aggregate supply can be represented through perturbations of the TFP parameter ($g_0$). This is tantamount to adding a dummy endowment variable to the yield model in Equation \ref{eq:lYdEnvReg3}. The four endowmwnt dummies included in the Kenya maize example may be considered yield scaling interventions that increase the value of $g_0$ on adopting farms. The percentage increase in TFP given the introduction of a new intervention $\beta_5 b_5$ on farms that implement the new technology (farms where $b_5 = 1$) may be calculated as
 
 \begin{equation}
 \begin{split}
@@ -2157,14 +2157,17 @@ The resulting percentage changes in farm level expenditure TFP ($v_0$), expendit
 
 \begin{equation}
 \frac{\partial \ln(v_0)}{\partial \ln(g_0)} = 1 - \boldsymbol{\alpha} ' \frac{\partial \ln(\mathbf{w})}{\partial \ln(g_0)}
+\label{eq:dlv0dlg0}
 \end{equation}
 
 \begin{equation}
 \frac{\partial \ln(C^*)}{\partial \ln(g_0)} = \frac{1}{1 - h} \left( 1 - \boldsymbol{\alpha} ' \frac{\partial \ln(\mathbf{w})}{\partial \ln(g_0)} + \frac{\partial \ln(P)}{\partial \ln(g_0)} \right)
+\label{eq:dlCstardlg0}
 \end{equation}
 
 \begin{equation}
 \frac{\partial \ln(y^*)}{\partial \ln(g_0)} = \frac{1}{1 - h} \left( 1 - \boldsymbol{\alpha} ' \frac{\partial \ln(\mathbf{w})}{\partial \ln(g_0)} + h \frac{\partial \ln(P)}{\partial \ln(g_0)} \right)
+\label{eq:dlyStardlg0}
 \end{equation}
 <!-- -- -->
 <!-- We note that the change in expenditure, unconditional mean expenditure, yield, and expected unconditional mean yield follow from Equations ..., and are all the same. -->
@@ -2212,7 +2215,7 @@ The only substantive difference between Lipton's condition and the condition in 
 If the efficiency adjusted output-input price ratio decrease is greater than the increase in TFP ($g_0$), then the margin by which it is greater is the net subsidy term $h / C^* \partial B$ required to make adoption profitable. Note that the required net subsidy $\partial B$ will vary across farms based on $C^*$. The factor $h / C^*$, which may also be written $\lambda / E[R^*(T)]|_{t = 0}$, represents each farm's marginal valuation of the subsidy; and implies that the subsidy is relatively more valuable to farms with relatively lower expenditure. Solving Inequality \ref{eq:adoptCond} for $C^*$ gives the maximum expenditure level for which adoption is profitable if the (absolute value of the) efficiency adjusted output-input price ratio decrease is greater than the increase in TFP ($|\partial \ln(\nu)| > \partial \ln(g_0)$).
 
 \begin{equation}
-C^* < \frac{-h \partial B}{\partial \ln(\nu) + \partial \ln(g_0)}
+C^* \leq \frac{-h \partial B}{\partial \ln(\nu) + \partial \ln(g_0)}
 \label{eq:cStarAdopt}
 \end{equation}
 
@@ -2257,21 +2260,27 @@ s_c^2 &= \frac{1}{(1 - h)^2} (s_k^2 + s_{\#}^2)
 Because the adoption rate is partly a function of $v_{0i}$, it varies across strata. The adoption rate for the whole population is then
 
 \begin{equation}
-\mathcal{A} = \sum_i \frac{N_i}{N} \mathcal{A}_i
+\begin{split}
+\mathcal{A} = \sum_i \frac{N_i}{N} \mathcal{A}_i \\
+&\text{where} \\
+&\mathcal{A}_i = \Phi\left( \frac{\frac{-h \partial B}{\partial \ln(\nu) + \partial \ln(g_0)} - m_{ci}}{s_c} \\
+&m_{ci} = \frac{1}{1 - h}(\ln(v_{0i}) + m_k + m_{\#})
+\end{split}
+\label{eq:AdoptRatei}
 \end{equation}
 
-Where
+(Note that the adoption rate will be higher in strata with lower starting $v_{0i}$, _ceteris paribus_.)
+
+The aggregate net subsidy required to reach this adoption rate can then be computed as the subsidy per unit area times the total farm area times the adoption rate.
 
 \begin{equation}
-\begin{split}
-\mathcal{A}_i &= \Phi\left( \frac{\frac{-h \partial B}{\partial \ln(\nu) + \partial \ln(g_0)} - m_{ci}}{s_c} \\
-& m_{ci} = \frac{1}{1 - h}(\ln(v_{0i}) + m_k + m_{\#})
+\text{Aggregate net subsidy} = \partial B N E[k_a] \mathcal{A}
+\label{eq:aggSubsidy}
 \end{equation}
 
-Note that the adoption rate will be higher in strata with lower starting $v_{0i}$, _ceteris paribus_.
+aggSubsidy <- dB * Nf * muArea * adoptRateTotal * 10^-9 # Total subsidies in billions
 
 <!-- The percentage change in aggregate supply given a 1% change in TFP follows from Equations \ref{eq:aggSup2} and \ref{eq:ddlng0}, -->
-
 <!-- \begin{equation} -->
 <!-- \begin{split} -->
 <!-- \frac{\partial \ln(E[Q(T)]|_{t = 0})}{\partial \ln(g_0)} = \frac{\partial \ln E[\tilde{y}^*(T; k_m(T))]|_{t = 0}}{\partial \ln(g_0)} \\ -->
@@ -2312,9 +2321,7 @@ Q &= E[Q(T)]|_{t = 0}
 Where the resolution of the integral in the last line follows from Equation \ref{eq:keyResult}. Recalling that $v_{0i} = E[y^*]_i / (E[k] E[C^{*h}]_i)$ (Equation \ref{eq:v0i}), this further reduces to
 
 \begin{equation}
-\begin{split}
-\Delta Q_i &= N_i E[k_a] E[y^*]_i \frac{1}{1 - h}(\partial \ln(g_0) - \boldsymbol{\alpha} ' \partial \ln(mathbf{w})) \Phi \left( \frac{\ln(\bar{\bar{C^*}}) - m_{ci}}{s_c} - h s_c  \right)
-\end{split}
+\Delta Q_i = N_i E[k_a] E[y^*]_i \frac{1}{1 - h}(\partial \ln(g_0) - \boldsymbol{\alpha} ' \partial \ln(mathbf{w})) \Phi \left( \frac{\ln(\bar{\bar{C^*}}) - m_{ci}}{s_c} - h s_c  \right)
 \label{eq:deltQ}
 \end{equation}
 <!-- $$ -->
@@ -2369,6 +2376,7 @@ The total change in expected aggregate supply across all strata then follows as
 
 \begin{equation}
 \Delta Q = \sum_i \Delta Q_i
+\label{eq:dQ}
 \end{equation}
 
 The new aggregate supply curve ($Q'$) can then be evaluated as
@@ -2429,31 +2437,29 @@ The total change in aggregate net benefit summed across all strata then follows 
 
 \begin{equation}
 \Delta \psi = \sum_i \Delta \psi_i
+\label{eq:dPsi}
 \end{equation}
 
-
-
-
-Say $\beta_5 = 0.3$. Then $\partial \ln(g_0) = 0.35$, and so, by the criterion in Inequality \ref{eq:adoptCondSimp} adoption in the absence of exogenous subsidies/costs will increase farm net benefit if the associated percentage decrease in output price plus the $\alpha_i$-scaled increase in input prices (i.e. $\partial \ln(\nu)$) is less than $35\%$. 
-The adoption rate for the hypothetical new technology described above ($\beta_5 = 0.3$), assuming a 40% decrease in the $\alpha_i$-adjusted output-input price ratio, with a net subsidy per acre of $\partial B = 2.5$, is presented in Figure \ref{fig:v0strata} alongside the mean yield, cost, and TFP ($v_0$), disaggregated by stratum.
-
-The pct change in v0 TFP, yield, and expenditure...
-
-\singlespacing
-
-```{r Fig5, fig.show = "hold", fig.width = 6, fig.height=3, fig.align="center", fig.cap="\\label{fig:v0strata}(Left) The adoption rate, change in welfare, and change in supply for each of the 14 different combinations of binary endowments present in the Kenya farm data; and (right) the research induced expected aggregate supply ribbon shift, where the dotted lines represent the new normal and dismal rainfall bounds of the aggregate supply ribbon.... given subsidy x and price ration decrease y.", echo = FALSE}
+```{r, echo=FALSE}
 
 # betaNew <- 0.2
 # dlng0 <- exp(betaNew) - 1
-dlng0 <- 0.2
+dlng0 <- 0.28
 betaNew <- log(dlng0 + 1)
-aDotdlw <- 0.2; dlP <- -0.20
+nuRatio <- 0.75
+aDotdlw <- 0.2; dlP <- -aDotdlw * nuRatio
 dlnNu <- dlP - aDotdlw
-dB <- 800
+dlnNuh <- h * dlP - aDotdlw
+dlv0dlg0 <- dlng0 - aDotdlw
+dlMuCstar <- 1 / (1 - h) * (dlnNu + dlng0)
+dlMuYstarT <- 1 / (1 - h) * (dlnNuh + dlng0)
+dB <- 550
 cStarMaxAdopt <- -h * dB / (dlnNu + dlng0)
 z <- (log(cStarMaxAdopt) - mCstari) / sCstar
 adoptRateStrat <- pnorm(z)
 adoptRateTotal <- sum(adoptRateStrat * stratPct)
+aggSubsidy <- dB * Nf * muArea * adoptRateTotal * 10^-9 # Total subsidies in billions
+aggSubsidyUSD <- aggSubsidy / 67 * 10^3 #in million USD
 # A = \Phi\left( \frac{\frac{-h (1 - h) \partial B}{\partial \ln(\nu) + \partial \ln(g_0)} - (\ln(v_0) + m_k + m_{\#})}{\sqrt{s_k^2 + s_{\#}^2}} \right)
 phiArg <- (log(cStarMaxAdopt) - mCstari) / sCstar - h * sCstar
 probProfAdopt <- pnorm(phiArg)
@@ -2461,23 +2467,23 @@ dPsiStrat <- stratPct * Nf * muArea * muYstarTi * EPT02007 * (dlnNu + dlng0) * (
 dPsiStrat <- dPsiStrat * 10^-9 # in billions KES
 dPsi <- sum(dPsiStrat)
 #dPsi / 67.32 # 2007 USD exchange rate
-dlnNuh <- h * dlP - aDotdlw
 dQStrat <- stratPct * Nf * muArea * muYstarTi * (dlnNuh + dlng0) / (1 - h) * probProfAdopt
 # \Delta Q_i &= N_i E[k_a] E[y^*]_i \frac{1}{1 - h}(\partial \ln(g_0) - \boldsymbol{\alpha} ' \partial \ln(mathbf{w})) \Phi \left( \frac{\ln(\bar{\bar{C^*}}) - m_{ci}}{s_c} - h s_c  \right)
 dQStrat <- 10^-3 * dQStrat # in MT
 dQStrat <- 10^-3 * dQStrat # in 1000 MT
 dQ <- sum(dQStrat)
-#---
-dlMuYstarT <- 1 / (1 - h) * (dlnNuh + dlng0)
-dlMuCstar <- 1 / (1 - h) * (dlnNu + dlng0)
-#---
-# dfPlot <- data.frame(Type = endowVec, v0 = round(v0, 1)) %>%
-#   mutate(xx = 1) %>% group_by(Type) %>%
-#   summarise(`Number of farms` = sum(xx, na.rm = T), v0 = unique(v0)) %>%
-#   as.data.frame() %>%
-#   mutate(`Pct of farms in sample` = `Number of farms` / sum(`Number of farms`) * 100) %>%
-#   arrange(v0) %>%
-#   mutate(Type = factor(Type, Type))
+
+
+```
+
+Returning to the Kenya maize data, say a new technology package is released in Kenya that results in a `r 100 * dlng0`% increase in TFP on adopting farms. This is tantamount to adding another binary endowment $b_5\beta_5 =$ `r round(betaNew, 2)` to the yield model. Say that the expected $\boldsymbol{\alpha}$-adjusted percentage increase in input prices ($\boldsymbol{\alpha} '\partial \ln(\mathbf{w})$) is `r aDotdlw`, and the expected percentage decrease in output price ($\partial \ln(P)$) is `r dlP`, such that $\partial \ln(\nu) =$ `r dlnNu`, which is greater than the percentage increase in TFP. Adoption would thus result in a `r 100 * dlv0dlg0`% increase in expenditure TFP ($v_0$), a `r -round(100 * dlMuCstar)`% reduction in expenditure, and a `r round(100 * dlMuYstarT)`% increase in yield on adopting farms (recall Equations \ref{eq:dlv0dlg0}, \ref{eq:dlyStardlg0}, and \ref{eq:dlCstardlg0}). However, by the criterion in Inequality \ref{eq:adoptCondSimp}, adoption makes economic sense for the farmer only if a net subsidy is included in the technology package (i.e., only if $\partial B > 0$).
+
+Say that the Ministry of Agriculture offers a net subsidy of $\partial B = $ `r dB` KES/acre to adopting farms, perhaps in the form of free seed and fertilizer. This then implies the adoption expenditure per acre ceiling of $\bar{\bar{C}^*} =$ `r round(cStarMaxAdopt)` KES (recall Equation \ref{eq:cStarAdopt}), and the corresponding adoption rate of $\mathcal{A} =$ `r round(100 * adoptRateTotal, 1)`% (recall Equation \ref{eq:AdoptRatei}). The aggregate net subsidy required from the Ministry of Agriculture to achieve this rate follows from Equation \ref{eq:aggSubsidy} as `r round(aggSubsidy, 2)` billion KES. The corresponding increase in aggregate supply and producer welfare follow from Equations \ref{eq:dQ} and \ref{eq:dPsi} as `r round(dQ, 2)` 1000 MT and `r round(dPsi, 2)` billion KES, respectively. The breakdown by stratum is given in the left panel of Figure \ref{fig:intervention}, accompanied by a graphic of the supply ribbon shift in the right panel.
+<!-- By the criterion in Inequality \ref{eq:adoptCondSimp}, adoption in the absence of exogenous subsidies/costs will increase farm net benefit only if the the percentage increase in TFP $\partial \ln(g_0) =$ `r 100 * dlng0`% is greater than the absolute value of the percentage decrease in output price plus the $\alpha_i$-scaled increase in input prices (i.e. only if $\partial \ln(g_0) > |\partial \ln(\nu)|$).  -->
+
+\singlespacing
+
+```{r Fig5, fig.show = "hold", fig.width = 6, fig.height=3, fig.align="center", fig.cap="\\label{fig:intervention}(Left) The adoption rate, change in welfare, and change in supply for each of the 14 binary endowment strata, for the technological intervention described in the text. (Right) The corresponding expected aggregate supply ribbon shift, where the dotted lines represent the new normal and dismal rainfall bounds of the aggregate supply ribbon.", echo = FALSE}
 
 dfStrat$`Adoption\nrate\n(%)` <- 100 * round(adoptRateStrat, 3)
 dfStrat$`Change in aggregate\nproducer welfare\n(billion KES)` <- round(dPsiStrat, 2)
@@ -2598,8 +2604,7 @@ nRes <- 20
 # dlAw <- seq(0.05, 0.35, length.out = nRes)
 # dlP <- seq(-0.01, -0.35, length.out = nRes)
 # dlNuVec <- dlP / dlAw
-nuRatio <- 0.75
-aDotdlwVec <- seq(0.25, 0.45, length.out = nRes)
+aDotdlwVec <- seq(0.15, 0.45, length.out = nRes)
 dlP <- -nuRatio * aDotdlwVec
 #dlNuVec <- seq(-0.65, -0.36, length.out = nRes)
 dlNuVec <- rev(-aDotdlwVec + dlP)
