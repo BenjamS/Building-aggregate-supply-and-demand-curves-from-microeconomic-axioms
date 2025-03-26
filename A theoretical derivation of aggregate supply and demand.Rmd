@@ -2169,6 +2169,7 @@ The resulting percentage changes in farm level expenditure TFP ($v_0$), expendit
 \frac{\partial \ln(y^*)}{\partial \ln(g_0)} = \frac{1}{1 - h} \left( 1 - \boldsymbol{\alpha} ' \frac{\partial \ln(\mathbf{w})}{\partial \ln(g_0)} + h \frac{\partial \ln(P)}{\partial \ln(g_0)} \right)
 \label{eq:dlyStardlg0}
 \end{equation}
+address unavailability of alpha
 <!-- -- -->
 <!-- We note that the change in expenditure, unconditional mean expenditure, yield, and expected unconditional mean yield follow from Equations ..., and are all the same. -->
 
@@ -2589,11 +2590,13 @@ ggEQsT0Shift <- gg
 ```
 \doublespacing
 
+policymakers may disagree over details regarding the expected rise in input costs and decrease in output price, and face a changing landscape of fiscal constraints that require consideration of multiple net subsidy scenarios.
 
 
+the intervention scenario considered just a point on a map of possible supply shift and welfare outcomes given the expected 
 can then do the same analysis for a wide range of price and subsidy scenarios
 
-
+address the alpha in aDotW
 
 ```{r Fig5, fig.show = "hold", fig.width = 7, fig.height=3, fig.align="center", fig.cap="\\label{fig:decisionMaps}Decision support heat maps of the (left to right) adoption rate, change in aggregate supply, and aggregate producer welfare, for different 'coordinates' of net subsidy and output-input price decrease given the release of a technology package in Kenya that increases maize TFP by 20%. The ratio of change in input to change in output price is fixed at 0.75 in these maps.", echo = FALSE}
 
