@@ -2196,7 +2196,7 @@ The aggregate impact of such interventions hinges critically on the adoption rat
 \label{eq:adoptCond}
 \end{equation}
 
-Where the term $\partial B$ represents the marginal subsidies, costs, or any other exogenous mitigating circumstances, per unit area, entailed in the adoption of the technology package. In the absence of such mitigating circumstances, the condition simplifies to
+Where the term $\partial B$ represents the subsidies, costs, or any other exogenous mitigating circumstances, per unit area, entailed in the adoption of the technology package. In the absence of such mitigating circumstances, the condition simplifies to
 
 \begin{equation}
 \partial \ln(g_0) > -\partial \ln(\nu)
@@ -2455,12 +2455,20 @@ dlv0dlg0 <- dlng0 - aDotdlw
 dlMuCstar <- 1 / (1 - h) * (dlnNu + dlng0)
 dlMuYstarT <- 1 / (1 - h) * (dlnNuh + dlng0)
 dB <- 550
+#---
+# Save to mark on heat maps below
+dlNuPoint <- dlnNu
+dBPoint <- dB
+#---
 cStarMaxAdopt <- -h * dB / (dlnNu + dlng0)
 z <- (log(cStarMaxAdopt) - mCstari) / sCstar
 adoptRateStrat <- pnorm(z)
 adoptRateTotal <- sum(adoptRateStrat * stratPct)
+aggSubsidyStrat <- stratPct * dB * Nf * muArea * adoptRateStrat * 10^-9 # Total subsidies in billions
 aggSubsidy <- dB * Nf * muArea * adoptRateTotal * 10^-9 # Total subsidies in billions
+#sum(aggSubsidyStrat) - aggSubsidy # Check if zero
 aggSubsidyUSD <- aggSubsidy / 67 * 10^3 #in million USD
+aggSubsidyStratMilln <- aggSubsidyStrat * 10^3
 # A = \Phi\left( \frac{\frac{-h (1 - h) \partial B}{\partial \ln(\nu) + \partial \ln(g_0)} - (\ln(v_0) + m_k + m_{\#})}{\sqrt{s_k^2 + s_{\#}^2}} \right)
 phiArg <- (log(cStarMaxAdopt) - mCstari) / sCstar - h * sCstar
 probProfAdopt <- pnorm(phiArg)
@@ -2484,7 +2492,7 @@ Say that the Ministry of Agriculture offers a net subsidy of $\partial B = $ `r 
 
 \singlespacing
 
-```{r Fig5, fig.show = "hold", fig.width = 6, fig.height=3, fig.align="center", fig.cap="\\label{fig:intervention}(Left) The adoption rate, change in welfare, and change in supply for each of the 14 binary endowment strata, for the technological intervention described in the text. (Right) The corresponding expected aggregate supply ribbon shift, where the dotted lines represent the new normal and dismal rainfall bounds of the aggregate supply ribbon.", echo = FALSE}
+```{r Fig5, fig.show = "hold", fig.width = 7, fig.height=3, fig.align="center", fig.cap="\\label{fig:intervention}(Left) The adoption rate, change in welfare, and change in supply for each of the 14 binary endowment strata, for the technological intervention described in the text. (Right) The corresponding expected aggregate supply ribbon shift, where the dotted lines represent the new normal and dismal rainfall bounds of the aggregate supply ribbon.", echo = FALSE}
 
 dfStrat$`Adoption\nrate\n(%)` <- 100 * round(adoptRateStrat, 3)
 dfStrat$`Change in aggregate\nproducer welfare\n(billion KES)` <- round(dPsiStrat, 2)
@@ -2590,6 +2598,7 @@ ggEQsT0Shift <- gg
 ```
 \doublespacing
 
+
 policymakers may disagree over details regarding the expected rise in input costs and decrease in output price, and face a changing landscape of fiscal constraints that require consideration of multiple net subsidy scenarios.
 
 
@@ -2598,16 +2607,16 @@ can then do the same analysis for a wide range of price and subsidy scenarios
 
 address the alpha in aDotW
 
-```{r Fig5, fig.show = "hold", fig.width = 7, fig.height=3, fig.align="center", fig.cap="\\label{fig:decisionMaps}Decision support heat maps of the (left to right) adoption rate, change in aggregate supply, and aggregate producer welfare, for different 'coordinates' of net subsidy and output-input price decrease given the release of a technology package in Kenya that increases maize TFP by 20%. The ratio of change in input to change in output price is fixed at 0.75 in these maps.", echo = FALSE}
+```{r Fig5, fig.show = "hold", fig.width = 7, fig.height=3, fig.align="center", fig.cap="\\label{fig:decisionMaps}Kenya maize farm subsidy policy heat maps of the (left to right) adoption rate, change in aggregate supply, and aggregate producer welfare given release of the technology package described in the text. Each 'coordinate' on the map represents an assumed percentage decrease in the $\\alpha$ adjusted output-input price ratio and net subsidy/acre. The ratio of change in input to change in output price is fixed at 0.75. The scenario presented in the previous figure above is marked with a blue dot.", echo = FALSE}
 
 rm(dfPlot, dfPlot1)
 gc()
 # Adoption rate map
-nRes <- 20
+nRes <- 30
 # dlAw <- seq(0.05, 0.35, length.out = nRes)
 # dlP <- seq(-0.01, -0.35, length.out = nRes)
 # dlNuVec <- dlP / dlAw
-aDotdlwVec <- seq(0.15, 0.45, length.out = nRes)
+aDotdlwVec <- seq(0.18, 0.45, length.out = nRes)
 dlP <- -nuRatio * aDotdlwVec
 #dlNuVec <- seq(-0.65, -0.36, length.out = nRes)
 dlNuVec <- rev(-aDotdlwVec + dlP)
@@ -2617,11 +2626,13 @@ matAdopt <- matrix(NA, nRes, nRes)
 matDq <- matrix(NA, nRes, nRes)
 matDpsi <- matrix(NA, nRes, nRes)
 for(j in 1:nRes){
-    dlNu <- dlNuVec[j]
-    dlNuh <- dlNuhVec[j]
+    dB <- dBvec[j]
+    #dB <- dBvec[indY]
 for(i in 1:nRes){
+    dlNu <- dlNuVec[i]
+    #dlNu <- dlNuVec[indX]
+    dlNuh <- dlNuhVec[i]
   #---
-  dB <- dBvec[i]
   cStarMaxAdopt <- -h * dB / (dlng0 + dlNu)
   lCstarMaxAdopt <- log(cStarMaxAdopt)
   z <- (lCstarMaxAdopt - mCstari) / sCstar
@@ -2648,6 +2659,9 @@ matAdopt[i, j] <- round(adoptRateTotal, 3) * 100
 }
 }
 
+indX <- which(abs(dlNuPoint - dlNuVec) == min(abs(dlNuPoint - dlNuVec)))
+indY <- which(abs(dBPoint - dBvec) == min(abs(dBPoint - dBvec)))
+matAdopt[indX, indY] <- NA
 dfAdopt <- as.data.frame(matAdopt)
 colnames(dfAdopt) <- round(dBvec, 2) # paste("dB =", round(dBvec, 2))
 gatherCols <- colnames(dfAdopt)
@@ -2657,8 +2671,12 @@ dfPlot$dB <- as.numeric(dfPlot$dB)
 gg <- ggplot(dfPlot, aes(x = dlNu, y = dB, z = adoptRate, fill = adoptRate, group = 1))
 gg <- gg + geom_tile(alpha = 1) + geom_contour()
 gg <- gg + metR::geom_text_contour(aes(z = adoptRate), stroke = 0.15)
-gg <- gg + scale_fill_gradient(low = "coral", high = "cyan")
+gg <- gg + scale_fill_gradient(low = "coral", high = "cyan", na.value = "blue")
 #gg <- gg + geom_text(aes(label = adoptRate), size = labelSize)
+# gg <- gg + annotate("rect", 
+#            xmin = dlNuPoint - 0.01, xmax = dlNuPoint + 0.01,
+#            ymin = dBPoint - 0.5, ymax = dBPoint + 0.5,
+#            fill = "blue", alpha = 0.8)
 gg <- gg + labs(fill = "Adoption rate (%)", x = "Decrease in output input price ratio (%)",
                 y = "Net subsidy (KES/acre)")
 gg <- gg + theme_bw()
