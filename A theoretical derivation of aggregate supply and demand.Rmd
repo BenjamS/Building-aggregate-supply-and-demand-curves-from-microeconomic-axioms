@@ -1,9 +1,9 @@
 ---
-title: A theoretical derivation of the aggregate agricultural supply curve
+title: A theoretical derivation of the aggregate agricultural supply curve and research induced supply curve shift
 # author: "Benjamin Schiek"
 # date: "`r Sys.Date()`"
 abstract: |
-  Conventional models of the aggregate supply of agricultural commodities---specifically those often used in ex-ante impact assessments of policy and research shocks---do not endogenously model the supply response to technology (or any other exogenous) shocks, but rather 1) assume the farm level supply response as exogenously given based on agronomic information, and then 2) assume, as a matter of fiat, the mechanism by which the farm level response manifests at the aggregate level (whether it is a shift or pivot of the aggregate supply curve). Such models also do not account for farm heterogeneity---or, worse still, assume identical marginal farms---and do not account for farm entry/exit. For applications where these things matter, here a tractable aggregate supply model is formally derived from 5 weak axioms. The derived form allows for endogenous modeling of the supply response to exogenous shocks. Unlike the conventional models, it is expressed in terms that have clear economic meaning---including price volatility and a term representing the mean probability of profit---opening up a novel set of policy questions that can be explored using the model. As an illustrative use case, the model is parameterized on Kenya farm data. The parameterized curve generally agrees with empirical estimates of aggregate supply. The price elasticity of supply curve is also examined and likewise found to agree with empirical estimates of price elasticity.
+  Conventional models of the aggregate supply of agricultural commodities---specifically those often used in ex-ante impact assessments of policy and research shocks---do not endogenously model the supply response to technology (or any other exogenous) shocks, but rather 1) assume the farm level supply response as exogenously given based on agronomic information, and then 2) assume, as a matter of fiat, the mechanism by which the farm level response manifests at the aggregate level (whether it is a shift or pivot of the aggregate supply curve). Such models also do not account for farm heterogeneity---or, worse still, assume identical marginal farms---and do not account for farm entry/exit. For applications where these things matter, here a tractable aggregate supply model is formally derived from 5 weak axioms. The derived form allows for endogenous modeling of the supply response to exogenous shocks. Unlike the conventional models, it is expressed in terms that have clear economic meaning---including price volatility and a term representing the mean probability of profit---opening up a novel set of policy questions that can be explored using the model. As an illustrative use case, the model is parameterized on Kenya farm data. The parameterized curve generally agrees with empirical estimates of aggregate supply. The price elasticity of supply curve is also examined and likewise found to agree with empirical estimates of price elasticity. The research induced supply curve shift
 header-includes:
   - \usepackage{geometry}
   - \geometry{top=1in,left=1in,bottom=1in,right=1in}
@@ -1803,6 +1803,8 @@ The stratified ex-ante expected mean yield $E[\tilde{y}^*(T)]|_{t = 0}^i$ can al
 E[\tilde{y}^*(T)]|_{t = 0}^i = \left( \frac{E[k_r(T)]|_{t = 0}}{E[k_r]_i} \right)^{\kappa_r} E[y_i^*(T) E[e^{-\epsilon}]_i
 \end{equation}
 
+...In Figure \ref{fig:v0strata}...
+[at what rain level?]
 <!-- The mean harvest yield for each stratum then follows from the first of Equations \ref{eq:v0forms} as $E[y^*(T)]_i = v_{0i} E[k] E[C^{*h}]_i$ (where $E[C^{*h}]_i = e^{h m_{ci} + h^2\frac{s^2_c}{2}}$). -->
 <!-- The TFP parameter for each stratum ($g_{0i}$) can likewise be calculated from the last of Equations \ref{eq:v0forms} given the input elasticities $\alpha_i$. -->
 <!-- \begin{equation} -->
@@ -2170,6 +2172,7 @@ The resulting percentage changes in farm level expenditure TFP ($v_0$), expendit
 \label{eq:dlyStardlg0}
 \end{equation}
 address unavailability of alpha
+[at what rain level?]
 <!-- -- -->
 <!-- We note that the change in expenditure, unconditional mean expenditure, yield, and expected unconditional mean yield follow from Equations ..., and are all the same. -->
 
@@ -2487,8 +2490,9 @@ dQ <- sum(dQStrat)
 
 Returning to the Kenya maize data, say a new technology package is released in Kenya that results in a `r 100 * dlng0`% increase in TFP on adopting farms. This is tantamount to adding another binary endowment $b_5\beta_5 =$ `r round(betaNew, 2)` to the yield model. Say that the expected $\boldsymbol{\alpha}$-adjusted percentage increase in input prices ($\boldsymbol{\alpha} '\partial \ln(\mathbf{w})$) is `r aDotdlw`, and the expected percentage decrease in output price ($\partial \ln(P)$) is `r dlP`, such that $\partial \ln(\nu) =$ `r dlnNu`, which is greater than the percentage increase in TFP. Adoption would thus result in a `r 100 * dlv0dlg0`% increase in expenditure TFP ($v_0$), a `r -round(100 * dlMuCstar)`% reduction in expenditure, and a `r round(100 * dlMuYstarT)`% increase in yield on adopting farms (recall Equations \ref{eq:dlv0dlg0}, \ref{eq:dlyStardlg0}, and \ref{eq:dlCstardlg0}). However, by the criterion in Inequality \ref{eq:adoptCondSimp}, adoption makes economic sense for the farmer only if a net subsidy is included in the technology package (i.e., only if $\partial B > 0$).
 
-Say that the Ministry of Agriculture offers a net subsidy of $\partial B = $ `r dB` KES/acre to adopting farms, perhaps in the form of free seed and fertilizer. This then implies the adoption expenditure per acre ceiling of $\bar{\bar{C}^*} =$ `r round(cStarMaxAdopt)` KES (recall Equation \ref{eq:cStarAdopt}), and the corresponding adoption rate of $\mathcal{A} =$ `r round(100 * adoptRateTotal, 1)`% (recall Equation \ref{eq:AdoptRatei}). The aggregate net subsidy required from the Ministry of Agriculture to achieve this rate follows from Equation \ref{eq:aggSubsidy} as `r round(aggSubsidy, 2)` billion KES. The corresponding increase in aggregate supply and producer welfare follow from Equations \ref{eq:dQ} and \ref{eq:dPsi} as `r round(dQ, 2)` 1000 MT and `r round(dPsi, 2)` billion KES, respectively. The breakdown by stratum is given in the left panel of Figure \ref{fig:intervention}, accompanied by a graphic of the supply ribbon shift in the right panel.
+Say that the Ministry of Agriculture offers a net subsidy of $\partial B = $ `r dB` KES/acre to adopting farms, perhaps in the form of free seed and fertilizer. This then implies the adoption expenditure per acre ceiling of $\bar{\bar{C}^*} =$ `r round(cStarMaxAdopt)` KES (recall Equation \ref{eq:cStarAdopt}), and the corresponding adoption rate of $\mathcal{A} =$ `r round(100 * adoptRateTotal, 1)`% (recall Equation \ref{eq:AdoptRatei}). The aggregate net subsidy required from the Ministry of Agriculture to achieve this rate follows from Equation \ref{eq:aggSubsidy} as `r round(aggSubsidy, 2)` billion KES. The corresponding increase in aggregate supply and producer welfare follow from Equations \ref{eq:dQ} and \ref{eq:dPsi} as `r round(dQ, 2)` 1000 MT and `r round(dPsi, 2)` billion KES, respectively. The breakdown by stratum is given in the left panel of Figure \ref{fig:intervention}, accompanied by a graphic of the corresponding supply ribbon shift in the right panel.
 <!-- By the criterion in Inequality \ref{eq:adoptCondSimp}, adoption in the absence of exogenous subsidies/costs will increase farm net benefit only if the the percentage increase in TFP $\partial \ln(g_0) =$ `r 100 * dlng0`% is greater than the absolute value of the percentage decrease in output price plus the $\alpha_i$-scaled increase in input prices (i.e. only if $\partial \ln(g_0) > |\partial \ln(\nu)|$).  -->
+[at what rain level?]
 
 \singlespacing
 
@@ -2598,21 +2602,16 @@ ggEQsT0Shift <- gg
 ```
 \doublespacing
 
+For the purpose of policy formation, it is instructive to consider, at a glance, multiple farm subsidy and price change scenarios, and their supply and welfare outcomes, in a heat map format (Figure \ref{fig:decisionMaps}). These heat maps facilitate digestion of the possible supply and welfare outcomes of a wide range of subsidy policy options and assumptions regarding input and output price change. The intervention scenario considered a point on a map of possible supply shift and welfare outcomes given the expected 
+[at what rain level?]
+[address the alpha in aDotW]
 
-policymakers may disagree over details regarding the expected rise in input costs and decrease in output price, and face a changing landscape of fiscal constraints that require consideration of multiple net subsidy scenarios.
-
-
-the intervention scenario considered just a point on a map of possible supply shift and welfare outcomes given the expected 
-can then do the same analysis for a wide range of price and subsidy scenarios
-
-address the alpha in aDotW
-
-```{r Fig5, fig.show = "hold", fig.width = 7, fig.height=3, fig.align="center", fig.cap="\\label{fig:decisionMaps}Kenya maize farm subsidy policy heat maps of the (left to right) adoption rate, change in aggregate supply, and aggregate producer welfare given release of the technology package described in the text. Each 'coordinate' on the map represents an assumed percentage decrease in the $\\alpha$ adjusted output-input price ratio and net subsidy/acre. The ratio of change in input to change in output price is fixed at 0.75. The scenario presented in the previous figure above is marked with a blue dot.", echo = FALSE}
+```{r Fig5, fig.show = "hold", fig.width = 7, fig.height=3, fig.align="center", fig.cap="\\label{fig:decisionMaps}Kenya maize farm subsidy policy heat maps of the (left to right) adoption rate, change in aggregate supply, and aggregate producer welfare given release of the technology package described in the text. Each 'coordinate' on the map represents an assumed percentage decrease in the $\\alpha$ adjusted output-input price ratio and a net subsidy per acre. The scenario presented in the previous figure above is marked with a black dot. In these maps, the ratio of change in input price to change in output price is fixed at 0.75.", echo = FALSE}
 
 rm(dfPlot, dfPlot1)
 gc()
 # Adoption rate map
-nRes <- 30
+nRes <- 20
 # dlAw <- seq(0.05, 0.35, length.out = nRes)
 # dlP <- seq(-0.01, -0.35, length.out = nRes)
 # dlNuVec <- dlP / dlAw
@@ -2661,17 +2660,17 @@ matAdopt[i, j] <- round(adoptRateTotal, 3) * 100
 
 indX <- which(abs(dlNuPoint - dlNuVec) == min(abs(dlNuPoint - dlNuVec)))
 indY <- which(abs(dBPoint - dBvec) == min(abs(dBPoint - dBvec)))
-matAdopt[indX, indY] <- NA
-dfAdopt <- as.data.frame(matAdopt)
-colnames(dfAdopt) <- round(dBvec, 2) # paste("dB =", round(dBvec, 2))
-gatherCols <- colnames(dfAdopt)
-dfAdopt$dlNu <- round(dlNuVec, 2) #paste("dlnNu =", round(dlnNuVec, 2))
-dfPlot <- dfAdopt %>% gather_("dB", "adoptRate", gatherCols)
+dfMat <- as.data.frame(matAdopt)
+dfMat[indX, indY] <- NA
+colnames(dfMat) <- round(dBvec, 2) # paste("dB =", round(dBvec, 2))
+gatherCols <- colnames(dfMat)
+dfMat$dlNu <- round(dlNuVec, 2) #paste("dlnNu =", round(dlnNuVec, 2))
+dfPlot <- dfMat %>% gather_("dB", "var", gatherCols)
 dfPlot$dB <- as.numeric(dfPlot$dB)
-gg <- ggplot(dfPlot, aes(x = dlNu, y = dB, z = adoptRate, fill = adoptRate, group = 1))
-gg <- gg + geom_tile(alpha = 1) + geom_contour()
-gg <- gg + metR::geom_text_contour(aes(z = adoptRate), stroke = 0.15)
-gg <- gg + scale_fill_gradient(low = "coral", high = "cyan", na.value = "blue")
+gg <- ggplot(dfPlot, aes(x = dlNu, y = dB, z = var, fill = var, group = 1))
+gg <- gg + geom_tile(alpha = 0.8) + geom_contour()
+gg <- gg + metR::geom_text_contour(aes(z = var), stroke = 0.15)
+gg <- gg + scale_fill_gradient(low = "coral", high = "cyan", na.value = "black")
 #gg <- gg + geom_text(aes(label = adoptRate), size = labelSize)
 # gg <- gg + annotate("rect", 
 #            xmin = dlNuPoint - 0.01, xmax = dlNuPoint + 0.01,
@@ -2690,18 +2689,19 @@ ggAdopt <- gg
 
 
 dfMat <- as.data.frame(matDpsi)
+dfMat[indX, indY] <- NA
 colnames(dfMat) <- round(dBvec, 2) # paste("dB =", round(dBvec, 2))
 gatherCols <- colnames(dfMat)
 dfMat$dlNu <- round(dlNuVec, 2) #paste("dlnNu =", round(dlnNuVec, 2))
-dfPlot <- dfMat %>% gather_("dB", "adoptRate", gatherCols)
+dfPlot <- dfMat %>% gather_("dB", "var", gatherCols)
 dfPlot$dB <- as.numeric(dfPlot$dB)
-gg <- ggplot(dfPlot, aes(x = dlNu, y = dB, z = adoptRate, fill = adoptRate, group = 1))
+gg <- ggplot(dfPlot, aes(x = dlNu, y = dB, z = var, fill = var, group = 1))
 gg <- gg + geom_tile(alpha = 1) + geom_contour()
-gg <- gg + metR::geom_text_contour(aes(z = adoptRate),
+gg <- gg + metR::geom_text_contour(aes(z = var),
                                    #breaks = seq(100, 3000, length.out = 6),
                                    stroke = 0.15)
-gg <- gg + scale_fill_gradient(low = "coral", high = "cyan")
-#gg <- gg + geom_text(aes(label = adoptRate), size = labelSize)
+gg <- gg + scale_fill_gradient(low = "coral", high = "cyan", na.value = "black")
+#gg <- gg + geom_text(aes(label = var), size = labelSize)
 gg <- gg + labs(fill = "Change in aggregate\nproducer welfare (billion KES)", x = "Decrease in output input price ratio (%)",
                 y = "Net subsidy (KES/acre)")
 gg <- gg + theme_bw()
@@ -2715,18 +2715,19 @@ gg <- gg + theme(axis.text = element_text(size = axisTextSize),
 ggDpsi <- gg
 
 dfMat <- as.data.frame(matDq)
+dfMat[indX, indY] <- NA
 colnames(dfMat) <- round(dBvec, 2) # paste("dB =", round(dBvec, 2))
 gatherCols <- colnames(dfMat)
 dfMat$dlNu <- round(dlNuVec, 2) #paste("dlnNu =", round(dlnNuVec, 2))
-dfPlot <- dfMat %>% gather_("dB", "adoptRate", gatherCols)
+dfPlot <- dfMat %>% gather_("dB", "var", gatherCols)
 dfPlot$dB <- as.numeric(dfPlot$dB)
-gg <- ggplot(dfPlot, aes(x = dlNu, y = dB, z = adoptRate, fill = adoptRate, group = 1))
+gg <- ggplot(dfPlot, aes(x = dlNu, y = dB, z = var, fill = var, group = 1))
 gg <- gg + geom_tile(alpha = 1) + geom_contour()
-gg <- gg + metR::geom_text_contour(aes(z = adoptRate),
+gg <- gg + metR::geom_text_contour(aes(z = var),
                                    #breaks = seq(100, 3000, length.out = 6),
                                    stroke = 0.15)
-gg <- gg + scale_fill_gradient(low = "coral", high = "cyan")
-#gg <- gg + geom_text(aes(label = adoptRate), size = labelSize)
+gg <- gg + scale_fill_gradient(low = "coral", high = "cyan", na.value = "black")
+#gg <- gg + geom_text(aes(label = var), size = labelSize)
 gg <- gg + labs(fill = "Change in aggregate supply (1000 MT)", x = "Decrease in output input price ratio (%)",
                 y = "Net subsidy (KES/acre)")
 gg <- gg + theme_bw()
@@ -2742,7 +2743,6 @@ ggDq <- gg
 
 ggAdopt | ggDq | ggDpsi
 
-gc()
 
 
 
@@ -2769,11 +2769,17 @@ can also look at shocks to continuous endowments k, rainfall etc., many of these
 
 # Discussion and conclusion
 
-this a direct measure of welfare.
+The theoretical supply curve and imact assessment framework presented above... to solve for equilibrium price and consumer welfare impacts require demand curve specificatiobn...which extends beyond the scope of this article but you can guess what it would be...input demand integrated over density...or monopsony...a single firm or cartel of firms buying all the production....so consumer welfare is actually firm welfare, to get at consumers have to go beyond a bit
+this is comparative statics. welfare has to be discounted according to release/adoption period. welfare and subsidy incur year by year
+
+Do not exogenously impose a change in expenditure and/or yield by fiat, but rather endogenously compute the change in expenditure and yield given an exogenous change in TFP and prices.
+
+Some may consider the welfare calculation "unconventional" ... this a direct measure of welfare. I challenge them to explain in what sense "producer surplus" is a measure of tangible, realized or realizable welfare, or even just to explain what producer surplus represents in any meaningful economic sense.
+
+A great deal of nuance may be introduced. For example, if the technology package intervention explored above represents improved seed, then this implies that the strata planting hybrid seed do not simply add the new binary endowment $b_5\beta_5$ to their yield models, but also remove the hybrid seed endowment. The theoretical modeling framework developed here can account for such nuance in a straightforward and transparent manner. The conventional ex-ante impact assessment frameworks cannot.
 can do same analysis focusing on specific strata.
 could examine the supply and welfare impact if hybrid maize adopted in strata where not yet adopted
-this is comparative statics. welfare has to be discounted according to release/adoption period. welfare and subsidy incur year by year
-have to think of supply not as curve but as a supply channel or ribbon or interval.
+
 have not considered the role of price volatility
 
 all the things we couldn't get to
