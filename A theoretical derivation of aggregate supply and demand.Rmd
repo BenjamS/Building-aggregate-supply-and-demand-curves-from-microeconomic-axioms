@@ -1,9 +1,10 @@
 ---
-title: A theoretical derivation of the aggregate agricultural supply curve and research induced supply curve shift
+title: A theoretical derivation of the agricultural aggregate supply curve and research induced supply curve shift
 # author: "Benjamin Schiek"
 # date: "`r Sys.Date()`"
 abstract: |
-  Conventional models of the aggregate supply of agricultural commodities---specifically those often used in ex-ante impact assessments of policy and research shocks---do not endogenously model the supply response to technology (or any other exogenous) shocks, but rather 1) assume the farm level supply response as exogenously given based on agronomic information, and then 2) assume, as a matter of fiat, the mechanism by which the farm level response manifests at the aggregate level (whether it is a shift or pivot of the aggregate supply curve). Such models also do not account for farm heterogeneity---or, worse still, assume identical marginal farms---and do not account for farm entry/exit. For applications where these things matter, here a tractable aggregate supply model is formally derived from 5 weak axioms. The derived form allows for endogenous modeling of the supply response to exogenous shocks. Unlike the conventional models, it is expressed in terms that have clear economic meaning---including price volatility and a term representing the mean probability of profit---opening up a novel set of policy questions that can be explored using the model. As an illustrative use case, the model is parameterized on Kenya farm data. The parameterized curve generally agrees with empirical estimates of aggregate supply. The price elasticity of supply curve is also examined and likewise found to agree with empirical estimates of price elasticity. The research induced supply curve shift
+  Conventional models of the aggregate supply of agricultural commodities---specifically those used in ex-ante impact assessments of policy and research shocks---do not endogenously model the supply response to technology (or any other exogenous) shocks, but rather 1) assume the farm level supply response as exogenously given based on agronomic information, and then 2) assume, as a matter of fiat, the mechanism by which the farm level response manifests at the aggregate level (whether it is a shift or pivot of the aggregate supply curve, and what the adoption rate will be). Such models also do not account for farm heterogeneity---or, worse still, assume identical marginal farms---and do not account for farm entry/exit. For applications where these things matter, here a tractable aggregate supply model is formally derived from five weak axioms. Unlike the conventional models, the derived form is expressed in parameters that have clear economic meaning. This includes novel parameters such as price volatility and a term representing the mean probability of profit---which in turn endogenously accounts for farm entry/exit---thus broadening the range of policy questions that can be addressed in partial equilibrium analysis. As an illustrative use case, the model is fit to Kenya maize farm data. The fitted aggregate supply and price elasticity of aggregate supply curves agree with empirical estimates. Equations for the _endogenous_ adoption rate, supply response, and producer welfare impact are derived and showcased given a hypothetical exogenous technology shock in the Kenya maize farm population.
+  distributional issues
 header-includes:
   - \usepackage{geometry}
   - \geometry{top=1in,left=1in,bottom=1in,right=1in}
@@ -118,22 +119,22 @@ In other words, policy formation does not require mathematical descriptions of a
 
 5) Output price follows a geometric Brownian motion over time
 
-Four other desirable properties immediately follow from axioms 1 and 2 as corollaries, and need not be imposed as additional axioms: 1) The farm yield function is homogeneous (and thus homothetic) and 2) concave in inputs; 3) farm supply curves are upward sloping; and 4) input demand curves are downward sloping.
-<!-- We also take a moment to demonstrate that 5) the derived yield function agrees with Lipton's theory of technology adoption []. -->
+In the course of the derivation, it becomes evident that five other desirable properties immediately follow from axioms 1 and 2 as corollaries, and need not be imposed as additional axioms: 1) The farm yield function is homogeneous (and thus homothetic) and 2) concave in inputs; 3) farm supply curves are upward sloping; 4) input demand curves are downward sloping; and 5) the derived yield function implies agreement with the consensus understanding of economic incentives behind the decision to adopt or not adopt new technology (as articulated, for example, by Lipton [-@lipton2005family]).
 
-On the other hand, two somewhat controversial corollaries also follow from this axiomatic approach: strictly decreasing returns to scale and constant marginal cost. The former contradicts the conventional wisdom handed down by Hicks [-@hicks1963theory] and Solow [-@solow1957technical]. The latter is well supported empirically [@lavoie2014post], but is eschewed in textbooks. Regardless of one's view on returns to scale and marginal cost curves, the very fact that it is possible to disagree with specific corollaries, and to trace the disagreement back to specific axioms, underscores a key strength of the derived model: its theoretic transparency. Under the theoretic opacity of the expedient approach, by contrast, it is not even possible to know if one agrees or disagrees with the premises, or whether the premises contradict each other mathematically, since those premises are stated in literary form (if they are stated at all), and the model is not explicitly derived from such premises.
+On the other hand, two somewhat controversial corollaries also follow from this axiomatic approach: strictly decreasing returns to scale and constant marginal cost. The former contradicts the conventional wisdom handed down by Hicks [-@hicks1963theory] and Solow [-@solow1957technical]. The latter is well supported empirically [@lavoie2014post], but is eschewed in textbooks. Regardless of one's view on returns to scale and marginal cost curves, the very fact that it is possible to disagree with specific corollaries, and to trace the disagreement back to specific axioms, underscores a key strength of the derived model: its theoretical transparency. Under the theoretic opacity of the expedient approach, by contrast, it is not even possible to know if one agrees or disagrees with the premises, or whether the premises contradict each other mathematically, since those premises are stated in literary form (if they are stated at all), and the model is not explicitly derived from such premises.
 
-All of the parameters appearing in the derived model have a straightforward interpretation in terms of relevant, measurable, empirical phenomena. This includes, in addition to the usual variables of interest (technology, agroclimatic variables, output price), output price volatility, length of cropping season, and a term reflecting the mean probability of profit. This widens the range of policy/technology questions that can be explored using the theoretically derived model as compared to a conventional model. The derived aggregate supply curve also explicitly captures farm entry/exit in response to price movements and risk, effectively accounting for heterogeneous endowments.
-<!-- across inframarginal farms. -->
+All of the parameters appearing in the derived model have a straightforward interpretation in terms of relevant, measurable, empirical phenomena. This includes, in addition to the usual variables of interest (technology, agroclimatic variables, output price), a term that indirectly accounts for the farm employment rate (i.e. farm entry/exit) in response to price movements, and which is partly a function of farm expenditure population parameters. This facilitates the exploration of a range of distributional policy issues that conventional modeling approaches are admittedly unable to address [@norton1992economic]. When axiom 5 comes into play, the distributional term is shown to have a dual expression in stochastic price parameter space as the mean farm's probability of profit. Expression in stochastic price parameter space also introduces an alternative set of parameters (output price trend and volatility parameters, and the length of cropping season) that further extends the range of policy questions that can be addressed within the derived modeling framework.
+<!-- effectively accounting for heterogeneous endowments. -->
 <!-- Wohlgenant [-@wohlgenant1997nature] suggests the lognormal distribution as a suitable density fn... -->
 <!-- the probability that output price will be greater than the mean farm's expected unit cost at harvest---i.e. the mean farm's probability of profit -->
 
-<!-- Working under such opacity, many economists would not hesitate to add Solow's axiom (constant returns to scale) to the list above, and would never discover the mathematical contradiction between this and axioms 1 and 2. -->
-<!-- Moreover, such  a corollary of eminently reasonable axioms seems distasteful, then one may not simply discard the offending corollary without also discarding the reasonable axioms whence it derives. Another strength of the theoretically rigorous approach followed here is that it invites careful reflection upon . -->
+In the first part of the derivation, immediately below, the farm yield function is derived from axioms 1-3. Most of these steps are elementary and thus presented in a highly summarized form, with details provided in the Appendix. However, a critical implication result overlooked by conventional models is that technology shocks cannot be represented by summarily shocking yield and/or expenditure based on agronomic trials. Agronomic trials may be useful to determine the shock to (total factor) productivity, but the yield response must then be evaluated endogenously based on the shock to productivity and expected change in input and output prices, plus any net subsidy offered as part of the technology package.   [enter lipton, adoption criterion here]
 
-Below, in the first part of the derivation, the farm yield function is derived from axioms 1-3. Most of these steps are elementary and thus presented below in a highly summarized form, with details provided in the Appendix. The main novelty and focus of the article is in the subsequent derivation of the aggregate supply model from the farm yield function and from axioms 4 and 5. This is followed by an illustrative use case using Kenya maize farm data. Calculations of aggregate supply and price elasticity of aggregate supply agree with empirical estimates. Use of the derived form to model research induced supply curve shifts is addressed in the Discussion.
-<!-- Food policy relevance, application in partial equilibrium analysis, and application in minimum data contexts are briefly considered in the Discussion. -->
-<!-- ---only pausing to note any novel details or implications, such as the agreement with Lipton's theory of adoption--- -->
+The first main contribution of the article comes in the subsequent derivation of the aggregate supply model from the farm yield function and from axioms 4 and 5. This is then followed by an illustrative use case based on Kenya maize farm data. The theoretical model's estimates of Kenyan aggregate maize supply and of the price elasticity of aggregate supply generally agree with empirical estimates.
+
+The second main contribution of the article comes in the subsequent derivation and showcasing of equations for the evaluation of the _endogenous_ adoption rate, change in aggregate supply, and change in producer welfare in response to a hypothetical exogenous technology shock in the Kenya maize farm population. This is [underscores] the key result distinguishing the derived theoretical modeling framework from the conventional modeling approach: Whereas the conventional approach exogenously asserts not only the technology shock, but also the farm level production and/or expenditure response to the shock, the adoption rate, and the aggregate expression supply response and welfare outcome of the shock, the method derived here .
+
+TFP, prices, and any net subsidy included in the package
 
 Because the conventional linear and CES aggregate supply functions are in such wide use, it is first worthwhile to engage with that literature in more detail than is offered in the cursory treatment above, and to thereby place the motivation for the present work on a more solid footing.
 
@@ -296,13 +297,13 @@ Where the $\kappa_i$ are the control variable elasticities of yield. Because the
 This is, of course, the Cobb-Douglas form. Outside of Economics, it would simply be referred to as a (multivariate) power law. Such forms are often good models of observed processes across a wide range of research contexts and disciplines. In Economics, the Cobb-Douglas form was widely used from the 1920s to 1950s on the basis of its good empirical fit, but fell into disrepute thereafter for its perceived lack a theoretical basis. Capalbo and Antle [-@capalbo2015agricultural] offer a succinct introduction to this vast discussion. The forgoing derivation of the Cobb-Douglas form from axiom 1 in some measure redresses the lack of a theoretical basis. A full defense against all of the criticisms levied against this form over the past seventy five years is a book-length project that will not be attempted here.
 <!-- [Other perceived shortcomings of the form are briefly addressed in the Discussion. if there is enough space!] [Or: In the course of the derivation below, a number of theoretical strengths are brought to light---underrepresented or overlooked by textbook treatments---that cast doubt on the bad reputation as a "restrictive" model] -->
 
-Interpretation of the constant $g_0$ is as difficult as one wants to make it. It is, of course, usually called the "total factor productivity" (TFP), and understood to represent the yield per unit "all inputs"---although a more accurate description would be yield per unit "all input and control variables, raised to various powers". For those not yet comfortable working in units of, say,
-$$
-\text{kg.} \times \: \text{acres}^{-1} \times \: \text{liters}^{-\alpha_{pest}} \times \: \text{kg.}^{-\alpha_{fert}} \times \: \text{manhours}^{-\alpha_{labor}} \times\: \\ \text{mm.}^{-\alpha_{rain}} \times\: \text{num. persons}^{-\alpha_{HHsize}}
-$$
+Interpretation of the constant $g_0$ is as difficult as one wants to make it. It is, of course, usually called the "total factor productivity" (TFP), and understood to represent the yield per unit "all inputs"---although a more accurate description would be yield per unit "all input and control variables, raised to various powers". The parameter $g_0$ may also be arbitrarily defined in terms of a new parameter ($u_0$) combined with judiciously chosen reference terms such that the new parameter has a meaningful interpretation and/or results in a more useful expression for yield. For present purposes, $g_0$ is defined as follows
+<!-- For those not yet comfortable working in units of, say, -->
+<!-- $$ -->
+<!-- \text{kg.} \times \: \text{acres}^{-1} \times \: \text{liters}^{-\alpha_{pest}} \times \: \text{kg.}^{-\alpha_{fert}} \times \: \text{manhours}^{-\alpha_{labor}} \times\: \\ \text{mm.}^{-\alpha_{rain}} \times\: \text{num. persons}^{-\alpha_{HHsize}} -->
+<!-- $$ -->
  <!-- \:;\:\: \alpha_{(var)} \in \mathbb{R} -->
 <!-- \: \text{years}^{-\alpha_{age}} \times\: -->
-an alternative approach is to define $g_0$ in terms of a new parameter ($u_0$) combined with judiciously chosen reference terms such that the new parameter has a meaningful interpretation and/or results in a more useful expression for yield. For present purposes, $g_0$ is defined as follows
 <!-- in terms of another constant $u_0$, the means $E[x_i]$, and the mean of    fixed reference values $\tilde{k}_i$, $\tilde{x}_i$ that have the same units as the corresponding management and control variables $x_i$ and $k_i$. -->
 <!-- Because the ratios in parentheses are dimensionless, $y_0$ must have the same units as $y$; and $y_0$ may be interpreted as the value of $y$ when all management and control variables equal their reference values. In the empirical study included here, for example, the reference values are set equal to the sample means, such that $y_0$ is the value of $y$ evaluated at the sample means of the input and control variables. -->
 
@@ -318,7 +319,21 @@ y = u_0 \frac{k}{E[k]} \prod_{i = 1}^{n_x} \left( \frac{x_i}{E[x_i]} \right)^{\a
 \label{eq:cobbDoug3}
 \end{equation}
 
-This substitution will soon be seen to facilitate interpretation and manipulation of the optimal yield function. But first the optimal yield function must be derived from axiom 2 (profit maximization). The first order conditions of farm profit maximization give the input demand (see Appendix A1 for details).
+This substitution will soon be seen to facilitate interpretation and manipulation of the optimal yield function. But first the optimal yield function must be derived from axiom 2 (profit maximization).
+
+\begin{equation}
+\mathcal{L} = Py - \lambda (C - B)
+\label{eq:lagrangian}
+\end{equation}
+
+Where $\lambda$ is the farm budget shadow price, that is, the marginal benefit to the farm of a marginal increase in budget.
+
+\begin{equation}
+\frac{\partial \mathcal{L}}{\partial B} = \lambda
+\end{equation}
+
+
+The first order conditions of farm profit maximization give the input demand (see Appendix A1 for details).
 
 \begin{equation}
 x^*_i = \frac{y^* P \alpha_i}{\lambda w_i}
@@ -390,6 +405,62 @@ In Appendices A.2 and A.3 it is shown that axioms 1 and 2 imply the degree of ho
 Whereby the domains of $h$ over which farm supply is elastic or inelastic immediately follow. The input own and cross price elasticities of demand are likewise derived and shown to be strictly negative when returns to scale are decreasing.
 <!-- Moreover, once $v_0$ is estimated,  -->
 <!-- A further advantage of this form is that the fitted coefficient on $\ln(C^*)$ may be directly interpreted as $h$, valid for all farms in the sample. Estimation of the model in Equation \ref{eq:cobbDoug3}, on the other hand, requires the extra step of summation of the input elasticities $\alpha_i$ in order to arrive at $h$. This may result in varying $h$ across the sample, as not all farms necessarily apply all the inputs specified in the model. -->
+
+## The technology adoption decision is endogenous
+
+Given the forgoing, the objective function evaluated at optimal yield ...
+
+From the objective function
+
+The farm profit lagrangian in Equation \ref{eq:lagrangian} evaluated at $y^*$ gives the farm profit envelope.
+
+\begin{equation}
+\mathcal{L}^* = R^* + \lambda (B - C^*)
+\end{equation}
+
+By Equation \ref{eq:cStar}, this reduces to
+
+\begin{equation}
+\mathcal{L}^* = R^* (1 - h) + \lambda B
+\end{equation}
+
+
+\begin{equation}
+\begin{split}
+\partial \ln(E[P(T)]|_{t = 0}) - \boldsymbol{\alpha} {'} \partial \ln(\mathbf{w}) + \partial \ln(g_0) + \frac{h}{C^*} \partial B &> 0 \\
+\partial \ln(\nu) + \partial \ln(g_0) + \frac{h}{C^*} \partial B &> 0 \:\:;\:\:\: \partial \ln(\nu) = \partial \ln(E[P(T)]|_{t = 0}) - \boldsymbol{\alpha} {'} \partial \ln(\mathbf{w})
+\end{split}
+\label{eq:adoptCond}
+\end{equation}
+
+Where the term $\partial B$ represents the subsidies, costs, or any other exogenous mitigating circumstances, per unit area, entailed in the adoption of the technology package. In the absence of such mitigating circumstances, the condition simplifies to
+
+\begin{equation}
+\partial \ln(g_0) > -\partial \ln(\nu)
+\label{eq:adoptCondSimp}
+\end{equation}
+
+Widespread adoption of yield scaling enhancements tends to boost production and thus lower output price while at the same time increasing input demand and thus input prices. Hence the expectation is that $\partial \ln(E[P]|_{t = 0}) < 0$, $\partial \ln(\mathbf{w}) > 0$, and thus $\partial \nu < 0$. In words, then, the adoption condition says that a farm stands to increase its net benefit through adoption of yield scaling technology only if the resulting percentage increase in TFP ($g_0$) is greater than the corresponding percentage decrease in output price minus the corresponding percentage increase in input prices scaled by their respective input elasticities $\alpha_i$.
+
+Note the resemblance between the adoption condition in Inequality \ref{eq:adoptCondSimp} and the "price/productivity tightrope" condition formulated by Lipton [-@lipton2005family].
+
+>\singlespacing "New science usually raises farm supply of outputs and demand for inputs. That makes outputs cheaper and inputs more expensive; hence the ratio of farm output prices to input prices falls. Do small and poor farmers gain? If, and only if, this science-induced fall in their relative farm prices is slower than the science-induced rise in their conversion ratio of physical inputs into physical outputs (that is, TFP)."
+
+\doublespacing
+
+The only substantive difference between Lipton's condition and the condition in Inequality \ref{eq:adoptCondSimp} is that the percentage increases in input prices in the latter are scaled by their respective elasticities ($\alpha_i$). And of course the more complete version of the adoption condition in Inequality \ref{eq:adoptCond} differs from Lipton by also including the exogenous net subsidy term.
+
+If the efficiency adjusted output-input price ratio decrease is greater than the increase in TFP ($g_0$), then the margin by which it is greater is the net subsidy term $h / C^* \partial B$ required to make adoption profitable. Note that the required net subsidy $\partial B$ will vary across farms based on $C^*$. The factor $h / C^*$, which may also be written $\lambda / E[R^*(T)]|_{t = 0}$, represents each farm's marginal valuation of the subsidy; and implies that the subsidy is relatively more valuable to farms with relatively lower expenditure. Solving Inequality \ref{eq:adoptCond} for $C^*$ gives the maximum expenditure level for which adoption is profitable if the (absolute value of the) efficiency adjusted output-input price ratio decrease is greater than the increase in TFP ($|\partial \ln(\nu)| > \partial \ln(g_0)$).
+
+\begin{equation}
+C^* \leq \frac{-h \partial B}{\partial \ln(\nu) + \partial \ln(g_0)}
+\label{eq:cStarAdopt}
+\end{equation}
+
+If $\partial B=0$, then Inequality \ref{eq:adoptCond} implies that adoption will be either $0\%$ or $100\%$. Empirically, this is almost never observed. Adoption rates tend to fall somewhere between $0\%$ and $100\%$. The increased input demand associated with new technology adoption implies in and of itself that, without subsidies, $\partial B < 0$. And, of course, every major green revolution success story has involved subsidies of one kind or another to offset the required increase in input expenditure, and then some []. Within the theoretical framework developed here, this means that the net subsidy $\partial B$ is generally positive.
+<!-- Assuming farms spend their whole farm budget ($B = C^*$), then the subsidy term simplifies to $h \partial \ln(C^*)$ and the adoption condition can be rewritten -->
+
+
 
 ## Integration of the farm production function based on axioms 3 and 4 \label{sec:aggSupDeterm}
 
@@ -1765,7 +1836,7 @@ muEyStarT0 <- muEyStarT0trunc * EmploymentRate / ProbProfit
 ```
 \doublespacing
 
-Calculation of $m_{\#}$ and $s_{\#}$ requires the expected price at planting for 2007, the same year as the farm data used to estimate $\bar{m}_{\#}$ and $\bar{s}_{\#}$. The short rains harvest in 2007 was normal and so the "good short rains" estimate of $m_p$, and March 2007 price  is used to calculate $E[P(T)]|_{t = 0} = P(0) e^{m_p T}$ (where $P(0)$ is the price at planting in March).
+Calculation of $m_{\#}$ and $s_{\#}$ requires the expected price at planting for 2007, the same year as the farm data used to estimate $\bar{m}_{\#}$ and $\bar{s}_{\#}$. The short rains harvest in 2007 was normal and so the "good short rains" estimate of $m_p$, and March 2007 price is used to calculate $E[P(T)]|_{t = 0} = P(0) e^{m_p T}$ (where $P(0)$ is the price at planting in March).
 
 Once $m_{\#}$ and $s_{\#}$ are calculated, the expected unconditional mean yield ($E[\tilde{y}^*(T; k_m(T))]|_{t = 0}$) follows from Equation \ref{eq:condMeanYd2}. In the process, the farm employment rate is calculated as `r round(EmploymentRate, 2)` and the PEFS adjusted mean probability of profit is calculated as `r round(ProbProfit, 2)`. The expected unconditional mean yield is evaluated at four different expected rainfall levels: $E[E[k_r(T)^{\kappa_r}]]|_{t = 0} = 1.5^{\kappa_r}, \: 1^{\kappa_r}, \: 0.5^{\kappa_r}, \: 0.1^{\kappa_r}$. These values correspond to expected rainfall that is 150% of the historical benchmark ("high"), in line with the historical benchmark ("normal"), 50% of the historical benchmark ("low"), and 10% of the historical benchmark ("dismal"), respectively.
 
@@ -1930,7 +2001,7 @@ With all the necessary parameters estimated, the theoretical expected aggregate 
 The price elasticity of expected aggregate supply curve is presented in the bottom panel of Figure \ref{fig:EaggQs}. Empirical estimates of the maize price elasticity of supply in Kenya generally range from $0.1$ to $0.365$ [@abodi2021supply; @onono2013response; @olwande2009supply], which is roughly the range of elasticities indicated by the theoretical curve for the years examined here.
 <!-- In one study, Onono et al.'s estimate of price elasticity of supply: 0.365 [@onono2013response] -->
 
-A key message emerging from these results is that aggregate supply varies widely with meteorological conditions. It is thus highly misleading to speak of a single supply "curve". Rather, individual supply curves represent specific meteorological scenarios within a broad range of such scenarios. It is thus more accurate to speak of a supply range or "ribbon" bounded by supply curves on top and bottom representing best and worst case meteorological scenarios, respectively.
+A key message emerging from these results is that aggregate supply varies widely with meteorological conditions. It is thus highly misleading to speak of a single supply "curve". Rather, individual supply curves represent specific cases within a broad range of meteorological scenarios. It is thus more accurate to speak of a supply range or "ribbon" bounded by supply curves on top and bottom representing best and worst case meteorological scenarios, respectively.
 
 Finally, it is important to keep in mind that the expected aggregate supply and price elasticity curves parameterized in this exercise are "short run" curves in the sense that they are valid only insofar as the values of their fitted parameters---$h$, $N$, $k_a$, $k$, $m_{\#}$, $s_{\#}$, $m_p$---are accurate. Empirical estimates for years well before or well after the year of the data used to estimate the parameters can be expected to diverge from the curve.
 
@@ -2187,44 +2258,44 @@ address unavailability of alpha
 <!-- Where the last equality follows noting that $u_0 = v_0 E[k] E[C^*]^h$. -->
 <!-- -- -->
 
-Note from Equation \ref{eq:useful2} that expected optimal unit expenditure does not vary with changes in $g_0$.
+(Note from Equation \ref{eq:useful2} that expected optimal unit expenditure does not vary with changes in $g_0$.)
 
 The aggregate impact of such interventions hinges critically on the adoption rate. In Appendix C it is shown that axioms 1 and 2 imply the following technology adoption condition.
 
-\begin{equation}
-\begin{split}
-\partial \ln(E[P(T)]|_{t = 0}) - \boldsymbol{\alpha} {'} \partial \ln(\mathbf{w}) + \partial \ln(g_0) + \frac{h}{C^*} \partial B &> 0 \\
-\partial \ln(\nu) + \partial \ln(g_0) + \frac{h}{C^*} \partial B &> 0 \:\:;\:\:\: \partial \ln(\nu) = \partial \ln(E[P(T)]|_{t = 0}) - \boldsymbol{\alpha} {'} \partial \ln(\mathbf{w})
-\end{split}
-\label{eq:adoptCond}
-\end{equation}
+<!-- \begin{equation} -->
+<!-- \begin{split} -->
+<!-- \partial \ln(E[P(T)]|_{t = 0}) - \boldsymbol{\alpha} {'} \partial \ln(\mathbf{w}) + \partial \ln(g_0) + \frac{h}{C^*} \partial B &> 0 \\ -->
+<!-- \partial \ln(\nu) + \partial \ln(g_0) + \frac{h}{C^*} \partial B &> 0 \:\:;\:\:\: \partial \ln(\nu) = \partial \ln(E[P(T)]|_{t = 0}) - \boldsymbol{\alpha} {'} \partial \ln(\mathbf{w}) -->
+<!-- \end{split} -->
+<!-- \label{eq:adoptCond} -->
+<!-- \end{equation} -->
 
-Where the term $\partial B$ represents the subsidies, costs, or any other exogenous mitigating circumstances, per unit area, entailed in the adoption of the technology package. In the absence of such mitigating circumstances, the condition simplifies to
+<!-- Where the term $\partial B$ represents the subsidies, costs, or any other exogenous mitigating circumstances, per unit area, entailed in the adoption of the technology package. In the absence of such mitigating circumstances, the condition simplifies to -->
 
-\begin{equation}
-\partial \ln(g_0) > -\partial \ln(\nu)
-\label{eq:adoptCondSimp}
-\end{equation}
+<!-- \begin{equation} -->
+<!-- \partial \ln(g_0) > -\partial \ln(\nu) -->
+<!-- \label{eq:adoptCondSimp} -->
+<!-- \end{equation} -->
 
-Widespread adoption of yield scaling enhancements tends to boost production and thus lower output price while at the same time increasing input demand and thus input prices. Hence the expectation is that $\partial \ln(E[P]|_{t = 0}) < 0$, $\partial \ln(\mathbf{w}) > 0$, and thus $\partial \nu < 0$. In words, then, the adoption condition says that a farm stands to increase its net benefit through adoption of yield scaling technology only if the resulting percentage increase in TFP ($g_0$) is greater than the corresponding percentage decrease in output price minus the corresponding percentage increase in input prices scaled by their respective input elasticities $\alpha_i$.
+<!-- Widespread adoption of yield scaling enhancements tends to boost production and thus lower output price while at the same time increasing input demand and thus input prices. Hence the expectation is that $\partial \ln(E[P]|_{t = 0}) < 0$, $\partial \ln(\mathbf{w}) > 0$, and thus $\partial \nu < 0$. In words, then, the adoption condition says that a farm stands to increase its net benefit through adoption of yield scaling technology only if the resulting percentage increase in TFP ($g_0$) is greater than the corresponding percentage decrease in output price minus the corresponding percentage increase in input prices scaled by their respective input elasticities $\alpha_i$. -->
 
-Note the resemblance between the adoption condition in Inequality \ref{eq:adoptCondSimp} and the "price/productivity tightrope" condition formulated by Lipton [-@lipton2005family].
+<!-- Note the resemblance between the adoption condition in Inequality \ref{eq:adoptCondSimp} and the "price/productivity tightrope" condition formulated by Lipton [-@lipton2005family]. -->
 
->\singlespacing "New science usually raises farm supply of outputs and demand for inputs. That makes outputs cheaper and inputs more expensive; hence the ratio of farm output prices to input prices falls. Do small and poor farmers gain? If, and only if, this science-induced fall in their relative farm prices is slower than the science-induced rise in their conversion ratio of physical inputs into physical outputs (that is, TFP)."
+<!-- >\singlespacing "New science usually raises farm supply of outputs and demand for inputs. That makes outputs cheaper and inputs more expensive; hence the ratio of farm output prices to input prices falls. Do small and poor farmers gain? If, and only if, this science-induced fall in their relative farm prices is slower than the science-induced rise in their conversion ratio of physical inputs into physical outputs (that is, TFP)." -->
 
-\doublespacing
+<!-- \doublespacing -->
 
-The only substantive difference between Lipton's condition and the condition in Inequality \ref{eq:adoptCondSimp} is that the percentage increases in input prices in the latter are scaled by their respective elasticities ($\alpha_i$). And of course the more complete version of the adoption condition in Inequality \ref{eq:adoptCond} differs from Lipton by also including the exogenous net subsidy term.
+<!-- The only substantive difference between Lipton's condition and the condition in Inequality \ref{eq:adoptCondSimp} is that the percentage increases in input prices in the latter are scaled by their respective elasticities ($\alpha_i$). And of course the more complete version of the adoption condition in Inequality \ref{eq:adoptCond} differs from Lipton by also including the exogenous net subsidy term. -->
 
-If the efficiency adjusted output-input price ratio decrease is greater than the increase in TFP ($g_0$), then the margin by which it is greater is the net subsidy term $h / C^* \partial B$ required to make adoption profitable. Note that the required net subsidy $\partial B$ will vary across farms based on $C^*$. The factor $h / C^*$, which may also be written $\lambda / E[R^*(T)]|_{t = 0}$, represents each farm's marginal valuation of the subsidy; and implies that the subsidy is relatively more valuable to farms with relatively lower expenditure. Solving Inequality \ref{eq:adoptCond} for $C^*$ gives the maximum expenditure level for which adoption is profitable if the (absolute value of the) efficiency adjusted output-input price ratio decrease is greater than the increase in TFP ($|\partial \ln(\nu)| > \partial \ln(g_0)$).
+<!-- If the efficiency adjusted output-input price ratio decrease is greater than the increase in TFP ($g_0$), then the margin by which it is greater is the net subsidy term $h / C^* \partial B$ required to make adoption profitable. Note that the required net subsidy $\partial B$ will vary across farms based on $C^*$. The factor $h / C^*$, which may also be written $\lambda / E[R^*(T)]|_{t = 0}$, represents each farm's marginal valuation of the subsidy; and implies that the subsidy is relatively more valuable to farms with relatively lower expenditure. Solving Inequality \ref{eq:adoptCond} for $C^*$ gives the maximum expenditure level for which adoption is profitable if the (absolute value of the) efficiency adjusted output-input price ratio decrease is greater than the increase in TFP ($|\partial \ln(\nu)| > \partial \ln(g_0)$). -->
 
-\begin{equation}
-C^* \leq \frac{-h \partial B}{\partial \ln(\nu) + \partial \ln(g_0)}
-\label{eq:cStarAdopt}
-\end{equation}
+<!-- \begin{equation} -->
+<!-- C^* \leq \frac{-h \partial B}{\partial \ln(\nu) + \partial \ln(g_0)} -->
+<!-- \label{eq:cStarAdopt} -->
+<!-- \end{equation} -->
 
-If $\partial B=0$, then Inequality \ref{eq:adoptCond} implies that adoption will be either $0\%$ or $100\%$. Empirically, this is almost never observed. Adoption rates tend to fall somewhere between $0\%$ and $100\%$. The increased input demand associated with new technology adoption implies in and of itself that, without subsidies, $\partial B < 0$. And, of course, every major green revolution success story has involved subsidies of one kind or another to offset the required increase in input expenditure, and then some []. Within the theoretical framework developed here, this means that the net subsidy $\partial B$ is generally positive.
-<!-- Assuming farms spend their whole farm budget ($B = C^*$), then the subsidy term simplifies to $h \partial \ln(C^*)$ and the adoption condition can be rewritten -->
+<!-- If $\partial B=0$, then Inequality \ref{eq:adoptCond} implies that adoption will be either $0\%$ or $100\%$. Empirically, this is almost never observed. Adoption rates tend to fall somewhere between $0\%$ and $100\%$. The increased input demand associated with new technology adoption implies in and of itself that, without subsidies, $\partial B < 0$. And, of course, every major green revolution success story has involved subsidies of one kind or another to offset the required increase in input expenditure, and then some []. Within the theoretical framework developed here, this means that the net subsidy $\partial B$ is generally positive. -->
+<!-- <!-- Assuming farms spend their whole farm budget ($B = C^*$), then the subsidy term simplifies to $h \partial \ln(C^*)$ and the adoption condition can be rewritten --> -->
 
 Denoting the upper adoption bound on $C^*$ (Equation \ref{eq:cStarAdopt}) as $\bar{\bar{C^*}}$ and recalling that axiom 4 implies lognormally distributed $C^*$, the adoption rate $A$ when $\partial B > 0$ and $|\partial \ln(\nu)| > \partial \ln(g_0)$ can be calculated as
 
@@ -2606,7 +2677,7 @@ For the purpose of policy formation, it is instructive to consider, at a glance,
 [at what rain level?]
 [address the alpha in aDotW]
 
-```{r Fig5, fig.show = "hold", fig.width = 7, fig.height=3, fig.align="center", fig.cap="\\label{fig:decisionMaps}Kenya maize farm subsidy policy heat maps of the (left to right) adoption rate, change in aggregate supply, and aggregate producer welfare given release of the technology package described in the text. Each 'coordinate' on the map represents an assumed percentage decrease in the $\\alpha$ adjusted output-input price ratio and a net subsidy per acre. The scenario presented in the previous figure above is marked with a black dot. In these maps, the ratio of change in input price to change in output price is fixed at 0.75.", echo = FALSE}
+```{r Fig6, fig.show = "hold", fig.width = 7, fig.height=3, fig.align="center", fig.cap="\\label{fig:decisionMaps}Kenya maize farm subsidy policy heat maps of the (left to right) adoption rate, change in aggregate supply, and aggregate producer welfare given release of the technology package described in the text. Each 'coordinate' on the map represents an assumed percentage decrease in the $\\alpha$ adjusted output-input price ratio and a net subsidy per acre. The scenario presented in the previous figure above is marked with a black dot. In these maps, the ratio of change in input price to change in output price is fixed at 0.75.", echo = FALSE}
 
 rm(dfPlot, dfPlot1)
 gc()
@@ -2771,10 +2842,12 @@ can also look at shocks to continuous endowments k, rainfall etc., many of these
 
 The theoretical supply curve and imact assessment framework presented above... to solve for equilibrium price and consumer welfare impacts require demand curve specificatiobn...which extends beyond the scope of this article but you can guess what it would be...input demand integrated over density...or monopsony...a single firm or cartel of firms buying all the production....so consumer welfare is actually firm welfare, to get at consumers have to go beyond a bit
 this is comparative statics. welfare has to be discounted according to release/adoption period. welfare and subsidy incur year by year
-
+opens up a novel set of policy questions and nuance -- not just tech but also contractual arrangements, intermediaries, value chain, agroclimatic advisory services, cooperative social mechanisms, risk pooling,...enabling environment... and all at once--combined approaches ...much higher fidelity representation of the reality and the reality of interventions.
 Do not exogenously impose a change in expenditure and/or yield by fiat, but rather endogenously compute the change in expenditure and yield given an exogenous change in TFP and prices.
 
-Some may consider the welfare calculation "unconventional" ... this a direct measure of welfare. I challenge them to explain in what sense "producer surplus" is a measure of tangible, realized or realizable welfare, or even just to explain what producer surplus represents in any meaningful economic sense.
+another way is to shock h, much more ambiguous results.
+
+[[Some may consider the welfare calculation "unconventional" ... this a direct measure of welfare. I challenge them to explain in what sense "producer surplus" is a measure of tangible, realized or realizable welfare, or even just to explain what producer surplus represents in any meaningful economic sense.]]
 
 A great deal of nuance may be introduced. For example, if the technology package intervention explored above represents improved seed, then this implies that the strata planting hybrid seed do not simply add the new binary endowment $b_5\beta_5$ to their yield models, but also remove the hybrid seed endowment. The theoretical modeling framework developed here can account for such nuance in a straightforward and transparent manner. The conventional ex-ante impact assessment frameworks cannot.
 can do same analysis focusing on specific strata.
@@ -3291,7 +3364,7 @@ The field level data files also include details on seed type and method of acqui
 Main season rainfall is reported in millimeters at district level. (Prior to the 2010 constitution, counties were referred to as "districts".) The "rain anomaly" variable appearing in the regression is calculated as 2007 main season rainfall divided by 1997 main season rainfall. Rain anomaly values greater or less than $1$ thus indicate departures north or south of the 1997 benchmark.
 <!--main07 This file, originally generated by Tavneet Suri, contains 2007 and historic average main season rainfall reported by the FEWS National Weather Service Climate Prediction Center, georeferenced to the 2007 TAMPA/TAPRA survey. -->
 
-```{r Fig4, fig.show = "hold", fig.width = 4, fig.height=4, fig.align="left", fig.cap="\\label{fig:sumStats}Summary statistics for the 2007 Kenya long rains farm level maize data.", echo = FALSE}
+```{r Fig7, fig.show = "hold", fig.width = 4, fig.height=4, fig.align="left", fig.cap="\\label{fig:sumStats}Summary statistics for the 2007 Kenya long rains farm level maize data.", echo = FALSE}
 # dfLook <- dfMod3 %>% select(`Landprep: oxen`, `Landprep: tractor`) %>%
 #   summarise_all(list(mean = "mean", sd = "sd"))
 gatherCols <- colnames(dfMod3)[-1]
@@ -3339,7 +3412,7 @@ By Equation \ref{eq:cStar}, this reduces to
 \mathcal{L}^* = R^* (1 - h) + \lambda B
 \end{equation}
 
-Assuming that farms will adopt a new yield scaling technology only if they expect it to increase their net benefit, the adoption condition is $\partial \ln(y^*)/\partial u_0 > 0$. That is,
+Assuming that farms will adopt a new yield scaling technology only if they expect it to increase their net benefit, the adoption condition is $\partial \mathcal{L}^*/\partial \ln(g_0) > 0$. That is,
 
 \begin{equation}
 \frac{\partial \mathcal{L}}{\partial \ln(g_0)} = E[R^*(T)]|_{t = 0} (1 - h) \left( \frac{\partial \ln(P)}{\partial u_0} + \frac{\partial \ln(y^*)}{\partial u_0} \right) + \lambda \frac{\partial B}{\partial u_0} > 0
