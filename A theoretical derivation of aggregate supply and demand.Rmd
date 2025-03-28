@@ -411,7 +411,6 @@ y^* = v_0 k C^{*h}e^{\epsilon} \:\:;\:\:\: v_0 = \frac{E[y^*]}{E[k] E[C^{*h}]}
 
 ### Important corollaries: returns to scale, cancavity, price elasticities of farm supply and input demand
 
-...it is shown that or it follows that the SOC is...h(1 - h) which implies global concavity in inputs...
 In Appendices A.2 and A.3 it is shown that axioms 1 and 2 imply the degree of homogeneity $h$ must exhibit strictly decreasing returns to scale ($0 < h < 1$), whereby it also follows that farm yield is globally concave in inputs, and that the farm supply curve is positively sloped. It is also shown that the output price elasticity of farm supply ($\eta$) is
 
 \begin{equation}
@@ -424,9 +423,7 @@ Whereby the domains of $h$ over which farm supply is elastic or inelastic immedi
 
 ### The farm yield and expenditure response to technology change
 
-The impact of yield scaling technologies and/or management practices on farm supply and expenditure can be represented through perturbations of the TFP parameter ($g_0$). 
-
-This is tantamount to adding a dummy endowment variable to the yield model in Equation \ref{eq:lYdEnvReg3}. The four endowment dummies included in the Kenya maize example may be considered yield scaling interventions that increase the value of $g_0$ on adopting farms. The percentage increase in TFP given the introduction of a new intervention $\beta_5 b_5$ on farms that implement the new technology (farms where $b_5 = 1$) may be calculated as
+The impact of yield scaling technologies and/or management practices on farm supply and expenditure can be represented through perturbations of the TFP parameter ($g_0$). This is tantamount to adding a binary endowment variable to the yield model in Equation \ref{eq:lYdEnvReg3}. The four binary endowments included in the Kenya maize model example may be considered yield scaling interventions that increase the value of $g_0$ on adopting farms. The percentage increase in TFP given the introduction of a new intervention $\beta_5 b_5$ on farms that implement the new technology (farms where $b_5 = 1$) may be calculated as
 
 \begin{equation}
 \begin{split}
@@ -435,62 +432,56 @@ This is tantamount to adding a dummy endowment variable to the yield model in Eq
 \end{split}
 \end{equation}
 
-Note that the increase in TFP is the same regardless of the starting value of $g_0$.
-<!-- , which varies across the population because the binary endowments $b_{i \in [1,4]}$ vary. -->
+The increase is thus the same across all adopting farms regardless of the starting value $g_0$. Ideally, the value of $\beta_5$ should be estimated via field trials. To assess the impact of the new technology on yield and expenditure, the effect of widespread adoption on prices must be also be taken into consideration. The direction of the expected change in input price depends upon the type of research product. Most agricultural research currently falls into one of two broad paradigms: "sustainable agricultural intensifcation" (SAI) or "agroecological intensification" (AEI) [@mockshell2018beyond]. Widespread adoption of a new SAI technology typically results in increased output supply and input demand, and hence a lower output price and higher input prices. Widespread adoption of an AEI technology, on the other hand, typically results in lower input demand and emphasizes yield stability over quantity, hence lowering input prices and having little or uncertain impact on output price. For illustrative purposes, here the new technology is assumed to be an SAI research product, such that $\partial \ln(\mathbf{w}) / \partial \ln(g_0) > 0$ and $\partial \ln(P) / \partial \ln(g_0) < 0$).
+
+The percentage changes in expenditure TFP ($v_0$), farm expenditure, and yield given a 1% change in $g_0$ follow from Equations \ref{eq:cStar} and \ref{eq:YdEnvReg1}.
 
 \begin{equation}
 \begin{split}
-v_0 &= \frac{E[y^*(T)]}{E[k] E[C^{* h}]} \\
-&= \frac{u_0}{E[k] E[C^*]^h} \\
+\frac{\partial \ln(v_0)}{\partial \ln(g_0)} &= 1 - \boldsymbol{\alpha} ' \frac{\partial \ln(\mathbf{w})}{\partial \ln(g_0)} \\
+\frac{\partial \ln(C^*)}{\partial \ln(g_0)} &= \frac{1}{1 - h} \left( 1 - \boldsymbol{\alpha} ' \frac{\partial \ln(\mathbf{w})}{\partial \ln(g_0)} + \frac{\partial \ln(P)}{\partial \ln(g_0)} \right) \\
+\frac{\partial \ln(y^*)}{\partial \ln(g_0)} &= \frac{1}{1 - h} \left( 1 - \boldsymbol{\alpha} ' \frac{\partial \ln(\mathbf{w})}{\partial \ln(g_0)} + h \frac{\partial \ln(P)}{\partial \ln(g_0)} \right)
+\end{split}
+\label{eq:dldlg0}
+\end{equation}
+
+(See Appendix ... for details.)
+
+[[In appendix:
+<!-- The percentage changes in expenditure per acre and yield given a 1 percentage change in TFP then follow from Equations \ref{eq:cStar} and \ref{eq:YdEnvReg1}. -->
+<!-- \begin{equation} -->
+<!-- \frac{\partial \ln(C^*)}{\partial \ln(g_0)} = \frac{1}{1 - h} \left( 1 - \boldsymbol{\alpha} ' \frac{\partial \ln(\mathbf{w})}{\partial \ln(g_0)} + \frac{\partial \ln(P)}{\partial \ln(g_0)} \right) -->
+<!-- \label{eq:dlCstardlg0} -->
+<!-- \end{equation} -->
+<!-- \begin{equation} -->
+<!-- \frac{\partial \ln(y^*)}{\partial \ln(g_0)} = \frac{1}{1 - h} \left( 1 - \boldsymbol{\alpha} ' \frac{\partial \ln(\mathbf{w})}{\partial \ln(g_0)} + h \frac{\partial \ln(P)}{\partial \ln(g_0)} \right) -->
+<!-- \label{eq:dlyStardlg0} -->
+<!-- \end{equation} -->
+<!-- \begin{equation} -->
+<!-- C^{\#} = \frac{P}{\lambda} h -->
+<!-- \label{eq:cSharp} -->
+<!-- \end{equation} -->
+<!-- \begin{equation} -->
+<!-- \frac{\partial \ln(C^{\#})}{\partial \ln(g_0)} = \frac{\partial \ln(P)}{\partial \ln(g_0)} -->
+<!-- \label{eq:cSharp} -->
+<!-- \end{equation} -->
+Noting that $v_0$ can also be expressed
+\begin{equation}
+\begin{split}
+v_0 &= \frac{u_0}{E[k] E[C^*]^h} \\
 &= g_0 \frac{\prod_i^{n_x}E[x_i]^{\alpha_i}}{E[C^*]^h} \\
 &= g_0 \frac{1}{h}\prod_i^{n_x} \left( \frac{\alpha_i}{w_i} \right)^{\alpha_i}
 \end{split}
 \label{eq:v0forms}
 \end{equation}
-
-(Where the last line follows from the input demand expression in Equation \ref{eq:inputDem2}.) 
-
-The resulting percentage changes in farm level expenditure TFP ($v_0$), expenditure per acre, and yield given a 1 percentage change in $g_0$ follow from Equations \ref{eq:v0forms}, \ref{eq:mCk}, and \ref{eq:yStarT}, respectively.
-
-\begin{equation}
-\frac{\partial \ln(v_0)}{\partial \ln(g_0)} = 1 - \boldsymbol{\alpha} ' \frac{\partial \ln(\mathbf{w})}{\partial \ln(g_0)}
-\label{eq:dlv0dlg0}
-\end{equation}
-
-\begin{equation}
-\frac{\partial \ln(C^*)}{\partial \ln(g_0)} = \frac{1}{1 - h} \left( 1 - \boldsymbol{\alpha} ' \frac{\partial \ln(\mathbf{w})}{\partial \ln(g_0)} + \frac{\partial \ln(P)}{\partial \ln(g_0)} \right)
-\label{eq:dlCstardlg0}
-\end{equation}
-
-\begin{equation}
-\frac{\partial \ln(y^*)}{\partial \ln(g_0)} = \frac{1}{1 - h} \left( 1 - \boldsymbol{\alpha} ' \frac{\partial \ln(\mathbf{w})}{\partial \ln(g_0)} + h \frac{\partial \ln(P)}{\partial \ln(g_0)} \right)
-\label{eq:dlyStardlg0}
-\end{equation}
-
-
-\begin{equation}
-C^{\#} = \frac{P}{\lambda} h
-\label{eq:cSharp}
-\end{equation}
-
-So
-
-\begin{equation}
-\frac{\partial \ln(C^{\#})}{\partial \ln(g_0)} = \frac{\partial \ln(P)}{\partial \ln(g_0)}
-\label{eq:cSharp}
-\end{equation}
-
-
-
-Changes in technology can be represented as changes in the TFP parameter $g_0$.
-
-
-and hence the expenditure TFP $v_0$. 
-
-Can also explore changes in the degree of homogeneity $h$.
-
-
-The yield response to changes in TFP and price must be calculated endogenously, not exogenously asserted based on expert opinion or agronomic yields on test plots cannot be taken...   Technology change cannot
+<!-- (Where the last line follows from the input demand expression in Equation \ref{eq:inputDem2}.) -->
+]]
+<!-- The change in yield is positive only if $\partial \ln(g_0) > \boldsymbol{\alpha} ' \partial \ln(\mathbf{w}) + h \partial \ln(P)$. -->
+<!-- Change in expenditure is positive if $\partial \ln(g_0) > (1 - h) (\boldsymbol{\alpha} ' \partial \ln(\mathbf{w}) + \partial \ln(P))$. -->
+<!-- However, the agronomic yields obtained at research stations are not indicative of economic yields ($y^*$) or farm expenditures ($C^*$) in a real farm population. This is plain to see from the yield and expenditure expressions derived above; and is also just an empirically well documented lesson learned from decades of agricultural research [@herdt1988increasing; @balasubramanian2000yield; @sumberg2012mind]. -->
+<!-- As discussed in the Introduction, conventional ex-ante impact assessment models routinely neglect this well known fact. They do not endogenously model the supply and/or expenditure response to technology shocks, but rather exogenously assert the response, often on the presumption that agronomic results at research stations will translate into identical results in real farm populations. -->
+<!-- Alston et al. note this is not the case...input mix, but in practice most impact studies do this -->
+<!-- whether wittingly or unwittingly, presuming instead that research induced percentage changes in agronomic yield and expenditure are equivalent to the percentage changes likely to occur in a real farm population. That is to say, they . -->
 
 ### The technology adoption decision is endogenous
 
@@ -2788,6 +2779,8 @@ ggEQsT0Shift <- gg
 For the purpose of policy formation, it is instructive to consider, at a glance, multiple farm subsidy and price change scenarios, and their supply and welfare outcomes, in a heat map format (Figure \ref{fig:decisionMaps}). These heat maps facilitate digestion of the possible supply and welfare outcomes of a wide range of subsidy policy options and assumptions regarding input and output price change. The intervention scenario considered a point on a map of possible supply shift and welfare outcomes given the expected 
 [at what rain level?]
 [address the alpha in aDotW]
+
+Also can do "pro-poor" measures of change in aggregate (supply and?) producer welfare. Integrate dlnL instead of dL.
 
 ```{r Fig6, fig.show = "hold", fig.width = 7, fig.height=3, fig.align="center", fig.cap="\\label{fig:decisionMaps}Kenya maize farm subsidy policy heat maps of the (left to right) adoption rate, change in aggregate supply, and aggregate producer welfare given release of the technology package described in the text. Each 'coordinate' on the map represents an assumed percentage decrease in the $\\alpha$ adjusted output-input price ratio and a net subsidy per acre. The scenario presented in the previous figure above is marked with a black dot. In these maps, the ratio of change in input price to change in output price is fixed at 0.75.", echo = FALSE}
 
