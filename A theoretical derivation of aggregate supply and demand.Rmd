@@ -407,21 +407,89 @@ y^* = v_0 k C^{*h}e^{\epsilon} \:\:;\:\:\: v_0 = \frac{E[y^*]}{E[k] E[C^{*h}]}
 \label{eq:YdEnvReg1}
 \end{equation}
 
-(Where $\epsilon$ is the error term.) Such that the estimated coefficient on logged farm cost may be directly interpreted as the degree of homogeneity for the population. When estimating the model in Equations \ref{eq:cobbDoug2} or \ref{eq:cobbDoug3}, by contrast, $h$ must be tallied by summing the estimated coefficients $\alpha_i$, and will likely vary across the population since not all farms necessarily apply all the inputs specified in the model. The new term $v_0$, moreover, is arguably a more meaningful measure of TFP than $g_0$, since inputs are expressed in identical units of cost; and is henceforth referred to as the "expenditure TFP".
+(Where $\epsilon$ is the error term.) Such that the estimated coefficient on logged farm cost may be directly interpreted as the degree of homogeneity for the population. When estimating the model in Equations \ref{eq:cobbDoug2} or \ref{eq:cobbDoug3}, by contrast, $h$ must be tallied by summing the estimated coefficients $\alpha_i$, and will likely vary across the population since not all farms necessarily apply all the inputs specified in the model. The new term $v_0$, moreover, retains meaning as a measure of TFP---and arguably a more instructive one since all inputs are expressed in identical units of cost. It is henceforth referred to as the "expenditure TFP".
 
-### Important corollaries: returns to scale, cancavity, price elasticities of farm supply and input demand
+### Returns to scale, cancavity, price elasticities of farm supply and input demand
 
-In Appendices A.2 and A.3 it is shown that axioms 1 and 2 imply the degree of homogeneity $h$ must exhibit strictly decreasing returns to scale ($0 < h < 1$), whereby it also follows that farm yield is globally concave in inputs, and that the farm supply curve is positively sloped. It is also shown that the output price elasticity of farm supply ($\eta$) is
+The second order condition for maximum profit is
 
 \begin{equation}
-\eta = \frac{h}{1 - h}
+\begin{split}
+\mathbf{x} ' \nabla_{\mathbf{x}}^2 \mathcal{L} \mathbf{x} &= P \mathbf{x} ' \nabla_{\mathbf{x}}^2 y \mathbf{x} ' < 0 \\
+&= P h (h - 1) < 0
+\end{split}
+\label{eq:eqSOC}
 \end{equation}
 
-Whereby the domains of $h$ over which farm supply is elastic or inelastic immediately follow. The input own and cross price elasticities of demand are likewise derived and shown to be strictly negative when returns to scale are decreasing.
-<!-- Moreover, once $v_0$ is estimated,  -->
-<!-- A further advantage of this form is that the fitted coefficient on $\ln(C^*)$ may be directly interpreted as $h$, valid for all farms in the sample. Estimation of the model in Equation \ref{eq:cobbDoug3}, on the other hand, requires the extra step of summation of the input elasticities $\alpha_i$ in order to arrive at $h$. This may result in varying $h$ across the sample, as not all farms necessarily apply all the inputs specified in the model. -->
+Where Euler's Theorem has been invoked in the second line of the condition. Axioms 1 and 2 thus require that yield exhibit decreasing returns to scale ($0 < h \leq 1$), whereby it also follows that yield is globally concave in inputs. (Increasing returns to scale would imply minimum profit and convexity in inputs, while constant returns would imply the break even point and linearity in inputs.)
 
-### The farm yield and expenditure response to technology change
+The price elasticity of farm supply resolves as follows.
+
+\begin{equation}
+\frac{\partial \ln(y^*)}{\partial P} = h \frac{\partial \ln(C^*)}{\partial P}
+\end{equation}
+
+Recalling that $C^* = R^* h / \lambda$ (Equation \ref{eq:cStar}), the output price elasticity of farm supply resolves as follows.
+
+\begin{equation}
+\begin{split}
+\frac{\partial \ln(y^*)}{\partial P} &= h \frac{\partial \ln(C^*)}{\partial P} \\
+&= h \left( \frac{\partial \ln(y^*)}{\partial P} + \frac{1}{P} \right) \\
+\frac{\partial \ln(y^*)}{\partial P} &= \frac{h}{1 - h} \frac{1}{P} \\
+\frac{\partial \ln(y^*)}{\partial \ln(P)} &= \frac{h}{1 - h}
+\end{split}
+\label{eq:PelastYstar}
+\end{equation}
+
+(Where Equation \ref{eq:cStar} is invoked in the second line.) Because returns to scale are strictly decreasing, it follows that farm supply is positively sloped. Moreover, farm supply is elastic for $h \in (1 / 2 , 1)$, inelastic for $h \in (0, 1 / 2)$, and linear when $h = 1 / 2$. Note that increasing returns to scale would imply negatively sloped supply curves. In Appendix A.1, the input own and cross price elasticities of demand are likewise derived and shown to be strictly negative only when returns to scale are decreasing.
+
+<!-- Then $y^*$ can also be written -->
+<!-- \begin{equation} -->
+<!-- y^* = \left( g_0 \prod_{i = 1}^{n_x} \left( \frac{\alpha_i}{w_i} \right)^{\alpha_i} \right) \left( \frac{P}{\lambda} \right) -->
+<!-- \end{equation} -->
+
+<!-- Whereby the price elasticity of farm yield follows as -->
+
+<!-- \begin{equation} -->
+<!-- \frac{\partial \ln(y^*)}{\partial \ln(P)} = \frac{h}{1 - h} -->
+<!-- \end{equation} -->
+<!-- In Appendices A.2 and A.3 it is shown that the second order conditions for maximum profit imply the degree of homogeneity $h$ must exhibit strictly decreasing returns to scale ($0 < h < 1$), whereby it also follows that farm , and that the farm supply curve is positively sloped. -->
+
+### Deducing the upper bound on expenditure and farm employment rate from axioms 3 and 4
+
+Letting $C^{\#}$ denote optimal unit expenditure (such that $C^{\#} = C^* / y^*$), note that farm expenditure and yield can be rewritten in terms of $C^{\#}$.
+
+\begin{equation}
+\begin{split}
+C^* = C^{\#} y^* &= C^{\#} v_0 k C^{* h} \\
+&= (v_0 k C^{\#})^{\frac{1}{1 - h}} \\
+&rightarrow y^* = (v_0 k)^{\frac{1}{1 - h}} C^{\# \frac{h}{1 - h}}
+\end{split}
+\label{eq:fnCsharp}
+\end{equation}
+
+And note, moreover, that Equation \ref{eq:cStar} simplifies to
+
+\begin{equation}
+C^{\#} = \frac{P}{\lambda} h
+\label{eq:cSharp}
+\end{equation}
+
+Axiom 3 states that farms enter production only if they expect to make non-negative profit, i.e. if $C^* \leq R^*$, which simplifies to $C^{\#} \leq P$. (It follows from Equation \ref{eq:cStar} or \ref{eq:cStar} that another way of expressing axiom 3 is $\lambda \geq h$.) The farm employment rate $\mathcal{E}$ may thus be expressed as
+
+\begin{equation}
+\mathcal{E} = \int_0^{P} \rho(C^{\#}) dC^{\#}
+\end{equation}
+
+If yield is lognormally distributed (axiom 4), then so must be $C^*$ and $C^{\#}$; and the expression reduces to
+
+\begin{equation}
+\mathcal{E} = \Phi \left( \frac{\ln(P) - m_{\#}}{s_{\#}} \right)
+\end{equation}
+
+Where $\Phi()$ is the standard normal cumulative distribution function.
+
+### The endogenous farm yield and expenditure response to exogenous technology change
 
 The impact of yield scaling technologies and/or management practices on farm supply and expenditure can be represented through perturbations of the TFP parameter ($g_0$). This is tantamount to adding a binary endowment variable to the yield model in Equation \ref{eq:lYdEnvReg3}. The four binary endowments included in the Kenya maize model example may be considered yield scaling interventions that increase the value of $g_0$ on adopting farms. The percentage increase in TFP given the introduction of a new intervention $\beta_5 b_5$ on farms that implement the new technology (farms where $b_5 = 1$) may be calculated as
 
@@ -432,9 +500,8 @@ The impact of yield scaling technologies and/or management practices on farm sup
 \end{split}
 \end{equation}
 
-The increase is thus the same across all adopting farms regardless of the starting value $g_0$. Ideally, the value of $\beta_5$ should be estimated via field trials. To assess the impact of the new technology on yield and expenditure, the effect of widespread adoption on prices must be also be taken into consideration. The direction of the expected change in input price depends upon the type of research product. Most agricultural research currently falls into one of two broad paradigms: "sustainable agricultural intensifcation" (SAI) or "agroecological intensification" (AEI) [@mockshell2018beyond]. Widespread adoption of a new SAI technology typically results in increased output supply and input demand, and hence a lower output price and higher input prices. Widespread adoption of an AEI technology, on the other hand, typically results in lower input demand and emphasizes yield stability over quantity, hence lowering input prices and having little or uncertain impact on output price. For illustrative purposes, here the new technology is assumed to be an SAI research product, such that $\partial \ln(\mathbf{w}) / \partial \ln(g_0) > 0$ and $\partial \ln(P) / \partial \ln(g_0) < 0$).
-
-The percentage changes in expenditure TFP ($v_0$), farm expenditure, and yield given a 1% change in $g_0$ follow from Equations \ref{eq:cStar} and \ref{eq:YdEnvReg1}.
+The increase is thus the same across all adopting farms regardless of the starting value $g_0$. Ideally, the value of $\beta_5$ should be estimated directly from field trials. If this is not possible, then the estimate can be made on the basis of agronomic crop modeling and expert opinion. Regardless of the path taken, it is critically important to keep in mind that the objective is to estimate the change in TFP ($\beta_5$ or $\partial \ln(g_0)$), not the change in economic yield itself ($\partial \ln(y^*)$). Information gathered in terms of the change in agronomic yield and/or expenditure must be converted into an estimate for $\partial \ln(g_0)$. The percentage change in economic yield, expenditure, and expenditure TFP ($v_0$) then follows from Equations \ref{eq:fnCsharp} as a function of the change in TFP as well as any change in output and input prices.
+<!-- The percentage changes in expenditure TFP ($v_0$), farm expenditure, and yield given a 1% change in $g_0$ follow from Equations \ref{eq:cStar} and \ref{eq:YdEnvReg1}. -->
 
 \begin{equation}
 \begin{split}
@@ -445,7 +512,46 @@ The percentage changes in expenditure TFP ($v_0$), farm expenditure, and yield g
 \label{eq:dldlg0}
 \end{equation}
 
-(See Appendix ... for details.)
+(See Appendix A.2 for details.)
+
+The direction of the expected change in input price depends upon the type of research product. Most agricultural research currently falls into one of two broad paradigms: "sustainable agricultural intensifcation" (SAI) or "agroecological intensification" (AEI) [@mockshell2018beyond]. Widespread adoption of a new SAI technology typically results in increased output supply and input demand, and hence a lower output price and higher input prices. Widespread adoption of an AEI technology, on the other hand, typically results in lower input demand and emphasizes yield stability over quantity, hence lowering input prices and having little or uncertain impact on output price. For illustrative purposes, here the new technology is assumed to be an SAI research product, such that $\partial \ln(\mathbf{w}) / \partial \ln(g_0) > 0$ and $\partial \ln(P) / \partial \ln(g_0) < 0$).
+
+
+The change in agronomic yield observed at research stations does not directly translate into the change in economic yield or farm expenditure likely to occur in a real farm population [@herdt1988increasing; @balasubramanian2000yield; @alston1995science].  This is well documented and obvious from the theoretical framework deveoped thus far but bears emphasis as it is still commonplace in practice to hear talk of the "exogenous yield shock", or in discussions, for example, of yield gaps [@sumberg2012mind].
+The conventional modeling approach is cognizant of  words of warning. The key difference between the approach developed here and the conventional framework that precedes it is that the present approach goes beyond words of warning to provide a framework for explicitly accounting for the effect of price change, increased cost, and subsidies on economic yield and expenditure.
+
+This is plain to see from the yield and expenditure expressions derived above; and is also just an empirically well documented lesson learned from decades of agricultural research .
+As discussed in the Introduction, conventional ex-ante impact assessment models routinely neglect this well known fact. They do not endogenously model the supply and/or expenditure response to technology shocks, but rather exogenously assert the response, often on the presumption that agronomic results at research stations will translate into identical results in real farm populations.
+Alston et al. note this is not the case...input mix, but in practice most impact studies do this
+whether wittingly or unwittingly, presuming instead that research induced percentage changes in agronomic yield and expenditure are equivalent to the percentage changes likely to occur in a real farm population. That is to say, they .
+
+
+
+\begin{equation}
+\begin{split}
+\frac{\partial \ln(y^*)}{\partial \ln(g_0)} &= \frac{\partial \ln(v_0)}{\partial \ln(g_0)} + h \frac{\partial \ln(C^*)}{\partial \ln(g_0)} \\
+&= \frac{\partial \ln(v_0)}{\partial \ln(g_0)} + h \left( \frac{\partial \ln(y^*)}{\partial \ln(g_0)} + \frac{\partial \ln(C^{\#})}{\partial \ln(g_0)} \right) \\
+&\rightarrow \frac{\partial \ln(y^*)}{\partial \ln(g_0)} = \frac{1}{1 - h} \left( \frac{\partial \ln(v_0)}{\partial \ln(g_0)} + h \frac{\partial \ln(P)}{\partial \ln(g_0)} \right)
+\end{split}
+\end{equation}
+<!-- \frac{1}{1 - h} \left( 1 - \boldsymbol{\alpha} ' \frac{\partial \ln(\mathbf{w})}{\partial \ln(g_0)} + h \frac{\partial \ln(P)}{\partial \ln(g_0)} \right) -->
+<!-- \frac{\partial \ln(v_0)}{\partial \ln(g_0)} + h \frac{\partial \ln(C^*)}{\partial \ln(g_0)} -->
+
+To resolve $\partial \ln(v_0) / \partial \ln(g_0)$, 
+
+
+
+
+
+
+
+
+
+
+
+<!-- (Where the last line follows from the input demand expression in Equation \ref{eq:inputDem2}.) -->
+
+<!-- &= \left( g_0 \prod_{i = 1}^{n_x} \left( \frac{\alpha_i}{w_i} \right)^{\alpha_i} \right) \left( \frac{C^{\#}}{h} \right)^{\frac{h}{1 - h}} -->
 
 [[In appendix:
 <!-- The percentage changes in expenditure per acre and yield given a 1 percentage change in TFP then follow from Equations \ref{eq:cStar} and \ref{eq:YdEnvReg1}. -->
@@ -465,42 +571,38 @@ The percentage changes in expenditure TFP ($v_0$), farm expenditure, and yield g
 <!-- \frac{\partial \ln(C^{\#})}{\partial \ln(g_0)} = \frac{\partial \ln(P)}{\partial \ln(g_0)} -->
 <!-- \label{eq:cSharp} -->
 <!-- \end{equation} -->
-Noting that $v_0$ can also be expressed
-\begin{equation}
-\begin{split}
-v_0 &= \frac{u_0}{E[k] E[C^*]^h} \\
-&= g_0 \frac{\prod_i^{n_x}E[x_i]^{\alpha_i}}{E[C^*]^h} \\
-&= g_0 \frac{1}{h}\prod_i^{n_x} \left( \frac{\alpha_i}{w_i} \right)^{\alpha_i}
-\end{split}
-\label{eq:v0forms}
-\end{equation}
-<!-- (Where the last line follows from the input demand expression in Equation \ref{eq:inputDem2}.) -->
 ]]
 <!-- The change in yield is positive only if $\partial \ln(g_0) > \boldsymbol{\alpha} ' \partial \ln(\mathbf{w}) + h \partial \ln(P)$. -->
 <!-- Change in expenditure is positive if $\partial \ln(g_0) > (1 - h) (\boldsymbol{\alpha} ' \partial \ln(\mathbf{w}) + \partial \ln(P))$. -->
-<!-- However, the agronomic yields obtained at research stations are not indicative of economic yields ($y^*$) or farm expenditures ($C^*$) in a real farm population. This is plain to see from the yield and expenditure expressions derived above; and is also just an empirically well documented lesson learned from decades of agricultural research [@herdt1988increasing; @balasubramanian2000yield; @sumberg2012mind]. -->
-<!-- As discussed in the Introduction, conventional ex-ante impact assessment models routinely neglect this well known fact. They do not endogenously model the supply and/or expenditure response to technology shocks, but rather exogenously assert the response, often on the presumption that agronomic results at research stations will translate into identical results in real farm populations. -->
-<!-- Alston et al. note this is not the case...input mix, but in practice most impact studies do this -->
-<!-- whether wittingly or unwittingly, presuming instead that research induced percentage changes in agronomic yield and expenditure are equivalent to the percentage changes likely to occur in a real farm population. That is to say, they . -->
 
-### The technology adoption decision is endogenous
+### The endogenous adoption rate
+<!-- Aggregate outcomes of an exogenous intervention depend critically on the adoption rate. This, in turn depends upon the profitability of adoption at the farm level. -->
+<!-- Given the forgoing, the objective function evaluated at optimal yield ... -->
+<!-- From the objective function -->
 
-Given the forgoing, the objective function evaluated at optimal yield ...
-
-From the objective function
-
-The farm profit lagrangian in Equation \ref{eq:lagrangian} evaluated at $y^*$ gives the farm profit envelope.
+The farm net benefit function in Equation \ref{eq:lagrangian} evaluated at $y^*$ gives the farm net benefit envelope.
 
 \begin{equation}
-\mathcal{L}^* = R^* + \lambda (B - C^*)
+\begin{split}
+\mathcal{L}^* &= R^* + \lambda (B - C^*) \\
+&= \frac{\lambda}{h} ((1 - h) C^* + h B)
+\end{split}
 \end{equation}
+<!-- By Equation \ref{eq:cStar}, this reduces to -->
+<!-- \begin{equation} -->
+<!-- \mathcal{L}^* = R^* (1 - h) + \lambda B -->
+<!-- \end{equation} -->
 
-By Equation \ref{eq:cStar}, this reduces to
+The welfare effect on a given farm of adopting the new technology can be examined by differentiating optimal net benefit with respect to the change in TFP.
 
 \begin{equation}
-\mathcal{L}^* = R^* (1 - h) + \lambda B
+\begin{split}
+\frac{\mathcal{L}^*}{\partial \ln(g_0)} &= \frac{\lambda}{h} \left((1 - h) \frac{\partial C^*}{\partial \ln(g_0)} + h \frac{\partial B}{\partial \ln(g_0)} \right) \\
+&= \frac{\lambda}{h} \left( C^* \left( 1 - \boldsymbol{\alpha} ' \frac{\partial \ln(\mathbf{w})}{\partial \ln(g_0)} + \frac{\partial \ln(P)}{\partial \ln(g_0)} \right) + h \frac{\partial B}{\partial \ln(g_0)} \right)
+\end{split}
 \end{equation}
 
+Assuming farmers adopt only if $\partial \mathcal{L}^*/\partial \ln(g_0) > 0$ (this is implicit in axiom 2), then the adoption condition is
 
 \begin{equation}
 \begin{split}
@@ -517,15 +619,13 @@ Where the term $\partial B$ represents the subsidies, costs, or any other exogen
 \label{eq:adoptCondSimp}
 \end{equation}
 
-Widespread adoption of yield scaling enhancements tends to boost production and thus lower output price while at the same time increasing input demand and thus input prices. Hence the expectation is that $\partial \ln(P) < 0$, $\partial \ln(\mathbf{w}) > 0$, and thus $\partial \nu < 0$. In words, then, the adoption condition says that a farm stands to increase its net benefit through adoption of yield scaling technology only if the resulting percentage increase in TFP ($g_0$) is greater than the corresponding percentage decrease in output price minus the corresponding percentage increase in input prices scaled by their respective input elasticities $\alpha_i$.
+As mentioned above, for SAI technologies the expectation is that $\partial \ln(P) < 0$, $\partial \ln(\mathbf{w}) > 0$, and thus $\partial \nu < 0$. In words, then, the adoption condition says that a farm stands to increase its net benefit through adoption of yield scaling technology only if the resulting percentage increase in TFP ($g_0$) is greater than the corresponding percentage decrease in output price minus the corresponding percentage increase in input prices scaled by their respective input elasticities $\alpha_i$. Note the resemblance between this and the "price/productivity tightrope" condition formulated by Lipton [-@lipton2005family].
 
-Note the resemblance between the adoption condition in Inequality \ref{eq:adoptCondSimp} and the "price/productivity tightrope" condition formulated by Lipton [-@lipton2005family].
-
->\singlespacing "New science usually raises farm supply of outputs and demand for inputs. That makes outputs cheaper and inputs more expensive; hence the ratio of farm output prices to input prices falls. Do small and poor farmers gain? If, and only if, this science-induced fall in their relative farm prices is slower than the science-induced rise in their conversion ratio of physical inputs into physical outputs (that is, TFP)."
+>\singlespacing "New [SAI] science usually raises farm supply of outputs and demand for inputs. That makes outputs cheaper and inputs more expensive; hence the ratio of farm output prices to input prices falls. Do small and poor farmers gain? If, and only if, this science-induced fall in their relative farm prices is slower than the science-induced rise in their conversion ratio of physical inputs into physical outputs (that is, TFP)."
 
 \doublespacing
 
-The only substantive difference between Lipton's condition and the condition in Inequality \ref{eq:adoptCondSimp} is that the percentage increases in input prices in the latter are scaled by their respective elasticities ($\alpha_i$). And of course the more complete version of the adoption condition in Inequality \ref{eq:adoptCond} differs from Lipton by also including the exogenous net subsidy term.
+The only substantive difference between Lipton's condition and the condition in Inequality \ref{eq:adoptCondSimp} is that the percentage increases in input prices in the latter are scaled by their respective efficiency parameters ($\alpha_i$). And of course the more complete version of the adoption condition in Inequality \ref{eq:adoptCond} differs from Lipton by also including the exogenous net subsidy term.
 
 If the efficiency adjusted output-input price ratio decrease is greater than the increase in TFP ($g_0$), then the margin by which it is greater is the net subsidy term $h / C^* \partial B$ required to make adoption profitable. Note that the required net subsidy $\partial B$ will vary across farms based on $C^*$. The factor $h / C^*$, which may also be written $\lambda / R^*$, represents each farm's marginal valuation of the subsidy; and implies that the subsidy is relatively more valuable to farms with relatively lower expenditure. Solving Inequality \ref{eq:adoptCond} for $C^*$ gives the maximum expenditure level for which adoption is profitable if the (absolute value of the) efficiency adjusted output-input price ratio decrease is greater than the increase in TFP ($|\partial \ln(\nu)| > \partial \ln(g_0)$).
 
@@ -534,17 +634,31 @@ C^* \leq \frac{-h \partial B}{\partial \ln(\nu) + \partial \ln(g_0)}
 \label{eq:cStarAdopt}
 \end{equation}
 
-If $\partial B=0$, then Inequality \ref{eq:adoptCond} implies that adoption will be either $0\%$ or $100\%$. Empirically, this is almost never observed. Adoption rates tend to fall somewhere between $0\%$ and $100\%$. The increased input demand associated with new technology adoption implies in and of itself that, without subsidies, $\partial B < 0$. And, of course, every major green revolution success story has involved subsidies of one kind or another to offset the required increase in input expenditure, and then some []. Within the theoretical framework developed here, this means that the net subsidy $\partial B$ is generally positive.
+If $\partial B=0$, then Inequality \ref{eq:adoptCond} implies that adoption will be either $0\%$ or $100\%$. Empirically, this is almost never observed. Adoption rates tend to fall somewhere between $0\%$ and $100\%$. The increased input demand associated with new technology adoption implies in and of itself that, without subsidies, $\partial B < 0$. And, of course, every major green revolution success story has involved subsidies of one kind or another to offset the required increase in input expenditure, and then some [@patel2013long; @pingali2012green]. (In his Nobel lecture, Norman Borlaug said that "equally as important as" the research product itself was the "sound governmental economic policy which would assure the farmer a fair price for his grain, the availability of the necessary inputs...and the credit with which to buy them" [-@Borlaug1970].) Within the theoretical framework developed here, this means that the net subsidy $\partial B$ is generally positive.
+<!-- Equally as important as the transfer of the new seed and new technology from Mexico to India and Pakistan was the introduction from Mexico of a crop-production campaign strategy. This strategy harnessed the high grain-yield potential of the new seed and new technology to sound governmental economic policy which would assure the farmer a fair price for his grain, the availability of the necessary inputs – seed, fertilizers, insecticides, weed killers, and machinery – and the credit with which to buy them. Collectively these inputs and strategy became the base from which the green revolution evolved. -->
 <!-- Assuming farms spend their whole farm budget ($B = C^*$), then the subsidy term simplifies to $h \partial \ln(C^*)$ and the adoption condition can be rewritten -->
 
-Denoting the upper adoption bound on $C^*$ (Equation \ref{eq:cStarAdopt}) as $\bar{\bar{C^*}}$ and recalling that axiom 4 implies lognormally distributed $C^*$, the adoption rate $A$ when $\partial B > 0$ and $|\partial \ln(\nu)| > \partial \ln(g_0)$ can be calculated as
+Denoting the upper adoption bound on $C^*$ (Equation \ref{eq:cStarAdopt}) as $\bar{\bar{C^*}}$, the adoption rate $A$ when $\partial \ln(g_0) < -\partial \ln(\nu)$ can be expressed as the integral of the density $\rho(C^*)$ over the domain $(0, \bar{\bar{C^*}})$.
+
+\begin{equation}
+\mathcal{A} = \int_0^{\bar{\bar{C^*}}} \rho(C^*) d C^*
+\end{equation}
+
+If $y^*$ is lognormally distributed (axiom 4), then so is $C^*$, and the expression resolves as follows.
 
 \begin{equation}
 \begin{split}
-\mathcal{A} &= \int_0^{\bar{\bar{C^*}}} \phi \left(\frac{\ln(C^*) - m_c}{s_c} \right) d \ln(C^*) \:\:;\:\:\: \bar{\bar{C^*}} = \frac{-h \partial B}{\partial \ln(\nu) + \partial \ln(g_0)} \\
-&= \Phi \left( \frac{\bar{\bar{C^*}} - m_c}{s_c} \right)
+\mathcal{A} &= \Phi \left( \frac{\ln(\bar{\bar{C^*}}) - m_c}{s_c} \right) \\
+& m_c = E[\ln(C^*)] \:\:\:\: s^2_c = Var[\ln(C^*)]
 \end{split}
 \end{equation}
+
+<!-- Where $\Phi()$ is the standard normal cumulative distribution function. -->
+
+
+\phi \left(\frac{\ln(C^*) - m_c}{s_c} \right) d \ln(C^*) \:\:;\:\:\: \bar{\bar{C^*}} = \frac{-h \partial B}{\partial \ln(\nu) + \partial \ln(g_0)} \\
+&= \Phi \left( \frac{\bar{\bar{C^*}} - m_c}{s_c} \right)
+\end{split}
 
 To parse $m_c$ and $s_c$, recall from Equation \ref{eq:mCk} that $C^* = (v_0 k E[C^{\#}(T)]|_{t = 0})^{1 / (1 - h)}$, such that
 <!-- note that Equations \ref{eq:paramsCondCsharp} can be rearranged into expressions for $\bar{m}_c$ and $\bar{s}_c$, whence the expression for the unconditional parameters follows immediately. -->
@@ -2409,7 +2523,7 @@ The aggregate impact of such interventions hinges critically on the adoption rat
 <!-- \end{equation} -->
 
 <!-- To parse $m_c$ and $s_c$, recall from Equation \ref{eq:mCk} that $C^* = (v_0 k E[C^{\#}(T)]|_{t = 0})^{1 / (1 - h)}$, such that -->
-<!-- <!-- note that Equations \ref{eq:paramsCondCsharp} can be rearranged into expressions for $\bar{m}_c$ and $\bar{s}_c$, whence the expression for the unconditional parameters follows immediately. --> -->
+<!-- <!-- note that Equations \ref{eq:paramsCondCsharp} can be rearranged into expressions for $\bar{m}_c$ and $\bar{s}_c$, whence the expression for the unconditional parameters follows immediately. -->
 
 <!-- \begin{equation} -->
 <!-- \begin{split} -->
@@ -2936,7 +3050,7 @@ ggAdopt | ggDq | ggDpsi
 # Discussion and conclusion
 
 The theoretical supply curve and imact assessment framework presented above... to solve for equilibrium price and consumer welfare impacts require demand curve specificatiobn...which extends beyond the scope of this article but you can guess what it would be...input demand integrated over density...or monopsony...a single firm or cartel of firms buying all the production....so consumer welfare is actually firm welfare, to get at consumers have to go beyond a bit
-this is comparative statics. welfare has to be discounted according to release/adoption period. welfare and subsidy incur year by year
+this is comparative statics. welfare has to be discounted according to release/adoption period. the change in prices, especially output price, is not immediate, lag... the adoption rate refers to the economically rational level of adoption once prices adjust to the intervention. many might adopt at first but then find out that it is not profitable and back out as prices adjust. welfare and subsidy incur year by year
 opens up a novel set of policy questions and nuance -- not just tech but also contractual arrangements, intermediaries, value chain, agroclimatic advisory services, cooperative social mechanisms, risk pooling,...enabling environment... and all at once--combined approaches ...much higher fidelity representation of the reality and the reality of interventions.
 Do not exogenously impose a change in expenditure and/or yield by fiat, but rather endogenously compute the change in expenditure and yield given an exogenous change in TFP and prices.
 can disaggregate results (adoption rate, supply change, and welfare change) by stratum
@@ -3079,98 +3193,10 @@ In the theoretical framework derived here, the adoption rate follows endogenousl
 # Appendix A
 
 A.1
-## Derivation of input demand from axiom 2 \label{sec:A1}
 
-Standard textbook treatments of the first and second order conditions for Cobb-Douglas profit maximization [e.g. @heathfield1987introduction] are typically limited to the two input case (capital and labor) for the purpose of isoquant analysis, and omit the budget constraint. It is therefore necessary to take a moment to examine these conditions for the more general case, and specific aims, at hand.
-<!-- ; and because the widespread insistence on constant or increasing returns to scale together with profit maximization, upward sloping firm supply curves, and other commonly desired production function properties, without acknowledging the mathematical contradiction between the latter and the former, suggests a lack of familiarity with the mathematical implications of these axioms beyond a literary form, such that a review is relevant to the aims of this article. -->
-<!-- \begin{framed} -->
-<!--    \textbf{Axiom 2} \\ Farms apply inputs so as to maximize their net benefit subject to a budget constraint. -->
-<!-- \end{framed} -->
+## Price and cross price elsaticities of input demand
 
-Formally, axiom 2 may be written
-
-\begin{equation}
-y^* = y(\mathbf{x}^*; y_0, \tilde{\mathbf{x}}, \mathbf{k}, \tilde{\mathbf{k}}, \boldsymbol{\alpha}, \boldsymbol{\kappa}) \:;\:\: x^* = \text{argmax}_{\mathbf{x}}(P y - \lambda(C - B))
-\end{equation}
-
-Where $P$ is the output price, $B$ is the farm budget, $C$ is the cost function, defined
-
-\begin{equation}
-C = \mathbf{w} ' \mathbf{x}
-\end{equation}
-
-and $\mathbf{w}$ is the vector of input prices corresponding to each element in the input vector $\mathbf{x}$.
-
-**--
-The Lagrangian is then
-
-\begin{equation}
-\mathcal{L} = Py - \lambda (C - B)
-\label{eq:lagrangian}
-\end{equation}
-
-Where $\lambda$ is the farm budget shadow price, that is, the marginal benefit to the farm of a marginal increase in budget.
-
-\begin{equation}
-\frac{\partial \mathcal{L}}{\partial B} = \lambda
-\end{equation}
-<!-- The budget shadow price is an implicit measure of how each farm values cash for expenditures on farm inputs, and plays a central role in the aggregation step farther below. -->
-
-The first order conditions for a maximum of $\mathcal{L}$ are
-
-\begin{equation}
-\begin{split}
-\nabla_{\mathbf{x}} \mathcal{L} &= P \nabla_{\mathbf{x}} y - \lambda \mathbf{w} = \mathbf{0} \\
-&= Py D(\mathbf{x})^{-1} \boldsymbol{\alpha} - \lambda \mathbf{w} = \mathbf{0}
-\end{split}
-\label{eq:eqFOC}
-\end{equation}
-
-Where the $\mathbf{0}$ indicates a vector of zeroes equal to the length of $\mathbf{x}$.
-**--
-And the second order condition for a maximum is
-
-\begin{equation}
-\begin{split}
-\mathbf{x} ' \nabla_{\mathbf{x}}^2 \mathcal{L} \mathbf{x} &= P \mathbf{x} ' \nabla_{\mathbf{x}}^2 y \mathbf{x} ' < 0 \\
-&= P h (h - 1) < 0
-\end{split}
-\label{eq:eqSOC}
-\end{equation}
-
-Where Euler's Theorem has been invoked in the second line of the condition. The first order conditions may be solved for input demand $x_j^*$ as follows.
-
-\begin{equation}
-x_j^* = \frac{P y^* \alpha_j}{\lambda w_j}
-\label{eq:inputDem1}
-\end{equation}
-
-A.2
-## Returns to scale and price elasticity of the farm yield envelope \label{sec:A2}
-
-The second order conditions examined above (Equation \ref{eq:eqSOC}) imply that constant returns to scale ($h = 1$) occur at the breakeven point of zero net benefit; and that increasing returns to scale ($h > 1$) minimize net benefit. The only values of $h$ over which the second order condition for maximum net benefit are met are $0 < h < 1$. Therefore, axioms 1 and 2 lead to the corollary that optimal farm yield exhibits strictly decreasing returns to scale. Note that it also follows that the farm yield function is globally concave in inputs only for decreasing returns to scale. Constant and increasing returns, on the other hand, would imply global linearity and convexity, respectively.
-
-Turning to output supply and input demand curves, note that the derivative of logged optimal yield (Equation \ref{eq:YdEnvNeat}) with respect to output price is
-
-\begin{equation}
-\frac{\partial \ln(y^*)}{\partial P} = h \frac{\partial \ln(C^*)}{\partial P}
-\end{equation}
-
-Recalling that $C^* = R^* h / \lambda$ (Equation \ref{eq:cStar}), the output price elasticity of farm supply resolves as follows.
-
-\begin{equation}
-\begin{split}
-\frac{\partial \ln(y^*)}{\partial P} &= h \left( \frac{\partial \ln(y^*)}{\partial P} + \frac{1}{P} \right) \\
-\frac{\partial \ln(y^*)}{\partial P} &= \frac{h}{1 - h} \frac{1}{P} \\
-\frac{\partial \ln(y^*)}{\partial \ln(P)} &= \frac{h}{1 - h}
-\end{split}
-\label{eq:PelastYstar}
-\end{equation}
-
-Because returns to scale are strictly decreasing, it follows that farm supply is positively sloped. Moreover, farm supply is elastic for $h \in (1 / 2 , 1)$, inelastic for $h \in (0, 1 / 2)$, and linear when $h = 1 / 2$. Note that increasing returns to scale would imply negatively sloped supply curves.
-<!-- first note that the optimal yield function in Equation \ref{eq:YdEnvNeat} can be rewritten in terms of output price $P$ by invoking Equation \ref{eq:cStar} to substitute $R^* h / \lambda$ for $C^*$. -->
-
-Decreasing returns to scale also imply strictly downward sloping input demand curves. To see this, consider the derivative of input demand (Equation \ref{eq:inputDem1}) with respect to input own price.
+Decreasing returns to scale imply strictly downward sloping input demand curves. To see this, consider the derivative of input demand (Equation \ref{eq:inputDem1}) with respect to input own price.
 
 \begin{equation}
 \frac{\partial \ln(x^*_i)}{\partial \ln(w_i)} = \frac{\partial \ln(y^*)}{\partial \ln(w_i)} - 1 \end{equation}
@@ -3209,43 +3235,173 @@ And
 
 whereby it is clear that the domain of $h$ implies negatively sloped own and cross price demand curves. It follows, moreover, that input own price elasticity of demand is strictly less than or equal to unity. Input cross price elasticity of demand is elastic if $h \in (1 - \alpha_j, 1)$, inelastic if $h \in (0, 1 - \alpha_j)$, and linear if $h = 1 - \alpha_j$. Note that increasing returns to scale would imply strictly upward sloping cross price demand curves, and the possibility of upward sloping own price demand curves.
 
-A.3
-## Marginal cost
-<!-- ### Marginal cost and unit cost -->
-<!-- Some important/underrepresented corollaries -->
-<!-- Because the C-D fn has fallen into such disrepute, it is worthwhile to take a moment to highlight some attractive corollaries that are underrepresented in the textbook treatments. [and one new one -lipton] -->
+A.2
 
-From Equation \ref{eq:YdEnvNeat}, it follows that
+## Differentiation of expenditure TFP, yield, and expenditure with respect to TFP
+
+Note that the expenditure TFP $v_0$ can be expressed
 
 \begin{equation}
-\frac{d \ln(y^*)}{d \ln(C^*)} = h
+\begin{split}
+v_0 &= \frac{u_0}{E[k] E[C^*]^h} \\
+&= g_0 \frac{\prod_i^{n_x}E[x_i]^{\alpha_i}}{E[C^*]^h} \\
+&= g_0 \frac{1}{h}\prod_i^{n_x} \left( \frac{\alpha_i}{w_i} \right)^{\alpha_i}
+\end{split}
+\label{eq:v0forms}
 \end{equation}
 
-In words, the degree of homogeneity $h$ may also be interpreted as the "scale elasticity of yield"---the fraction by which yield increases given a unit increase in expenditure. (This is a standard result for the Cobb-Douglas form, usually noted in the textbooks [@heathfield1987introduction]).
-
-The farm marginal cost follows from this as
+So that
 
 \begin{equation}
-\frac{dC^*}{dy^*} = \frac{C^*}{y^* h}
+\frac{\partial \ln(v_0)}{\partial \ln(g_0)} = 1 - \boldsymbol{\alpha} ' \frac{\partial \ln(\mathbf{w})}{\partial \ln(g_0)}
 \end{equation}
 
-Which, considering Equation \ref{eq:cStar}, may also be written
+The derivatives $\partial \ln (C^*) / \partial \ln(g_0)$ and $\partial \ln(y^*) / \partial \ln(g_0)$ then follow from the expressions in Equation \ref{eq:fnCsharp} as
 
 \begin{equation}
-\frac{dC^*}{dy^*} = \frac{P}{\lambda}
-\label{eq:margCost}
+\begin{split}
+\frac{\partial \ln(C^*)}{\partial \ln(g_0)} &= \frac{1}{1 - h} \left( \frac{\partial \ln(v_0)}{\partial \ln(g_0)} + \frac{\partial \ln(C^*)}{\partial \ln(g_0)} \right)  \\
+&\rightarrow \frac{\partial \ln(C^*)}{\partial \ln(g_0)} = \frac{1}{1 - h} \left( 1 - \boldsymbol{\alpha} ' \frac{\partial \ln(\mathbf{w})}{\partial \ln(g_0)} + \frac{\partial \ln(P)}{\partial \ln(g_0)} \right)
+\end{split}
 \end{equation}
 
-Axioms 1 and 2 thus imply that marginal cost is proportionate, but not equal, to output price. If they were equal, then this would constitute theoretical grounds upon which to presume that every farm has the same marginal cost. And then from there it would be a short jump to presume, as is often done, that a given exogenous shock affects every farm's marginal cost identically. But no, marginal cost varies with $\lambda$. In highly developed economic sectors, it may be that $\lambda$ is effectively determined by the lending rate, and is thus homogeneous across firms; but this is generally not true in the primary sector. In the primary sector, heterogeneous endowments result in heterogeneous valuation of marginal increments in production expenditure (i.e. $\lambda$).
-<!-- This may be considered one of the hallmarks of the primary sector setting it apart from other sectors. -->
-
-The relation between marginal cost and "average cost" (i.e. optimal unit cost) readily follows from Equation \ref{eq:margCost}.
+And
 
 \begin{equation}
-\frac{dC^*}{dy^*} = \frac{C^{\#}}{h} \:\:; \:\:\: C^{\#} = C^*/y^*
+\begin{split}
+\frac{\partial \ln(y^*)}{\partial \ln(g_0)} &= \frac{\partial \ln(v_0)}{\partial \ln(g_0)} - h \frac{\partial \ln(C^*)}{\partial \ln(g_0)} \\
+&= \frac{1}{1 - h} \left( 1 - \boldsymbol{\alpha} ' \frac{\partial \ln(\mathbf{w})}{\partial \ln(g_0)} + h \frac{\partial \ln(P)}{\partial \ln(g_0)} \right)
+\end{split}
 \end{equation}
 
-The standard assertion that profit-maximizing farms produce such that marginal cost equals average cost thus implies constant returns to scale ($h = 1$), which in turn implies a marginal farm producing for zero profit with a perfectly inelastic farm supply curve that is globally linear in inputs.
+
+
+
+<!-- ## Derivation of input demand from axiom 2 \label{sec:A1} -->
+
+<!-- Standard textbook treatments of the first and second order conditions for Cobb-Douglas profit maximization [e.g. @heathfield1987introduction] are typically limited to the two input case (capital and labor) for the purpose of isoquant analysis, and omit the budget constraint. It is therefore necessary to take a moment to examine these conditions for the more general case, and specific aims, at hand. -->
+<!-- ; and because the widespread insistence on constant or increasing returns to scale together with profit maximization, upward sloping firm supply curves, and other commonly desired production function properties, without acknowledging the mathematical contradiction between the latter and the former, suggests a lack of familiarity with the mathematical implications of these axioms beyond a literary form, such that a review is relevant to the aims of this article. -->
+<!-- \begin{framed} -->
+<!--    \textbf{Axiom 2} \\ Farms apply inputs so as to maximize their net benefit subject to a budget constraint. -->
+<!-- \end{framed} -->
+
+<!-- Formally, axiom 2 may be written -->
+
+<!-- \begin{equation} -->
+<!-- y^* = y(\mathbf{x}^*; y_0, \tilde{\mathbf{x}}, \mathbf{k}, \tilde{\mathbf{k}}, \boldsymbol{\alpha}, \boldsymbol{\kappa}) \:;\:\: x^* = \text{argmax}_{\mathbf{x}}(P y - \lambda(C - B)) -->
+<!-- \end{equation} -->
+
+<!-- Where $P$ is the output price, $B$ is the farm budget, $C$ is the cost function, defined -->
+
+<!-- \begin{equation} -->
+<!-- C = \mathbf{w} ' \mathbf{x} -->
+<!-- \end{equation} -->
+
+<!-- and $\mathbf{w}$ is the vector of input prices corresponding to each element in the input vector $\mathbf{x}$. -->
+
+<!-- **-- -->
+<!-- The Lagrangian is then -->
+
+<!-- \begin{equation} -->
+<!-- \mathcal{L} = Py - \lambda (C - B) -->
+<!-- \label{eq:lagrangian} -->
+<!-- \end{equation} -->
+
+<!-- Where $\lambda$ is the farm budget shadow price, that is, the marginal benefit to the farm of a marginal increase in budget. -->
+
+<!-- \begin{equation} -->
+<!-- \frac{\partial \mathcal{L}}{\partial B} = \lambda -->
+<!-- \end{equation} -->
+<!-- <!-- The budget shadow price is an implicit measure of how each farm values cash for expenditures on farm inputs, and plays a central role in the aggregation step farther below. -->
+
+<!-- The first order conditions for a maximum of $\mathcal{L}$ are -->
+
+<!-- \begin{equation} -->
+<!-- \begin{split} -->
+<!-- \nabla_{\mathbf{x}} \mathcal{L} &= P \nabla_{\mathbf{x}} y - \lambda \mathbf{w} = \mathbf{0} \\ -->
+<!-- &= Py D(\mathbf{x})^{-1} \boldsymbol{\alpha} - \lambda \mathbf{w} = \mathbf{0} -->
+<!-- \end{split} -->
+<!-- \label{eq:eqFOC} -->
+<!-- \end{equation} -->
+
+<!-- Where the $\mathbf{0}$ indicates a vector of zeroes equal to the length of $\mathbf{x}$. -->
+
+<!-- And the second order condition for a maximum is -->
+
+<!-- \begin{equation} -->
+<!-- \begin{split} -->
+<!-- \mathbf{x} ' \nabla_{\mathbf{x}}^2 \mathcal{L} \mathbf{x} &= P \mathbf{x} ' \nabla_{\mathbf{x}}^2 y \mathbf{x} ' < 0 \\ -->
+<!-- &= P h (h - 1) < 0 -->
+<!-- \end{split} -->
+<!-- \label{eq:eqSOC} -->
+<!-- \end{equation} -->
+
+<!-- Where Euler's Theorem has been invoked in the second line of the condition. The first order conditions may be solved for input demand $x_j^*$ as follows. -->
+
+<!-- \begin{equation} -->
+<!-- x_j^* = \frac{P y^* \alpha_j}{\lambda w_j} -->
+<!-- \label{eq:inputDem1} -->
+<!-- \end{equation} -->
+
+<!-- A.2 -->
+<!-- ## Returns to scale and price elasticity of the farm yield envelope \label{sec:A2} -->
+
+<!-- The second order conditions examined above (Equation \ref{eq:eqSOC}) imply that constant returns to scale ($h = 1$) occur at the breakeven point of zero net benefit; and that increasing returns to scale ($h > 1$) minimize net benefit. The only values of $h$ over which the second order condition for maximum net benefit are met are $0 < h < 1$. Therefore, axioms 1 and 2 lead to the corollary that optimal farm yield exhibits strictly decreasing returns to scale. Note that it also follows that the farm yield function is globally concave in inputs only for decreasing returns to scale. Constant and increasing returns, on the other hand, would imply global linearity and convexity, respectively. -->
+
+<!-- Turning to output supply and input demand curves, note that the derivative of logged optimal yield (Equation \ref{eq:YdEnvNeat}) with respect to output price is -->
+
+<!-- \begin{equation} -->
+<!-- \frac{\partial \ln(y^*)}{\partial P} = h \frac{\partial \ln(C^*)}{\partial P} -->
+<!-- \end{equation} -->
+
+<!-- Recalling that $C^* = R^* h / \lambda$ (Equation \ref{eq:cStar}), the output price elasticity of farm supply resolves as follows. -->
+
+<!-- \begin{equation} -->
+<!-- \begin{split} -->
+<!-- \frac{\partial \ln(y^*)}{\partial P} &= h \left( \frac{\partial \ln(y^*)}{\partial P} + \frac{1}{P} \right) \\ -->
+<!-- \frac{\partial \ln(y^*)}{\partial P} &= \frac{h}{1 - h} \frac{1}{P} \\ -->
+<!-- \frac{\partial \ln(y^*)}{\partial \ln(P)} &= \frac{h}{1 - h} -->
+<!-- \end{split} -->
+<!-- \label{eq:PelastYstar} -->
+<!-- \end{equation} -->
+
+<!-- Because returns to scale are strictly decreasing, it follows that farm supply is positively sloped. Moreover, farm supply is elastic for $h \in (1 / 2 , 1)$, inelastic for $h \in (0, 1 / 2)$, and linear when $h = 1 / 2$. Note that increasing returns to scale would imply negatively sloped supply curves. -->
+<!-- <!-- first note that the optimal yield function in Equation \ref{eq:YdEnvNeat} can be rewritten in terms of output price $P$ by invoking Equation \ref{eq:cStar} to substitute $R^* h / \lambda$ for $C^*$. --> 
+<!-- **-- -->
+<!-- A.3 -->
+<!-- ## Marginal cost -->
+<!-- <!-- ### Marginal cost and unit cost -->
+<!-- <!-- Some important/underrepresented corollaries -->
+<!-- <!-- Because the C-D fn has fallen into such disrepute, it is worthwhile to take a moment to highlight some attractive corollaries that are underrepresented in the textbook treatments. [and one new one -lipton] -->
+
+<!-- From Equation \ref{eq:YdEnvNeat}, it follows that -->
+
+<!-- \begin{equation} -->
+<!-- \frac{d \ln(y^*)}{d \ln(C^*)} = h -->
+<!-- \end{equation} -->
+<!-- In words, the degree of homogeneity $h$ may also be interpreted as the "scale elasticity of yield"---the fraction by which yield increases given a unit increase in expenditure. (This is a standard result for the Cobb-Douglas form, usually noted in the textbooks [@heathfield1987introduction]). -->
+<!-- The farm marginal cost follows from this as -->
+<!-- \begin{equation} -->
+<!-- \frac{dC^*}{dy^*} = \frac{C^*}{y^* h} -->
+<!-- \end{equation} -->
+
+<!-- Which, considering Equation \ref{eq:cStar}, may also be written -->
+
+<!-- \begin{equation} -->
+<!-- \frac{dC^*}{dy^*} = \frac{P}{\lambda} -->
+<!-- \label{eq:margCost} -->
+<!-- \end{equation} -->
+
+<!-- Axioms 1 and 2 thus imply that marginal cost is proportionate, but not equal, to output price. If they were equal, then this would constitute theoretical grounds upon which to presume that every farm has the same marginal cost. And then from there it would be a short jump to presume, as is often done, that a given exogenous shock affects every farm's marginal cost identically. But no, marginal cost varies with $\lambda$. In highly developed economic sectors, it may be that $\lambda$ is effectively determined by the lending rate, and is thus homogeneous across firms; but this is generally not true in the primary sector. In the primary sector, heterogeneous endowments result in heterogeneous valuation of marginal increments in production expenditure (i.e. $\lambda$). -->
+<!-- <!-- This may be considered one of the hallmarks of the primary sector setting it apart from other sectors. -->
+
+<!-- The relation between marginal cost and "average cost" (i.e. optimal unit cost) readily follows from Equation \ref{eq:margCost}. -->
+
+<!-- \begin{equation} -->
+<!-- \frac{dC^*}{dy^*} = \frac{C^{\#}}{h} \:\:; \:\:\: C^{\#} = C^*/y^* -->
+<!-- \end{equation} -->
+
+<!-- The standard assertion that profit-maximizing farms produce such that marginal cost equals average cost thus implies constant returns to scale ($h = 1$), which in turn implies a marginal farm producing for zero profit with a perfectly inelastic farm supply curve that is globally linear in inputs. -->
 <!-- Since $P = d R^* / d y^*$, this can be rearranged into another instructive expression for $\lambda$. -->
 <!-- constant marginal cost. (As mentioned in the introduction, this is well supported empirically [].) -->
 <!-- \begin{equation} -->
@@ -3299,7 +3455,7 @@ The standard assertion that profit-maximizing farms produce such that marginal c
 <!-- \theta_x = \prod_i {\alpha_i}^{\alpha_i} \:\:\: \theta_w = \prod_i{w_i}^{\alpha_i} \:\:\:  \theta_k = \prod_i \left( \frac{k_i}{\tilde{k}_i} \right)^{\kappa_i} -->
 <!-- \end{equation} -->
 
-A.4
+A.3
 ## Proof of Equation \ref{eq:keyResult}
 
 For any lognormally distributed $\chi$, the probability density function $\rho(\chi)$ is defined
