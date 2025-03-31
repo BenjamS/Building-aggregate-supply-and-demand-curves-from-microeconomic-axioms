@@ -4,7 +4,7 @@ title: A theoretical derivation of the agricultural aggregate supply curve and r
 # date: "`r Sys.Date()`"
 abstract: |
   Conventional models of the aggregate supply of agricultural commodities---specifically those used in ex-ante impact assessments of policy and research shocks---do not endogenously model the supply response to technology (or any other exogenous) shocks, but rather 1) assume the farm level supply response as exogenously given based on agronomic information, and then 2) assume, as a matter of fiat, the mechanism by which the farm level response manifests at the aggregate level (whether it is a shift or pivot of the aggregate supply curve, and what the adoption rate will be). Such models also do not account for farm heterogeneity---or, worse still, assume identical marginal farms---and do not account for farm entry/exit. For applications where these things matter, here a tractable aggregate supply model is formally derived from five weak axioms. Unlike the conventional models, the derived form is expressed in parameters that have clear economic meaning. This includes novel parameters such as price volatility and a term representing the mean probability of profit---which in turn endogenously accounts for farm entry/exit---thus broadening the range of policy questions that can be addressed in partial equilibrium analysis. As an illustrative use case, the model is fit to Kenya maize farm data. The fitted aggregate supply and price elasticity of aggregate supply curves agree with empirical estimates. Equations for the _endogenous_ adoption rate, supply response, and producer welfare impact are derived and showcased given a hypothetical exogenous technology shock in the Kenya maize farm population.
-  distributional issues
+  distributional issues endogenous adoption rate
 header-includes:
   - \usepackage{geometry}
   - \geometry{top=1in,left=1in,bottom=1in,right=1in}
@@ -137,6 +137,15 @@ The second main contribution of the article comes in the subsequent derivation a
 TFP, prices, and any net subsidy included in the package
 
 Because the conventional linear and CES aggregate supply functions are in such wide use, it is first worthwhile to engage with that literature in more detail than is offered in the cursory treatment above, and to thereby place the motivation for the present work on a more solid footing.
+
+*------
+Changes in agronomic yield and expenditure observed at research stations do not directly translate into changes in economic yield and expenditure likely to occur in real farm populations. This economically obvious, empirically well documented [@herdt1988increasing; @balasubramanian2000yield], fact of life bears mentioning here because confusion about the difference between experimental agronomic and real world economic farm outcomes still pervades the conversation in many areas of agricultural research impact assessment [@sumberg2012mind]. And this is arguably rooted in the lack of practical, formal tools for addressing the matter in the conventional ex-ante impact assessment framework. To be clear, the authors of the conventional framework are cognizant of the matter; but offer little in the way of practical, formal tools for addressing it [@alston1995science].
+[and no transparency for what the assumptions behind the conversion from experimental result to economic yield are! And in practice,... always take the agronomic result as the economic result,[many studies]. also its effectively exogenous]
+<!-- Information gathered in terms of the change in agronomic yield and/or expenditure must be converted into an estimate for $\partial \ln(g)$. -->
+
+The key difference between the convention and the alternative approach developed here is that the present approach is built upon a transparent _endogenous_ accounting of the research induced supply and expenditure response to the exogenous technology shock. [and transparent aggregation]
+
+ENDOGENOUS ADOPTION RATE
 
 # Literature review
 
@@ -284,7 +293,7 @@ Empirical analysis involves exogenously given control variables ($k_i$), typical
 <!-- (Analysis is said to be "ceteris paribus" when these variables are held constant at a particular value across the population.) -->
 
 \begin{equation}
-y = g_0 \prod_{i = 1}^{n_k} k_i^{\kappa_i} \prod_{i = 1}^{n_x} x_i^{\alpha_i} \:\:;\:\:\: g_0 = e^{\alpha_0}
+y = g \prod_{i = 1}^{n_k} k_i^{\kappa_i} \prod_{i = 1}^{n_x} x_i^{\alpha_i} \:\:;\:\:\: g = e^{\alpha_0}
 \label{eq:cobbDoug2}
 \end{equation}
 
@@ -297,33 +306,34 @@ Where the $\kappa_i$ are the control variable elasticities of yield. Because the
 This is, of course, the Cobb-Douglas form. Outside of Economics, it would simply be referred to as a (multivariate) power law. Such forms are often good models of observed processes across a wide range of research contexts and disciplines. In Economics, the Cobb-Douglas form was widely used from the 1920s to 1950s on the basis of its good empirical fit, but fell into disrepute thereafter for its perceived lack a theoretical basis. Capalbo and Antle [-@capalbo2015agricultural] offer a succinct introduction to this vast discussion. The forgoing derivation of the Cobb-Douglas form from axiom 1 in some measure redresses the lack of a theoretical basis. A full defense against all of the criticisms levied against this form over the past seventy five years is a book-length project that will not be attempted here.
 <!-- [Other perceived shortcomings of the form are briefly addressed in the Discussion. if there is enough space!] [Or: In the course of the derivation below, a number of theoretical strengths are brought to light---underrepresented or overlooked by textbook treatments---that cast doubt on the bad reputation as a "restrictive" model] -->
 
-Interpretation of the constant $g_0$ is as difficult as one wants to make it. It is, of course, usually called the "total factor productivity" (TFP), and understood to represent the yield per unit "all inputs"---although a more accurate description would be yield per unit "all input and control variables, raised to various powers". The TFP constant $g_0$ may in fact be a sum of binary endowments $b_i \beta_i$ that augment the base constant $\beta_0$ on farms where the endowment is present (where $b_i = 1$). That is to say, 
+Interpretation of the constant $g$ is as difficult as one wants to make it. It is, of course, usually called the "total factor productivity" (TFP), and understood to represent the yield per unit "all inputs"---although a more accurate description would be yield per unit "all input and control variables, raised to various powers". The TFP constant $g$ may in fact be a sum of binary endowments $b_i \beta_i$ that augment the base constant $\beta_0$ on farms where the endowment is present (where $b_i = 1$). That is to say, 
 
 \begin{equation}
-\alpha_0 = \beta_0 + \sum_{i = 1}^{n_b} b_i \beta_i
+\ln(g) = \alpha_0 = \beta_0 + \sum_{i = 1}^{n_b} b_i \beta_i
+\label{eq:g0Sum}
 \end{equation}
 
-In the Kenya maize farm exercise farther below, for example, there are four ($n_b = 4$) binary endowment variables $b_i$ (which take a value of $1$ if the endowment is present and $0$ otherwise): use of oxen in land preparation, use of tractor in land preparation, use of hybrid maize seed, and land tenure. This means that $g_0$ can vary across the population. In the Kenya maize exercise, there are 14 unique values of $g_0$ in the population, corresponding to 14 unique combinations of the four binary endowments plus the regression constant.
+In the Kenya maize farm exercise farther below, for example, there are four ($n_b = 4$) binary endowment variables $b_i$ (which take a value of $1$ if the endowment is present and $0$ otherwise): use of oxen in land preparation, use of tractor in land preparation, use of hybrid maize seed, and land tenure. This means that $g$ can vary across the population. In the Kenya maize exercise, there are 14 unique values of $g$ in the population, corresponding to 14 unique combinations of the four binary endowments plus the regression constant.
 
-The parameter $g_0$ may also be arbitrarily defined in terms of a new parameter ($u_0$) combined with judiciously chosen reference terms such that the new parameter has a meaningful interpretation and/or results in a more useful expression for yield. For present purposes, $g_0$ is defined as follows
+The parameter $g$ may also be arbitrarily defined in terms of a new parameter ($u$) combined with judiciously chosen reference terms such that the new parameter has a meaningful interpretation and/or results in a more useful expression for yield. For present purposes, $g$ is defined as follows
 <!-- For those not yet comfortable working in units of, say, -->
 <!-- $$ -->
 <!-- \text{kg.} \times \: \text{acres}^{-1} \times \: \text{liters}^{-\alpha_{pest}} \times \: \text{kg.}^{-\alpha_{fert}} \times \: \text{manhours}^{-\alpha_{labor}} \times\: \\ \text{mm.}^{-\alpha_{rain}} \times\: \text{num. persons}^{-\alpha_{HHsize}} -->
 <!-- $$ -->
  <!-- \:;\:\: \alpha_{(var)} \in \mathbb{R} -->
 <!-- \: \text{years}^{-\alpha_{age}} \times\: -->
-<!-- in terms of another constant $u_0$, the means $E[x_i]$, and the mean of    fixed reference values $\tilde{k}_i$, $\tilde{x}_i$ that have the same units as the corresponding management and control variables $x_i$ and $k_i$. -->
+<!-- in terms of another constant $u$, the means $E[x_i]$, and the mean of    fixed reference values $\tilde{k}_i$, $\tilde{x}_i$ that have the same units as the corresponding management and control variables $x_i$ and $k_i$. -->
 <!-- Because the ratios in parentheses are dimensionless, $y_0$ must have the same units as $y$; and $y_0$ may be interpreted as the value of $y$ when all management and control variables equal their reference values. In the empirical study included here, for example, the reference values are set equal to the sample means, such that $y_0$ is the value of $y$ evaluated at the sample means of the input and control variables. -->
 
 \begin{equation}
-g_0 = \frac{u_0}{E[\prod_{i = 1}^{n_k} k_i^{\kappa_i}] \prod_{i = 1}^{n_x} E[x_i]^{\alpha_i}}
+g = \frac{u}{E[\prod_{i = 1}^{n_k} k_i^{\kappa_i}] \prod_{i = 1}^{n_x} E[x_i]^{\alpha_i}}
 \label{eq:u0_for_g0}
 \end{equation}
 
-Where $u_0$ is a constant, such that $y$ may be rewritten
+Where $u$ is a constant, such that $y$ may be rewritten
 
 \begin{equation}
-y = u_0 \frac{k}{E[k]} \prod_{i = 1}^{n_x} \left( \frac{x_i}{E[x_i]} \right)^{\alpha_i} \:\:;\:\:\: k = \prod_{i = 1}^{n_k} k_i^{\kappa_i}
+y = u \frac{k}{E[k]} \prod_{i = 1}^{n_x} \left( \frac{x_i}{E[x_i]} \right)^{\alpha_i} \:\:;\:\:\: k = \prod_{i = 1}^{n_k} k_i^{\kappa_i}
 \label{eq:cobbDoug3}
 \end{equation}
 
@@ -382,18 +392,18 @@ Combining this with the previous equation gives
 Such that the optimal farm yield $y^*$ (Equation \ref{eq:cobbDoug3} evaluated at $x^*_i$) may be expressed
 
 \begin{equation}
-y^* = u_0 \frac{k}{E[k]} \left( \frac{C^*}{E[C^*]} \right)^h
+y^* = u \frac{k}{E[k]} \left( \frac{C^*}{E[C^*]} \right)^h
 \label{eq:YdEnvNeat0}
 \end{equation}
 
-The expression can be simplified still further by taking the expectation and solving for $u_0$.
+The expression can be simplified still further by taking the expectation and solving for $u$.
 
 \begin{equation}
-u_0 = E[y^*] \frac{E[C^*]^h}{E[C^{*h}]}
+u = E[y^*] \frac{E[C^*]^h}{E[C^{*h}]}
 \label{eq:muYstarU0}
 \end{equation}
 
-And then substituting this for $u_0$ in the yield expression.
+And then substituting this for $u$ in the yield expression.
 
 \begin{equation}
 y^* = E[y^*] \frac{k}{E[k]} \frac{C^{*h}}{E[C^{*h}]}
@@ -403,11 +413,11 @@ y^* = E[y^*] \frac{k}{E[k]} \frac{C^{*h}}{E[C^{*h}]}
 This expression for optimal farm yield---henceforth referred to simply as the farm yield---is particularly useful as an econometric yield model, as it only requires information on the control variables $k_i$ and total cost $C^*$, and no information on individual input quantities, as would be required when estimating Equations \ref{eq:cobbDoug2} or \ref{eq:cobbDoug3}. Given farm data, one specifies the model
 
 \begin{equation}
-y^* = v_0 k C^{*h}e^{\epsilon} \:\:;\:\:\: v_0 = \frac{E[y^*]}{E[k] E[C^{*h}]}
+y^* = v k C^{*h}e^{\epsilon} \:\:;\:\:\: v = \frac{E[y^*]}{E[k] E[C^{*h}]}
 \label{eq:YdEnvReg1}
 \end{equation}
 
-(Where $\epsilon$ is the error term.) Such that the estimated coefficient on logged farm cost may be directly interpreted as the degree of homogeneity for the population. When estimating the model in Equations \ref{eq:cobbDoug2} or \ref{eq:cobbDoug3}, by contrast, $h$ must be tallied by summing the estimated coefficients $\alpha_i$, and will likely vary across the population since not all farms necessarily apply all the inputs specified in the model. The new term $v_0$, moreover, retains meaning as a measure of TFP---and arguably a more instructive one since all inputs are expressed in identical units of cost. It is henceforth referred to as the "expenditure TFP".
+(Where $\epsilon$ is the error term.) Such that the estimated coefficient on logged farm cost may be directly interpreted as the degree of homogeneity for the population. When estimating the model in Equations \ref{eq:cobbDoug2} or \ref{eq:cobbDoug3}, by contrast, $h$ must be tallied by summing the estimated coefficients $\alpha_i$, and will likely vary across the population since not all farms necessarily apply all the inputs specified in the model. The new term $v$, moreover, retains meaning as a measure of TFP---and arguably a more instructive one since all inputs are expressed in identical units of cost. It is henceforth referred to as the "expenditure TFP".
 
 ### Returns to scale, cancavity, price elasticities of farm supply and input demand
 
@@ -442,10 +452,9 @@ Recalling that $C^* = R^* h / \lambda$ (Equation \ref{eq:cStar}), the output pri
 \end{equation}
 
 (Where Equation \ref{eq:cStar} is invoked in the second line.) Because returns to scale are strictly decreasing, it follows that farm supply is positively sloped. Moreover, farm supply is elastic for $h \in (1 / 2 , 1)$, inelastic for $h \in (0, 1 / 2)$, and linear when $h = 1 / 2$. Note that increasing returns to scale would imply negatively sloped supply curves. In Appendix A.1, the input own and cross price elasticities of demand are likewise derived and shown to be strictly negative only when returns to scale are decreasing.
-
 <!-- Then $y^*$ can also be written -->
 <!-- \begin{equation} -->
-<!-- y^* = \left( g_0 \prod_{i = 1}^{n_x} \left( \frac{\alpha_i}{w_i} \right)^{\alpha_i} \right) \left( \frac{P}{\lambda} \right) -->
+<!-- y^* = \left( g \prod_{i = 1}^{n_x} \left( \frac{\alpha_i}{w_i} \right)^{\alpha_i} \right) \left( \frac{P}{\lambda} \right) -->
 <!-- \end{equation} -->
 
 <!-- Whereby the price elasticity of farm yield follows as -->
@@ -457,13 +466,13 @@ Recalling that $C^* = R^* h / \lambda$ (Equation \ref{eq:cStar}), the output pri
 
 ### Deducing the upper bound on expenditure and farm employment rate from axioms 3 and 4
 
-Letting $C^{\#}$ denote optimal unit expenditure (such that $C^{\#} = C^* / y^*$), note that farm expenditure and yield can be rewritten in terms of $C^{\#}$.
+Letting $C^{\#}$ denote optimal unit expenditure ($C^{\#} = C^* / y^*$), note that $C^*$ and $y^*$ can be rewritten in terms of $C^{\#}$ as follows.
 
 \begin{equation}
 \begin{split}
-C^* = C^{\#} y^* &= C^{\#} v_0 k C^{* h} \\
-&= (v_0 k C^{\#})^{\frac{1}{1 - h}} \\
-&rightarrow y^* = (v_0 k)^{\frac{1}{1 - h}} C^{\# \frac{h}{1 - h}}
+C^* = C^{\#} y^* &= C^{\#} v k C^{* h} \\
+&rightarrow C^* = (v k C^{\#})^{\frac{1}{1 - h}} \\
+&rightarrow y^* = (v k)^{\frac{1}{1 - h}} C^{\# \frac{h}{1 - h}}
 \end{split}
 \label{eq:fnCsharp}
 \end{equation}
@@ -481,7 +490,7 @@ Axiom 3 states that farms enter production only if they expect to make non-negat
 \mathcal{E} = \int_0^{P} \rho(C^{\#}) dC^{\#}
 \end{equation}
 
-If yield is lognormally distributed (axiom 4), then so must be $C^*$ and $C^{\#}$; and the expression reduces to
+Assuming yield is lognormally distributed (axiom 4), then so must be $C^*$ and $C^{\#}$; and the expression reduces to
 
 \begin{equation}
 \mathcal{E} = \Phi \left( \frac{\ln(P) - m_{\#}}{s_{\#}} \right)
@@ -491,76 +500,67 @@ Where $\Phi()$ is the standard normal cumulative distribution function.
 
 ### The endogenous farm yield and expenditure response to exogenous technology change
 
-The impact of yield scaling technologies and/or management practices on farm supply and expenditure can be represented through perturbations of the TFP parameter ($g_0$). This is tantamount to adding a binary endowment variable to the yield model in Equation \ref{eq:lYdEnvReg3}. The four binary endowments included in the Kenya maize model example may be considered yield scaling interventions that increase the value of $g_0$ on adopting farms. The percentage increase in TFP given the introduction of a new intervention $\beta_5 b_5$ on farms that implement the new technology (farms where $b_5 = 1$) may be calculated as
+The impact of yield scaling technologies and/or management practices on farm supply and expenditure can be represented through perturbations of the TFP parameter ($g$). This is tantamount to adding a binary endowment variable to the TFP sum in Equation \ref{eq:g0Sum}. The four binary endowments included in the Kenya maize model example may be considered yield scaling interventions that increase the value of $g$ on adopting farms. The percentage increase in TFP given the introduction of a new intervention $\beta_5 b_5$ on farms that implement the new technology (farms where $b_5 = 1$) may be calculated as
 
 \begin{equation}
 \begin{split}
-\partial \ln(g_0) &\approx \frac{g_0' - g_0}{g_0} \:\:; \:\:\: g_0' = g_0 e^{\beta_5 b_5}
+\partial \ln(g) &\approx \frac{g' - g}{g} \:\:; \:\:\: g' = g e^{\beta_5 b_5}
 &\approx e^{\beta_5} - 1
 \end{split}
 \end{equation}
 
-The increase is thus the same across all adopting farms regardless of the starting value $g_0$. Ideally, the value of $\beta_5$ should be estimated directly from field trials. If this is not possible, then the estimate can be made on the basis of agronomic crop modeling and expert opinion. Regardless of the path taken, it is critically important to keep in mind that the objective is to estimate the change in TFP ($\beta_5$ or $\partial \ln(g_0)$), not the change in economic yield itself ($\partial \ln(y^*)$). Information gathered in terms of the change in agronomic yield and/or expenditure must be converted into an estimate for $\partial \ln(g_0)$. The percentage change in economic yield, expenditure, and expenditure TFP ($v_0$) then follows from Equations \ref{eq:fnCsharp} as a function of the change in TFP as well as any change in output and input prices.
-<!-- The percentage changes in expenditure TFP ($v_0$), farm expenditure, and yield given a 1% change in $g_0$ follow from Equations \ref{eq:cStar} and \ref{eq:YdEnvReg1}. -->
+The increase is thus the same across all adopting farms regardless of the starting value $g$. Ideally, the value of $\beta_5$ should be estimated directly from field trials. If this is not possible, then the estimate can be made on the basis of agronomic crop modeling and expert opinion. Regardless of the path taken in this exercise, it is critically important to keep in mind that the objective is to estimate the change in TFP ($\beta_5$ or $\partial \ln(g)$), not the change in economic yield itself ($\partial \ln(y^*)$). If information is gathered in terms of the change in agronomic yield and/or expenditure, then it must be converted into an estimate for $\partial \ln(g)$. The percentage change in economic yield, expenditure, and expenditure TFP ($v$) then follows from Equations \ref{eq:fnCsharp} as a function of the change in TFP as well as any change in output and input prices.
+<!-- The percentage changes in expenditure TFP ($v$), farm expenditure, and yield given a 1% change in $g$ follow from Equations \ref{eq:cStar} and \ref{eq:YdEnvReg1}. -->
 
 \begin{equation}
 \begin{split}
-\frac{\partial \ln(v_0)}{\partial \ln(g_0)} &= 1 - \boldsymbol{\alpha} ' \frac{\partial \ln(\mathbf{w})}{\partial \ln(g_0)} \\
-\frac{\partial \ln(C^*)}{\partial \ln(g_0)} &= \frac{1}{1 - h} \left( 1 - \boldsymbol{\alpha} ' \frac{\partial \ln(\mathbf{w})}{\partial \ln(g_0)} + \frac{\partial \ln(P)}{\partial \ln(g_0)} \right) \\
-\frac{\partial \ln(y^*)}{\partial \ln(g_0)} &= \frac{1}{1 - h} \left( 1 - \boldsymbol{\alpha} ' \frac{\partial \ln(\mathbf{w})}{\partial \ln(g_0)} + h \frac{\partial \ln(P)}{\partial \ln(g_0)} \right)
+\frac{\partial \ln(y^*)}{\partial \ln(g)} &= \frac{1}{1 - h} \left( 1 - \boldsymbol{\alpha} ' \frac{\partial \ln(\mathbf{w})}{\partial \ln(g)} + h \frac{\partial \ln(P)}{\partial \ln(g)} \right) \\
+\frac{\partial \ln(C^*)}{\partial \ln(g)} &= \frac{1}{1 - h} \left( 1 - \boldsymbol{\alpha} ' \frac{\partial \ln(\mathbf{w})}{\partial \ln(g)} + \frac{\partial \ln(P)}{\partial \ln(g)} \right) \\
+\frac{\partial \ln(v)}{\partial \ln(g)} &= 1 - \boldsymbol{\alpha} ' \frac{\partial \ln(\mathbf{w})}{\partial \ln(g)}
 \end{split}
 \label{eq:dldlg0}
 \end{equation}
 
 (See Appendix A.2 for details.)
 
-The direction of the expected change in input price depends upon the type of research product. Most agricultural research currently falls into one of two broad paradigms: "sustainable agricultural intensifcation" (SAI) or "agroecological intensification" (AEI) [@mockshell2018beyond]. Widespread adoption of a new SAI technology typically results in increased output supply and input demand, and hence a lower output price and higher input prices. Widespread adoption of an AEI technology, on the other hand, typically results in lower input demand and emphasizes yield stability over quantity, hence lowering input prices and having little or uncertain impact on output price. For illustrative purposes, here the new technology is assumed to be an SAI research product, such that $\partial \ln(\mathbf{w}) / \partial \ln(g_0) > 0$ and $\partial \ln(P) / \partial \ln(g_0) < 0$).
+The direction of the expected change in prices depends upon the type of research product. Most agricultural research currently falls into one of two broad paradigms: "sustainable agricultural intensification" (SAI) or "agroecological intensification" (AEI) [@mockshell2018beyond]. Widespread adoption of a new SAI technology typically results in increased output supply and input demand, and hence a lower output price and higher input prices. Widespread adoption of an AEI technology, on the other hand, typically results in lower input demand and emphasizes yield stability over quantity, hence lowering input prices and having little or uncertain impact on output price. For illustrative purposes, in this article the new technology is assumed to be an SAI research product, such that $\partial \ln(\mathbf{w}) / \partial \ln(g) > 0$ and $\partial \ln(P) / \partial \ln(g) < 0$).
 
 
-The change in agronomic yield observed at research stations does not directly translate into the change in economic yield or farm expenditure likely to occur in a real farm population [@herdt1988increasing; @balasubramanian2000yield; @alston1995science].  This is well documented and obvious from the theoretical framework deveoped thus far but bears emphasis as it is still commonplace in practice to hear talk of the "exogenous yield shock", or in discussions, for example, of yield gaps [@sumberg2012mind].
-The conventional modeling approach is cognizant of  words of warning. The key difference between the approach developed here and the conventional framework that precedes it is that the present approach goes beyond words of warning to provide a framework for explicitly accounting for the effect of price change, increased cost, and subsidies on economic yield and expenditure.
+
+[[
+Changes in agronomic yield and expenditure observed at research stations do not directly translate into changes in economic yield and expenditure likely to occur in real farm populations. This economically obvious, empirically well documented [@herdt1988increasing; @balasubramanian2000yield], fact of life bears mentioning here because confusion about the difference between experimental agronomic and real world economic farm outcomes still pervades the conversation in many areas of agricultural research impact assessment [@sumberg2012mind]. And this is arguably rooted in the lack of practical, formal tools for addressing the matter in the conventional ex-ante impact assessment framework. To be clear, the authors of the conventional framework are cognizant of the matter; but offer little in the way of practical, formal tools for addressing it [@alston1995science].
+[and no transparency for what the assumptions behind the conversion from experimental result to economic yield are! And in practice,... always take the agronomic result as the economic result,[many studies]. also its effectively exogenous]
+
+
+The key difference between the convention and the alternative approach developed here is that the present approach is built upon a transparent _endogenous_ accounting of the farm supply and expenditure response to the exogenous technology shock. [and transparent aggregation]
+<!-- The key factor distinguishing the present work from conventional framework is then that the present work may be characterized as built around a careful endogeneous modeling of the yield and expenditure response to technology change. (And careful modeling of its aggregation up to a aggregate supply curve) and so transparent about the decomposition of the yield and expenditure shift into tfp and price, clearly listing the assumed price change and why it has certain aggregate impacts. -->
+
+This is well documented and obvious from the theoretical framework developed thus far but bears emphasis as it is still commonplace in practice to hear talk of the "exogenous yield shock", or in discussions, for example, of yield gaps .
 
 This is plain to see from the yield and expenditure expressions derived above; and is also just an empirically well documented lesson learned from decades of agricultural research .
 As discussed in the Introduction, conventional ex-ante impact assessment models routinely neglect this well known fact. They do not endogenously model the supply and/or expenditure response to technology shocks, but rather exogenously assert the response, often on the presumption that agronomic results at research stations will translate into identical results in real farm populations.
 Alston et al. note this is not the case...input mix, but in practice most impact studies do this
 whether wittingly or unwittingly, presuming instead that research induced percentage changes in agronomic yield and expenditure are equivalent to the percentage changes likely to occur in a real farm population. That is to say, they .
+<!-- \begin{equation} -->
+<!-- \begin{split} -->
+<!-- \frac{\partial \ln(y^*)}{\partial \ln(g)} &= \frac{\partial \ln(v)}{\partial \ln(g)} + h \frac{\partial \ln(C^*)}{\partial \ln(g)} \\ -->
+<!-- &= \frac{\partial \ln(v)}{\partial \ln(g)} + h \left( \frac{\partial \ln(y^*)}{\partial \ln(g)} + \frac{\partial \ln(C^{\#})}{\partial \ln(g)} \right) \\ -->
+<!-- &\rightarrow \frac{\partial \ln(y^*)}{\partial \ln(g)} = \frac{1}{1 - h} \left( \frac{\partial \ln(v)}{\partial \ln(g)} + h \frac{\partial \ln(P)}{\partial \ln(g)} \right) -->
+<!-- \end{split} -->
+<!-- \end{equation} -->
+<!-- \frac{1}{1 - h} \left( 1 - \boldsymbol{\alpha} ' \frac{\partial \ln(\mathbf{w})}{\partial \ln(g)} + h \frac{\partial \ln(P)}{\partial \ln(g)} \right) -->
+<!-- \frac{\partial \ln(v)}{\partial \ln(g)} + h \frac{\partial \ln(C^*)}{\partial \ln(g)} -->
 
+<!-- &= \left( g \prod_{i = 1}^{n_x} \left( \frac{\alpha_i}{w_i} \right)^{\alpha_i} \right) \left( \frac{C^{\#}}{h} \right)^{\frac{h}{1 - h}} -->
 
-
-\begin{equation}
-\begin{split}
-\frac{\partial \ln(y^*)}{\partial \ln(g_0)} &= \frac{\partial \ln(v_0)}{\partial \ln(g_0)} + h \frac{\partial \ln(C^*)}{\partial \ln(g_0)} \\
-&= \frac{\partial \ln(v_0)}{\partial \ln(g_0)} + h \left( \frac{\partial \ln(y^*)}{\partial \ln(g_0)} + \frac{\partial \ln(C^{\#})}{\partial \ln(g_0)} \right) \\
-&\rightarrow \frac{\partial \ln(y^*)}{\partial \ln(g_0)} = \frac{1}{1 - h} \left( \frac{\partial \ln(v_0)}{\partial \ln(g_0)} + h \frac{\partial \ln(P)}{\partial \ln(g_0)} \right)
-\end{split}
-\end{equation}
-<!-- \frac{1}{1 - h} \left( 1 - \boldsymbol{\alpha} ' \frac{\partial \ln(\mathbf{w})}{\partial \ln(g_0)} + h \frac{\partial \ln(P)}{\partial \ln(g_0)} \right) -->
-<!-- \frac{\partial \ln(v_0)}{\partial \ln(g_0)} + h \frac{\partial \ln(C^*)}{\partial \ln(g_0)} -->
-
-To resolve $\partial \ln(v_0) / \partial \ln(g_0)$, 
-
-
-
-
-
-
-
-
-
-
-
-<!-- (Where the last line follows from the input demand expression in Equation \ref{eq:inputDem2}.) -->
-
-<!-- &= \left( g_0 \prod_{i = 1}^{n_x} \left( \frac{\alpha_i}{w_i} \right)^{\alpha_i} \right) \left( \frac{C^{\#}}{h} \right)^{\frac{h}{1 - h}} -->
-
-[[In appendix:
+<!-- [[In appendix: -->
 <!-- The percentage changes in expenditure per acre and yield given a 1 percentage change in TFP then follow from Equations \ref{eq:cStar} and \ref{eq:YdEnvReg1}. -->
 <!-- \begin{equation} -->
-<!-- \frac{\partial \ln(C^*)}{\partial \ln(g_0)} = \frac{1}{1 - h} \left( 1 - \boldsymbol{\alpha} ' \frac{\partial \ln(\mathbf{w})}{\partial \ln(g_0)} + \frac{\partial \ln(P)}{\partial \ln(g_0)} \right) -->
+<!-- \frac{\partial \ln(C^*)}{\partial \ln(g)} = \frac{1}{1 - h} \left( 1 - \boldsymbol{\alpha} ' \frac{\partial \ln(\mathbf{w})}{\partial \ln(g)} + \frac{\partial \ln(P)}{\partial \ln(g)} \right) -->
 <!-- \label{eq:dlCstardlg0} -->
 <!-- \end{equation} -->
 <!-- \begin{equation} -->
-<!-- \frac{\partial \ln(y^*)}{\partial \ln(g_0)} = \frac{1}{1 - h} \left( 1 - \boldsymbol{\alpha} ' \frac{\partial \ln(\mathbf{w})}{\partial \ln(g_0)} + h \frac{\partial \ln(P)}{\partial \ln(g_0)} \right) -->
+<!-- \frac{\partial \ln(y^*)}{\partial \ln(g)} = \frac{1}{1 - h} \left( 1 - \boldsymbol{\alpha} ' \frac{\partial \ln(\mathbf{w})}{\partial \ln(g)} + h \frac{\partial \ln(P)}{\partial \ln(g)} \right) -->
 <!-- \label{eq:dlyStardlg0} -->
 <!-- \end{equation} -->
 <!-- \begin{equation} -->
@@ -568,12 +568,13 @@ To resolve $\partial \ln(v_0) / \partial \ln(g_0)$,
 <!-- \label{eq:cSharp} -->
 <!-- \end{equation} -->
 <!-- \begin{equation} -->
-<!-- \frac{\partial \ln(C^{\#})}{\partial \ln(g_0)} = \frac{\partial \ln(P)}{\partial \ln(g_0)} -->
+<!-- \frac{\partial \ln(C^{\#})}{\partial \ln(g)} = \frac{\partial \ln(P)}{\partial \ln(g)} -->
 <!-- \label{eq:cSharp} -->
 <!-- \end{equation} -->
+<!-- ]] -->
+<!-- The change in yield is positive only if $\partial \ln(g) > \boldsymbol{\alpha} ' \partial \ln(\mathbf{w}) + h \partial \ln(P)$. -->
+<!-- Change in expenditure is positive if $\partial \ln(g) > (1 - h) (\boldsymbol{\alpha} ' \partial \ln(\mathbf{w}) + \partial \ln(P))$. -->
 ]]
-<!-- The change in yield is positive only if $\partial \ln(g_0) > \boldsymbol{\alpha} ' \partial \ln(\mathbf{w}) + h \partial \ln(P)$. -->
-<!-- Change in expenditure is positive if $\partial \ln(g_0) > (1 - h) (\boldsymbol{\alpha} ' \partial \ln(\mathbf{w}) + \partial \ln(P))$. -->
 
 ### The endogenous adoption rate
 <!-- Aggregate outcomes of an exogenous intervention depend critically on the adoption rate. This, in turn depends upon the profitability of adoption at the farm level. -->
@@ -597,17 +598,17 @@ The welfare effect on a given farm of adopting the new technology can be examine
 
 \begin{equation}
 \begin{split}
-\frac{\mathcal{L}^*}{\partial \ln(g_0)} &= \frac{\lambda}{h} \left((1 - h) \frac{\partial C^*}{\partial \ln(g_0)} + h \frac{\partial B}{\partial \ln(g_0)} \right) \\
-&= \frac{\lambda}{h} \left( C^* \left( 1 - \boldsymbol{\alpha} ' \frac{\partial \ln(\mathbf{w})}{\partial \ln(g_0)} + \frac{\partial \ln(P)}{\partial \ln(g_0)} \right) + h \frac{\partial B}{\partial \ln(g_0)} \right)
+\frac{\mathcal{L}^*}{\partial \ln(g)} &= \frac{\lambda}{h} \left((1 - h) \frac{\partial C^*}{\partial \ln(g)} + h \frac{\partial B}{\partial \ln(g)} \right) \\
+&= \frac{\lambda}{h} \left( C^* \left( 1 - \boldsymbol{\alpha} ' \frac{\partial \ln(\mathbf{w})}{\partial \ln(g)} + \frac{\partial \ln(P)}{\partial \ln(g)} \right) + h \frac{\partial B}{\partial \ln(g)} \right)
 \end{split}
 \end{equation}
 
-Assuming farmers adopt only if $\partial \mathcal{L}^*/\partial \ln(g_0) > 0$ (this is implicit in axiom 2), then the adoption condition is
+Assuming farmers adopt only if $\partial \mathcal{L}^*/\partial \ln(g) > 0$ (this is implicit in axiom 2), then the adoption condition is
 
 \begin{equation}
 \begin{split}
-\partial \ln(P) - \boldsymbol{\alpha} {'} \partial \ln(\mathbf{w}) + \partial \ln(g_0) + \frac{h}{C^*} \partial B &> 0 \\
-\partial \ln(\nu) + \partial \ln(g_0) + \frac{h}{C^*} \partial B &> 0 \:\:;\:\:\: \partial \ln(\nu) = \partial \ln(P) - \boldsymbol{\alpha} {'} \partial \ln(\mathbf{w})
+\partial \ln(P) - \boldsymbol{\alpha} {'} \partial \ln(\mathbf{w}) + \partial \ln(g) + \frac{h}{C^*} \partial B &> 0 \\
+\partial \ln(\nu) + \partial \ln(g) + \frac{h}{C^*} \partial B &> 0 \:\:;\:\:\: \partial \ln(\nu) = \partial \ln(P) - \boldsymbol{\alpha} {'} \partial \ln(\mathbf{w})
 \end{split}
 \label{eq:adoptCond}
 \end{equation}
@@ -615,22 +616,22 @@ Assuming farmers adopt only if $\partial \mathcal{L}^*/\partial \ln(g_0) > 0$ (t
 Where the term $\partial B$ represents the subsidies, costs, or any other exogenous mitigating circumstances, per unit area, entailed in the adoption of the technology package. In the absence of such mitigating circumstances, the condition simplifies to
 
 \begin{equation}
-\partial \ln(g_0) > -\partial \ln(\nu)
+\partial \ln(g) > -\partial \ln(\nu)
 \label{eq:adoptCondSimp}
 \end{equation}
 
-As mentioned above, for SAI technologies the expectation is that $\partial \ln(P) < 0$, $\partial \ln(\mathbf{w}) > 0$, and thus $\partial \nu < 0$. In words, then, the adoption condition says that a farm stands to increase its net benefit through adoption of yield scaling technology only if the resulting percentage increase in TFP ($g_0$) is greater than the corresponding percentage decrease in output price minus the corresponding percentage increase in input prices scaled by their respective input elasticities $\alpha_i$. Note the resemblance between this and the "price/productivity tightrope" condition formulated by Lipton [-@lipton2005family].
+As mentioned above, for SAI technologies the expectation is that $\partial \ln(P) < 0$, $\partial \ln(\mathbf{w}) > 0$, and thus $\partial \nu < 0$. In words, then, the adoption condition says that a farm stands to increase its net benefit through adoption of yield scaling technology only if the resulting percentage increase in TFP ($g$) is greater than the corresponding percentage decrease in output price minus the corresponding percentage increase in input prices scaled by their respective input elasticities ($\alpha_i$). Note the resemblance between this and the "price/productivity tightrope" condition formulated by Lipton [-@lipton2005family].
 
 >\singlespacing "New [SAI] science usually raises farm supply of outputs and demand for inputs. That makes outputs cheaper and inputs more expensive; hence the ratio of farm output prices to input prices falls. Do small and poor farmers gain? If, and only if, this science-induced fall in their relative farm prices is slower than the science-induced rise in their conversion ratio of physical inputs into physical outputs (that is, TFP)."
 
 \doublespacing
 
-The only substantive difference between Lipton's condition and the condition in Inequality \ref{eq:adoptCondSimp} is that the percentage increases in input prices in the latter are scaled by their respective efficiency parameters ($\alpha_i$). And of course the more complete version of the adoption condition in Inequality \ref{eq:adoptCond} differs from Lipton by also including the exogenous net subsidy term.
+The only substantive difference between Lipton's condition and the condition in Inequality \ref{eq:adoptCondSimp} is that the percentage increases in input prices in the latter are scaled by their respective efficiency parameters. And of course the more complete version of the adoption condition in Inequality \ref{eq:adoptCond} differs from Lipton by also including the exogenous net subsidy term.
 
-If the efficiency adjusted output-input price ratio decrease is greater than the increase in TFP ($g_0$), then the margin by which it is greater is the net subsidy term $h / C^* \partial B$ required to make adoption profitable. Note that the required net subsidy $\partial B$ will vary across farms based on $C^*$. The factor $h / C^*$, which may also be written $\lambda / R^*$, represents each farm's marginal valuation of the subsidy; and implies that the subsidy is relatively more valuable to farms with relatively lower expenditure. Solving Inequality \ref{eq:adoptCond} for $C^*$ gives the maximum expenditure level for which adoption is profitable if the (absolute value of the) efficiency adjusted output-input price ratio decrease is greater than the increase in TFP ($|\partial \ln(\nu)| > \partial \ln(g_0)$).
+If the efficiency adjusted output-input price ratio decrease is greater than the increase in TFP ($g$), then the margin by which it is greater is the net subsidy term $h / C^* \partial B$ required to make adoption profitable. Note that the required net subsidy $\partial B$ will vary across farms based on $C^*$. The factor $h / C^*$, which may also be written $\lambda / R^*$, represents each farm's marginal valuation of the subsidy; and implies that the subsidy is relatively more valuable to farms with relatively lower expenditure. Solving Inequality \ref{eq:adoptCond} for $C^*$ gives the maximum expenditure level for which adoption is profitable if the (absolute value of the) efficiency adjusted output-input price ratio decrease is greater than the increase in TFP ($|\partial \ln(\nu)| > \partial \ln(g)$).
 
 \begin{equation}
-C^* \leq \frac{-h \partial B}{\partial \ln(\nu) + \partial \ln(g_0)}
+C^* \leq \frac{-h \partial B}{\partial \ln(\nu) + \partial \ln(g)}
 \label{eq:cStarAdopt}
 \end{equation}
 
@@ -638,13 +639,13 @@ If $\partial B=0$, then Inequality \ref{eq:adoptCond} implies that adoption will
 <!-- Equally as important as the transfer of the new seed and new technology from Mexico to India and Pakistan was the introduction from Mexico of a crop-production campaign strategy. This strategy harnessed the high grain-yield potential of the new seed and new technology to sound governmental economic policy which would assure the farmer a fair price for his grain, the availability of the necessary inputs – seed, fertilizers, insecticides, weed killers, and machinery – and the credit with which to buy them. Collectively these inputs and strategy became the base from which the green revolution evolved. -->
 <!-- Assuming farms spend their whole farm budget ($B = C^*$), then the subsidy term simplifies to $h \partial \ln(C^*)$ and the adoption condition can be rewritten -->
 
-Denoting the upper adoption bound on $C^*$ (Equation \ref{eq:cStarAdopt}) as $\bar{\bar{C^*}}$, the adoption rate $A$ when $\partial \ln(g_0) < -\partial \ln(\nu)$ can be expressed as the integral of the density $\rho(C^*)$ over the domain $(0, \bar{\bar{C^*}})$.
+Denoting the upper adoption bound on $C^*$ (Equation \ref{eq:cStarAdopt}) as $\bar{\bar{C^*}}$, the adoption rate $\mathcal{A}$ when $\partial \ln(g) < -\partial \ln(\nu)$ can be expressed as the integral of the density $\rho(C^*)$ over the domain $(0, \bar{\bar{C^*}})$.
 
 \begin{equation}
 \mathcal{A} = \int_0^{\bar{\bar{C^*}}} \rho(C^*) d C^*
 \end{equation}
 
-If $y^*$ is lognormally distributed (axiom 4), then so is $C^*$, and the expression resolves as follows.
+Because $C^*$ is lognormally distributed, the expression resolves as follows.
 
 \begin{equation}
 \begin{split}
@@ -652,27 +653,48 @@ If $y^*$ is lognormally distributed (axiom 4), then so is $C^*$, and the express
 & m_c = E[\ln(C^*)] \:\:\:\: s^2_c = Var[\ln(C^*)]
 \end{split}
 \end{equation}
-
 <!-- Where $\Phi()$ is the standard normal cumulative distribution function. -->
+<!-- \phi \left(\frac{\ln(C^*) - m_c}{s_c} \right) d \ln(C^*) \:\:;\:\:\: \bar{\bar{C^*}} = \frac{-h \partial B}{\partial \ln(\nu) + \partial \ln(g)} \\ -->
+<!-- &= \Phi \left( \frac{\bar{\bar{C^*}} - m_c}{s_c} \right) -->
+<!-- \end{split} -->
 
-
-\phi \left(\frac{\ln(C^*) - m_c}{s_c} \right) d \ln(C^*) \:\:;\:\:\: \bar{\bar{C^*}} = \frac{-h \partial B}{\partial \ln(\nu) + \partial \ln(g_0)} \\
-&= \Phi \left( \frac{\bar{\bar{C^*}} - m_c}{s_c} \right)
-\end{split}
-
-To parse $m_c$ and $s_c$, recall from Equation \ref{eq:mCk} that $C^* = (v_0 k E[C^{\#}(T)]|_{t = 0})^{1 / (1 - h)}$, such that
-<!-- note that Equations \ref{eq:paramsCondCsharp} can be rearranged into expressions for $\bar{m}_c$ and $\bar{s}_c$, whence the expression for the unconditional parameters follows immediately. -->
+Where $m_c$ and $s_c$ follow from the expenditure expression in Equations \ref{eq:fnCsharp}.
 
 \begin{equation}
 \begin{split}
-m_c &= \frac{1}{1 - h}(\ln(v_0) + m_k + m_{\#}) \:\:;\:\:\: m_k = E[\ln(k)] \:\: s_k^2 = Var[\ln(k)] \\
-s_c^2 &= \frac{1}{(1 - h)^2} (s_k^2 + s_{\#}^2)
+m_c &= \frac{1}{1 - h}(\ln(v) + m_k + m_{\#}) \:\:;\:\:\: m_k = E[\ln(k)] \\
+s_c^2 &= \frac{1}{(1 - h)^2} (s_k^2 + s_{\#}^2) \:\:;\:\:\: s_k^2 = Var[\ln(k)]
 \end{split}
 \label{eq:mCsC}
 \end{equation}
 
+...
+because the binary endowments $b_i$ vary across the population, the value of $g$ (and hence of $v$) also varies. In the present example, there are 14 distinct values of $v$, corresponding to 14 distinct combinations of the $\beta_i b_i$. The supply aggregation step in Equation \ref{eq:aggSupStep} averages aggregate supply across all binary endowment strata. Denoting the value of each distinct combination as $v_{0i}$, the average $v$ is effectively a population weighted sum of the $v_{0i}$.
+<!-- Each value of $v$ effectively identifies a binary endowment stratum of the population. -->
+
+\begin{equation}
+v = \sum_i \frac{N_i}{N} v_{0i}
+\end{equation}
+
+Where $N_i / N$ is the fraction of farms in the $i^{th}$ binary endowment stratum.
+
+Because the adoption rate is partly a function of $v_{0i}$, it varies across strata. The adoption rate for the whole population is then
+
+\begin{equation}
+\begin{split}
+\mathcal{A} = \sum_i \frac{N_i}{N} \mathcal{A}_i \\
+&\text{where} \\
+&\mathcal{A}_i = \Phi\left( \frac{\frac{-h \partial B}{\partial \ln(\nu) + \partial \ln(g)} - m_{ci}}{s_c} \\
+&m_{ci} = \frac{1}{1 - h}(\ln(v_{0i}) + m_k + m_{\#})
+\end{split}
+\label{eq:AdoptRatei}
+\end{equation}
+
+(Note that the adoption rate will be higher in strata with lower starting $v_{0i}$, _ceteris paribus_.)
+
 
 ## Integration of the farm production function based on axioms 3 and 4 \label{sec:aggSupDeterm}
+OR: The aggregate supply curve
 
 The farm production function is just farm yield times area $k_a$.
 
@@ -680,7 +702,6 @@ The farm production function is just farm yield times area $k_a$.
 q^* = k_a y^*
 \label{eq:qStar}
 \end{equation}
-
 <!-- To develop an expression for aggregate supply, it only remains to substitute $q^*$ into Equation \ref{eq:aggSup0}, to specify a yield density function, and to integrate over the domain of profitable production. The domain of profitable production is given by axiom 3: farms enter production only if they expect to make non-nonegative profit. Mathematically, this means $C^* \leq R^*$. The yield density function is given by axiom 4, which states that yield is lognormally distributed. -->
 
 Substituting Equation \ref{eq:qStar} for $q^*$ in Equation \ref{eq:aggSup0} gives
@@ -690,46 +711,45 @@ Substituting Equation \ref{eq:qStar} for $q^*$ in Equation \ref{eq:aggSup0} give
 Q &= N \int_{\underline{q}^*}^{\bar{q}^*} \rho(q^*) dq^* \\
 &= N \int_{0}^{\infty} k_a \int_{0}^{\bar{y}^*} \rho(y^*) dy^* \rho(k_a) dk_a \\
 &= N E[k_a] \frac{E[y^*]}{E[k] E[C^{* h}]} \int_{0}^{\infty} k \int_{0}^{\bar{C}^{*}} C^{*h} \rho(C*) dC^* \rho(k) dk \\
-&= N E[k_a] \frac{E[y^*]}{E[C^{* h}]} \int_{0}^{\bar{C}^*} C^{* h} \rho(C^*)
+&= N E[k_a] \frac{E[y^*]}{E[C^{* h}]} \int_{0}^{\bar{C}^*} C^{* h} \rho(C^*) d C^*
 \end{split}
 \label{eq:aggSupStep}
 \end{equation}
 
-Axiom 3 states that farms enter production only if they expect to make non-negative profit. Mathematically, this means $C^* \leq R^*$, which implies the following upper bound on optimal expenditure.
+By axiom 3 and the expression for $C^*$ in Equations \ref{eq:fnCsharp},
 
 \begin{equation}
-\bar{C}^* = R^* = P y^*|_{C^* = \bar{C}^*} = P v_0 k R^{*h}
+\bar{C}^*(k) = (P v k)^{\frac{\eta}{h}}
 \end{equation}
 
-Taking logs of this expression and repeatedly substituting $P y^*|_{C^* = \bar{C}^*}$ for $R^*$ and expanding the righthand side results in an infinite geometric series.
+<!-- Axiom 3 states that farms enter production only if they expect to make non-negative profit. Mathematically, this means $C^* \leq R^*$, which implies the following upper bound on optimal expenditure. -->
 
-\begin{equation}
-\begin{split}
-\ln(\bar{C}^*) = \ln(\bar{R}^*) &= \ln(P y^*|_{C^* = R^*}) = \ln(P v_0 k) + h \ln(R^*) \\
-&= \ln(P v_0 k) + h(\ln(P v_0 k) + h\ln(R^*)) \\
-&= \ln(P v_0 k) + h(\ln(P v_0 k) + h(\ln(P v_0 k) + h\ln(R^*))) \\
-&= \cdots \\
-&= \ln(P v_0 k) \sum_{j = 0}^{\infty} h^{j} \\
-&= \frac{1}{1 - h} \ln(P v_0 k) = (\frac{\eta}{h}) \ln(P v_0 k)
-\end{split}
-\end{equation}
+<!-- \begin{equation} -->
+<!-- \bar{C}^* = R^* = P y^*|_{C^* = \bar{C}^*} = P v k R^{*h} -->
+<!-- \end{equation} -->
 
-Where the geometric series converges to the last equation only because axioms 1 and 2 constrain $h$ to $(0,1)$ (decreasing returns ot scale). Assuming constant or increasing returns to scale ($h \geq 1$) would result in a divergent infinite sum and thus unbounded $C^*$.
+<!-- Taking logs of this expression and repeatedly substituting $P y^*|_{C^* = \bar{C}^*}$ for $R^*$ and expanding the righthand side results in an infinite geometric series. -->
 
-Given the domain of homogeneity $h \in (0,1)$, the upper bound on cost for given $k$ can thus be expressed
+<!-- \begin{equation} -->
+<!-- \begin{split} -->
+<!-- \ln(\bar{C}^*) = \ln(\bar{R}^*) &= \ln(P y^*|_{C^* = R^*}) = \ln(P v k) + h \ln(R^*) \\ -->
+<!-- &= \ln(P v k) + h(\ln(P v k) + h\ln(R^*)) \\ -->
+<!-- &= \ln(P v k) + h(\ln(P v k) + h(\ln(P v k) + h\ln(R^*))) \\ -->
+<!-- &= \cdots \\ -->
+<!-- &= \ln(P v k) \sum_{j = 0}^{\infty} h^{j} \\ -->
+<!-- &= \frac{1}{1 - h} \ln(P v k) = (\frac{\eta}{h}) \ln(P v k) -->
+<!-- \end{split} -->
+<!-- \end{equation} -->
 
-\begin{equation}
-\bar{C}^*(k) = (P v_0 k)^{\frac{\eta}{h}}
-\end{equation}
+<!-- Where the geometric series converges to the last equation only because axioms 1 and 2 constrain $h$ to $(0,1)$ (decreasing returns ot scale). Assuming constant or increasing returns to scale ($h \geq 1$) would result in a divergent infinite sum and thus unbounded $C^*$. -->
 
-And so aggregate supply for given $k$ can be expressed
+<!-- Given the domain of homogeneity $h \in (0,1)$, the upper bound on cost for given $k$ can thus be expressed -->
 
-\begin{equation}
-Q(k) = N E[k_a] \frac{E[y^*]}{E[C^*(k)^h]} \int_{0}^{(P v_0 k)^{\frac{\eta}{h}}} C^*(k)^h \rho(C^*(k)) dC^*(k)
-\label{eq:aggSupStep}
-\end{equation}
+<!-- \begin{equation} -->
+<!-- \bar{C}^*(k) = (P v k)^{\frac{\eta}{h}} -->
+<!-- \end{equation} -->
 
-If $y^*$ is lognormally distributed (axiom 4), then $C^*$ is also lognormally distributed. For any lognormally distributed variable $\chi$ and upper bound $\xi$, it can be shown that
+And noting that for any lognormally distributed variable $\chi$ and upper bound $\xi$,
 
 \begin{equation}
 \begin{split}
@@ -739,13 +759,29 @@ If $y^*$ is lognormally distributed (axiom 4), then $C^*$ is also lognormally di
 \label{eq:keyResult}
 \end{equation}
 
-Where $\Phi()$ is the standard normal cumulative distribution function. (See Appendix A.4 for a proof.)
+(See Appendix A.4 for a proof.)
+
+Then, because $C^*$ is lognormally distributed, aggregate supply can be expressed
+<!-- \begin{equation} -->
+<!-- Q(k) = N E[k_a] \frac{E[y^*]}{E[C^*(k)^h]} \int_{0}^{(P v k)^{\frac{\eta}{h}}} C^*(k)^h \rho(C^*(k)) dC^*(k) -->
+<!-- \label{eq:aggSupStep} -->
+<!-- \end{equation} -->
+
+\begin{equation}
+Q = N E[k_a] E[y^*] \Phi\left( \frac{\ln(P) - m_{\#}}{s_{\#}} - \eta s_{\#} \right)
+\label{eq:aggSup1}
+\end{equation}
+
+
+If $y^*$ is lognormally distributed (axiom 4), then $C^*$ is also lognormally distributed. 
+
+Where $\Phi()$ is the standard normal cumulative distribution function. 
 
 Substituting $\chi = C^{* h}$ and $\xi = \bar{C}^*$, 
 
 \begin{equation}
 \begin{split}
-\int_{0}^{(P v_0 k)^{\frac{\eta}{h}}} C^{* h} \rho(C^*) d C^* &= E[C^{* h}] \Phi\left( \frac{\eta \ln(P v_0 k) - h m_c}{h s_c} - h s_c \right) \\
+\int_{0}^{(P v k)^{\frac{\eta}{h}}} C^{* h} \rho(C^*) d C^* &= E[C^{* h}] \Phi\left( \frac{\eta \ln(P v k) - h m_c}{h s_c} - h s_c \right) \\
 & m_c = E[\ln(C^*)] \:\:\:\: s^2_c = Var[\ln(C^*)]
 \end{split}
 \label{eq:integralStep}
@@ -753,32 +789,32 @@ Substituting $\chi = C^{* h}$ and $\xi = \bar{C}^*$,
 
 But note that $C^*$ can be expressed $C^* = C^{\#} y^*$, where $C^{\#}$ is the optimal cost per unit output (also commonly referred to as the "average cost"). Then, for given $k$,
 
+<!-- \begin{equation} -->
+<!-- \begin{split} -->
+<!-- C^* = C^{\#} y^* &= C^{\#} v k C^{*h} \\ -->
+<!-- &\rightarrow C^* = (C^{\#} v k)^{\frac{1}{1 - h}} \\ -->
+<!-- &\Rightarrow E[\ln(C^*(k))] = \frac{1}{1 - h} (E[\ln(C^{\#})] + \ln(v k)) \\ -->
+<!-- & m_c = (\frac{\eta}{h}) (m_{\#} + \ln(v k))  \:\:;\:\:\: m_{\#} = E[\ln(C^{\#})] -->
+<!-- \end{split} -->
+<!-- \label{eq:mCk} -->
+<!-- \end{equation} -->
+
+<!-- And -->
+
+<!-- \begin{equation} -->
+<!-- \begin{split} -->
+<!-- Var[\ln(C^*)] &= \frac{1}{(1 - h)^2} Var[\ln(C^{\#})] \\ -->
+<!-- s^2_c &= \frac{1}{(1 - h)^2} s^2_{\#} \:\:;\:\:\: s^2_{\#} = Var[\ln(C^{\#})] \\ -->
+<!-- &\rightarrow s_c = \frac{\eta}{h} s_{\#} -->
+<!-- \end{split} -->
+<!-- \end{equation} -->
+
+<!-- Substituting these new expressions in for $m_c$ and $s_c$ in Equation \ref{eq:integralStep} gives -->
+
 \begin{equation}
 \begin{split}
-C^* = C^{\#} y^* &= C^{\#} v_0 k C^{*h} \\
-&\rightarrow C^* = (C^{\#} v_0 k)^{\frac{1}{1 - h}} \\
-&\Rightarrow E[\ln(C^*(k))] = \frac{1}{1 - h} (E[\ln(C^{\#})] + \ln(v_0 k)) \\
-& m_c = (\frac{\eta}{h}) (m_{\#} + \ln(v_0 k))  \:\:;\:\:\: m_{\#} = E[\ln(C^{\#})]
-\end{split}
-\label{eq:mCk}
-\end{equation}
-
-And
-
-\begin{equation}
-\begin{split}
-Var[\ln(C^*)] &= \frac{1}{(1 - h)^2} Var[\ln(C^{\#})] \\
-s^2_c &= \frac{1}{(1 - h)^2} s^2_{\#} \:\:;\:\:\: s^2_{\#} = Var[\ln(C^{\#})] \\
-&\rightarrow s_c = \frac{\eta}{h} s_{\#}
-\end{split}
-\end{equation}
-
-Substituting these new expressions in for $m_c$ and $s_c$ in Equation \ref{eq:integralStep} gives
-
-\begin{equation}
-\begin{split}
-\int_{0}^{(P v_0 k)^{\eta / h}} C^{* h} \rho(C^*) d C^* &= E[C^{* h}] \Phi \left( \frac{\eta \ln(P v_0 k) - \eta m_{\#}}{\eta s_{\#}} - \eta s_{\#} \right) \\
-&= E[C^{* h}] \Phi \left( \frac{\ln(P v_0 k) - m_{\#}}{s_{\#}} - \eta s_{\#} \right)
+\int_{0}^{(P v k)^{\eta / h}} C^{* h} \rho(C^*) d C^* &= E[C^{* h}] \Phi \left( \frac{\eta \ln(P v k) - \eta m_{\#}}{\eta s_{\#}} - \eta s_{\#} \right) \\
+&= E[C^{* h}] \Phi \left( \frac{\ln(P v k) - m_{\#}}{s_{\#}} - \eta s_{\#} \right)
 \end{split}
 \end{equation}
 
@@ -875,7 +911,7 @@ To begin with, yield is partly a function of stochastic meteorological variables
 \begin{equation}
 \begin{split}
 y^*(T; k_m(T)) &= y^*(T) = E[y^*(T; k_m(T))] \frac{k_m(T)^{\kappa_m}}{E[k_m(T)^{\kappa_m}]} \frac{k'}{E[k']} \frac{C^{*h}}{E[C^{*h}]} \:\:;\:\:\: k' = k_m(T)^{-\kappa_m} k \\
-&= v_0 \frac{k_m(T)^{\kappa_m}}{E[k_m(T)^{\kappa_m}]} k' C^{*h} \:\:;\:\:\: v_0 = \frac{E[y^*(T)]}{E[k'] E[C^{*h}]}
+&= v \frac{k_m(T)^{\kappa_m}}{E[k_m(T)^{\kappa_m}]} k' C^{*h} \:\:;\:\:\: v = \frac{E[y^*(T)]}{E[k'] E[C^{*h}]}
 \end{split}
 \label{eq:yStarT}
 \end{equation}
@@ -930,7 +966,7 @@ This result, which can also be reached by invoking Fubini's theorem, maps the me
 <!-- \begin{equation} -->
 <!-- \begin{split} -->
 <!-- E[y^*(T)]|_{t = 0} &= E[\tilde{y}^*(T)]|_{t = 0} \frac{E[k_m(T)]|_{t = 0}}{E[\tilde{k}_m(T)]|_{t = 0}} \frac{k'}{E[k']} \frac{C^{*h}}{E[C^{*h}]} \:\:;\:\:\: \tilde{y}^*(T) = y^*(T)\bigr|_{k'} = E[k'], \:\:\: C^{*h} = E[C^{*h}]} \\ -->
-<!-- &= v_0 k' \frac{E[k_m(T)]|_{t = 0}}{E[\tilde{k}_m(T)]|_{t = 0}} C^{*h} \:\:;\:\:\: v_0 = \frac{E[\tilde{y}^*(T)]|_{t = 0}}{E[k'] E[C^{*h}]} -->
+<!-- &= v k' \frac{E[k_m(T)]|_{t = 0}}{E[\tilde{k}_m(T)]|_{t = 0}} C^{*h} \:\:;\:\:\: v = \frac{E[\tilde{y}^*(T)]|_{t = 0}}{E[k'] E[C^{*h}]} -->
 <!-- \end{split} -->
 <!-- \label{eq:stochYd2} -->
 <!-- \end{equation} -->
@@ -944,7 +980,7 @@ Note that optimal farm expenditure per acre $C^*$ remains a deterministic variab
 <!-- Expected yield can be deduced from observed yield $y^*(T)$ by estimating Equation \ref{eq:stochYd2} at $t = T$ (in logs), -->
 <!-- \ref{eq:YdEnvReg1} becomes -->
 <!-- \begin{equation} -->
-<!-- \ln(y^*(T)) = \ln(v_0) + \kappa_m \ln(k_m(T)) + \sum_{i \neq m}^{n_{k'}} \kappa_i \ln(k_i) + h \ln(C^*) + \epsilon -->
+<!-- \ln(y^*(T)) = \ln(v) + \kappa_m \ln(k_m(T)) + \sum_{i \neq m}^{n_{k'}} \kappa_i \ln(k_i) + h \ln(C^*) + \epsilon -->
 <!-- \label{eq:lYdEnvReg2} -->
 <!-- \end{equation} -->
 <!-- And then evaluating Equation \ref{eq:EyStarFromYT} at the fitted values of $y^*(T)$, and at the expected meteorological conditions of interest. -->
@@ -957,10 +993,10 @@ Note that optimal farm expenditure per acre $C^*$ remains a deterministic variab
 <!-- \label{eq:EyStarT0fromYhat} -->
 <!-- \end{equation} -->
 <!-- \begin{equation} -->
-<!-- E[y^*(T)]|_{t = 0} = v_0 E[k_m(T)]|_{t = 0} \hat{k} C^{*h} \:\:;\:\:\: v_0 = \frac{E[\tilde{y}^*(T)]|_{t = 0}}{E[k] E[C^{*h}]} -->
+<!-- E[y^*(T)]|_{t = 0} = v E[k_m(T)]|_{t = 0} \hat{k} C^{*h} \:\:;\:\:\: v = \frac{E[\tilde{y}^*(T)]|_{t = 0}}{E[k] E[C^{*h}]} -->
 <!-- \label{eq:YdEnvReg2} -->
 <!-- \end{equation} -->
-<!-- \:\:;\:\:\: v_0 = \frac{E[y^*]}{E[k] E[C^{*h}]}  -->
+<!-- \:\:;\:\:\: v = \frac{E[y^*]}{E[k] E[C^{*h}]}  -->
 <!-- # ```{r Fig2, fig.show = "hold", fig.width = 5, fig.height=5, fig.align="center", fig.cap="\\label{fig:gBmWeather}(Left) Daily average weather variable time series covering the 2018 maize long rains growing season in Eldoret, Kenya (NREL 2023). (Right) The corresponding daily log changes exhibit the normal distribution typical of geometric Brownian motion.", echo = FALSE} -->
 <!-- #Weather data from National Solar Radiation Database -->
 <!-- #https://nsrdb.nrel.gov/data-viewer -->
@@ -1429,34 +1465,34 @@ ft
 ```
 \doublespacing
 
-To parameterize the expected aggregate supply curve, Equation \ref{eq:yStarT} (in logs) is fit to the farm data. Here it is important to note that $v_0$ may be expressed in terms of $g_0$.
+To parameterize the expected aggregate supply curve, Equation \ref{eq:yStarT} (in logs) is fit to the farm data. Here it is important to note that $v$ may be expressed in terms of $g$.
 
 **--
 \begin{equation}
 \begin{split}
-v_0 &= \frac{E[y^*(T)]}{E[k] E[C^{* h}]} \\
-&= \frac{u_0}{E[k] E[C^*]^h} \\
-&= g_0 \frac{\prod_i^{n_x}E[x_i]^{\alpha_i}}{E[C^*]^h} \\
-&= g_0 \frac{1}{h}\prod_i^{n_x} \left( \frac{\alpha_i}{w_i} \right)^{\alpha_i}
+v &= \frac{E[y^*(T)]}{E[k] E[C^{* h}]} \\
+&= \frac{u}{E[k] E[C^*]^h} \\
+&= g \frac{\prod_i^{n_x}E[x_i]^{\alpha_i}}{E[C^*]^h} \\
+&= g \frac{1}{h}\prod_i^{n_x} \left( \frac{\alpha_i}{w_i} \right)^{\alpha_i}
 \end{split}
 \label{eq:v0forms}
 \end{equation}
 
 (Where the last line follows from the input demand expression in Equation \ref{eq:inputDem2}.) 
 
-The TFP constant $g_0$ may include binary endowment variables that augment the constant on farms where the endowment is present.
+The TFP constant $g$ may include binary endowment variables that augment the constant on farms where the endowment is present.
 
 \begin{equation}
-\ln(y^*(T)) &= \ln(v_0) + \sum_i^{n_k} \kappa_i \ln(k_i) + h \ln(C^*) + \epsilon
+\ln(y^*(T)) &= \ln(v) + \sum_i^{n_k} \kappa_i \ln(k_i) + h \ln(C^*) + \epsilon
 \label{eq:lYdEnvReg3}
 \end{equation}
-<!-- \:\:;\:\:\: v_0 = \frac{E[y^*]}{E[k] E[C^{*h}]}  -->
+<!-- \:\:;\:\:\: v = \frac{E[y^*]}{E[k] E[C^{*h}]}  -->
 
 Where $\epsilon$ is the regression residual, and
 
 $$
-\ln(v_0) = \sum_i^{n_x} \ln \left( \frac{\alpha_i}{w_i} \right)^{\alpha_i} - \ln(h) + \ln(g_0) \\
-\ln(g_0) = \beta_0 + \sum_{i = 1}^{n_b} \beta_i b_i
+\ln(v) = \sum_i^{n_x} \ln \left( \frac{\alpha_i}{w_i} \right)^{\alpha_i} - \ln(h) + \ln(g) \\
+\ln(g) = \beta_0 + \sum_{i = 1}^{n_b} \beta_i b_i
 $$
 In this exercise, the binary endowment variables $b_i$ (which take a value of $1$ if the endowment is present and $0$ otherwise) are: use of oxen in land preparation, use of tractor in land preparation, use of hybrid seed, and land tenure. The control variables ($k_i$) are planting density (seed kg/acre), adult equivalent household size, farm size, and rainfall. The rainfall variable is 2007 main season rainfall divided by an historical benchmark, and so can be interpreted as the rainfall anomaly or departure from the historical benchmark. The farm expenditure $C^*$ includes the cost of synthetic fertilizer, land preparation, pest and disease control chemicals, and seed. The OLS regression results are presented in Table 2.
 **--
@@ -1736,15 +1772,15 @@ E[\tilde{y}^*(T; k_r(T))|\theta]|_{t = 0} = \frac{E[E[k_r(T)^{\kappa_r}]]|_{t = 
 To estimate $m_{\#}$ and $s_{\#}$, note that the second line of Equations \ref{eq:mCk} (rewritten in stochastic terms) can be rearranged as an expression for $E[C^{\#}(T)]|_{t = 0}$.
 
 \begin{equation}
-E[C^{\#}(T)]|_{t = 0} = \frac{C^{* 1 - h}}{v_0 k}
+E[C^{\#}(T)]|_{t = 0} = \frac{C^{* 1 - h}}{v k}
 \end{equation}
 
 Such that the conditional parameters $\bar{m}_{\#}$ and $\bar{s}_{\#}$ can be estimated from the data as follows.
-<!-- To parse $m_c$ and $s_c$, recall from Equation \ref{eq:mCk} that $C^* = (v_0 k C^{\#})^{1 / (1 - h)}$, such that -->
+<!-- To parse $m_c$ and $s_c$, recall from Equation \ref{eq:mCk} that $C^* = (v k C^{\#})^{1 / (1 - h)}$, such that -->
 
 \begin{equation}
 \begin{split}
-\bar{m}_{\#} &= (1 - h) \bar{m}_c - m_k - \ln(v_0) \\
+\bar{m}_{\#} &= (1 - h) \bar{m}_c - m_k - \ln(v) \\
 \bar{s}_{\#}^2 &= (1 - h)^2 \bar{m}_c^2 - m_k^2 \\
 & \bar{m}_c = E[\ln(C^*)| \theta] \:\:\:\: \bar{s}_c^2 = Var[\ln(C^*)| \theta]
 \end{split}
@@ -2054,15 +2090,6 @@ muEyStarT0 <- muEyStarT0trunc * EmploymentRate / ProbProfit
 Calculation of $m_{\#}$ and $s_{\#}$ requires the expected price at planting for 2007, the same year as the farm data used to estimate $\bar{m}_{\#}$ and $\bar{s}_{\#}$. The short rains harvest in 2007 was normal and so the "good short rains" estimate of $m_p$, and March 2007 price is used to calculate $E[P(T)]|_{t = 0} = P(0) e^{m_p T}$ (where $P(0)$ is the price at planting in March).
 
 Once $m_{\#}$ and $s_{\#}$ are calculated, the expected unconditional mean yield ($E[\tilde{y}^*(T; k_m(T))]|_{t = 0}$) follows from Equation \ref{eq:condMeanYd2}. In the process, the farm employment rate is calculated as `r round(EmploymentRate, 2)` and the PEFS adjusted mean probability of profit is calculated as `r round(ProbProfit, 2)`. The expected unconditional mean yield is evaluated at four different expected rainfall levels: $E[E[k_r(T)^{\kappa_r}]]|_{t = 0} = 1.5^{\kappa_r}, \: 1^{\kappa_r}, \: 0.5^{\kappa_r}, \: 0.1^{\kappa_r}$. These values correspond to expected rainfall that is 150% of the historical benchmark ("high"), in line with the historical benchmark ("normal"), 50% of the historical benchmark ("low"), and 10% of the historical benchmark ("dismal"), respectively.
-
-Note in passing that, because the binary endowments $b_i$ vary across the population, the value of $g_0$ (and hence of $v_0$) also varies. In the present example, there are 14 distinct values of $v_0$, corresponding to 14 distinct combinations of the $\beta_i b_i$. The supply aggregation step in Equation \ref{eq:aggSupStep} averages aggregate supply across all binary endowment strata. Denoting the value of each distinct combination as $v_{0i}$, the average $v_0$ is effectively a population weighted sum of the $v_{0i}$.
-<!-- Each value of $v_0$ effectively identifies a binary endowment stratum of the population. -->
-
-\begin{equation}
-v_0 = \sum_i \frac{N_i}{N} v_{0i}
-\end{equation}
-
-Where $N_i / N$ is the fraction of farms in the $i^{th}$ binary endowment stratum.
 
 The conditional mean cost and yield disaggregated by stratum ($E[C^*| \theta]_i$, $E[y^*(T)| \theta]_i$), can be evaluated as follows.
 
@@ -2431,31 +2458,31 @@ ggEQsT0 / ggEtaEPT0EQsT0a
 ## The research induced supply ribbon shift
 
 **--
-The impact of yield scaling technologies and/or management practices on aggregate supply can be represented through perturbations of the TFP parameter ($g_0$). This is tantamount to adding a dummy endowment variable to the yield model in Equation \ref{eq:lYdEnvReg3}. The four endowment dummies included in the Kenya maize example may be considered yield scaling interventions that increase the value of $g_0$ on adopting farms. The percentage increase in TFP given the introduction of a new intervention $\beta_5 b_5$ on farms that implement the new technology (farms where $b_5 = 1$) may be calculated as
+The impact of yield scaling technologies and/or management practices on aggregate supply can be represented through perturbations of the TFP parameter ($g$). This is tantamount to adding a dummy endowment variable to the yield model in Equation \ref{eq:lYdEnvReg3}. The four endowment dummies included in the Kenya maize example may be considered yield scaling interventions that increase the value of $g$ on adopting farms. The percentage increase in TFP given the introduction of a new intervention $\beta_5 b_5$ on farms that implement the new technology (farms where $b_5 = 1$) may be calculated as
 
 \begin{equation}
 \begin{split}
-\partial \ln(g_0) &\approx \frac{g_0' - g_0}{g_0} \:\:; \:\:\: g_0' = g_0 e^{\beta_5 b_5}
+\partial \ln(g) &\approx \frac{g' - g}{g} \:\:; \:\:\: g' = g e^{\beta_5 b_5}
 &\approx e^{\beta_5} - 1
 \end{split}
 \end{equation}
 
-Note that the increase in TFP is the same regardless of the starting value of $g_0$, which varies across the population because the binary endowments $b_{i \in [1,4]}$ vary.
+Note that the increase in TFP is the same regardless of the starting value of $g$, which varies across the population because the binary endowments $b_{i \in [1,4]}$ vary.
 
-The resulting percentage changes in farm level expenditure TFP ($v_0$), expenditure per acre, and yield given a 1 percentage change in $g_0$ follow from Equations \ref{eq:v0forms}, \ref{eq:mCk}, and \ref{eq:yStarT}, respectively.
+The resulting percentage changes in farm level expenditure TFP ($v$), expenditure per acre, and yield given a 1 percentage change in $g$ follow from Equations \ref{eq:v0forms}, \ref{eq:mCk}, and \ref{eq:yStarT}, respectively.
 
 \begin{equation}
-\frac{\partial \ln(v_0)}{\partial \ln(g_0)} = 1 - \boldsymbol{\alpha} ' \frac{\partial \ln(\mathbf{w})}{\partial \ln(g_0)}
+\frac{\partial \ln(v)}{\partial \ln(g)} = 1 - \boldsymbol{\alpha} ' \frac{\partial \ln(\mathbf{w})}{\partial \ln(g)}
 \label{eq:dlv0dlg0}
 \end{equation}
 
 \begin{equation}
-\frac{\partial \ln(C^*)}{\partial \ln(g_0)} = \frac{1}{1 - h} \left( 1 - \boldsymbol{\alpha} ' \frac{\partial \ln(\mathbf{w})}{\partial \ln(g_0)} + \frac{\partial \ln(P)}{\partial \ln(g_0)} \right)
+\frac{\partial \ln(C^*)}{\partial \ln(g)} = \frac{1}{1 - h} \left( 1 - \boldsymbol{\alpha} ' \frac{\partial \ln(\mathbf{w})}{\partial \ln(g)} + \frac{\partial \ln(P)}{\partial \ln(g)} \right)
 \label{eq:dlCstardlg0}
 \end{equation}
 
 \begin{equation}
-\frac{\partial \ln(y^*)}{\partial \ln(g_0)} = \frac{1}{1 - h} \left( 1 - \boldsymbol{\alpha} ' \frac{\partial \ln(\mathbf{w})}{\partial \ln(g_0)} + h \frac{\partial \ln(P)}{\partial \ln(g_0)} \right)
+\frac{\partial \ln(y^*)}{\partial \ln(g)} = \frac{1}{1 - h} \left( 1 - \boldsymbol{\alpha} ' \frac{\partial \ln(\mathbf{w})}{\partial \ln(g)} + h \frac{\partial \ln(P)}{\partial \ln(g)} \right)
 \label{eq:dlyStardlg0}
 \end{equation}
 address unavailability of alpha
@@ -2465,23 +2492,22 @@ address unavailability of alpha
 
 <!-- \begin{equation} -->
 <!-- \begin{split} -->
-<!-- \frac{\partial \ln(C^*)}{\partial \ln(g_0)} &= \frac{\partial \ln(E[C^*])}{\partial \ln(g_0)} = \frac{\partial \ln(y^*(T))}{\partial \ln(g_0)} = \frac{\partial \ln(E[\tilde{y}^*(T; k_m(T))]|_{t = 0})}{\partial \ln(g_0)} \\ -->
-<!-- &= \frac{1}{1 - h} \left( 1 - \boldsymbol{\alpha} ' \frac{\partial \ln(\mathbf{w})}{\partial \ln(g_0)} \right) -->
+<!-- \frac{\partial \ln(C^*)}{\partial \ln(g)} &= \frac{\partial \ln(E[C^*])}{\partial \ln(g)} = \frac{\partial \ln(y^*(T))}{\partial \ln(g)} = \frac{\partial \ln(E[\tilde{y}^*(T; k_m(T))]|_{t = 0})}{\partial \ln(g)} \\ -->
+<!-- &= \frac{1}{1 - h} \left( 1 - \boldsymbol{\alpha} ' \frac{\partial \ln(\mathbf{w})}{\partial \ln(g)} \right) -->
 <!-- \end{split} -->
 <!-- \label{eq:ddlng0} -->
 <!-- \end{equation} -->
 
-<!-- Where the last equality follows noting that $u_0 = v_0 E[k] E[C^*]^h$. -->
+<!-- Where the last equality follows noting that $u = v E[k] E[C^*]^h$. -->
 <!-- -- -->
 
-(Note from Equation \ref{eq:useful2} that expected optimal unit expenditure does not vary with changes in $g_0$.)
 
 The aggregate impact of such interventions hinges critically on the adoption rate. In Appendix C it is shown that axioms 1 and 2 imply the following technology adoption condition.
 
 <!-- \begin{equation} -->
 <!-- \begin{split} -->
-<!-- \partial \ln(E[P(T)]|_{t = 0}) - \boldsymbol{\alpha} {'} \partial \ln(\mathbf{w}) + \partial \ln(g_0) + \frac{h}{C^*} \partial B &> 0 \\ -->
-<!-- \partial \ln(\nu) + \partial \ln(g_0) + \frac{h}{C^*} \partial B &> 0 \:\:;\:\:\: \partial \ln(\nu) = \partial \ln(E[P(T)]|_{t = 0}) - \boldsymbol{\alpha} {'} \partial \ln(\mathbf{w}) -->
+<!-- \partial \ln(E[P(T)]|_{t = 0}) - \boldsymbol{\alpha} {'} \partial \ln(\mathbf{w}) + \partial \ln(g) + \frac{h}{C^*} \partial B &> 0 \\ -->
+<!-- \partial \ln(\nu) + \partial \ln(g) + \frac{h}{C^*} \partial B &> 0 \:\:;\:\:\: \partial \ln(\nu) = \partial \ln(E[P(T)]|_{t = 0}) - \boldsymbol{\alpha} {'} \partial \ln(\mathbf{w}) -->
 <!-- \end{split} -->
 <!-- \label{eq:adoptCond} -->
 <!-- \end{equation} -->
@@ -2489,11 +2515,11 @@ The aggregate impact of such interventions hinges critically on the adoption rat
 <!-- Where the term $\partial B$ represents the subsidies, costs, or any other exogenous mitigating circumstances, per unit area, entailed in the adoption of the technology package. In the absence of such mitigating circumstances, the condition simplifies to -->
 
 <!-- \begin{equation} -->
-<!-- \partial \ln(g_0) > -\partial \ln(\nu) -->
+<!-- \partial \ln(g) > -\partial \ln(\nu) -->
 <!-- \label{eq:adoptCondSimp} -->
 <!-- \end{equation} -->
 
-<!-- Widespread adoption of yield scaling enhancements tends to boost production and thus lower output price while at the same time increasing input demand and thus input prices. Hence the expectation is that $\partial \ln(E[P]|_{t = 0}) < 0$, $\partial \ln(\mathbf{w}) > 0$, and thus $\partial \nu < 0$. In words, then, the adoption condition says that a farm stands to increase its net benefit through adoption of yield scaling technology only if the resulting percentage increase in TFP ($g_0$) is greater than the corresponding percentage decrease in output price minus the corresponding percentage increase in input prices scaled by their respective input elasticities $\alpha_i$. -->
+<!-- Widespread adoption of yield scaling enhancements tends to boost production and thus lower output price while at the same time increasing input demand and thus input prices. Hence the expectation is that $\partial \ln(E[P]|_{t = 0}) < 0$, $\partial \ln(\mathbf{w}) > 0$, and thus $\partial \nu < 0$. In words, then, the adoption condition says that a farm stands to increase its net benefit through adoption of yield scaling technology only if the resulting percentage increase in TFP ($g$) is greater than the corresponding percentage decrease in output price minus the corresponding percentage increase in input prices scaled by their respective input elasticities $\alpha_i$. -->
 
 <!-- Note the resemblance between the adoption condition in Inequality \ref{eq:adoptCondSimp} and the "price/productivity tightrope" condition formulated by Lipton [-@lipton2005family]. -->
 
@@ -2503,40 +2529,39 @@ The aggregate impact of such interventions hinges critically on the adoption rat
 
 <!-- The only substantive difference between Lipton's condition and the condition in Inequality \ref{eq:adoptCondSimp} is that the percentage increases in input prices in the latter are scaled by their respective elasticities ($\alpha_i$). And of course the more complete version of the adoption condition in Inequality \ref{eq:adoptCond} differs from Lipton by also including the exogenous net subsidy term. -->
 
-<!-- If the efficiency adjusted output-input price ratio decrease is greater than the increase in TFP ($g_0$), then the margin by which it is greater is the net subsidy term $h / C^* \partial B$ required to make adoption profitable. Note that the required net subsidy $\partial B$ will vary across farms based on $C^*$. The factor $h / C^*$, which may also be written $\lambda / E[R^*(T)]|_{t = 0}$, represents each farm's marginal valuation of the subsidy; and implies that the subsidy is relatively more valuable to farms with relatively lower expenditure. Solving Inequality \ref{eq:adoptCond} for $C^*$ gives the maximum expenditure level for which adoption is profitable if the (absolute value of the) efficiency adjusted output-input price ratio decrease is greater than the increase in TFP ($|\partial \ln(\nu)| > \partial \ln(g_0)$). -->
+<!-- If the efficiency adjusted output-input price ratio decrease is greater than the increase in TFP ($g$), then the margin by which it is greater is the net subsidy term $h / C^* \partial B$ required to make adoption profitable. Note that the required net subsidy $\partial B$ will vary across farms based on $C^*$. The factor $h / C^*$, which may also be written $\lambda / E[R^*(T)]|_{t = 0}$, represents each farm's marginal valuation of the subsidy; and implies that the subsidy is relatively more valuable to farms with relatively lower expenditure. Solving Inequality \ref{eq:adoptCond} for $C^*$ gives the maximum expenditure level for which adoption is profitable if the (absolute value of the) efficiency adjusted output-input price ratio decrease is greater than the increase in TFP ($|\partial \ln(\nu)| > \partial \ln(g)$). -->
 
 <!-- \begin{equation} -->
-<!-- C^* \leq \frac{-h \partial B}{\partial \ln(\nu) + \partial \ln(g_0)} -->
+<!-- C^* \leq \frac{-h \partial B}{\partial \ln(\nu) + \partial \ln(g)} -->
 <!-- \label{eq:cStarAdopt} -->
 <!-- \end{equation} -->
 
 <!-- If $\partial B=0$, then Inequality \ref{eq:adoptCond} implies that adoption will be either $0\%$ or $100\%$. Empirically, this is almost never observed. Adoption rates tend to fall somewhere between $0\%$ and $100\%$. The increased input demand associated with new technology adoption implies in and of itself that, without subsidies, $\partial B < 0$. And, of course, every major green revolution success story has involved subsidies of one kind or another to offset the required increase in input expenditure, and then some []. Within the theoretical framework developed here, this means that the net subsidy $\partial B$ is generally positive. -->
 <!-- <!-- Assuming farms spend their whole farm budget ($B = C^*$), then the subsidy term simplifies to $h \partial \ln(C^*)$ and the adoption condition can be rewritten --> -->
 
-<!-- Denoting the upper adoption bound on $C^*$ (Equation \ref{eq:cStarAdopt}) as $\bar{\bar{C^*}}$ and recalling that axiom 4 implies lognormally distributed $C^*$, the adoption rate $A$ when $\partial B > 0$ and $|\partial \ln(\nu)| > \partial \ln(g_0)$ can be calculated as -->
+<!-- Denoting the upper adoption bound on $C^*$ (Equation \ref{eq:cStarAdopt}) as $\bar{\bar{C^*}}$ and recalling that axiom 4 implies lognormally distributed $C^*$, the adoption rate $A$ when $\partial B > 0$ and $|\partial \ln(\nu)| > \partial \ln(g)$ can be calculated as -->
 
 <!-- \begin{equation} -->
 <!-- \begin{split} -->
-<!-- \mathcal{A} &= \int_0^{\bar{\bar{C^*}}} \phi \left(\frac{\ln(C^*) - m_c}{s_c} \right) d \ln(C^*) \:\:;\:\:\: \bar{\bar{C^*}} = \frac{-h \partial B}{\partial \ln(\nu) + \partial \ln(g_0)} \\ -->
+<!-- \mathcal{A} &= \int_0^{\bar{\bar{C^*}}} \phi \left(\frac{\ln(C^*) - m_c}{s_c} \right) d \ln(C^*) \:\:;\:\:\: \bar{\bar{C^*}} = \frac{-h \partial B}{\partial \ln(\nu) + \partial \ln(g)} \\ -->
 <!-- &= \Phi \left( \frac{\bar{\bar{C^*}} - m_c}{s_c} \right) -->
 <!-- \end{split} -->
 <!-- \end{equation} -->
 
-<!-- To parse $m_c$ and $s_c$, recall from Equation \ref{eq:mCk} that $C^* = (v_0 k E[C^{\#}(T)]|_{t = 0})^{1 / (1 - h)}$, such that -->
+<!-- To parse $m_c$ and $s_c$, recall from Equation \ref{eq:mCk} that $C^* = (v k E[C^{\#}(T)]|_{t = 0})^{1 / (1 - h)}$, such that -->
 <!-- <!-- note that Equations \ref{eq:paramsCondCsharp} can be rearranged into expressions for $\bar{m}_c$ and $\bar{s}_c$, whence the expression for the unconditional parameters follows immediately. -->
 
 <!-- \begin{equation} -->
 <!-- \begin{split} -->
-<!-- m_c &= \frac{1}{1 - h}(\ln(v_0) + m_k + m_{\#}) \:\:;\:\:\: m_k = E[\ln(k)] \:\: s_k^2 = Var[\ln(k)] \\ -->
+<!-- m_c &= \frac{1}{1 - h}(\ln(v) + m_k + m_{\#}) \:\:;\:\:\: m_k = E[\ln(k)] \:\: s_k^2 = Var[\ln(k)] \\ -->
 <!-- s_c^2 &= \frac{1}{(1 - h)^2} (s_k^2 + s_{\#}^2) -->
 <!-- \end{split} -->
 <!-- \label{eq:mCsC} -->
 <!-- \end{equation} -->
-**--
-<!-- Recalling from Equation \ref{eq:mCk} that $C^* = (v_0 k C^{\#})^{1 / (1 - h)}$, then $m_c = 1 / (1 - h)(\ln(v_0) + m_k + m_{\#})$ and $s_c^2 = 1 / (1 - h)^2 (s_k^2 + s_{\#}^2)$ (where $m_k = E[\ln(k)]$ and $s_k^2 = Var[\ln(k)]$); and so the adoption rate can be written in terms of known parameters. -->
+<!-- Recalling from Equation \ref{eq:mCk} that $C^* = (v k C^{\#})^{1 / (1 - h)}$, then $m_c = 1 / (1 - h)(\ln(v) + m_k + m_{\#})$ and $s_c^2 = 1 / (1 - h)^2 (s_k^2 + s_{\#}^2)$ (where $m_k = E[\ln(k)]$ and $s_k^2 = Var[\ln(k)]$); and so the adoption rate can be written in terms of known parameters. -->
 <!-- ; and from Equation \ref{eq:useful2} that $m_{\#} = \ln(E[P(T)]|_{t = 0}) - m_{\lambda}$ (where $m_{\lambda} = E[\ln(\lambda)]$) -->
 <!-- \begin{equation} -->
-<!-- A = \Phi\left( \frac{\frac{-h (1 - h) \partial B}{\partial \ln(\nu) + \partial \ln(g_0)} - (\ln(v_0) + m_k + m_{\#})}{\sqrt{s_k^2 + s_{\#}^2}} \right) -->
+<!-- A = \Phi\left( \frac{\frac{-h (1 - h) \partial B}{\partial \ln(\nu) + \partial \ln(g)} - (\ln(v) + m_k + m_{\#})}{\sqrt{s_k^2 + s_{\#}^2}} \right) -->
 <!-- \label{eq:adoptRate} -->
 <!-- \end{equation} -->
 
@@ -2549,19 +2574,6 @@ The aggregate impact of such interventions hinges critically on the adoption rat
 <!-- \end{split} -->
 <!-- \end{equation} -->
 
-Because the adoption rate is partly a function of $v_{0i}$, it varies across strata. The adoption rate for the whole population is then
-
-\begin{equation}
-\begin{split}
-\mathcal{A} = \sum_i \frac{N_i}{N} \mathcal{A}_i \\
-&\text{where} \\
-&\mathcal{A}_i = \Phi\left( \frac{\frac{-h \partial B}{\partial \ln(\nu) + \partial \ln(g_0)} - m_{ci}}{s_c} \\
-&m_{ci} = \frac{1}{1 - h}(\ln(v_{0i}) + m_k + m_{\#})
-\end{split}
-\label{eq:AdoptRatei}
-\end{equation}
-
-(Note that the adoption rate will be higher in strata with lower starting $v_{0i}$, _ceteris paribus_.)
 
 The aggregate net subsidy required to reach this adoption rate can then be computed as the subsidy per unit area times the total farm area times the adoption rate.
 
@@ -2575,8 +2587,8 @@ aggSubsidy <- dB * Nf * muArea * adoptRateTotal * 10^-9 # Total subsidies in bil
 <!-- The percentage change in aggregate supply given a 1% change in TFP follows from Equations \ref{eq:aggSup2} and \ref{eq:ddlng0}, -->
 <!-- \begin{equation} -->
 <!-- \begin{split} -->
-<!-- \frac{\partial \ln(E[Q(T)]|_{t = 0})}{\partial \ln(g_0)} = \frac{\partial \ln E[\tilde{y}^*(T; k_m(T))]|_{t = 0}}{\partial \ln(g_0)} \\ -->
-<!-- &= \frac{1}{1 - h} \left( 1 - \boldsymbol{\alpha} ' \frac{\partial \ln(\mathbf{w})}{\partial \ln(g_0)} \right) -->
+<!-- \frac{\partial \ln(E[Q(T)]|_{t = 0})}{\partial \ln(g)} = \frac{\partial \ln E[\tilde{y}^*(T; k_m(T))]|_{t = 0}}{\partial \ln(g)} \\ -->
+<!-- &= \frac{1}{1 - h} \left( 1 - \boldsymbol{\alpha} ' \frac{\partial \ln(\mathbf{w})}{\partial \ln(g)} \right) -->
 <!-- \end{split} -->
 <!-- \end{equation} -->
 
@@ -2601,26 +2613,26 @@ Q &= E[Q(T)]|_{t = 0}
 \begin{split}
 \Delta Q_i &= N_i \int_0^{\bar{\bar{y^*}}} k_a \partial \y^* \rho(y^*) dy^* \\
 &= N_i E[k_a] \int_0^{\bar{\bar{y^*}}} y^* \partial \ln(y^*) \rho(y^*) dy^* \\
-&= N_i E[k_a] \frac{1}{1 - h}(\partial \ln(g_0) - \boldsymbol{\alpha} ' \partial \ln(\mathbf{w})) \int_0^{\bar{\bar{y^*}}} y^* \rho(y^*) dy^* \\
-&= N_i E[k_a] \frac{1}{1 - h}(\partial \ln(g_0) - \boldsymbol{\alpha} ' \partial \ln(\mathbf{w})) v_{0i} E[k] \int_0^{\bar{\bar{C^*}}} C^{*h} \rho(C^*) dC^* \\
-&= N_i E[k_a] v_{0i} E[k] E[C^{*h}]_i \frac{1}{1 - h}(\partial \ln(g_0) - \boldsymbol{\alpha} ' \partial \ln(\mathbf{w})) \Phi \left( \frac{\ln(\bar{\bar{C^*}}) - m_c}{s_c} - h s_c  \right)
+&= N_i E[k_a] \frac{1}{1 - h}(\partial \ln(g) - \boldsymbol{\alpha} ' \partial \ln(\mathbf{w})) \int_0^{\bar{\bar{y^*}}} y^* \rho(y^*) dy^* \\
+&= N_i E[k_a] \frac{1}{1 - h}(\partial \ln(g) - \boldsymbol{\alpha} ' \partial \ln(\mathbf{w})) v_{0i} E[k] \int_0^{\bar{\bar{C^*}}} C^{*h} \rho(C^*) dC^* \\
+&= N_i E[k_a] v_{0i} E[k] E[C^{*h}]_i \frac{1}{1 - h}(\partial \ln(g) - \boldsymbol{\alpha} ' \partial \ln(\mathbf{w})) \Phi \left( \frac{\ln(\bar{\bar{C^*}}) - m_c}{s_c} - h s_c  \right)
 \end{split}
 \end{equation}
 <!-- $$ -->
-<!-- N_i E[k_a] v_{0i} E[k] E[C^{*h}]_i \frac{1}{1 - h}(\partial \ln(g_0) - \boldsymbol{\alpha} ' \partial \ln(\mathbf{w})) \Phi \left( \frac{\ln(\bar{\bar{C^*}}) - m_c}{s_c} - h s_c  \right) -->
+<!-- N_i E[k_a] v_{0i} E[k] E[C^{*h}]_i \frac{1}{1 - h}(\partial \ln(g) - \boldsymbol{\alpha} ' \partial \ln(\mathbf{w})) \Phi \left( \frac{\ln(\bar{\bar{C^*}}) - m_c}{s_c} - h s_c  \right) -->
 <!-- $$ -->
 
 Where the resolution of the integral in the last line follows from Equation \ref{eq:keyResult}. Recalling that $v_{0i} = E[y^*]_i / (E[k] E[C^{*h}]_i)$ (Equation \ref{eq:v0i}), this further reduces to
 
 \begin{equation}
-\Delta Q_i = N_i E[k_a] E[y^*]_i \frac{1}{1 - h}(\partial \ln(g_0) - \boldsymbol{\alpha} ' \partial \ln(mathbf{w})) \Phi \left( \frac{\ln(\bar{\bar{C^*}}) - m_{ci}}{s_c} - h s_c  \right)
+\Delta Q_i = N_i E[k_a] E[y^*]_i \frac{1}{1 - h}(\partial \ln(g) - \boldsymbol{\alpha} ' \partial \ln(mathbf{w})) \Phi \left( \frac{\ln(\bar{\bar{C^*}}) - m_{ci}}{s_c} - h s_c  \right)
 \label{eq:deltQ}
 \end{equation}
 <!-- $$ -->
-<!-- \Delta Q_i = N_i E[k_a] E[y^*]_i \frac{1}{1 - h}(\partial \ln(g_0) - \boldsymbol{\alpha} ' \partial \ln(\mathbf{w})) \Phi \left( \frac{\ln(\bar{\bar{C^*}}) - m_{ci}}{s_c} - h s_c  \right) -->
+<!-- \Delta Q_i = N_i E[k_a] E[y^*]_i \frac{1}{1 - h}(\partial \ln(g) - \boldsymbol{\alpha} ' \partial \ln(\mathbf{w})) \Phi \left( \frac{\ln(\bar{\bar{C^*}}) - m_{ci}}{s_c} - h s_c  \right) -->
 <!-- $$ -->
 
-For purposes of evaluation of $\Delta Q_i$ based on farm data, this is a useful expression. Another instructive expression can be found by expressing the $\Phi()$ term in stochastic price parameter space. To do this, first recall that $C^* = (v_0 k C^{\#})^{\eta / h}$ (Equation ...), such that the argument of $\Phi()$ can be rewritten
+For purposes of evaluation of $\Delta Q_i$ based on farm data, this is a useful expression. Another instructive expression can be found by expressing the $\Phi()$ term in stochastic price parameter space. To do this, first recall that $C^* = (v k C^{\#})^{\eta / h}$ (Equation ...), such that the argument of $\Phi()$ can be rewritten
 
 \begin{equation}
 \frac{\ln(\bar{\bar{C^*}}) - m_{ci}}{s_c} - h s_c = \frac{\ln(\bar{\bar{C^{\#}}}) - m_{\#}}{s_{\#}} - \eta s_{\#}
@@ -2649,19 +2661,19 @@ Such that the expression for $\Delta Q_i$ may be rewritten as follows.
 
 \begin{equation}
 \begin{split}
-\Delta Q_i &= N_i E[k_a] E[\tilde{y}^*(T, k_m(T))]_i|_{t = 0} \frac{1}{1 - h}(\partial \ln(g_0) - \boldsymbol{\alpha} ' \partial \ln(\mathbf{w})) (1 - \Phi ( \zeta )) \\
-&= N_i \mathcal{A}_i E[k_a] E[\tilde{y}^*(T, k_m(T))| C^* \leq \bar{\bar{C^*}}]_i|_{t = 0} \frac{1}{1 - h}(\partial \ln(g_0) - \boldsymbol{\alpha} ' \partial \ln(\mathbf{w}))
+\Delta Q_i &= N_i E[k_a] E[\tilde{y}^*(T, k_m(T))]_i|_{t = 0} \frac{1}{1 - h}(\partial \ln(g) - \boldsymbol{\alpha} ' \partial \ln(\mathbf{w})) (1 - \Phi ( \zeta )) \\
+&= N_i \mathcal{A}_i E[k_a] E[\tilde{y}^*(T, k_m(T))| C^* \leq \bar{\bar{C^*}}]_i|_{t = 0} \frac{1}{1 - h}(\partial \ln(g) - \boldsymbol{\alpha} ' \partial \ln(\mathbf{w}))
 \end{split}
 \end{equation}
 <!-- For purposes of evaluation given farm data, the left hand side is   Phi term better evaluated as in Equation \ref{eq:deltQ}. -->
 <!-- \begin{equation} -->
 <!-- \begin{split} -->
-<!-- \Delta Q_i &= N_i E[k_a] E[y^*]_i \frac{1}{1 - h}(\partial \ln(g_0) - \boldsymbol{\alpha} ' \partial \ln(\mathbf{w})) \Phi \left( \frac{\ln(\bar{\bar{C^*}}) - m_{ci}}{s_c} - h s_c  \right) \\ -->
-<!-- &= N_i \mathcal{A}_i E[k_a] E[\tilde{y}^*(T, k_m(T))]_i \frac{1}{1 - h}(\partial \ln(g_0) - \boldsymbol{\alpha} ' \partial \ln(\mathbf{w})) (1 - \Phi ( \zeta ) \:\:;\:\:\: \zeta = \frac{\ln \left( \frac{E[\tilde{C}^{\#}(T)]|_{t = 0}}{\bar{\bar{C^{\#}(0)}}} \right) - \left( m_p - \eta \frac{s_p^2}{2} \right) T}{s_p \sqrt{T}} -->
+<!-- \Delta Q_i &= N_i E[k_a] E[y^*]_i \frac{1}{1 - h}(\partial \ln(g) - \boldsymbol{\alpha} ' \partial \ln(\mathbf{w})) \Phi \left( \frac{\ln(\bar{\bar{C^*}}) - m_{ci}}{s_c} - h s_c  \right) \\ -->
+<!-- &= N_i \mathcal{A}_i E[k_a] E[\tilde{y}^*(T, k_m(T))]_i \frac{1}{1 - h}(\partial \ln(g) - \boldsymbol{\alpha} ' \partial \ln(\mathbf{w})) (1 - \Phi ( \zeta ) \:\:;\:\:\: \zeta = \frac{\ln \left( \frac{E[\tilde{C}^{\#}(T)]|_{t = 0}}{\bar{\bar{C^{\#}(0)}}} \right) - \left( m_p - \eta \frac{s_p^2}{2} \right) T}{s_p \sqrt{T}} -->
 <!-- \end{split} -->
 <!-- \end{equation} -->
 <!-- \begin{equation} -->
-<!-- \Delta Q_i &= N_i E[k_a] \frac{1}{1 - h}(\partial \ln(g_0) - \boldsymbol{\alpha} ' \partial \ln(mathbf{w})) E[\tilde{y}^*(T, k_m(T))| C^* \leq \bar{\bar{C^{\#}(0)}}]_i \mathcal{A}_i -->
+<!-- \Delta Q_i &= N_i E[k_a] \frac{1}{1 - h}(\partial \ln(g) - \boldsymbol{\alpha} ' \partial \ln(mathbf{w})) E[\tilde{y}^*(T, k_m(T))| C^* \leq \bar{\bar{C^{\#}(0)}}]_i \mathcal{A}_i -->
 <!-- \end{equation} -->
 
 The total change in expected aggregate supply across all strata then follows as
@@ -2687,21 +2699,21 @@ In Appendix ... it is shown that farm net benefit per unit area may be expressed
 \end{split}
 \end{equation}
 
-The marginal change in farm net benefit given a percentage change in $g_0$ follows as
+The marginal change in farm net benefit given a percentage change in $g$ follows as
 
 \begin{equation}
 \begin{split}
-\frac{\partial \mathcal{L}^*}{\partial \ln(g_0)} &= r \left((1 - h) \frac{\partial C^*}{\partial \ln(g_0)} + h \frac{\partial B}{\partial \ln(g_0)} \right) \\
-&= r \left( C^* \left(1 - \boldsymbol{\alpha} ' \frac{\partial \mathbf{w}}{\partial \ln(g_0)} \right) + h \frac{\partial B}{\partial \ln(g_0)} \right)
+\frac{\partial \mathcal{L}^*}{\partial \ln(g)} &= r \left((1 - h) \frac{\partial C^*}{\partial \ln(g)} + h \frac{\partial B}{\partial \ln(g)} \right) \\
+&= r \left( C^* \left(1 - \boldsymbol{\alpha} ' \frac{\partial \mathbf{w}}{\partial \ln(g)} \right) + h \frac{\partial B}{\partial \ln(g)} \right)
 \end{split}
 \end{equation}
 
-The farm level change in net benefit per unit area given the intervention $\partial \ln(g_0)$ may thus be expressed
+The farm level change in net benefit per unit area given the intervention $\partial \ln(g)$ may thus be expressed
 
 \begin{equation}
 \begin{split}
-\partial \mathcal{L}^* &= r ( C^* \left(\partial \ln(g_0) - \boldsymbol{\alpha} ' \partial \mathbf{w} \right) + h \partial B ) \\
-&= r \gamma (C^* - \bar{\bar{C}^*}) \:\:;\:\:\: \gamma = \left(\partial \ln(g_0) - \boldsymbol{\alpha} ' \partial \mathbf{w} \right) \\
+\partial \mathcal{L}^* &= r ( C^* \left(\partial \ln(g) - \boldsymbol{\alpha} ' \partial \mathbf{w} \right) + h \partial B ) \\
+&= r \gamma (C^* - \bar{\bar{C}^*}) \:\:;\:\:\: \gamma = \left(\partial \ln(g) - \boldsymbol{\alpha} ' \partial \mathbf{w} \right) \\
 &= \gamma P (y^* - \bar{\bar{y^*}}) \\
 \partial \mathcal{L}^*(C^*, k)_i &= \gamma P v_{0i} k  (C^{*h} - \bar{\bar{C^{*h}}})
 \end{split}
@@ -2760,7 +2772,7 @@ aggSubsidy <- dB * Nf * muArea * adoptRateTotal * 10^-9 # Total subsidies in bil
 #sum(aggSubsidyStrat) - aggSubsidy # Check if zero
 aggSubsidyUSD <- aggSubsidy / 67 * 10^3 #in million USD
 aggSubsidyStratMilln <- aggSubsidyStrat * 10^3
-# A = \Phi\left( \frac{\frac{-h (1 - h) \partial B}{\partial \ln(\nu) + \partial \ln(g_0)} - (\ln(v_0) + m_k + m_{\#})}{\sqrt{s_k^2 + s_{\#}^2}} \right)
+# A = \Phi\left( \frac{\frac{-h (1 - h) \partial B}{\partial \ln(\nu) + \partial \ln(g)} - (\ln(v) + m_k + m_{\#})}{\sqrt{s_k^2 + s_{\#}^2}} \right)
 phiArg <- (log(cStarMaxAdopt) - mCstari) / sCstar - h * sCstar
 probProfAdopt <- pnorm(phiArg)
 dPsiStrat <- stratPct * Nf * muArea * muYstarTi * EPT02007 * (dlnNu + dlng0) * (probProfAdopt - cStarMaxAdopt / muCstarih * adoptRateStrat)
@@ -2768,7 +2780,7 @@ dPsiStrat <- dPsiStrat * 10^-9 # in billions KES
 dPsi <- sum(dPsiStrat)
 #dPsi / 67.32 # 2007 USD exchange rate
 dQStrat <- stratPct * Nf * muArea * muYstarTi * (dlnNuh + dlng0) / (1 - h) * probProfAdopt
-# \Delta Q_i &= N_i E[k_a] E[y^*]_i \frac{1}{1 - h}(\partial \ln(g_0) - \boldsymbol{\alpha} ' \partial \ln(mathbf{w})) \Phi \left( \frac{\ln(\bar{\bar{C^*}}) - m_{ci}}{s_c} - h s_c  \right)
+# \Delta Q_i &= N_i E[k_a] E[y^*]_i \frac{1}{1 - h}(\partial \ln(g) - \boldsymbol{\alpha} ' \partial \ln(mathbf{w})) \Phi \left( \frac{\ln(\bar{\bar{C^*}}) - m_{ci}}{s_c} - h s_c  \right)
 dQStrat <- 10^-3 * dQStrat # in MT
 dQStrat <- 10^-3 * dQStrat # in 1000 MT
 dQ <- sum(dQStrat)
@@ -2776,10 +2788,10 @@ dQ <- sum(dQStrat)
 
 ```
 
-Returning to the Kenya maize data, say a new technology package is released in Kenya that results in a `r 100 * dlng0`% increase in TFP on adopting farms. This is tantamount to adding another binary endowment $b_5\beta_5 =$ `r round(betaNew, 2)` to the yield model. Say that the expected $\boldsymbol{\alpha}$-adjusted percentage increase in input prices ($\boldsymbol{\alpha} '\partial \ln(\mathbf{w})$) is `r aDotdlw`, and the expected percentage decrease in output price ($\partial \ln(P)$) is `r dlP`, such that $\partial \ln(\nu) =$ `r dlnNu`, which is greater than the percentage increase in TFP. Adoption would thus result in a `r 100 * dlv0dlg0`% increase in expenditure TFP ($v_0$), a `r -round(100 * dlMuCstar)`% reduction in expenditure, and a `r round(100 * dlMuYstarT)`% increase in yield on adopting farms (recall Equations \ref{eq:dlv0dlg0}, \ref{eq:dlyStardlg0}, and \ref{eq:dlCstardlg0}). However, by the criterion in Inequality \ref{eq:adoptCondSimp}, adoption makes economic sense for the farmer only if a net subsidy is included in the technology package (i.e., only if $\partial B > 0$).
+Returning to the Kenya maize data, say a new technology package is released in Kenya that results in a `r 100 * dlng0`% increase in TFP on adopting farms. This is tantamount to adding another binary endowment $b_5\beta_5 =$ `r round(betaNew, 2)` to the yield model. Say that the expected $\boldsymbol{\alpha}$-adjusted percentage increase in input prices ($\boldsymbol{\alpha} '\partial \ln(\mathbf{w})$) is `r aDotdlw`, and the expected percentage decrease in output price ($\partial \ln(P)$) is `r dlP`, such that $\partial \ln(\nu) =$ `r dlnNu`, which is greater than the percentage increase in TFP. Adoption would thus result in a `r 100 * dlv0dlg0`% increase in expenditure TFP ($v$), a `r -round(100 * dlMuCstar)`% reduction in expenditure, and a `r round(100 * dlMuYstarT)`% increase in yield on adopting farms (recall Equations \ref{eq:dlv0dlg0}, \ref{eq:dlyStardlg0}, and \ref{eq:dlCstardlg0}). However, by the criterion in Inequality \ref{eq:adoptCondSimp}, adoption makes economic sense for the farmer only if a net subsidy is included in the technology package (i.e., only if $\partial B > 0$).
 
 Say that the Ministry of Agriculture offers a net subsidy of $\partial B = $ `r dB` KES/acre to adopting farms, perhaps in the form of free seed and fertilizer. This then implies the adoption expenditure per acre ceiling of $\bar{\bar{C}^*} =$ `r round(cStarMaxAdopt)` KES (recall Equation \ref{eq:cStarAdopt}), and the corresponding adoption rate of $\mathcal{A} =$ `r round(100 * adoptRateTotal, 1)`% (recall Equation \ref{eq:AdoptRatei}). The aggregate net subsidy required from the Ministry of Agriculture to achieve this rate follows from Equation \ref{eq:aggSubsidy} as `r round(aggSubsidy, 2)` billion KES. The corresponding increase in aggregate supply and producer welfare follow from Equations \ref{eq:dQ} and \ref{eq:dPsi} as `r round(dQ, 2)` 1000 MT and `r round(dPsi, 2)` billion KES, respectively. The breakdown by stratum is given in the left panel of Figure \ref{fig:intervention}, accompanied by a graphic of the corresponding supply ribbon shift in the right panel.
-<!-- By the criterion in Inequality \ref{eq:adoptCondSimp}, adoption in the absence of exogenous subsidies/costs will increase farm net benefit only if the the percentage increase in TFP $\partial \ln(g_0) =$ `r 100 * dlng0`% is greater than the absolute value of the percentage decrease in output price plus the $\alpha_i$-scaled increase in input prices (i.e. only if $\partial \ln(g_0) > |\partial \ln(\nu)|$).  -->
+<!-- By the criterion in Inequality \ref{eq:adoptCondSimp}, adoption in the absence of exogenous subsidies/costs will increase farm net benefit only if the the percentage increase in TFP $\partial \ln(g) =$ `r 100 * dlng0`% is greater than the absolute value of the percentage decrease in output price plus the $\alpha_i$-scaled increase in input prices (i.e. only if $\partial \ln(g) > |\partial \ln(\nu)|$).  -->
 [at what rain level?]
 
 \singlespacing
@@ -2937,7 +2949,7 @@ dPsi <- sum(dPsiStrat)
 # dPsi / 67.32 # 2007 USD exchange rate
 #---
 dQStrat <- stratPct * Nf * muArea * muYstarTi * (dlng0 + dlnNuh) / (1 - h) * probProfAdopt
-# \Delta Q_i &= N_i E[k_a] E[y^*]_i \frac{1}{1 - h}(\partial \ln(g_0) - \boldsymbol{\alpha} ' \partial \ln(mathbf{w})) \Phi \left( \frac{\ln(\bar{\bar{C^*}}) - m_{ci}}{s_c} - h s_c  \right)
+# \Delta Q_i &= N_i E[k_a] E[y^*]_i \frac{1}{1 - h}(\partial \ln(g) - \boldsymbol{\alpha} ' \partial \ln(mathbf{w})) \Phi \left( \frac{\ln(\bar{\bar{C^*}}) - m_{ci}}{s_c} - h s_c  \right)
 dQStrat <- 10^-3 * dQStrat # in MT
 dQStrat <- 10^-3 * dQStrat # in 1000 MT
 dQ <- sum(dQStrat)
@@ -3091,14 +3103,14 @@ map between employment rate and PEFS adj mean prob of profit
 caveats: t=0 and T may differ across the population, prices differ across the population... the bigger the geographical scope, the more the difference. At subnational scales the differences will be small. I.e. the more homogeneous the agroclimatic environment and market, the smaller the difference.
 
 
-Specifically, then, the scaling shift can be modeled by shocking the parameter $u_0$. This results in an unambiguous increase in aggregate supply. That is to say, it is straightforward to see that
+Specifically, then, the scaling shift can be modeled by shocking the parameter $u$. This results in an unambiguous increase in aggregate supply. That is to say, it is straightforward to see that
 
 
 
 Evaluating the lagrangian at $y^*$ gives the optimal farm profit or net benefit.
 
 
-The adoption condition for a new scaling technology is $\frac{\partial \mathcal{L}^*}{\partial u_0}$.
+The adoption condition for a new scaling technology is $\frac{\partial \mathcal{L}^*}{\partial u}$.
 
 In the theoretical framework derived here, the adoption rate follows endogenously from the farm net benefit (profit) envelope.
 
@@ -3125,15 +3137,15 @@ In the theoretical framework derived here, the adoption rate follows endogenousl
 <!-- Now, rewriting the unconditional mean expected yield (Equation \ref{eq:muYstarU0}) in stochastic terms, -->
 
 <!-- \begin{equation} -->
-<!-- E[\tilde{y}^*(T)]|_{t = 0} = u_0 \frac{E[C^{*h}]}{E[C^*]^h} -->
+<!-- E[\tilde{y}^*(T)]|_{t = 0} = u \frac{E[C^{*h}]}{E[C^*]^h} -->
 <!-- \end{equation} -->
 
 <!-- And recalling that $E[y^*(T)]|_{t = 0}$ and thus $C^*$ are assumed to be lognormally distributed, this reduces to -->
 
 <!-- \begin{equation} -->
 <!-- \begin{split} -->
-<!-- E[\tilde{y}^*(T)]|_{t = 0} &= u_0 \frac{e^{hm_c + h^2 \frac{s^2_c}{2}}}{e^{hm_c + h \frac{s^2_c}{2}}} = u_0 e^{\frac{s^2_c}{2}(h^2 - h)} \\ -->
-<!-- &= u_0 e^{\frac{1}{2} (\eta + 1)^2 (s^2_k + s^2_{\#}) (h^2 - h)} -->
+<!-- E[\tilde{y}^*(T)]|_{t = 0} &= u \frac{e^{hm_c + h^2 \frac{s^2_c}{2}}}{e^{hm_c + h \frac{s^2_c}{2}}} = u e^{\frac{s^2_c}{2}(h^2 - h)} \\ -->
+<!-- &= u e^{\frac{1}{2} (\eta + 1)^2 (s^2_k + s^2_{\#}) (h^2 - h)} -->
 <!-- \end{split} -->
 <!-- \label{eq:muYdStoch1} -->
 <!-- \end{equation} -->
@@ -3205,9 +3217,9 @@ To resolve the yield derivative, note that a more conventional textbook form of 
 
 \begin{equation}
 \begin{split}
-y^* &= y|_{x_i = x^*_i} = g_0 \prod_{i = 1}^{n_k} k_i^{\kappa_i} \prod_{i = 1}^{n_x} x^*_i^{\alpha_i} \\
-&= g_0 \prod_{i = 1}^{n_k} k_i^{\kappa_i} \prod_{i = 1}^{n_x} \left( \frac{y^* P \alpha_i}{\lambda w_i} \right)^{\alpha_i}
-&\rightarrow y^* = \left( g_0 \prod_{i = 1}^{n_k} k_i^{\kappa_i} \prod_{i = 1}^{n_x} \frac{\alpha_i}{w_i} \right)^{1 / (1 - h)} \left( \frac{P}{\lambda} \right)^{h / (1 - h)}
+y^* &= y|_{x_i = x^*_i} = g \prod_{i = 1}^{n_k} k_i^{\kappa_i} \prod_{i = 1}^{n_x} x^*_i^{\alpha_i} \\
+&= g \prod_{i = 1}^{n_k} k_i^{\kappa_i} \prod_{i = 1}^{n_x} \left( \frac{y^* P \alpha_i}{\lambda w_i} \right)^{\alpha_i}
+&\rightarrow y^* = \left( g \prod_{i = 1}^{n_k} k_i^{\kappa_i} \prod_{i = 1}^{n_x} \frac{\alpha_i}{w_i} \right)^{1 / (1 - h)} \left( \frac{P}{\lambda} \right)^{h / (1 - h)}
 \end{split}
 \label{eq:yStarAlt}
 \end{equation}
@@ -3239,29 +3251,31 @@ A.2
 
 ## Differentiation of expenditure TFP, yield, and expenditure with respect to TFP
 
-Note that the expenditure TFP $v_0$ can be expressed
+Note that the expenditure TFP $v$ can be expressed
 
 \begin{equation}
 \begin{split}
-v_0 &= \frac{u_0}{E[k] E[C^*]^h} \\
-&= g_0 \frac{\prod_i^{n_x}E[x_i]^{\alpha_i}}{E[C^*]^h} \\
-&= g_0 \frac{1}{h}\prod_i^{n_x} \left( \frac{\alpha_i}{w_i} \right)^{\alpha_i}
+v &= \frac{u}{E[k] E[C^*]^h} \\
+&= g \frac{\prod_i^{n_x}E[x_i]^{\alpha_i}}{E[C^*]^h} \\
+&= g \frac{1}{h}\prod_i^{n_x} \left( \frac{\alpha_i}{w_i} \right)^{\alpha_i}
 \end{split}
 \label{eq:v0forms}
 \end{equation}
 
-So that
+(Where the last line follows from the input demand expression in Equation \ref{eq:inputDem2}.)
+
+Then the derivative of expenditure TFP with respect to TFP is
 
 \begin{equation}
-\frac{\partial \ln(v_0)}{\partial \ln(g_0)} = 1 - \boldsymbol{\alpha} ' \frac{\partial \ln(\mathbf{w})}{\partial \ln(g_0)}
+\frac{\partial \ln(v)}{\partial \ln(g)} = 1 - \boldsymbol{\alpha} ' \frac{\partial \ln(\mathbf{w})}{\partial \ln(g)}
 \end{equation}
 
-The derivatives $\partial \ln (C^*) / \partial \ln(g_0)$ and $\partial \ln(y^*) / \partial \ln(g_0)$ then follow from the expressions in Equation \ref{eq:fnCsharp} as
+And the derivatives $\partial \ln (C^*) / \partial \ln(g)$ and $\partial \ln(y^*) / \partial \ln(g)$ then follow from the expressions in Equation \ref{eq:fnCsharp}.
 
 \begin{equation}
 \begin{split}
-\frac{\partial \ln(C^*)}{\partial \ln(g_0)} &= \frac{1}{1 - h} \left( \frac{\partial \ln(v_0)}{\partial \ln(g_0)} + \frac{\partial \ln(C^*)}{\partial \ln(g_0)} \right)  \\
-&\rightarrow \frac{\partial \ln(C^*)}{\partial \ln(g_0)} = \frac{1}{1 - h} \left( 1 - \boldsymbol{\alpha} ' \frac{\partial \ln(\mathbf{w})}{\partial \ln(g_0)} + \frac{\partial \ln(P)}{\partial \ln(g_0)} \right)
+\frac{\partial \ln(C^*)}{\partial \ln(g)} &= \frac{1}{1 - h} \left( \frac{\partial \ln(v)}{\partial \ln(g)} + \frac{\partial \ln(C^*)}{\partial \ln(g)} \right)  \\
+&\rightarrow \frac{\partial \ln(C^*)}{\partial \ln(g)} = \frac{1}{1 - h} \left( 1 - \boldsymbol{\alpha} ' \frac{\partial \ln(\mathbf{w})}{\partial \ln(g)} + \frac{\partial \ln(P)}{\partial \ln(g)} \right)
 \end{split}
 \end{equation}
 
@@ -3269,16 +3283,12 @@ And
 
 \begin{equation}
 \begin{split}
-\frac{\partial \ln(y^*)}{\partial \ln(g_0)} &= \frac{\partial \ln(v_0)}{\partial \ln(g_0)} - h \frac{\partial \ln(C^*)}{\partial \ln(g_0)} \\
-&= \frac{1}{1 - h} \left( 1 - \boldsymbol{\alpha} ' \frac{\partial \ln(\mathbf{w})}{\partial \ln(g_0)} + h \frac{\partial \ln(P)}{\partial \ln(g_0)} \right)
+\frac{\partial \ln(y^*)}{\partial \ln(g)} &= \frac{\partial \ln(v)}{\partial \ln(g)} - h \frac{\partial \ln(C^*)}{\partial \ln(g)} \\
+&= \frac{1}{1 - h} \left( 1 - \boldsymbol{\alpha} ' \frac{\partial \ln(\mathbf{w})}{\partial \ln(g)} + h \frac{\partial \ln(P)}{\partial \ln(g)} \right)
 \end{split}
 \end{equation}
 
-
-
-
 <!-- ## Derivation of input demand from axiom 2 \label{sec:A1} -->
-
 <!-- Standard textbook treatments of the first and second order conditions for Cobb-Douglas profit maximization [e.g. @heathfield1987introduction] are typically limited to the two input case (capital and labor) for the purpose of isoquant analysis, and omit the budget constraint. It is therefore necessary to take a moment to examine these conditions for the more general case, and specific aims, at hand. -->
 <!-- ; and because the widespread insistence on constant or increasing returns to scale together with profit maximization, upward sloping firm supply curves, and other commonly desired production function properties, without acknowledging the mathematical contradiction between the latter and the former, suggests a lack of familiarity with the mathematical implications of these axioms beyond a literary form, such that a review is relevant to the aims of this article. -->
 <!-- \begin{framed} -->
@@ -3429,12 +3439,12 @@ And
 <!-- \end{equation} -->
 <!-- \begin{equation} -->
 <!-- \begin{split} -->
-<!-- y^* &= y|_{x_i = x^*_i} = u_0 \frac{k}{E[k]} \prod_{i = 1}^{n_x} \left( \frac{x^*_i}{E[x_i]} \right)^{\alpha_i} \:\:;\:\:\: k = \prod_{i = 1}^{n_k} k_i^{\kappa_i} \\ -->
-<!-- &= u_0 \frac{k}{E[k]} \prod_{i = 1}^{n_x} \left( \frac{x^*_i}{E[x_i]} \right)^{\alpha_i} -->
+<!-- y^* &= y|_{x_i = x^*_i} = u \frac{k}{E[k]} \prod_{i = 1}^{n_x} \left( \frac{x^*_i}{E[x_i]} \right)^{\alpha_i} \:\:;\:\:\: k = \prod_{i = 1}^{n_k} k_i^{\kappa_i} \\ -->
+<!-- &= u \frac{k}{E[k]} \prod_{i = 1}^{n_x} \left( \frac{x^*_i}{E[x_i]} \right)^{\alpha_i} -->
 <!-- \end{split} -->
 <!-- \end{equation} -->
 <!-- \begin{equation} -->
-<!-- y = u_0 \frac{k}{E[k]} \prod_{i = 1}^{n_x} \left( \frac{x_i}{E[x_i]} \right)^{\alpha_i} \:\:;\:\:\: k = \prod_{i = 1}^{n_k} k_i^{\kappa_i} -->
+<!-- y = u \frac{k}{E[k]} \prod_{i = 1}^{n_x} \left( \frac{x_i}{E[x_i]} \right)^{\alpha_i} \:\:;\:\:\: k = \prod_{i = 1}^{n_k} k_i^{\kappa_i} -->
 <!-- \label{eq:cobbDoug3} -->
 <!-- \end{equation} -->
 <!-- \begin{equation} -->
@@ -3668,43 +3678,43 @@ By Equation \ref{eq:cStar}, this reduces to
 \mathcal{L}^* = R^* (1 - h) + \lambda B
 \end{equation}
 
-Assuming that farms will adopt a new yield scaling technology only if they expect it to increase their net benefit, the adoption condition is $\partial \mathcal{L}^*/\partial \ln(g_0) > 0$. That is,
+Assuming that farms will adopt a new yield scaling technology only if they expect it to increase their net benefit, the adoption condition is $\partial \mathcal{L}^*/\partial \ln(g) > 0$. That is,
 
 \begin{equation}
-\frac{\partial \mathcal{L}}{\partial \ln(g_0)} = E[R^*(T)]|_{t = 0} (1 - h) \left( \frac{\partial \ln(P)}{\partial u_0} + \frac{\partial \ln(y^*)}{\partial u_0} \right) + \lambda \frac{\partial B}{\partial u_0} > 0
+\frac{\partial \mathcal{L}}{\partial \ln(g)} = E[R^*(T)]|_{t = 0} (1 - h) \left( \frac{\partial \ln(P)}{\partial u} + \frac{\partial \ln(y^*)}{\partial u} \right) + \lambda \frac{\partial B}{\partial u} > 0
 \end{equation}
 
-The yield derivative resolves by substituting $P y^* h/\lambda$ for $C^*$ in Equation \ref{eq:YdEnvNeat0} and differentiating with repect to $\ln(g_0)$.
+The yield derivative resolves by substituting $P y^* h/\lambda$ for $C^*$ in Equation \ref{eq:YdEnvNeat0} and differentiating with repect to $\ln(g)$.
 
 \begin{equation}
 \begin{split}
-\frac{\partial \ln(y^*)}{\partial \ln(g_0)} &= 1 - \mathbf{\alpha} {'} \frac{\partial \ln(\mathbf{w})}{\partial \ln(g_0)} + h \frac{\partial \ln(P)}{\partial \ln(g_0)} + h \frac{\partial \ln(y^*)}{\partial \ln(g_0)} \\
-&\rightarrow \frac{\partial \ln(y^*)}{\partial \ln(g_0)} = \frac{1}{1 - h} \left( 1 - \mathbf{\alpha} {'} \frac{\partial \ln(\mathbf{w})}{\partial \ln(g_0)} + \frac{\partial \ln(P)}{\partial \ln(g_0)} \right)
+\frac{\partial \ln(y^*)}{\partial \ln(g)} &= 1 - \mathbf{\alpha} {'} \frac{\partial \ln(\mathbf{w})}{\partial \ln(g)} + h \frac{\partial \ln(P)}{\partial \ln(g)} + h \frac{\partial \ln(y^*)}{\partial \ln(g)} \\
+&\rightarrow \frac{\partial \ln(y^*)}{\partial \ln(g)} = \frac{1}{1 - h} \left( 1 - \mathbf{\alpha} {'} \frac{\partial \ln(\mathbf{w})}{\partial \ln(g)} + \frac{\partial \ln(P)}{\partial \ln(g)} \right)
 \end{split}
 \end{equation}
 
 Substituting this into the adoption condition and simplifying,
 
 \begin{equation}
-\frac{\partial \mathcal{L}}{\partial \ln(g_0)} = \frac{1 - \mathbf{\alpha} {'} \frac{\partial \ln(\mathbf{w})}{\partial u_0}} + \partial \ln(P)}{\partial \ln(g_0)} \right) + \frac{\lambda}{R^*} \frac{\partial B}{\partial u_0} > 0
+\frac{\partial \mathcal{L}}{\partial \ln(g)} = \frac{1 - \mathbf{\alpha} {'} \frac{\partial \ln(\mathbf{w})}{\partial u}} + \partial \ln(P)}{\partial \ln(g)} \right) + \frac{\lambda}{R^*} \frac{\partial B}{\partial u} > 0
 \end{equation}
 
 Which further reduces to
 
 \begin{equation}
-\partial \ln(P) - \mathbf{\alpha} {'} \partial \ln(\mathbf{w}) + \partial \ln(g_0)  + \frac{\lambda}{R^*} \partial B > 0
+\partial \ln(P) - \mathbf{\alpha} {'} \partial \ln(\mathbf{w}) + \partial \ln(g)  + \frac{\lambda}{R^*} \partial B > 0
 \end{equation}
 
 Or, substituting $h / C^*$ for $\lambda / R^*$,
 
 \begin{equation}
-\partial \ln(P) - \mathbf{\alpha} {'} \partial \ln(\mathbf{w}) + \partial \ln(g_0)  + \frac{h}{C^*} \partial B > 0
+\partial \ln(P) - \mathbf{\alpha} {'} \partial \ln(\mathbf{w}) + \partial \ln(g)  + \frac{h}{C^*} \partial B > 0
 \end{equation}
 
 And, in stochastic terms,
 
 \begin{equation}
-\partial \ln(E[P(T)]|_{t = 0}) - \mathbf{\alpha} {'} \partial \ln(\mathbf{w}) + \partial \ln(g_0)  + \frac{h}{C^*} \partial B > 0
+\partial \ln(E[P(T)]|_{t = 0}) - \mathbf{\alpha} {'} \partial \ln(\mathbf{w}) + \partial \ln(g)  + \frac{h}{C^*} \partial B > 0
 \end{equation}
 
 \blacksquare
