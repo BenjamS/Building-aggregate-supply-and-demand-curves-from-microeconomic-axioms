@@ -466,7 +466,7 @@ Recalling that $C^* = R^* h / \lambda$ (Equation \ref{eq:cStar}), the output pri
 
 ### Deducing the upper bound on expenditure and farm employment rate from axioms 3 and 4
 
-Letting $C^{\#}$ denote optimal unit expenditure ($C^{\#} = C^* / y^*$), note that $C^*$ and $y^*$ can be rewritten in terms of $C^{\#}$ as follows.
+Letting $C^{\#}$ denote optimal unit expenditure (also commonly referred to as the "average cost", $C^{\#} = C^* / y^*$), note that $C^*$ and $y^*$ can be rewritten in terms of $C^{\#}$ as follows.
 
 \begin{equation}
 \begin{split}
@@ -692,9 +692,8 @@ Because the adoption rate is partly a function of $v_{0i}$, it varies across str
 
 (Note that the adoption rate will be higher in strata with lower starting $v_{0i}$, _ceteris paribus_.)
 
-
-## Integration of the farm production function based on axioms 3 and 4 \label{sec:aggSupDeterm}
-OR: The aggregate supply curve
+## The aggregate supply curve
+<!-- ## Integration of the farm production function based on axioms 3 and 4 \label{sec:aggSupDeterm} -->
 
 The farm production function is just farm yield times area $k_a$.
 
@@ -710,17 +709,67 @@ Substituting Equation \ref{eq:qStar} for $q^*$ in Equation \ref{eq:aggSup0} give
 \begin{split}
 Q &= N \int_{\underline{q}^*}^{\bar{q}^*} \rho(q^*) dq^* \\
 &= N \int_{0}^{\infty} k_a \int_{0}^{\bar{y}^*} \rho(y^*) dy^* \rho(k_a) dk_a \\
-&= N E[k_a] \frac{E[y^*]}{E[k] E[C^{* h}]} \int_{0}^{\infty} k \int_{0}^{\bar{C}^{*}} C^{*h} \rho(C*) dC^* \rho(k) dk \\
-&= N E[k_a] \frac{E[y^*]}{E[C^{* h}]} \int_{0}^{\bar{C}^*} C^{* h} \rho(C^*) d C^*
+&= N E[k_a] v^{\eta / h} \int_{0}^{\infty} k^{\eta / h} \int_{0}^{\bar{C}^{\#}} C^{\# \eta} \rho(C^{\#})  d C^{\#} \rho(k) dk \:\:;\:\:\: \eta = \frac{h}{1 - h} \\
+&= N E[k_a] v^{\eta / h}  E[k^{\eta / h}] \int_{0}^{\bar{C}^{\#}} C^{\# \eta} \rho(C^{\#}) d C^{\#}
 \end{split}
-\label{eq:aggSupStep}
+\label{eq:aggSupStep1}
 \end{equation}
+<!-- \frac{E[y^*]}{E[k] E[C^{* h}]} -->
 
-By axiom 3 and the expression for $C^*$ in Equations \ref{eq:fnCsharp},
+Taking the expectation of the yield expression in Equations \ref{eq:fnCsharp} and rearranging,
 
 \begin{equation}
-\bar{C}^*(k) = (P v k)^{\frac{\eta}{h}}
+v^{\eta/h} = \frac{E[y^*]}{E[k^{\eta / h}] E[C^{\# \eta}]}
 \end{equation}
+
+Such that the previous expression can be simplified to
+
+\begin{equation}
+Q = N E[k_a] \frac{E[y^*]}{E[C^{\# \eta}]} \int_{0}^{\bar{C}^{\#}} C^{\# \eta} \rho(C^{\#}) d C^{\#}
+\label{eq:aggSupStep2}
+\end{equation}
+
+To resolve the integral on the right hand side, note that for any lognormally distributed variable $\chi$ and upper bound $\xi$,
+
+\begin{equation}
+\begin{split}
+\int_{0}^{\xi} \chi \rho(\chi) d\chi &= E[\chi] \Phi\left( \frac{\ln(\xi) - m_{\chi}}{s_{\chi}} - s_{\chi} \right) \:\:; \\ 
+&m_{\chi} = E[\ln(\chi)] \:\:\: s^2_{\chi} = Var[\ln(\chi)]
+\end{split}
+\label{eq:keyResult}
+\end{equation}
+
+(See Appendix A.4 for a proof.)
+
+Because $y^*$ is assumed to be lognormally distributed (axiom 4), then $C^{\# \eta}$ must also be lognormally distributed. Substituting $\chi = C^{\# \eta}$ and $\xi = \bar{C}^{\#}$, and recalling that $\bar{C}^{\#} = P$ (axiom 3),
+
+\begin{equation}
+\int_{0}^{P} C^{\# \eta} \rho(C^{\#}) d C^{\#} = E[C^{\# \eta}] \Phi \left( \frac{\ln(P) - m_{\#}}{s_{\#}} - \eta s_{\#} \right)
+\label{eq:integralStep}
+\end{equation}
+
+Substituting the right hand side of this expression for the integral in Equation \ref{eq:aggSupStep2}, the expression for aggregate supply simplifies as follows.
+
+\begin{equation}
+Q = N E[k_a] E[y^*] \Phi \left( \frac{\ln(P) - m_{\#}}{s_{\#}} - \eta s_{\#} \right)
+\label{eq:aggSup1}
+\end{equation}
+
+<!-- \begin{equation} -->
+<!-- \begin{split} -->
+<!-- Q &= N \int_{\underline{q}^*}^{\bar{q}^*} \rho(q^*) dq^* \\ -->
+<!-- &= N \int_{0}^{\infty} k_a \int_{0}^{\bar{y}^*} \rho(y^*) dy^* \rho(k_a) dk_a \\ -->
+<!-- &= N E[k_a] \frac{E[y^*]}{E[k] E[C^{* h}]} \int_{0}^{\infty} k \int_{0}^{\bar{C}^{*}(k)} C^{*h}(k) \rho(C*) dC^* \rho(k) dk \\ -->
+<!-- &= N E[k_a] \frac{E[y^*]}{E[C^{* h}]} \int_{0}^{\bar{C}^*(k)} C^{* h}(k) \rho(C^*) d C^* -->
+<!-- \end{split} -->
+<!-- \label{eq:aggSupStep} -->
+<!-- \end{equation} -->
+
+<!-- By axiom 3 and the expression for $C^*$ in Equations \ref{eq:fnCsharp}, the upper bound on farm expenditure for given $k$ is -->
+
+<!-- \begin{equation} -->
+<!-- \bar{C}^*(k) = (P v k)^{\frac{\eta}{h}} -->
+<!-- \end{equation} -->
 
 <!-- Axiom 3 states that farms enter production only if they expect to make non-negative profit. Mathematically, this means $C^* \leq R^*$, which implies the following upper bound on optimal expenditure. -->
 
@@ -749,45 +798,22 @@ By axiom 3 and the expression for $C^*$ in Equations \ref{eq:fnCsharp},
 <!-- \bar{C}^*(k) = (P v k)^{\frac{\eta}{h}} -->
 <!-- \end{equation} -->
 
-And noting that for any lognormally distributed variable $\chi$ and upper bound $\xi$,
-
-\begin{equation}
-\begin{split}
-\int_{0}^{\xi} \chi \rho(\chi) d\chi &= E[\chi] \Phi\left( \frac{\ln(\xi) - m_{\chi}}{s_{\chi}} - s_{\chi} \right) \:\:; \\ 
-&m_{\chi} = E[\ln(\chi)] \:\:\: s^2_{\chi} = Var[\ln(\chi)]
-\end{split}
-\label{eq:keyResult}
-\end{equation}
-
-(See Appendix A.4 for a proof.)
-
-Then, because $C^*$ is lognormally distributed, aggregate supply can be expressed
+<!-- Then, because $C^*$ is lognormally distributed, aggregate supply can be expressed -->
 <!-- \begin{equation} -->
 <!-- Q(k) = N E[k_a] \frac{E[y^*]}{E[C^*(k)^h]} \int_{0}^{(P v k)^{\frac{\eta}{h}}} C^*(k)^h \rho(C^*(k)) dC^*(k) -->
 <!-- \label{eq:aggSupStep} -->
 <!-- \end{equation} -->
 
-\begin{equation}
-Q = N E[k_a] E[y^*] \Phi\left( \frac{\ln(P) - m_{\#}}{s_{\#}} - \eta s_{\#} \right)
-\label{eq:aggSup1}
-\end{equation}
+<!-- \begin{equation} -->
+<!-- Q = N E[k_a] E[y^*] \Phi\left( \frac{\ln(P) - m_{\#}}{s_{\#}} - \eta s_{\#} \right) -->
+<!-- \label{eq:aggSup1} -->
+<!-- \end{equation} -->
 
+<!-- If $y^*$ is lognormally distributed (axiom 4), then $C^*$ is also lognormally distributed.  -->
 
-If $y^*$ is lognormally distributed (axiom 4), then $C^*$ is also lognormally distributed. 
+<!-- Where $\Phi()$ is the standard normal cumulative distribution function.  -->
 
-Where $\Phi()$ is the standard normal cumulative distribution function. 
-
-Substituting $\chi = C^{* h}$ and $\xi = \bar{C}^*$, 
-
-\begin{equation}
-\begin{split}
-\int_{0}^{(P v k)^{\frac{\eta}{h}}} C^{* h} \rho(C^*) d C^* &= E[C^{* h}] \Phi\left( \frac{\eta \ln(P v k) - h m_c}{h s_c} - h s_c \right) \\
-& m_c = E[\ln(C^*)] \:\:\:\: s^2_c = Var[\ln(C^*)]
-\end{split}
-\label{eq:integralStep}
-\end{equation}
-
-But note that $C^*$ can be expressed $C^* = C^{\#} y^*$, where $C^{\#}$ is the optimal cost per unit output (also commonly referred to as the "average cost"). Then, for given $k$,
+<!-- But note that $C^*$ can be expressed $C^* = C^{\#} y^*$, where $C^{\#}$ is the optimal cost per unit output (also commonly referred to as the "average cost"). Then, for given $k$, -->
 
 <!-- \begin{equation} -->
 <!-- \begin{split} -->
@@ -811,19 +837,19 @@ But note that $C^*$ can be expressed $C^* = C^{\#} y^*$, where $C^{\#}$ is the o
 
 <!-- Substituting these new expressions in for $m_c$ and $s_c$ in Equation \ref{eq:integralStep} gives -->
 
-\begin{equation}
-\begin{split}
-\int_{0}^{(P v k)^{\eta / h}} C^{* h} \rho(C^*) d C^* &= E[C^{* h}] \Phi \left( \frac{\eta \ln(P v k) - \eta m_{\#}}{\eta s_{\#}} - \eta s_{\#} \right) \\
-&= E[C^{* h}] \Phi \left( \frac{\ln(P v k) - m_{\#}}{s_{\#}} - \eta s_{\#} \right)
-\end{split}
-\end{equation}
+<!-- \begin{equation} -->
+<!-- \begin{split} -->
+<!-- \int_{0}^{(P v k)^{\eta / h}} C^{* h} \rho(C^*) d C^* &= E[C^{* h}] \Phi \left( \frac{\eta \ln(P v k) - \eta m_{\#}}{\eta s_{\#}} - \eta s_{\#} \right) \\ -->
+<!-- &= E[C^{* h}] \Phi \left( \frac{\ln(P v k) - m_{\#}}{s_{\#}} - \eta s_{\#} \right) -->
+<!-- \end{split} -->
+<!-- \end{equation} -->
 
-Substituting the right hand side of this equation for the integral in Equation \ref{eq:aggSupStep} results in the following expression for aggregate supply.
+<!-- Substituting the right hand side of this equation for the integral in Equation \ref{eq:aggSupStep} results in the following expression for aggregate supply. -->
 
-\begin{equation}
-Q = N E[k_a] E[y^*] \Phi\left( \frac{\ln(P) - m_{\#}}{s_{\#}} - \eta s_{\#} \right)
-\label{eq:aggSup1}
-\end{equation}
+<!-- \begin{equation} -->
+<!-- Q = N E[k_a] E[y^*] \Phi\left( \frac{\ln(P) - m_{\#}}{s_{\#}} - \eta s_{\#} \right) -->
+<!-- \label{eq:aggSup1} -->
+<!-- \end{equation} -->
 
 In the evaluation of $Q$, it is important to keep in mind that $E[y^*]$, $m_{\#}$, and $s_{\#}$ are unconditional population parameters. That is to say, $E[y^*]$ refers to the mean yield given the participation of all farms in the population; and $m_{\#}$ and $s_{\#}$ refer to the mean and standard deviation of $\ln(C^{\#})$ given full participation, i.e. as $C^{\#}$ goes to infinity. But axiom 3 truncates the upper tail of the distribution of $C^{\#}$ at $P$ (this follows directly from $C^* \leq R^*$). The observed parameters $\bar{m}_{\#}$ and $\bar{s}_{\#}$ are thus conditional.
 
@@ -883,7 +909,7 @@ Note that it also follows from this expression that aggregate supply can be writ
 Q = N E[k_a] E[y^*|C^{\#} \leq P] \Phi \left( \frac{\ln(P) - m_{\#}}{s_{\#}} \right)
 \end{equation}
 
-Which may be useful for point estimates of aggregate supply along the curve since $E[y^*|C^{\#} \leq P]$ can be estimated from the observed yield distribution. This form is also instructive because the $\Phi()$ term has a straightforward interpretation as the fraction of the population participating in production, i.e. the farm employment rate. However, it is inconvenient for purposes of drawing the entire aggregate supply curve, as the observed $E[y^*|C^{\#} \leq P]$ is valid only for the $P$ at which it is measured. The unconditional mean yield $E[y^*]$, on the other hand, is constant for all $P$. For this reason, Equation \ref{eq:aggSup1} is preferred. Moreover, the $\Phi()$ term in Equation \ref{eq:aggSup1} turns out to have a meaningful economic interpretation once the stochastic character of price is taken into account, as shown below.
+Which may be useful for point estimates of aggregate supply along the curve since $E[y^*|C^{\#} \leq P]$ can be estimated from the observed yield distribution. This form is also instructive because the $\Phi()$ term has a straightforward interpretation as the farm employment rate $\mathcal{E}$. However, it is inconvenient for purposes of drawing the entire aggregate supply curve, as the observed $E[y^*|C^{\#} \leq P]$ is valid only for the $P$ at which it is measured. The unconditional mean yield $E[y^*]$, on the other hand, is constant for all $P$. For this reason, Equation \ref{eq:aggSup1} is preferred. Moreover, the $\Phi()$ term in Equation \ref{eq:aggSup1} turns out to have a meaningful economic interpretation once the stochastic character of price is taken into account, as shown below.
 <!-- \begin{equation} -->
 <!-- E[\ell|\ell < \gamma] = \frac{\int_{0}^{\gamma} f(\ell) d \ell}{F(\gamma)} -->
 <!-- \end{equation} -->
@@ -1186,17 +1212,7 @@ gg_ts + gg_hist + plot_layout(ncol = 2, widths = c(1, 1/3))
 ```
 \doublespacing
 
-Farm cost per acre is deterministic, but optimal unit expenditure $C^{\#}$ is proportional to price, and must therefore also be stochastic.
-**--
-To see this, note that Equation \ref{eq:cStar} simplifies to
-
-\begin{equation}
-C^{\#} = \frac{P}{\lambda} h
-\label{eq:cSharp}
-\end{equation}
-**--
-
-Which, taking into account the stochastic character of price, must now be more carefully written as follows.
+Farm cost per acre is deterministic, but optimal unit expenditure $C^{\#}$ is proportional to price, and must therefore also be stochastic. Rewriting Equation \ref{eq:cSharp} in stochastically explicit terms,
 
 \begin{equation}
 \begin{split}
@@ -1222,7 +1238,7 @@ Equation \ref{eq:condMeanYd1}, relating the observed (conditional) mean and unco
 \begin{split}
 E[\tilde{y}^*(T; k_m(T))]|_{t = 0} &= E[\tilde{y}^*(T; k_m(T)) | \theta]|_{t = 0} \frac{\Phi\left( \frac{\ln(E[P(T)]|_{t = 0}) - m_{\#}}{s_{\#}} \right)}{\Phi \left( \frac{\ln(E[P(T)]|_{t = 0}) - m_{\#}}{s_{\#}} - \eta s_{\#} \right)} \\
 & \theta = E[C^{\#}(T)]|_{t = 0} \leq E[P(T)]|_{t = 0} \\
-& \tilde{y}^*(T; k_r(T))|\{\theta\} = E[y^*(T; k_r(T))|\theta]
+& \tilde{y}^*(T; k_r(T))|\{\theta\} = E[y^*(T; k_r(T)) | \theta]
 \end{split}
 \label{eq:condMeanYd2}
 \end{equation}
@@ -1335,10 +1351,13 @@ z &= \frac{\ln \left(\frac{E[\tilde{C}^{\#}(T)^{\eta}]|_{t = 0}}{P(0)} \right) -
 Therefore
 
 \begin{equation}
-1 - \Phi(z) = \text{Prob}(E[\tilde{C}^{\#}(T)^{\eta}]|_{t = 0} \leq P(T)^{\eta})
+\begin{split}
+1 - \Phi(z) &= \text{Prob}(E[\tilde{C}^{\#}(T)^{\eta}]|_{t = 0} \leq P(T)^{\eta}) \\
+& \equiv \mathcal{P}
+\end{split}
 \end{equation}
 
-Which proves Equation \ref{eq:probProfitResult}. Recalling from section \ref{sec:axioms1and2} that the adjustment $\eta$ is the output price elasticity of farm supply (PEFS), this probability is henceforth referred to as the "PEFS-adjusted mean probability of profit". Equation \ref{eq:PhiMap} maps the PEFS-adjusted mean probability of profit from farm population parameter space to stochastic price parameter space. The most appropriate parameter space to work in is that for which the higher resolution data is available. When farm data is available, evaluation in farm population parameter space is the best approach. In the absence of farm data, evaluation in stochastic price parameter space is appropriate if high resolution price series data is available.
+Which proves Equation \ref{eq:probProfitResult}. Recalling from section \ref{sec:axioms1and2} that the adjustment $\eta$ is the output price elasticity of farm supply (PEFS), the probability $\mathcal{P}$ is henceforth referred to as the "PEFS-adjusted mean probability of profit". Equation \ref{eq:PhiMap} maps the PEFS-adjusted mean probability of profit from farm population parameter space to stochastic price parameter space. The most appropriate parameter space to work in is that for which the higher resolution data is available. When farm data is available, evaluation in farm population parameter space is the best approach. In the absence of farm data, evaluation in stochastic price parameter space is appropriate if high resolution price series data is available.
 
 Expected aggregate supply in stochastic price parameter space follows from Equations \ref{eq:aggSup2} and \ref{eq:PhiMap}.
 
