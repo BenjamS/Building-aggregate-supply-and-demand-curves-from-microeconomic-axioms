@@ -457,7 +457,8 @@ Recalling that $C^* = R^* h / \lambda$ (Equation \ref{eq:cStar}), the output pri
 \frac{\partial \ln(y^*)}{\partial P} &= h \frac{\partial \ln(C^*)}{\partial P} \\
 &= h \left( \frac{\partial \ln(y^*)}{\partial P} + \frac{1}{P} \right) \\
 \frac{\partial \ln(y^*)}{\partial P} &= \frac{h}{1 - h} \frac{1}{P} \\
-\frac{\partial \ln(y^*)}{\partial \ln(P)} &= \frac{h}{1 - h}
+\frac{\partial \ln(y^*)}{\partial \ln(P)} &= \frac{h}{1 - h} \\
+& \equiv \eta
 \end{split}
 \label{eq:PelastYstar}
 \end{equation}
@@ -514,7 +515,7 @@ Where $\Phi()$ is the standard normal cumulative distribution function.
 
 ### Conditional and unconditional means
 
-it is important to keep in mind that $E[y^*]$, $m_{\#}$, and $s_{\#}$ are unconditional population parameters. That is to say, $E[y^*]$ refers to the mean yield given the participation of all farms in the population; and $m_{\#}$ and $s_{\#}$ refer to the mean and standard deviation of $\ln(C^{\#})$ given full participation, i.e. as $C^{\#}$ goes to infinity. But axiom 3 truncates the upper tail of the distribution of $C^{\#}$ at $P$ (this follows directly from $C^* \leq R^*$). The observed parameters $\bar{m}_{\#}$ and $\bar{s}_{\#}$ are thus conditional.
+It is important to keep in mind that $E[y^*]$, $m_{\#}$, and $s_{\#}$ are unconditional population parameters. That is to say, $E[y^*]$ refers to the population mean yield; and $m_{\#}$ and $s_{\#}$ refer to the population mean and standard deviation of $\ln(C^{\#})$. But axiom 3 truncates the upper tail of the distribution of $C^{\#}$ at $P$. Within this axiomatic framework, then, sample parameters calculated from observational data must be interpreted as conditional parameters. That is to say, the sample mean of yield does not represent $E[y^*]$ but rather the conditional mean $E[y^*|C^{\#} \leq P]$; and likewise for the sample parameters $\bar{m}_{\#}$ and $\bar{s}_{\#}$,
 
 \begin{equation}
 \begin{split}
@@ -522,11 +523,10 @@ it is important to keep in mind that $E[y^*]$, $m_{\#}$, and $s_{\#}$ are uncond
 \bar{s}^2_{\#} &= Var[\ln(C^{\#}) | C^{\#} \leq P]
 \end{split}
 \end{equation}
-
-Because $y^*$ is a function of $C^{\#}$, then (for given $k$) $y^*$ is also truncated; and so the observed mean yield is the conditional mean $E[y^*|C^{\#} \leq P]$.
+<!-- Because $y^*$ is a function of $C^{\#}$, then (for given $k$) $y^*$ is also truncated; and so the observed mean yield is the conditional mean $E[y^*|C^{\#} \leq P]$. -->
 <!-- The unconditional  $E[y]$ is thus never observed except in the limit as $P$ becomes very large.-->
 
-The unconditional parameters $m_{\#}$ and $s_{\#}$ can be deduced from the conditional parameters $\bar{m}_{\#}$ and $\bar{s}_{\#}$ by numerically solving the following system of equations.
+Because $C^{\#}$ is lognormally distributed (axiom 4), then the unconditional parameters $m_{\#}$ and $s_{\#}$ can be deduced from the conditional parameters $\bar{m}_{\#}$ and $\bar{s}_{\#}$ by numerically solving the following system of equations.
 
 \begin{equation}
 \begin{split}
@@ -536,35 +536,46 @@ The unconditional parameters $m_{\#}$ and $s_{\#}$ can be deduced from the condi
 \label{eq:cSharpUncondParams}
 \end{equation}
 
-Now, for any lognormally distributed variable $\chi$ and upper bound $\xi$, it can be shown that
+Moreover, the conditional and unconditional means of a lognormally distributed variable $\chi$ with upper bound $\xi$ are related as follows.
 
 \begin{equation}
-E[\chi | \chi \leq \xi] = E[\chi] \frac{\Phi \left(\frac{\ln(\xi) - m_{\chi}}{s_{\chi}} - s_{\chi}\right)}{\Phi \left( \frac{\ln(\xi) - m_{\chi}}{s_{\chi}} \right))}
+E[\chi | \chi \leq \xi] \Phi \left( \frac{\ln(\xi) - m_{\chi}}{s_{\chi}} \right)) = E[\chi] \Phi \left(\frac{\ln(\xi) - m_{\chi}}{s_{\chi}} - s_{\chi}\right)
 \label{eq:keyResult2}
 \end{equation}
 
-The unconditional mean yield $E[y^*]$ can be deduced by evaluating this relation at $\chi =C^{\# \eta}$ and $\xi = P$.
+Evaluating this relation at $\chi = C^{\# \eta}$ and $\xi = P$ gives
 
 \begin{equation}
-E[C^{\# \eta} | C^{\#} \leq P] = E[C^{\# \eta}] \frac{\Phi \left(\frac{\ln(P) - m_{\#}}{s_{\#}} - \eta s_{\#}\right)}{\Phi \left( \frac{\ln(P) - m_{\#}}{s_{\#}} \right))}
+E[C^{\# \eta} | C^{\#} \leq P] \mathcal{E} = E[C^{\# \eta}] \Phi \left(\frac{\ln(P) - m_{\#}}{s_{\#}} - \eta s_{\#}\right)
 \end{equation}
 
-Such that the conditional mean of $y^*$ truncated at $C^{\#} \leq P$ can be parsed as follows.
+Considering that the conditional mean of $y^*$ follows from the yield expression in Equations \ref{eq:fnCsharp} as
 
 \begin{equation}
 \begin{split}
-E[y^*|C^{\#} \leq P] &= E \left[ E[y^*] \frac{k^{\eta + 1}}{E[k^{\eta + 1}]}\right] \frac{E[C^{\# \eta} | C^{\#} \leq P]}{E[C^{\# \eta}]} \\
-&= E[y^*] \frac{\Phi \left( \frac{\ln(P) - m_{\#}}{s_{\#}} - \eta s_{\#} \right)}{\Phi \left( \frac{\ln(P) - m_{\#}}{s_{\#}} \right)}
+E[y^*|C^{\#} \leq P] &= E \left[ E[y^*] \frac{k^{\eta / h}}{E[k^{\eta / h}]}\right] \frac{E[C^{\# \eta} | C^{\#} \leq P]}{E[C^{\# \eta}]} \\
+&= E[y^*] \frac{\Phi \left( \frac{\ln(P) - m_{\#}}{s_{\#}} - \eta s_{\#} \right)}{\mathcal{E}}
 \end{split}
 \end{equation}
-<!-- &\rightarrow E[y^*] = E[y^*|C^{\#} < P] = E[y^*] \frac{\Phi\left( \frac{\ln(P) - m_{\#}}{s_{\#}} \right)}{\Phi \left( \frac{\ln(P) - m_{\#}}{s_{\#}} - \eta s_{\#} \right)} -->
 
-Whence the unknown $E[y^*]$ follows as a function of the observed or derived parameters $E[y^*|C^{\#} \leq P]$, $m_{\#}$, $s_{\#}$, and $\eta$.
+Then a tractable expression for the unobservable, unconditional mean yield $E[y^*]$ follows from Equation \ref{eq:keyResult2} as a function of the observed or derived parameters $E[y^*|C^{\#} \leq P]$, $m_{\#}$, $s_{\#}$, and $\eta$.
 
 \begin{equation}
-E[y^*] = E[y^*|C^{\#} \leq P] \frac{\Phi \left( \frac{\ln(P) - m_{\#}}{s_{\#}} \right)}{\Phi \left( \frac{\ln(P) - m_{\#}}{s_{\#}} - \eta s_{\#} \right)}
+E[y^*] = E[y^*|C^{\#} \leq P] \frac{\mathcal{E}}{\Phi \left( \frac{\ln(P) - m_{\#}}{s_{\#}} - \eta s_{\#} \right)}
 \label{eq:condMeanYd1}
 \end{equation}
+
+Likewise
+
+\begin{equation}
+E[C^*]  = E[C^*|C^{\#} \leq P] \frac{\Phi \left( \frac{\ln(P) - m_{\#}}{s_{\#}} \right)}{\Phi \left( \frac{\ln(P) - m_{\#}}{s_{\#}} - \eta s_{\#} \right)}
+\label{eq:condMeanYd1}
+\end{equation}
+
+Note differ by stratum,
+
+
+
 
 ### The endogenous farm yield and expenditure response to exogenous technology change
 
@@ -949,65 +960,79 @@ Q = N E[k_a] E[y^*] \Phi \left( \frac{\ln(P) - m_{\#}}{s_{\#}} - \eta s_{\#} \ri
 <!-- Q = N E[k_a] E[y^*] \Phi\left( \frac{\ln(P) - m_{\#}}{s_{\#}} - \eta s_{\#} \right) -->
 <!-- \label{eq:aggSup1} -->
 <!-- \end{equation} -->
-**--
-In the evaluation of $Q$, it is important to keep in mind that $E[y^*]$, $m_{\#}$, and $s_{\#}$ are unconditional population parameters. That is to say, $E[y^*]$ refers to the mean yield given the participation of all farms in the population; and $m_{\#}$ and $s_{\#}$ refer to the mean and standard deviation of $\ln(C^{\#})$ given full participation, i.e. as $C^{\#}$ goes to infinity. But axiom 3 truncates the upper tail of the distribution of $C^{\#}$ at $P$ (this follows directly from $C^* \leq R^*$). The observed parameters $\bar{m}_{\#}$ and $\bar{s}_{\#}$ are thus conditional.
+
+The relation between conditional and unconditional mean yield (Equation \ref{eq:condMeanYd2}) can thus be rewritten as follows.
 
 \begin{equation}
-\begin{split}
-\bar{m}_{\#} &= E[\ln(C^{\#}) | C^{\#} \leq P] \\
-\bar{s}^2_{\#} &= Var[\ln(C^{\#}) | C^{\#} \leq P]
-\end{split}
+E[y^*] = E[y^*|C^{\#} \leq P] \frac{\mathcal{E}}{\mathcal{P}}
+\label{eq:condMeanYd2}
 \end{equation}
 
-Because $y^*$ is a function of $C^{\#}$, then (for given $k$) $y^*$ is also truncated; and so the observed mean yield is the conditional mean $E[y^*|C^{\#} \leq P]$.
-<!-- The unconditional  $E[y]$ is thus never observed except in the limit as $P$ becomes very large.-->
 
-The unconditional parameters $m_{\#}$ and $s_{\#}$ can be deduced from the conditional parameters $\bar{m}_{\#}$ and $\bar{s}_{\#}$ by numerically solving the following system of equations.
+<!-- **-- -->
+<!-- In the evaluation of $Q$, it is important to keep in mind that $E[y^*]$, $m_{\#}$, and $s_{\#}$ are unconditional population parameters. That is to say, $E[y^*]$ refers to the mean yield given the participation of all farms in the population; and $m_{\#}$ and $s_{\#}$ refer to the mean and standard deviation of $\ln(C^{\#})$ given full participation, i.e. as $C^{\#}$ goes to infinity. But axiom 3 truncates the upper tail of the distribution of $C^{\#}$ at $P$ (this follows directly from $C^* \leq R^*$). The observed parameters $\bar{m}_{\#}$ and $\bar{s}_{\#}$ are thus conditional. -->
+
+<!-- \begin{equation} -->
+<!-- \begin{split} -->
+<!-- \bar{m}_{\#} &= E[\ln(C^{\#}) | C^{\#} \leq P] \\ -->
+<!-- \bar{s}^2_{\#} &= Var[\ln(C^{\#}) | C^{\#} \leq P] -->
+<!-- \end{split} -->
+<!-- \end{equation} -->
+
+<!-- Because $y^*$ is a function of $C^{\#}$, then (for given $k$) $y^*$ is also truncated; and so the observed mean yield is the conditional mean $E[y^*|C^{\#} \leq P]$. -->
+<!-- <!-- The unconditional  $E[y]$ is thus never observed except in the limit as $P$ becomes very large.--> -->
+
+<!-- The unconditional parameters $m_{\#}$ and $s_{\#}$ can be deduced from the conditional parameters $\bar{m}_{\#}$ and $\bar{s}_{\#}$ by numerically solving the following system of equations. -->
+
+<!-- \begin{equation} -->
+<!-- \begin{split} -->
+<!-- \bar{m}_{\#} &= m_{\#} - s_{\#} \frac{\phi(z)}{\Phi(z)} \\ -->
+<!-- \bar{s}_{\#}^2 &= s_{\#}^2 \left( 1 - z \frac{\phi(z)}{\Phi(z)} - \left( \frac{\phi(z)}{\Phi(z)} \right)^2   \right) \:\:;\:\:\: z = \frac{\ln(P) - m_{\#}}{s_{\#}} -->
+<!-- \end{split} -->
+<!-- \label{eq:cSharpUncondParams} -->
+<!-- \end{equation} -->
+
+<!-- Where $\phi()$ is the standard normal probability density function. Now, for any lognormally distributed variable $\chi$ and upper bound $\xi$, it can be shown that -->
+
+<!-- \begin{equation} -->
+<!-- E[\chi | \chi \leq \xi] = E[\chi] \frac{\Phi \left(\frac{\ln(\xi) - m_{\chi}}{s_{\chi}} - s_{\chi}\right)}{\Phi \left( \frac{\ln(\xi) - m_{\chi}}{s_{\chi}} \right))} -->
+<!-- \label{eq:keyResult2} -->
+<!-- \end{equation} -->
+
+<!-- The unconditional mean yield $E[y^*]$ can be deduced by evaluating this relation at $\chi =C^{\# \eta}$ and $\xi = P$. -->
+
+<!-- \begin{equation} -->
+<!-- E[C^{\# \eta} | C^{\#} \leq P] = E[C^{\# \eta}] \frac{\Phi \left(\frac{\ln(P) - m_{\#}}{s_{\#}} - \eta s_{\#}\right)}{\Phi \left( \frac{\ln(P) - m_{\#}}{s_{\#}} \right))} -->
+<!-- \end{equation} -->
+
+<!-- Such that the conditional mean of $y^*$ truncated at $C^{\#} \leq P$ can be parsed as follows. -->
+
+<!-- \begin{equation} -->
+<!-- \begin{split} -->
+<!-- E[y^*|C^{\#} \leq P] &= E \left[ E[y^*] \frac{k^{\eta + 1}}{E[k^{\eta + 1}]}\right] \frac{E[C^{\# \eta} | C^{\#} \leq P]}{E[C^{\# \eta}]} \\ -->
+<!-- &= E[y^*] \frac{\Phi \left( \frac{\ln(P) - m_{\#}}{s_{\#}} - \eta s_{\#} \right)}{\Phi \left( \frac{\ln(P) - m_{\#}}{s_{\#}} \right)} -->
+<!-- \end{split} -->
+<!-- \end{equation} -->
+<!-- <!-- &\rightarrow E[y^*] = E[y^*|C^{\#} < P] = E[y^*] \frac{\Phi\left( \frac{\ln(P) - m_{\#}}{s_{\#}} \right)}{\Phi \left( \frac{\ln(P) - m_{\#}}{s_{\#}} - \eta s_{\#} \right)} --> 
+<!-- Whence the unknown $E[y^*]$ follows as a function of the observed or derived parameters $E[y^*|C^{\#} \leq P]$, $m_{\#}$, $s_{\#}$, and $\eta$. -->
+
+<!-- \begin{equation} -->
+<!-- E[y^*] = E[y^*|C^{\#} \leq P] \frac{\Phi \left( \frac{\ln(P) - m_{\#}}{s_{\#}} \right)}{\Phi \left( \frac{\ln(P) - m_{\#}}{s_{\#}} - \eta s_{\#} \right)} -->
+<!-- \label{eq:condMeanYd1} -->
+<!-- \end{equation} -->
+
+<!-- Note that it also follows from this expression that aggregate supply can be written -->
+<!-- *-- -->
 
 \begin{equation}
-\begin{split}
-\bar{m}_{\#} &= m_{\#} - s_{\#} \frac{\phi(z)}{\Phi(z)} \\
-\bar{s}_{\#}^2 &= s_{\#}^2 \left( 1 - z \frac{\phi(z)}{\Phi(z)} - \left( \frac{\phi(z)}{\Phi(z)} \right)^2   \right) \:\:;\:\:\: z = \frac{\ln(P) - m_{\#}}{s_{\#}}
-\end{split}
-\label{eq:cSharpUncondParams}
+Q = N E[k_a] E[y^*|C^{\#} \leq P] \mathcal{E}
 \end{equation}
-
-Where $\phi()$ is the standard normal probability density function. Now, for any lognormally distributed variable $\chi$ and upper bound $\xi$, it can be shown that
-
-\begin{equation}
-E[\chi | \chi \leq \xi] = E[\chi] \frac{\Phi \left(\frac{\ln(\xi) - m_{\chi}}{s_{\chi}} - s_{\chi}\right)}{\Phi \left( \frac{\ln(\xi) - m_{\chi}}{s_{\chi}} \right))}
-\label{eq:keyResult2}
-\end{equation}
-
-The unconditional mean yield $E[y^*]$ can be deduced by evaluating this relation at $\chi =C^{\# \eta}$ and $\xi = P$.
-
-\begin{equation}
-E[C^{\# \eta} | C^{\#} \leq P] = E[C^{\# \eta}] \frac{\Phi \left(\frac{\ln(P) - m_{\#}}{s_{\#}} - \eta s_{\#}\right)}{\Phi \left( \frac{\ln(P) - m_{\#}}{s_{\#}} \right))}
-\end{equation}
-
-Such that the conditional mean of $y^*$ truncated at $C^{\#} \leq P$ can be parsed as follows.
-
-\begin{equation}
-\begin{split}
-E[y^*|C^{\#} \leq P] &= E \left[ E[y^*] \frac{k^{\eta + 1}}{E[k^{\eta + 1}]}\right] \frac{E[C^{\# \eta} | C^{\#} \leq P]}{E[C^{\# \eta}]} \\
-&= E[y^*] \frac{\Phi \left( \frac{\ln(P) - m_{\#}}{s_{\#}} - \eta s_{\#} \right)}{\Phi \left( \frac{\ln(P) - m_{\#}}{s_{\#}} \right)}
-\end{split}
-\end{equation}
-<!-- &\rightarrow E[y^*] = E[y^*|C^{\#} < P] = E[y^*] \frac{\Phi\left( \frac{\ln(P) - m_{\#}}{s_{\#}} \right)}{\Phi \left( \frac{\ln(P) - m_{\#}}{s_{\#}} - \eta s_{\#} \right)} -->
-
-Whence the unknown $E[y^*]$ follows as a function of the observed or derived parameters $E[y^*|C^{\#} \leq P]$, $m_{\#}$, $s_{\#}$, and $\eta$.
-
-\begin{equation}
-E[y^*] = E[y^*|C^{\#} \leq P] \frac{\Phi \left( \frac{\ln(P) - m_{\#}}{s_{\#}} \right)}{\Phi \left( \frac{\ln(P) - m_{\#}}{s_{\#}} - \eta s_{\#} \right)}
-\label{eq:condMeanYd1}
-\end{equation}
-
-Note that it also follows from this expression that aggregate supply can be written
-*--
-
-\begin{equation}
-Q = N E[k_a] E[y^*|C^{\#} \leq P] \Phi \left( \frac{\ln(P) - m_{\#}}{s_{\#}} \right)
-\end{equation}
+<!-- \begin{equation} -->
+<!-- \begin{split} -->
+<!-- Q &= N E[k_a] E[y^*|C^{\#} \leq P] \Phi \left( \frac{\ln(P) - m_{\#}}{s_{\#}} \right) \\ -->
+<!-- &= N E[k_a] E[y^*|C^{\#} \leq P] \mathcal{E} -->
+<!-- \end{split} -->
+<!-- \end{equation} -->
 
 Which may be useful for point estimates of aggregate supply along the curve since $E[y^*|C^{\#} \leq P]$ can be estimated from the observed yield distribution. This form is also instructive because the $\Phi()$ term has a straightforward interpretation as the farm employment rate $\mathcal{E}$. However, it is inconvenient for purposes of drawing the entire aggregate supply curve, as the observed $E[y^*|C^{\#} \leq P]$ is valid only for the $P$ at which it is measured. The unconditional mean yield $E[y^*]$, on the other hand, is constant for all $P$. For this reason, Equation \ref{eq:aggSup1} is preferred. Moreover, the $\Phi()$ term in Equation \ref{eq:aggSup1} turns out to have a meaningful economic interpretation once the stochastic character of price is taken into account, as shown below.
 <!-- \begin{equation} -->
