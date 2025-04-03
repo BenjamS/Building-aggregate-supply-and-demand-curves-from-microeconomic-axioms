@@ -313,7 +313,7 @@ Interpretation of the constant $g$ is as difficult as one wants to make it. It i
 \label{eq:g0Sum}
 \end{equation}
 
-In the Kenya maize farm exercise farther below, for example, there are four ($n_b = 4$) binary endowment variables $b_i$ (which take a value of $1$ if the endowment is present and $0$ otherwise): use of oxen in land preparation, use of tractor in land preparation, use of hybrid maize seed, and land tenure. This means that $g$ can vary across the population. In the Kenya maize exercise, there are 14 unique values of $g$ in the population, corresponding to 14 unique combinations of the four binary endowments plus the regression constant.
+In the Kenya maize farm exercise farther below, for example, there are four ($n_b = 4$) binary endowment variables $b_i$ (which take a value of $1$ if the endowment is present and $0$ otherwise): use of oxen in land preparation, use of tractor in land preparation, use of hybrid maize seed, and land tenure. This means that $g$ can vary across the population. In the Kenya maize exercise, there are 14 unique values of $g$ in the population, corresponding to 14 unique combinations of the four binary endowments plus the base endowment constant $\beta_0$.
 
 The parameter $g$ may also be arbitrarily defined in terms of a new parameter ($u$) combined with judiciously chosen reference terms such that the new parameter has a meaningful interpretation and/or results in a more useful expression for yield. For present purposes, $g$ is defined as follows
 <!-- For those not yet comfortable working in units of, say, -->
@@ -515,7 +515,8 @@ Where $\Phi()$ is the standard normal cumulative distribution function.
 
 ### Conditional and unconditional means
 
-It is important to keep in mind that $E[y^*]$, $m_{\#}$, and $s_{\#}$ are unconditional population parameters. That is to say, $E[y^*]$ refers to the population mean yield; and $m_{\#}$ and $s_{\#}$ refer to the population mean and standard deviation of $\ln(C^{\#})$. But axiom 3 truncates the upper tail of the distribution of $C^{\#}$ at $P$. Within this axiomatic framework, then, sample parameters calculated from observational data must be interpreted as conditional parameters. That is to say, the sample mean of yield does not represent $E[y^*]$ but rather the conditional mean $E[y^*|C^{\#} \leq P]$; and likewise for the sample parameters $\bar{m}_{\#}$ and $\bar{s}_{\#}$,
+It is important to keep in mind that $E[y^*]$, $m_{\#}$, and $s_{\#}$ are unconditional parameters. But axiom 3 truncates the upper tail of the distribution of $C^{\#}$ at $P$. Within this axiomatic framework, then, sample parameters calculated from observational data must be interpreted as conditional parameters. That is to say, the sample mean of yield does not represent $E[y^*]$ but rather the conditional mean $E[y^*|C^{\#} \leq P]$; and likewise for the sample parameters $\bar{m}_{\#}$ and $\bar{s}_{\#}$,
+<!-- That is to say, $E[y^*]$ refers to the population mean yield; and $m_{\#}$ and $s_{\#}$ refer to the population mean and standard deviation of $\ln(C^{\#})$. -->
 
 \begin{equation}
 \begin{split}
@@ -526,7 +527,7 @@ It is important to keep in mind that $E[y^*]$, $m_{\#}$, and $s_{\#}$ are uncond
 <!-- Because $y^*$ is a function of $C^{\#}$, then (for given $k$) $y^*$ is also truncated; and so the observed mean yield is the conditional mean $E[y^*|C^{\#} \leq P]$. -->
 <!-- The unconditional  $E[y]$ is thus never observed except in the limit as $P$ becomes very large.-->
 
-Because $C^{\#}$ is lognormally distributed (axiom 4), then the unconditional parameters $m_{\#}$ and $s_{\#}$ can be deduced from the conditional parameters $\bar{m}_{\#}$ and $\bar{s}_{\#}$ by numerically solving the following system of equations.
+Because $C^{\#}$ is lognormally distributed (axiom 4), then the unconditional parameters $m_{\#}$ and $s_{\#}$ can be deduced from the conditional parameters $\bar{m}_{\#}$ and $\bar{s}_{\#}$ by solving the following system of equations.
 
 \begin{equation}
 \begin{split}
@@ -561,34 +562,72 @@ E[y^*|C^{\#} \leq P] &= E \left[ E[y^*] \frac{k^{\eta / h}}{E[k^{\eta / h}]}\rig
 Then a tractable expression for the unobservable, unconditional mean yield $E[y^*]$ follows from Equation \ref{eq:keyResult2} as a function of the observed or derived parameters $E[y^*|C^{\#} \leq P]$, $m_{\#}$, $s_{\#}$, and $\eta$.
 
 \begin{equation}
-E[y^*] = E[y^*|C^{\#} \leq P] \frac{\mathcal{E}}{\Phi \left( \frac{\ln(P) - m_{\#}}{s_{\#}} - \eta s_{\#} \right)}
+E[y^*] = E[y^* | C^{\#} \leq P] \frac{\mathcal{E}}{\Phi \left( \frac{\ln(P) - m_{\#}}{s_{\#}} - \eta s_{\#} \right)}
 \label{eq:condMeanYd1}
 \end{equation}
+<!-- Likewise, -->
+<!-- \begin{equation} -->
+<!-- \begin{split} -->
+<!-- E[C^*] &= E[C^{\#}] E[y^*] = E[C^{\#} | C^{\#} \leq P] E[y^* | C^{\#} \leq P] \mathcal{E}^2 \frac{\mathcal{E}^2}{\Phi \left(\frac{\ln(P) - m_{\#}}{s_{\#}} - s_{\#}\right) \Phi \left(\frac{\ln(P) - m_{\#}}{s_{\#}} - \eta s_{\#}\right)} -->
+<!-- \end{split} -->
+<!-- \label{eq:condMeanC1} -->
+<!-- \end{equation} -->
 
-Likewise
+### Binary endowment strata
+
+As noted earlier (Equation \ref{eq:g0Sum}), binary endowments $\beta_i b_i$, and hence TFP, vary across the population. In the Kenya maize farm example explored farther below, there are 14 distinct values of expenditure TFP, corresponding to 14 distinct combinations of the binary endowments $\beta_i b_i$. The values corresponding to each distinct combination are henceforth indexed by $\ell$. The TFP and expenditure TFP of the $\ell^{th}$ binary endowment stratum, for example, are henceforth expressed $g_{\ell}$ and $v_{\ell}$. When  appears without an index, it refers to the average across all strata. For example, $v$ refers to
+<!-- The supply aggregation step in Equation \ref{eq:aggSupStep} averages aggregate supply across all binary endowment strata. -->
+<!-- Each value of $v$ effectively identifies a binary endowment stratum of the population. -->
 
 \begin{equation}
-E[C^*]  = E[C^*|C^{\#} \leq P] \frac{\Phi \left( \frac{\ln(P) - m_{\#}}{s_{\#}} \right)}{\Phi \left( \frac{\ln(P) - m_{\#}}{s_{\#}} - \eta s_{\#} \right)}
-\label{eq:condMeanYd1}
+v = \sum_{\ell} \frac{N_\ell}{N} v_{\ell}
 \end{equation}
 
-Note differ by stratum,
+Where $N_{\ell} / N$ is the fraction of the farm sample in the $\ell^{th}$ binary endowment stratum.
 
+The expressions $E[y^*]$ and $E[C^*]$ likewise refer to the unconditional means evaluated at $v$. To disaggregate by binary endowment stratum, note that
 
+\begin{equation}
+E[C^*]_{\ell} = e^{m_{c \ell} + frac{s^2_c}{2}}
+\end{equation}
 
-
-### The endogenous farm yield and expenditure response to exogenous technology change
-
-The impact of yield scaling technologies and/or management practices on farm supply and expenditure can be represented through perturbations of the TFP parameter ($g$). This is tantamount to adding a binary endowment variable to the TFP sum in Equation \ref{eq:g0Sum}. The four binary endowments included in the Kenya maize model example may be considered yield scaling interventions that increase the value of $g$ on adopting farms. The percentage increase in TFP given the introduction of a new intervention $\beta_5 b_5$ on farms that implement the new technology (farms where $b_5 = 1$) may be calculated as
+Where $m_{c \ell}$ and $s_c$ follow from the expenditure expression in Equations \ref{eq:fnCsharp}.
 
 \begin{equation}
 \begin{split}
-\partial \ln(g) &\approx \frac{g' - g}{g} \:\:; \:\:\: g' = g e^{\beta_5 b_5}
+m_{c \ell} &= \frac{1}{1 - h}(\ln(v_{\ell}) + m_k + m_{\#}) \:\:;\:\:\: m_k = E[\ln(k)] \\
+s_c^2 &= \frac{1}{(1 - h)^2} (s_k^2 + s_{\#}^2) \:\:;\:\:\: s_k^2 = Var[\ln(k)]
+\end{split}
+\label{eq:mCsC}
+\end{equation}
+
+Whence the stratified mean yield $E[y^*]_{\ell}$ follows.
+
+\begin{equation}
+\begin{split}
+E[y^*]_{\ell} &= v_{\ell} E[k] E[C^{* h}] \\
+&= v_{\ell} E[k] e^{h m_{c \ell} + h^2 \frac{s_c^2}{2}}
+\end{split}
+\end{equation}
+
+To evaluate the stratified conditional (observed) means, replace $m_{\#}$, $s_{\#}$ in these expressions with $\bar{m}_{\#}$, $\bar{s}_{\#}$.
+
+## The endogenous farm level response to an exogenous technology shock
+
+The impact of yield scaling technologies and/or management practices on farm supply and expenditure can be represented through perturbations of the TFP parameter ($g_{\ell}$). This is tantamount to adding a binary endowment variable to the TFP sum in Equation \ref{eq:g0Sum}. The four binary endowments included in the Kenya maize model example may be considered yield scaling interventions that increase the value of $g_{\ell}$ on farms where the endowment is present. The percentage increase in TFP given the introduction of a new intervention $\beta_5 b_5$ on adopting farms (farms where $b_5 = 1$) may be calculated as
+
+\begin{equation}
+\begin{split}
+\partial \ln(g_{\ell}) &\approx \frac{g_{\ell}' - g_{\ell}}{g_{\ell}} \:\:; \:\:\: g_{\ell}' = g_{\ell} e^{\beta_5 b_5} \\
 &\approx e^{\beta_5} - 1
 \end{split}
 \end{equation}
 
-The increase is thus the same across all adopting farms regardless of the starting value $g$. Ideally, the value of $\beta_5$ should be estimated directly from field trials. If this is not possible, then the estimate can be made on the basis of agronomic crop modeling and expert opinion. Regardless of the path taken in this exercise, it is critically important to keep in mind that the objective is to estimate the change in TFP ($\beta_5$ or $\partial \ln(g)$), not the change in economic yield itself ($\partial \ln(y^*)$). If information is gathered in terms of the change in agronomic yield and/or expenditure, then it must be converted into an estimate for $\partial \ln(g)$. The percentage change in economic yield, expenditure, and expenditure TFP ($v$) then follows from Equations \ref{eq:fnCsharp} as a function of the change in TFP as well as any change in output and input prices.
+Note that the percentage increase is the same across all adopting farms regardless of the starting value $g_{\ell}$.
+
+### The endogenous farm yield and expenditure response to exgenous shock
+
+Ideally, the value of $\beta_5$ should be estimated directly from field trials. If this is not possible, then the estimate can be made on the basis of agronomic crop modeling and expert opinion. Regardless of the path taken in this exercise, it is critically important to keep in mind that the objective is to estimate the change in TFP ($\beta_5$ or $\partial \ln(g)$), not the change in economic yield itself ($\partial \ln(y^*)$). If information is gathered in terms of the change in agronomic yield and/or expenditure, then it must be converted into an estimate for $\partial \ln(g)$. The percentage changes in economic yield, expenditure, and expenditure TFP ($v$) then follow from Equations \ref{eq:fnCsharp} as a function of the change in TFP as well as any change in output and input prices.
 <!-- The percentage changes in expenditure TFP ($v$), farm expenditure, and yield given a 1% change in $g$ follow from Equations \ref{eq:cStar} and \ref{eq:YdEnvReg1}. -->
 
 \begin{equation}
@@ -664,7 +703,7 @@ The farm net benefit function in Equation \ref{eq:lagrangian} evaluated at $y^*$
 
 \begin{equation}
 \begin{split}
-\mathcal{L}^* &= R^* + \lambda (B - C^*) \\
+\mathcal{L}^* &= \mathcal{L}|_{y = y^*} = R^* + \lambda (B - C^*) \\
 &= \frac{\lambda}{h} ((1 - h) C^* + h B)
 \end{split}
 \end{equation}
@@ -673,7 +712,7 @@ The farm net benefit function in Equation \ref{eq:lagrangian} evaluated at $y^*$
 <!-- \mathcal{L}^* = R^* (1 - h) + \lambda B -->
 <!-- \end{equation} -->
 
-The welfare effect on a given farm of adopting the new technology can be examined by differentiating optimal net benefit with respect to the change in TFP.
+The welfare effect on a given farm of adopting the new technology can be examined by differentiating $\mathcal{L}^*$ with respect to the change in TFP.
 
 \begin{equation}
 \begin{split}
@@ -729,47 +768,20 @@ Because $C^*$ is lognormally distributed, the expression resolves as follows.
 \begin{equation}
 \begin{split}
 \mathcal{A} &= \Phi \left( \frac{\ln(\bar{\bar{C^*}}) - m_c}{s_c} \right) \\
-& m_c = E[\ln(C^*)] \:\:\:\: s^2_c = Var[\ln(C^*)]
+&= \Phi\left( \frac{\frac{-h \partial B}{\partial \ln(\nu) + \partial \ln(g)} - m_c}{s_c}
+\end{split}
 \end{split}
 \end{equation}
-<!-- Where $\Phi()$ is the standard normal cumulative distribution function. -->
-<!-- \phi \left(\frac{\ln(C^*) - m_c}{s_c} \right) d \ln(C^*) \:\:;\:\:\: \bar{\bar{C^*}} = \frac{-h \partial B}{\partial \ln(\nu) + \partial \ln(g)} \\ -->
-<!-- &= \Phi \left( \frac{\bar{\bar{C^*}} - m_c}{s_c} \right) -->
-<!-- \end{split} -->
 
-Where $m_c$ and $s_c$ follow from the expenditure expression in Equations \ref{eq:fnCsharp}.
+The adoption rate within single a binary endowment stratum can be calculated by evaluating this expression at the $v_{\ell}$ and $m_{c \ell}$ of interest.
+<!-- \begin{equation} -->
+<!-- A = \sum_{\ell} \frac{N_{\ell}}{N} A_{\ell} -->
+<!-- \end{equation} -->
 
-\begin{equation}
-\begin{split}
-m^i_c &= \frac{1}{1 - h}(\ln(v_i) + m_k + m_{\#}) \:\:;\:\:\: m_k = E[\ln(k)] \\
-s_c^2 &= \frac{1}{(1 - h)^2} (s_k^2 + s_{\#}^2) \:\:;\:\:\: s_k^2 = Var[\ln(k)]
-\end{split}
-\label{eq:mCsC}
-\end{equation}
 
-STRATIFICATION HERE
-...
-because the binary endowments $b_i$ vary across the population, the value of $g$ (and hence of $v$) also varies. In the present example, there are 14 distinct values of $v$, corresponding to 14 distinct combinations of the $\beta_i b_i$. The supply aggregation step in Equation \ref{eq:aggSupStep} averages aggregate supply across all binary endowment strata. Denoting the value of each distinct combination as $v_{0i}$, the average $v$ is effectively a population weighted sum of the $v_{0i}$.
-<!-- Each value of $v$ effectively identifies a binary endowment stratum of the population. -->
 
-\begin{equation}
-v = \sum_i \frac{N_i}{N} v_{0i}
-\end{equation}
 
-Where $N_i / N$ is the fraction of farms in the $i^{th}$ binary endowment stratum.
-
-Because the adoption rate is partly a function of $v_{0i}$, it varies across strata. The adoption rate for the whole population is then
-
-\begin{equation}
-\begin{split}
-\mathcal{A} = \sum_i \frac{N_i}{N} \mathcal{A}_i \\
-&\text{where} \\
-&\mathcal{A}_i = \Phi\left( \frac{\frac{-h \partial B}{\partial \ln(\nu) + \partial \ln(g)} - m_{ci}}{s_c} \\
-&m_{ci} = \frac{1}{1 - h}(\ln(v_{0i}) + m_k + m_{\#})
-\end{split}
-\label{eq:AdoptRatei}
-\end{equation}
-
+[[
 The observed (conditional) mean cost and yield disaggregated by endowment stratum ($E[C^*| \theta]_i$, $E[y^*(T)| \theta]_i$), can be evaluated as follows.
 
 \begin{equation}
@@ -799,7 +811,7 @@ The stratified ex-ante expected mean yield $E[\tilde{y}^*(T)]|_{t = 0}^i$ can al
 E[\tilde{y}^*(T)]|_{t = 0}^i = \left( \frac{E[k_r(T)]|_{t = 0}}{E[k_r]_i} \right)^{\kappa_r} E[y_i^*(T) E[e^{-\epsilon}]_i
 \end{equation}
 
-
+]]
 <!-- (Note that the adoption rate will be higher in strata with lower starting $v_{0i}$, _ceteris paribus_.) -->
 
 ## The aggregate supply curve
@@ -2330,6 +2342,7 @@ gg <- gg + scale_y_discrete(limits = typeVec)
 gg <- gg + geom_tile(alpha = 0)
 #gg <- gg + labs(title = expression(v[0]))
 gg <- gg + scale_x_discrete(position = "top")
+# scale_x_discrete(labels = c("A", "B", bquote("TFP " ~ v[0]), "D"))
 gg <- gg + theme_bw()
 gg <- gg + theme(axis.title = element_blank(),
                  axis.text.x = element_text(size = axisTextSize),
