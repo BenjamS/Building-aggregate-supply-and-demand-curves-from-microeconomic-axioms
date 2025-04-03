@@ -442,7 +442,7 @@ The second order condition for maximum profit is
 \label{eq:eqSOC}
 \end{equation}
 
-Where Euler's Theorem has been invoked in the second line of the condition. Axioms 1 and 2 thus require that yield exhibit decreasing returns to scale ($0 < h \leq 1$), whereby it also follows that yield is globally concave in inputs. (Increasing returns to scale would imply minimum profit and convexity in inputs, while constant returns would imply the break even point and linearity in inputs.)
+Where Euler's Theorem has been invoked in the second line of the condition. Axioms 1 and 2 thus require that yield exhibit decreasing returns to scale ($0 < h < 1$), whereby it also follows that yield is globally concave in inputs. (Increasing returns to scale would imply minimum profit and convexity in inputs, while constant returns would imply the break even point and linearity in inputs.)
 
 The price elasticity of farm supply resolves as follows.
 
@@ -468,9 +468,7 @@ Recalling that $C^* = R^* h / \lambda$ (Equation \ref{eq:cStar}), the output pri
 <!-- \begin{equation} -->
 <!-- y^* = \left( g \prod_{i = 1}^{n_x} \left( \frac{\alpha_i}{w_i} \right)^{\alpha_i} \right) \left( \frac{P}{\lambda} \right) -->
 <!-- \end{equation} -->
-
 <!-- Whereby the price elasticity of farm yield follows as -->
-
 <!-- \begin{equation} -->
 <!-- \frac{\partial \ln(y^*)}{\partial \ln(P)} = \frac{h}{1 - h} -->
 <!-- \end{equation} -->
@@ -515,19 +513,58 @@ Where $\Phi()$ is the standard normal cumulative distribution function.
 
 ### Conditional and unconditional means
 
-It is important to keep in mind that $E[y^*]$, $m_{\#}$, and $s_{\#}$ are unconditional parameters. But axiom 3 truncates the upper tail of the distribution of $C^{\#}$ at $P$. Within this axiomatic framework, then, sample parameters calculated from observational data must be interpreted as conditional parameters. That is to say, the sample mean of yield does not represent $E[y^*]$ but rather the conditional mean $E[y^*|C^{\#} \leq P]$; and likewise for the sample parameters $\bar{m}_{\#}$ and $\bar{s}_{\#}$,
-<!-- That is to say, $E[y^*]$ refers to the population mean yield; and $m_{\#}$ and $s_{\#}$ refer to the population mean and standard deviation of $\ln(C^{\#})$. -->
+Tractable expressions for mean expenditure and yield follow from Equations \ref{eq:fnCsharp} and from the lognormality of $y^*$ and $C^*$ (axiom 4).
+
+\begin{equation}
+E[C^*] = e^{m_c + frac{s^2_c}{2}}
+\end{equation}
+
+Where
 
 \begin{equation}
 \begin{split}
+m_c &= \frac{1}{1 - h}(\ln(v) + m_k + m_{\#}) \:\:;\:\:\: m_k = E[\ln(k)] \\
+s_c^2 &= \frac{1}{(1 - h)^2} (s_k^2 + s_{\#}^2) \:\:;\:\:\: s_k^2 = Var[\ln(k)]
+\end{split}
+\label{eq:mCsC}
+\end{equation}
+
+And
+
+\begin{equation}
+\begin{split}
+E[y^*] &= v E[k] E[C^{* h}] \\
+&= v E[k] e^{h m_c + h^2 \frac{s_c^2}{2}}
+\end{split}
+\end{equation}
+
+However, it is important to keep in mind that these are _unconditional_ means. Because axiom 3 truncates the upper tail of the distribution of $C^{\#}$ at $P$, then sample parameters calculated from observed data must be interpreted as conditional parameters. That is to say, the sample means of expenditure and yield do not represent $E[C^*]$ and $E[y^*]$, but rather the conditional means $E[C^* | C^{\#} \leq P]$ and $E[y^* | C^{\#} \leq P]$.
+
+The conditional means can be evaluated by replacing $m_c$, $s_c$, $m_{\#}$, and $s_{\#}$ in the expressions above with the sample parameters $\bar{m}_c$, $\bar{s}_c$, $\bar{m}_{\#}$, and $\bar{s}_{\#}$, defined
+
+\begin{equation}
+\begin{split}
+\bar{m}_c &= E[\ln(C^*) | C^{\#} \leq P] \\
+\bar{s}^2_c &= Var[\ln(C^*) | C^{\#} \leq P] \\
 \bar{m}_{\#} &= E[\ln(C^{\#}) | C^{\#} \leq P] \\
 \bar{s}^2_{\#} &= Var[\ln(C^{\#}) | C^{\#} \leq P]
 \end{split}
 \end{equation}
-<!-- Because $y^*$ is a function of $C^{\#}$, then (for given $k$) $y^*$ is also truncated; and so the observed mean yield is the conditional mean $E[y^*|C^{\#} \leq P]$. -->
-<!-- The unconditional  $E[y]$ is thus never observed except in the limit as $P$ becomes very large.-->
 
-Because $C^{\#}$ is lognormally distributed (axiom 4), then the unconditional parameters $m_{\#}$ and $s_{\#}$ can be deduced from the conditional parameters $\bar{m}_{\#}$ and $\bar{s}_{\#}$ by solving the following system of equations.
+In practice, the sample parameters $\bar{m}_{\#}$ and $\bar{s}_{\#}$ can be calculated from the sample parameters $\bar{m}_c$ and $\bar{s}_c$ by rearranging Equations \ref{eq:mCsC} into expressions for $\bar{m}_{\#}$ and $\bar{s}_{\#}$.
+
+\begin{equation}
+\begin{split}
+\bar{m}_{\#} &= (1 - h) \bar{m}_c - \ln(v) - m_k \\
+\bar{s}_{\#}^2 &= (1 - h)^2 \bar{s}_c^2 - s_k^2
+\end{split}
+\label{eq:mCshrpsCshrp}
+\end{equation}
+
+This is preferred to calculating the mean and standard deviation directly from observed $y^*/C^*$ for reasons that will become clear when stochasticity is taken into account farther below.
+(It will turn out that $y^*$ refers not to harvest yield but to expected harvest yield at planting time, which is not observed.)
+
+Because $C^{\#}$ is lognormally distributed, the unconditional parameters $m_{\#}$ and $s_{\#}$ can then be deduced from the conditional parameters $\bar{m}_{\#}$ and $\bar{s}_{\#}$ by solving the following system of equations.
 
 \begin{equation}
 \begin{split}
@@ -537,32 +574,27 @@ Because $C^{\#}$ is lognormally distributed (axiom 4), then the unconditional pa
 \label{eq:cSharpUncondParams}
 \end{equation}
 
-Moreover, the conditional and unconditional means of a lognormally distributed variable $\chi$ with upper bound $\xi$ are related as follows.
+Whence it is then possible to evaluate the unconditional parameters $m_c$, $s_c$, $E[C^*]$, and $E[y^*]$.
+
+Note, moreover, that the conditional and unconditional means of any lognormally distributed variable $\chi$ with upper bound $\xi$ are related as follows.
 
 \begin{equation}
 E[\chi | \chi \leq \xi] \Phi \left( \frac{\ln(\xi) - m_{\chi}}{s_{\chi}} \right)) = E[\chi] \Phi \left(\frac{\ln(\xi) - m_{\chi}}{s_{\chi}} - s_{\chi}\right)
 \label{eq:keyResult2}
 \end{equation}
+<!-- Evaluating this relation at $\chi = C^{\# \eta}$ and $\xi = P$ gives -->
 
-Evaluating this relation at $\chi = C^{\# \eta}$ and $\xi = P$ gives
+Whereby it follows that
 
 \begin{equation}
-E[C^{\# \eta} | C^{\#} \leq P] \mathcal{E} = E[C^{\# \eta}] \Phi \left(\frac{\ln(P) - m_{\#}}{s_{\#}} - \eta s_{\#}\right)
+E[C^{\# \eta}] \Phi \left(\frac{\ln(P) - m_{\#}}{s_{\#}} - \eta s_{\#}\right) = E[C^{\# \eta} | C^{\#} \leq P] \mathcal{E}
+\label{eq:condMeanCshrp}
 \end{equation}
 
-Considering that the conditional mean of $y^*$ follows from the yield expression in Equations \ref{eq:fnCsharp} as
+And
 
 \begin{equation}
-\begin{split}
-E[y^*|C^{\#} \leq P] &= E \left[ E[y^*] \frac{k^{\eta / h}}{E[k^{\eta / h}]}\right] \frac{E[C^{\# \eta} | C^{\#} \leq P]}{E[C^{\# \eta}]} \\
-&= E[y^*] \frac{\Phi \left( \frac{\ln(P) - m_{\#}}{s_{\#}} - \eta s_{\#} \right)}{\mathcal{E}}
-\end{split}
-\end{equation}
-
-Then a tractable expression for the unobservable, unconditional mean yield $E[y^*]$ follows from Equation \ref{eq:keyResult2} as a function of the observed or derived parameters $E[y^*|C^{\#} \leq P]$, $m_{\#}$, $s_{\#}$, and $\eta$.
-
-\begin{equation}
-E[y^*] = E[y^* | C^{\#} \leq P] \frac{\mathcal{E}}{\Phi \left( \frac{\ln(P) - m_{\#}}{s_{\#}} - \eta s_{\#} \right)}
+E[y^*] \Phi \left( \frac{\ln(P) - m_{\#}}{s_{\#}} - \eta s_{\#} \right) = E[y^* | C^{\#} \leq P] \mathcal{E}
 \label{eq:condMeanYd1}
 \end{equation}
 <!-- Likewise, -->
@@ -572,47 +604,46 @@ E[y^*] = E[y^* | C^{\#} \leq P] \frac{\mathcal{E}}{\Phi \left( \frac{\ln(P) - m_
 <!-- \end{split} -->
 <!-- \label{eq:condMeanC1} -->
 <!-- \end{equation} -->
+<!-- Considering that the conditional mean of $y^*$ follows from the yield expression in Equations \ref{eq:fnCsharp} as -->
+<!-- \begin{equation} -->
+<!-- \begin{split} -->
+<!-- E[y^*|C^{\#} \leq P] &= E \left[ E[y^*] \frac{k^{\eta / h}}{E[k^{\eta / h}]}\right] \frac{E[C^{\# \eta} | C^{\#} \leq P]}{E[C^{\# \eta}]} \\ -->
+<!-- &= E[y^*] \frac{\Phi \left( \frac{\ln(P) - m_{\#}}{s_{\#}} - \eta s_{\#} \right)}{\mathcal{E}} -->
+<!-- \end{split} -->
+<!-- \end{equation} -->
+<!-- Then a tractable expression for the unobservable, unconditional mean yield $E[y^*]$ follows from Equation \ref{eq:keyResult2} as a function of the observed or derived parameters $E[y^*|C^{\#} \leq P]$, $m_{\#}$, $s_{\#}$, and $\eta$. -->
 
-### Binary endowment strata
+### Binary endowment strata \label{sec:binEndStrat}
 
-As noted earlier (Equation \ref{eq:g0Sum}), binary endowments $\beta_i b_i$, and hence TFP, vary across the population. In the Kenya maize farm example explored farther below, there are 14 distinct values of expenditure TFP, corresponding to 14 distinct combinations of the binary endowments $\beta_i b_i$. The values corresponding to each distinct combination are henceforth indexed by $\ell$. The TFP and expenditure TFP of the $\ell^{th}$ binary endowment stratum, for example, are henceforth expressed $g_{\ell}$ and $v_{\ell}$. When  appears without an index, it refers to the average across all strata. For example, $v$ refers to
-<!-- The supply aggregation step in Equation \ref{eq:aggSupStep} averages aggregate supply across all binary endowment strata. -->
-<!-- Each value of $v$ effectively identifies a binary endowment stratum of the population. -->
+As noted earlier (Equation \ref{eq:g0Sum}), binary endowments $\beta_i b_i$, and hence TFP, vary across the population. In the Kenya maize farm example explored farther below, there are 14 distinct values of expenditure TFP, corresponding to 14 distinct combinations of the binary endowments, henceforth referred to as "binary endowment strata". Wherever $g$ or $v$ appears above, then, what is really meant is $g_{\ell}$ and $v_{\ell}$, where $\ell$ indexes the values of TFP corresponding to each stratum ($\ell \in (1,14)$ in this case). It follows that any parameters that are a function of $v_{\ell}$ likewise correspond to the $\ell^{th}$ stratum. In other words, $E[C^*]$ and $E[y^*]$ can be disaggregated by stratum as follows.
+
+\begin{equation}
+\begin{split}
+E[C^*]_{\ell} &= e^{m_{c \ell} + frac{s^2_c}{2}} \\
+\text{Where} &\:\:\: m_{c \ell} = \frac{1}{1 - h}(\ln(v_{\ell}) + m_k + m_{\#})
+\end{split}
+\end{equation}
+
+And
+
+\begin{equation}
+\begin{split}
+E[y^*]_{\ell} &= v_{\ell} E[k] E[C^{* h}]_{\ell} \\
+&= v_{\ell} E[k] e^{h m_{c \ell} + h^2 \frac{s_c^2}{2}}
+\end{split}
+\end{equation}
+
+To evaluate the stratified conditional (observed) means, replace $m_{c \ell}$, $s_c$ in these expressions with $\bar{m}_{c \ell}$, $\bar{s}_c$.
+
+Parameters unindexed by $\ell$ refer to their average across all strata. For example, $E[y^*]$ refers to the unconditional mean yield evaluated at $v$, the average expenditure across all strata.
 
 \begin{equation}
 v = \sum_{\ell} \frac{N_\ell}{N} v_{\ell}
 \end{equation}
 
-Where $N_{\ell} / N$ is the fraction of the farm sample in the $\ell^{th}$ binary endowment stratum.
+Where $N_{\ell} / N$ is the fraction of farms in the $\ell^{th}$ binary endowment stratum.
 
-The expressions $E[y^*]$ and $E[C^*]$ likewise refer to the unconditional means evaluated at $v$. To disaggregate by binary endowment stratum, note that
-
-\begin{equation}
-E[C^*]_{\ell} = e^{m_{c \ell} + frac{s^2_c}{2}}
-\end{equation}
-
-Where $m_{c \ell}$ and $s_c$ follow from the expenditure expression in Equations \ref{eq:fnCsharp}.
-
-\begin{equation}
-\begin{split}
-m_{c \ell} &= \frac{1}{1 - h}(\ln(v_{\ell}) + m_k + m_{\#}) \:\:;\:\:\: m_k = E[\ln(k)] \\
-s_c^2 &= \frac{1}{(1 - h)^2} (s_k^2 + s_{\#}^2) \:\:;\:\:\: s_k^2 = Var[\ln(k)]
-\end{split}
-\label{eq:mCsC}
-\end{equation}
-
-Whence the stratified mean yield $E[y^*]_{\ell}$ follows.
-
-\begin{equation}
-\begin{split}
-E[y^*]_{\ell} &= v_{\ell} E[k] E[C^{* h}] \\
-&= v_{\ell} E[k] e^{h m_{c \ell} + h^2 \frac{s_c^2}{2}}
-\end{split}
-\end{equation}
-
-To evaluate the stratified conditional (observed) means, replace $m_{\#}$, $s_{\#}$ in these expressions with $\bar{m}_{\#}$, $\bar{s}_{\#}$.
-
-## The endogenous farm level response to an exogenous technology shock
+## The endogenous farm level response to exogenous technology shocks
 
 The impact of yield scaling technologies and/or management practices on farm supply and expenditure can be represented through perturbations of the TFP parameter ($g_{\ell}$). This is tantamount to adding a binary endowment variable to the TFP sum in Equation \ref{eq:g0Sum}. The four binary endowments included in the Kenya maize model example may be considered yield scaling interventions that increase the value of $g_{\ell}$ on farms where the endowment is present. The percentage increase in TFP given the introduction of a new intervention $\beta_5 b_5$ on adopting farms (farms where $b_5 = 1$) may be calculated as
 
@@ -625,7 +656,7 @@ The impact of yield scaling technologies and/or management practices on farm sup
 
 Note that the percentage increase is the same across all adopting farms regardless of the starting value $g_{\ell}$.
 
-### The endogenous farm yield and expenditure response to exgenous shock
+### The endogenous farm yield and expenditure response to exgenous shock \label{sec:farmResp}
 
 Ideally, the value of $\beta_5$ should be estimated directly from field trials. If this is not possible, then the estimate can be made on the basis of agronomic crop modeling and expert opinion. Regardless of the path taken in this exercise, it is critically important to keep in mind that the objective is to estimate the change in TFP ($\beta_5$ or $\partial \ln(g)$), not the change in economic yield itself ($\partial \ln(y^*)$). If information is gathered in terms of the change in agronomic yield and/or expenditure, then it must be converted into an estimate for $\partial \ln(g)$. The percentage changes in economic yield, expenditure, and expenditure TFP ($v$) then follow from Equations \ref{eq:fnCsharp} as a function of the change in TFP as well as any change in output and input prices.
 <!-- The percentage changes in expenditure TFP ($v$), farm expenditure, and yield given a 1% change in $g$ follow from Equations \ref{eq:cStar} and \ref{eq:YdEnvReg1}. -->
@@ -694,7 +725,7 @@ whether wittingly or unwittingly, presuming instead that research induced percen
 <!-- Change in expenditure is positive if $\partial \ln(g) > (1 - h) (\boldsymbol{\alpha} ' \partial \ln(\mathbf{w}) + \partial \ln(P))$. -->
 ]]
 
-### The endogenous adoption rate
+### The endogenous adoption rate \label{sec:adopt}
 <!-- Aggregate outcomes of an exogenous intervention depend critically on the adoption rate. This, in turn depends upon the profitability of adoption at the farm level. -->
 <!-- Given the forgoing, the objective function evaluated at optimal yield ... -->
 <!-- From the objective function -->
@@ -877,164 +908,17 @@ Q = N E[k_a] E[y^*] \Phi \left( \frac{\ln(P) - m_{\#}}{s_{\#}} - \eta s_{\#} \ri
 \label{eq:aggSup1}
 \end{equation}
 
-<!-- \begin{equation} -->
-<!-- \begin{split} -->
-<!-- Q &= N \int_{\underline{q}^*}^{\bar{q}^*} \rho(q^*) dq^* \\ -->
-<!-- &= N \int_{0}^{\infty} k_a \int_{0}^{\bar{y}^*} \rho(y^*) dy^* \rho(k_a) dk_a \\ -->
-<!-- &= N E[k_a] \frac{E[y^*]}{E[k] E[C^{* h}]} \int_{0}^{\infty} k \int_{0}^{\bar{C}^{*}(k)} C^{*h}(k) \rho(C*) dC^* \rho(k) dk \\ -->
-<!-- &= N E[k_a] \frac{E[y^*]}{E[C^{* h}]} \int_{0}^{\bar{C}^*(k)} C^{* h}(k) \rho(C^*) d C^* -->
-<!-- \end{split} -->
-<!-- \label{eq:aggSupStep} -->
-<!-- \end{equation} -->
+...
 
-<!-- By axiom 3 and the expression for $C^*$ in Equations \ref{eq:fnCsharp}, the upper bound on farm expenditure for given $k$ is -->
-
-<!-- \begin{equation} -->
-<!-- \bar{C}^*(k) = (P v k)^{\frac{\eta}{h}} -->
-<!-- \end{equation} -->
-
-<!-- Axiom 3 states that farms enter production only if they expect to make non-negative profit. Mathematically, this means $C^* \leq R^*$, which implies the following upper bound on optimal expenditure. -->
-
-<!-- \begin{equation} -->
-<!-- \bar{C}^* = R^* = P y^*|_{C^* = \bar{C}^*} = P v k R^{*h} -->
-<!-- \end{equation} -->
-
-<!-- Taking logs of this expression and repeatedly substituting $P y^*|_{C^* = \bar{C}^*}$ for $R^*$ and expanding the righthand side results in an infinite geometric series. -->
-
-<!-- \begin{equation} -->
-<!-- \begin{split} -->
-<!-- \ln(\bar{C}^*) = \ln(\bar{R}^*) &= \ln(P y^*|_{C^* = R^*}) = \ln(P v k) + h \ln(R^*) \\ -->
-<!-- &= \ln(P v k) + h(\ln(P v k) + h\ln(R^*)) \\ -->
-<!-- &= \ln(P v k) + h(\ln(P v k) + h(\ln(P v k) + h\ln(R^*))) \\ -->
-<!-- &= \cdots \\ -->
-<!-- &= \ln(P v k) \sum_{j = 0}^{\infty} h^{j} \\ -->
-<!-- &= \frac{1}{1 - h} \ln(P v k) = (\frac{\eta}{h}) \ln(P v k) -->
-<!-- \end{split} -->
-<!-- \end{equation} -->
-
-<!-- Where the geometric series converges to the last equation only because axioms 1 and 2 constrain $h$ to $(0,1)$ (decreasing returns ot scale). Assuming constant or increasing returns to scale ($h \geq 1$) would result in a divergent infinite sum and thus unbounded $C^*$. -->
-
-<!-- Given the domain of homogeneity $h \in (0,1)$, the upper bound on cost for given $k$ can thus be expressed -->
-
-<!-- \begin{equation} -->
-<!-- \bar{C}^*(k) = (P v k)^{\frac{\eta}{h}} -->
-<!-- \end{equation} -->
-
-<!-- Then, because $C^*$ is lognormally distributed, aggregate supply can be expressed -->
-<!-- \begin{equation} -->
-<!-- Q(k) = N E[k_a] \frac{E[y^*]}{E[C^*(k)^h]} \int_{0}^{(P v k)^{\frac{\eta}{h}}} C^*(k)^h \rho(C^*(k)) dC^*(k) -->
-<!-- \label{eq:aggSupStep} -->
-<!-- \end{equation} -->
-
-<!-- \begin{equation} -->
-<!-- Q = N E[k_a] E[y^*] \Phi\left( \frac{\ln(P) - m_{\#}}{s_{\#}} - \eta s_{\#} \right) -->
-<!-- \label{eq:aggSup1} -->
-<!-- \end{equation} -->
-
-<!-- If $y^*$ is lognormally distributed (axiom 4), then $C^*$ is also lognormally distributed.  -->
-
-<!-- Where $\Phi()$ is the standard normal cumulative distribution function.  -->
-
-<!-- But note that $C^*$ can be expressed $C^* = C^{\#} y^*$, where $C^{\#}$ is the optimal cost per unit output (also commonly referred to as the "average cost"). Then, for given $k$, -->
-
-<!-- \begin{equation} -->
-<!-- \begin{split} -->
-<!-- C^* = C^{\#} y^* &= C^{\#} v k C^{*h} \\ -->
-<!-- &\rightarrow C^* = (C^{\#} v k)^{\frac{1}{1 - h}} \\ -->
-<!-- &\Rightarrow E[\ln(C^*(k))] = \frac{1}{1 - h} (E[\ln(C^{\#})] + \ln(v k)) \\ -->
-<!-- & m_c = (\frac{\eta}{h}) (m_{\#} + \ln(v k))  \:\:;\:\:\: m_{\#} = E[\ln(C^{\#})] -->
-<!-- \end{split} -->
-<!-- \label{eq:mCk} -->
-<!-- \end{equation} -->
-
-<!-- And -->
-
-<!-- \begin{equation} -->
-<!-- \begin{split} -->
-<!-- Var[\ln(C^*)] &= \frac{1}{(1 - h)^2} Var[\ln(C^{\#})] \\ -->
-<!-- s^2_c &= \frac{1}{(1 - h)^2} s^2_{\#} \:\:;\:\:\: s^2_{\#} = Var[\ln(C^{\#})] \\ -->
-<!-- &\rightarrow s_c = \frac{\eta}{h} s_{\#} -->
-<!-- \end{split} -->
-<!-- \end{equation} -->
-
-<!-- Substituting these new expressions in for $m_c$ and $s_c$ in Equation \ref{eq:integralStep} gives -->
-
-<!-- \begin{equation} -->
-<!-- \begin{split} -->
-<!-- \int_{0}^{(P v k)^{\eta / h}} C^{* h} \rho(C^*) d C^* &= E[C^{* h}] \Phi \left( \frac{\eta \ln(P v k) - \eta m_{\#}}{\eta s_{\#}} - \eta s_{\#} \right) \\ -->
-<!-- &= E[C^{* h}] \Phi \left( \frac{\ln(P v k) - m_{\#}}{s_{\#}} - \eta s_{\#} \right) -->
-<!-- \end{split} -->
-<!-- \end{equation} -->
-
-<!-- Substituting the right hand side of this equation for the integral in Equation \ref{eq:aggSupStep} results in the following expression for aggregate supply. -->
-
-<!-- \begin{equation} -->
-<!-- Q = N E[k_a] E[y^*] \Phi\left( \frac{\ln(P) - m_{\#}}{s_{\#}} - \eta s_{\#} \right) -->
-<!-- \label{eq:aggSup1} -->
-<!-- \end{equation} -->
-
-The relation between conditional and unconditional mean yield (Equation \ref{eq:condMeanYd2}) can thus be rewritten as follows.
+The relation between conditional and unconditional mean yield (Equation \ref{eq:condMeanYd1}) can thus be rewritten as follows.
 
 \begin{equation}
 E[y^*] = E[y^*|C^{\#} \leq P] \frac{\mathcal{E}}{\mathcal{P}}
 \label{eq:condMeanYd2}
 \end{equation}
+...
 
-
-<!-- **-- -->
-<!-- In the evaluation of $Q$, it is important to keep in mind that $E[y^*]$, $m_{\#}$, and $s_{\#}$ are unconditional population parameters. That is to say, $E[y^*]$ refers to the mean yield given the participation of all farms in the population; and $m_{\#}$ and $s_{\#}$ refer to the mean and standard deviation of $\ln(C^{\#})$ given full participation, i.e. as $C^{\#}$ goes to infinity. But axiom 3 truncates the upper tail of the distribution of $C^{\#}$ at $P$ (this follows directly from $C^* \leq R^*$). The observed parameters $\bar{m}_{\#}$ and $\bar{s}_{\#}$ are thus conditional. -->
-
-<!-- \begin{equation} -->
-<!-- \begin{split} -->
-<!-- \bar{m}_{\#} &= E[\ln(C^{\#}) | C^{\#} \leq P] \\ -->
-<!-- \bar{s}^2_{\#} &= Var[\ln(C^{\#}) | C^{\#} \leq P] -->
-<!-- \end{split} -->
-<!-- \end{equation} -->
-
-<!-- Because $y^*$ is a function of $C^{\#}$, then (for given $k$) $y^*$ is also truncated; and so the observed mean yield is the conditional mean $E[y^*|C^{\#} \leq P]$. -->
-<!-- <!-- The unconditional  $E[y]$ is thus never observed except in the limit as $P$ becomes very large.--> -->
-
-<!-- The unconditional parameters $m_{\#}$ and $s_{\#}$ can be deduced from the conditional parameters $\bar{m}_{\#}$ and $\bar{s}_{\#}$ by numerically solving the following system of equations. -->
-
-<!-- \begin{equation} -->
-<!-- \begin{split} -->
-<!-- \bar{m}_{\#} &= m_{\#} - s_{\#} \frac{\phi(z)}{\Phi(z)} \\ -->
-<!-- \bar{s}_{\#}^2 &= s_{\#}^2 \left( 1 - z \frac{\phi(z)}{\Phi(z)} - \left( \frac{\phi(z)}{\Phi(z)} \right)^2   \right) \:\:;\:\:\: z = \frac{\ln(P) - m_{\#}}{s_{\#}} -->
-<!-- \end{split} -->
-<!-- \label{eq:cSharpUncondParams} -->
-<!-- \end{equation} -->
-
-<!-- Where $\phi()$ is the standard normal probability density function. Now, for any lognormally distributed variable $\chi$ and upper bound $\xi$, it can be shown that -->
-
-<!-- \begin{equation} -->
-<!-- E[\chi | \chi \leq \xi] = E[\chi] \frac{\Phi \left(\frac{\ln(\xi) - m_{\chi}}{s_{\chi}} - s_{\chi}\right)}{\Phi \left( \frac{\ln(\xi) - m_{\chi}}{s_{\chi}} \right))} -->
-<!-- \label{eq:keyResult2} -->
-<!-- \end{equation} -->
-
-<!-- The unconditional mean yield $E[y^*]$ can be deduced by evaluating this relation at $\chi =C^{\# \eta}$ and $\xi = P$. -->
-
-<!-- \begin{equation} -->
-<!-- E[C^{\# \eta} | C^{\#} \leq P] = E[C^{\# \eta}] \frac{\Phi \left(\frac{\ln(P) - m_{\#}}{s_{\#}} - \eta s_{\#}\right)}{\Phi \left( \frac{\ln(P) - m_{\#}}{s_{\#}} \right))} -->
-<!-- \end{equation} -->
-
-<!-- Such that the conditional mean of $y^*$ truncated at $C^{\#} \leq P$ can be parsed as follows. -->
-
-<!-- \begin{equation} -->
-<!-- \begin{split} -->
-<!-- E[y^*|C^{\#} \leq P] &= E \left[ E[y^*] \frac{k^{\eta + 1}}{E[k^{\eta + 1}]}\right] \frac{E[C^{\# \eta} | C^{\#} \leq P]}{E[C^{\# \eta}]} \\ -->
-<!-- &= E[y^*] \frac{\Phi \left( \frac{\ln(P) - m_{\#}}{s_{\#}} - \eta s_{\#} \right)}{\Phi \left( \frac{\ln(P) - m_{\#}}{s_{\#}} \right)} -->
-<!-- \end{split} -->
-<!-- \end{equation} -->
-<!-- <!-- &\rightarrow E[y^*] = E[y^*|C^{\#} < P] = E[y^*] \frac{\Phi\left( \frac{\ln(P) - m_{\#}}{s_{\#}} \right)}{\Phi \left( \frac{\ln(P) - m_{\#}}{s_{\#}} - \eta s_{\#} \right)} --> 
-<!-- Whence the unknown $E[y^*]$ follows as a function of the observed or derived parameters $E[y^*|C^{\#} \leq P]$, $m_{\#}$, $s_{\#}$, and $\eta$. -->
-
-<!-- \begin{equation} -->
-<!-- E[y^*] = E[y^*|C^{\#} \leq P] \frac{\Phi \left( \frac{\ln(P) - m_{\#}}{s_{\#}} \right)}{\Phi \left( \frac{\ln(P) - m_{\#}}{s_{\#}} - \eta s_{\#} \right)} -->
-<!-- \label{eq:condMeanYd1} -->
-<!-- \end{equation} -->
-
-<!-- Note that it also follows from this expression that aggregate supply can be written -->
-<!-- *-- -->
+By Equation \ref{eq:condMeanCshrp},
 
 \begin{equation}
 Q = N E[k_a] E[y^*|C^{\#} \leq P] \mathcal{E}
@@ -1047,23 +931,6 @@ Q = N E[k_a] E[y^*|C^{\#} \leq P] \mathcal{E}
 <!-- \end{equation} -->
 
 Which may be useful for point estimates of aggregate supply along the curve since $E[y^*|C^{\#} \leq P]$ can be estimated from the observed yield distribution. This form is also instructive because the $\Phi()$ term has a straightforward interpretation as the farm employment rate $\mathcal{E}$. However, it is inconvenient for purposes of drawing the entire aggregate supply curve, as the observed $E[y^*|C^{\#} \leq P]$ is valid only for the $P$ at which it is measured. The unconditional mean yield $E[y^*]$, on the other hand, is constant for all $P$. For this reason, Equation \ref{eq:aggSup1} is preferred. Moreover, the $\Phi()$ term in Equation \ref{eq:aggSup1} turns out to have a meaningful economic interpretation once the stochastic character of price is taken into account, as shown below.
-<!-- \begin{equation} -->
-<!-- E[\ell|\ell < \gamma] = \frac{\int_{0}^{\gamma} f(\ell) d \ell}{F(\gamma)} -->
-<!-- \end{equation} -->
-<!-- If $\ell$ is lognormally distributed, then this reduces to -->
-<!-- \begin{equation} -->
-<!-- E[\ell|\ell < \gamma] = E[\ell] \frac{\Phi \left(\frac{\ln(\gamma) - m_{\ell}}{s_{\ell}} - s_{\ell}\right)}{F(\frac{\ln(\gamma) - m_{\ell}}{s_{\ell}} \right))} \:\:;\:\:\: m_{\ell} = E[\ln(\ell)] \:\: s^2_{\ell} = Var[\ln(\ell)] -->
-<!-- \label{eq:condMean} -->
-<!-- \end{equation} -->
-<!-- The unconditional mean yield can then be deduced from the known information $E[y^*|C^{\#} < P]$, $m_{\#}$, and $s_{\#}$ by considering that for any random variable $\ell$ with probability density $f(\ell)$ and cumulative distribution function $F(\ell)$, the conditional mean of $\ell$ with upper tail truncated at $\gamma$ is -->
-<!-- Moreover, given conditional parameters $\hat{m}_{\ell}$ and $\hat{s}_{\ell}$ estimated from the observed truncated distribution,  -->
-<!-- Substituting $C^{\# \eta}$ for $\ell$ and $P$ for $\gamma$ in Equation \ref{eq:condMean}, -->
-<!-- \:\:;\:\:\: m_{\#} = E[\ln(C^{\#})] \:\: s^2_{\#} = Var[\ln(C^{\#})] -->
-<!-- The unconditional mean does not change with price but with technology or lambda. The conidtional mean changes with price, in addition to technology and lambda. So, given the relation between conditional and unconditional mean of a lognormally distributed variable,  -->
-<!-- Finally, necessary to account for the stochastic character of price... -->
-<!-- choose the approach based on higher resolution data -->
-<!-- mean log(lambda) = 0 might be a reasonable assumption -->
-<!-- Main thing is result that price is a dual space where solution can be found in the absence of farm data. -->
 
 ## Accounting for stochasticity, derivation of the expected aggregate supply curve based on axiom 5 \label{sec:acct4Stoch}
 
@@ -1648,9 +1515,7 @@ $$
 <!-- \label{eq:g0Sum} -->
 <!-- \end{equation} -->
 
-As mentioned in section \ref{sec:axioms1and2}, in this exercise the binary endowment variables $b_i$ (which take a value of $1$ if the endowment is present and $0$ otherwise) are: use of oxen in land preparation, use of tractor in land preparation, use of hybrid seed, and land tenure. There are 14 unique combinations of these four endowments in the data, representing different endowment strata.
-
-The control variables ($k_i$) are planting density (seed kg/acre), adult equivalent household size, farm size, and rainfall. The rainfall variable is 2007 main season rainfall divided by an historical benchmark, and so can be interpreted as the rainfall anomaly or departure from the historical benchmark. The farm expenditure $C^*$ includes the cost of synthetic fertilizer, land preparation, pest and disease control chemicals, and seed. The OLS regression results are presented in Table 2.
+As mentioned in section \ref{sec:axioms1and2}, in this exercise the binary endowment variables $b_i$ (which take a value of $1$ if the endowment is present and $0$ otherwise) are: use of oxen in land preparation, use of tractor in land preparation, use of hybrid seed, and land tenure. There are 14 unique combinations of these four endowments in the data. The control variables ($k_i$) are planting density (seed kg/acre), adult equivalent household size, farm size, and rainfall. The rainfall variable is 2007 main season rainfall divided by an historical benchmark, and so can be interpreted as the rainfall anomaly or departure from the historical benchmark. The farm expenditure $C^*$ includes the cost of synthetic fertilizer, land preparation, pest and disease control chemicals, and seed. The OLS regression results are presented in Table 2.
 
 \pagebreak
 
@@ -1899,32 +1764,19 @@ rm(mod1, mod2, listDf)
 ```
 \doublespacing
 
-The estimated coefficient on logged cost per acre is statistically significant and indicates that the population yield degree of homogeneity is $h =$ `r hReport`, by which it follows immediately that the price elasticity of farm supply is $\eta = h / (1 - h) =$ `r etaReport`. The coefficients on the other regressors are also statistically significant and take values and signs that agree with intuition. Note that the coefficient on the farm size regressor is negative, affirming the inverse relation between farm size and yield found in numerous other studies [@muyanga2019revisiting; @larson2014should; @wassie2019revisiting; @gautam2019too; @kimhi2006plot].
+The fitted coefficient on logged cost per acre is statistically significant and indicates that the population yield degree of homogeneity is $h =$ `r hReport`, by which it follows immediately that the price elasticity of farm supply is $\eta = h / (1 - h) =$ `r etaReport`. The coefficients on the other regressors are also statistically significant and take values and signs that agree with intuition. Note that the coefficient on the farm size regressor is negative, affirming the inverse relation between farm size and yield found in numerous other studies [@muyanga2019revisiting; @larson2014should; @wassie2019revisiting; @gautam2019too; @kimhi2006plot].
 
-The expenditure TFP, mean observed cost, and mean yield are presented in Table ... , disaggregated by...
+The fitted binary endowment coefficients ($\beta_i$) indicate that hybrid maize seed is the most significant contributor to TFP, followed by ... and ..., with farm tenure also playing a role... Based on this, the expenditure TFPs are calculated for each of the 14 binary endowment strata ($v_{\ell}$), and the average across all strata is also computed ($v$). The conditional parameters $\bar{m}_{\#}$ and $\bar{s}_{\#}$ are calculated from the fitted values $v$ and $h$, and the sample parameters $\bar{m}_c$, $\bar{s}_c$, $m_k$, and $s_k$, by Equation \ref{eq:mCshrpsCshrp}. And the disaggregated $\bar{m}_{c \ell}$ are also computed...and then the conditional mean cost and yield are also evaluated both in the aggregate and disaggregated by strata, as explained in section \ref{sec:binEndStrat}
 
-**--
-The observed (conditional) mean cost and yield disaggregated by endowment stratum ($E[C^*| \theta]_i$, $E[y^*(T)| \theta]_i$), can be evaluated as follows.
+presented in Table 2 along with the corresponding conditional mean cost and yield, which are evaluated as explained in section \ref{sec:binEndStrat}.
 
-\begin{equation}
-\begin{split}
-E[C^*| \theta]_i &= e^{\bar{m}_{ci} + \frac{\bar{s}^2_c}{2}} \\
-&= v_i^{\frac{1}{1 - h}} e^{\frac{1}{1 - h}(m_k + \bar{m}_{\#}) + \frac{1}{(1 - h)^2} \frac{s^2_k + \bar{s}_{\#}^2}{2}}
-\end{split}
-\end{equation}
-<!-- \:\:;\:\:\: \bar{m}_{ci} = \frac{1}{1 - h}(\ln(v) + m_k + \bar{m}_{\#})  \\ -->
 
-Where the parameters $\bar{m}_{ci}$ and $\bar{s}_c$ are calculated from Equations \ref{eq:mCsC}.
 
-And
 
-\begin{equation}
-E[\hat{y}^*(T, k_m(T))]|_{t = 0} = v E[k] E[C^{*h}| \theta]
-\end{equation}
-<!-- E[e^{\epsilon}]_i -->
-<!-- Where $E[e^{\epsilon}]_i$ is the mean of the exponential function of the regression error of farms in the $i^{th}$ stratum. -->
+as explained in \ref{sec:farmResp}
+as explained in \ref{sec:adopt}
 
-The stratified ex-ante expected mean yield $E[\tilde{y}^*(T)]|_{t = 0}^i$ can also be deduced as 
+The expenditure TFP,  and presented in Table 2, disaggregated by binary endowment stratum.
 
 <!-- in Equation \ref{eq:EyStarT0fromYhat}. -->
 <!-- , since it is calculated based on the fitted value of $v_{0i}$ -->
@@ -1978,9 +1830,11 @@ Estimation of the unconditional parameters $m_{\# i}$ and $s_{\#}$, requires the
 <!-- \label{eq:mCsC} -->
 <!-- \end{equation} -->
 
+equations x in section x can be rearranged into expressions for msharp ssharp
+
 \begin{equation}
 \begin{split}
-\bar{m}_{\#i} &= (1 - h) \bar{m}_c - m_k - \ln(v_i) \\
+\bar{m}_{\#} &= (1 - h) \bar{m}_c - m_k - \ln(v) \\
 \bar{s}_{\#}^2 &= (1 - h)^2 (\bar{s}_c^2 - s_k^2) \\
 & \bar{m}_c = E[\ln(C^*)| \theta] \:\:\:\: \bar{s}_c^2 = Var[\ln(C^*)| \theta]
 \end{split}
@@ -5281,3 +5135,171 @@ sketch out extension to aggregate demand and PE analysis...computing Econ Surplu
 
 <!-- Where the last equality follows noting that $u = v E[k] E[C^*]^h$. -->
 <!-- -- -->
+
+<!-- \begin{equation} -->
+<!-- E[\ell|\ell < \gamma] = \frac{\int_{0}^{\gamma} f(\ell) d \ell}{F(\gamma)} -->
+<!-- \end{equation} -->
+<!-- If $\ell$ is lognormally distributed, then this reduces to -->
+<!-- \begin{equation} -->
+<!-- E[\ell|\ell < \gamma] = E[\ell] \frac{\Phi \left(\frac{\ln(\gamma) - m_{\ell}}{s_{\ell}} - s_{\ell}\right)}{F(\frac{\ln(\gamma) - m_{\ell}}{s_{\ell}} \right))} \:\:;\:\:\: m_{\ell} = E[\ln(\ell)] \:\: s^2_{\ell} = Var[\ln(\ell)] -->
+<!-- \label{eq:condMean} -->
+<!-- \end{equation} -->
+<!-- The unconditional mean yield can then be deduced from the known information $E[y^*|C^{\#} < P]$, $m_{\#}$, and $s_{\#}$ by considering that for any random variable $\ell$ with probability density $f(\ell)$ and cumulative distribution function $F(\ell)$, the conditional mean of $\ell$ with upper tail truncated at $\gamma$ is -->
+<!-- Moreover, given conditional parameters $\hat{m}_{\ell}$ and $\hat{s}_{\ell}$ estimated from the observed truncated distribution,  -->
+<!-- Substituting $C^{\# \eta}$ for $\ell$ and $P$ for $\gamma$ in Equation \ref{eq:condMean}, -->
+<!-- \:\:;\:\:\: m_{\#} = E[\ln(C^{\#})] \:\: s^2_{\#} = Var[\ln(C^{\#})] -->
+<!-- The unconditional mean does not change with price but with technology or lambda. The conidtional mean changes with price, in addition to technology and lambda. So, given the relation between conditional and unconditional mean of a lognormally distributed variable,  -->
+<!-- Finally, necessary to account for the stochastic character of price... -->
+<!-- choose the approach based on higher resolution data -->
+<!-- mean log(lambda) = 0 might be a reasonable assumption -->
+<!-- Main thing is result that price is a dual space where solution can be found in the absence of farm data. -->
+<!-- \begin{equation} -->
+<!-- \begin{split} -->
+<!-- Q &= N \int_{\underline{q}^*}^{\bar{q}^*} \rho(q^*) dq^* \\ -->
+<!-- &= N \int_{0}^{\infty} k_a \int_{0}^{\bar{y}^*} \rho(y^*) dy^* \rho(k_a) dk_a \\ -->
+<!-- &= N E[k_a] \frac{E[y^*]}{E[k] E[C^{* h}]} \int_{0}^{\infty} k \int_{0}^{\bar{C}^{*}(k)} C^{*h}(k) \rho(C*) dC^* \rho(k) dk \\ -->
+<!-- &= N E[k_a] \frac{E[y^*]}{E[C^{* h}]} \int_{0}^{\bar{C}^*(k)} C^{* h}(k) \rho(C^*) d C^* -->
+<!-- \end{split} -->
+<!-- \label{eq:aggSupStep} -->
+<!-- \end{equation} -->
+
+<!-- By axiom 3 and the expression for $C^*$ in Equations \ref{eq:fnCsharp}, the upper bound on farm expenditure for given $k$ is -->
+
+<!-- \begin{equation} -->
+<!-- \bar{C}^*(k) = (P v k)^{\frac{\eta}{h}} -->
+<!-- \end{equation} -->
+
+<!-- Axiom 3 states that farms enter production only if they expect to make non-negative profit. Mathematically, this means $C^* \leq R^*$, which implies the following upper bound on optimal expenditure. -->
+
+<!-- \begin{equation} -->
+<!-- \bar{C}^* = R^* = P y^*|_{C^* = \bar{C}^*} = P v k R^{*h} -->
+<!-- \end{equation} -->
+
+<!-- Taking logs of this expression and repeatedly substituting $P y^*|_{C^* = \bar{C}^*}$ for $R^*$ and expanding the righthand side results in an infinite geometric series. -->
+
+<!-- \begin{equation} -->
+<!-- \begin{split} -->
+<!-- \ln(\bar{C}^*) = \ln(\bar{R}^*) &= \ln(P y^*|_{C^* = R^*}) = \ln(P v k) + h \ln(R^*) \\ -->
+<!-- &= \ln(P v k) + h(\ln(P v k) + h\ln(R^*)) \\ -->
+<!-- &= \ln(P v k) + h(\ln(P v k) + h(\ln(P v k) + h\ln(R^*))) \\ -->
+<!-- &= \cdots \\ -->
+<!-- &= \ln(P v k) \sum_{j = 0}^{\infty} h^{j} \\ -->
+<!-- &= \frac{1}{1 - h} \ln(P v k) = (\frac{\eta}{h}) \ln(P v k) -->
+<!-- \end{split} -->
+<!-- \end{equation} -->
+
+<!-- Where the geometric series converges to the last equation only because axioms 1 and 2 constrain $h$ to $(0,1)$ (decreasing returns ot scale). Assuming constant or increasing returns to scale ($h \geq 1$) would result in a divergent infinite sum and thus unbounded $C^*$. -->
+
+<!-- Given the domain of homogeneity $h \in (0,1)$, the upper bound on cost for given $k$ can thus be expressed -->
+
+<!-- \begin{equation} -->
+<!-- \bar{C}^*(k) = (P v k)^{\frac{\eta}{h}} -->
+<!-- \end{equation} -->
+
+<!-- Then, because $C^*$ is lognormally distributed, aggregate supply can be expressed -->
+<!-- \begin{equation} -->
+<!-- Q(k) = N E[k_a] \frac{E[y^*]}{E[C^*(k)^h]} \int_{0}^{(P v k)^{\frac{\eta}{h}}} C^*(k)^h \rho(C^*(k)) dC^*(k) -->
+<!-- \label{eq:aggSupStep} -->
+<!-- \end{equation} -->
+
+<!-- \begin{equation} -->
+<!-- Q = N E[k_a] E[y^*] \Phi\left( \frac{\ln(P) - m_{\#}}{s_{\#}} - \eta s_{\#} \right) -->
+<!-- \label{eq:aggSup1} -->
+<!-- \end{equation} -->
+
+<!-- If $y^*$ is lognormally distributed (axiom 4), then $C^*$ is also lognormally distributed.  -->
+
+<!-- Where $\Phi()$ is the standard normal cumulative distribution function.  -->
+
+<!-- But note that $C^*$ can be expressed $C^* = C^{\#} y^*$, where $C^{\#}$ is the optimal cost per unit output (also commonly referred to as the "average cost"). Then, for given $k$, -->
+
+<!-- \begin{equation} -->
+<!-- \begin{split} -->
+<!-- C^* = C^{\#} y^* &= C^{\#} v k C^{*h} \\ -->
+<!-- &\rightarrow C^* = (C^{\#} v k)^{\frac{1}{1 - h}} \\ -->
+<!-- &\Rightarrow E[\ln(C^*(k))] = \frac{1}{1 - h} (E[\ln(C^{\#})] + \ln(v k)) \\ -->
+<!-- & m_c = (\frac{\eta}{h}) (m_{\#} + \ln(v k))  \:\:;\:\:\: m_{\#} = E[\ln(C^{\#})] -->
+<!-- \end{split} -->
+<!-- \label{eq:mCk} -->
+<!-- \end{equation} -->
+
+<!-- And -->
+
+<!-- \begin{equation} -->
+<!-- \begin{split} -->
+<!-- Var[\ln(C^*)] &= \frac{1}{(1 - h)^2} Var[\ln(C^{\#})] \\ -->
+<!-- s^2_c &= \frac{1}{(1 - h)^2} s^2_{\#} \:\:;\:\:\: s^2_{\#} = Var[\ln(C^{\#})] \\ -->
+<!-- &\rightarrow s_c = \frac{\eta}{h} s_{\#} -->
+<!-- \end{split} -->
+<!-- \end{equation} -->
+
+<!-- Substituting these new expressions in for $m_c$ and $s_c$ in Equation \ref{eq:integralStep} gives -->
+
+<!-- \begin{equation} -->
+<!-- \begin{split} -->
+<!-- \int_{0}^{(P v k)^{\eta / h}} C^{* h} \rho(C^*) d C^* &= E[C^{* h}] \Phi \left( \frac{\eta \ln(P v k) - \eta m_{\#}}{\eta s_{\#}} - \eta s_{\#} \right) \\ -->
+<!-- &= E[C^{* h}] \Phi \left( \frac{\ln(P v k) - m_{\#}}{s_{\#}} - \eta s_{\#} \right) -->
+<!-- \end{split} -->
+<!-- \end{equation} -->
+
+<!-- Substituting the right hand side of this equation for the integral in Equation \ref{eq:aggSupStep} results in the following expression for aggregate supply. -->
+
+<!-- \begin{equation} -->
+<!-- Q = N E[k_a] E[y^*] \Phi\left( \frac{\ln(P) - m_{\#}}{s_{\#}} - \eta s_{\#} \right) -->
+<!-- \label{eq:aggSup1} -->
+<!-- \end{equation} -->
+
+<!-- **-- -->
+<!-- In the evaluation of $Q$, it is important to keep in mind that $E[y^*]$, $m_{\#}$, and $s_{\#}$ are unconditional population parameters. That is to say, $E[y^*]$ refers to the mean yield given the participation of all farms in the population; and $m_{\#}$ and $s_{\#}$ refer to the mean and standard deviation of $\ln(C^{\#})$ given full participation, i.e. as $C^{\#}$ goes to infinity. But axiom 3 truncates the upper tail of the distribution of $C^{\#}$ at $P$ (this follows directly from $C^* \leq R^*$). The observed parameters $\bar{m}_{\#}$ and $\bar{s}_{\#}$ are thus conditional. -->
+
+<!-- \begin{equation} -->
+<!-- \begin{split} -->
+<!-- \bar{m}_{\#} &= E[\ln(C^{\#}) | C^{\#} \leq P] \\ -->
+<!-- \bar{s}^2_{\#} &= Var[\ln(C^{\#}) | C^{\#} \leq P] -->
+<!-- \end{split} -->
+<!-- \end{equation} -->
+
+<!-- Because $y^*$ is a function of $C^{\#}$, then (for given $k$) $y^*$ is also truncated; and so the observed mean yield is the conditional mean $E[y^*|C^{\#} \leq P]$. -->
+<!-- <!-- The unconditional  $E[y]$ is thus never observed except in the limit as $P$ becomes very large.-->
+
+<!-- The unconditional parameters $m_{\#}$ and $s_{\#}$ can be deduced from the conditional parameters $\bar{m}_{\#}$ and $\bar{s}_{\#}$ by numerically solving the following system of equations. -->
+
+<!-- \begin{equation} -->
+<!-- \begin{split} -->
+<!-- \bar{m}_{\#} &= m_{\#} - s_{\#} \frac{\phi(z)}{\Phi(z)} \\ -->
+<!-- \bar{s}_{\#}^2 &= s_{\#}^2 \left( 1 - z \frac{\phi(z)}{\Phi(z)} - \left( \frac{\phi(z)}{\Phi(z)} \right)^2   \right) \:\:;\:\:\: z = \frac{\ln(P) - m_{\#}}{s_{\#}} -->
+<!-- \end{split} -->
+<!-- \label{eq:cSharpUncondParams} -->
+<!-- \end{equation} -->
+
+<!-- Where $\phi()$ is the standard normal probability density function. Now, for any lognormally distributed variable $\chi$ and upper bound $\xi$, it can be shown that -->
+
+<!-- \begin{equation} -->
+<!-- E[\chi | \chi \leq \xi] = E[\chi] \frac{\Phi \left(\frac{\ln(\xi) - m_{\chi}}{s_{\chi}} - s_{\chi}\right)}{\Phi \left( \frac{\ln(\xi) - m_{\chi}}{s_{\chi}} \right))} -->
+<!-- \label{eq:keyResult2} -->
+<!-- \end{equation} -->
+
+<!-- The unconditional mean yield $E[y^*]$ can be deduced by evaluating this relation at $\chi =C^{\# \eta}$ and $\xi = P$. -->
+
+<!-- \begin{equation} -->
+<!-- E[C^{\# \eta} | C^{\#} \leq P] = E[C^{\# \eta}] \frac{\Phi \left(\frac{\ln(P) - m_{\#}}{s_{\#}} - \eta s_{\#}\right)}{\Phi \left( \frac{\ln(P) - m_{\#}}{s_{\#}} \right))} -->
+<!-- \end{equation} -->
+
+<!-- Such that the conditional mean of $y^*$ truncated at $C^{\#} \leq P$ can be parsed as follows. -->
+
+<!-- \begin{equation} -->
+<!-- \begin{split} -->
+<!-- E[y^*|C^{\#} \leq P] &= E \left[ E[y^*] \frac{k^{\eta + 1}}{E[k^{\eta + 1}]}\right] \frac{E[C^{\# \eta} | C^{\#} \leq P]}{E[C^{\# \eta}]} \\ -->
+<!-- &= E[y^*] \frac{\Phi \left( \frac{\ln(P) - m_{\#}}{s_{\#}} - \eta s_{\#} \right)}{\Phi \left( \frac{\ln(P) - m_{\#}}{s_{\#}} \right)} -->
+<!-- \end{split} -->
+<!-- \end{equation} -->
+<!-- <!-- &\rightarrow E[y^*] = E[y^*|C^{\#} < P] = E[y^*] \frac{\Phi\left( \frac{\ln(P) - m_{\#}}{s_{\#}} \right)}{\Phi \left( \frac{\ln(P) - m_{\#}}{s_{\#}} - \eta s_{\#} \right)} --> 
+<!-- Whence the unknown $E[y^*]$ follows as a function of the observed or derived parameters $E[y^*|C^{\#} \leq P]$, $m_{\#}$, $s_{\#}$, and $\eta$. -->
+
+<!-- \begin{equation} -->
+<!-- E[y^*] = E[y^*|C^{\#} \leq P] \frac{\Phi \left( \frac{\ln(P) - m_{\#}}{s_{\#}} \right)}{\Phi \left( \frac{\ln(P) - m_{\#}}{s_{\#}} - \eta s_{\#} \right)} -->
+<!-- \label{eq:condMeanYd1} -->
+<!-- \end{equation} -->
+
+<!-- Note that it also follows from this expression that aggregate supply can be written -->
+<!-- *-- -->
