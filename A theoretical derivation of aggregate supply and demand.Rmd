@@ -1766,7 +1766,7 @@ rm(mod1, mod2, listDf)
 
 The fitted coefficient on logged cost per acre is statistically significant and indicates that the population yield degree of homogeneity is $h =$ `r hReport`, by which it follows immediately that the price elasticity of farm supply is $\eta = h / (1 - h) =$ `r etaReport`. The coefficients on the other regressors are also statistically significant and take values and signs that agree with intuition. Note that the coefficient on the farm size regressor is negative, affirming the inverse relation between farm size and yield found in numerous other studies [@muyanga2019revisiting; @larson2014should; @wassie2019revisiting; @gautam2019too; @kimhi2006plot].
 
-The fitted binary endowment coefficients ($\beta_i$) indicate that hybrid maize seed is the most significant contributor to TFP, followed by ... and ..., with farm tenure also playing a role... Based on this, the expenditure TFPs are calculated for each of the 14 binary endowment strata ($v_{\ell}$), and the average across all strata is also computed ($v$). The conditional parameters $\bar{m}_{\#}$ and $\bar{s}_{\#}$ are calculated from the fitted values $v$ and $h$, and the sample parameters $\bar{m}_c$, $\bar{s}_c$, $m_k$, and $s_k$, by Equation \ref{eq:mCshrpsCshrp}. And the disaggregated $\bar{m}_{c \ell}$ are also computed...and then the conditional mean cost and yield are also evaluated both in the aggregate and disaggregated by strata, as explained in section \ref{sec:binEndStrat}
+The fitted binary endowment coefficients ($\beta_i$) indicate that hybrid maize seed is the most significant contributor to TFP, followed by land prep method and tenure. Based on these values, the expenditure TFPs are calculated for each of the 14 binary endowment strata ($v_{\ell}$), and the average across all strata is also computed ($v$). The conditional parameters $\bar{m}_{\#}$ and $\bar{s}_{\#}$ are calculated from the fitted values $v$ and $h$, and the sample parameters $\bar{m}_c$, $\bar{s}_c$, $m_k$, and $s_k$, by Equation \ref{eq:mCshrpsCshrp}. The disaggregated $\bar{m}_{c \ell}$ are also computed...and then the conditional mean cost and yield are also evaluated both in the aggregate and disaggregated by strata, as explained in section \ref{sec:binEndStrat}.
 
 presented in Table 2 along with the corresponding conditional mean cost and yield, which are evaluated as explained in section \ref{sec:binEndStrat}.
 
@@ -1787,6 +1787,236 @@ E[\tilde{y}^*(T)]|_{t = 0}^i = \left( \frac{E[k_r(T)]|_{t = 0}}{E[k_r]_i} \right
 *--
 ...In Figure \ref{fig:v0strata}... MOVE strat TABLE HERE
 [at what rain level?]
+
+
+```{r Fig3, fig.show = "hold", fig.width = 6, fig.height=3, fig.align="center", fig.cap="\\label{fig:v0strata}(Left) The expenditure TFP, conditional (observed) mean cost/area, harvest yield, and implicit expected yield for each of the 14 different combinations of binary endowments present in the Kenya farm data. The implicit expected yield assumes rainfall equal to the historical benchmark. (Right) their respective prevalance in the population.", echo = FALSE}
+#=============================================================================
+# Define constant in terms of convenient known reference value y0, in this case sample mean yield.
+# Sample mean yield varies with binary controls. Here is the mean with just the base constant
+# (i.e. all binaries = 0)
+coefVec <- mod3$coefficients; coefNames <- gsub("`", "", names(coefVec))
+#-----------------------------------------------------------------------------
+# Get muK
+# HAVE TO FACTOR OUT KRAIN BECAUSE IT IS AN EX POST VARIABLE!!!!
+# IMPORTANT TO NOTE IN TEXT THAT EXOG CONTROL VARS ARE FROM POV OF PLANTING TIME
+# --> A crude way of calculating expected yield is by evaluating ex-post yield
+# at kRain = 1, i.e. expecting rainfall to follow past pattern.
+kappaRn <- coefVec[which(coefNames == "ln[Rain anomaly]")]
+kRn <- exp(dfMod3$`ln[Rain anomaly]`)
+# EyStarT0 <- exp(dfMod3$`Yield (kg/acre)`) * kRn^(-kappaRn)
+EyStarT0trunc <- exp(mod3$fitted.values) * kRn^(-kappaRn)
+notThese <- c("Dist", "ln[Yield (kg/acre)]", "ln[Cost/acre (KES/acre)]", bin_vars)# "ln[Rain anomaly]", 
+lnMod3Vars <- coefOrder
+kVars <- setdiff(lnMod3Vars, notThese)
+#kVars <- kVars[-grep("Tenure|Landprep", kVars)]
+kappaVec <- coefVec[which(coefNames %in% kVars)]
+matK <- dfMod3[, kVars] %>% as.matrix()
+kLook <- matK %*% rep(1, ncol(matK))
+lkVec <- matK %*% kappaVec
+mKvec <- matK %*% diag(kappaVec) %>% colMeans()
+sKvec <- matK %*% diag(kappaVec) %>% apply(2, sd)
+mK <- sum(mKvec)
+sK <- sqrt(sum(sKvec^2))
+muK <- exp(mK + sK^2 / 2)
+#-----------------------------------------------------------------------------
+beta0plusAlphaWhterm <- coefVec[1]
+v0base <- exp(beta0plusAlphaWhterm)
+#y0base <- v0base * muThetaKnh * muEcSharpT0n
+#muEcStarT0hBase <- muEyStarT0 / (muThetaK * v0base)
+#---
+# Now calculate mean yield for all binary combinations
+# Adjust for exogenous endowments/constraints
+bin_vars <- gsub(":", " -", bin_vars)
+bin_vars <- gsub("Adopter", "Hybrid seed", bin_vars)
+kappaBins <- coefVec[which(coefNames %in% bin_vars)]
+names(kappaBins) <- gsub("`", "", names(kappaBins))
+dfBins <- dfMod3[, bin_vars]
+beta0adj <- beta0plusAlphaWhterm + as.matrix(dfBins) %*% kappaBins
+vStrat <- exp(beta0adj)
+nStrat <- unique(vStrat) %>% length()
+dfx <- dfBins
+dfx$vStrat <- c(vStrat)
+dfx$lcStar <- dfMod3$`ln[Cost/acre (KES/acre)]`
+dfx$ydHarv <- exp(dfMod3$`ln[Yield (kg/acre)]`)
+dfx$k <- exp(lkVec)
+dfx$Type <- endowVec
+#--------------------------------------------------------------------------
+# Create label vec for each of the 14 endowment combos
+dfBins$`Hybrid seed` <- ifelse(dfBins$`Hybrid seed` == 1, "Hybrid", "0")
+dfBins$`Tenure - owned with title deed` <- ifelse(dfBins$`Tenure - owned with title deed` == 1, "Tenure", "0")
+dfBins$`Landprep - oxen` <- ifelse(dfBins$`Landprep - oxen` == 1, "Oxen", "0")
+dfBins$`Landprep - tractor` <- ifelse(dfBins$`Landprep - tractor` == 1, "Tractor", "0")
+endowVec <- apply(dfBins, 1, paste, collapse = " + ")
+endowVec <- gsub("0 \\+|\\+ 0", "", endowVec)
+endowVec <- gsub("   0", "Base", endowVec)
+endowVec[which(endowVec != "Base")] <- paste("Base +", endowVec[which(endowVec != "Base")])
+endowVec <- gsub("  ", " ", endowVec)
+endowVec <- trimws(endowVec)
+endowVec <- gsub("  ", " ", endowVec)
+#unique(endowVec)
+#--------------------------------------------------------------------------
+dfx$Type <- endowVec
+dfStrat <- dfx %>% group_by(vStrat) %>% summarise(Type = unique(Type),
+                                                mCstar = mean(lcStar),
+                                                 sCstar = sd(lcStar),
+                                                 muYdHarv = mean(ydHarv),
+                                                 muKstrat = mean(k)) %>%
+  mutate(muCstarTruncStrat = exp(mCstar + sCstar^2 / 2)) %>%
+  mutate(muCstarHtruncStrat = exp(h * mCstar + h^2 * sCstar^2 / 2)) %>%
+  mutate(muEyStarT0truncStrat = vStrat * muK * muCstarHtruncStrat) %>%
+  arrange(vStrat) %>% relocate(Type) %>%
+  mutate(stratID = as.character(1:nStrat))
+dfAll <- dfx %>% summarise(v = mean(vStrat),
+                              mCstar = mean(lcStar),
+                              sCstar = sd(lcStar),
+                              muYdHarv = mean(ydHarv),
+                              muKstrat = mean(k)) %>%
+  mutate(muCstarTruncStrat = exp(mCstar + sCstar^2 / 2),
+         muCstarHtruncStrat = exp(h * mCstar + h^2 * sCstar^2 / 2)) %>%
+  mutate(muEyStarT0truncStrat = mean(vStrat) * muK * muCstarHtruncStrat) %>%
+  mutate(stratID = "All")
+# REMEMBER: kRain removed from muK (equivalent to setting kRain = 1), so muEyStarT0truncStrat
+# is the conditional mean expected yield assuming rain will be in line with historical
+# benchmark
+dfStratTab <- dfStrat %>% select(vStrat, muCstarTruncStrat, muYdHarv, muEyStarT0truncStrat)
+tabHeaders <- c("Expenditure\nTFP",
+                "Mean observed\ncost/area\n(KES/acre)",
+                "Mean observed\nharvest yield\n(kg/acre)",
+                "Mean implicit\nexpected yield\n(kg/acre)")
+colnames(dfStratTab) <- tabHeaders
+dfAllTab <- dfAll %>% select(v, muCstarTruncStrat, muYdHarv, muEyStarT0truncStrat)
+colnames(dfAllTab) <- tabHeaders
+#==========================================================================
+# Graphic of prevalence of each endowment combo and its value
+cellText_size <- 2.5
+dfStratPct <- data.frame(Type = endowVec, vStrat = round(vStrat, 1)) %>%
+  mutate(xx = 1) %>% group_by(Type) %>%
+  summarise(`Number of farms` = sum(xx, na.rm = T), vStrat = unique(vStrat)) %>%
+  as.data.frame() %>%
+  mutate(`Pct of farms in sample` = `Number of farms` / sum(`Number of farms`) * 100) %>%
+  arrange(vStrat) %>% mutate(Type = factor(Type, Type))
+stratFrac <- dfStratPct$`Pct of farms in sample` / 100
+#-----------------------------------------------------------------------------
+#muVcheck <- sum(dfStratPct$vStrat * stratFrac) - mean(vStrat)
+# popRow <- data.frame(Type = "Population mean", `Number of Farms` = length(v0),
+#                      v0 = round(muV0, 1), NA)
+# colnames(popRow) <- colnames(dfStrat)
+#dfStrat <- dfStrat %>% rbind(popRow)
+#dfStrat <- dfStrat %>% mutate(Type = factor(Type, Type))
+#-----------------------------------------------------------------------------
+# typeVec <- dfStrat$Type
+# mCstari <- 1 / (1 - h) * (log(v0strat) + mEcSharpT0)
+# #mCstari <- 1 / (1 - h) * (log(v0strat) + mK + mEcSharpT0)
+# muK <- exp(mK + sK^2 / 2)
+# muCstari <- exp(mCstari + sCstar^2 / 2)
+# muCstarih <- exp(h * mCstari + h^2 * sCstar^2 / 2)
+# muYstarTicheck <- mean(v0strat * muK) * muCstarih
+# muYstarTi <- v0strat * muK * muCstarih
+# muYstarT <- sum(muYstarTi * stratPct)
+# muCstar <- sum(muCstari * stratPct)
+#---
+# dfStrat$`Mean yield\n(kg/acre)` <- round(c(muYstarTi, muYstarT), 1)
+# dfStrat$`Mean cost/area\n(KES/acre)` <- round(c(muCstari, muCstar), 1)
+# dfStrat$`Mean yield\n(kg/acre)` <- round(muYstarTi, 1)
+# dfStrat$`Mean cost/area\n(KES/acre)` <- round(muCstari, 1)
+dfStratTab$Type <- dfStratPct$Type
+dfTab <- dfStrat %>% rename(`Expenditure\nTFP` = vStrat) %>%
+  relocate(`Type`, `Expenditure\nTFP`, `Mean cost/area\n(KES/acre)`, `Mean yield\n(kg/acre)`, `Mean implicit\nexpected yield\n(kg/acre)`) %>%
+  select(`Type`, `Expenditure\nTFP`, `Mean cost/area\n(KES/acre)`, `Mean yield\n(kg/acre)`, `Mean implicit\nexpected yield\n(kg/acre)`) %>% gather(var, val, `Expenditure\nTFP`:`Mean yield\n(kg/acre)`)
+gg <- ggplot(dfTab, aes(x = var, y = Type, fill = val, label = val))
+gg <- gg + scale_y_discrete(limits = typeVec)
+gg <- gg + geom_tile(alpha = 0)
+#gg <- gg + labs(title = expression(v[0]))
+gg <- gg + scale_x_discrete(position = "top")
+# scale_x_discrete(labels = c("A", "B", bquote("TFP " ~ v[0]), "D"))
+gg <- gg + theme_bw()
+gg <- gg + theme(axis.title = element_blank(),
+                 axis.text.x = element_text(size = axisTextSize),
+                 axis.ticks.x = element_blank(),
+                 axis.text.y = element_text(size = axisTextSize),
+                 panel.grid = element_blank(),
+                 plot.title = element_text(size = axisTitleSize, hjust = 0.5),
+                 legend.position = "none")
+gg <- gg + geom_text(size = cellText_size)
+ggEndow1 <- gg
+#---
+gg <- ggplot(dfStrat, aes(x = `Pct of farms in sample`, y = Type))
+#gg <- gg + scale_y_discrete(limits = typeVec)
+gg <- gg + geom_col()
+gg <- gg + labs(title = "Pct of farms in sample")
+gg <- gg + scale_x_continuous(position = "top")
+gg <- gg + theme_bw()
+gg <- gg + theme(axis.title = element_blank(),
+                 #axis.title.x = element_text(size = axisTitleSize),
+                 axis.text.y = element_blank(),
+                 axis.text.x = element_text(size = axisTextSize),
+                 #panel.grid = element_blank(),
+                 plot.title = element_text(size = axisTitleSize, hjust = 0.5))
+ggEndow2 <- gg
+#ggEndow1 + ggEndow2
+
+#colnames(dfPlot1)
+dfPopRow <- data.frame(Type = "Population mean",
+                       var = c("TFP (v0)", "Mean cost/area\n(KES/acre)",
+                               "Mean yield\n(kg/acre)"),
+                       val = c(round(muV0, 1), round(muCstar, 1), round(muYstarT, 1)))
+gg <- ggplot(dfPopRow, aes(x = var, y = Type, fill = val, label = val))
+#gg <- gg + scale_y_discrete(limits = typeVec)
+gg <- gg + geom_tile(alpha = 0)
+#gg <- gg + labs(title = expression(v[0]))
+#gg <- gg + scale_x_discrete(position = "top")
+gg <- gg + theme_bw()
+gg <- gg + theme(axis.title = element_blank(),
+                 axis.text.x = element_blank(),
+                 axis.ticks.x = element_blank(),
+                 axis.text.y = element_text(size = axisTextSize),
+                 panel.grid = element_blank(),
+                 plot.title = element_text(size = axisTitleSize, hjust = 0.5),
+                 legend.position = "none")
+gg <- gg + geom_text(size = cellText_size)
+ggEndowPop <- gg
+
+dfBlank <- data.frame(Type = NA,
+                       var = c(NA, NA, NA),
+                       val = c(NA, NA, NA))
+gg <- ggplot(dfBlank, aes(x = var, y = Type, fill = val, label = val))
+gg <- gg + geom_tile(alpha = 0)
+gg <- gg + theme_bw()
+gg <- gg + theme(axis.title = element_blank(),
+                 axis.text = element_blank(),
+                 axis.ticks = element_blank(),
+                 panel.grid = element_blank(),
+                 panel.border = element_blank(),
+                 legend.position = "none")
+ggBlank <- gg
+
+
+(ggEndow1 / ggEndowPop + plot_layout(heights = c(1, 1 / 14))) | (ggEndow2 / ggBlank + plot_layout(heights = c(1, 1 / 14)))
+
+
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 <!-- The mean harvest yield for each stratum then follows from the first of Equations \ref{eq:v0forms} as $E[y^*(T)]_i = v_{0i} E[k] E[C^{*h}]_i$ (where $E[C^{*h}]_i = e^{h m_{ci} + h^2\frac{s^2_c}{2}}$). -->
 <!-- The TFP parameter for each stratum ($g_{0i}$) can likewise be calculated from the last of Equations \ref{eq:v0forms} given the input elasticities $\alpha_i$. -->
 <!-- \begin{equation} -->
@@ -2025,12 +2255,7 @@ EPT02012 <- mean(dfP0March$EPT0[which(dfP0March$year == 2012)])
 # EPT02015 <- mean(dfP0March$EPT0[which(dfP0March$year == 2015)])
 P02007 <- mean(dfP0March$P0[which(dfP0March$year == 2007)])
 #=============================================================================
-# Mean farm size
-muArea <- mean(exp(dfMod3$`ln[Farm size (acres)]`))
-muAreaReport <- round(muArea, 2)
-# Number of farms
-NfReport <- 2
-Nf <- NfReport * 10^6
+#=============================================================================
 #=============================================================================
 # Define root function to solve for population EcSharpT0
 rootFnUp <- function(xIn, xUp, sXtrunc, mXtrunc){
@@ -2044,73 +2269,14 @@ rootFnUp <- function(xIn, xUp, sXtrunc, mXtrunc){
   return(outVec)
 }
 #=============================================================================
-# Define constant in terms of convenient known reference value y0, in this case sample mean yield.
-# Sample mean yield varies with binary controls. Here is the mean with just the base constant
-# (i.e. all binaries = 0)
-coefVec <- mod3$coefficients; coefNames <- gsub("`", "", names(coefVec))
-beta0plusAlphaWhterm <- coefVec[1]
-v0base <- exp(beta0plusAlphaWhterm)
-#y0base <- v0base * muThetaKnh * muEcSharpT0n
-#muEcStarT0hBase <- muEyStarT0 / (muThetaK * v0base)
-#---
-# Now calculate mean yield for all binary combinations
-# Adjust for exogenous endowments/constraints
-bin_vars <- gsub(":", " -", bin_vars)
-bin_vars <- gsub("Adopter", "Hybrid seed", bin_vars)
-kappaBins <- coefVec[which(coefNames %in% bin_vars)]
-names(kappaBins) <- gsub("`", "", names(kappaBins))
-dfBins <- dfMod3[, bin_vars]
-beta0adj <- beta0plusAlphaWhterm + as.matrix(dfBins) %*% kappaBins
-v0 <- exp(beta0adj)
-# muEcStarT0h <- muEyStarT0 / (muThetaK * v0)
-#v0 %>% unique() %>% length # 14 endowment combos present
-# dfPlot <- data.frame(County = dfMod3$Dist, v0)
-#dfPlot <- data.frame(County = dfMod3b$Dist, y0)
-#ggplot(dfPlot, aes(x = y0)) + geom_histogram() + facet_wrap(~County)
-#exp(mean(dfMod3$`Yield (kg/acre)`) + sd(dfMod3$`Yield (kg/acre)`)^2/2)
-# mean(y0)
-#--------------------------------------------------------------------------
-# Create label vec for each of the 14 endowment combos
-dfBins$`Hybrid seed` <- ifelse(dfBins$`Hybrid seed` == 1, "Hybrid", "0")
-dfBins$`Tenure - owned with title deed` <- ifelse(dfBins$`Tenure - owned with title deed` == 1, "Tenure", "0")
-dfBins$`Landprep - oxen` <- ifelse(dfBins$`Landprep - oxen` == 1, "Oxen", "0")
-dfBins$`Landprep - tractor` <- ifelse(dfBins$`Landprep - tractor` == 1, "Tractor", "0")
-endowVec <- apply(dfBins, 1, paste, collapse = " + ")
-endowVec <- gsub("0 \\+|\\+ 0", "", endowVec)
-endowVec <- gsub("   0", "Base", endowVec)
-endowVec[which(endowVec != "Base")] <- paste("Base +", endowVec[which(endowVec != "Base")])
-endowVec <- gsub("  ", " ", endowVec)
-endowVec <- trimws(endowVec)
-endowVec <- gsub("  ", " ", endowVec)
-#unique(endowVec)
 #=============================================================================
-# HAVE TO FACTOR OUT KRAIN BECAUSE IT IS AN EX POST VARIABLE!!!!
-# IMPORTANT TO NOTE IN TEXT THAT EXOG CONTROL VARS ARE FROM POV OF PLANTING TIME
-# --> A crude way of calculating expected yield is by evaluating ex-post yield
-# at kRain = 1, i.e. expecting rainfall to follow past pattern.
-kappaRn <- coefVec[which(coefNames == "ln[Rain anomaly]")]
-kRn <- exp(dfMod3$`ln[Rain anomaly]`)
-# EyStarT0 <- exp(dfMod3$`Yield (kg/acre)`) * kRn^(-kappaRn)
-EyStarT0trunc <- exp(mod3$fitted.values) * kRn^(-kappaRn)
-notThese <- c("Dist", "ln[Yield (kg/acre)]", "ln[Cost/acre (KES/acre)]", bin_vars)# "ln[Rain anomaly]", 
-lnMod3Vars <- coefOrder
-kVars <- setdiff(lnMod3Vars, notThese)
-#kVars <- kVars[-grep("Tenure|Landprep", kVars)]
-kappaVec <- coefVec[which(coefNames %in% kVars)]
-matK <- dfMod3[, kVars] %>% as.matrix()
-kLook <- matK %*% rep(1, ncol(matK))
-mKvec <- matK %*% diag(kappaVec) %>% colMeans()
-sKvec <- matK %*% diag(kappaVec) %>% apply(2, sd)
-mK <- sum(mKvec)
-sK <- sqrt(sum(sKvec^2))
 mCstarTrunc <- mean(dfMod3$`ln[Cost/acre (KES/acre)]`)
 sCstarTrunc <- sd(dfMod3$`ln[Cost/acre (KES/acre)]`)
-# muThetaK <- exp(sum(c(mVec * kappaVec, kappaVec^2 * sVec^2 / 2)))
-# thetaKvec <- matK %*% kappaVec
-# muThetaKsamp <- thetaKvec %>% exp() %>% mean()
-#muThetaK/muThetaKsamp
-#EthetaKsamp2 <- matK %*% diag(kappaVec) %>% colMeans() %>% sum() %>% exp()
-# muThetaKnh <- exp(sum(c(eta / h * mVec * kappaVec, (eta / h)^2 * kappaVec^2 * sVec^2 / 2)))
+muCstarTrunc <- exp(mCstarTrunc + sCstarTrunc^2 / 2)
+
+
+mCstarTruncStrat <- mean(dfMod3$`ln[Cost/acre (KES/acre)]`)
+sCstarTrunc <- sd(dfMod3$`ln[Cost/acre (KES/acre)]`)
 #--------------------------------------------------------------------------
 mEcSharpT0trunc <- (1 - h) * mCstarTrunc - mK - mean(beta0adj)
 sEcSharpT0trunc <- sqrt((1 - h)^2 * sCstarTrunc^2 - sK^2)
@@ -2132,7 +2298,6 @@ mCstar <- 1 / (1 - h) * (mean(beta0adj) + mK + mEcSharpT0)
 sCstar <- 1 / (1 - h) * sqrt(sK^2 + sEcSharpT0^2)
 muCstar <- exp(mCstar + sCstar^2 / 2)
 muCstarh <- exp(h * mCstar + h^2 * sCstar^2 / 2)
-muK <- exp(mK + sK^2 / 2)
 muEyStarT0check <- mean(v0 * muK) * muCstarh
 # mLamba <- log(P02007) + (mPDown - sPDown^2 / 2) * timeHoriz + log(h) - mEcSharpT0
 # mean(log(lamTrunc))
@@ -2145,6 +2310,16 @@ muEyStarT0 <- muEyStarT0trunc * EmploymentRate / ProbProfit
 # muEcSharpT0nTrunc <- mean(EcSharpT0nTrunc)
 # muEcSharpT0n <- muEcSharpT0nTrunc * EmploymentRate / ProbProfit
 # EyStarT0max <- muEyStarT0 * EPT02007^eta / muEcSharpT0n
+#=============================================================================
+#=============================================================================
+#=============================================================================
+# Mean farm size
+muArea <- mean(exp(dfMod3$`ln[Farm size (acres)]`))
+muAreaReport <- round(muArea, 2)
+# Number of farms
+NfReport <- 2
+Nf <- NfReport * 10^6
+
 ```
 \doublespacing
 
@@ -2154,115 +2329,6 @@ The short rains harvest in 2007 was normal and so the "good short rains" estimat
 Once $m_{\#}$ and $s_{\#}$ are calculated, the expected unconditional mean yield ($E[\tilde{y}^*(T; k_m(T))]|_{t = 0}$) follows from Equation \ref{eq:condMeanYd2}. In the process, the farm employment rate is calculated as $\mathcal{E}=$ `r round(EmploymentRate, 2)` and the PEFS adjusted mean probability of profit is calculated as `r round(ProbProfit, 2)`. The expected unconditional mean yield is evaluated at four different expected rainfall levels: $E[E[k_r(T)^{\kappa_r}]]|_{t = 0} = 1.5^{\kappa_r}, \: 1^{\kappa_r}, \: 0.5^{\kappa_r}, \: 0.1^{\kappa_r}$. These values correspond to expected rainfall that is 150% of the historical benchmark ("high"), in line with the historical benchmark ("normal"), 50% of the historical benchmark ("low"), and 10% of the historical benchmark ("dismal"), respectively.
 
 
-```{r Fig3, fig.show = "hold", fig.width = 6, fig.height=3, fig.align="center", fig.cap="\\label{fig:v0strata}(Left) The mean observed cost, yield, and TFP (v0) for each of the 14 different combinations of binary endowments present in the Kenya farm data; and (right) their respective prevalance in the population.", echo = FALSE}
-#---------------------------------------------------------------------
-# Graphic of prevalence of each endowment combo and its value
-cellText_size <- 2.5
-dfStrat <- data.frame(Type = endowVec, v0 = round(v0, 1)) %>%
-  mutate(xx = 1) %>% group_by(Type) %>%
-  summarise(`Number of farms` = sum(xx, na.rm = T), v0 = unique(v0)) %>%
-  as.data.frame() %>%
-  mutate(`Pct of farms in sample` = `Number of farms` / sum(`Number of farms`) * 100) %>%
-  arrange(v0) %>% mutate(Type = factor(Type, Type))
-stratPct <- dfStrat$`Pct of farms in sample` / 100
-v0strat <- dfStrat$v0
-muV0 <- sum(v0strat * stratPct)
-# popRow <- data.frame(Type = "Population mean", `Number of Farms` = length(v0),
-#                      v0 = round(muV0, 1), NA)
-# colnames(popRow) <- colnames(dfStrat)
-#dfStrat <- dfStrat %>% rbind(popRow)
-#dfStrat <- dfStrat %>% mutate(Type = factor(Type, Type))
-#-----------------------------------------------------------------------------
-typeVec <- dfStrat$Type
-mCstari <- 1 / (1 - h) * (log(v0strat) + mEcSharpT0)
-#mCstari <- 1 / (1 - h) * (log(v0strat) + mK + mEcSharpT0)
-muK <- exp(mK + sK^2 / 2)
-muCstari <- exp(mCstari + sCstar^2 / 2)
-muCstarih <- exp(h * mCstari + h^2 * sCstar^2 / 2)
-muYstarTicheck <- mean(v0strat * muK) * muCstarih
-muYstarTi <- v0strat * muK * muCstarih
-muYstarT <- sum(muYstarTi * stratPct)
-muCstar <- sum(muCstari * stratPct)
-#---
-# dfStrat$`Mean yield\n(kg/acre)` <- round(c(muYstarTi, muYstarT), 1)
-# dfStrat$`Mean cost/area\n(KES/acre)` <- round(c(muCstari, muCstar), 1)
-dfStrat$`Mean yield\n(kg/acre)` <- round(muYstarTi, 1)
-dfStrat$`Mean cost/area\n(KES/acre)` <- round(muCstari, 1)
-dfTab <- dfStrat %>% rename(`TFP (v0)` = v0) %>%
-  relocate(`Type`, `TFP (v0)`, `Mean cost/area\n(KES/acre)`, `Mean yield\n(kg/acre)`) %>%
-  select(`Type`, `TFP (v0)`, `Mean cost/area\n(KES/acre)`, `Mean yield\n(kg/acre)`) %>% gather(var, val, `TFP (v0)`:`Mean yield\n(kg/acre)`)
-gg <- ggplot(dfTab, aes(x = var, y = Type, fill = val, label = val))
-gg <- gg + scale_y_discrete(limits = typeVec)
-gg <- gg + geom_tile(alpha = 0)
-#gg <- gg + labs(title = expression(v[0]))
-gg <- gg + scale_x_discrete(position = "top")
-# scale_x_discrete(labels = c("A", "B", bquote("TFP " ~ v[0]), "D"))
-gg <- gg + theme_bw()
-gg <- gg + theme(axis.title = element_blank(),
-                 axis.text.x = element_text(size = axisTextSize),
-                 axis.ticks.x = element_blank(),
-                 axis.text.y = element_text(size = axisTextSize),
-                 panel.grid = element_blank(),
-                 plot.title = element_text(size = axisTitleSize, hjust = 0.5),
-                 legend.position = "none")
-gg <- gg + geom_text(size = cellText_size)
-ggEndow1 <- gg
-#---
-gg <- ggplot(dfStrat, aes(x = `Pct of farms in sample`, y = Type))
-#gg <- gg + scale_y_discrete(limits = typeVec)
-gg <- gg + geom_col()
-gg <- gg + labs(title = "Pct of farms in sample")
-gg <- gg + scale_x_continuous(position = "top")
-gg <- gg + theme_bw()
-gg <- gg + theme(axis.title = element_blank(),
-                 #axis.title.x = element_text(size = axisTitleSize),
-                 axis.text.y = element_blank(),
-                 axis.text.x = element_text(size = axisTextSize),
-                 #panel.grid = element_blank(),
-                 plot.title = element_text(size = axisTitleSize, hjust = 0.5))
-ggEndow2 <- gg
-#ggEndow1 + ggEndow2
-
-#colnames(dfPlot1)
-dfPopRow <- data.frame(Type = "Population mean",
-                       var = c("TFP (v0)", "Mean cost/area\n(KES/acre)",
-                               "Mean yield\n(kg/acre)"),
-                       val = c(round(muV0, 1), round(muCstar, 1), round(muYstarT, 1)))
-gg <- ggplot(dfPopRow, aes(x = var, y = Type, fill = val, label = val))
-#gg <- gg + scale_y_discrete(limits = typeVec)
-gg <- gg + geom_tile(alpha = 0)
-#gg <- gg + labs(title = expression(v[0]))
-#gg <- gg + scale_x_discrete(position = "top")
-gg <- gg + theme_bw()
-gg <- gg + theme(axis.title = element_blank(),
-                 axis.text.x = element_blank(),
-                 axis.ticks.x = element_blank(),
-                 axis.text.y = element_text(size = axisTextSize),
-                 panel.grid = element_blank(),
-                 plot.title = element_text(size = axisTitleSize, hjust = 0.5),
-                 legend.position = "none")
-gg <- gg + geom_text(size = cellText_size)
-ggEndowPop <- gg
-
-dfBlank <- data.frame(Type = NA,
-                       var = c(NA, NA, NA),
-                       val = c(NA, NA, NA))
-gg <- ggplot(dfBlank, aes(x = var, y = Type, fill = val, label = val))
-gg <- gg + geom_tile(alpha = 0)
-gg <- gg + theme_bw()
-gg <- gg + theme(axis.title = element_blank(),
-                 axis.text = element_blank(),
-                 axis.ticks = element_blank(),
-                 panel.grid = element_blank(),
-                 panel.border = element_blank(),
-                 legend.position = "none")
-ggBlank <- gg
-
-
-(ggEndow1 / ggEndowPop + plot_layout(heights = c(1, 1 / 14))) | (ggEndow2 / ggBlank + plot_layout(heights = c(1, 1 / 14)))
-
-
-```
 
 The two remaining parameters required to evaluate expected aggregate supply in Equation \ref{eq:aggSup2} are number of farms $N$ and mean farm size $k_a$. For mean farm size, the Kenya farm sample mean is used, giving $k_a =$ `r muAreaReport` acres. The number of maize farms is more difficult to assess. One sometimes sees the figure $3$ million mentioned [e.g. @njeru2022maize], but this appears to be unsupported by any hard evidence. Here, a rough estimate is deduced by dividing planted area by mean farm size. The midseason reports examined for this exercise suggest that planted main season maize area during the period in question ranges between 3 and 4.5 million acres [@KFSSGJul2011]. Divided by $k_a$, this gives a range between $1.56$ and $2.34$ million farms. The figure $N =$ `r NfReport` million is used as a rough estimate.
 
