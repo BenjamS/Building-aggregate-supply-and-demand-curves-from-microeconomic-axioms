@@ -313,7 +313,7 @@ Interpretation of the constant $g$ is as difficult as one wants to make it. It i
 \label{eq:g0Sum}
 \end{equation}
 
-In the Kenya maize farm exercise farther below, for example, there are four ($n_b = 4$) binary endowment variables $b_i$ (which take a value of $1$ if the endowment is present and $0$ otherwise): use of oxen in land preparation, use of tractor in land preparation, use of hybrid maize seed, and land tenure. This means that $g$ can vary across the population. In the Kenya maize exercise, there are 14 unique values of $g$ in the population, corresponding to 14 unique combinations of the four binary endowments plus the base endowment constant $\beta_0$.
+In the Kenya maize farm exercise farther below, for example, there are four ($n_b = 4$) binary endowment variables $b_i$ (which take a value of $1$ if the endowment is present and $0$ otherwise): use of oxen in land preparation, use of tractor in land preparation, use of hybrid maize seed, and land tenure. This means that $g$ can vary across the population. In the Kenya maize exercise, there are 12 unique values of $g$ in the population, corresponding to 12 unique combinations of the four binary endowments plus the base endowment constant $\beta_0$.
 
 The parameter $g$ may also be arbitrarily defined in terms of a new parameter ($u$) combined with judiciously chosen reference terms such that the new parameter has a meaningful interpretation and/or results in a more useful expression for yield. For present purposes, $g$ is defined as follows
 <!-- For those not yet comfortable working in units of, say, -->
@@ -511,7 +511,7 @@ Assuming yield is lognormally distributed (axiom 4), then so must be $C^*$ and $
 
 Where $\Phi()$ is the standard normal cumulative distribution function.
 
-### Conditional and unconditional means
+### Conditional and unconditional means \label{sec:condMean}
 
 Tractable expressions for mean expenditure and yield follow from Equations \ref{eq:fnCsharp} and from the lognormality of $y^*$ and $C^*$ (axiom 4).
 
@@ -615,7 +615,7 @@ E[y^*] \Phi \left( \frac{\ln(P) - m_{\#}}{s_{\#}} - \eta s_{\#} \right) = E[y^* 
 
 ### Binary endowment strata \label{sec:binEndStrat}
 
-As noted earlier (Equation \ref{eq:g0Sum}), binary endowments $\beta_i b_i$, and hence TFP, vary across the population. In the Kenya maize farm example explored farther below, there are 14 distinct values of expenditure TFP, corresponding to 14 distinct combinations of the binary endowments, henceforth referred to as "binary endowment strata". Wherever $g$ or $v$ appears above, then, what is really meant is $g_{\ell}$ and $v_{\ell}$, where $\ell$ indexes the values of TFP corresponding to each stratum ($\ell \in (1,14)$ in this case). It follows that any parameters that are a function of $v_{\ell}$ likewise correspond to the $\ell^{th}$ stratum. In other words, $E[C^*]$ and $E[y^*]$ can be disaggregated by stratum as follows.
+As noted earlier (Equation \ref{eq:g0Sum}), binary endowments $\beta_i b_i$, and hence TFP, vary across the population. In the Kenya maize farm example explored farther below, there are 12 distinct values of expenditure TFP, corresponding to 12 distinct combinations of the binary endowments, henceforth referred to as "binary endowment strata". Wherever $g$ or $v$ appears above, then, what is really meant is $g_{\ell}$ and $v_{\ell}$, where $\ell$ indexes the values of TFP corresponding to each stratum ($\ell \in (1,12)$ in this case). It follows that any parameters that are a function of $v_{\ell}$ likewise correspond to the $\ell^{th}$ stratum. In other words, $E[C^*]$ and $E[y^*]$ can be disaggregated by stratum as follows.
 
 \begin{equation}
 \begin{split}
@@ -962,6 +962,15 @@ E[E[y^*(T; k_m)]|_{t = 0}] = E[\tilde{y}^*(T; k_m)]|_{t = 0}
 \end{equation}
 
 This result, which can also be reached by invoking Fubini's theorem, maps the mean expected yield to the expected yield on the mean farm---i.e., the farm where $k = E[k]$ and $C^{*h} = E[C^{*h}]$.
+
+THE IMPLICIT MEAN EXPECTED YIELD...
+...in section \ref{sec:condMean}, tractable expression for mean yield, stochastic version
+
+\begin{equation}
+E[\tilde{y}^*(T; k_r) | \theta]|_{t = 0} = v k_r^{\kappa_r} E[k'] E[C^{*h} | \theta]
+\label{eq:impMuEyStarT0}
+\end{equation}
+
 <!-- In practice, $E[y^*(T; k_m(T))]|_{t = 0}$ is generally not observable. Given farm data on which to fit the model in Equation \ref{eq:yStarT}, one may reasonably parse expected yield based on observed yield $y^*(T; k_r(T))$, observed meteorology $k_m(T)$, and on the expected meteorology $E[k_m(T)]|_{t = 0}$, as follows. -->
 <!-- \begin{equation} -->
 <!-- E[y^*(T; k_m(T))]|_{t = 0} = \frac{E[k_m(T)^{\kappa_m}]|_{t = 0}}{k_r(T)^{\kappa_m}} y^*(T; k_r(T)) -->
@@ -1420,7 +1429,7 @@ s_p \sqrt{T} </> \frac{\phi(-z)}{\Phi(-z)}
 
 ## Expected aggregate supply model parameter estimation and comparison to empirical estimates
 
-As an illustrative example, the expected aggregate supply curve derived above from axioms 1-5 is fit to 2007 Kenyan maize farm data and compared against empirical estimates of expected aggregate supply for the years 2006-2012. The farm data used in this pedagogical exercise come from a panel covering the main and short rains seasons for multiple crops across Kenya for the years 1997, 2000, 2004, 2007, and 2010, originally gathered by the Egerton University Tegemeo Institute of Agricultural Policy and Development in partnership with Michigan State University, under the auspices of a USAID project [@maizeData]. For the present exercise, only the 2007 main rains season maize farm data is used. The main season in Kenya generally runs from March to August or September. Farms not reporting maize as their main crop or reporting zero maize production cost are excluded, resulting in a sample size of 942 maize farms across 20 districts (nowadays referred to as "counties"). The sample represents all major maize growing regions in the country. Full details regarding the data and its processing for the present exercise, including summary statistics, are provided in Appendix B.
+As an illustrative example, the expected aggregate supply curve derived above from axioms 1-5 is fit to 2007 Kenyan maize farm data and compared against empirical estimates of expected aggregate supply for the years 2006-2012. The farm data used in this pedagogical exercise come from a panel covering the main and short rains seasons for multiple crops across Kenya for the years 1997, 2000, 2004, 2007, and 2010, originally gathered by the Egerton University Tegemeo Institute of Agricultural Policy and Development in partnership with Michigan State University, under the auspices of a USAID project [@maizeData]. For the present exercise, only the 2007 main rains season maize farm data is used. The main season in Kenya generally runs from March to August or September. Farms not reporting maize as their main crop or reporting zero maize production cost are excluded, as well as five farms reporting extremely high unit cost, resulting in a sample size of 937 maize farms across 20 districts (nowadays referred to as "counties"). The sample represents all major maize growing regions in the country. Full details regarding the data and its processing for the present exercise, including summary statistics, are provided in Appendix B.
 
 The empirical estimates of aggregate supply for the years 2006-2012 are taken from commodity intelligence reports published in mid to late season---prior to harvest but after planted area and main season rainfall are known. These estimates, summarized in Table 1, cover some of Kenya's worst drought years in living memory.
 
@@ -1445,7 +1454,7 @@ EQsT2012Jul16giews <- 2.4 # MLND outbreak, late start to rains
 #EQsT2013Jul16MoA <- 1.62 # GoK KFSSG Poorly distributed low rainfall, early cessation
 EQsTvec <- c(EQsT2006Jun14giews, EQsT2007Jun28usda, EQsT2008Jul15giews,
              EQsT2009Aug11MoA, EQsT2010Aug5giews, EQsT2011Nov3kfssg, EQsT2012Jul16giews)
-reportDate <- c("14 Jun 2006",
+reportDate <- c("12 Jun 2006",
                 "28 Jun 2007",
                 "15 Jul 2008",
                 "11 Aug 2009",
@@ -1508,14 +1517,14 @@ Where $\epsilon$ is the regression residual. Recall from the exposition in secti
 Where TFP may include binary endowment variables that augment the constant on farms where the endowment is present (Equation \ref{eq:g0Sum}, replicated here for convenience).
 
 $$
-\ln(g) = \beta_0 + \sum_{i = 1}^{n_b} \beta_i b_i
+\ln(g) = \beta_0 + \sum_{i = 1}^{n_b} \beta_i b_i \:\:;\:\:\: n_b = 4
 $$
 <!-- \begin{equation} -->
 <!-- \ln(g) = \alpha_0 = \beta_0 + \sum_{i = 1}^{n_b} b_i \beta_i -->
 <!-- \label{eq:g0Sum} -->
 <!-- \end{equation} -->
 
-As mentioned in section \ref{sec:axioms1and2}, in this exercise the binary endowment variables $b_i$ (which take a value of $1$ if the endowment is present and $0$ otherwise) are: use of oxen in land preparation, use of tractor in land preparation, use of hybrid seed, and land tenure. There are 14 unique combinations of these four endowments in the data. The control variables ($k_i$) are planting density (seed kg/acre), adult equivalent household size, farm size, and rainfall. The rainfall variable is 2007 main season rainfall divided by an historical benchmark, and so can be interpreted as the rainfall anomaly or departure from the historical benchmark. The farm expenditure $C^*$ includes the cost of synthetic fertilizer, land preparation, pest and disease control chemicals, and seed. The OLS regression results are presented in Table 2.
+As mentioned in section \ref{sec:axioms1and2}, in this exercise there are four binary endowment variables $b_i$ (which take a value of $1$ if the endowment is present and $0$ otherwise) are: use of oxen in land preparation, use of tractor in land preparation, use of hybrid seed, and land tenure. There are 12 unique combinations of these four endowments in the data. The control variables ($k_i$) are planting density (seed kg/acre), adult equivalent household size, farm size, and rainfall. The rainfall variable is 2007 main season rainfall divided by an historical benchmark, and so can be interpreted as the rainfall anomaly or departure from the historical benchmark. The farm expenditure $C^*$ includes the cost of synthetic fertilizer, land preparation, pest and disease control chemicals, and seed. The OLS regression results are presented in Table 2.
 
 \pagebreak
 
@@ -1699,33 +1708,6 @@ mod2 <- lm(`Yield (kg/acre)`~., df_mod2[, -not_these])
 #---------------------------------------------------------------------
 # mod 3
 mod3Vars <- setdiff(mod2Vars, c(priceVars, "Child family labor, planting (person-hrs/acre)"))
-#mod3Vars <- setdiff(mod2Vars, c(priceVars))
-# # Let's drop some extreme values
-# # Extremely high cost/acre often due to extremely small farm size
-# hist(exp(df_mod$`Cost/acre (KES/acre)`), 40)
-# indHiCost <- which(exp(df_mod$`Cost/acre (KES/acre)`) > 20000)
-# indUnprofitable <- which(exp(df_mod$Rstar) / exp(df_mod$`Cost/acre (KES/acre)`)<0.75)
-# cSharpTrunc <- df_mod$`Cost/acre (KES/acre)`/df_mod$`Yield (kg/acre)`
-# hist(cSharpTrunc,25)
-# cSharpTrunc
-# # exp(df_mod$`Yield (kg/acre)`[indHiCost])
-# # exp(df_mod$`Farm size (acres)`[indHiCost])
-# # exp(df_mod$Rstar[indHiCost]) / exp(df_mod$`Cost/acre (KES/acre)`[indHiCost])
-# # df_mod[which(!duplicated(df_mod$`Seed (kg/acre)`)),]%>%View
-# # df_mod[indUnprofitable,]%>%View
-# indRm <- indHiCost
-#indRm <- unique(c(indHiCost, indUnprofitable))
-#dfMod3 <- df_mod[, c(mod3Vars)]
-#hist(df_mod$`Yield (kg/acre)`)
-# Focus on provinces that have same or similar maize price
-# dfLook <- df_mod %>% group_by(Dist) %>% summarize(`Maize price (KES/kg)` = mean(`Maize price (KES/kg)`))
-# ggplot(dfLook,aes(x=`Maize price (KES/kg)`,y=Dist))+geom_bar(stat="identity")
-# maizeProvs <- c("Uasin Gishu", "Nyeri", "Trans Nzoia", "Bungoma", "Kakamega", "Narok", "Laikipia", "Kitui", "Machakos")
-# dfLook <- df_mod %>% subset(Dist %in% maizeProvs) %>% select(all_of(mod3Vars))
-# hist(dfLook$`Yield (kg/acre)`)
-# dfLook$cSharp <- dfLook$`Cost/acre (KES/acre)` - dfLook$`Yield (kg/acre)`
-# hist(dfLook$cSharp)
-#dfMod3 <- df_mod[-indRm, c(mod3Vars)]
 dfMod3 <- df_mod[, mod3Vars]
 colnames(dfMod3) <- gsub("Adopter", "Hybrid seed", colnames(dfMod3))
 colnames(dfMod3) <- gsub("Seed \\(kg/acre\\)", "Planting density (kg seed/acre)", colnames(dfMod3))
@@ -1734,6 +1716,12 @@ notThese <- c(1, indDum)
 colnames(dfMod3)[-notThese] <- paste0("ln[", colnames(dfMod3)[-notThese], "]")
 colnames(dfMod3) <- gsub(":", " -", colnames(dfMod3))
 coefOrder <- c(colnames(dfMod3)[-c(2, notThese)], colnames(dfMod3)[notThese[-1]])
+# Drop cost outliers
+#hist((dfMod3$`ln[Cost/acre (KES/acre)]`), 20)
+indHiCost <- which(exp(df_mod$`Cost/acre (KES/acre)`) > 40000)
+indOxTractr <- which((dfMod3$`Landprep - oxen` + dfMod3$`Landprep - tractor`) == 2)
+indRm <- unique(c(indHiCost, indOxTractr))
+dfMod3 <- dfMod3[-indRm, ]
 mod3 <- lm(`ln[Yield (kg/acre)]` ~., dfMod3[, -1])
 #summ(mod3)
 #car::vif(mod3)
@@ -1766,30 +1754,12 @@ rm(mod1, mod2, listDf)
 
 The fitted coefficient on logged cost per acre is statistically significant and indicates that the population yield degree of homogeneity is $h =$ `r hReport`, by which it follows immediately that the price elasticity of farm supply is $\eta = h / (1 - h) =$ `r etaReport`. The coefficients on the other regressors are also statistically significant and take values and signs that agree with intuition. Note that the coefficient on the farm size regressor is negative, affirming the inverse relation between farm size and yield found in numerous other studies [@muyanga2019revisiting; @larson2014should; @wassie2019revisiting; @gautam2019too; @kimhi2006plot].
 
-The fitted binary endowment coefficients ($\beta_i$) indicate that hybrid maize seed is the most significant contributor to TFP, followed by land prep method and tenure. Based on these values, the expenditure TFPs are calculated for each of the 14 binary endowment strata ($v_{\ell}$), and the average across all strata is also computed ($v$). The conditional parameters $\bar{m}_{\#}$ and $\bar{s}_{\#}$ are calculated from the fitted values $v$ and $h$, and the sample parameters $\bar{m}_c$, $\bar{s}_c$, $m_k$, and $s_k$, by Equation \ref{eq:mCshrpsCshrp}. The disaggregated $\bar{m}_{c \ell}$ are also computed...and then the conditional mean cost and yield are also evaluated both in the aggregate and disaggregated by strata, as explained in section \ref{sec:binEndStrat}.
+The fitted binary endowment coefficients ($\beta_i$) indicate that hybrid maize seed is the most significant contributor to TFP, followed by land prep method and tenure. Interestingly, oxen contributes slightly more than tractor. Based on these values, the expenditure TFPs are calculated for each of the 12 binary endowment strata ($v_{\ell}$), as well as the average across all strata ($v$). The implicit mean expected yield ($E[\tilde{y}^*(T;k_r) | \theta] |_{t = 0}$) is then calculated by Equation \ref{eq:impMuEyStarT0}, for $k_r = 1$ (indicating an expectation of no departure from the historical benchmark). These stratified and whole sample parameters are reported along with the mean observed cost per unit area and harvest yield in Table 2.
 
-presented in Table 2 along with the corresponding conditional mean cost and yield, which are evaluated as explained in section \ref{sec:binEndStrat}.
+comment on higher yield of tractor but higher efficiency of oxen
+harvest was higher than expected, implicit expected yield based on kr=1 when in fact kr > 1 (graphic)-- expected less got more hence harvest yield higher than implicit expected yield at kr=1.
 
-
-
-
-as explained in \ref{sec:farmResp}
-as explained in \ref{sec:adopt}
-
-The expenditure TFP,  and presented in Table 2, disaggregated by binary endowment stratum.
-
-<!-- in Equation \ref{eq:EyStarT0fromYhat}. -->
-<!-- , since it is calculated based on the fitted value of $v_{0i}$ -->
-
-\begin{equation}
-E[\tilde{y}^*(T)]|_{t = 0}^i = \left( \frac{E[k_r(T)]|_{t = 0}}{E[k_r]_i} \right)^{\kappa_r} E[y_i^*(T) E[e^{-\epsilon}]_i
-\end{equation}
-*--
-...In Figure \ref{fig:v0strata}... MOVE strat TABLE HERE
-[at what rain level?]
-
-
-```{r Fig3, fig.show = "hold", fig.width = 6, fig.height=3, fig.align="center", fig.cap="\\label{fig:v0strata}(Left) The expenditure TFP, conditional (observed) mean cost/area, harvest yield, and implicit expected yield for each of the 14 different combinations of binary endowments present in the Kenya farm data. The implicit expected yield assumes rainfall equal to the historical benchmark. (Right) their respective prevalance in the population.", echo = FALSE}
+```{r Fig3, fig.show = "hold", fig.width = 6, fig.height=3, fig.align="center", fig.cap="\\label{fig:v0strata}(Left) The expenditure TFP, conditional (observed) mean cost/area, harvest yield, and implicit expected yield for each of the 12 different combinations of binary endowments present in the Kenya farm data. The implicit expected yield assumes rainfall equal to the historical benchmark. (Right) their respective prevalance in the population.", echo = FALSE}
 #=============================================================================
 # Define constant in terms of convenient known reference value y0, in this case sample mean yield.
 # Sample mean yield varies with binary controls. Here is the mean with just the base constant
@@ -1839,9 +1809,8 @@ dfx$vStrat <- c(vStrat)
 dfx$lcStar <- dfMod3$`ln[Cost/acre (KES/acre)]`
 dfx$ydHarv <- exp(dfMod3$`ln[Yield (kg/acre)]`)
 dfx$k <- exp(lkVec)
-dfx$Type <- endowVec
 #--------------------------------------------------------------------------
-# Create label vec for each of the 14 endowment combos
+# Create label vec for each of the 12 endowment combos
 dfBins$`Hybrid seed` <- ifelse(dfBins$`Hybrid seed` == 1, "Hybrid", "0")
 dfBins$`Tenure - owned with title deed` <- ifelse(dfBins$`Tenure - owned with title deed` == 1, "Tenure", "0")
 dfBins$`Landprep - oxen` <- ifelse(dfBins$`Landprep - oxen` == 1, "Oxen", "0")
@@ -1856,7 +1825,8 @@ endowVec <- gsub("  ", " ", endowVec)
 #unique(endowVec)
 #--------------------------------------------------------------------------
 dfx$Type <- endowVec
-dfStrat <- dfx %>% group_by(vStrat) %>% summarise(Type = unique(Type),
+dfStrat <- dfx %>% group_by(Type) %>% summarise(Type = unique(Type),
+                                                vStrat = unique(vStrat),
                                                 mCstar = mean(lcStar),
                                                  sCstar = sd(lcStar),
                                                  muYdHarv = mean(ydHarv),
@@ -1864,6 +1834,9 @@ dfStrat <- dfx %>% group_by(vStrat) %>% summarise(Type = unique(Type),
   mutate(muCstarTruncStrat = exp(mCstar + sCstar^2 / 2)) %>%
   mutate(muCstarHtruncStrat = exp(h * mCstar + h^2 * sCstar^2 / 2)) %>%
   mutate(muEyStarT0truncStrat = vStrat * muK * muCstarHtruncStrat) %>%
+  mutate(mEcSharpT0 = (1 - h) * mCstar - mK - log(vStrat),
+         sEcSharpT0 = sqrt((1 - h)^2 * sCstar^2 - sK^2)) %>%
+  mutate(muEcSharpT0truncStrat = exp(mEcSharpT0 + sEcSharpT0^2 / 2)) %>%
   arrange(vStrat) %>% relocate(Type) %>%
   mutate(stratID = as.character(1:nStrat))
 dfAll <- dfx %>% summarise(v = mean(vStrat),
@@ -1874,18 +1847,25 @@ dfAll <- dfx %>% summarise(v = mean(vStrat),
   mutate(muCstarTruncStrat = exp(mCstar + sCstar^2 / 2),
          muCstarHtruncStrat = exp(h * mCstar + h^2 * sCstar^2 / 2)) %>%
   mutate(muEyStarT0truncStrat = mean(vStrat) * muK * muCstarHtruncStrat) %>%
-  mutate(stratID = "All")
+  mutate(mEcSharpT0 = (1 - h) * mCstar - mK - log(v),
+         sEcSharpT0 = sqrt((1 - h)^2 * sCstar^2 - sK^2)) %>%
+  mutate(muEcSharpT0truncStrat = exp(mEcSharpT0 + sEcSharpT0^2 / 2)) %>%
+  mutate(stratID = "All",
+         Type = "All") %>% relocate(Type)
 # REMEMBER: kRain removed from muK (equivalent to setting kRain = 1), so muEyStarT0truncStrat
 # is the conditional mean expected yield assuming rain will be in line with historical
 # benchmark
-dfStratTab <- dfStrat %>% select(vStrat, muCstarTruncStrat, muYdHarv, muEyStarT0truncStrat)
+dfStratTab <- dfStrat %>% select(Type, vStrat, muCstarTruncStrat,
+                                 muEcSharpT0truncStrat, muYdHarv, muEyStarT0truncStrat)
 tabHeaders <- c("Expenditure\nTFP",
-                "Mean observed\ncost/area\n(KES/acre)",
+                "Mean observed\nexpenditure/area\n(KES/acre)",
+                "Mean implicit\nexpected unit\nexpenditure (KES/kg)",
                 "Mean observed\nharvest yield\n(kg/acre)",
                 "Mean implicit\nexpected yield\n(kg/acre)")
-colnames(dfStratTab) <- tabHeaders
-dfAllTab <- dfAll %>% select(v, muCstarTruncStrat, muYdHarv, muEyStarT0truncStrat)
-colnames(dfAllTab) <- tabHeaders
+colnames(dfStratTab)[-1] <- tabHeaders
+dfAllTab <- dfAll %>% select(Type, v, muCstarTruncStrat, muEcSharpT0truncStrat,
+                             muYdHarv, muEyStarT0truncStrat)
+colnames(dfAllTab)[-1] <- tabHeaders
 #==========================================================================
 # Graphic of prevalence of each endowment combo and its value
 cellText_size <- 2.5
@@ -1896,38 +1876,20 @@ dfStratPct <- data.frame(Type = endowVec, vStrat = round(vStrat, 1)) %>%
   mutate(`Pct of farms in sample` = `Number of farms` / sum(`Number of farms`) * 100) %>%
   arrange(vStrat) %>% mutate(Type = factor(Type, Type))
 stratFrac <- dfStratPct$`Pct of farms in sample` / 100
-#-----------------------------------------------------------------------------
 #muVcheck <- sum(dfStratPct$vStrat * stratFrac) - mean(vStrat)
+#-----------------------------------------------------------------------------
 # popRow <- data.frame(Type = "Population mean", `Number of Farms` = length(v0),
 #                      v0 = round(muV0, 1), NA)
 # colnames(popRow) <- colnames(dfStrat)
 #dfStrat <- dfStrat %>% rbind(popRow)
 #dfStrat <- dfStrat %>% mutate(Type = factor(Type, Type))
 #-----------------------------------------------------------------------------
-# typeVec <- dfStrat$Type
-# mCstari <- 1 / (1 - h) * (log(v0strat) + mEcSharpT0)
-# #mCstari <- 1 / (1 - h) * (log(v0strat) + mK + mEcSharpT0)
-# muK <- exp(mK + sK^2 / 2)
-# muCstari <- exp(mCstari + sCstar^2 / 2)
-# muCstarih <- exp(h * mCstari + h^2 * sCstar^2 / 2)
-# muYstarTicheck <- mean(v0strat * muK) * muCstarih
-# muYstarTi <- v0strat * muK * muCstarih
-# muYstarT <- sum(muYstarTi * stratPct)
-# muCstar <- sum(muCstari * stratPct)
-#---
-# dfStrat$`Mean yield\n(kg/acre)` <- round(c(muYstarTi, muYstarT), 1)
-# dfStrat$`Mean cost/area\n(KES/acre)` <- round(c(muCstari, muCstar), 1)
-# dfStrat$`Mean yield\n(kg/acre)` <- round(muYstarTi, 1)
-# dfStrat$`Mean cost/area\n(KES/acre)` <- round(muCstari, 1)
-dfStratTab$Type <- dfStratPct$Type
-dfTab <- dfStrat %>% rename(`Expenditure\nTFP` = vStrat) %>%
-  relocate(`Type`, `Expenditure\nTFP`, `Mean cost/area\n(KES/acre)`, `Mean yield\n(kg/acre)`, `Mean implicit\nexpected yield\n(kg/acre)`) %>%
-  select(`Type`, `Expenditure\nTFP`, `Mean cost/area\n(KES/acre)`, `Mean yield\n(kg/acre)`, `Mean implicit\nexpected yield\n(kg/acre)`) %>% gather(var, val, `Expenditure\nTFP`:`Mean yield\n(kg/acre)`)
+typeVec <- dfStratTab$Type
+dfTab <- dfStratTab %>% gather_("var", "val", tabHeaders) %>% mutate(val = round(val, 1))
 gg <- ggplot(dfTab, aes(x = var, y = Type, fill = val, label = val))
 gg <- gg + scale_y_discrete(limits = typeVec)
 gg <- gg + geom_tile(alpha = 0)
-#gg <- gg + labs(title = expression(v[0]))
-gg <- gg + scale_x_discrete(position = "top")
+gg <- gg + scale_x_discrete(limits = tabHeaders, position = "top")
 # scale_x_discrete(labels = c("A", "B", bquote("TFP " ~ v[0]), "D"))
 gg <- gg + theme_bw()
 gg <- gg + theme(axis.title = element_blank(),
@@ -1940,7 +1902,7 @@ gg <- gg + theme(axis.title = element_blank(),
 gg <- gg + geom_text(size = cellText_size)
 ggEndow1 <- gg
 #---
-gg <- ggplot(dfStrat, aes(x = `Pct of farms in sample`, y = Type))
+gg <- ggplot(dfStratPct, aes(x = `Pct of farms in sample`, y = Type))
 #gg <- gg + scale_y_discrete(limits = typeVec)
 gg <- gg + geom_col()
 gg <- gg + labs(title = "Pct of farms in sample")
@@ -1956,15 +1918,16 @@ ggEndow2 <- gg
 #ggEndow1 + ggEndow2
 
 #colnames(dfPlot1)
-dfPopRow <- data.frame(Type = "Population mean",
-                       var = c("TFP (v0)", "Mean cost/area\n(KES/acre)",
-                               "Mean yield\n(kg/acre)"),
-                       val = c(round(muV0, 1), round(muCstar, 1), round(muYstarT, 1)))
-gg <- ggplot(dfPopRow, aes(x = var, y = Type, fill = val, label = val))
+# dfPopRow <- data.frame(Type = "Population mean",
+#                        var = c("TFP (v0)", "Mean cost/area\n(KES/acre)",
+#                                "Mean yield\n(kg/acre)"),
+#                        val = c(round(muV0, 1), round(muCstar, 1), round(muYstarT, 1)))
+dfAllTab <- dfAllTab %>% gather_("var", "val", tabHeaders) %>% mutate(val = round(val, 1))
+gg <- ggplot(dfAllTab, aes(x = var, y = Type, fill = val, label = val))
 #gg <- gg + scale_y_discrete(limits = typeVec)
 gg <- gg + geom_tile(alpha = 0)
 #gg <- gg + labs(title = expression(v[0]))
-#gg <- gg + scale_x_discrete(position = "top")
+gg <- gg + scale_x_discrete(limits = tabHeaders)
 gg <- gg + theme_bw()
 gg <- gg + theme(axis.title = element_blank(),
                  axis.text.x = element_blank(),
@@ -1991,32 +1954,16 @@ gg <- gg + theme(axis.title = element_blank(),
 ggBlank <- gg
 
 
-(ggEndow1 / ggEndowPop + plot_layout(heights = c(1, 1 / 14))) | (ggEndow2 / ggBlank + plot_layout(heights = c(1, 1 / 14)))
+((ggEndow1 / ggEndowPop + plot_layout(heights = c(1, 1 / 12))) | (ggEndow2 / ggBlank + plot_layout(heights = c(1, 1 / 12)))) + plot_layout(widths = c(1, 1 / 4))
 
 
 ```
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+To evaluate the expected unconditional mean yield term ($E[\tilde{y}^*(T)]|_{t = 0}$) and parameters $m_{\#}$, $s_{\#}$ appearing in the expected aggregate supply expression (Equation \ref{eq:aggSup2}), first the conditional parameters $\bar{m}_{\#}$ and $\bar{s}_{\#}$ are calculated from the fitted values $v$, $h$, and the sample parameters $\bar{m}_c$, $\bar{s}_c$, $m_k$, and $s_k$, by Equation \ref{eq:mCshrpsCshrp}.
+<!-- The disaggregated $\bar{m}_{c \ell}$ are also computed...and then the conditional mean cost and yield are also evaluated both in the aggregate and disaggregated by strata, as explained in section \ref{sec:binEndStrat}. -->
+as explained in \ref{sec:farmResp}
+as explained in \ref{sec:adopt}
 <!-- The mean harvest yield for each stratum then follows from the first of Equations \ref{eq:v0forms} as $E[y^*(T)]_i = v_{0i} E[k] E[C^{*h}]_i$ (where $E[C^{*h}]_i = e^{h m_{ci} + h^2\frac{s^2_c}{2}}$). -->
 <!-- The TFP parameter for each stratum ($g_{0i}$) can likewise be calculated from the last of Equations \ref{eq:v0forms} given the input elasticities $\alpha_i$. -->
 <!-- \begin{equation} -->
@@ -2025,9 +1972,7 @@ ggBlank <- gg
 <!-- &= v_{0i}^{\frac{1}{1 - h}} e^{\frac{1}{1 - h}(m_k + m_{\#}) + \frac{1}{(1 - h)^2} \frac{s^2_k + s_{\#}^2}{2}} -->
 <!-- \end{split} -->
 <!-- \end{equation} -->
-
-
-To evaluate the expected unconditional mean yield term ($E[\tilde{y}^*(T)]|_{t = 0}$) and parameters $m_{\#}$, $s_{\#}$ appearing in the expected aggregate supply expression (Equation \ref{eq:aggSup2}), first the mean fitted values for yield ($\hat{y}^*$) are interpreted as the observed conditional mean yield.
+<!-- the mean fitted values for yield ($\hat{y}^*$) are interpreted as the observed conditional mean yield. -->
 <!-- the fitted values for yield ($\hat{y}^*$) are interpreted as the observed conditional mean yield. -->
 <!-- \begin{equation} -->
 <!-- y^*(T; k_r(T)) = \hat{y}^* \:\:;\:\:\: \hat{y}^* = y_{obs}^* e^{-\epsilon} -->
@@ -2078,7 +2023,7 @@ equations x in section x can be rearranged into expressions for msharp ssharp
 <!-- Such that the conditional parameters $\bar{m}_{\#}$ and $\bar{s}_{\#}$ can be estimated from the data as follows. -->
 <!-- To parse $m_c$ and $s_c$, recall from Equation \ref{eq:mCk} that $C^* = (v k C^{\#})^{1 / (1 - h)}$, such that -->
 
-The unconditional parameters $m_{\#}$ and $s_{\#}$ can then be computed by solving simultaneous Equations \ref{eq:cSharpUncondParams} at $E[P(T)]|_{t = 0}$ (the expected price at planting time for 2007, the same year as the farm data used to estimate $\bar{m}_{\#}$ and $\bar{s}_{\#}$).
+The unconditional parameters $m_{\#}$ and $s_{\#}$ can then be computed by solving simultaneous Equations \ref{eq:cSharpUncondParams} at $E[P(T)]|_{t = 0}$ (the expected price at planting time for 2007, the same year as the farm data used to estimate $\bar{m}_{\#}$ and $\bar{s}_{\#}$). [This requires EPT02007].
 
 The Kenya farm data includes the harvest output price as observed at harvest $P(T)$, but not $E[P(T)]|_{t = 0}$. Recall from Equation \ref{eq:EPT0} that calculation of $E[P(T)]|_{t = 0}$ requires the maize price at planting $P(0)$, the drift parameter $m_p$, and the time from planting to harvest $T$. In the present exercise, this information is taken from the World Food Program main season monthly price series plotted in Figure \ref{fig:mzP} [@WFPpriceData]. Given the monthly time step of the data, the time horizon from planting in March to the August-September harvest is $T = 6$. The price at planting $P(0)$ is averaged over the main maize markets. The drift parameter $m_p$ is then calculated as the mean log change from one month to another in all markets. Missing values are omitted from these calculations.
 
@@ -2096,7 +2041,7 @@ When calculating $m_p$, it is important to take note of price dynamics peculiar 
 <!-- Farmers base expectations of harvest price on most recent price movement, adaptive expectation [@onono2013response].  -->
 <!-- GoK KFSSG 2011 long rains assessment - 85% of the national output is main season -->
 <!-- Nf: GoK KFSSG 2011 long rains assessment notes that 1.8 million hectares (4.45 million acres) are put to maize. Then have to consider harvested area will be less than planted area. mean farm size of about 2 acres -> Nf = 2 million -->
-<!-- 2006 14 Jun - Good rain [GIEWS]. -->
+<!-- 2006 12 Jun - Good rain [GIEWS]. -->
 <!-- 2007 15 May assessment - long rains were delayed and short rains harvest delayed due to unseasonal extension of short rains into February. This initially led to reduced main season planting, but then good rains came and planting increased. [GIEWS/MoA 2007]. -->
 <!-- 2008 15 July assessment - after a poor mar-may main rains season and post election violence the Ministry of Agriculture estimated that the main season harvest would be 2.16 million MT (GIEWS/MoA 2008 brief). also input prices were higher. -->
 <!-- 100,000 ha not planted due to post election violence, west received normal rainfall but rest of main maize growing area received 20-80% of normal. (USDA FAS Commod Intel Report https://ipad.fas.usda.gov/highlights/2008/09/kenya/) -->
@@ -2270,13 +2215,11 @@ rootFnUp <- function(xIn, xUp, sXtrunc, mXtrunc){
 }
 #=============================================================================
 #=============================================================================
-mCstarTrunc <- mean(dfMod3$`ln[Cost/acre (KES/acre)]`)
-sCstarTrunc <- sd(dfMod3$`ln[Cost/acre (KES/acre)]`)
-muCstarTrunc <- exp(mCstarTrunc + sCstarTrunc^2 / 2)
-
-
-mCstarTruncStrat <- mean(dfMod3$`ln[Cost/acre (KES/acre)]`)
-sCstarTrunc <- sd(dfMod3$`ln[Cost/acre (KES/acre)]`)
+# mCstarTrunc <- mean(dfMod3$`ln[Cost/acre (KES/acre)]`)
+# sCstarTrunc <- sd(dfMod3$`ln[Cost/acre (KES/acre)]`)
+# muCstarTrunc <- exp(mCstarTrunc + sCstarTrunc^2 / 2)
+# mCstarTruncStrat <- mean(dfMod3$`ln[Cost/acre (KES/acre)]`)
+# sCstarTrunc <- sd(dfMod3$`ln[Cost/acre (KES/acre)]`)
 #--------------------------------------------------------------------------
 mEcSharpT0trunc <- (1 - h) * mCstarTrunc - mK - mean(beta0adj)
 sEcSharpT0trunc <- sqrt((1 - h)^2 * sCstarTrunc^2 - sK^2)
@@ -2845,7 +2788,7 @@ Say that the Ministry of Agriculture offers a net subsidy of $\partial B = $ `r 
 
 \singlespacing
 
-```{r Fig5, fig.show = "hold", fig.width = 7, fig.height=3, fig.align="center", fig.cap="\\label{fig:intervention}(Left) The adoption rate, change in welfare, and change in supply for each of the 14 binary endowment strata, for the technological intervention described in the text. (Right) The corresponding expected aggregate supply ribbon shift, where the dotted lines represent the new normal and dismal rainfall bounds of the aggregate supply ribbon.", echo = FALSE}
+```{r Fig5, fig.show = "hold", fig.width = 7, fig.height=3, fig.align="center", fig.cap="\\label{fig:intervention}(Left) The adoption rate, change in welfare, and change in supply for each of the 12 binary endowment strata, for the technological intervention described in the text. (Right) The corresponding expected aggregate supply ribbon shift, where the dotted lines represent the new normal and dismal rainfall bounds of the aggregate supply ribbon.", echo = FALSE}
 
 dfStrat$`Adoption\nrate\n(%)` <- 100 * round(adoptRateStrat, 3)
 dfStrat$`Change in aggregate\nproducer welfare\n(billion KES)` <- round(dPsiStrat, 2)
@@ -2920,7 +2863,7 @@ ggEQsT0Shift <- gg
 
 
 
-(ggShift / ggShiftPop + plot_layout(heights = c(1, 1 / 14))) | (ggEQsT0Shift)
+(ggShift / ggShiftPop + plot_layout(heights = c(1, 1 / 12))) | (ggEQsT0Shift)
 
 
 # gg <- ggplot(dfPlot, aes(x = `Pct of farms in sample`, y = Type))
@@ -3656,7 +3599,7 @@ $\blacksquare$
 
 # Appendix B: Data details and preparation
 
-The raw Kenya farm data files used in this article are open access and available from Tegemeo Institute upon request. The files detail short and long rains maize production (and that of any other crops grown), farm size, input (seed, synthetic and organic fertilizer, chemical pest control) use and cost, land tenure type, and land preparation type and cost, for the years 1997, 2000, 2004, 2007, and 2010. For the present article, only the 2007 long rains (i.e. main season) data is used. Data on production, area, seed, fertilizer, land preparation, and tenure are provided at field level. Fields where maize is not grown or is not the main crop are dropped. Green and dry maize production are reported separately. Green maize production is converted to dry maize equivalent by subtracting 15% of the production weight. The field level input and production files are then merged and aggregated up to farm level. Farm yield is then calculated as maize production (kg.) divided by maize area (acres). Chemical input use and cost are reported at farm level, indicating the main crop on the farm to which the input is applied. Chemical pest controls are counted as costs only if applied primarily to maize. Synthetic fertilizer consists of calcium ammonium nitrate (CAN), nitrogen phosphorus potassium (NPK), Urea, and diammonium phosphate (DAP). Different mixtures under these headings (e.g. NPK 22:11:11, NPK 18:14:12, NPK 17:17:0, etc.) are aggregated. Farm level cost is then calculated as the sum of seed, fertilizer, chemical pest control, and land preparation costs in Kenyan Shillings per acre (KES/acre).
+The raw Kenya farm data files used in this article are open access and available from Tegemeo Institute upon request. The files detail short and long rains maize production (and that of any other crops grown), farm size, input (seed, synthetic and organic fertilizer, chemical pest control) use and cost, land tenure type, and land preparation type and cost, for the years 1997, 2000, 2004, 2007, and 2010. For the present article, only the 2007 long rains (i.e. main season) data is used. Data on production, area, seed, fertilizer, land preparation, and tenure are provided at field level. Fields where maize is not grown or is not the main crop are dropped. Green and dry maize production are reported separately. Green maize production is converted to dry maize equivalent by subtracting 15% of the production weight. The field level input and production files are then merged and aggregated up to farm level. Farm yield is then calculated as maize production (kg.) divided by maize area (acres). Chemical input use and cost are reported at farm level, indicating the main crop on the farm to which the input is applied. Chemical pest controls are counted as costs only if applied primarily to maize. Synthetic fertilizer consists of calcium ammonium nitrate (CAN), nitrogen phosphorus potassium (NPK), Urea, and diammonium phosphate (DAP). Different mixtures under these headings (e.g. NPK 22:11:11, NPK 18:12:12, NPK 17:17:0, etc.) are aggregated. Farm level cost is then calculated as the sum of seed, fertilizer, chemical pest control, and land preparation costs in Kenyan Shillings per acre (KES/acre).
 <!-- This is then merged with the main farm level file.  -->
 
 Land preparation type (manual, oxen, tractor, or none) and land tenure type (owned by parent/relative, owned with title deed, owned without title deed, rented) are reported at field level. Dummy variables are created for land preparation types "oxen" and "tractor", and for the land tenure type "owned with title deed". When aggregating to farm level, the land preparation dummies are preserved if present on any field.
@@ -3767,7 +3710,7 @@ And, in stochastic terms,
 <!-- DAP (NPK, CAN, UREA?) application in line with recommended level of 50kg/acre -->
 <!-- farm size refers to maize fields only, excludes fields that are fallow or where other crops are grown -->
 <!-- 121 crops grown in the survey area, by far maize and beans, often intercropped together. Only farms reporting maize as their main crop are included for the present exercise. Only farms yd > 1kg/acre and cost > 0. [inappendix: yield from croplev07.dta, field07.dta, fert07.dta, labour07.dta, input07.dta (P&D control inputs) files, tampa_rain_96_07.dta (main07), climate.dta (qwetpre), main season only,  Adopter if purchased or retained hybrid maize seed.] -->
-<!-- The survey reports 28 different types of organic and synthetic fertilizer types in use, only a small subset of which is applied in significant quantities: CAN, NPK, DAP, UREA, and manure. For the present exercise, different mixture ratios within any one of these main fertilizer categories (e.g., NPK (23:23:0) and NPK (18:14:12)) are aggregated. Pest and disease control chemical use (pesticide, insecticide, herbicide, fungicide) is similarly aggregated up to a single "P&D control chemical" variable. Reported in different units, harmonized to kg. Input prices are then calculated as the aggregate cost divided by the aggregate quantities. Rain anomaly is actual rainfall divided by the qwetpre -->
+<!-- The survey reports 28 different types of organic and synthetic fertilizer types in use, only a small subset of which is applied in significant quantities: CAN, NPK, DAP, UREA, and manure. For the present exercise, different mixture ratios within any one of these main fertilizer categories (e.g., NPK (23:23:0) and NPK (18:12:12)) are aggregated. Pest and disease control chemical use (pesticide, insecticide, herbicide, fungicide) is similarly aggregated up to a single "P&D control chemical" variable. Reported in different units, harmonized to kg. Input prices are then calculated as the aggregate cost divided by the aggregate quantities. Rain anomaly is actual rainfall divided by the qwetpre -->
 <!-- , must be used in accordance with the provisions of the Tegemeo data policy. -->
 <!-- adult equivalent household size  -->
 <!-- tribal affiliation, gender of head of household, cell phone use, distance to market or nearest road, etc., but  -->
