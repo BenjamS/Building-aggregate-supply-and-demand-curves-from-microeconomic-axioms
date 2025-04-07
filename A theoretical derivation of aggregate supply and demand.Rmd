@@ -802,7 +802,7 @@ Because $C^*$ is lognormally distributed, the expression resolves as follows.
 \mathcal{A} &= \Phi \left( \frac{\ln(\bar{\bar{C^*}}) - m_c}{s_c} \right) \\
 &= \Phi\left( \frac{\frac{-h \partial B}{\partial \ln(\nu) + \partial \ln(g)} - m_c}{s_c}
 \end{split}
-\end{split}
+\label{eq:AdoptRate}
 \end{equation}
 
 The adoption rate within single a binary endowment stratum can be calculated by evaluating this expression at the $v_{\ell}$ of interest.
@@ -1044,7 +1044,7 @@ Such that
 \Delta \psi &= N E[k_a] E[k] v P \gamma \int_0^{\bar{\bar{C}^{*}}} (C^{*h} - \bar{\bar{C^{*h}}}) \rho (C^*) d C^* \\
 &= N E[k_a] E[k] v P \gamma (E[C^{*h}] \mathcal{P}(\bar{\bar{C^*}}) - \bar{\bar{C^{*h}}} \mathcal{A}) \:\:;\:\:\: \mathcal{P}(\bar{\bar{C^{\#}}}) = \Phi \left( \frac{\ln(\bar{\bar{C^{\#}}}) - m_{\#}}{s_{\#}} - \eta s_{\#}  \right) \\
 &= N E[k_a] P \gamma (E[y^*] \mathcal{P}(\bar{\bar{C^{\#}}}) - E[k] v \bar{\bar{C^{*h}}} \mathcal{A}) \\
-&= N E[k_a] P \gamma \left( E[y^*] \mathcal{P}(\bar{\bar{C^{\#}}}) - E[\bar{\bar{y}^*}] \mathcal{A} \right)
+&= N E[k_a] P \gamma \left( E[y^*] \mathcal{P}(\bar{\bar{C^{\#}}}) - E[\bar{\bar{y}^*}] \mathcal{A} \right) \:\:;\:\:\: E[\bar{\bar{y}^*}] = E[v k \bar{\bar{C^{*}}}] = \frac{\bar{\bar{C^{*}}}}{E[C^{* h}]} E[y^*]
 \end{split}
 \end{equation}
 <!-- $$ -->
@@ -1545,7 +1545,7 @@ Which proves Equation \ref{eq:probProfitResult}. Recalling from section \ref{sec
 Expected aggregate supply in stochastic price parameter space follows from Equations \ref{eq:aggSup2} and \ref{eq:PhiMap}.
 
 \begin{equation}
-E[Q(T)]|_{t = 0} = N E[k_a] E[\tilde{y}^*(T)]|_{t = 0} (1 - \Phi(z)) \:\:;\:\:\: z = \frac{\ln \left( \frac{E[\tilde{C}^{\#}(T)^{\eta}]|_{t = 0}}{P(0)} \right) - \left( m_p - \eta \frac{s^2_p}{2} \right) T}{s_p \sqrt{T}}
+E[Q(T)]|_{t = 0} = N E[k_a] E[\tilde{y}^*(T; k_m(T))]|_{t = 0} (1 - \Phi(z)) \:\:;\:\:\: z = \frac{\ln \left( \frac{E[\tilde{C}^{\#}(T)^{\eta}]|_{t = 0}}{P(0)} \right) - \left( m_p - \eta \frac{s^2_p}{2} \right) T}{s_p \sqrt{T}}
 \label{eq:aggSup3}
 \end{equation}
 
@@ -1560,7 +1560,7 @@ And, regardless of the parameter space in which calculations are made,
 
 \begin{equation}
 \begin{split}
-E[Q(T)]|_{t = 0} &= N E[k_a] E[\tilde{y}^*(T)]|_{t = 0} \text{Prob}(E[\tilde{C}^{\#}(T)^{\eta}]|_{t = 0} \leq P(T)^{\eta}) \\
+E[Q(T)]|_{t = 0} &= N E[k_a] E[\tilde{y}^*(T; k_m(T))]|_{t = 0} \text{Prob}(E[\tilde{C}^{\#}(T)^{\eta}]|_{t = 0} \leq P(T)^{\eta}) \\
 &= N E[k_a] E[\tilde{y}^*(T)]|_{t = 0} \times \text{PEFS-adj. mean probability of profit}
 \end{split}
 \label{eq:aggSup4}
@@ -1949,7 +1949,7 @@ rm(mod1, mod2, listDf)
 
 The fitted coefficient on logged cost per acre is statistically significant and indicates that the population yield degree of homogeneity is $h =$ `r hReport`, by which it follows immediately that the price elasticity of farm supply is $\eta = h / (1 - h) =$ `r etaReport`. The coefficients on the other regressors are also statistically significant and take values and signs that agree with intuition. Note that the coefficient on the farm size regressor is negative, affirming the inverse relation between farm size and yield found in numerous other studies [@muyanga2019revisiting; @larson2014should; @wassie2019revisiting; @gautam2019too; @kimhi2006plot].
 
-The fitted binary endowment coefficients ($\beta_i$) indicate that hybrid maize seed is the most significant contributor to TFP, followed by land prep method and tenure. Interestingly, oxen contributes slightly more than tractor. Based on these values, the expenditure TFPs are calculated for each of the 12 binary endowment strata ($v_{\ell}$), as well as the average across all strata ($v$). The implicit mean expected yield ($E[\tilde{y}^*(T;k_r) | \theta] |_{t = 0}$) is then calculated by Equation \ref{eq:impMuEyStarT0cond}, for $k_r = 1$ (indicating rainfall expectation in line with the historical benchmark). These stratified and whole sample parameters are reported along with the mean observed cost per unit area and harvest yield in Table 2.
+The fitted binary endowment coefficients ($\beta_i$) indicate that hybrid maize seed is the most significant contributor to TFP, followed by land prep method and tenure. Interestingly, oxen contributes slightly more than tractor. Based on these values, the expenditure TFPs are calculated for each of the 12 binary endowment strata ($v_{\ell}$), as well as the average across all strata ($v$). The implicit mean expected yield ($E[\tilde{y}^*(T;k_r) | \theta] |_{t = 0}$) is then calculated by Equation \ref{eq:impMuEyStarT0cond}, for $\tilde{k}_r^{\kappa_r} = 1$ (indicating rainfall expectation in line with the historical benchmark). These stratified and whole sample parameters are reported along with the mean observed cost per unit area and harvest yield in Table 2.
 
 comment on higher yield of tractor but higher efficiency of oxen
 harvest was higher than expected, implicit expected yield based on kr=1 when in fact kr > 1 (graphic)-- expected less got more hence harvest yield higher than implicit expected yield at kr=1.
@@ -1970,19 +1970,19 @@ kappaRn <- coefVec[which(coefNames == "ln[Rain anomaly]")]
 kRn <- exp(dfMod3$`ln[Rain anomaly]`)
 # EyStarT0 <- exp(dfMod3$`Yield (kg/acre)`) * kRn^(-kappaRn)
 EyStarT0trunc <- exp(mod3$fitted.values) * kRn^(-kappaRn)
-notThese <- c("Dist", "ln[Yield (kg/acre)]", "ln[Cost/acre (KES/acre)]", bin_vars)# "ln[Rain anomaly]", 
+notThese <- c("Dist", "ln[Yield (kg/acre)]", "ln[Cost/acre (KES/acre)]", bin_vars, "ln[Rain anomaly]") 
 lnMod3Vars <- coefOrder
-kVars <- setdiff(lnMod3Vars, notThese)
+kPrimeVars <- setdiff(lnMod3Vars, notThese)
 #kVars <- kVars[-grep("Tenure|Landprep", kVars)]
-kappaVec <- coefVec[which(coefNames %in% kVars)]
-matK <- dfMod3[, kVars] %>% as.matrix()
-kLook <- matK %*% rep(1, ncol(matK))
-lkVec <- matK %*% kappaVec
-mKvec <- matK %*% diag(kappaVec) %>% colMeans()
-sKvec <- matK %*% diag(kappaVec) %>% apply(2, sd)
-mK <- sum(mKvec)
-sK <- sqrt(sum(sKvec^2))
-muK <- exp(mK + sK^2 / 2)
+kappaPrimeVec <- coefVec[which(coefNames %in% kPrimeVars)]
+matKprime <- dfMod3[, kPrimeVars] %>% as.matrix()
+kPrimeLook <- matKprime %*% rep(1, ncol(matKprime))
+lkPrimeVec <- matKprime %*% kappaPrimeVec
+mKprimeVec <- matKprime %*% diag(kappaPrimeVec) %>% colMeans()
+sKprimeVec <- matKprime %*% diag(kappaPrimeVec) %>% apply(2, sd)
+mKprime <- sum(mKprimeVec)
+sKprime <- sqrt(sum(sKprimeVec^2))
+muKprime <- exp(mKprime + sKprime^2 / 2)
 #-----------------------------------------------------------------------------
 beta0plusAlphaWhterm <- coefVec[1]
 v0base <- exp(beta0plusAlphaWhterm)
@@ -2003,7 +2003,7 @@ dfx <- dfBins
 dfx$vStrat <- c(vStrat)
 dfx$lcStar <- dfMod3$`ln[Cost/acre (KES/acre)]`
 dfx$ydHarv <- exp(dfMod3$`ln[Yield (kg/acre)]`)
-dfx$k <- exp(lkVec)
+dfx$kPrime <- exp(lkPrimeVec)
 #--------------------------------------------------------------------------
 # Create label vec for each of the 12 endowment combos
 dfBins$`Hybrid seed` <- ifelse(dfBins$`Hybrid seed` == 1, "Hybrid", "0")
@@ -2025,26 +2025,26 @@ dfStrat <- dfx %>% group_by(Type) %>% summarise(Type = unique(Type),
                                                 mCstar = mean(lcStar),
                                                  sCstar = sd(lcStar),
                                                  muYdHarv = mean(ydHarv),
-                                                 muKstrat = mean(k)) %>%
+                                                 muKprimeStrat = mean(kPrime)) %>%
   mutate(muCstarTruncStrat = exp(mCstar + sCstar^2 / 2)) %>%
   mutate(muCstarHtruncStrat = exp(h * mCstar + h^2 * sCstar^2 / 2)) %>%
-  mutate(muEyStarT0truncStrat = vStrat * muK * muCstarHtruncStrat) %>%
-  mutate(mEcSharpT0 = (1 - h) * mCstar - mK - log(vStrat),
-         sEcSharpT0 = sqrt((1 - h)^2 * sCstar^2 - sK^2)) %>%
-  mutate(muEcSharpT0truncStrat = exp(mEcSharpT0 + sEcSharpT0^2 / 2)) %>%
+  mutate(muEyStarT0truncStrat = vStrat * muKprime * muCstarHtruncStrat) %>%
+  mutate(mEcSharpT0truncStrat = (1 - h) * mCstar - mKprime - log(vStrat),
+         sEcSharpT0truncStrat = sqrt((1 - h)^2 * sCstar^2 - sKprime^2)) %>%
+  mutate(muEcSharpT0truncStrat = exp(mEcSharpT0truncStrat + sEcSharpT0truncStrat^2 / 2)) %>%
   arrange(vStrat) %>% relocate(Type) %>%
   mutate(stratID = as.character(1:nStrat))
 dfAll <- dfx %>% summarise(v = mean(vStrat),
                               mCstar = mean(lcStar),
                               sCstar = sd(lcStar),
                               muYdHarv = mean(ydHarv),
-                              muKstrat = mean(k)) %>%
-  mutate(muCstarTruncStrat = exp(mCstar + sCstar^2 / 2),
-         muCstarHtruncStrat = exp(h * mCstar + h^2 * sCstar^2 / 2)) %>%
-  mutate(muEyStarT0truncStrat = mean(vStrat) * muK * muCstarHtruncStrat) %>%
-  mutate(mEcSharpT0 = (1 - h) * mCstar - mK - log(v),
-         sEcSharpT0 = sqrt((1 - h)^2 * sCstar^2 - sK^2)) %>%
-  mutate(muEcSharpT0truncStrat = exp(mEcSharpT0 + sEcSharpT0^2 / 2)) %>%
+                              muKprime = mean(kPrime)) %>%
+  mutate(muCstarTrunc = exp(mCstar + sCstar^2 / 2),
+         muCstarHtrunc = exp(h * mCstar + h^2 * sCstar^2 / 2)) %>%
+  mutate(muEyStarT0trunc = mean(vStrat) * muKprime * muCstarHtrunc) %>%
+  mutate(mEcSharpT0trunc = (1 - h) * mCstar - mKprime - log(v),
+         sEcSharpT0trunc = sqrt((1 - h)^2 * sCstar^2 - sKprime^2)) %>%
+  mutate(muEcSharpT0trunc = exp(mEcSharpT0 + sEcSharpT0^2 / 2)) %>%
   mutate(stratID = "All",
          Type = "All") %>% relocate(Type)
 # REMEMBER: kRain removed from muK (equivalent to setting kRain = 1), so muEyStarT0truncStrat
@@ -2054,12 +2054,12 @@ dfStratTab <- dfStrat %>% select(Type, vStrat, muCstarTruncStrat,
                                  muEcSharpT0truncStrat, muYdHarv, muEyStarT0truncStrat)
 tabHeaders <- c("Expenditure\nTFP",
                 "Mean observed\nexpenditure/area\n(KES/acre)",
-                "Mean implicit\nexpected unit\nexpenditure (KES/kg)",
+                "Mean implicit\nexpected unit\nexpend. (KES/kg)",
                 "Mean observed\nharvest yield\n(kg/acre)",
                 "Mean implicit\nexpected yield\n(kg/acre)")
 colnames(dfStratTab)[-1] <- tabHeaders
-dfAllTab <- dfAll %>% select(Type, v, muCstarTruncStrat, muEcSharpT0truncStrat,
-                             muYdHarv, muEyStarT0truncStrat)
+dfAllTab <- dfAll %>% select(Type, v, muCstarTrunc, muEcSharpT0trunc,
+                             muYdHarv, muEyStarT0trunc)
 colnames(dfAllTab)[-1] <- tabHeaders
 #==========================================================================
 # Graphic of prevalence of each endowment combo and its value
@@ -2347,6 +2347,7 @@ rootFnUp <- function(xIn, xUp, sXtrunc, mXtrunc){
   return(outVec)
 }
 #=============================================================================
+# Unconditional params
 #=============================================================================
 # mCstarTrunc <- mean(dfMod3$`ln[Cost/acre (KES/acre)]`)
 # sCstarTrunc <- sd(dfMod3$`ln[Cost/acre (KES/acre)]`)
@@ -2370,19 +2371,25 @@ sEcSharpT0 <- sol$x[1]
 mEcSharpT0 <- sol$x[2]
 muEcSharpT0 <- exp(mEcSharpT0 + sEcSharpT0^2 / 2)
 muEcSharpT0n <- exp(eta * mEcSharpT0 + eta^2 * sEcSharpT0^2 / 2)
-# Now can calculate unconditional cStar parameters
-mCstar <- 1 / (1 - h) * (mean(beta0adj) + mK + mEcSharpT0)
-sCstar <- 1 / (1 - h) * sqrt(sK^2 + sEcSharpT0^2)
+# Now can calculate unconditional cStar, muEyStarT0 parameters
+# Keep in mind 
+mCstar <- 1 / (1 - h) * (mean(beta0adj) + mKprime + mEcSharpT0)
+sCstar <- 1 / (1 - h) * sqrt(sKprime^2 + sEcSharpT0^2)
 muCstar <- exp(mCstar + sCstar^2 / 2)
 muCstarh <- exp(h * mCstar + h^2 * sCstar^2 / 2)
-muEyStarT0 <- mean(vStrat) * muK * muCstarh
+muEyStarT0 <- mean(vStrat) * muKprime * muCstarh
+# Stratified unconditional params
+mCstarStrat <- 1 / (1 - h) * (log(dfStrat$vStrat) + mKprime + mEcSharpT0)
+muCstarStrat <- exp(mCstarStrat + sCstar^2 / 2)
+muCstarhStrat <- exp(h * mCstarStrat + h^2 * sCstar^2 / 2)
+muEyStarT0strat <- dfStrat$vStrat * muKprime * muCstarhStrat
 # mLamba <- log(P02007) + (mPDown - sPDown^2 / 2) * timeHoriz + log(h) - mEcSharpT0
 # mean(log(lamTrunc))
 # log(P02007) + (mPDown - sPDown^2 / 2) * timeHoriz + log(h) #mEcSharpT0
 ProbProfit <- pnorm((log(EPT02007) - mEcSharpT0) / (sEcSharpT0) - eta * sEcSharpT0)
 EmploymentRate <- pnorm((log(EPT02007) - mEcSharpT0) / sEcSharpT0)
-muEyStarT0check <- dfAll$muEyStarT0truncStrat * EmploymentRate / ProbProfit
-muEyStarT0check - muEyStarT0
+muEyStarT0check <- dfAll$muEyStarT0trunc * EmploymentRate / ProbProfit
+#muEyStarT0check - muEyStarT0
 #=============================================================================
 #=============================================================================
 #=============================================================================
@@ -2472,7 +2479,7 @@ gg <- gg + theme(axis.title = element_text(size = axisTitleSize),
                  legend.text = element_text(size = legendTextSize),
                  legend.position = "top")
 ggEQsT0 <- gg
-#-------------------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------------
 # Price elasticity of expected aggregate supply
 gg <- ggplot(dfOut, aes(x = `Expected price (KES/kg)`, y = `Price elasticity\nof supply`))
 gg <- gg + geom_line() + coord_cartesian(ylim = c(0, 1))
@@ -2624,101 +2631,122 @@ ggEQsT0 / ggEtaEPT0EQsT0a
 ## The research induced supply ribbon shift
 ```{r, echo=FALSE}
 
-sEcSharpT0stratVec <- c(); mEcSharpT0stratVec <- c()
-for(i in 1:nrow(dfStrat)){
-  xIn <- c(dfStrat$sEcSharpT0[i], dfStrat$mEcSharpT0[i])
-sol <- nleqslv::nleqslv(xIn, rootFnUp, jac = NULL,
-                        xUp = EPT02007,
-                        sXtrunc = dfStrat$sEcSharpT0[i],
-                        mXtrunc = dfStrat$mEcSharpT0[i])
-#sol
-sEcSharpT0stratVec[i] <- sol$x[1]
-mEcSharpT0stratVec[i] <- sol$x[2]
-}
+# sEcSharpT0stratVec <- c(); mEcSharpT0stratVec <- c()
+# for(i in 1:nrow(dfStrat)){
+#   xIn <- c(dfStrat$sEcSharpT0[i], dfStrat$mEcSharpT0[i])
+# sol <- nleqslv::nleqslv(xIn, rootFnUp, jac = NULL,
+#                         xUp = EPT02007,
+#                         sXtrunc = dfStrat$sEcSharpT0[i],
+#                         mXtrunc = dfStrat$mEcSharpT0[i])
+# #sol
+# sEcSharpT0stratVec[i] <- sol$x[1]
+# mEcSharpT0stratVec[i] <- sol$x[2]
+# }
 # muEcSharpT0 <- exp(mEcSharpT0 + sEcSharpT0^2 / 2)
 # muEcSharpT0n <- exp(eta * mEcSharpT0 + eta^2 * sEcSharpT0^2 / 2)
 # Now can calculate unconditional cStar parameters
-mCstarStrat <- 1 / (1 - h) * (mean(beta0adj) + mK + mEcSharpT0stratVec)
-sCstarStrat <- 1 / (1 - h) * sqrt(sK^2 + sEcSharpT0stratVec^2)
 # muCstar <- exp(mCstar + sCstar^2 / 2)
 # muCstarh <- exp(h * mCstar + h^2 * sCstar^2 / 2)
 # muEyStarT0 <- mean(vStrat) * muK * muCstarh
 # mLamba <- log(P02007) + (mPDown - sPDown^2 / 2) * timeHoriz + log(h) - mEcSharpT0
 # mean(log(lamTrunc))
 # log(P02007) + (mPDown - sPDown^2 / 2) * timeHoriz + log(h) #mEcSharpT0
-ProbProfit <- pnorm((log(EPT02007) - mEcSharpT0stratVec) / (sEcSharpT0stratVec) - eta * sEcSharpT0stratVec)
-EmploymentRate <- pnorm((log(EPT02007) - mEcSharpT0stratVec) / sEcSharpT0stratVec)
+# ProbProfitStrat <- pnorm((log(EPT02007) - mEcSharpT0stratVec) / (sEcSharpT0stratVec) - eta * sEcSharpT0stratVec)
+# EmploymentRateStrat <- pnorm((log(EPT02007) - mEcSharpT0stratVec) / sEcSharpT0stratVec)
 # muEyStarT0check <- dfAll$muEyStarT0truncStrat * EmploymentRate / ProbProfit
-
-
-
+#-------------------------------------------------------------------------
+# Exogenous tech, price, and subsidy shock params
 # betaNew <- 0.2
 # dlng0 <- exp(betaNew) - 1
 dlng0 <- 0.28
 betaNew <- log(dlng0 + 1)
 nuRatio <- 0.75
 aDotdlw <- 0.2; dlP <- -aDotdlw * nuRatio
+dB <- 1200
 dlnNu <- dlP - aDotdlw
 dlnNuh <- h * dlP - aDotdlw
-dlv0dlg0 <- dlng0 - aDotdlw
-dlMuCstar <- 1 / (1 - h) * (dlnNu + dlng0)
-dlMuYstarT <- 1 / (1 - h) * (dlnNuh + dlng0)
-dB <- 550
-#---
-# Save to mark on heat maps below
+# Save intervention coordinates to mark on heat maps farther below
 dlNuPoint <- dlnNu
 dBPoint <- dB
+#-------------------------------------------------------------------------
+# Endogenous farm expenditure TFP, mean cost, and mean expected yield response
+dlv0dlg0 <- dlng0 - aDotdlw
+dlMuCstar <- 1 / (1 - h) * (dlnNu + dlng0)
+dlMuEyStarT0 <- 1 / (1 - h) * (dlnNuh + dlng0)
 #---
 cStarMaxAdopt <- -h * dB / (dlnNu + dlng0)
-z <- (log(cStarMaxAdopt) - mCstarStrat) / sCstarStrat
-adoptRateStrat <- pnorm(z)
-adoptRateTotal <- sum(adoptRateStrat * stratPct)
-# Total subsidies in billions
-aggSubsidyStrat <- stratPct * dB * Nf * muArea * adoptRateStrat * 10^-9
-aggSubsidy <- dB * Nf * muArea * adoptRateTotal * 10^-9
-#sum(aggSubsidyStrat) - aggSubsidy # Check if zero
-aggSubsidyUSD <- aggSubsidy / 67 * 10^3 #in million USD
-aggSubsidyStratMilln <- aggSubsidyStrat * 10^3
+lcStarMaxAdopt <- log(cStarMaxAdopt)
+zStrat <- (lcStarMaxAdopt - mCstarStrat) / sCstar
+adoptRateStrat <- pnorm(zStrat)
+zTot <- (lcStarMaxAdopt - mCstar) / sCstar
+adoptRateTotal <- pnorm(zTot)
+adoptRateTotalCheck <- sum(adoptRateStrat * stratFrac)
+#adoptRateTotal - adoptRateTotalCheck
 # A = \Phi\left( \frac{\frac{-h (1 - h) \partial B}{\partial \ln(\nu) + \partial \ln(g)} - (\ln(v) + m_k + m_{\#})}{\sqrt{s_k^2 + s_{\#}^2}} \right)
-phiArg <- (log(cStarMaxAdopt) - mCstarStrat) / sCstarStrat - h * sCstarStrat
-probProfAdopt <- pnorm(phiArg)
-dPsiStrat <- stratPct * Nf * muArea * muYstarTi * EPT02007 * (dlnNu + dlng0) * (probProfAdopt - cStarMaxAdopt / muCstarih * adoptRateStrat)
+#--------------------------------------------------------------------------
+# Total subsidies in billions
+aggSubsidy <- dB * Nf * muArea * adoptRateTotal * 10^-9
+aggSubsidyStrat <- stratFrac * dB * Nf * muArea * adoptRateStrat * 10^-9
+#sum(aggSubsidyStrat) - aggSubsidy # Check if zero
+aggSubsidyMillnUSD <- aggSubsidy / 67 * 10^3 #in million USD
+aggSubsidyStratMillnKES <- aggSubsidyStrat * 10^3 #in million KES
+#--------------------------------------------------------------------------
+# Welfare assessment
+phiArgStrat <- (lcStarMaxAdopt - mCstarStrat) / sCstar - h * sCstar
+probProfAdoptStrat <- pnorm(phiArgStrat)
+phiArgTot <- (lcStarMaxAdopt - mCstar) / sCstar - h * sCstar
+probProfAdoptTot <- pnorm(phiArgTot)
+dPsiStrat <- stratFrac * Nf * muArea * muEyStarT0strat * EPT02007 * (dlnNu + dlng0) * (probProfAdoptStrat - cStarMaxAdopt / muCstarhStrat * adoptRateStrat)
 dPsiStrat <- dPsiStrat * 10^-9 # in billions KES
-dPsi <- sum(dPsiStrat)
-#dPsi / 67.32 # 2007 USD exchange rate
-dQStrat <- stratPct * Nf * muArea * muYstarTi * (dlnNuh + dlng0) / (1 - h) * probProfAdopt
-# \Delta Q_i &= N_i E[k_a] E[y^*]_i \frac{1}{1 - h}(\partial \ln(g) - \boldsymbol{\alpha} ' \partial \ln(mathbf{w})) \Phi \left( \frac{\ln(\bar{\bar{C^*}}) - m_{ci}}{s_c} - h s_c  \right)
+dPsiTot <- sum(dPsiStrat)
+#dPsiTot / 67.32 # 2007 USD exchange rate
+dPsiTotCheck <- Nf * muArea * muEyStarT0 * EPT02007 * (dlnNu + dlng0) * (probProfAdoptTot - cStarMaxAdopt / muCstarh * adoptRateTotal) * 10^-9
+#dPsiTot - dPsiTotCheck
+#--------------------------------------------------------------------------
+# Change in aggregate supply
+dQStrat <- stratFrac * Nf * muArea * muEyStarT0strat * (dlnNuh + dlng0) / (1 - h) * probProfAdoptStrat
 dQStrat <- 10^-3 * dQStrat # in MT
 dQStrat <- 10^-3 * dQStrat # in 1000 MT
-dQ <- sum(dQStrat)
-
+dQtot <- sum(dQStrat)
+dQtotCheck <- Nf * muArea * muEyStarT0 * (dlnNuh + dlng0) / (1 - h) * probProfAdoptTot * 10^-6
+#dQtot - dQtotCheck
+# \Delta Q_i &= N_i E[k_a] E[y^*]_i \frac{1}{1 - h}(\partial \ln(g) - \boldsymbol{\alpha} ' \partial \ln(mathbf{w})) \Phi \left( \frac{\ln(\bar{\bar{C^*}}) - m_{ci}}{s_c} - h s_c  \right)
 
 ```
 
-Say a new technology package is released in Kenya that results in a `r 100 * dlng0`% increase in TFP on adopting farms. As explained in section \ref{sec:farmResp}, this is tantamount to adding another binary endowment $b_5\beta_5 =$ `r round(betaNew, 2)` to the yield model. Say that the expected $\boldsymbol{\alpha}$-adjusted percentage increase in input prices ($\boldsymbol{\alpha} '\partial \ln(\mathbf{w})$) is `r aDotdlw`, and the expected percentage decrease in output price ($\partial \ln(P)$) is `r dlP`, such that $\partial \ln(\nu) =$ `r dlnNu`, which is greater than the percentage increase in TFP. Adoption would thus result in a `r 100 * dlv0dlg0`% increase in expenditure TFP ($v$), a `r -round(100 * dlMuCstar)`% reduction in expenditure, and a `r round(100 * dlMuYstarT)`% increase in yield on adopting farms (recall Equations \ref{eq:dlv0dlg0}, \ref{eq:dlyStardlg0}, and \ref{eq:dlCstardlg0}). However, by the criterion in Inequality \ref{eq:adoptCondSimp}, adoption makes economic sense for the farmer only if a net subsidy is included in the technology package (i.e., only if $\partial B > 0$).
+Say a new technology package is released in Kenya that results in a `r 100 * dlng0`% increase in TFP on adopting farms. As explained in section \ref{sec:farmResp}, this is tantamount to adding another binary endowment $b_5\beta_5 =$ `r round(betaNew, 2)` to the yield model. Say that the expected $\boldsymbol{\alpha}$-adjusted percentage increase in input prices ($\boldsymbol{\alpha} '\partial \ln(\mathbf{w})$) is `r aDotdlw`, and the expected percentage decrease in output price ($\partial \ln(P)$) is `r dlP`, such that $\partial \ln(\nu) =$ `r dlnNu`, which is greater than the percentage increase in TFP. Adoption would thus result in a `r 100 * dlv0dlg0`% increase in expenditure TFP ($v$), a `r -round(100 * dlMuCstar)`% reduction in expenditure, and a `r round(100 * dlMuEyStarT0)`% increase in yield on adopting farms (recall Equations \ref{eq:dlv0dlg0}, \ref{eq:dlyStardlg0}, and \ref{eq:dlCstardlg0}). However, by the criterion in Inequality \ref{eq:adoptCondSimp}, adoption makes economic sense for the farmer only if a net subsidy is included in the technology package (i.e., only if $\partial B > 0$).
 
-Say that the Ministry of Agriculture offers a net subsidy of $\partial B = $ `r dB` KES/acre to adopting farms, perhaps in the form of free seed and fertilizer. This then implies the adoption expenditure per acre ceiling of $\bar{\bar{C}^*} =$ `r round(cStarMaxAdopt)` KES (recall Equation \ref{eq:cStarAdopt}), and the corresponding adoption rate of $\mathcal{A} =$ `r round(100 * adoptRateTotal, 1)`% (recall Equation \ref{eq:AdoptRatei}). The aggregate net subsidy required from the Ministry of Agriculture to achieve this rate follows from Equation \ref{eq:aggSubsidy} as `r round(aggSubsidy, 2)` billion KES. The corresponding increase in aggregate supply and producer welfare follow from Equations \ref{eq:dEQT0} and \ref{eq:dEPsi} as `r round(dQ, 2)` 1000 MT and `r round(dPsi, 2)` billion KES, respectively. The breakdown by stratum is given in the left panel of Figure \ref{fig:intervention}, accompanied by a graphic of the corresponding supply ribbon shift in the right panel.
+Say that the Ministry of Agriculture offers a net subsidy of $\partial B = $ `r dB` KES/acre to adopting farms, perhaps in the form of free seed and fertilizer. As explained in section \ref{sec:adopt}, this then implies the adoption expenditure per acre ceiling of $\bar{\bar{C}^*} =$ `r round(cStarMaxAdopt)` KES (Equation \ref{eq:cStarAdopt}), and the corresponding adoption rate of $\mathcal{A} =$ `r round(100 * adoptRateTotal, 1)`% (Equation \ref{eq:AdoptRate}). The aggregate net subsidy required from the Ministry of Agriculture to achieve this rate follows from Equation \ref{eq:aggSubsidy} as `r round(aggSubsidy, 2)` billion KES. The corresponding increase in expected aggregate supply and producer welfare follow from Equations \ref{eq:dEQT0} and \ref{eq:dEPsi} as `r round(dQ, 2)` 1000 MT and `r round(dPsi, 2)` billion KES, respectively (assuming normal rainfall $\tilde{k}_r^{\kappa_r} = 1$). The breakdown by stratum is given in the left panel of Figure \ref{fig:intervention}, accompanied by a graphic of the corresponding supply ribbon shift in the right panel.
 <!-- By the criterion in Inequality \ref{eq:adoptCondSimp}, adoption in the absence of exogenous subsidies/costs will increase farm net benefit only if the the percentage increase in TFP $\partial \ln(g) =$ `r 100 * dlng0`% is greater than the absolute value of the percentage decrease in output price plus the $\alpha_i$-scaled increase in input prices (i.e. only if $\partial \ln(g) > |\partial \ln(\nu)|$).  -->
-[at what rain level?... any impact assessment must be accompanied by a clear indication of the assumed meteorological conditions.]
 
 \singlespacing
 
 ```{r Fig5, fig.show = "hold", fig.width = 7, fig.height=3, fig.align="center", fig.cap="\\label{fig:intervention}(Left) The adoption rate, change in welfare, and change in supply for each of the 12 binary endowment strata, for the technological intervention described in the text. (Right) The corresponding expected aggregate supply ribbon shift, where the dotted lines represent the new normal and dismal rainfall bounds of the aggregate supply ribbon.", echo = FALSE}
 
-dfStrat$`Adoption\nrate\n(%)` <- 100 * round(adoptRateStrat, 3)
-dfStrat$`Change in aggregate\nproducer welfare\n(billion KES)` <- round(dPsiStrat, 2)
-dfStrat$`Change in\nsupply\n(1000 MT)` <- round(dQStrat, 2)
-dfTab <- dfStrat %>% rename(`TFP (v0)` = v0) %>%
-  select(`Type`, `Adoption\nrate\n(%)`, `Change in aggregate\nproducer welfare\n(billion KES)`, `Change in\nsupply\n(1000 MT)`) %>%
-  relocate(`Type`, `Adoption\nrate\n(%)`, `Change in aggregate\nproducer welfare\n(billion KES)`, `Change in\nsupply\n(1000 MT)`) %>% gather(var, val, `Adoption\nrate\n(%)`:`Change in\nsupply\n(1000 MT)`)
+# dfStrat$`Adoption\nrate\n(%)` <- 100 * round(adoptRateStrat, 3)
+# dfStrat$`Change in aggregate\nproducer welfare\n(billion KES)` <- round(dPsiStrat, 2)
+# dfStrat$`Change in\nsupply\n(1000 MT)` <- round(dQStrat, 2)
+# dfTab <- dfStrat %>% rename(`TFP (v0)` = v0) %>%
+#   select(`Type`, `Adoption\nrate\n(%)`, `Change in aggregate\nproducer welfare\n(billion KES)`, `Change in\nsupply\n(1000 MT)`) %>%
+#   relocate(`Type`, `Adoption\nrate\n(%)`, `Change in aggregate\nproducer welfare\n(billion KES)`, `Change in\nsupply\n(1000 MT)`) %>% gather(var, val, `Adoption\nrate\n(%)`:`Change in\nsupply\n(1000 MT)`)
 
 #dfPlot$Type <- factor(dfPlot$Type, levels = dfPlot$`TFP (v0)`[order(dfPlot$`TFP (v0)`)], ordered = T)
 #gg <- ggplot(dfPlot, aes(x = Element, y = Type, fill = y0, label = y0))
+
+
+dfTab <- data.frame(Type = dfStrat$Type,
+                    round(100 * adoptRateStrat, 1),
+                    round(dQStrat, 1),
+                    round(dPsiStrat, 1))
+varCols <- c("Adoption\nrate (%)", "Change in\nsupply\n(1000 MT)",
+             "Change in aggregate\nproducer welfare\n(billion KES)")
+colnames(dfTab)[-1] <- varCols
+dfTab <- dfTab %>% gather_("var", "val", varCols)
 gg <- ggplot(dfTab, aes(x = var, y = Type, fill = val, label = val))
 gg <- gg + scale_y_discrete(limits = typeVec)
 gg <- gg + geom_tile(alpha = 0)
 #gg <- gg + labs(title = expression(v[0]))
-gg <- gg + scale_x_discrete(position = "top")
+gg <- gg + scale_x_discrete(limits = varCols, position = "top")
 gg <- gg + theme_bw()
 gg <- gg + theme(axis.title = element_blank(),
                  axis.text.x = element_text(size = axisTextSize),
@@ -2730,11 +2758,14 @@ gg <- gg + theme(axis.title = element_blank(),
 gg <- gg + geom_text(size = cellText_size)
 ggShift <- gg
 #---
-dfPopRow <- data.frame(Type = "Population total",
+dfPopRow <- data.frame(Type = "Population",
                        var = unique(dfTab$var),
-                       val = c(round(100 * adoptRateTotal, 1), round(dPsi, 1), round(dQ, 1)))
+                       val = c(round(100 * adoptRateTotal, 1),
+                               round(dQtot, 1), 
+                               round(dPsiTot, 1)))
 gg <- ggplot(dfPopRow, aes(x = var, y = Type, fill = val, label = val))
 gg <- gg + geom_tile(alpha = 0)
+gg <- gg + scale_x_discrete(limits = varCols)
 gg <- gg + theme_bw()
 gg <- gg + theme(axis.title = element_blank(),
                  axis.text.x = element_blank(),
@@ -2745,7 +2776,6 @@ gg <- gg + theme(axis.title = element_blank(),
                  legend.position = "none")
 gg <- gg + geom_text(size = cellText_size)
 ggShiftPop <- gg
-
 #===========================================================================
 # Supply curve shift
 
@@ -2761,7 +2791,7 @@ gg <- ggplot(dfLine)
 gg <- gg + geom_line(aes(x = `Expected price (KES/kg)`, y = `Expected supply\n(million metric tons)`, group = rainLev, color = rainLev))
 gg <- gg + scale_color_manual(breaks = c("Normal rainfall", "Dismal rainfall (10%)"), values = c("black", "red"))
 
-dfShift <- dfLine %>% mutate(`Expected supply\n(million metric tons)` = `Expected supply\n(million metric tons)` + dQ * 10^-3) %>% mutate(x = "The research induced\nsupply ribbon shift")
+dfShift <- dfLine %>% mutate(`Expected supply\n(million metric tons)` = `Expected supply\n(million metric tons)` + dQtot * 10^-3) %>% mutate(x = "The research induced\nsupply ribbon shift")
 gg <- gg + geom_line(data = dfShift, aes(x = `Expected price (KES/kg)`, y = `Expected supply\n(million metric tons)`, group = rainLev, color = rainLev), linetype = "dashed")
 gg <- gg + facet_wrap(~x, strip.position = "right")
 gg <- gg + scale_color_manual(breaks = c("Normal rainfall", "Dismal rainfall (10%)"), values = c("black", "red"))
@@ -2816,20 +2846,16 @@ For the purpose of policy formation, it is instructive to consider, at a glance,
 
 ```{r Fig6, fig.show = "hold", fig.width = 7, fig.height=3, fig.align="center", fig.cap="\\label{fig:decisionMaps}Kenya maize farm subsidy policy heat maps of the (left to right) adoption rate, change in aggregate supply, and aggregate producer welfare given release of the technology package described in the text. Each 'coordinate' on the map represents an assumed percentage decrease in the $\\alpha$ adjusted output-input price ratio and a net subsidy per acre. The scenario presented in the previous figure above is marked with a black dot. In these maps, the ratio of change in input price to change in output price is fixed at 0.75.", echo = FALSE}
 
-rm(dfPlot, dfPlot1)
-gc()
+# rm(dfPlot, dfPlot1)
+# gc()
 # Adoption rate map
 nRes <- 20
-# dlAw <- seq(0.05, 0.35, length.out = nRes)
-# dlP <- seq(-0.01, -0.35, length.out = nRes)
-# dlNuVec <- dlP / dlAw
-aDotdlwVec <- seq(0.18, 0.45, length.out = nRes)
+aDotdlwVec <- seq(0.18, 0.4, length.out = nRes)
 dlP <- -nuRatio * aDotdlwVec
-#dlNuVec <- seq(-0.65, -0.36, length.out = nRes)
 dlNuVec <- rev(-aDotdlwVec + dlP)
 dlNuhVec <- rev(-aDotdlwVec + h * dlP)
 #dBvec <- seq(400, 1100, length.out = nRes)
-dBvec <- seq(400, 2800, length.out = nRes)
+dBvec <- seq(400, 2200, length.out = nRes)
 matAdopt <- matrix(NA, nRes, nRes)
 matDq <- matrix(NA, nRes, nRes)
 matDpsi <- matrix(NA, nRes, nRes)
@@ -2849,11 +2875,11 @@ for(i in 1:nRes){
   lCstarMaxAdopt <- log(cStarMaxAdopt)
   #---
   # Stratified adopt rate
-  z <- (lCstarMaxAdopt - dfStrat$mCstar) / dfStrat$sCstar
+  z <- (lCstarMaxAdopt - mCstarStrat) / sCstar
   adoptRateStrat <- pnorm(z)
-  adoptRateTotalCheck <- sum(adoptRateStrat * stratPct)
+  adoptRateTotalCheck <- sum(adoptRateStrat * stratFrac)
   # Total adopt rate
-  z <- (lCstarMaxAdopt - dfAll$mCstar) / dfAll$sCstar
+  z <- (lCstarMaxAdopt - mCstar) / sCstar
   adoptRateTotal <- pnorm(z)
   # Check mean stratified adopt rate equals total
   t <- t + 1
@@ -2861,32 +2887,31 @@ for(i in 1:nRes){
  # print(paste("Check adoptRate", round(adoptRateTotal - adoptRateTotalCheck, 3)))
 #---
   # Stratified welfare change
-phiArg <- (lCstarMaxAdopt - dfStrat$mCstar) / dfStrat$sCstar - h * dfStrat$sCstar
-probProfAdoptStrat <- pnorm(phiArg)
-dPsiStrat <- stratPct * Nf * muArea * dfStrat$muEyStarT0truncStrat * EPT02007 * (dlng0 + dlNu) * (probProfAdoptStrat - cStarMaxAdopt / dfStrat$muCstarHtruncStrat * adoptRateStrat)
+phiArgStrat <- (lCstarMaxAdopt - mCstarStrat) / sCstar - h * sCstar
+probProfAdoptStrat <- pnorm(phiArgStrat)
+dPsiStrat <- stratFrac * Nf * muArea * muEyStarT0strat * EPT02007 * (dlng0 + dlNu) * (probProfAdoptStrat - cStarMaxAdopt / muCstarhStrat * adoptRateStrat)
 dPsiStrat <- dPsiStrat * 10^-9 # in billions KES
-dPsiTotCheck <- sum(dPsiStrat)
+dPsiTot <- sum(dPsiStrat)
 # Total welfare change
-phiArg <- (lCstarMaxAdopt - dfAll$mCstar) / dfAll$sCstar - h * dfAll$sCstar
-probProfAdoptTot <- pnorm(phiArg)
-dPsiTot <- Nf * muArea * dfAll$muEyStarT0truncStrat * EPT02007 * (dlng0 + dlNu) * (probProfAdoptTot - cStarMaxAdopt / dfAll$muCstarHtruncStrat * adoptRateTotal)
-dPsiTot <- dPsiTot * 10^-9 # in billions KES
+phiArgTot <- (lCstarMaxAdopt - mCstar) / sCstar - h * sCstar
+probProfAdoptTot <- pnorm(phiArgTot)
+dPsiTotCheck <- Nf * muArea * muEyStarT0 * EPT02007 * (dlng0 + dlNu) * (probProfAdoptTot - cStarMaxAdopt / muCstarh * adoptRateTotal)
+dPsiTotCheck <- dPsiTotCheck * 10^-9 # in billions KES
 # Check that the sum of stratified welfare changes matches the total
 dPsiCheckVec[t] <- dPsiTot - dPsiTotCheck
 #print(paste("Check dPsi", round(dPsi - dPsiCheck, 3)))
-# dPsiNet <- dPsi - dB * adoptRateTotal * Nf * muArea * 10^-9
-# dPsi / 67.32 # 2007 USD exchange rate
+# dPsiTot / 67.32 # 2007 USD exchange rate
 # Total welfare change
 #---
 # Stratified change in expected aggregate supply
-dQStrat <- stratPct * Nf * muArea * dfStrat$muEyStarT0truncStrat * (dlng0 + dlnNuh) / (1 - h) * probProfAdoptStrat
+dQStrat <- stratFrac * Nf * muArea * muEyStarT0strat * (dlnNuh + dlng0) / (1 - h) * probProfAdoptStrat
 # \Delta Q_i &= N_i E[k_a] E[y^*]_i \frac{1}{1 - h}(\partial \ln(g) - \boldsymbol{\alpha} ' \partial \ln(mathbf{w})) \Phi \left( \frac{\ln(\bar{\bar{C^*}}) - m_{ci}}{s_c} - h s_c  \right)
 dQStrat <- 10^-3 * dQStrat # in MT
 dQStrat <- 10^-3 * dQStrat # in 1000 MT
-dQTotCheck <- sum(dQStrat)
+dQTot <- sum(dQStrat)
 # Total change in expected aggregate supply
-dQTot <- Nf * muArea * dfAll$muEyStarT0truncStrat * (dlng0 + dlnNuh) / (1 - h) * probProfAdoptTot
-dQTot <- dQTot * 10^-6 # in 1000 MT
+dQTotCheck <- Nf * muArea * muEyStarT0strat * (dlng0 + dlnNuh) / (1 - h) * probProfAdoptTot
+dQTotCheck <- dQTotCheck * 10^-6 # in 1000 MT
 # Check that the sum of stratified supply changes matches the total
 dQCheckVec[t] <- dQTot - dQTotCheck
 #print(paste("Check dQ", round(dQTot - dQTotCheck, 3)))
@@ -2993,6 +3018,7 @@ ggAdopt | ggDq | ggDpsi
 
 # Discussion and conclusion
 
+any impact assessment must be accompanied by a clear indication of the assumed meteorological conditions.
 The theoretical supply curve and imact assessment framework presented above... to solve for equilibrium price and consumer welfare impacts require demand curve specificatiobn...which extends beyond the scope of this article but you can guess what it would be...input demand integrated over density...or monopsony...a single firm or cartel of firms buying all the production....so consumer welfare is actually firm welfare, to get at consumers have to go beyond a bit
 this is comparative statics. welfare has to be discounted according to release/adoption period. the change in prices, especially output price, is not immediate, lag... the adoption rate refers to the economically rational level of adoption once prices adjust to the intervention. many might adopt at first but then find out that it is not profitable and back out as prices adjust. welfare and subsidy incur year by year
 opens up a novel set of policy questions and nuance -- not just tech but also contractual arrangements, intermediaries, value chain, agroclimatic advisory services, cooperative social mechanisms, risk pooling,...enabling environment... and all at once--combined approaches ...much higher fidelity representation of the reality and the reality of interventions.
