@@ -595,6 +595,18 @@ And
 
 \begin{equation}
 E[y^*] \Phi \left( \frac{\ln(P) - m_{\#}}{s_{\#}} - \eta s_{\#} \right) = E[y^* | C^{\#} \leq P] \mathcal{E}
+\end{equation}
+
+To reduce notational clutter, henceforth the shorthand
+
+\begin{equation}
+\mathcal{P}(\xi; m_{\chi}, s_{\chi}) = \left( \frac{\ln(\xi) - m_{\chi}}{s_{\chi}} - \eta s_{\chi} \right)
+\end{equation}
+
+is introduced, such that the preceding relation can be written more compactly as follows.
+
+\begin{equation}
+E[y^*] \mathcal{P}(P^{\eta}; m_{\#}, s_{\#}) = E[y^* | C^{\#} \leq P] \mathcal{E}
 \label{eq:condMeanYd1}
 \end{equation}
 <!-- Likewise, -->
@@ -747,7 +759,7 @@ The welfare effect on a given farm of adopting the new technology can be examine
 
 \begin{equation}
 \begin{split}
-\frac{\mathcal{L}^*}{\partial \ln(g)} &= \frac{\lambda}{h} \left((1 - h) \frac{\partial C^*}{\partial \ln(g)} + h \frac{\partial B}{\partial \ln(g)} \right) \\
+\frac{\partial \mathcal{L}^*}{\partial \ln(g)} &= \frac{\lambda}{h} \left((1 - h) \frac{\partial C^*}{\partial \ln(g)} + h \frac{\partial B}{\partial \ln(g)} \right) \\
 &= \frac{\lambda}{h} \left( C^* \left( 1 - \boldsymbol{\alpha} ' \frac{\partial \ln(\mathbf{w})}{\partial \ln(g)} + \frac{\partial \ln(P)}{\partial \ln(g)} \right) + h \frac{\partial B}{\partial \ln(g)} \right)
 \end{split}
 \label{eq:dLdlng}
@@ -805,7 +817,16 @@ Because $C^*$ is lognormally distributed, the expression resolves as follows.
 \label{eq:AdoptRate}
 \end{equation}
 
+The aggregate net subsidy required to reach this adoption rate can then be computed as the subsidy per unit area times the total farm area times the adoption rate.
+
+\begin{equation}
+\text{Aggregate net subsidy} = \partial B N E[k_a] \mathcal{A}
+\label{eq:aggSubsidy}
+\end{equation}
+
 The adoption rate within single a binary endowment stratum can be calculated by evaluating this expression at the $v_{\ell}$ of interest.
+<!-- aggSubsidy <- dB * Nf * muArea * adoptRateTotal * 10^-9 # Total subsidies in billions -->
+
 <!-- \begin{equation} -->
 <!-- A = \sum_{\ell} \frac{N_{\ell}}{N} A_{\ell} -->
 <!-- \end{equation} -->
@@ -901,7 +922,7 @@ Because $y^*$ is assumed to be lognormally distributed (axiom 4), then $C^{\# \e
 Substituting the right hand side of this expression for the integral in Equation \ref{eq:aggSupStep2}, the expression for aggregate supply simplifies as follows.
 
 \begin{equation}
-Q = N E[k_a] E[y^*] \mathcal{P}(\bar{C}^{\#}) \:\:;\:\:\: \mathcal{P}(\bar{C}^{\#}) = \Phi \left( \frac{\ln(P) - m_{\#}}{s_{\#}} - \eta s_{\#} \right)
+Q = N E[k_a] E[y^*] \mathcal{P}(P^{\eta}; m_{\#}, s_{\#})
 \label{eq:aggSup1}
 \end{equation}
 
@@ -917,41 +938,11 @@ Q = N E[k_a] E[y^*|C^{\#} \leq P] \mathcal{E}
 <!-- \end{split} -->
 <!-- \end{equation} -->
 
-Which may be useful for point estimates of aggregate supply along the curve since $E[y^*|C^{\#} \leq P]$ can be estimated from the observed yield distribution. This form is also instructive because the $\Phi()$ term has a straightforward interpretation as the farm employment rate $\mathcal{E}$. However, it is inconvenient for purposes of drawing the entire aggregate supply curve, as the observed $E[y^*|C^{\#} \leq P]$ is valid only for the $P$ at which it is measured. The unconditional mean yield $E[y^*]$, on the other hand, is constant for all $P$. For this reason, Equation \ref{eq:aggSup1} is preferred. Moreover, the $\mathcal{P}(\bar{C}^{\#})$ term in Equation \ref{eq:aggSup1} turns out to have a meaningful economic interpretation once the stochastic character of price is taken into account, as shown farther below.
+Which may be useful for point estimates of aggregate supply along the curve since $E[y^*|C^{\#} \leq P]$ can be estimated from the observed yield distribution. This form is also instructive because the $\mathcal{E}$ term has a straightforward interpretation as the farm employment rate. However, it is inconvenient for purposes of drawing the entire aggregate supply curve, as the observed $E[y^*|C^{\#} \leq P]$ is valid only for the $P$ at which it is measured. The unconditional mean yield $E[y^*]$, on the other hand, is constant for all $P$. For this reason, Equation \ref{eq:aggSup1} is preferred. Moreover, the $\mathcal{P}(P; m_{\#}, s_{\#})$ term turns out to have a meaningful economic interpretation that will become clear when the stochastic character of price is taken into account farther below.
 
 ## Aggregation of the endogenous farm supply response and change in welfare due to technology shocks \label{sec:aggImpact}
 
-<!-- The aggregate net subsidy required to reach this adoption rate can then be computed as the subsidy per unit area times the total farm area times the adoption rate. -->
-
-<!-- \begin{equation} -->
-<!-- \text{Aggregate net subsidy} = \partial B N E[k_a] \mathcal{A} -->
-<!-- \label{eq:aggSubsidy} -->
-<!-- \end{equation} -->
-
-<!-- aggSubsidy <- dB * Nf * muArea * adoptRateTotal * 10^-9 # Total subsidies in billions -->
-
-<!-- The percentage change in aggregate supply given a 1% change in TFP follows from Equations \ref{eq:aggSup2} and \ref{eq:ddlng0}, -->
-<!-- \begin{equation} -->
-<!-- \begin{split} -->
-<!-- \frac{\partial \ln(E[Q(T)]|_{t = 0})}{\partial \ln(g)} = \frac{\partial \ln E[\tilde{y}^*(T; k_m(T))]|_{t = 0}}{\partial \ln(g)} \\ -->
-<!-- &= \frac{1}{1 - h} \left( 1 - \boldsymbol{\alpha} ' \frac{\partial \ln(\mathbf{w})}{\partial \ln(g)} \right) -->
-<!-- \end{split} -->
-<!-- \end{equation} -->
-
 The total increase in aggregate supply due to a technology shock can be evaluated by integrating the change in farm production $\partial y^*$ over the density of adopting farms $(0, \bar{\bar{y^*}})$ where $\bar{\bar{y^*}} = y^*(\bar{\bar{C^*}})$.
-<!-- Recalling that $\partial \ln(y^*(T; k_m(T))) = \partial \ln(C^*)$, this can be parsed as follows. -->
-<!-- E[y^*(T; k_m(T))]|_{t = 0} -->
-<!-- \partial y^*(T, k_m(T)) = \Delta y^*(T, k_m(T)) -->
-<!-- $\partial q^*(T) = k_a \partial y^*(T; k_m(T))$ -->
-<!-- To reduce clutter, the following shorthand is used -->
-<!-- \begin{equation} -->
-<!-- \begin{split} -->
-<!-- y^* &= E[y(T; k_m(T))] \bigr|_{t = 0} \\ -->
-<!-- C^{\#} &= E[C^{\#}(T)] \bigr|_{t = 0} \\ -->
-<!-- P &= E[P(T)]|_{t = 0} \\ -->
-<!-- Q &= E[Q(T)]|_{t = 0} -->
-<!-- \end{split} -->
-<!-- \end{equation} -->
 
 \begin{equation}
 \begin{split}
@@ -972,11 +963,14 @@ Such that the integral reduces to
 \begin{split}
 \Delta Q &= N E[k_a] \frac{1}{1 - h}(\partial \ln(g) - \boldsymbol{\alpha} ' \partial \ln(\mathbf{w})) \int_0^{\bar{\bar{y^*}}} y^* \rho(y^*) dy^* \\
 &= N E[k_a] \frac{1}{1 - h}(\partial \ln(g) - \boldsymbol{\alpha} ' \partial \ln(\mathbf{w})) v E[k] \int_0^{\bar{\bar{C^*}}} C^{*h} \rho(C^*) dC^* \\
-&= N E[k_a] v E[k] E[C^{*h}] \frac{1}{1 - h}(\partial \ln(g) - \boldsymbol{\alpha} ' \partial \ln(\mathbf{w})) \Phi \left( \frac{\ln(\bar{\bar{C^*}}) - m_c}{s_c} - h s_c  \right)
+&= N E[k_a] v E[k] E[C^{*h}] \frac{1}{1 - h}(\partial \ln(g) - \boldsymbol{\alpha} ' \partial \ln(\mathbf{w})) \Phi \left( \frac{\ln(\bar{\bar{C^*}}) - m_c}{s_c} - h s_c  \right) \\
+&= N E[k_a] v E[k] E[C^{*h}] \frac{1}{1 - h}(\partial \ln(g) - \boldsymbol{\alpha} ' \partial \ln(\mathbf{w})) \mathcal{P}(\bar{\bar{C^{*h}}}; m_c, s_c)
 \end{split}
 \end{equation}
-<!-- $$ -->
-<!-- N_i E[k_a] v_{0i} E[k] E[C^{*h}]_i \frac{1}{1 - h}(\partial \ln(g) - \boldsymbol{\alpha} ' \partial \ln(\mathbf{w})) \Phi \left( \frac{\ln(\bar{\bar{C^*}}) - m_c}{s_c} - h s_c  \right) -->
+<!-- \Delta Q = N E[k_a] \frac{1}{1 - h}(\partial \ln(g) - \boldsymbol{\alpha} ' \partial \ln(\mathbf{w})) \int_0^{\bar{\bar{y^*}}} y^* \rho(y^*) dy^* \\ -->
+<!-- = N E[k_a] \frac{1}{1 - h}(\partial \ln(g) - \boldsymbol{\alpha} ' \partial \ln(\mathbf{w})) v E[k] \int_0^{\bar{\bar{C^*}}} C^{*h} \rho(C^*) dC^* \\ -->
+<!-- = N E[k_a] v E[k] E[C^{*h}] \frac{1}{1 - h}(\partial \ln(g) - \boldsymbol{\alpha} ' \partial \ln(\mathbf{w})) \Phi \left( \frac{\ln(\bar{\bar{C^*}}) - m_c}{s_c} - h s_c  \right) \\ -->
+<!-- = N E[k_a] v E[k] E[C^{*h}] \frac{1}{1 - h}(\partial \ln(g) - \boldsymbol{\alpha} ' \partial \ln(\mathbf{w})) \mathcal{P}(\bar{\bar{C^{*h}}}; m_c, s_c) -->
 <!-- $$ -->
 
 Where the last line follows from Equation \ref{eq:keyResult}. Recalling that $v = E[y^*] / (E[k] E[C^{*h}])$ (Equation \ref{eq:v0i}), this further reduces to
@@ -991,104 +985,62 @@ The new aggregate supply curve ($Q'$) can then be evaluated as
 \begin{equation}
 Q' = Q + \Delta Q
 \end{equation}
-<!-- The total change in expected aggregate supply across all strata then follows as -->
-<!-- \begin{equation} -->
-<!-- \Delta Q = \sum_i \Delta Q_i -->
-<!-- \label{eq:dQ} -->
-<!-- \end{equation} -->
-<!-- In Appendix ... it is shown that farm net benefit per unit area may be expressed -->
-<!-- \begin{equation} -->
-<!-- \begin{split} -->
-<!-- \mathcal{L}^* &= P y^* + \lambda (B - C^*) \\ -->
-<!-- &= r ((1 - h) C^* + h B ) \:\:;\:\:\: r = \frac{\lambda}{h} = \frac{P}{C^{\#}} -->
-<!-- \end{split} -->
-<!-- \end{equation} -->
-<!-- The marginal change in farm net benefit given a percentage change in $g$ follows as -->
-<!-- \begin{equation} -->
-<!-- \begin{split} -->
-<!-- \frac{\partial \mathcal{L}^*}{\partial \ln(g)} &= r \left((1 - h) \frac{\partial C^*}{\partial \ln(g)} + h \frac{\partial B}{\partial \ln(g)} \right) \\ -->
-<!-- &= r \left( C^* \left(1 - \boldsymbol{\alpha} ' \frac{\partial \mathbf{w}}{\partial \ln(g)} \right) + h \frac{\partial B}{\partial \ln(g)} \right) -->
-<!-- \end{split} -->
-<!-- \end{equation} -->
-<!-- \begin{equation} -->
-<!-- \begin{split} -->
-<!-- \frac{\mathcal{L}^*}{\partial \ln(g)} &= \frac{\lambda}{h} \left((1 - h) \frac{\partial C^*}{\partial \ln(g)} + h \frac{\partial B}{\partial \ln(g)} \right) \\ -->
-<!-- &= \frac{\lambda}{h} \left( C^* \left( 1 - \boldsymbol{\alpha} ' \frac{\partial \ln(\mathbf{w})}{\partial \ln(g)} + \frac{\partial \ln(P)}{\partial \ln(g)} \right) + h \frac{\partial B}{\partial \ln(g)} \right) -->
-<!-- \end{split} -->
-<!-- \label{eq:dLdlng} -->
-<!-- From The farm level change in net benefit per unit area given the intervention $\partial \ln(g)$ may thus be expressed -->
 
-The aggregate change in net benefit ($\Delta \psi$) can be similarly be evaluated by integrating $\partial \mathcal{L}^*(C^*, k)$ over the farm expenditure ($C^* \in (0, \bar{\bar{C^{*h}}})$), exogenous factor ($k$), and area ($k_a$) densities.
+To assess the aggregate change in net benefit, note from Equation \ref{eq:dLdlng} that the farm level change in net benefit per unit area $\partial \mathcal{L}^*$ may be expressed
 
 \begin{equation}
 \begin{split}
-\Delta \psi &= N \int_0^{\infty} k_a \int_0^{\infty} k \int_0^{\bar{\bar{C}^{*}}} \partial \mathcal{L}^*(C^*, k) \rho(C^*) d C^* \rho(k) dk \rho(k_a) dk_a \\
+\partial \mathcal{L}^* &= \frac{\lambda}{h} ( C^* (\partial g - \boldsymbol{\alpha} ' \partial \ln(\mathbf{w}) + \partial \ln(P)) + h \partial B) \\
+&= r (C^* \gamma + h \partial B) \:\:;\:\:\: \gamma = \partial g - \boldsymbol{\alpha} ' \partial \ln(\mathbf{w}) + \partial \ln(P) \:\:\: r = \frac{\lambda}{h} = \fraC{P}{C^{\#}}
 \end{split}
 \end{equation}
 
-From the expression for research induced farm level change in net benefit in Equation \ref{eq:dLdlng} it follows that
+But recall from Equation \ref{eq:cStarAdopt} that $h \partial B = - \gamma \bar{\bar{C}^*}$, such that the expression reduces to
+
+\begin{equation}
+\partial \mathcal{L}^*(r, C^*) = r \gamma (C^* - \bar{\bar{C}^*})
+\label{eq:dLstar}
+\end{equation}
+
+The aggregate change in net benefit ($\Delta \psi$) can be evaluated by integrating $\partial \mathcal{L}^*(C^*, r)$ over the farm expenditure ($C^* \in (0, \bar{\bar{C^{*h}}})$), revenue to expenditure ratio ($r \in (1, \infty)$) and area ($k_a$) densities. The domain of $r$ follows from axiom 3.
 
 \begin{equation}
 \begin{split}
-\partial \mathcal{L}^*(C^*, k) &= r ( C^* \left(\partial \ln(g) - \boldsymbol{\alpha} ' \partial \mathbf{w} \right) + h \partial B ) \\
-&= r \gamma (C^* - \bar{\bar{C}^*}) \:\:;\:\:\: \gamma = \left(\partial \ln(g) - \boldsymbol{\alpha} ' \partial \mathbf{w} \right) \\
-&= \gamma P (y^* - \bar{\bar{y^*}}) \\
-&= \gamma P v k  (C^{*h} - \bar{\bar{C^{*h}}})
+\Delta \psi &= N \int_0^{\infty} \int_1^{\infty} \int_0^{\bar{\bar{C^*}}} \partial \mathcal{L}^*(C^*, r) \rho(C^*) dC^* \rho(r) dr \rho(k_a) d k_a \\
+&= N E[k_a] \int_1^{\infty} r \rho(r) dr  \int_0^{\bar{\bar{C^*}}} \gamma (C^* - \bar{\bar{C}^*})  \rho(C^*) dC^* \\
+&= N E[k_a] E[r] \gamma \Phi \left( \frac{\ln(P) - m_{\#}}{s_{\#}} + s_{\#} \right) \left( E[C^*] \mathcal{P}(\bar{\bar{C}^*}; m_c, s_c) - \bar{\bar{C}^*} \mathcal{A} \right)
 \end{split}
 \end{equation}
 
-Such that
+But note that, by the symmetry of the normal cumulative distribution function,
 
 \begin{equation}
 \begin{split}
-\Delta \psi &= N E[k_a] E[k] v P \gamma \int_0^{\bar{\bar{C}^{*}}} (C^{*h} - \bar{\bar{C^{*h}}}) \rho (C^*) d C^* \\
-&= N E[k_a] E[k] v P \gamma (E[C^{*h}] \mathcal{P}(\bar{\bar{C^*}}) - \bar{\bar{C^{*h}}} \mathcal{A}) \:\:;\:\:\: \mathcal{P}(\bar{\bar{C^{\#}}}) = \Phi \left( \frac{\ln(\bar{\bar{C^{\#}}}) - m_{\#}}{s_{\#}} - \eta s_{\#}  \right) \\
-&= N E[k_a] P \gamma (E[y^*] \mathcal{P}(\bar{\bar{C^{\#}}}) - E[k] v \bar{\bar{C^{*h}}} \mathcal{A}) \\
-&= N E[k_a] P \gamma \left( E[y^*] \mathcal{P}(\bar{\bar{C^{\#}}}) - E[\bar{\bar{y}^*}] \mathcal{A} \right) \:\:;\:\:\: E[\bar{\bar{y}^*}] = E[v k \bar{\bar{C^{*}}}] = \frac{\bar{\bar{C^{*}}}}{E[C^{* h}]} E[y^*]
+\Phi \left( \frac{\ln(P) - m_{\#}}{s_{\#}} + s_{\#} \right) &= 2 \Phi \left( \frac{\ln(P) - m_{\#}}{s_{\#}}\right) - \Phi \left( \frac{\ln(P) - m_{\#}}{s_{\#}} - s_{\#} \right)\\
+&= 2 \mathcal{E} - \mathcal{P}(P; m_{\#}, s_{\#})
 \end{split}
+\end{equation}
+
+Such that the previous equation reduces as follows.
+
+\begin{equation}
+\Delta \psi = N E[k_a] E[r] \gamma (2 \mathcal{E} - \mathcal{P}(P; m_{\#}, s_{\#})) ( E[C^*] \mathcal{P}(\bar{\bar{C}^*}; m_c, s_c)  - \bar{\bar{C}^*} \mathcal{A} )
+\label{eq:dPsi}
 \end{equation}
 <!-- $$ -->
-<!-- N E[k_a] E[k] v P \gamma (E[C^{*h}] \mathcal{P}(\bar{\bar{C^*}}) - \bar{\bar{C^{*h}}} \mathcal{A}) \:\:;\:\:\: \mathcal{P}(\bar{\bar{C^*}}) = \Phi \left( \frac{\ln(\bar{\bar{C^{\#}}}) - m_{\#}}{s_{\#}} - \eta s_{\#}  \right) -->
+<!-- \Delta \psi = N \int_0^{\infty} \int_1^{\infty} \int_0^{\bar{\bar{C^*}}} \partial \mathcal{L}^*(C^*, r) \rho(C^*) dC^* \rho(r) dr \rho(k_a) d k_a \\ -->
+<!-- = N E[k_a] \int_1^{\infty} r \rho(r) dr \int_0^{\bar{\bar{C^*}}} \gamma (C^* - \bar{\bar{C}^*})  \rho(C^*) dC^* \\ -->
+<!-- = N E[k_a] E[r] \gamma \Phi \left( \frac{\ln(P) - m_{\#}}{s_{\#}} + s_{\#} \right) \left( E[C^*] \Phi \left( \frac{\ln(\bar{\bar{C}^*}) - m_c}{s_c} - s_c \right) - \bar{\bar{C}^*} \mathcal{A} \right) \\ -->
+<!-- = N E[k_a] E[r] \gamma (2 \mathcal{E} - \mathcal{P}(P; m_{\#}, s_{\#})) ( E[C^*] \mathcal{P}(\bar{\bar{C}^*}; m_c, s_c)  - \bar{\bar{C}^*} \mathcal{A}) -->
 <!-- $$ -->
-<!-- &= N E[k_a] E[k] v P \gamma (E[C^{*h}] (1 - \Phi(\zeta)) - \bar{\bar{C^{*h}}} \mathcal{A}) \\ -->
-<!-- &= N E[k_a] P \gamma (E[y^*] (1 - \Phi(\zeta)) - E[k] v \bar{\bar{C^{*h}}} \mathcal{A}) \\ -->
-<!-- &= N E[k_a] P \gamma \left( E[y^*] (1 - \Phi(\zeta)) - E[\bar{\bar{y}^*}] \mathcal{A} \right) -->
 
-By Equation \ref{eq:keyResult2} this can also be written
+By Equation \ref{eq:keyResult2}, this can also be written
 
 \begin{equation}
-\Delta \psi = N E[k_a] P \gamma \mathcal{A} \left( E[y^*| C^* \leq \bar{\bar{C^{*h}}}] -  E[\bar{\bar{y}^*}] \right)
+\Delta \psi = N E[k_a] \gamma E[r | r \geq 1] \mathcal{A} \mathcal{E} (E[C^* | C^* \leq \bar{\bar{C}^*}] - \bar{\bar{C}^*})
 \end{equation}
-<!-- The total change in aggregate net benefit summed across all strata then follows as -->
-<!-- \begin{equation} -->
-<!-- \Delta \psi = \sum \Delta \psi -->
-<!-- \label{eq:dPsi} -->
-<!-- \end{equation} -->
 
 To calculate the change in aggregate supply and welfare for each stratum ($\Delta Q_{\ell}$ and $\Delta \psi_{\ell}$), in the equations above simply replace $v$, $N$, with $v_{\ell}$, $N_{\ell}$.
-<!-- as explained in section \ref{sec:binEndStrat} -->
-
-<!-- Following the steps in Equations \ref{eq:PhiMap}, the $\Phi()$ term can then be expressed in stochastic price parameter space. -->
-
-<!-- \begin{equation} -->
-<!-- \begin{split} -->
-<!-- \Phi \left( \frac{\ln(\bar{\bar{C^{\#}}}) - m_{\#}}{s_{\#}} - \eta s_{\#}  \right) &= 1 - \Phi ( \zeta ) \:\:;\:\:\: \zeta = \frac{\ln \left( \frac{E[\tilde{C}^{\#}(T)]|_{t = 0}}{\bar{\bar{C^{\#}(0)}}} \right) - \left( m_p - \eta \frac{s_p^2}{2} \right) T}{s_p \sqrt{T}} \\ -->
-<!-- &= \text{Prob}(\tilde{C}^{\#}(T)} \leq \bar{\bar{C^{\#}}}) -->
-<!-- \end{equation} -->
-
-<!-- Such that the term $1 - \Phi(\zeta)$ may be interpreted as the PEFS-adjusted probability that, on the mean farm, adoption will prove to be more profitable than not adopting. [The PEFS adjusted mean probability of profitable adoption] -->
-
-<!-- Recalling, moreover, the relation between conditional and unconditional mean of a lognormally distributed variable (Equation \ref{eq:keyResult2}), -->
-
-<!-- \begin{equation} -->
-<!-- \begin{split} -->
-<!-- E[y^*] \Phi \left( \frac{\ln(\bar{\bar{C^*}}) - m_{c}}{s_c} - h s_c  \right) &= E[y^*| C^* \leq \bar{\bar{C^*}}] \Phi \left( \frac{\ln(\bar{\bar{C^*}}) - m_{c}}{s_c} \right) \\ -->
-<!-- E[y^*] (1 - \Phi(\zeta)) &= E[y^*| C^* \leq \bar{\bar{C^*}}] \mathcal{A} -->
-<!-- \end{split} -->
-<!-- \end{equation} -->
-
-<!-- Such that the expression for $\Delta Q$ may be rewritten as follows. -->
-
 
 ## Accounting for stochasticity, derivation of the expected aggregate supply curve based on axiom 5 \label{sec:acct4Stoch}
 
@@ -1595,7 +1547,7 @@ Whereby it is clear that, under axioms 1-5, price elasticity of expected aggrega
 s_p \sqrt{T} </> \frac{\phi(-z)}{\Phi(-z)}
 \end{equation}
 
-Finally, the stochastically explicit formulations for the research induced change in aggregate supply and welfare derived in section \ref{sec:aggImpact} follow from exposition above as
+Finally, the stochastically explicit formulations for the research induced change in aggregate supply and welfare derived in section \ref{sec:aggImpact} follow from the exposition above as
 
 \begin{equation}
 \begin{split}
@@ -1607,13 +1559,20 @@ Finally, the stochastically explicit formulations for the research induced chang
 
 And
 
+<!-- \begin{equation} -->
+<!-- \begin{split} -->
+<!-- \Delta \psi &= N E[k_a] E[k] v P \gamma (E[C^{*h}] \mathcal{P}() - \bar{\bar{C^{*h}}} \mathcal{A}) \\ -->
+<!-- &= N E[k_a] P \gamma \left( E[y^*] \mathcal{P} - E[\overline{\overline{E[y(T)^*]|_{t = 0}}}] \mathcal{A} \right) -->
+<!-- \end{split} -->
+<!-- \label{eq:dEPsi} -->
+<!-- \end{equation} -->
+
 \begin{equation}
-\begin{split}
-\Delta \psi &= N E[k_a] E[k] v P \gamma (E[C^{*h}] \mathcal{P} - \bar{\bar{C^{*h}}} \mathcal{A}) \\
-&= N E[k_a] P \gamma \left( E[y^*] \mathcal{P} - E[\overline{\overline{E[y(T)^*]|_{t = 0}}}] \mathcal{A} \right)
-\end{split}
+\Delta \psi = N E[k_a] E[\tilde{r}(T)]|_{t = 0} \gamma (2 \mathcal{E} - \mathcal{P}(P; m_{\#}, s_{\#})) ( E[C^*] \mathcal{P}(\bar{\bar{C}^*}; m_c, s_c)  - \bar{\bar{C}^*} \mathcal{A} ) \:\:;\:\:\: \tilde{r}(T) = E[r(T)] = \frac{E[P(T)]}{E[C^{\#}(T)]}
 \label{eq:dEPsi}
 \end{equation}
+
+
 <!-- \Delta E[Q(T; k_m(T))]|_{t = 0} &= N E[k_a] E[\tilde{y}^*(T, k_m(T))]|_{t = 0} \frac{1}{1 - h}(\partial \ln(g) - \boldsymbol{\alpha} ' \partial \ln(\mathbf{w})) (1 - \Phi ( \v )) \\ -->
 <!-- &= N \mathcal{A} E[k_a] E[\tilde{y}^*(T, k_m(T))| C^* \leq \bar{\bar{C^*}}]|_{t = 0} \frac{1}{1 - h}(\partial \ln(g) - \boldsymbol{\alpha} ' \partial \ln(\mathbf{w})) -->
 <!-- \begin{equation} -->
@@ -1952,7 +1911,7 @@ The fitted coefficient on logged cost per acre is statistically significant and 
 The fitted binary endowment coefficients ($\beta_i$) indicate that hybrid maize seed is the most significant contributor to TFP, followed by land prep method and tenure. Interestingly, oxen contributes slightly more than tractor. Based on these values, the expenditure TFPs are calculated for each of the 12 binary endowment strata ($v_{\ell}$), as well as the average across all strata ($v$). The implicit mean expected yield ($E[\tilde{y}^*(T;k_r) | \theta] |_{t = 0}$) is then calculated by Equation \ref{eq:impMuEyStarT0cond}, for $\tilde{k}_r^{\kappa_r} = 1$ (indicating rainfall expectation in line with the historical benchmark). These stratified and whole sample parameters are reported along with the mean observed cost per unit area and harvest yield in Table 2.
 
 comment on higher yield of tractor but higher efficiency of oxen
-harvest was higher than expected, implicit expected yield based on kr=1 when in fact kr > 1 (graphic)-- expected less got more hence harvest yield higher than implicit expected yield at kr=1.
+harvest was higher than expected, implicit expected yield based on kr=1 when in fact kr > 1 (graphic)-- expected less got more hence harvest yield higher than implicit expected yield at $\tilde{k}_r^{\kappa_r}=1$.
 
 ```{r Fig3, fig.show = "hold", fig.width = 6, fig.height=3, fig.align="center", fig.cap="\\label{fig:v0strata}(Left) The expenditure TFP, conditional (observed) mean cost/area, harvest yield, and implicit expected yield for each of the 12 different combinations of binary endowments present in the Kenya farm data. The implicit expected yield assumes rainfall equal to the historical benchmark. (Right) their respective prevalance in the population.", echo = FALSE}
 #=============================================================================
@@ -2692,14 +2651,23 @@ aggSubsidyMillnUSD <- aggSubsidy / 67 * 10^3 #in million USD
 aggSubsidyStratMillnKES <- aggSubsidyStrat * 10^3 #in million KES
 #--------------------------------------------------------------------------
 # Welfare assessment
-phiArgStrat <- (lcStarMaxAdopt - mCstarStrat) / sCstar - h * sCstar
+phiArgStrat <- (lcStarMaxAdopt - mCstarStrat) / sCstar - sCstar
 probProfAdoptStrat <- pnorm(phiArgStrat)
-phiArgTot <- (lcStarMaxAdopt - mCstar) / sCstar - h * sCstar
+phiArgTot <- (lcStarMaxAdopt - mCstar) / sCstar - sCstar
 probProfAdoptTot <- pnorm(phiArgTot)
-dPsiStrat <- stratFrac * Nf * muArea * muEyStarT0strat * EPT02007 * (dlnNu + dlng0) * (probProfAdoptStrat - cStarMaxAdopt / muCstarhStrat * adoptRateStrat)
+
+pnorm((lcStarMaxAdopt - mCstar) / sCstar + sCstar) + probProfAdoptTot
+
+pnorm((0.8 - 0.9) /1 - 1)+pnorm((0.8 - 0.9) /1 + 1)
+  
+
+# dPsiStrat <- stratFrac * Nf * muArea * muEyStarT0strat * EPT02007 * (dlnNu + dlng0) * (probProfAdoptStrat - cStarMaxAdopt / muCstarhStrat * adoptRateStrat)
 dPsiStrat <- dPsiStrat * 10^-9 # in billions KES
 dPsiTot <- sum(dPsiStrat)
 #dPsiTot / 67.32 # 2007 USD exchange rate
+mR <- log(EPT02007) - mEcSharpT0; sR <- sEcSharpT0
+muRobs <- EPT02007 / dfAll$muEcSharpT0trunc
+dPsiTot <- Nf * muArea * muRobs * EmploymentRate * (dlnNu + dlng0) * (muCstar * probProfAdoptTot - cStarMaxAdopt * adoptRateTotal) * 10^-9
 dPsiTotCheck <- Nf * muArea * muEyStarT0 * EPT02007 * (dlnNu + dlng0) * (probProfAdoptTot - cStarMaxAdopt / muCstarh * adoptRateTotal) * 10^-9
 #dPsiTot - dPsiTotCheck
 #--------------------------------------------------------------------------
@@ -2839,16 +2807,16 @@ ggEQsT0Shift <- gg
 ```
 \doublespacing
 
-For the purpose of policy formation, it is instructive to consider, at a glance, multiple farm subsidy and price change scenarios, and their supply and welfare outcomes, in a heat map format (Figure \ref{fig:decisionMaps}). These heat maps facilitate digestion of the possible supply and welfare outcomes of a wide range of subsidy policy options and assumptions regarding input and output price change. The intervention scenario considered a point on a map of possible supply shift and welfare outcomes given the expected 
-[at what rain level?]
-[address the alpha in aDotW]
-[Also can do "pro-poor" measures of change in aggregate (supply and?) producer welfare. Integrate dlnL instead of dL.]
+For policy formation, it is helpful to consider interventions in a sensitivity heatmap whereby multiple farm subsidy and price change scenarios can be examined at a single glance (Figure \ref{fig:decisionMaps}). By illustrating the impact of changes in subsidy and assumed price shifts in a readily digestible manner, these maps build intuition about the effectiveness of changes in subsidy policy and the implications of price changes associated with the intervention.
+<!-- [address the alpha in aDotW] -->
+<!-- [Also can do "pro-poor" measures of change in aggregate (supply and?) producer welfare. Integrate dlnL instead of dL.] -->
 
 ```{r Fig6, fig.show = "hold", fig.width = 7, fig.height=3, fig.align="center", fig.cap="\\label{fig:decisionMaps}Kenya maize farm subsidy policy heat maps of the (left to right) adoption rate, change in aggregate supply, and aggregate producer welfare given release of the technology package described in the text. Each 'coordinate' on the map represents an assumed percentage decrease in the $\\alpha$ adjusted output-input price ratio and a net subsidy per acre. The scenario presented in the previous figure above is marked with a black dot. In these maps, the ratio of change in input price to change in output price is fixed at 0.75.", echo = FALSE}
 
 # rm(dfPlot, dfPlot1)
 # gc()
 # Adoption rate map
+muR <- EPT02007 / dfAll$muEcSharpT0trunc
 nRes <- 20
 aDotdlwVec <- seq(0.18, 0.4, length.out = nRes)
 dlP <- -nuRatio * aDotdlwVec
@@ -2859,6 +2827,7 @@ dBvec <- seq(400, 2200, length.out = nRes)
 matAdopt <- matrix(NA, nRes, nRes)
 matDq <- matrix(NA, nRes, nRes)
 matDpsi <- matrix(NA, nRes, nRes)
+matSub <-  matrix(NA, nRes, nRes)
 adoptCheckVec <- c()
 dPsiCheckVec <- c()
 dQCheckVec <- c()
@@ -2889,14 +2858,19 @@ for(i in 1:nRes){
   # Stratified welfare change
 phiArgStrat <- (lCstarMaxAdopt - mCstarStrat) / sCstar - h * sCstar
 probProfAdoptStrat <- pnorm(phiArgStrat)
-dPsiStrat <- stratFrac * Nf * muArea * muEyStarT0strat * EPT02007 * (dlng0 + dlNu) * (probProfAdoptStrat - cStarMaxAdopt / muCstarhStrat * adoptRateStrat)
-dPsiStrat <- dPsiStrat * 10^-9 # in billions KES
+mR <- log(EPT02007) - mEcSharpT0; sR <- sEcSharpT0
+argR <- -mR / sR - sR
+phiTermR <- pnorm(argR)
+dPsiStrat <- stratFrac * Nf * muArea * muR * phiTermR * (muCstar * probProfAdoptStrat - cStarMaxAdopt * adoptRateStrat)
+# dPsiStrat <- stratFrac * Nf * muArea * muEyStarT0strat * EPT02007 * (dlng0 + dlNu) * (probProfAdoptStrat - cStarMaxAdopt / muCstarhStrat * adoptRateStrat)
+dPsiStrat <- dPsiStrat * 10^-9 # in billion KES
 dPsiTot <- sum(dPsiStrat)
 # Total welfare change
 phiArgTot <- (lCstarMaxAdopt - mCstar) / sCstar - h * sCstar
 probProfAdoptTot <- pnorm(phiArgTot)
-dPsiTotCheck <- Nf * muArea * muEyStarT0 * EPT02007 * (dlng0 + dlNu) * (probProfAdoptTot - cStarMaxAdopt / muCstarh * adoptRateTotal)
-dPsiTotCheck <- dPsiTotCheck * 10^-9 # in billions KES
+dPsiTotCheck <- Nf * muArea * muR * phiTermR * (muCstar * probProfAdoptTot - cStarMaxAdopt * adoptRateTotal)
+# dPsiTotCheck <- Nf * muArea * muEyStarT0 * EPT02007 * (dlng0 + dlNu) * (probProfAdoptTot - cStarMaxAdopt / muCstarh * adoptRateTotal)
+dPsiTotCheck <- dPsiTotCheck * 10^-9 # in billion KES
 # Check that the sum of stratified welfare changes matches the total
 dPsiCheckVec[t] <- dPsiTot - dPsiTotCheck
 #print(paste("Check dPsi", round(dPsi - dPsiCheck, 3)))
@@ -2916,14 +2890,22 @@ dQTotCheck <- dQTotCheck * 10^-6 # in 1000 MT
 dQCheckVec[t] <- dQTot - dQTotCheck
 #print(paste("Check dQ", round(dQTot - dQTotCheck, 3)))
 #---
+# Total subsidies in billions
+aggSubsidy <- dB * Nf * muArea * adoptRateTotal * 10^-9
+#aggSubsidyStrat <- stratFrac * dB * Nf * muArea * adoptRateStrat * 10^-9
+#sum(aggSubsidyStrat) - aggSubsidy # Check if zero
+aggSubsidyMillnUSD <- aggSubsidy / 67 * 10^3 #in million USD
+aggSubsidyStratMillnKES <- aggSubsidyStrat * 10^3 #in million KES
+#---
 matDq[i, j] <- round(dQTot, 3)
 matDpsi[i, j] <- round(dPsiTot, 3)
 matAdopt[i, j] <- round(adoptRateTotal, 3) * 100
+matSub[i, j] <- dPsiTot - aggSubsidy
 }
 }
-hist(adoptCheckVec)
-hist(dPsiCheckVec)
-hist(dQCheckVec)
+# hist(adoptCheckVec)
+# hist(dPsiCheckVec)
+# hist(dQCheckVec)
 
 indX <- which(abs(dlNuPoint - dlNuVec) == min(abs(dlNuPoint - dlNuVec)))
 indY <- which(abs(dBPoint - dBvec) == min(abs(dBPoint - dBvec)))
@@ -2969,7 +2951,8 @@ gg <- gg + metR::geom_text_contour(aes(z = var),
                                    stroke = 0.15)
 gg <- gg + scale_fill_gradient(low = "coral", high = "cyan", na.value = "black")
 #gg <- gg + geom_text(aes(label = var), size = labelSize)
-gg <- gg + labs(fill = "Change in aggregate\nproducer welfare (billion KES)", x = "Decrease in output input price ratio (%)",
+gg <- gg + labs(fill = "Change in aggregate\nproducer welfare (billion KES)", 
+                x = "Decrease in output input price ratio (%)",
                 y = "Net subsidy (KES/acre)")
 gg <- gg + theme_bw()
 gg <- gg + theme(axis.text = element_text(size = axisTextSize),
@@ -3008,6 +2991,33 @@ gg <- gg + theme(axis.text = element_text(size = axisTextSize),
 ggDq <- gg
 
 
+dfMat <- as.data.frame(matSub)
+dfMat[indX, indY] <- NA
+colnames(dfMat) <- round(dBvec, 2) # paste("dB =", round(dBvec, 2))
+gatherCols <- colnames(dfMat)
+dfMat$dlNu <- round(dlNuVec, 2) #paste("dlnNu =", round(dlnNuVec, 2))
+dfPlot <- dfMat %>% gather_("dB", "var", gatherCols)
+dfPlot$dB <- as.numeric(dfPlot$dB)
+gg <- ggplot(dfPlot, aes(x = dlNu, y = dB, z = var, fill = var, group = 1))
+gg <- gg + geom_tile(alpha = 1) + geom_contour()
+gg <- gg + metR::geom_text_contour(aes(z = var),
+                                   #breaks = seq(100, 3000, length.out = 6),
+                                   stroke = 0.15)
+gg <- gg + scale_fill_gradient(low = "coral", high = "cyan", na.value = "black")
+#gg <- gg + geom_text(aes(label = var), size = labelSize)
+gg <- gg + labs(fill = "Change in aggregate supply (1000 MT)", x = "Decrease in output input price ratio (%)",
+                y = "Net subsidy (KES/acre)")
+gg <- gg + theme_bw()
+gg <- gg + theme(axis.text = element_text(size = axisTextSize),
+                 axis.title.x = element_text(size = axisTitleSize),
+                 axis.title.y = element_blank(),
+                 legend.title = element_text(size = axisTitleSize),
+                 legend.text = element_text(size = axisTextSize),
+                 legend.position = "top",
+                 legend.title.position = "top")
+ggSub <- gg
+
+
 ggAdopt | ggDq | ggDpsi
 
 
@@ -3018,6 +3028,7 @@ ggAdopt | ggDq | ggDpsi
 
 # Discussion and conclusion
 
+real price change found by PE analysis i.e. have to specify a demand curve...monopsony, etc.
 any impact assessment must be accompanied by a clear indication of the assumed meteorological conditions.
 The theoretical supply curve and imact assessment framework presented above... to solve for equilibrium price and consumer welfare impacts require demand curve specificatiobn...which extends beyond the scope of this article but you can guess what it would be...input demand integrated over density...or monopsony...a single firm or cartel of firms buying all the production....so consumer welfare is actually firm welfare, to get at consumers have to go beyond a bit
 this is comparative statics. welfare has to be discounted according to release/adoption period. the change in prices, especially output price, is not immediate, lag... the adoption rate refers to the economically rational level of adoption once prices adjust to the intervention. many might adopt at first but then find out that it is not profitable and back out as prices adjust. welfare and subsidy incur year by year
@@ -5334,3 +5345,89 @@ sketch out extension to aggregate demand and PE analysis...computing Econ Surplu
 <!-- \end{equation} -->
 <!-- Such that the conditional parameters $\bar{m}_{\#}$ and $\bar{s}_{\#}$ can be estimated from the data as follows. -->
 <!-- To parse $m_c$ and $s_c$, recall from Equation \ref{eq:mCk} that $C^* = (v k C^{\#})^{1 / (1 - h)}$, such that -->
+<!-- as explained in section \ref{sec:binEndStrat} -->
+<!-- \begin{equation} -->
+<!-- \begin{split} -->
+<!-- \Delta \psi &= N \int_0^{\infty} k_a \int_0^{\infty} k \int_0^{\bar{\bar{C}^{*}}} \partial \mathcal{L}^*(C^*, k) \rho(C^*) d C^* \rho(k) dk \rho(k_a) dk_a \\ -->
+<!-- \end{split} -->
+<!-- \end{equation} -->
+
+<!-- From the expression for research induced farm level change in net benefit in Equation \ref{eq:dLdlng} it follows that -->
+
+<!-- \begin{equation} -->
+<!-- \begin{split} -->
+<!-- \partial \mathcal{L}^*(C^*, k) &= r ( C^* \left(\partial \ln(g) - \boldsymbol{\alpha} ' \partial \mathbf{w} \right) + h \partial B ) \\ -->
+<!-- &= r \gamma (C^* - \bar{\bar{C}^*}) \:\:;\:\:\: \gamma = \left(\partial \ln(g) - \boldsymbol{\alpha} ' \partial \mathbf{w} \right) \\ -->
+<!-- &= \gamma P (y^* - \bar{\bar{y^*}}) \\ -->
+<!-- &= \gamma P v k  (C^{*h} - \bar{\bar{C^{*h}}}) -->
+<!-- \end{split} -->
+<!-- \end{equation} -->
+
+<!-- Such that -->
+
+<!-- \begin{equation} -->
+<!-- \begin{split} -->
+<!-- \Delta \psi &= N E[k_a] E[k] v P \gamma \int_0^{\bar{\bar{C}^{*}}} (C^{*h} - \bar{\bar{C^{*h}}}) \rho (C^*) d C^* \\ -->
+<!-- &= N E[k_a] E[k] v P \gamma (E[C^{*h}] \mathcal{P}(\bar{\bar{C^*}}) - \bar{\bar{C^{*h}}} \mathcal{A}) \:\:;\:\:\: \mathcal{P}(\bar{\bar{C^{\#}}}) = \Phi \left( \frac{\ln(\bar{\bar{C^{\#}}}) - m_{\#}}{s_{\#}} - \eta s_{\#}  \right) \\ -->
+<!-- &= N E[k_a] P \gamma (E[y^*] \mathcal{P}(\bar{\bar{C^{\#}}}) - E[k] v \bar{\bar{C^{*h}}} \mathcal{A}) \\ -->
+<!-- &= N E[k_a] P \gamma \left( E[y^*] \mathcal{P}(\bar{\bar{C^{\#}}}) - E[\bar{\bar{y}^*}] \mathcal{A} \right) \:\:;\:\:\: E[\bar{\bar{y}^*}] = E[v k \bar{\bar{C^{*}}}] = \frac{\bar{\bar{C^{*}}}}{E[C^{* h}]} E[y^*] -->
+<!-- \end{split} -->
+<!-- \end{equation} -->
+<!-- $$ -->
+<!-- N E[k_a] E[k] v P \gamma (E[C^{*h}] \mathcal{P}(\bar{\bar{C^*}}) - \bar{\bar{C^{*h}}} \mathcal{A}) \:\:;\:\:\: \mathcal{P}(\bar{\bar{C^*}}) = \Phi \left( \frac{\ln(\bar{\bar{C^{\#}}}) - m_{\#}}{s_{\#}} - \eta s_{\#}  \right) -->
+<!-- $$ -->
+<!-- &= N E[k_a] E[k] v P \gamma (E[C^{*h}] (1 - \Phi(\zeta)) - \bar{\bar{C^{*h}}} \mathcal{A}) \\ -->
+<!-- &= N E[k_a] P \gamma (E[y^*] (1 - \Phi(\zeta)) - E[k] v \bar{\bar{C^{*h}}} \mathcal{A}) \\ -->
+<!-- &= N E[k_a] P \gamma \left( E[y^*] (1 - \Phi(\zeta)) - E[\bar{\bar{y}^*}] \mathcal{A} \right) -->
+
+<!-- By Equation \ref{eq:keyResult2} this can also be written -->
+
+<!-- \begin{equation} -->
+<!-- \Delta \psi = N E[k_a] P \gamma \mathcal{A} \left( E[y^*| C^* \leq \bar{\bar{C^{*h}}}] -  E[\bar{\bar{y}^*}] \right) -->
+<!-- \end{equation} -->
+<!-- The total change in aggregate net benefit summed across all strata then follows as -->
+<!-- \begin{equation} -->
+<!-- \Delta \psi = \sum \Delta \psi -->
+<!-- \label{eq:dPsi} -->
+<!-- \end{equation} -->
+
+<!-- Following the steps in Equations \ref{eq:PhiMap}, the $\Phi()$ term can then be expressed in stochastic price parameter space. -->
+
+<!-- \begin{equation} -->
+<!-- \begin{split} -->
+<!-- \Phi \left( \frac{\ln(\bar{\bar{C^{\#}}}) - m_{\#}}{s_{\#}} - \eta s_{\#}  \right) &= 1 - \Phi ( \zeta ) \:\:;\:\:\: \zeta = \frac{\ln \left( \frac{E[\tilde{C}^{\#}(T)]|_{t = 0}}{\bar{\bar{C^{\#}(0)}}} \right) - \left( m_p - \eta \frac{s_p^2}{2} \right) T}{s_p \sqrt{T}} \\ -->
+<!-- &= \text{Prob}(\tilde{C}^{\#}(T)} \leq \bar{\bar{C^{\#}}}) -->
+<!-- \end{equation} -->
+
+<!-- Such that the term $1 - \Phi(\zeta)$ may be interpreted as the PEFS-adjusted probability that, on the mean farm, adoption will prove to be more profitable than not adopting. [The PEFS adjusted mean probability of profitable adoption] -->
+
+<!-- Recalling, moreover, the relation between conditional and unconditional mean of a lognormally distributed variable (Equation \ref{eq:keyResult2}), -->
+
+<!-- \begin{equation} -->
+<!-- \begin{split} -->
+<!-- E[y^*] \Phi \left( \frac{\ln(\bar{\bar{C^*}}) - m_{c}}{s_c} - h s_c  \right) &= E[y^*| C^* \leq \bar{\bar{C^*}}] \Phi \left( \frac{\ln(\bar{\bar{C^*}}) - m_{c}}{s_c} \right) \\ -->
+<!-- E[y^*] (1 - \Phi(\zeta)) &= E[y^*| C^* \leq \bar{\bar{C^*}}] \mathcal{A} -->
+<!-- \end{split} -->
+<!-- \end{equation} -->
+
+<!-- Such that the expression for $\Delta Q$ may be rewritten as follows. -->
+<!-- The percentage change in aggregate supply given a 1% change in TFP follows from Equations \ref{eq:aggSup2} and \ref{eq:ddlng0}, -->
+<!-- \begin{equation} -->
+<!-- \begin{split} -->
+<!-- \frac{\partial \ln(E[Q(T)]|_{t = 0})}{\partial \ln(g)} = \frac{\partial \ln E[\tilde{y}^*(T; k_m(T))]|_{t = 0}}{\partial \ln(g)} \\ -->
+<!-- &= \frac{1}{1 - h} \left( 1 - \boldsymbol{\alpha} ' \frac{\partial \ln(\mathbf{w})}{\partial \ln(g)} \right) -->
+<!-- \end{split} -->
+<!-- \end{equation} -->
+<!-- Recalling that $\partial \ln(y^*(T; k_m(T))) = \partial \ln(C^*)$, this can be parsed as follows. -->
+<!-- E[y^*(T; k_m(T))]|_{t = 0} -->
+<!-- \partial y^*(T, k_m(T)) = \Delta y^*(T, k_m(T)) -->
+<!-- $\partial q^*(T) = k_a \partial y^*(T; k_m(T))$ -->
+<!-- To reduce clutter, the following shorthand is used -->
+<!-- \begin{equation} -->
+<!-- \begin{split} -->
+<!-- y^* &= E[y(T; k_m(T))] \bigr|_{t = 0} \\ -->
+<!-- C^{\#} &= E[C^{\#}(T)] \bigr|_{t = 0} \\ -->
+<!-- P &= E[P(T)]|_{t = 0} \\ -->
+<!-- Q &= E[Q(T)]|_{t = 0} -->
+<!-- \end{split} -->
+<!-- \end{equation} -->
