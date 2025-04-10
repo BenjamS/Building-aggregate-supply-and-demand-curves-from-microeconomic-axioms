@@ -954,31 +954,40 @@ The total increase in aggregate supply due to a technology shock can be evaluate
 From the expression for research induced yield change in Equations \ref{eq:dldlg0} it follows that
 
 \begin{equation}
-\partial \ln(y^*) = \frac{1}{1 - h} ( \partial \ln(g) - \boldsymbol{\alpha} ' \partial \ln(\mathbf{w}) + h \partial \ln(P) )
+\partial \ln(y^*) = \frac{\ell}{1 - h} \:\:;\:\:\: \ell = \partial \ln(g) - \boldsymbol{\alpha} ' \partial \ln(\mathbf{w}) + h \partial \ln(P)
 \end{equation}
 
 Such that the integral reduces to
 
 \begin{equation}
 \begin{split}
-\Delta Q &= N E[k_a] \frac{1}{1 - h}(\partial \ln(g) - \boldsymbol{\alpha} ' \partial \ln(\mathbf{w})) \int_0^{\bar{\bar{y^*}}} y^* \rho(y^*) dy^* \\
-&= N E[k_a] \frac{1}{1 - h}(\partial \ln(g) - \boldsymbol{\alpha} ' \partial \ln(\mathbf{w})) v E[k] \int_0^{\bar{\bar{C^*}}} C^{*h} \rho(C^*) dC^* \\
-&= N E[k_a] v E[k] E[C^{*h}] \frac{1}{1 - h}(\partial \ln(g) - \boldsymbol{\alpha} ' \partial \ln(\mathbf{w})) \Phi \left( \frac{\ln(\bar{\bar{C^*}}) - m_c}{s_c} - h s_c  \right) \\
-&= N E[k_a] v E[k] E[C^{*h}] \frac{1}{1 - h}(\partial \ln(g) - \boldsymbol{\alpha} ' \partial \ln(\mathbf{w})) \mathcal{P}(\bar{\bar{C^{*h}}}; m_c, s_c)
+\Delta Q &= N E[k_a] \frac{\ell}{1 - h} \int_0^{\bar{\bar{y^*}}} y^* \rho(y^*) dy^* \\
+&= N E[k_a] \frac{\ell}{1 - h} v E[k] \int_0^{\bar{\bar{C^*}}} C^{*h} \rho(C^*) dC^* \\
+&= N E[k_a] v E[k] E[C^{*h}] \frac{\ell}{1 - h} \Phi \left( \frac{\ln(\bar{\bar{C^*}}) - m_c}{s_c} - h s_c  \right) \\
+&= N E[k_a] v E[k] E[C^{*h}] \frac{\ell}{1 - h} \mathcal{P}(\bar{\bar{C^{*h}}}; m_c, s_c)
 \end{split}
 \end{equation}
+<!-- $$ -->
+<!-- \Delta Q = N E[k_a] \frac{\ell}{1 - h} \int_0^{\bar{\bar{y^*}}} y^* \rho(y^*) dy^* \\ -->
+<!-- = N E[k_a] \frac{\ell}{1 - h} v E[k] \int_0^{\bar{\bar{C^*}}} C^{*h} \rho(C^*) dC^* \\ -->
+<!-- = N E[k_a] v E[k] E[C^{*h}] \frac{\ell}{1 - h} \Phi \left( \frac{\ln(\bar{\bar{C^*}}) - m_c}{s_c} - h s_c  \right) \\ -->
+<!-- = N E[k_a] v E[k] E[C^{*h}] \frac{\ell}{1 - h} \mathcal{P}(\bar{\bar{C^{*h}}}; m_c, s_c) -->
+<!-- $$ -->
 <!-- \Delta Q = N E[k_a] \frac{1}{1 - h}(\partial \ln(g) - \boldsymbol{\alpha} ' \partial \ln(\mathbf{w})) \int_0^{\bar{\bar{y^*}}} y^* \rho(y^*) dy^* \\ -->
 <!-- = N E[k_a] \frac{1}{1 - h}(\partial \ln(g) - \boldsymbol{\alpha} ' \partial \ln(\mathbf{w})) v E[k] \int_0^{\bar{\bar{C^*}}} C^{*h} \rho(C^*) dC^* \\ -->
 <!-- = N E[k_a] v E[k] E[C^{*h}] \frac{1}{1 - h}(\partial \ln(g) - \boldsymbol{\alpha} ' \partial \ln(\mathbf{w})) \Phi \left( \frac{\ln(\bar{\bar{C^*}}) - m_c}{s_c} - h s_c  \right) \\ -->
 <!-- = N E[k_a] v E[k] E[C^{*h}] \frac{1}{1 - h}(\partial \ln(g) - \boldsymbol{\alpha} ' \partial \ln(\mathbf{w})) \mathcal{P}(\bar{\bar{C^{*h}}}; m_c, s_c) -->
 <!-- $$ -->
 
-Where the last line follows from Equation \ref{eq:keyResult}. Recalling that $v = E[y^*] / (E[k] E[C^{*h}])$ (Equation \ref{eq:v0i}), this further reduces to
+Where the penultimate line follows from Equation \ref{eq:keyResult}. Recalling that $v = E[y^*] / (E[k] E[C^{*h}])$ (Equation \ref{eq:v0forms}), this further reduces to
 
 \begin{equation}
-\Delta Q = N E[k_a] E[y^*] \frac{1}{1 - h}(\partial \ln(g) - \boldsymbol{\alpha} ' \partial \ln(mathbf{w})) \Phi \left( \frac{\ln(\bar{\bar{C^*}}) - m_{c}}{s_c} - h s_c  \right)
+\Delta Q = N E[k_a] E[y^*] \frac{\ell}{1 - h} \mathcal{P}(\bar{\bar{C^{*h}}}; m_c, s_c)
 \label{eq:deltQ}
 \end{equation}
+<!-- $$ -->
+<!-- \Delta Q = N E[k_a] E[y^*] \frac{\ell}{1 - h}\mathcal{P}(\bar{\bar{C^{*h}}}; m_c, s_c) -->
+<!-- $$ -->
 
 The new aggregate supply curve ($Q'$) can then be evaluated as
 
@@ -1556,6 +1565,7 @@ Finally, the stochastically explicit formulations for the research induced chang
 \end{split}
 \label{eq:dEQT0}
 \end{equation}
+<!-- \Delta Q = N E[k_a] E[y^*] \frac{\ell}{1 - h}\mathcal{P}(\bar{\bar{C^{*h}}}; m_c, s_c) -->
 
 And
 
@@ -1571,6 +1581,7 @@ And
 \Delta \psi = N E[k_a] E[\tilde{r}(T)]|_{t = 0} \gamma (2 \mathcal{E} - \mathcal{P}(P; m_{\#}, s_{\#})) ( E[C^*] \mathcal{P}(\bar{\bar{C}^*}; m_c, s_c)  - \bar{\bar{C}^*} \mathcal{A} ) \:\:;\:\:\: \tilde{r}(T) = E[r(T)] = \frac{E[P(T)]}{E[C^{\#}(T)]}
 \label{eq:dEPsi}
 \end{equation}
+<!-- \Delta \psi = N E[k_a] E[r] \gamma (2 \mathcal{E} - \mathcal{P}(P; m_{\#}, s_{\#})) ( E[C^*] \mathcal{P}(\bar{\bar{C}^*}; m_c, s_c)  - \bar{\bar{C}^*} \mathcal{A} ) -->
 
 
 <!-- \Delta E[Q(T; k_m(T))]|_{t = 0} &= N E[k_a] E[\tilde{y}^*(T, k_m(T))]|_{t = 0} \frac{1}{1 - h}(\partial \ln(g) - \boldsymbol{\alpha} ' \partial \ln(\mathbf{w})) (1 - \Phi ( \v )) \\ -->
@@ -2617,11 +2628,11 @@ ggEQsT0 / ggEtaEPT0EQsT0a
 # Exogenous tech, price, and subsidy shock params
 # betaNew <- 0.2
 # dlng0 <- exp(betaNew) - 1
-dlng0 <- 0.28
+dlng0 <- 0.3
 betaNew <- log(dlng0 + 1)
 nuRatio <- 0.75
 aDotdlw <- 0.2; dlP <- -aDotdlw * nuRatio
-dB <- 1200
+dB <- 1000
 dlnNu <- dlP - aDotdlw
 dlnNuh <- h * dlP - aDotdlw
 # Save intervention coordinates to mark on heat maps farther below
@@ -2643,43 +2654,41 @@ adoptRateTotalCheck <- sum(adoptRateStrat * stratFrac)
 #adoptRateTotal - adoptRateTotalCheck
 # A = \Phi\left( \frac{\frac{-h (1 - h) \partial B}{\partial \ln(\nu) + \partial \ln(g)} - (\ln(v) + m_k + m_{\#})}{\sqrt{s_k^2 + s_{\#}^2}} \right)
 #--------------------------------------------------------------------------
-# Total subsidies in billions
-aggSubsidy <- dB * Nf * muArea * adoptRateTotal * 10^-9
-aggSubsidyStrat <- stratFrac * dB * Nf * muArea * adoptRateStrat * 10^-9
+# Total subsidies in millions
+aggSubsidyTot <- dB * Nf * muArea * adoptRateTotal * 10^-6
+aggSubsidyStrat <- stratFrac * dB * Nf * muArea * adoptRateStrat * 10^-6
 #sum(aggSubsidyStrat) - aggSubsidy # Check if zero
-aggSubsidyMillnUSD <- aggSubsidy / 67 * 10^3 #in million USD
-aggSubsidyStratMillnKES <- aggSubsidyStrat * 10^3 #in million KES
 #--------------------------------------------------------------------------
 # Welfare assessment
 phiArgStrat <- (lcStarMaxAdopt - mCstarStrat) / sCstar - sCstar
 probProfAdoptStrat <- pnorm(phiArgStrat)
 phiArgTot <- (lcStarMaxAdopt - mCstar) / sCstar - sCstar
 probProfAdoptTot <- pnorm(phiArgTot)
-
-pnorm((lcStarMaxAdopt - mCstar) / sCstar + sCstar) + probProfAdoptTot
-
-pnorm((0.8 - 0.9) /1 - 1)+pnorm((0.8 - 0.9) /1 + 1)
-  
-
+#mR <- log(EPT02007) - mEcSharpT0; sR <- sEcSharpT0
+# muRcondStrat <- EPT02007 * exp(-dfStrat$mEcSharpT0truncStrat + dfStrat$sEcSharpT0truncStrat^2 / 2)
+#muRcondTot <- EPT02007 * exp(-dfAll$mEcSharpT0trunc + dfAll$sEcSharpT0trunc^2 / 2)
+muRcond <- EPT02007 * exp(-dfAll$mEcSharpT0trunc + dfAll$sEcSharpT0trunc^2 / 2)
+dPsiStrat <- stratFrac * Nf * muArea * (dlnNu + dlng0) * muRcond * EmploymentRate * (muCstar * probProfAdoptStrat - cStarMaxAdopt * adoptRateStrat) * 10^-6 # In million KES
+#\Delta \psi = N E[k_a] E[r] \gamma (2 \mathcal{E} - \mathcal{P}(P; m_{\#}, s_{\#})) ( E[C^*] \mathcal{P}(\bar{\bar{C}^*}; m_c, s_c)  - \bar{\bar{C}^*} \mathcal{A} )
 # dPsiStrat <- stratFrac * Nf * muArea * muEyStarT0strat * EPT02007 * (dlnNu + dlng0) * (probProfAdoptStrat - cStarMaxAdopt / muCstarhStrat * adoptRateStrat)
-dPsiStrat <- dPsiStrat * 10^-9 # in billions KES
 dPsiTot <- sum(dPsiStrat)
 #dPsiTot / 67.32 # 2007 USD exchange rate
-mR <- log(EPT02007) - mEcSharpT0; sR <- sEcSharpT0
-muRobs <- EPT02007 / dfAll$muEcSharpT0trunc
-dPsiTot <- Nf * muArea * muRobs * EmploymentRate * (dlnNu + dlng0) * (muCstar * probProfAdoptTot - cStarMaxAdopt * adoptRateTotal) * 10^-9
-dPsiTotCheck <- Nf * muArea * muEyStarT0 * EPT02007 * (dlnNu + dlng0) * (probProfAdoptTot - cStarMaxAdopt / muCstarh * adoptRateTotal) * 10^-9
+dPsiTotCheck <- Nf * muArea * (dlnNu + dlng0) * muRcond * EmploymentRate * (muCstar * probProfAdoptTot - cStarMaxAdopt * adoptRateTotal) * 10^-6 # In million KES
 #dPsiTot - dPsiTotCheck
+#dPsiTot - aggSubsidyTot
 #--------------------------------------------------------------------------
 # Change in aggregate supply
+phiArgStrat <- (lcStarMaxAdopt - mCstarStrat) / sCstar - h * sCstar
+probProfAdoptStrat <- pnorm(phiArgStrat)
+phiArgTot <- (lcStarMaxAdopt - mCstar) / sCstar - h * sCstar
+probProfAdoptTot <- pnorm(phiArgTot)
 dQStrat <- stratFrac * Nf * muArea * muEyStarT0strat * (dlnNuh + dlng0) / (1 - h) * probProfAdoptStrat
 dQStrat <- 10^-3 * dQStrat # in MT
 dQStrat <- 10^-3 * dQStrat # in 1000 MT
 dQtot <- sum(dQStrat)
 dQtotCheck <- Nf * muArea * muEyStarT0 * (dlnNuh + dlng0) / (1 - h) * probProfAdoptTot * 10^-6
 #dQtot - dQtotCheck
-# \Delta Q_i &= N_i E[k_a] E[y^*]_i \frac{1}{1 - h}(\partial \ln(g) - \boldsymbol{\alpha} ' \partial \ln(mathbf{w})) \Phi \left( \frac{\ln(\bar{\bar{C^*}}) - m_{ci}}{s_c} - h s_c  \right)
-
+#\Delta Q = N E[k_a] E[y^*] \frac{\ell}{1 - h}\mathcal{P}(\bar{\bar{C^{*h}}}; m_c, s_c)
 ```
 
 Say a new technology package is released in Kenya that results in a `r 100 * dlng0`% increase in TFP on adopting farms. As explained in section \ref{sec:farmResp}, this is tantamount to adding another binary endowment $b_5\beta_5 =$ `r round(betaNew, 2)` to the yield model. Say that the expected $\boldsymbol{\alpha}$-adjusted percentage increase in input prices ($\boldsymbol{\alpha} '\partial \ln(\mathbf{w})$) is `r aDotdlw`, and the expected percentage decrease in output price ($\partial \ln(P)$) is `r dlP`, such that $\partial \ln(\nu) =$ `r dlnNu`, which is greater than the percentage increase in TFP. Adoption would thus result in a `r 100 * dlv0dlg0`% increase in expenditure TFP ($v$), a `r -round(100 * dlMuCstar)`% reduction in expenditure, and a `r round(100 * dlMuEyStarT0)`% increase in yield on adopting farms (recall Equations \ref{eq:dlv0dlg0}, \ref{eq:dlyStardlg0}, and \ref{eq:dlCstardlg0}). However, by the criterion in Inequality \ref{eq:adoptCondSimp}, adoption makes economic sense for the farmer only if a net subsidy is included in the technology package (i.e., only if $\partial B > 0$).
@@ -2707,7 +2716,7 @@ dfTab <- data.frame(Type = dfStrat$Type,
                     round(dQStrat, 1),
                     round(dPsiStrat, 1))
 varCols <- c("Adoption\nrate (%)", "Change in\nsupply\n(1000 MT)",
-             "Change in aggregate\nproducer welfare\n(billion KES)")
+             "Change in aggregate\nproducer welfare\n(million KES)")
 colnames(dfTab)[-1] <- varCols
 dfTab <- dfTab %>% gather_("var", "val", varCols)
 gg <- ggplot(dfTab, aes(x = var, y = Type, fill = val, label = val))
@@ -2816,18 +2825,19 @@ For policy formation, it is helpful to consider interventions in a sensitivity h
 # rm(dfPlot, dfPlot1)
 # gc()
 # Adoption rate map
-muR <- EPT02007 / dfAll$muEcSharpT0trunc
-nRes <- 20
-aDotdlwVec <- seq(0.18, 0.4, length.out = nRes)
+muRcond <- EPT02007 * exp(-dfAll$mEcSharpT0trunc + dfAll$sEcSharpT0trunc^2 / 2)
+nRes <- 14
+aDotdlwVec <- seq(0.19, 0.22, length.out = nRes)
 dlP <- -nuRatio * aDotdlwVec
 dlNuVec <- rev(-aDotdlwVec + dlP)
 dlNuhVec <- rev(-aDotdlwVec + h * dlP)
 #dBvec <- seq(400, 1100, length.out = nRes)
-dBvec <- seq(400, 2200, length.out = nRes)
+dBvec <- seq(500, 2000, length.out = nRes)
 matAdopt <- matrix(NA, nRes, nRes)
 matDq <- matrix(NA, nRes, nRes)
 matDpsi <- matrix(NA, nRes, nRes)
 matSub <-  matrix(NA, nRes, nRes)
+matProfitAdopt <- matrix(NA, nRes, nRes)
 adoptCheckVec <- c()
 dPsiCheckVec <- c()
 dQCheckVec <- c()
@@ -2841,63 +2851,53 @@ for(i in 1:nRes){
     dlNuh <- dlNuhVec[i]
   #---
   cStarMaxAdopt <- -h * dB / (dlng0 + dlNu)
-  lCstarMaxAdopt <- log(cStarMaxAdopt)
+  lcStarMaxAdopt <- log(cStarMaxAdopt)
   #---
   # Stratified adopt rate
-  z <- (lCstarMaxAdopt - mCstarStrat) / sCstar
-  adoptRateStrat <- pnorm(z)
+  zStrat <- (lcStarMaxAdopt - mCstarStrat) / sCstar
+  adoptRateStrat <- pnorm(zStrat)
   adoptRateTotalCheck <- sum(adoptRateStrat * stratFrac)
   # Total adopt rate
-  z <- (lCstarMaxAdopt - mCstar) / sCstar
-  adoptRateTotal <- pnorm(z)
+  zTot <- (lcStarMaxAdopt - mCstar) / sCstar
+  adoptRateTotal <- pnorm(zTot)
   # Check mean stratified adopt rate equals total
   t <- t + 1
   adoptCheckVec[t] <- adoptRateTotal - adoptRateTotalCheck
  # print(paste("Check adoptRate", round(adoptRateTotal - adoptRateTotalCheck, 3)))
 #---
-  # Stratified welfare change
-phiArgStrat <- (lCstarMaxAdopt - mCstarStrat) / sCstar - h * sCstar
+# Stratified welfare change
+phiArgStrat <- (lcStarMaxAdopt - mCstarStrat) / sCstar - sCstar
 probProfAdoptStrat <- pnorm(phiArgStrat)
-mR <- log(EPT02007) - mEcSharpT0; sR <- sEcSharpT0
-argR <- -mR / sR - sR
-phiTermR <- pnorm(argR)
-dPsiStrat <- stratFrac * Nf * muArea * muR * phiTermR * (muCstar * probProfAdoptStrat - cStarMaxAdopt * adoptRateStrat)
-# dPsiStrat <- stratFrac * Nf * muArea * muEyStarT0strat * EPT02007 * (dlng0 + dlNu) * (probProfAdoptStrat - cStarMaxAdopt / muCstarhStrat * adoptRateStrat)
-dPsiStrat <- dPsiStrat * 10^-9 # in billion KES
-dPsiTot <- sum(dPsiStrat)
-# Total welfare change
-phiArgTot <- (lCstarMaxAdopt - mCstar) / sCstar - h * sCstar
+phiArgTot <- (lcStarMaxAdopt - mCstar) / sCstar - sCstar
 probProfAdoptTot <- pnorm(phiArgTot)
-dPsiTotCheck <- Nf * muArea * muR * phiTermR * (muCstar * probProfAdoptTot - cStarMaxAdopt * adoptRateTotal)
-# dPsiTotCheck <- Nf * muArea * muEyStarT0 * EPT02007 * (dlng0 + dlNu) * (probProfAdoptTot - cStarMaxAdopt / muCstarh * adoptRateTotal)
-dPsiTotCheck <- dPsiTotCheck * 10^-9 # in billion KES
+matProfitAdopt[i, j] <- probProfAdoptTot
+dPsiStrat <- stratFrac * Nf * muArea * (dlnNu + dlng0) * muRcond * EmploymentRate * (muCstar * probProfAdoptStrat - cStarMaxAdopt * adoptRateStrat) * 10^-6 # In million KES
+dPsiTot <- sum(dPsiStrat)
+#dPsiTot / 67.32 # 2007 USD exchange rate
+dPsiTotCheck <- Nf * muArea * (dlnNu + dlng0) * muRcond * EmploymentRate * (muCstar * probProfAdoptTot - cStarMaxAdopt * adoptRateTotal) * 10^-6 # In million KES
 # Check that the sum of stratified welfare changes matches the total
 dPsiCheckVec[t] <- dPsiTot - dPsiTotCheck
-#print(paste("Check dPsi", round(dPsi - dPsiCheck, 3)))
-# dPsiTot / 67.32 # 2007 USD exchange rate
-# Total welfare change
-#---
-# Stratified change in expected aggregate supply
+#dPsiTot - dPsiTotCheck
+#--------------------------------------------------------------------------
+# Change in aggregate supply
+phiArgStrat <- (lcStarMaxAdopt - mCstarStrat) / sCstar - h * sCstar
+probProfAdoptStrat <- pnorm(phiArgStrat)
+phiArgTot <- (lcStarMaxAdopt - mCstar) / sCstar - h * sCstar
+probProfAdoptTot <- pnorm(phiArgTot)
 dQStrat <- stratFrac * Nf * muArea * muEyStarT0strat * (dlnNuh + dlng0) / (1 - h) * probProfAdoptStrat
-# \Delta Q_i &= N_i E[k_a] E[y^*]_i \frac{1}{1 - h}(\partial \ln(g) - \boldsymbol{\alpha} ' \partial \ln(mathbf{w})) \Phi \left( \frac{\ln(\bar{\bar{C^*}}) - m_{ci}}{s_c} - h s_c  \right)
 dQStrat <- 10^-3 * dQStrat # in MT
 dQStrat <- 10^-3 * dQStrat # in 1000 MT
-dQTot <- sum(dQStrat)
-# Total change in expected aggregate supply
-dQTotCheck <- Nf * muArea * muEyStarT0strat * (dlng0 + dlnNuh) / (1 - h) * probProfAdoptTot
-dQTotCheck <- dQTotCheck * 10^-6 # in 1000 MT
-# Check that the sum of stratified supply changes matches the total
-dQCheckVec[t] <- dQTot - dQTotCheck
-#print(paste("Check dQ", round(dQTot - dQTotCheck, 3)))
+dQtot <- sum(dQStrat)
+dQtotCheck <- Nf * muArea * muEyStarT0 * (dlnNuh + dlng0) / (1 - h) * probProfAdoptTot * 10^-6 # In 1000 MT
+dQCheckVec[t] <- dQtot - dQtotCheck
 #---
-# Total subsidies in billions
-aggSubsidy <- dB * Nf * muArea * adoptRateTotal * 10^-9
+# Total subsidies in millions
+aggSubsidy <- dB * Nf * muArea * adoptRateTotal * 10^-6
 #aggSubsidyStrat <- stratFrac * dB * Nf * muArea * adoptRateStrat * 10^-9
 #sum(aggSubsidyStrat) - aggSubsidy # Check if zero
-aggSubsidyMillnUSD <- aggSubsidy / 67 * 10^3 #in million USD
-aggSubsidyStratMillnKES <- aggSubsidyStrat * 10^3 #in million KES
+#aggSubsidyMillnUSD <- aggSubsidy / 67 #in million USD
 #---
-matDq[i, j] <- round(dQTot, 3)
+matDq[i, j] <- round(dQtot, 3)
 matDpsi[i, j] <- round(dPsiTot, 3)
 matAdopt[i, j] <- round(adoptRateTotal, 3) * 100
 matSub[i, j] <- dPsiTot - aggSubsidy
@@ -2951,7 +2951,7 @@ gg <- gg + metR::geom_text_contour(aes(z = var),
                                    stroke = 0.15)
 gg <- gg + scale_fill_gradient(low = "coral", high = "cyan", na.value = "black")
 #gg <- gg + geom_text(aes(label = var), size = labelSize)
-gg <- gg + labs(fill = "Change in aggregate\nproducer welfare (billion KES)", 
+gg <- gg + labs(fill = "Change in aggregate\nproducer welfare (million KES)", 
                 x = "Decrease in output input price ratio (%)",
                 y = "Net subsidy (KES/acre)")
 gg <- gg + theme_bw()
@@ -3005,7 +3005,7 @@ gg <- gg + metR::geom_text_contour(aes(z = var),
                                    stroke = 0.15)
 gg <- gg + scale_fill_gradient(low = "coral", high = "cyan", na.value = "black")
 #gg <- gg + geom_text(aes(label = var), size = labelSize)
-gg <- gg + labs(fill = "Change in aggregate supply (1000 MT)", x = "Decrease in output input price ratio (%)",
+gg <- gg + labs(fill = "Welfare-tot net subsidy (billion KES)", x = "Decrease in output input price ratio (%)",
                 y = "Net subsidy (KES/acre)")
 gg <- gg + theme_bw()
 gg <- gg + theme(axis.text = element_text(size = axisTextSize),
@@ -3016,6 +3016,32 @@ gg <- gg + theme(axis.text = element_text(size = axisTextSize),
                  legend.position = "top",
                  legend.title.position = "top")
 ggSub <- gg
+
+dfMat <- as.data.frame(matProfitAdopt)
+dfMat[indX, indY] <- NA
+colnames(dfMat) <- round(dBvec, 2) # paste("dB =", round(dBvec, 2))
+gatherCols <- colnames(dfMat)
+dfMat$dlNu <- round(dlNuVec, 2) #paste("dlnNu =", round(dlnNuVec, 2))
+dfPlot <- dfMat %>% gather_("dB", "var", gatherCols)
+dfPlot$dB <- as.numeric(dfPlot$dB)
+gg <- ggplot(dfPlot, aes(x = dlNu, y = dB, z = var, fill = var, group = 1))
+gg <- gg + geom_tile(alpha = 1) + geom_contour()
+gg <- gg + metR::geom_text_contour(aes(z = var),
+                                   #breaks = seq(100, 3000, length.out = 6),
+                                   stroke = 0.15)
+gg <- gg + scale_fill_gradient(low = "coral", high = "cyan", na.value = "black")
+#gg <- gg + geom_text(aes(label = var), size = labelSize)
+gg <- gg + labs(fill = "ProbProfitAdopt", x = "Decrease in output input price ratio (%)",
+                y = "Net subsidy (KES/acre)")
+gg <- gg + theme_bw()
+gg <- gg + theme(axis.text = element_text(size = axisTextSize),
+                 axis.title.x = element_text(size = axisTitleSize),
+                 axis.title.y = element_blank(),
+                 legend.title = element_text(size = axisTitleSize),
+                 legend.text = element_text(size = axisTextSize),
+                 legend.position = "top",
+                 legend.title.position = "top")
+ggProbProfitAdopt <- gg
 
 
 ggAdopt | ggDq | ggDpsi
