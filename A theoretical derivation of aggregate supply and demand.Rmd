@@ -130,6 +130,9 @@ All of the parameters appearing in the derived model have a straightforward inte
 
 In the first part of the derivation, immediately below, the farm yield function is derived from axioms 1-3. Most of these steps are elementary and thus presented in a highly summarized form, with details provided in the Appendix. However, a critical implication result overlooked by conventional models is that technology shocks cannot be represented by summarily shocking yield and/or expenditure based on agronomic trials. Agronomic trials may be useful to determine the shock to (total factor) productivity, but the yield response must then be evaluated endogenously based on the shock to productivity and expected change in input and output prices, plus any net subsidy offered as part of the technology package.   [enter lipton, adoption criterion here]
 
+main novel contributions resulting from the axiomatic approach: endogenous farm level supply response, transparent aggregation, endogenous adoption rate. Because of this the evaluation of researh induced shifts in aggregate supply and welfare are also fundamentally different from convention.
+
+
 The first main contribution of the article comes in the subsequent derivation of the aggregate supply model from the farm yield function and from axioms 4 and 5. This is then followed by an illustrative use case based on Kenya maize farm data. The theoretical model's estimates of Kenyan aggregate maize supply and of the price elasticity of aggregate supply generally agree with empirical estimates.
 
 The second main contribution of the article comes in the subsequent derivation and showcasing of equations for the evaluation of the _endogenous_ adoption rate, change in aggregate supply, and change in producer welfare in response to a hypothetical exogenous technology shock in the Kenya maize farm population. This is [underscores] the key result distinguishing the derived theoretical modeling framework from the conventional modeling approach: Whereas the conventional approach exogenously asserts not only the technology shock, but also the farm level production and/or expenditure response to the shock, the adoption rate, and the aggregate expression supply response and welfare outcome of the shock, the method derived here .
@@ -144,8 +147,6 @@ Changes in agronomic yield and expenditure observed at research stations do not 
 <!-- Information gathered in terms of the change in agronomic yield and/or expenditure must be converted into an estimate for $\partial \ln(g)$. -->
 
 The key difference between the convention and the alternative approach developed here is that the present approach is built upon a transparent _endogenous_ accounting of the research induced supply and expenditure response to the exogenous technology shock. [and transparent aggregation]
-
-ENDOGENOUS ADOPTION RATE
 
 # Literature review
 
@@ -2016,7 +2017,7 @@ dfAll <- dfx %>% summarise(v = mean(vStrat),
          sEcSharpT0trunc = sqrt((1 - h)^2 * sCstar^2 - sKprime^2)) %>%
   mutate(muEcSharpT0trunc = exp(mEcSharpT0 + sEcSharpT0^2 / 2)) %>%
   mutate(stratID = "All",
-         Type = "All") %>% relocate(Type)
+         Type = "Sample") %>% relocate(Type)
 # REMEMBER: kRain removed from muK (equivalent to setting kRain = 1), so muEyStarT0truncStrat
 # is the conditional mean expected yield assuming rain will be in line with historical
 # benchmark
@@ -2816,7 +2817,7 @@ ggEQsT0Shift <- gg
 ```
 \doublespacing
 
-For policy formation, it is helpful to consider interventions in a sensitivity heatmap whereby multiple farm subsidy and price change scenarios can be examined at a single glance (Figure \ref{fig:decisionMaps}). By illustrating the impact of changes in subsidy and assumed price shifts in a readily digestible manner, these maps build intuition about the effectiveness of changes in subsidy policy and the implications of price changes associated with the intervention.
+For policy formation, it is helpful to consider interventions in a sensitivity heatmap format whereby multiple farm subsidy and price change scenarios can be examined at a single glance (Figure \ref{fig:decisionMaps}). By illustrating the impact of changes in subsidy and assumed price shifts in a readily digestible manner, these maps build intuition about the effectiveness of changes in subsidy policy and the implications of price changes associated with the intervention.
 <!-- [address the alpha in aDotW] -->
 <!-- [Also can do "pro-poor" measures of change in aggregate (supply and?) producer welfare. Integrate dlnL instead of dL.] -->
 
@@ -2826,13 +2827,13 @@ For policy formation, it is helpful to consider interventions in a sensitivity h
 # gc()
 # Adoption rate map
 muRcond <- EPT02007 * exp(-dfAll$mEcSharpT0trunc + dfAll$sEcSharpT0trunc^2 / 2)
-nRes <- 14
+nRes <- 20
 aDotdlwVec <- seq(0.19, 0.22, length.out = nRes)
 dlP <- -nuRatio * aDotdlwVec
 dlNuVec <- rev(-aDotdlwVec + dlP)
 dlNuhVec <- rev(-aDotdlwVec + h * dlP)
 #dBvec <- seq(400, 1100, length.out = nRes)
-dBvec <- seq(500, 2000, length.out = nRes)
+dBvec <- seq(500, 1500, length.out = nRes)
 matAdopt <- matrix(NA, nRes, nRes)
 matDq <- matrix(NA, nRes, nRes)
 matDpsi <- matrix(NA, nRes, nRes)
@@ -3051,144 +3052,41 @@ ggAdopt | ggDq | ggDpsi
 
 ```
 
-
 # Discussion and conclusion
 
+Models of agricultural supply and of the impact of new technology (or any exogenous shock) are useful to agricultural policy formation insofar as they can map out the plausible outcome space for a relevant range of price assumptions and policy lever settings (subsidies); and insofar as this mapping is transparently rooted in an empirically vetted theoretical foundation.
+
+This involves, more specifically,... The aggregate supply of agricultural commodities hinges critically on the shape of the yield distribution and on farm entry and exit in response to price changes. The impact of new technology (or any exogenous shock) on aggregate supply and welfare depends upon endogenous, economically rational decision making by farmers in response to the exogenous shock and associated changes in input/output prices and any subsidies. The adoption rate is an aggregate expression of the farm level response, and is thus also endogenous to the impact.
+
+The conventional approach to modeling aggregate agricultural supply and the impact of new technology described in the introduction does not explicitly account for any of this [these critical ocmponents]. It effectively assumes the farm level response as an exogenous input into the modeling. There is no explicit modeling of input price changes, and the adoption rate is also assumed as exogenously given [earlier entry/exit]
+...also no explicit modeling of meteorological factors.
+The conventional approach to modeling aggregate agricultural supply and the impact of new technology described in the introduction is essentially a mathematical description of an assumed supply response to the exogenous technology shock. It takes no account of changes in input prices due to changes in input demand, subsidies, nor how this   As such, it effectively treats the supply response as though it too were exogenous, takes no account of changes in input prices   Here an alternative framework is derived from 5 non-controversial axioms which explicitly models the 
+
+comparative statics
+consumer welfare due to price decrease
 real price change found by PE analysis i.e. have to specify a demand curve...monopsony, etc.
 any impact assessment must be accompanied by a clear indication of the assumed meteorological conditions.
-The theoretical supply curve and imact assessment framework presented above... to solve for equilibrium price and consumer welfare impacts require demand curve specificatiobn...which extends beyond the scope of this article but you can guess what it would be...input demand integrated over density...or monopsony...a single firm or cartel of firms buying all the production....so consumer welfare is actually firm welfare, to get at consumers have to go beyond a bit
-this is comparative statics. welfare has to be discounted according to release/adoption period. the change in prices, especially output price, is not immediate, lag... the adoption rate refers to the economically rational level of adoption once prices adjust to the intervention. many might adopt at first but then find out that it is not profitable and back out as prices adjust. welfare and subsidy incur year by year
 opens up a novel set of policy questions and nuance -- not just tech but also contractual arrangements, intermediaries, value chain, agroclimatic advisory services, cooperative social mechanisms, risk pooling,...enabling environment... and all at once--combined approaches ...much higher fidelity representation of the reality and the reality of interventions.
 Do not exogenously impose a change in expenditure and/or yield by fiat, but rather endogenously compute the change in expenditure and yield given an exogenous change in TFP and prices.
 can disaggregate results (adoption rate, supply change, and welfare change) by stratum
 another way is to shock h, much more ambiguous results.
-distributional questions
+the role of price volatility
 also can look at shifts resulting from changes to k. also shifts due to changes in input price multiple effects at the same time.... mean prob of profit vs. farm employment
 can also look at shocks to continuous endowments k, rainfall etc., many of these simultaneously...
-
-
-[[Some may consider the welfare calculation "unconventional" ... this a direct measure of welfare. I challenge them to explain in what sense "producer surplus" is a measure of tangible, realized or realizable welfare, or even just to explain what producer surplus represents in any meaningful economic sense.]]
+distributional questions
 
 A great deal of nuance may be introduced. For example, if the technology package intervention explored above represents improved seed, then this implies that the strata planting hybrid seed do not simply add the new binary endowment $b_5\beta_5$ to their yield models, but also remove the hybrid seed endowment. The theoretical modeling framework developed here can account for such nuance in a straightforward and transparent manner. The conventional ex-ante impact assessment frameworks cannot.
 can do same analysis focusing on specific strata.
 could examine the supply and welfare impact if hybrid maize adopted in strata where not yet adopted
-
-have not considered the role of price volatility
-
-all the things we couldn't get to
-
-the percentage shift $\partial \nu$ will ultimately depend upon the change in equilibrium price, which requires the demand curve... no space here but demand curve will look like an aggregate input demand curve.
-
-Conventional approach is exogenously determine adoption rate by expert opinion. Here adoption rate is endogenous to the theoretical framework.
-
 minimum data contexts
 
-Have accumulated many departures from the conventional wisdom along the way that are important to point out. (and yet few would argue with axioms 1 and 2)
-Take a moment to take stock of the many contradictions between the statements generated so far by these two very uncontroversial axioms and the conventional wisdom.
---strictly decreasing returns to scale, else downward sloping supply, breakeven or loss, and unbounded optimal expenditure and constant 100% employment regardless of price, no market exit or entry in response to price
---cost increasing in tech (above)
---yield increasing in cost (above)
---farms do not have identical marginal cost (key assumption underlying the linear aggregate supply function)
---identical marginal cost implies constant returns to scale and perfectly inelastic aggregate supply
---marginal cost constant
---marginal cost relation to unit cost
 
+
+
+
+[[Some may consider the welfare calculation "unconventional" ... this a direct measure of welfare. I challenge them to explain in what sense "producer surplus" is a measure of tangible, realized or realizable welfare, or even just to explain what producer surplus represents in any meaningful economic sense.]]
 map between employment rate and PEFS adj mean prob of profit
-
 caveats: t=0 and T may differ across the population, prices differ across the population... the bigger the geographical scope, the more the difference. At subnational scales the differences will be small. I.e. the more homogeneous the agroclimatic environment and market, the smaller the difference.
-
-
-Specifically, then, the scaling shift can be modeled by shocking the parameter $u$. This results in an unambiguous increase in aggregate supply. That is to say, it is straightforward to see that
-
-
-
-Evaluating the lagrangian at $y^*$ gives the optimal farm profit or net benefit.
-
-
-The adoption condition for a new scaling technology is $\frac{\partial \mathcal{L}^*}{\partial u}$.
-
-In the theoretical framework derived here, the adoption rate follows endogenously from the farm net benefit (profit) envelope.
-
-<!-- To model the effect of technologies that increase input efficiency, the     Another approach is to introduce a  -->
-
-<!-- Substituting $E[C^{\#}(T)]|_{t = 0} E[y^*(T)]|_{t = 0}$ for $C^*$ in the expected farm yield (Equation \ref{eq:stochYd2}) and solving for $E[y^*(T)]|_{t = 0}$ gives the expected yield in terms of unit cost. -->
-
-<!-- \begin{equation} -->
-<!-- E[y^*(T)]|_{t = 0} = E[\tilde{y}^*(T)]|_{t = 0} \left( \frac{\hat{k}}{E[k]} \right)^{\eta + 1} \frac{E[C^{\#}(T)]|_{t = 0}^{\eta}}{E[\tilde{C}^{\#}(T)^{\eta}]|_{t = 0}} -->
-<!-- \label{eq:stochYd3} -->
-<!-- \end{equation} -->
-
-<!-- <!-- (Detailed steps given in Appendix 2C.) -->
-<!-- An expression for $s^2_c$ then follows as -->
-
-<!-- \begin{equation} -->
-<!-- \begin{split} -->
-<!-- C^* &= E[C^{\#}(T)]|_{t = 0} E[y^*(T)]|_{t = 0} \\ -->
-<!-- &= E[\tilde{y}^*(T)]|_{t = 0} \left( \frac{\hat{k}}{E[k]} \right)^{\eta + 1} \frac{E[C^{\#}(T)]|_{t = 0}^{\eta + 1}}{E[\tilde{C}^{\#}(T)^{\eta}]|_{t = 0}} -->
-<!-- &\rightarrow s^2_c = Var[\ln(C^*)] = (\eta + 1)^2 (s^2_k + s^2_{\#}) \:\:;\:\:\: s^2_k = Var[\ln(\hat{k})] -->
-<!-- \end{split} -->
-<!-- \end{equation} -->
-
-<!-- Now, rewriting the unconditional mean expected yield (Equation \ref{eq:muYstarU0}) in stochastic terms, -->
-
-<!-- \begin{equation} -->
-<!-- E[\tilde{y}^*(T)]|_{t = 0} = u \frac{E[C^{*h}]}{E[C^*]^h} -->
-<!-- \end{equation} -->
-
-<!-- And recalling that $E[y^*(T)]|_{t = 0}$ and thus $C^*$ are assumed to be lognormally distributed, this reduces to -->
-
-<!-- \begin{equation} -->
-<!-- \begin{split} -->
-<!-- E[\tilde{y}^*(T)]|_{t = 0} &= u \frac{e^{hm_c + h^2 \frac{s^2_c}{2}}}{e^{hm_c + h \frac{s^2_c}{2}}} = u e^{\frac{s^2_c}{2}(h^2 - h)} \\ -->
-<!-- &= u e^{\frac{1}{2} (\eta + 1)^2 (s^2_k + s^2_{\#}) (h^2 - h)} -->
-<!-- \end{split} -->
-<!-- \label{eq:muYdStoch1} -->
-<!-- \end{equation} -->
-
-<!-- It follows, then, -->
-
-<!-- \begin{equation} -->
-<!-- \frac{\partial \ln(E[\tilde{y}^*(T)]|_{t = 0})}{\partial h} = s^2_c\left(h - \frac{1}{2} \right) -->
-<!-- \begin{cases} -->
-<!-- < 0, & \text{if $h$ < 1 / 2} \\ -->
-<!-- = 0, & \text{if $h$ = 1 / 2} \\ -->
-<!-- > 0, & \text{if $h$ > 1 / 2} -->
-<!-- \end{cases} -->
-<!-- \end{equation} -->
-
-<!-- The unconditional mean yield increases with technology only if $h > 1 / 2$. Implies a critical threshold on one side of which a subsitence or cost saving mentality predominates---the farmer reasons that they can achieve the same level of income by producing, and thus spending, less---whereas for $h > 1 / 2$ the entrepreneurial mentality takes hold---the farmer reasons that they can raise their income level  -->
-<!-- the marginal value of less effort, more free time is greater than that of increased income. Beyond the critical value of 1/2 the opposite is true. -->
-<!-- \begin{equation} -->
-<!-- \begin{split} -->
-<!-- \frac{\partial \ln(E[Q(T)]|_{t = 0})}{\partial h} &= \frac{\partial \ln(E[y^*(T)]|_{t = 0})}{\partial h} + \frac{\partial \ln(\Phi(-z))}{\partial h} \\ -->
-<!-- &= s^2_c \left(h - \frac{1}{2} \right) + \frac{\phi(-z)}{\Phi(-z)} \frac{\partial (-z)}{\partial h} \\ -->
-<!-- &= s^2_c \left(h - \frac{1}{2} \right) - \frac{\phi(-z)}{\Phi(-z)} \frac{\partial (-z)}{\partial h} s_{\#} (\eta + 1)^2 -->
-<!-- \end{split} -->
-<!-- \end{equation} -->
-
-<!-- Now, recalling Equation \ref{eq:stochYd2}, and substituting $E[C^{\#}(T)]|_{t = 0} E[y^*(T)]|_{t = 0}$ for $C^*$, note that stochastic yield resolves as a function of $E[C^{\#}(T)]|_{t = 0}$. -->
-
-<!-- \begin{equation} -->
-<!-- \begin{split} -->
-<!-- E[y^*(T)]|_{t = 0} &= E[\tilde{y}^*(T)]|_{t = 0} E[k_m(T)]|_{t = 0} \frac{\hat{k}}{E[k]} \frac{(E[C^{\#}(T)]|_{t = 0} E[y^*(T)]|_{t = 0})^{h}}{E[\tilde{C}^{\#}(T)]|_{t = 0} E[\tilde{y}^*(T)]|_{t = 0}^{*h}} \:\:;\:\:\: \tilde{y}^*(T) = y^*(T)\bigr|_{\hat{k} = E[\hat{k}], C^{*h} = E[C^{*h}]} \:\: \tilde{C}^{\#}(T) = E[C^{\#}(T)] \\ -->
-<!-- E[y^*(T)]|_{t = 0}^{1 - h} &= E[\tilde{y}^*(T)]|_{t = 0}^{1 - h} \frac{\hat{k}}{E[k]} \frac{E[y^*(T)]|_{t = 0}}{E[\tilde{C}^{\#}(T)]|_{t = 0}} \\ -->
-<!-- E[y^*(T)]|_{t = 0} &= E[\tilde{y}^*(T)]|_{t = 0} \left( \frac{\hat{k}}{E[k]} \right)^{1/(1 - h)} \frac{E[C^{\#}(T)]|_{t = 0}}{E[\tilde{C}^{\#}(T)]|_{t = 0}} -->
-<!-- \end{split} -->
-<!-- \end{equation} -->
-
-<!-- C^* = E[\tilde{y}^*(T)]|_{t = 0} \frac{k}{E[k]} -->
-
-<!-- It follows that -->
-
-<!-- \begin{equation} -->
-<!-- \frac{\ln(\partial E[Q(T)]|_{t = 0})}{\partial h} \begin{cases} -->
-<!-- < 0, & \text{if $h$ < 1 / 2} \\ -->
-<!-- = 0, & \text{if $h$ = 1 / 2} \\ -->
-<!-- > 0, & \text{if $h$ > 1 / 2} -->
-<!-- \end{cases} -->
-<!-- \end{equation} -->
-
-<!-- In the conventional approach to ex-ante impact assessment, the technology adoption rate is exogenously specified based on expert opinion. -->
 
 
 # References {-}
