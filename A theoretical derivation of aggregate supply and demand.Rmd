@@ -863,7 +863,7 @@ The aggregate net subsidy required to reach this adoption rate can then be compu
 \label{eq:aggSubsidy}
 \end{equation}
 
-The adoption rate within single a binary endowment stratum can be calculated by evaluating this expression at the $v_{\ell}$ of interest.
+The adoption rate within a single TFP stratum can be calculated by evaluating this expression at the $v_{\ell}$ of interest.
 <!-- aggSubsidy <- dB * Nf * muArea * adoptRateTotal * 10^-9 # Total subsidies in billions -->
 
 <!-- \begin{equation} -->
@@ -903,7 +903,7 @@ The adoption rate within single a binary endowment stratum can be calculated by 
 <!-- (Note that the adoption rate will be higher in strata with lower starting $v_{0i}$, _ceteris paribus_.) -->
 
 ## Aggregation of the endogenous farm supply response and change in welfare due to technology shocks \label{sec:aggImpact}
-...second main contributution...
+
 The total increase in aggregate supply due to a technology shock can be evaluated by integrating the change in farm production $\partial y^*$ over the density of adopting farms $(0, \bar{\bar{y^*}})$ where $\bar{\bar{y^*}} = y^*(\bar{\bar{C^*}})$.
 
 $\overset{\triangle}{y}$
@@ -1884,7 +1884,7 @@ rm(mod1, mod2, listDf)
 
 The fitted coefficient on logged cost per acre is statistically significant and indicates that the population yield degree of homogeneity is $h =$ `r hReport`, by which it follows immediately that the price elasticity of farm supply is $\eta = h / (1 - h) =$ `r etaReport`. The coefficients on the other regressors are also statistically significant and take values and signs that agree with intuition. Note that the coefficient on the farm size regressor is negative, affirming the inverse relation between farm size and yield found in numerous other studies [@muyanga2019revisiting; @larson2014should; @wassie2019revisiting; @gautam2019too; @kimhi2006plot].
 
-The fitted binary endowment coefficients ($\beta_i$) indicate that hybrid maize seed is the most significant contributor to TFP, followed by land prep method and tenure. Interestingly, oxen contributes slightly more than tractor. Based on these values, the expenditure TFPs are calculated for each of the 12 binary endowment strata ($v_{\ell}$), as well as the average across all strata ($v$). The implicit mean expected yield ($E[\tilde{y}^*(T;k_r) | \theta] |_{t = 0}$) is then calculated by Equation \ref{eq:impMuEyStarT0cond}, for $\tilde{k}_r^{\kappa_r} = 1$ (indicating rainfall expectation in line with the historical benchmark). These stratified and whole sample parameters are reported along with the mean observed cost per unit area and harvest yield in Table 2.
+The fitted binary endowment coefficients ($\beta_i$) indicate that hybrid maize seed is the most significant contributor to TFP, followed by land prep method and tenure. Interestingly, oxen contributes slightly more than tractor. Based on these values, the expenditure TFPs are calculated for each of the 12 TFP strata ($v_{\ell}$), as well as the average across all strata ($v$). The implicit mean expected yield ($E[\tilde{y}^*(T;k_r) | \theta] |_{t = 0}$) is then calculated by Equation \ref{eq:impMuEyStarT0cond}, for $\tilde{k}_r^{\kappa_r} = 1$ (indicating rainfall expectation in line with the historical benchmark). These stratified and whole sample parameters are reported along with the mean observed cost per unit area and harvest yield in Table 2.
 
 comment on higher yield of tractor but higher efficiency of oxen
 harvest was higher than expected, implicit expected yield based on kr=1 when in fact kr > 1 (graphic)-- expected less got more hence harvest yield higher than implicit expected yield at $\tilde{k}_r^{\kappa_r}=1$.
@@ -2664,7 +2664,7 @@ Say that the Ministry of Agriculture offers a net subsidy of $\partial B = $ `r 
 
 \singlespacing
 
-```{r Fig5, fig.show = "hold", fig.width = 7, fig.height=3, fig.align="center", fig.cap="\\label{fig:intervention}(Left) The adoption rate, change in welfare, and change in supply for each of the 12 binary endowment strata, for the technological intervention described in the text. (Right) The corresponding expected aggregate supply ribbon shift, where the dotted lines represent the new normal and dismal rainfall bounds of the aggregate supply ribbon.", echo = FALSE}
+```{r Fig5, fig.show = "hold", fig.width = 7, fig.height=3, fig.align="center", fig.cap="\\label{fig:intervention}(Left) The adoption rate, change in welfare, and change in supply for each of the 12 TFP strata, for the technological intervention described in the text. (Right) The corresponding expected aggregate supply ribbon shift, where the dotted lines represent the new normal and dismal rainfall bounds of the aggregate supply ribbon.", echo = FALSE}
 
 # dfStrat$`Adoption\nrate\n(%)` <- 100 * round(adoptRateStrat, 3)
 # dfStrat$`Change in aggregate\nproducer welfare\n(billion KES)` <- round(dPsiStrat, 2)
@@ -2782,7 +2782,8 @@ ggEQsT0Shift <- gg
 ```
 \doublespacing
 
-For policy formation, it is helpful to consider interventions in a sensitivity heatmap format whereby multiple farm subsidy and price change scenarios can be examined at a single glance (Figure \ref{fig:decisionMaps}). By illustrating the impact of changes in subsidy and assumed price shifts in a readily digestible manner, these maps build intuition about the effectiveness of changes in subsidy policy and the implications of price changes associated with the intervention.
+For policy formation, it is helpful to consider prospective interventions in a sensitivity heatmap format, whereby multiple farm subsidy and price change scenarios can be examined at a single glance (Figure \ref{fig:decisionMaps}). These "policy decision maps" plot the adoption rate, supply change, and producer welfare outcome over a range of different lever-assumption "coordinates". The maps here are expressed in coordinates of subsidy level (y-axis), and assumed price ratio change (x-axis). The policy assumption may be swapped out for other assumptions, such as assumed rainfall level.
+<!-- By illustrating the impact of changes in subsidy and assumed price shifts in a readily digestible manner, these maps facilitate intuition-building regarding the effectiveness of changes in subsidy policy and the implications of price changes associated with the intervention. Here  -->
 <!-- [address the alpha in aDotW] -->
 <!-- [Also can do "pro-poor" measures of change in aggregate (supply and?) producer welfare. Integrate dlnL instead of dL.] -->
 
@@ -2891,7 +2892,7 @@ gg <- gg + scale_fill_gradient(low = "coral", high = "cyan", na.value = "black")
 #            xmin = dlNuPoint - 0.01, xmax = dlNuPoint + 0.01,
 #            ymin = dBPoint - 0.5, ymax = dBPoint + 0.5,
 #            fill = "blue", alpha = 0.8)
-gg <- gg + labs(fill = "Adoption rate (%)", x = "Decrease in output input price ratio (%)",
+gg <- gg + labs(fill = "Adoption rate (%)", x = "Decrease in efficiency adjusted\noutput-input price ratio (%)",
                 y = "Net subsidy (KES/acre)")
 gg <- gg + theme_bw()
 gg <- gg + theme(axis.text = element_text(size = axisTextSize),
@@ -2918,7 +2919,7 @@ gg <- gg + metR::geom_text_contour(aes(z = var),
 gg <- gg + scale_fill_gradient(low = "coral", high = "cyan", na.value = "black")
 #gg <- gg + geom_text(aes(label = var), size = labelSize)
 gg <- gg + labs(fill = "Change in aggregate\nproducer welfare (million KES)", 
-                x = "Decrease in output input price ratio (%)",
+                x = "Decrease in efficiency adjusted\noutput-input price ratio (%)",
                 y = "Net subsidy (KES/acre)")
 gg <- gg + theme_bw()
 gg <- gg + theme(axis.text = element_text(size = axisTextSize),
@@ -2944,7 +2945,8 @@ gg <- gg + metR::geom_text_contour(aes(z = var),
                                    stroke = 0.15)
 gg <- gg + scale_fill_gradient(low = "coral", high = "cyan", na.value = "black")
 #gg <- gg + geom_text(aes(label = var), size = labelSize)
-gg <- gg + labs(fill = "Change in aggregate supply (1000 MT)", x = "Decrease in output input price ratio (%)",
+gg <- gg + labs(fill = "Change in aggregate supply (1000 MT)",
+                x = "Decrease in efficiency adjusted\noutput-input price ratio (%)",
                 y = "Net subsidy (KES/acre)")
 gg <- gg + theme_bw()
 gg <- gg + theme(axis.text = element_text(size = axisTextSize),
@@ -2971,7 +2973,8 @@ gg <- gg + metR::geom_text_contour(aes(z = var),
                                    stroke = 0.15)
 gg <- gg + scale_fill_gradient(low = "coral", high = "cyan", na.value = "black")
 #gg <- gg + geom_text(aes(label = var), size = labelSize)
-gg <- gg + labs(fill = "Welfare-tot net subsidy (billion KES)", x = "Decrease in output input price ratio (%)",
+gg <- gg + labs(fill = "Welfare-tot net subsidy (billion KES)",
+                x = "Decrease in efficiency adjusted\noutput-input price ratio (%)",
                 y = "Net subsidy (KES/acre)")
 gg <- gg + theme_bw()
 gg <- gg + theme(axis.text = element_text(size = axisTextSize),
@@ -2997,7 +3000,8 @@ gg <- gg + metR::geom_text_contour(aes(z = var),
                                    stroke = 0.15)
 gg <- gg + scale_fill_gradient(low = "coral", high = "cyan", na.value = "black")
 #gg <- gg + geom_text(aes(label = var), size = labelSize)
-gg <- gg + labs(fill = "ProbProfitAdopt", x = "Decrease in output input price ratio (%)",
+gg <- gg + labs(fill = "ProbProfitAdopt",
+                x = "Decrease in efficiency adjusted\noutput-input price ratio (%)",
                 y = "Net subsidy (KES/acre)")
 gg <- gg + theme_bw()
 gg <- gg + theme(axis.text = element_text(size = axisTextSize),
@@ -3012,61 +3016,59 @@ ggProbProfitAdopt <- gg
 
 ggAdopt | ggDq | ggDpsi
 
-
-
-
 ```
-The illustrative example presented above is an exercise in comparative statics. That is to say, it is a comparison of the "before new tech" (or status quo) and "after new tech" situations, without accounting for the time it takes for release and adoption to occur. In a standard impact assessment, the static analysis would be converted into a temporally explicit assessment by introducing a sigmoidal adoption rate curve over time, as explained in Alston et al. [] and elsewhere. The welfare impact would be then be calculated as the sum of discounted yearly net impacts out to a relevant cutoff year determined by the policy question.
+
+The illustrative example presented above is an exercise in comparative statics. That is to say, it is a comparison of the "before new tech" (or status quo) and "after new tech" situations, without accounting for the time it takes for release and adoption to occur. In a standard impact assessment, the static analysis would be converted into a temporally explicit assessment by introducing a sigmoidal adoption rate curve over time, as explained in Alston et al. [-@alston1995science] and elsewhere. The welfare impact would be then be calculated as the sum of discounted yearly net impacts out to a relevant cutoff year determined by the policy question.
 
 # Discussion and conclusion
 
-A model of agricultural supply and of the production side impact of new technology (or any exogenous shock) is useful to agricultural policy makers insofar as it can map out the plausible outcome space for the relevant range of price assumptions and policy lever settings (subsidies) underpinning the policy discussion; and insofar as this mapping is transparently rooted in an empirically vetted, sensible theoretical foundation.
-
-More specifically, this means that a useful model of aggregate supply must explicitly account for 1) the shape of the yield distribution, and hence also provide an endogenous accounting of farm entry and exit in response to price changes; 2) the endogenous farm level supply response to new technology (or any exogenous shock) and to any associated exogenous changes in input/output prices and subsidies; and 3) the aggregation of farm level response and welfare impacts up to the population level---i.e. the supply curve shift---in a theoretically sensible and transparent way, including endogenous modeling of the adoption rate.
-
-As mentioned in the Introduction, the conventional approach to modeling aggregate agricultural supply and technology shocks provides no such explicit, theoretically grounded, endogenous accounting. Instead, the shape of the distribution is unceremoniously ignored (or identically endowed marginal firms are assumed), the supply response and adoption rate are assumed as exogenous inputs into the model, essentially synonymous with the technology shock itself; and the aggregation of farm level impacts up to the population level is neither empirically nor theoretically grounded, but rather introduced as a matter of fiat. As a result, the model is ill suited to answer such basic policy questions such as:
-
-*By how much will the adoption rate/producer welfare/aggregate supply change if the change in TFP turns out to be $10$% higher or lower than expected?
-
-*By how much will the adoption rate/producer welfare/aggregate supply change if subsidies are increased/lowered?
-
-*By how much will the adoption rate/producer welfare/aggregate supply change if the change in input prices is $10$%?
-
-*Given a certain change in TFP and input/output prices, what subsidy level is required to push adoption over $50$%?
-
-To more squarely meet the needs of agricultural policy makers, here an alternative modeling framework is theoretically derived from 5 non-controversial axioms, and empirically vetted against Kenya farm data. The proposed model can answer the ussual policy questions such as those just enumerated, as well as many others not often considered part of the purview of such models. In particular, the model explicitly controls for meteorological conditions and price volatility, and disaggregates results by binary endowment stratum. The model can thus be used to examine highly nuanced scenarios regarding technology packages tailored to specific farming systems under different weather and price volatility settings.
-
-For example, on untenured farms, the technology package could be bundled with legal services to formalize a title deed, such that TFP on such farms is augmented not just by the new techology coefficient ($\beta_{new}$), but also by the tenure coefficient $\beta_{new} + \beta_{tenure}$. (In such a scenario, the cost of the legal services would be included in the $\partial B$ term.) If the technology shock is a new seed variety, then the impact on farms growing hybrid maize will be considerably less than on non-hybrid farms, as TFP is augmented not by $\beta_{new}$ but by $\beta_{new} - \beta_{hybrid}$.
-
-The proposed model is highly adaptive to the data that is available. The Kenya example explored above represents an ideal case where good farm survey data is available. Under less auspicious circumstances, model parameters can still be estimated up to a respectable degree of precision because the model is expressed in terms of economic indicators and population parameters (the farm employment rate, PEFS-adjusted probability of profit, observed mean and standard deviation of yield and expenditure) that in many cases is published or readily deductible from available information. As explained in section \ref{sec:acct4Stoch}, model parameters can also be estimated based on price information.
+The Kenya example explored above represents an ideal case where good farm survey data is available. Under less auspicious circumstances, model parameters can still be estimated up to a respectable degree of precision because the model is expressed in terms of economic indicators and population parameters (the farm employment rate, PEFS-adjusted probability of profit, observed mean and standard deviation of yield and expenditure) that in many cases are published or readily deductible from available information. As explained in section \ref{sec:acct4Stoch}, model parameters can also be estimated based on output price series, if available.
 <!-- The conventional approach, by contrast, makes no use of farm survey data even when it is available. Rather, the model parameters are mostly elicited from "experts"---i.e., scientists directly involved in the research who have a vested interest in the impact assessment---makes very little use of farm survey data even when it is available. -->
 <!-- \ref{sec:aggSup1} -->
 <!-- compare numbers of parameters? -->
 <!-- \ref{sec:aggImpact} -->
 
-The model developed here is limited to the evaluation of aggregate supply and production side impacts. The model can be expanded to include aggregate demand and consumer side impacts (i.e. a full fledged partial equilibrium model) by pairing the derivation above with a theoretical derivation of the demand curve from the same set of axioms. While this lies outside the scope of the present effort, one may reasonably anticipate that this will involve reinterpretation of the input demand curve derived in section \ref{sec:axioms1and2} as a processing plant (e.g. miller, starch factory) feedstock demand curve; and the aggregation of this curve over the processor plant population density. In the Kenya maize example above (and many other such applied cases), the number of processors is small relative to the number of producers, such that the resulting aggregate demand curve would likely represent a monopsony or cartel demand curve, especially at subnational scales of analysis.
+The model developed in this article is limited to the evaluation of aggregate supply and producer side welfare impacts. However, it would be straightforward to extend the model to include aggregate demand and consumer side impacts---thereby converting it into a full fledged partial equilibrium model---by pairing the derivation above with a theoretical derivation of the demand curve from the same set of axioms. While this lies outside the scope of the present effort, one may reasonably anticipate that the demand side derivation will involve reinterpretation of the input demand curve derived in section \ref{sec:axioms1and2} as a processing plant (e.g. miller, starch factory) feedstock demand curve; and the aggregation of this curve over the processor population density. In many use cases, the number of processors may be quite small, resulting in a cartel or even monopsony demand curve, especially at subnational scales of analysis. The axiomatic approach would explicitly capture this and other demand side nuance, which is glossed over in the conventional treatment of aggregate demand.
 
-By explicitly including aggregate demand in the modeling, the equilibrium output price becomes endogenous to the model, and consumer welfare can be evaluated. (Although it should be kept in mind that "consumer welfare" in such instances is, more accurately, processing plant welfare; and thus does not necessarily reflect the welfare that ultimately passes through to the end consumer.) In the Kenya maize example above, producer welfare alone is not enough to offset the total subsidy paid out by the government to encourage adoption. Adding in consumer welfare would likely result in a net positive return on the government's investment.
+When aggregate demand is included, the equilibrium output price becomes endogenous to the model, and consumer welfare outcomes can be evaluated. In many cases where the producer welfare alone does not offset the total subsidy cost to government (as in the Kenya example above), the addition of consumer side welfare would likely push the total welfare above the subsidy cost by a considerable margin.
 
-In future work, it will be interesting to use this model to examine the role of price volatility and price support (forward contracts, price floors) on technology adoption and impact under different meteorological scenarios.  and to test the limits of the model in minimum data contexts.
+A model of agricultural supply and of the producer side impact of new technology (or any exogenous shock) is useful to agricultural policy makers insofar as it can map out the plausible outcome space for the range of price assumptions and policy lever settings (subsidies) relevant to the policy discussion; and insofar as this mapping is transparently rooted in an empirically vetted, sensible theoretical foundation.
 
-It may also be interesting to model technology shocks as a perturbation of the degree of homogeneity ($h$). Preliminary exploration of the matter suggests that the supply response to and welfare outcomes of changes in homogeneity are considerably more complex and ambiguous than they are in the case of changes to TFP.
+More specifically, this means that a useful model of aggregate supply must explicitly account for 1) the shape of the yield distribution, and hence also provide an endogenous accounting of farm entry and exit in response to price changes; 2) the endogenous farm level supply response to new technology and to any associated exogenous changes in input/output prices and subsidies; and 3) the aggregation of farm level response and welfare impacts up to the population level---i.e. the supply curve shift---in a theoretically sensible and transparent way, including endogenous modeling of the adoption rate.
 
-future work: consumer side impact, price guarantees, forward contracts, can also look at shocks to continuous endowments k; map between employment rate and PEFS adj mean prob of profit
-another way is to shock h, much more ambiguous results.
-the role of price volatility
+As mentioned in the Introduction, the conventional approach to modeling aggregate agricultural supply and technology shocks provides no such explicit, theoretically grounded, endogenous accounting. Instead, the shape of the distribution is unceremoniously ignored (or identically endowed marginal firms are assumed), the supply response and adoption rate are assumed as exogenous inputs into the model, essentially synonymous with the technology shock itself; and the aggregation of farm level impacts up to the population level is neither empirically nor theoretically grounded, but rather introduced as a matter of fiat. As a result, the model is ill suited to answer such basic policy questions such as:
+
+* Upon what input price assumptions is the assessment based? What is the assumed rainfall level? What is the assumed subsidy level?
+
+* By how much will the adoption rate/producer welfare/aggregate supply change if subsidies are increased/lowered?
+
+* By how much will the adoption rate/producer welfare/aggregate supply change if the change in TFP turns out to be $10$ percentage points higher/lower than expected?
+
+* By how much will the adoption rate/producer welfare/aggregate supply change if the change in input prices is $10$ percentage points higher/lower than expected?
+
+* Given a certain change in TFP and input/output prices, what subsidy level is required to push adoption over $50$%?
+
+To more squarely meet the needs of agricultural policy makers, here an alternative modeling framework is theoretically derived from five non-controversial axioms and empirically vetted against Kenya farm data. The proposed model can answer the usual set of policy questions, such as those just enumerated, as well as many others not often considered part of the purview of such models. In particular, the model explicitly controls for meteorological conditions and price volatility, and disaggregates results by TFP stratum. The model can thus be used to examine highly nuanced scenarios regarding technology packages tailored to specific farming systems under different weather and price volatility settings.
+
+For example, on untenured farms, the technology package could be bundled with legal services to formalize a title deed, such that TFP on such farms is augmented not just by the new techology coefficient ($\beta_{new}$), but also by the tenure coefficient $\beta_{new} + \beta_{tenure}$. Policy makers can use the model to weight the benefits of such a strategy against the additional cost in legal services, under different output/input price, subsidy, and rainfall scenarios. Or, if the technology shock is a new seed variety, then the percentage change in TFP ($\partial \ln(g)$) on farms growing hybrid maize will be considerably less than on non-hybrid farms, as the new technology in such cases does not augment but rather replaces the existing seed productivity. The model explicitly accommodates this nuance by replacing the hybrid maize binary endowment coefficient $\beta_{hybrid}$ with the new seed coefficient.
+
+The Kenya example above focuses on a hypothetical SAI technology shock, but the model is equally applicable AEI shocks as well. Yield stability  focuses on the potential impacts of SAI technology shocks. As mentioned in section \ref{sec:farmResp},
+
+opens up a novel set of policy questions and nuance -- not just tech but also contractual arrangements, intermediaries, value chain, agroclimatic advisory services, cooperative social mechanisms, risk pooling,...enabling environment... and all at once--combined approaches ...much higher fidelity representation of the reality and the reality of interventions.
+distributional questions
 
 
+
+
+<!-- (Although it should be kept in mind that "consumer welfare" in such instances is, more accurately, processing plant welfare; and thus does not necessarily reflect the welfare that ultimately passes through to the end consumer.) -->
+<!-- In future work, it will be interesting to use this model to examine the role of price volatility and price support (forward contracts, price floors) on technology adoption and impact under different meteorological scenarios.  and to test the limits of the model in minimum data contexts. -->
+<!-- It may also be interesting to model technology shocks as a perturbation of the degree of homogeneity ($h$). Preliminary exploration of the matter suggests that the supply response to and welfare outcomes of changes in homogeneity are considerably more complex and ambiguous than they are in the case of changes to TFP. -->
+<!-- future work: consumer side impact, price guarantees, forward contracts, can also look at shocks to continuous endowments k; map between employment rate and PEFS adj mean prob of profit -->
+<!-- another way is to shock h, much more ambiguous results. -->
+<!-- the role of price volatility -->
 <!-- The model may likewise be linked to upstream market models such that input prices also become endogenous. That is to say, the proposed model is modular, and may be inserted into broader multimarket equilibrium frameworks. -->
 <!-- The framework derived here is the minimum -->
 <!-- The broader the scope of equilibrium, the more data is required. -->
-
-
-
-opens up a novel set of policy questions and nuance -- not just tech but also contractual arrangements, intermediaries, value chain, agroclimatic advisory services, cooperative social mechanisms, risk pooling,...enabling environment... and all at once--combined approaches ...much higher fidelity representation of the reality and the reality of interventions.
-
-, rainfall etc., many of these simultaneously...
-distributional questions
 
 
 [[Some may consider the welfare calculation "unconventional" ... this a direct measure of welfare. I challenge them to explain in what sense "producer surplus" is a measure of tangible, realized or realizable welfare, or even just to explain what producer surplus represents in any meaningful economic sense.]]
