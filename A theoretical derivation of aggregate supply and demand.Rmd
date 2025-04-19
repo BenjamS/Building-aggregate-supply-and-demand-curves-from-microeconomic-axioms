@@ -3,7 +3,7 @@ title: A theoretical derivation of the agricultural aggregate supply curve and r
 # author: "Benjamin Schiek"
 # date: "`r Sys.Date()`"
 abstract: |
-  Conventional models of the aggregate supply of agricultural commodities---specifically those used in ex-ante impact assessments of policy and research shocks---do not endogenously model the supply response to technology (or any other exogenous) shocks, but rather 1) assume the farm level supply response as exogenously given based on agronomic information, and then 2) assume, as a matter of fiat, the mechanism by which the farm level response manifests at the aggregate level (whether it is a shift or pivot of the aggregate supply curve, and what the adoption rate will be). Such models also do not account for farm heterogeneity---or, worse still, assume identical marginal farms---and do not account for farm entry/exit. For applications where these things matter, here a tractable aggregate supply model is formally derived from five weak axioms. The derived form is expressed in parameters that have clear economic meaning, including novel parameters such as price volatility and a term representing the mean probability of profit---which in turn endogenously accounts for farm entry/exit---thus broadening the range of policy questions that can be addressed in partial equilibrium analysis. Equations for the _endogenous_ adoption rate, supply response, and producer welfare impact of technology shock are derived. As an illustrative use case, the model is fit to Kenya maize farm data. The fitted aggregate supply and price elasticity of aggregate supply curves agree with empirical estimates. The adoption rate, supply response, and welfare impact are calculated for a hypothetical technology shock.
+  \singlespacing Conventional models of the aggregate supply of agricultural commodities---specifically those used in ex-ante impact assessments of policy and research shocks---do not endogenously model the supply response to technology (or any other exogenous) shocks, but rather 1) assume the farm level supply response as exogenously given based on agronomic information, and then 2) assume, as a matter of fiat, the mechanism by which the farm level response manifests at the aggregate level (whether it is a shift or pivot of the aggregate supply curve, and what the adoption rate will be). Such models also do not account for farm heterogeneity---or, worse still, assume identical marginal farms---and do not account for farm entry/exit. For applications where these things matter, here a tractable aggregate supply model is formally derived from five weak axioms. The derived form is expressed in parameters that have clear economic meaning, including novel parameters such as price volatility and a term representing the mean probability of profit---which in turn endogenously accounts for farm entry/exit---thus broadening the range of policy questions that can be addressed in partial equilibrium analysis. Equations for the _endogenous_ adoption rate, supply response, and producer welfare impact of technology shock are derived. As an illustrative use case, the model is fit to Kenya maize farm data. The fitted aggregate supply and price elasticity of aggregate supply curves agree with empirical estimates. The adoption rate, supply response, and welfare impact are calculated for a hypothetical technology shock.
 header-includes:
   - \usepackage{geometry}
   - \geometry{top=1in,left=1in,bottom=1in,right=1in}
@@ -59,8 +59,10 @@ axisTextSize <- 6
 axisTitleSize <- 7
 facetTitleSize <- 7
 
-mainFolder <- "D:/OneDrive - CGIAR/Documents 1/CIAT 2/A theory of aggregate supply and demand/"
+mainFolder <- "/home/ben/Documents/Theory of aggregate supply and shocks/"
+# mainFolder <- "D:/OneDrive - CGIAR/Documents 1/CIAT 2/A theory of aggregate supply and demand/"
 priceFolder <- "Price data/"
+
 
 ```
    <!-- Allows for analysis of price and technology impacts at specific centiles. -->
@@ -131,91 +133,12 @@ In the Methodology section, immediately below, the model is derived from axioms 
 
 After the Methodology, the derived model is fit to Kenya maize farm data as an illustrative use case. The fitted maize supply model is vetted against empirical estimates of maize supply at different price points across seven years. The model's estimates of both supply and the price elasticity of supply agree closely with empirical estimates. The model's explicit stochastic accounting of rainfall proves critical to this accuracy. A hypothetical, generic technology shock is then introduced in order to showcase the model's impact assessment capacity. The endogenously modeled aggregate supply response to the shock, and associated producer welfare outcomes, are evaluated at a range of different subsidy levels and assumed price shocks. Results are presented in a heatmap format to facilitate policy discussion.
 
-Because the conventional linear and CES aggregate supply functions are in such wide use, an in depth literature review is included in the Appendix for those requiring a more detailed engagement with the literature than the cursory treatment above, and to thereby place the motivation for the present work on a more solid footing.
+The widespread use of conventional linear and CES modeling frameworks calls for a more detailed engagement with the literature than the cursory treatment offered above. To place the motivation of the present work on solid footing, this engagement is provided in Appendix A.
 <!-- [Because the conventional linear and CES aggregate supply functions are in such wide use, it is first worthwhile to engage with that literature in more detail than is offered in the cursory treatment above, and to thereby place the motivation for the present work on a more solid footing.] -->
-<!-- Changes in agronomic yield and expenditure observed at research stations do not directly translate into changes in economic yield and expenditure likely to occur in real farm populations. This economically obvious, empirically well documented [@herdt1988increasing; @balasubramanian2000yield], fact of life bears mentioning here because confusion about the difference between experimental agronomic and real world economic farm outcomes still pervades the conversation in many areas of agricultural research impact assessment [@sumberg2012mind]. And this is arguably rooted in the lack of practical, formal tools for addressing the matter in the conventional ex-ante impact assessment framework. To be clear, the authors of the conventional framework are cognizant of the matter; but offer little in the way of practical, formal tools for addressing it [@alston1995science]. -->
-<!-- [and no transparency for what the assumptions behind the conversion from experimental result to economic yield are! And in practice,... always take the agronomic result as the economic result,[many studies]. also its effectively exogenous] -->
-<!-- Information gathered in terms of the change in agronomic yield and/or expenditure must be converted into an estimate for $\partial \ln(g)$. -->
 
-# Literature review
-
-## Is impact assessment insensitive to misspecification of the supply curve?
-
-When pressed on the matter, proponents of the conventional aggregate supply functions make little attempt to defend their specifications on empirical or theoretical grounds. On the contrary, proponents of linear models generally admit that real world commodity supply and demand curves are almost certainly never linear [@brester2023equilibrium]. Proponents of the CES model generally argue that CES models are probably at least slightly more accurate than linear specifications [@voon1991calculation], but likewise offer no formal derivation of their model from theory. Rather, the defense of conventional models centers on the argument that the functional form is irrelevant for purposes of impact assessment.
-<!-- On the contrary, everyone involved in this literature acknowledges that the functional forms are specified primarily to facilitate calculations of consumer and producer surplus [@lindner1978supply; @alston1995science; @rose1980supply]. -->
-
->\singlespacing"The pertinent question is whether the functional form used is an adequate approximation for the purpose. It turns out, empirically, that measures of total research benefits and their distribution between producers and consumers are quite insensitive to choices of functional form. They are much more sensitive to the related but separate choices concerning the nature of the research-induced supply curve shift and elasticities" [@alston1995science].
-
-\doublespacing
-
-Alston et al. [-@alston1995science] cite three peer reviewed articles in support of this claim. One of the cited articles actually runs contrary to the claim, explicitly concluding that impact assessment results are highly sensitive to choices of functional form [@voon1991calculation]---a conclusion subsequently reaffirmed in a comment [@elbasha1997calculation] and reply [@edwards1997calculation]. Another cited article, by Lindner and Jarrett [-@lindner1978supply], concludes that impact assessment results are sensitive to the nature of the supply curve shift (pivot versus parallel shift); but also acknowledges that these shifts are determined by the choice of functional form. In their words,
-
->\singlespacing"[P]ast studies have made no attempt to justify or explain the particular assumptions made about the type of supply shift. In fact, in some studies the impression is given that the type of supply shift was determined by the specification of the mathematical form of the supply curve, which in turn appears to have been chosen simply for computational convenience" [@lindner1978supply].
-
-\doublespacing
-
-By the transitive property, then, their conclusion regarding impact assessment sensitivity to the type of supply curve shift extends to functional form, again contrary to the claim that functional form is irrelevant. Similarly, the third cited article, by Norton and Davis [-@norton1981evaluating], asserts that functional form is "less important than the type and magnitude of the supply shift". But then, contrary to this assertion, the authors proceed to survey four examples where the mathematical form of the shift is clearly prefigured by that of the supply curve; and explicitly state that differences between the four examples in the assessment of net benefits are due to differences in both type/magnitude of shift and functional form. Alston et al. [-@alston1995science] themselves point out that the practitioner is at liberty to choose between different types of shift only in the case of the linear specification---where the choice is between a pivot and a parallel shift, or some combination thereof. In the case of the CES specification, the practitioner is constricted to assume a pivot (a point later emphasized by Voon and Edwards [-@voon1991calculation]). And elsewhere Alston writes that "the choice [of type of supply shift is] dictated by analytic convenience, given _a prior_ choice of functional form for supply" [@martin1997producer].
-
-A fourth document is also cited [@alston1990measuring], but is not peer reviewed and not, at the time of writing, readily available from the publisher. A subsequent peer reviewed article by Zhao et al. [-@zhao1997functional] cites the unavailable document as an annex to a technical report on R&D in the Australian wool industry. The main text of this report appears to have been published in a peer reviewed journal, but without the annex in question [@scobie1991returns]. In their own analysis, Zhao et al. [-@zhao1997functional] find that assessment of net benefits (economic surplus) is highly sensitive to misspecification of the functional form in the case of the CES specification, again contrary to the claim that impact assessments are insensitive to misspecification of the supply curve.
-
-They also find that impact assessment is insensitive to misspecification error when 1) the linear specification is assumed together with 2) a parallel shift, and assuming 3) the shift is small [@zhao1997functional]. Proponents and critics alike acknowledge that the empirical and theoretical grounds for assumptions 1 and 2 are narrow, at best [@lindner1978supply; @alston2009economics; @voon1991calculation; @rose1980supply]. If the real shift is a pivot or mixture of pivot and shift, then Zhao et al.'s finding of insensitivity does not apply. Moreover, it is questionable whether the parallel supply curve shifts assumed in most economic surplus assessments of returns to agricultural R&D qualify as "small" [@hurley2014re; @alston2000research]. To know for sure, Zhao et al. [-@zhao1997functional] develop a method to calculate the upper bound on misspecification bias; but the present literature review finds no instance where this method has actually been implemented. Finally, Zhao et al. [-@zhao1997functional] acknowledge that their findings regarding linear misspecification are valid only insofar as farm populations consist entirely of identical marginal farms, a condition never actually observed in any real farm population.
-
-In synthesis, then, it is misleading to characterize the cited literature as supportive of Alston et al.'s [-@alston1995science] broad claim that impact assessments are insensitive to misspecification of the functional form of the supply curve. More accurately, the literature supports the much narrower claim that impact assessments are insensitive to misspecification when the linear specification is assumed together with a parallel shift, and when the real shift is also parallel; and when the shift is small, and when the farm population consists of identical marginal farms. Apart from this exceptionally implausible case identified by Zhao et al. [-@zhao1997functional], the literature indicates that impact assessments are highly sensitive to functional form, whether directly, as in the case of the CES function, or by the transitive property, i.e., through a supply curve shift which is mathematically prefigured by the functional form of the supply curve.
-
-## Is it impossible to do any better?
-
-As a final line of defense, proponents of conventional aggregate supply curves argue that there is no alternative to their cavalier approach of arbitrarily assuming a functional form for supply curves and supply curve shifts, however implausible or grossly inaccurate they might be. Alston et al. [-@alston1995science] write:
-
->\singlespacing"What does economic theory tell us about the nature of ...[research induced aggregate supply curve] shifts? Unfortunately, not very much. To be confident about this aspect of the problem would require either (a) precise econometric evidence or (b) detailed information on the effects on individual agents, details of industry structure including details on exit and entry of firms, and a complete theory of aggregation. This information is not available; assumptions are unavoidable".
-
-\doublespacing
-
-<!-- The aggregate supply model derived in the subsequent sections -->
-The present work is effectively one long disagreement with this passage. The sweeping claim that economic theory does not tell us "very much" about the nature of aggregate supply curve shifts is especially perplexing. On the contrary, economic theory provides a set of microeconomic principles whence a firm level yield envelope is derived, whence "effects on individual agents", i.e., farm level response to exogenous shock, can be can modeled. Insofar as the phrase "complete theory of aggregation" refers to the specification of aggregate supply and demand curves, this too can be derived from theory by integrating individual effects over a suitable density function (i.e., Equation \ref{eq:aggSup0}). The firm yield model implies bounds on the domain of optimal output, such that the "exit and entry of firms" is accounted for by integrating over the domain of optimal behavior.
-<!-- (Similar bounds can be determined for optimal input use, whence an aggregate demand curve could be derived; but the focus here is limited to aggregate supply.) -->
-
-To be clear, the "precise econometric evidence or...detailed information" that the authors refer to is, indeed, generally not available; but the suggestion that economic theory offers nothing in its stead is mistaken. One of the key purposes of having a theory is to draw inference when detailed information is unavailable or otherwise provides no clear answer to our questions. And, yes, "assumptions are unavoidable"---but in the sense that axioms 1-5 in the Introduction are unavoidable, not in the sense of superimposing an exogenously assumed supply response on top of said axioms. Not economic theory, then, but rather a descriptive mathematical formulation which, by construction, precludes endogenous modeling of the aggregate supply response to exogenous shocks, is what tells us "not very much" about the the aggregate supply response to exogenous shocks.
-<!-- The authors themselves may have made little use of theory when they specified their linear aggregate supply and demand curves; but this does not mean that others are prohibited from doing so. -->
-
-## The limited policy relevance of conventional forms
-
-Effective policy formation requires careful assessment not only of the magnitude of net benefits of a given intervention, but also of their distribution across producers and consumers (the "food price dilemma"), and across income levels. Proponents and critics alike acknowledge that conventional functional forms are ill suited to the assessment of such distributional issues [@alston2009economics; @alston1995science; @lindner1978supply; @rose1980supply; @wohlgenant1997nature].
-
-More specifically, impact assessments based on a pivot of the linear or CES supply curve can result in consumer-producer tradeoffs, whereas assessments based on a linear parallel shift of the linear supply curve guarantee increases in both consumer and producer welfare [@alston2009economics]. With no clear theoretical or empirical premise upon which to recommend one set of results over another, little confidence can be attached to any of them. This is remarkable considering that the primary motive for conventional supply curve specifications is to facilitate the assessment of changes in consumer and producer surplus. It is also noteworthy that, of all the possible arbitrary configurations of supply curve and type of shift, most agricultural R&D impact assessments assume the one that, by construction, results in the highest net benefits and avoids any food-price dilemma [@hurley2014re; @alston2000research; @alston2009economics].
-<!-- mainly because they are not explicitly derived from a theoretical framework that maps model parameters to specific empirical economic phenomena. -->
-<!-- Effective food policy formation requires careful assessment not only of the magnitude of net benefits of a given intervention, but also of resulting consumer-producer tradeoffs (the "food price dilemma"), as well as the distributional effects of the intervention across income levels. In recent decades, rural-urban migration, and hence rural employment (farm entry/exit), is also a major concern []; as well as the overarching issue of smallholder price risk and risk-mitigating mechanisms []. -->
-<!-- Due to the fundamental disconnect between theory and functional form outlined above,  Impact assessment results regarding consumer-producer tradeoffs vary considerably with the assumed functional form and type of supply curve shift [@alston2009economic].  -->
-<!-- conspicuous -->
-
-As for the assessment of impacts on income inequality, conventional models are ill suited because, as noted earlier, they either do not explicitly account for heterogeneous farm endowments (in the case of the CES curve), or assume a population of identically endowed marginal farms (in the case of the linear specification). In some sectors, one might reasonably justify the assumption of homogeneously endowed firms by invoking competitive long run equilibrium. Such arguments are strained in the primary sector, however, where one typically sees an abundance of heterogeneously endowed, inframarginal farms in operation. By failing to account for such heterogeneity, the conventional models fail to account for farm entry/exit. (See Wohlgenant [-@wohlgenant1997nature] for a deeper treatment of this point.)
-
-Proponents of the conventional approach even go so far as to expressly discourage the assessment of distributional equity vis-a-vis agricultural research, arguing that such issues lie beyond its scope.
-<!-- Wohlgenant [-@wohlgenant1997nature] demonstrates that the long run equilibrium supply curve cannot be linear under such circumstances, even if the supply curves of individual farms are all linear. -->
-
->\singlespacing"For many economists...the only defensible justification for government intervention in agricultural research, and the only legitimate and achievable objective of research, is the pursuit of economic efficiency. This is not to say that other objectives (such as...income distribution and food security) are illegitimate, irrelevant, or unimportant but that there are likely to be alternative, less costly ways to achieve these other objectives than by biasing the agricultural research portfolio away from programs that will maximize total national net income" [@alston1995science].
-
-\doublespacing
-
-An underlying assumption here is that distributional equity and economic growth ("efficiency") are mutually exlusive objectives, such that the one cannot be pursued except at the cost of the other. Norton [-@norton1992economic] makes this explicit by actually drawing an equity-efficiency tradeoff frontier to illustrate the concept. Again citing "many economists", he affirms that "agricultural research is a relatively poor instrument for achieving non-efficiency objectives".
-
-The authors provide no references to indicate who they mean by "many economists"; and it is not readily obvious who they might have in mind. On the contrary, many economists think and/or have demonstrated econometrically that the exact opposite is true: agricultural research generally results in agricultural productivity growth, which goes hand in hand with poverty reduction [@rosegrant2001transforming; @ravallion1996important; @thorbecke1996multiplier; @fan2005rural; @bourguignon1998inequality; @timmer1997well; @gallup1998economic; @ravallion1999gowth; @ravallion2002has; @byerlee2009agriculture; @valdes2010reflections; @kydd2004agricultural; @world2007world; @de2020using; @de2022agriculture; @gollin2021two]. Publicly funded agricultural research since the 1960s has generally endeavored to align with pro-poor growth objectives, with mixed success [@thirtle2003impact; @adato2007agricultural; @hazell2001agricultural; @lipton2005family; @redclift1983production; @feleke2016assessing; @pingali1998impact; @mathur2003agricultural]. Moreover, it is now well documented that a nation's economic growth is generally more robust and sustainable in the measure that it is equitable [@partridge1997inequality; @easterly2007inequality; @berg2012makes; @ostry2015inequality; @berg2017inequality; @berg2018redistribution; @ostry2021growth]. Equity and sustainable growth are not mutually exclusive, but rather "two sides of the same coin" [@berg2017inequality].
-
-Finally, conventional models also introduce awkward artifacts that further undermine their explanatory power. The CES function, by definition, implies that yield and entry/exit responses to price changes always offset each other precisely such that the elasticity of supply is constant. The linear aggregate supply curve implies the possibility of negative supply quantities and/or of farms producing for free. This either requires redefinition of the curve as a piecewise function---which further complicates interpretation in terms of Equation \ref{eq:aggSup0}---or compels us to regard the function as a local approximation to some inscrutable global function, with validity restricted to a small domain of convergence around the starting equilibrium point.
-<!-- The lack of any accounting for farm entry/exit  -->
-<!-- Effective policy formation also requires careful  rural-urban migration, and hence rural employment (farm entry/exit), is also a major concern [@lall2006rural; @nori2020migration; @crush2013linking].  The conventional approach also takes no account of commodity price risk and risk mitigating mechanisms, which have also received increasing attention in agriculture research and policy discussions [@bellemare2020producer; @byerlee2006managing]. -->
-<!-- By neglecting farm heterogeneity, the conventional approach also of course precludes decomposition of supply shifts into yield and entry/exit components. The  -->
-<!-- entry/exit and yield components []. -->
-<!-- price risk -->
-
-## Real consequences
-
-There is a growing "disconnect" between the actual level of funding for agricultural research and the level of funding that would be justified by impact assessments conducted on the basis of conventional aggregate supply models [@hurley2016returns]. And there is good reason to suspect that this disconnect is due to the implausibly high---and sometimes absurdly high---internal rates of return (IRR) reported in conventional impact assessments of agricultural R&D [@hurley2014re; @alston2001attribution; @hurley2016returns]. The high reported returns are, of course, made more conspicuous by the aforementioned conflict of interest inherent in the expert opinion upon which these studies are typically based. In a meta-analysis of 492 such impact assessments, for example, Hurley et al. [@hurley2016returns] note that the average reported IRR implies that the USDA's 2000 R&D investment of \$4.1 billion should be worth \$56.3 quintillion in 2050, or 2.3 million times projected world GDP at that time.^[The meta-analysis covered a variety of impact assessment methods in addition to expedient specifications of aggregate supply (economic surplus analyses). It is safe to assume that most of these studies were economic surplus analyses.] "[I]t is not difficult to see," the authors conclude, "how policy makers may question the credibility of such evidence" [@hurley2016returns].
-<!-- It could merely reflect the low cost of implementing the model, for example, and/or the lack of comparably low cost alternatives.  -->
-<!-- [In discussion: The implausibility is made more conspicuous considering that these assessments are typically written by or in close consultation with the scientists whose research is under evaluation, and who thus have a vested interest in its success.] -->
-
-Hurley et al. [@hurley2014re] respond to the incredulity of policy makers by replacing IRR with their "modified" IRR or "MIRR", whereby implausibly high projected returns are deflated to plausible levels. This is a suitable response insofar as the implausibility in question is rooted in the discounting method (although see the debate between Ohemke [-@oehmke2017re] and Hurley et al. [-@hurley2017re]). However, the theoretical opacity, dubious implications, and limited interpretability of these models, outlined above, are good reason to suspect that much of the incredulity is in fact aimed at the impact modeling itself, particularly the modeling of aggregate supply and the supply response to exogenous shocks. Insofar as this is true, MIRR is an insufficient response, and may even exacerbate the problem by masking the real sources of inaccuracy.
-
+\singlespacing
 # Methodology: Theoretically derived, endogenous modeling of aggregate supply and response to exogenous shock
+\doublespacing
 
 Below, a deterministic model of aggregate supply and endogenous response to technology (or any other kind of exogenous) shock is derived from axioms 1-5. First, the farm production function is derived from axioms 1 and 2. Then a deterministic aggregate supply function is derived from the farm production function and axioms 3 and 4. (This is deterministic in the sense that it does not take into account the stochasticity of output price and weather.) An alternative deterministic form for aggregate supply is also derived based on the relation between conditional and unconditional means. Practical steps for evaluating curve parameters are briefly enumerated; and the importance of accounting for "stratified TFP"---i.e., variations in total factor productivity across farm populations---is addressed. The farm level endogenous yield and expenditure response to exogenous shock is then formalized---including a formula for calculating the endogenous adoption rate---and aggregated. Finally, stochasticity and axiom 5 are introduced to explicitly account for random fluctuations in weather and output price, resulting in the final functional form for expected aggregate supply.
 
@@ -447,8 +370,7 @@ Recalling that $C^* = R^* h / \lambda$ (Equation \ref{eq:cStar}), the output pri
 \frac{\partial \ln(y^*)}{\partial P} &= h \frac{\partial \ln(C^*)}{\partial P} \\
 &= h \left( \frac{\partial \ln(y^*)}{\partial P} + \frac{1}{P} \right) \\
 \frac{\partial \ln(y^*)}{\partial P} &= \frac{h}{1 - h} \frac{1}{P} \\
-\frac{\partial \ln(y^*)}{\partial \ln(P)} &= \frac{h}{1 - h} \\
-& \equiv \eta
+\frac{\partial \ln(y^*)}{\partial \ln(P)} &= \frac{h}{1 - h}
 \end{split}
 \label{eq:PelastYstar}
 \end{equation}
@@ -575,7 +497,9 @@ Q = N E[k_a] E[y^*] \mathcal{P}(P^{\eta}; m_{\#}, s_{\#})
 
 Axioms 1-4 thus give us a provisional tractable expression for aggregate supply in terms of interpretable parameters. The derived form is provisional because it is a deterministic expression that does not capture the stochastic nature of meteorology and price movements affecting agricultural output. The stochastic dimension of aggregate supply is introduced along with axiom 5 farther below.
 
-### Conditional vs. unconditional means, an alternative form for aggregate supply \label{sec:condMean}
+\singlespacing
+### Conditional vs. unconditional means, and an alternative form for aggregate supply \label{sec:condMean}
+\doublespacing
 
 It is important to keep in mind that $E[C^*]$, $E[y^*]$ are _unconditional_ means. Because axiom 3 truncates the upper tail of the distribution of $C^{\#}$ at $P$, then sample parameters calculated from observed data must be interpreted as _conditional_. That is to say, the sample means of expenditure and yield do not represent $E[C^*]$ and $E[y^*]$, but rather the conditional means $E[C^* | C^{\#} \leq P]$ and $E[y^* | C^{\#} \leq P]$. The conditional and unconditional means of any lognormally distributed variable $\chi$ with upper bound $\xi$ are related as follows.
 
@@ -632,6 +556,7 @@ And
 E[y^*] &= v E[k] E[C^{* h}] \\
 &= v E[k] e^{h m_c + h^2 \frac{s_c^2}{2}}
 \end{split}
+\label{eq:uncondMuYstar}
 \end{equation}
 
 The conditional means can be expressed by replacing $m_c$, $s_c$, $m_{\#}$, and $s_{\#}$ with the sample parameters $\bar{m}_c$, $\bar{s}_c$, $\bar{m}_{\#}$, and $\bar{s}_{\#}$, defined
@@ -699,7 +624,9 @@ v = \sum_{\ell} \frac{N_\ell}{N} v_{\ell}
 
 Where $N_{\ell} / N$ is the fraction of farms in the $\ell^{th}$ TFP stratum.
 
+\singlespacing
 ## An endogenous model of supply response to and welfare impact of exogenous shock
+\doublespacing
 
 Agronomic yield and expenditure response to exogenous stimulus at an experimental station does not translate into the economic yield and expenditure response likely to occur in real farm populations. This economically obvious fact of life [@herdt1988increasing; @balasubramanian2000yield] bears reiteration because confusion on this matter unfortunately still pervades the conversation in areas of agricultural research impact assessment [@sumberg2012mind].
 
@@ -736,7 +663,7 @@ Ideally, the value of $\beta_5$ should be estimated directly from field trials. 
 \label{eq:dldlg0}
 \end{equation}
 
-(See Appendix A.2 for details.)
+(See Appendix B.2 for details.)
 
 The direction of the expected change in prices depends upon the type of research product. Most agricultural research currently falls into one of two broad paradigms: "sustainable agricultural intensification" (SAI) or "agroecological intensification" (AEI) [@mockshell2018beyond]. Widespread adoption of a new SAI technology typically results in increased output supply and input demand, and hence a lower output price and higher input prices. Widespread adoption of an AEI technology, on the other hand, can result in lower input demand and emphasizes yield stability over quantity, hence lowering input prices and lowering output price volatility more than output price itself. For illustrative purposes, in this article the new technology is assumed to be an SAI research product, such that $\partial \ln(\mathbf{w}) / \partial \ln(g) > 0$ and $\partial \ln(P) / \partial \ln(g) < 0$.
 <!-- \begin{equation} -->
@@ -837,18 +764,18 @@ If $\partial B=0$, then Inequality \ref{eq:adoptCond} implies that adoption will
 <!-- Equally as important as the transfer of the new seed and new technology from Mexico to India and Pakistan was the introduction from Mexico of a crop-production campaign strategy. This strategy harnessed the high grain-yield potential of the new seed and new technology to sound governmental economic policy which would assure the farmer a fair price for his grain, the availability of the necessary inputs – seed, fertilizers, insecticides, weed killers, and machinery – and the credit with which to buy them. Collectively these inputs and strategy became the base from which the green revolution evolved. -->
 <!-- Assuming farms spend their whole farm budget ($B = C^*$), then the subsidy term simplifies to $h \partial \ln(C^*)$ and the adoption condition can be rewritten -->
 
-Denoting the upper adoption bound on $C^*$ (Equation \ref{eq:cStarAdopt}) as $\bar{\bar{C^*}}$, the adoption rate $\mathcal{A}$ when $\partial \ln(g) < -\partial \ln(\nu)$ can be expressed as the integral of the density $\rho(C^*)$ over the domain $(0, \bar{\bar{C^*}})$.
+Denoting the upper adoption bound on $C^*$ (Equation \ref{eq:cStarAdopt}) as $\hat{C^*}$, the adoption rate $\mathcal{A}$ when $\partial \ln(g) < -\partial \ln(\nu)$ can be expressed as the integral of the density $\rho(C^*)$ over the domain $(0, \hat{C^*})$.
 
 \begin{equation}
-\mathcal{A} = \int_0^{\bar{\bar{C^*}}} \rho(C^*) d C^*
+\mathcal{A} = \int_0^{\hat{C^*}} \rho(C^*) d C^*
 \end{equation}
 
 Because $C^*$ is lognormally distributed, the expression resolves as follows.
 
 \begin{equation}
 \begin{split}
-\mathcal{A} &= \Phi \left( \frac{\ln(\bar{\bar{C^*}}) - m_c}{s_c} \right) \\
-&= \Phi\left( \frac{\frac{-h \partial B}{\partial \ln(\nu) + \partial \ln(g)} - m_c}{s_c}
+\mathcal{A} &= \Phi \left( \frac{\ln(\hat{C^*}) - m_c}{s_c} \right) \\
+&= \Phi\left( \frac{\frac{-h \partial B}{\partial \ln(\nu) + \partial \ln(g)} - m_c}{s_c} \right)
 \end{split}
 \label{eq:AdoptRate}
 \end{equation}
@@ -856,7 +783,7 @@ Because $C^*$ is lognormally distributed, the expression resolves as follows.
 The aggregate net subsidy required to reach this adoption rate can then be computed as the subsidy per unit area times the total farm area times the adoption rate.
 
 \begin{equation}
-\text{Aggregate net subsidy} = \partial B N E[k_a] \mathcal{A}
+\text{Aggregate net subsidy} = N E[k_a] \mathcal{A} \partial B
 \label{eq:aggSubsidy}
 \end{equation}
 
@@ -898,17 +825,17 @@ The adoption rate within a single TFP stratum can be calculated by evaluating th
 
 <!-- ]] -->
 <!-- (Note that the adoption rate will be higher in strata with lower starting $v_{0i}$, _ceteris paribus_.) -->
-
+\singlespacing
 ## Aggregation of the endogenous farm supply response and change in welfare due to technology shocks \label{sec:aggImpact}
+\doublespacing
 
-The total increase in aggregate supply due to a technology shock can be evaluated by integrating the change in farm production $\partial y^*$ over the density of adopting farms $(0, \bar{\bar{y^*}})$ where $\bar{\bar{y^*}} = y^*(\bar{\bar{C^*}})$.
-
-$\overset{\triangle}{y}$
+The total increase in aggregate supply due to a technology shock can be evaluated by integrating the change in farm production $\partial y^*$ over the density of adopting farms $(0, \hat{y^*})$ where $\hat{y^*} = y^*(\hat{C^*})$.
+<!-- $\overset{\triangle}{y}$ -->
 
 \begin{equation}
 \begin{split}
-\Delta Q &= N \int_0^{\bar{\bar{y^*}}} k_a \partial \y^* \rho(y^*) dy^* \\
-&= N E[k_a] \int_0^{\bar{\bar{y^*}}} y^* \partial \ln(y^*) \rho(y^*) dy^*
+\Delta Q &= N \int_0^{\hat{y^*}} k_a \partial y^* \rho(y^*) dy^* \\
+&= N E[k_a] \int_0^{\hat{y^*}} y^* \partial \ln(y^*) \rho(y^*) dy^*
 \end{split}
 \end{equation}
 
@@ -922,32 +849,32 @@ Such that the integral reduces to
 
 \begin{equation}
 \begin{split}
-\Delta Q &= N E[k_a] \frac{\ell}{1 - h} \int_0^{\bar{\bar{y^*}}} y^* \rho(y^*) dy^* \\
-&= N E[k_a] \frac{\ell}{1 - h} v E[k] \int_0^{\bar{\bar{C^*}}} C^{*h} \rho(C^*) dC^* \\
-&= N E[k_a] v E[k] E[C^{*h}] \frac{\ell}{1 - h} \Phi \left( \frac{\ln(\bar{\bar{C^*}}) - m_c}{s_c} - h s_c  \right) \\
-&= N E[k_a] v E[k] E[C^{*h}] \frac{\ell}{1 - h} \mathcal{P}(\bar{\bar{C^{*h}}}; m_c, s_c)
+\Delta Q &= N E[k_a] \frac{\ell}{1 - h} \int_0^{\hat{y^*}} y^* \rho(y^*) dy^* \\
+&= N E[k_a] \frac{\ell}{1 - h} v E[k] \int_0^{\hat{C^*}} C^{*h} \rho(C^*) dC^* \\
+&= N E[k_a] v E[k] E[C^{*h}] \frac{\ell}{1 - h} \Phi \left( \frac{\ln(\hat{C^*}) - m_c}{s_c} - h s_c  \right) \\
+&= N E[k_a] v E[k] E[C^{*h}] \frac{\ell}{1 - h} \mathcal{P}(\hat{C}^{*h}; m_c, s_c)
 \end{split}
 \end{equation}
 <!-- $$ -->
-<!-- \Delta Q = N E[k_a] \frac{\ell}{1 - h} \int_0^{\bar{\bar{y^*}}} y^* \rho(y^*) dy^* \\ -->
-<!-- = N E[k_a] \frac{\ell}{1 - h} v E[k] \int_0^{\bar{\bar{C^*}}} C^{*h} \rho(C^*) dC^* \\ -->
-<!-- = N E[k_a] v E[k] E[C^{*h}] \frac{\ell}{1 - h} \Phi \left( \frac{\ln(\bar{\bar{C^*}}) - m_c}{s_c} - h s_c  \right) \\ -->
-<!-- = N E[k_a] v E[k] E[C^{*h}] \frac{\ell}{1 - h} \mathcal{P}(\bar{\bar{C^{*h}}}; m_c, s_c) -->
+<!-- \Delta Q = N E[k_a] \frac{\ell}{1 - h} \int_0^{\hat{y^*}} y^* \rho(y^*) dy^* \\ -->
+<!-- = N E[k_a] \frac{\ell}{1 - h} v E[k] \int_0^{\hat{C^*}} C^{*h} \rho(C^*) dC^* \\ -->
+<!-- = N E[k_a] v E[k] E[C^{*h}] \frac{\ell}{1 - h} \Phi \left( \frac{\ln(\hat{C^*}) - m_c}{s_c} - h s_c  \right) \\ -->
+<!-- = N E[k_a] v E[k] E[C^{*h}] \frac{\ell}{1 - h} \mathcal{P}(\hat{C}^{*h}; m_c, s_c) -->
 <!-- $$ -->
-<!-- \Delta Q = N E[k_a] \frac{1}{1 - h}(\partial \ln(g) - \boldsymbol{\alpha} ' \partial \ln(\mathbf{w})) \int_0^{\bar{\bar{y^*}}} y^* \rho(y^*) dy^* \\ -->
-<!-- = N E[k_a] \frac{1}{1 - h}(\partial \ln(g) - \boldsymbol{\alpha} ' \partial \ln(\mathbf{w})) v E[k] \int_0^{\bar{\bar{C^*}}} C^{*h} \rho(C^*) dC^* \\ -->
-<!-- = N E[k_a] v E[k] E[C^{*h}] \frac{1}{1 - h}(\partial \ln(g) - \boldsymbol{\alpha} ' \partial \ln(\mathbf{w})) \Phi \left( \frac{\ln(\bar{\bar{C^*}}) - m_c}{s_c} - h s_c  \right) \\ -->
-<!-- = N E[k_a] v E[k] E[C^{*h}] \frac{1}{1 - h}(\partial \ln(g) - \boldsymbol{\alpha} ' \partial \ln(\mathbf{w})) \mathcal{P}(\bar{\bar{C^{*h}}}; m_c, s_c) -->
+<!-- \Delta Q = N E[k_a] \frac{1}{1 - h}(\partial \ln(g) - \boldsymbol{\alpha} ' \partial \ln(\mathbf{w})) \int_0^{\hat{y^*}} y^* \rho(y^*) dy^* \\ -->
+<!-- = N E[k_a] \frac{1}{1 - h}(\partial \ln(g) - \boldsymbol{\alpha} ' \partial \ln(\mathbf{w})) v E[k] \int_0^{\hat{C^*}} C^{*h} \rho(C^*) dC^* \\ -->
+<!-- = N E[k_a] v E[k] E[C^{*h}] \frac{1}{1 - h}(\partial \ln(g) - \boldsymbol{\alpha} ' \partial \ln(\mathbf{w})) \Phi \left( \frac{\ln(\hat{C^*}) - m_c}{s_c} - h s_c  \right) \\ -->
+<!-- = N E[k_a] v E[k] E[C^{*h}] \frac{1}{1 - h}(\partial \ln(g) - \boldsymbol{\alpha} ' \partial \ln(\mathbf{w})) \mathcal{P}(\hat{C}^{*h}; m_c, s_c) -->
 <!-- $$ -->
 
 Where the penultimate line follows from Equation \ref{eq:keyResult}. Recalling that $v = E[y^*] / (E[k] E[C^{*h}])$ (Equation \ref{eq:v0forms}), this further reduces to
 
 \begin{equation}
-\Delta Q = N E[k_a] E[y^*] \frac{\ell}{1 - h} \mathcal{P}(\bar{\bar{C^{*h}}}; m_c, s_c)
+\Delta Q = N E[k_a] E[y^*] \frac{\ell}{1 - h} \mathcal{P}(\hat{C}^{*h}; m_c, s_c)
 \label{eq:deltQ}
 \end{equation}
 <!-- $$ -->
-<!-- \Delta Q = N E[k_a] E[y^*] \frac{\ell}{1 - h}\mathcal{P}(\bar{\bar{C^{*h}}}; m_c, s_c) -->
+<!-- \Delta Q = N E[k_a] E[y^*] \frac{\ell}{1 - h}\mathcal{P}(\hat{C}^{*h}; m_c, s_c) -->
 <!-- $$ -->
 
 The new aggregate supply curve ($Q'$) can then be evaluated as
@@ -961,24 +888,24 @@ To assess the aggregate change in net benefit, note from Equation \ref{eq:dLdlng
 \begin{equation}
 \begin{split}
 \partial \mathcal{L}^* &= \frac{\lambda}{h} ( C^* (\partial g - \boldsymbol{\alpha} ' \partial \ln(\mathbf{w}) + \partial \ln(P)) + h \partial B) \\
-&= r (C^* \gamma + h \partial B) \:\:;\:\:\: \gamma = \partial g - \boldsymbol{\alpha} ' \partial \ln(\mathbf{w}) + \partial \ln(P) \:\:\: r = \frac{\lambda}{h} = \fraC{P}{C^{\#}}
+&= r (C^* \gamma + h \partial B) \:\:;\:\:\: \gamma = \partial g - \boldsymbol{\alpha} ' \partial \ln(\mathbf{w}) + \partial \ln(P) \:\:\: r = \frac{\lambda}{h} = \frac{P}{C^{\#}}
 \end{split}
 \end{equation}
 
-But recall from Equation \ref{eq:cStarAdopt} that $h \partial B = - \gamma \bar{\bar{C}^*}$, such that the expression reduces to
+But recall from Equation \ref{eq:cStarAdopt} that $h \partial B = - \gamma \hat{C}^*$, such that the expression reduces to
 
 \begin{equation}
-\partial \mathcal{L}^*(r, C^*) = r \gamma (C^* - \bar{\bar{C}^*})
+\partial \mathcal{L}^*(r, C^*) = r \gamma (C^* - \hat{C}^*)
 \label{eq:dLstar}
 \end{equation}
 
-The aggregate change in net benefit ($\Delta \psi$) can be evaluated by integrating $\partial \mathcal{L}^*(C^*, r)$ over the farm expenditure ($C^* \in (0, \bar{\bar{C^{*h}}})$), revenue to expenditure ratio ($r \in (1, \infty)$) and area ($k_a$) densities. The domain of $r$ follows from axiom 3.
+The aggregate change in net benefit ($\Delta \psi$) can be evaluated by integrating $\partial \mathcal{L}^*(C^*, r)$ over the farm expenditure ($C^* \in (0, \hat{C}^{*h})$), revenue to expenditure ratio ($r \in (1, \infty)$) and area ($k_a$) densities. The domain of $r$ follows from axiom 3.
 
 \begin{equation}
 \begin{split}
-\Delta \psi &= N \int_0^{\infty} \int_1^{\infty} \int_0^{\bar{\bar{C^*}}} \partial \mathcal{L}^*(C^*, r) \rho(C^*) dC^* \rho(r) dr \rho(k_a) d k_a \\
-&= N E[k_a] \int_1^{\infty} r \rho(r) dr  \int_0^{\bar{\bar{C^*}}} \gamma (C^* - \bar{\bar{C}^*})  \rho(C^*) dC^* \\
-&= N E[k_a] E[r] \gamma \Phi \left( \frac{\ln(P) - m_{\#}}{s_{\#}} + s_{\#} \right) \left( E[C^*] \mathcal{P}(\bar{\bar{C}^*}; m_c, s_c) - \bar{\bar{C}^*} \mathcal{A} \right)
+\Delta \psi &= N \int_0^{\infty} \int_1^{\infty} \int_0^{\hat{C^*}} \partial \mathcal{L}^*(C^*, r) \rho(C^*) dC^* \rho(r) dr \rho(k_a) d k_a \\
+&= N E[k_a] \int_1^{\infty} r \rho(r) dr  \int_0^{\hat{C^*}} \gamma (C^* - \hat{C}^*)  \rho(C^*) dC^* \\
+&= N E[k_a] E[r] \gamma \Phi \left( \frac{\ln(P) - m_{\#}}{s_{\#}} + s_{\#} \right) \left( E[C^*] \mathcal{P}(\hat{C}^*; m_c, s_c) - \hat{C}^* \mathcal{A} \right)
 \end{split}
 \end{equation}
 
@@ -994,25 +921,27 @@ But note that, by the symmetry of the normal cumulative distribution function,
 Such that the previous equation reduces as follows.
 
 \begin{equation}
-\Delta \psi = N E[k_a] E[r] \gamma (2 \mathcal{E} - \mathcal{P}(P; m_{\#}, s_{\#})) ( E[C^*] \mathcal{P}(\bar{\bar{C}^*}; m_c, s_c)  - \bar{\bar{C}^*} \mathcal{A} )
+\Delta \psi = N E[k_a] E[r] \gamma (2 \mathcal{E} - \mathcal{P}(P; m_{\#}, s_{\#})) ( E[C^*] \mathcal{P}(\hat{C}^*; m_c, s_c)  - \hat{C}^* \mathcal{A} )
 \label{eq:dPsi}
 \end{equation}
 <!-- $$ -->
-<!-- \Delta \psi = N \int_0^{\infty} \int_1^{\infty} \int_0^{\bar{\bar{C^*}}} \partial \mathcal{L}^*(C^*, r) \rho(C^*) dC^* \rho(r) dr \rho(k_a) d k_a \\ -->
-<!-- = N E[k_a] \int_1^{\infty} r \rho(r) dr \int_0^{\bar{\bar{C^*}}} \gamma (C^* - \bar{\bar{C}^*})  \rho(C^*) dC^* \\ -->
-<!-- = N E[k_a] E[r] \gamma \Phi \left( \frac{\ln(P) - m_{\#}}{s_{\#}} + s_{\#} \right) \left( E[C^*] \Phi \left( \frac{\ln(\bar{\bar{C}^*}) - m_c}{s_c} - s_c \right) - \bar{\bar{C}^*} \mathcal{A} \right) \\ -->
-<!-- = N E[k_a] E[r] \gamma (2 \mathcal{E} - \mathcal{P}(P; m_{\#}, s_{\#})) ( E[C^*] \mathcal{P}(\bar{\bar{C}^*}; m_c, s_c)  - \bar{\bar{C}^*} \mathcal{A}) -->
+<!-- \Delta \psi = N \int_0^{\infty} \int_1^{\infty} \int_0^{\hat{C^*}} \partial \mathcal{L}^*(C^*, r) \rho(C^*) dC^* \rho(r) dr \rho(k_a) d k_a \\ -->
+<!-- = N E[k_a] \int_1^{\infty} r \rho(r) dr \int_0^{\hat{C^*}} \gamma (C^* - \hat{C}^*)  \rho(C^*) dC^* \\ -->
+<!-- = N E[k_a] E[r] \gamma \Phi \left( \frac{\ln(P) - m_{\#}}{s_{\#}} + s_{\#} \right) \left( E[C^*] \Phi \left( \frac{\ln(\hat{C}^*) - m_c}{s_c} - s_c \right) - \hat{C}^* \mathcal{A} \right) \\ -->
+<!-- = N E[k_a] E[r] \gamma (2 \mathcal{E} - \mathcal{P}(P; m_{\#}, s_{\#})) ( E[C^*] \mathcal{P}(\hat{C}^*; m_c, s_c)  - \hat{C}^* \mathcal{A}) -->
 <!-- $$ -->
 
 By Equation \ref{eq:keyResult2}, this can also be written
 
 \begin{equation}
-\Delta \psi = N E[k_a] \gamma E[r | r \geq 1] \mathcal{A} \mathcal{E} (E[C^* | C^* \leq \bar{\bar{C}^*}] - \bar{\bar{C}^*})
+\Delta \psi = N E[k_a] \gamma E[r | r \geq 1] \mathcal{A} \mathcal{E} (E[C^* | C^* \leq \hat{C}^*] - \hat{C}^*)
 \end{equation}
 
 To calculate the change in aggregate supply and welfare for each stratum ($\Delta Q_{\ell}$ and $\Delta \psi_{\ell}$), in the equations above simply replace $v$, $N$, with $v_{\ell}$, $N_{\ell}$.
 
+\singlespacing
 ## Accounting for stochasticity, derivation of the expected aggregate supply curve based on axiom 5 \label{sec:acct4Stoch}
+\doublespacing
 
 The deterministic aggregate supply function derived in section \ref{sec:addSupDet} is a suitable aggregate supply function in sectors characterized by deterministic production processes, negligible delays between input decisions and output, and negligible output price volatility. However, it is not suited to the primary sector, where production is partly deterministic but also partly a function of stochastic meteorological variables; where there is a significant delay between input decisions and output (i.e., the cropping season); and where output price volatility looms large in any management decision. In order to accommodate these hallmarks of agricultural supply, it is necessary to be more explicit in the treatment of yield and output price as stochastic variables.
 <!-- Equation \ref{eq:aggSup1} -->
@@ -1021,7 +950,7 @@ To begin with, yield is partly a function of stochastic meteorological variables
 
 \begin{equation}
 \begin{split}
-y^*(T; k_m(T)) &= y^*(T) = E[y^*(T; k_m(T))] \frac{k_m(T)^{\kappa_m}}{E[k_m(T)^{\kappa_m}]} \frac{k'}{E[k']} \frac{C^{*h}}{E[C^{*h}]} \:\:;\:\:\: k' = k_m(T)^{-\kappa_m} k \\
+y^*(T; k_m(T)) = y^*(T) &= E[y^*(T; k_m(T))] \frac{k_m(T)^{\kappa_m}}{E[k_m(T)^{\kappa_m}]} \frac{k'}{E[k']} \frac{C^{*h}}{E[C^{*h}]} \:\:;\:\:\: k' = k_m(T)^{-\kappa_m} k \\
 &= v \frac{k_m(T)^{\kappa_m}}{E[k_m(T)^{\kappa_m}]} k' C^{*h} \:\:;\:\:\: v = \frac{E[y^*(T)]}{E[k'] E[C^{*h}]}
 \end{split}
 \label{eq:yStarT}
@@ -1056,6 +985,8 @@ Such that the implicit observed mean expected yield can be written
 E[\tilde{y}^*(T; k_m)|\theta]|_{t = 0} = v E[\tilde{k}_m(T)^{\kappa_m}]|_{t = 0} E[k'] E[C^{*h}|\theta]
 \label{eq:impMuEyStarT0cond}
 \end{equation}
+
+That is to say, this is the stochastically explicit version of Equation \ref{eq:uncondMuYstar}.
 <!-- ...in section \ref{sec:condMean}, tractable expression for mean yield, stochastic version -->
 <!-- ... -->
 <!-- The relation between conditional and unconditional mean yield (Equation \ref{eq:condMeanYd1}) can thus be rewritten as follows. -->
@@ -1341,14 +1272,29 @@ m_{\#} = E[\ln(E[C^{\#}(T)]|_{t = 0})] \:\:\:\: s^2_{\#} = Var\ln(E[C^{\#}(T)]|_
 Equation \ref{eq:condMeanYd1}, relating the observed (conditional) mean and unconditional mean expected yield, must also be rewritten more carefully as follows.
 
 \begin{equation}
-\begin{split}
-E[\tilde{y}^*(T; k_m(T))]|_{t = 0} &= E[\tilde{y}^*(T; k_m(T)) | \theta]|_{t = 0} \frac{\Phi\left( \frac{\ln(E[P(T)]|_{t = 0}) - m_{\#}}{s_{\#}} \right)}{\Phi \left( \frac{\ln(E[P(T)]|_{t = 0}) - m_{\#}}{s_{\#}} - \eta s_{\#} \right)} \\
-& \theta = E[C^{\#}(T)]|_{t = 0} \leq E[P(T)]|_{t = 0} \\
-& \tilde{y}^*(T; k_r(T))|\{\theta\} = E[y^*(T; k_r(T)) | \theta]
-\end{split}
+E[\tilde{y}^*(T; k_m(T))]|_{t = 0} \mathcal{P}(E[P(T)^{\eta}]|_{t = 0}, m_{\#}, s_{\#}) = E[\tilde{y}^*(T; k_m(T)) | \theta]|_{t = 0} \mathcal{E}
 \label{eq:condMeanYd2}
 \end{equation}
+<!-- \begin{equation} -->
+<!-- \begin{split} -->
+<!-- E[\tilde{y}^*(T; k_m(T))]|_{t = 0} &= E[\tilde{y}^*(T; k_m(T)) | \theta]|_{t = 0} \frac{\Phi\left( \frac{\ln(E[P(T)]|_{t = 0}) - m_{\#}}{s_{\#}} \right)}{\Phi \left( \frac{\ln(E[P(T)]|_{t = 0}) - m_{\#}}{s_{\#}} - \eta s_{\#} \right)} \\ -->
+<!-- & \theta = E[C^{\#}(T)]|_{t = 0} \leq E[P(T)]|_{t = 0} \\ -->
+<!-- & \tilde{y}^*(T; k_r(T))|\{\theta\} = E[y^*(T; k_r(T)) | \theta] -->
+<!-- \end{split} -->
+<!-- \label{eq:condMeanYd2} -->
+<!-- \end{equation} -->
 
+[have to change this as better method for deducing implicit expected yield given higher up:
+-Above (in this same subsection) shown how to deduce implicit expected cond yield from the observed (cond) harvest yield.
+-Now given the relation between the cond and uncond mean, the uncond mean can be derived from the cond mean as follows
+(this can be addressed in the unconditional and cond mean section higher up, then repeated here just to give the stochastic expressions of the relations?)
+Look, the two ways to deductively calculate expected unconditional mean yield are:
+$muEyStarT0check <- dfAll(dollarSign)muEyStarT0trunc * EmploymentRate / ProbProfit $
+$muEyStarT0 <- mean(vStrat) * muKprime * muCstarh$
+The latter is more straightforward from data based on cost. The former can be used as a check.
+So basically get rid of this part about deducing expected unconditional mean yield from employment rate and PEFS adj prob of profit--except maybe show that it could be used for back of envelope calcs in absence of data
+The most relevant usage might be as a way to calculate PEFS adj prob of profit from emplyment rate and mean yield?
+]
 In practice, the expected conditional mean yield ($E[\tilde{y}^*(T; k_m(T)) | \theta]|_{t = 0}$) is generally not observable. However, it can be estimated from the observed (conditional) mean harvest yield ($E[y^*(T; k_m(T))|\theta]$) as follows.
 
 \begin{equation}
@@ -1359,12 +1305,13 @@ E[\tilde{y}^*(T; k_m(T)) | \theta]|_{t = 0} = \frac{E[E[k_m(T)^{\kappa_m}]]|_{t 
 <!-- E[E[y^*(T)]|_{t = 0}] &= E[E[y^*(T)]|_{t = 0} | \theta] -->
 <!-- \frac{\Phi\left( \frac{\ln(P) - m_{\#}}{s_{\#}} \right)}{\Phi \left( \frac{\ln(P) - m_{\#}}{s_{\#}} - \eta s_{\#} \right)} \\ -->
 
-It was noted earlier that the $\Phi()$ term in the numerator on the righthand side of Equation \ref{eq:condMeanYd2} may be interpreted as the farm employment rate. In the remainder of this section, it is shown that the $\Phi()$ term appearing in the denominator, and in the expected aggregate supply function, also has a meaningful economic interpretation. Specifically,
+In the remainder of this section, it is shown that the $\mathcal{P}(E[P(T)]|_{t = 0})$ term appearing on the left hand side of Equation \ref{eq:condMeanYd2}, and in the expected aggregate supply function, also has a meaningful economic interpretation. Specifically,
 
 \begin{equation}
-\Phi \left( \frac{\ln(E[P(T)]|_{t = 0}) - m_{\#}}{s_{\#}} - \eta s_{\#} \right) = \text{Prob}(E[\tilde{C}^{\#}(T)^{\eta}]|_{t = 0} \leq P(T)^{\eta}) \:\:;\:\:\: \tilde{C}^{\#}(T) = E[C^{\#}(T)]
+\mathcal{P}(E[P(T)^{\eta}]|_{t = 0}, m_{\#}, s_{\#}) = \text{Prob}(E[\tilde{C}^{\#}(T)^{\eta}]|_{t = 0} \leq P(T)^{\eta}) \:\:;\:\:\: \tilde{C}^{\#}(T) = E[C^{\#}(T)]
 \label{eq:probProfitResult}
 \end{equation}
+<!-- \Phi \left( \frac{\ln(E[P(T)]|_{t = 0}) - m_{\#}}{s_{\#}} - \eta s_{\#} \right) -->
 
 In words, the $\Phi()$ term on the lefthand side equals the probability that the harvest output price (raised to $\eta$) will be greater than the mean farm's expected unit cost (raised to $\eta$). The term may thus be considered a rough reflection (up to the adjustment $\eta$) of the mean probability of profit. To see this, start with the expectation of Equation \ref{eq:useful2}, giving the population mean of $E[C^{\#}(T)]\bigr|_{t = 0}$.
 
@@ -1457,18 +1404,18 @@ z &= \frac{\ln \left(\frac{E[\tilde{C}^{\#}(T)^{\eta}]|_{t = 0}}{P(0)} \right) -
 Therefore
 
 \begin{equation}
-\begin{split}
-1 - \Phi(z) &= \text{Prob}(E[\tilde{C}^{\#}(T)^{\eta}]|_{t = 0} \leq P(T)^{\eta}) \\
-& \equiv \mathcal{P}
-\end{split}
+1 - \Phi(z) = \text{Prob}(E[\tilde{C}^{\#}(T)^{\eta}]|_{t = 0} \leq P(T)^{\eta})
 \end{equation}
 
-Which proves Equation \ref{eq:probProfitResult}. Recalling from section \ref{sec:axioms1and2} that the adjustment $\eta$ is the output price elasticity of farm supply (PEFS), the probability $\mathcal{P}$ is henceforth referred to as the "PEFS-adjusted mean probability of profit". Equation \ref{eq:PhiMap} maps the PEFS-adjusted mean probability of profit from farm population parameter space to stochastic price parameter space. The most appropriate parameter space to work in is that for which the higher resolution data is available. When farm data is available, evaluation in farm population parameter space is the best approach. In the absence of farm data, evaluation in stochastic price parameter space is appropriate if high resolution price series data is available.
+Which proves Equation \ref{eq:probProfitResult}. Recalling from section \ref{sec:axioms1and2} that the adjustment $\eta$ is the output price elasticity of farm supply (PEFS), the probability $\mathcal{P}(E[P(T)^{\eta}]|_{t = 0}, m_{\#}, s_{\#})$ is henceforth referred to as the "PEFS-adjusted mean probability of profit". Equation \ref{eq:PhiMap} maps the PEFS-adjusted mean probability of profit from farm population parameter space to stochastic price parameter space. The most appropriate parameter space to work in is that for which the higher resolution data is available. When farm data is available, evaluation in farm population parameter space is the best approach. In the absence of farm data, evaluation in stochastic price parameter space is appropriate if high resolution price series data is available.
 
 Expected aggregate supply in stochastic price parameter space follows from Equations \ref{eq:aggSup2} and \ref{eq:PhiMap}.
 
 \begin{equation}
-E[Q(T)]|_{t = 0} = N E[k_a] E[\tilde{y}^*(T; k_m(T))]|_{t = 0} (1 - \Phi(z)) \:\:;\:\:\: z = \frac{\ln \left( \frac{E[\tilde{C}^{\#}(T)^{\eta}]|_{t = 0}}{P(0)} \right) - \left( m_p - \eta \frac{s^2_p}{2} \right) T}{s_p \sqrt{T}}
+\begin{split}
+E[Q(T)]|_{t = 0} &= N E[k_a] E[\tilde{y}^*(T; k_m(T))]|_{t = 0} \mathcal{P}(E[P(T)^{\eta}]|_{t = 0}, m_{\#}, s_{\#}) \\
+&= N E[k_a] E[\tilde{y}^*(T; k_m(T))]|_{t = 0} (1 - \Phi(z)) \:\:;\:\:\: z = \frac{\ln \left( \frac{E[\tilde{C}^{\#}(T)^{\eta}]|_{t = 0}}{P(0)} \right) - \left( m_p - \eta \frac{s^2_p}{2} \right) T}{s_p \sqrt{T}}
+\end{split}
 \label{eq:aggSup3}
 \end{equation}
 
@@ -1494,7 +1441,7 @@ And
 \begin{equation}
 \begin{split}
 E[\tilde{y}^*(T)]|_{t = 0} &= E[\tilde{y}^*(T) | \theta]|_{t = 0} \frac{\text{Prob}(E[C^{\#}(T)]|_{t = 0} \leq P(T))}{\text{Prob}(E[\tilde{C}^{\#}(T)^{\eta}]|_{t = 0} \leq P(T)^{\eta})} \\
-\text{Expected undonditional mean yield} &= \text{Expected conditional mean yield} \times \frac{\text{Farm employment rate}}{\text{PEFS-adj. mean probability of profit}}
+\text{Exp. uncond. mean yield} &= \text{Exp. cond. mean yield} \times \frac{\text{Farm employment rate}}{\text{PEFS-adj. mean probability of profit}}
 \end{split}
 \label{eq:muEyStarT0frommuEyStarT0trunc}
 \end{equation}
@@ -1520,43 +1467,37 @@ s_p \sqrt{T} </> \frac{\phi(-z)}{\Phi(-z)}
 
 Finally, the stochastically explicit formulations for the research induced change in aggregate supply and welfare derived in section \ref{sec:aggImpact} follow from the exposition above as
 
+<!-- \begin{equation} -->
+<!-- \Delta Q = N E[k_a] E[y^*] \frac{\ell}{1 - h} \mathcal{P}(\hat{C}^{*h}; m_c, s_c) -->
+<!-- \label{eq:deltQ} -->
+<!-- \end{equation} -->
 \begin{equation}
-\begin{split}
-\Delta E[Q(T; k_m(T))]|_{t = 0} &= N E[k_a] E[\tilde{y}^*(T, k_m(T))]|_{t = 0} \frac{1}{1 - h}(\partial \ln(g) - \boldsymbol{\alpha} ' \partial \ln(\mathbf{w})) \mathcal{P} \\
-&= N \mathcal{A} E[k_a] E[\tilde{y}^*(T, k_m(T))| C^* \leq \bar{\bar{C^*}}]|_{t = 0} \frac{1}{1 - h}(\partial \ln(g) - \boldsymbol{\alpha} ' \partial \ln(\mathbf{w}))
-\end{split}
+\Delta E[Q(T; k_m(T))]|_{t = 0} = N E[k_a] E[\tilde{y}^*(T, k_m(T))]|_{t = 0} \frac{\ell}{1 - h} \mathcal{P}(\hat{C}^{*h}; m_c, s_c)
 \label{eq:dEQT0}
 \end{equation}
-<!-- \Delta Q = N E[k_a] E[y^*] \frac{\ell}{1 - h}\mathcal{P}(\bar{\bar{C^{*h}}}; m_c, s_c) -->
 
 And
 
 <!-- \begin{equation} -->
-<!-- \begin{split} -->
-<!-- \Delta \psi &= N E[k_a] E[k] v P \gamma (E[C^{*h}] \mathcal{P}() - \bar{\bar{C^{*h}}} \mathcal{A}) \\ -->
-<!-- &= N E[k_a] P \gamma \left( E[y^*] \mathcal{P} - E[\overline{\overline{E[y(T)^*]|_{t = 0}}}] \mathcal{A} \right) -->
-<!-- \end{split} -->
-<!-- \label{eq:dEPsi} -->
+<!-- \Delta \psi = N E[k_a] E[r] \gamma (2 \mathcal{E} - \mathcal{P}(P; m_{\#}, s_{\#})) ( E[C^*] \mathcal{P}(\hat{C}^*; m_c, s_c)  - \hat{C}^* \mathcal{A} ) -->
+<!-- \label{eq:dPsi} -->
 <!-- \end{equation} -->
 
 \begin{equation}
-\Delta \psi = N E[k_a] E[\tilde{r}(T)]|_{t = 0} \gamma (2 \mathcal{E} - \mathcal{P}(P; m_{\#}, s_{\#})) ( E[C^*] \mathcal{P}(\bar{\bar{C}^*}; m_c, s_c)  - \bar{\bar{C}^*} \mathcal{A} ) \:\:;\:\:\: \tilde{r}(T) = E[r(T)] = \frac{E[P(T)]}{E[C^{\#}(T)]}
+\begin{split}
+\Delta \psi &= N E[k_a] E[\tilde{r}(T)]|_{t = 0} \gamma (2 \mathcal{E} - \mathcal{P}(E[P(T)]|_{t = 0}; m_{\#}, s_{\#})) (E[C^*] \mathcal{P}(\hat{C}^*; m_c, s_c)  - \hat{C}^* \mathcal{A}) \\
+& \tilde{r}(T) = E[r(T)] = \frac{E[P(T)]|_{t = 0}}{E[C^{\#}(T)]|_{t = 0}}
+\end{split}
 \label{eq:dEPsi}
 \end{equation}
-<!-- \Delta \psi = N E[k_a] E[r] \gamma (2 \mathcal{E} - \mathcal{P}(P; m_{\#}, s_{\#})) ( E[C^*] \mathcal{P}(\bar{\bar{C}^*}; m_c, s_c)  - \bar{\bar{C}^*} \mathcal{A} ) -->
 
-
-<!-- \Delta E[Q(T; k_m(T))]|_{t = 0} &= N E[k_a] E[\tilde{y}^*(T, k_m(T))]|_{t = 0} \frac{1}{1 - h}(\partial \ln(g) - \boldsymbol{\alpha} ' \partial \ln(\mathbf{w})) (1 - \Phi ( \v )) \\ -->
-<!-- &= N \mathcal{A} E[k_a] E[\tilde{y}^*(T, k_m(T))| C^* \leq \bar{\bar{C^*}}]|_{t = 0} \frac{1}{1 - h}(\partial \ln(g) - \boldsymbol{\alpha} ' \partial \ln(\mathbf{w})) -->
-<!-- \begin{equation} -->
-<!-- \frac{\ln(\bar{\bar{C^*}}) - m_{c}}{s_c} - h s_c = \frac{\ln(\bar{\bar{C^{\#}}}) - m_{\#}}{s_{\#}} - \eta s_{\#} -->
-<!-- \end{equation} -->
-
+\singlespacing
 # An illustrative use case: Kenya's maize aggregate supply curve
 
 ## Expected aggregate supply model parameter estimation and comparison to empirical estimates
+\doublespacing
 
-As an illustrative example, the expected aggregate supply curve derived above from axioms 1-5 is fit to 2007 Kenyan maize farm data and compared against empirical estimates of expected aggregate supply for the years 2006-2012. The farm data used in this pedagogical exercise come from a panel covering the main and short rains seasons for multiple crops across Kenya for the years 1997, 2000, 2004, 2007, and 2010, originally gathered by the Egerton University Tegemeo Institute of Agricultural Policy and Development in partnership with Michigan State University, under the auspices of a USAID project [@maizeData]. For the present exercise, only the 2007 main rains season maize farm data is used. The main season in Kenya generally runs from March to August or September. Farms not reporting maize as their main crop or reporting zero maize production cost are excluded, as well as five farms reporting extremely high unit cost, resulting in a sample size of 937 maize farms across 20 districts (nowadays referred to as "counties"). The sample represents all major maize growing regions in the country. Full details regarding the data and its processing for the present exercise, including summary statistics, are provided in Appendix B.
+As an illustrative example, the expected aggregate supply curve derived above is fit to 2007 Kenyan maize farm data and compared against empirical estimates of expected aggregate supply for the years 2006-2012. The farm data used in this pedagogical exercise come from a panel covering the main and short rains seasons for multiple crops across Kenya for the years 1997, 2000, 2004, 2007, and 2010, originally gathered by the Egerton University Tegemeo Institute of Agricultural Policy and Development in partnership with Michigan State University, under the auspices of a USAID project [@maizeData]. For the present exercise, only the 2007 main rains season maize farm data is used. The main season in Kenya generally runs from March to August or September. Farms not reporting maize as their main crop or reporting zero maize production cost are excluded, as well as five farms reporting extremely high unit cost, resulting in a sample size of 937 maize farms across 20 districts (nowadays referred to as "counties"). The sample represents all major maize growing regions in the country. Full details regarding the data and its processing for the present exercise, including summary statistics, are provided in Appendix C.
 
 The empirical estimates of aggregate supply for the years 2006-2012 are taken from commodity intelligence reports published in mid to late season---prior to harvest but after planted area and main season rainfall are known. These estimates, summarized in Table 1, cover some of Kenya's worst drought years in living memory.
 
@@ -1608,18 +1549,20 @@ dfPoints <- data.frame(`Estimate date` = reportDate,
                        Comments = commentVec)
 colnames(dfPoints) <- c("Estimate date", "Estimate (million MT)", "Reference", "Comments")
 
-set_flextable_defaults(
-  font.size = 10#, #theme_fun = theme_vanilla,
-  #padding = 6
-  )
-  #background.color = "#EFEFEF")
+# set_flextable_defaults(
+#   font.size = 11#, #theme_fun = theme_vanilla,
+#   #padding = 6
+#   )
+#   #background.color = "#EFEFEF")
 dfPoints_ft <- dfPoints
 dfPoints_ft$`Estimate (million MT)` <- as.character(dfPoints_ft$`Estimate (million MT)`)
-ft <- flextable(dfPoints_ft) %>% 
-  set_caption("Empirical midseason forecasts of Kenya main season maize harvest 2006-2012", align_with_table = F) %>% autofit() %>% fit_to_width(7)
-  # add_header_row(values = "",
-  # colwidths = c(4)) 
+ft <- flextable(dfPoints_ft) %>% autofit() %>%
+  add_header_lines(values = "Table 1. Empirical midseason forecasts of Kenya main season maize harvest 2006-2012") %>%
+  fontsize(size = 7, part = "all") %>%
+  line_spacing(space = 0.75, part = "all") %>%
+  fit_to_width(7)
 ft
+  # set_caption(as_paragraph(as_chunk("Table 1. Empirical midseason forecasts of Kenya main season maize harvest 2006-2012", props = fp_text_default(font.size = 8))), align_with_table = F) %>% autofit() %>% fit_to_width(7)
 
 ```
 \doublespacing
@@ -1627,7 +1570,7 @@ ft
 To estimate the parameters of expected aggregate supply curve, Equation \ref{eq:yStarT} (in logs) is fit to the farm data by OLS regression.
 
 \begin{equation}
-\ln(y^*(T)) &= \ln(v) + \sum_i^{n_k} \kappa_i \ln(k_i) + h \ln(C^*) + \epsilon
+\ln(y^*(T)) = \ln(v) + \sum_i^{n_k} \kappa_i \ln(k_i) + h \ln(C^*) + \epsilon
 \label{eq:lYstarT}
 \end{equation}
 <!-- $$ -->
@@ -1638,7 +1581,7 @@ To estimate the parameters of expected aggregate supply curve, Equation \ref{eq:
 Where $\epsilon$ is the regression residual. Recall from the exposition in section \ref{sec:axioms1and2} that the regression constant $\ln(v)$ captures the (logged) expenditure TFP, and is related to the (logged) TFP $\ln(g)$ as follows.
 
 \begin{equation}
-\ln(v) = \ln(a) + \ln(g) \:\:;\:\:\: \ln(a) &= \sum_i^{n_x} \ln \left( \frac{\alpha_i}{w_i} \right)^{\alpha_i} - \ln(h)
+\ln(v) = \ln(a) + \ln(g) \:\:;\:\:\: \ln(a) = \sum_i^{n_x} \ln \left( \frac{\alpha_i}{w_i} \right)^{\alpha_i} - \ln(h)
 \end{equation}
 
 Where TFP may include binary endowment variables that augment the constant on farms where the endowment is present (Equation \ref{eq:g0Sum}, replicated here for convenience).
@@ -1864,10 +1807,12 @@ ft <- modelsummary(mod3, output = "flextable", statistic = "{std.error} ({p.valu
 #output = "markdown"
 #output = "kableExtra"
 #ouput="flextable"
-ft %>% autofit() %>% set_caption("2007 Kenya farm yield regression results") %>%
-  fontsize(size = 9) %>% delete_part(part = "header") %>%
-  add_header_row(values = "Dependent variable: ln[yield (kg/acre)]",
-  colwidths = c(2))
+ft %>% autofit() %>%
+  delete_part(part = "header") %>%
+  add_header_lines(values = c("Table 2. 2007 Kenya farm yield regression results",
+                              "Dependent variable: ln[yield (kg/acre)]")) %>%
+  fontsize(size = 7, part = "all") %>%
+  line_spacing(space = 0, part = "all")
 
 h <- mod3$coefficients[2]; eta <- h / (1 - h)
 hReport <- round(h, 2)
@@ -1881,19 +1826,19 @@ rm(mod1, mod2, listDf)
 
 The fitted coefficient on logged cost per acre is statistically significant and indicates that the population yield degree of homogeneity is $h =$ `r hReport`, by which it follows immediately that the price elasticity of farm supply is $\eta = h / (1 - h) =$ `r etaReport`. The coefficients on the other regressors are also statistically significant and take values and signs that agree with intuition. Note that the coefficient on the farm size regressor is negative, affirming the inverse relation between farm size and yield found in numerous other studies [@muyanga2019revisiting; @larson2014should; @wassie2019revisiting; @gautam2019too; @kimhi2006plot].
 
-The fitted binary endowment coefficients ($\beta_i$) indicate that hybrid maize seed is the most significant contributor to TFP, followed by land prep method and tenure. Interestingly, oxen contributes slightly more than tractor. Based on these values, the expenditure TFPs are calculated for each of the 12 TFP strata ($v_{\ell}$), as well as the average across all strata ($v$). The implicit mean expected yield ($E[\tilde{y}^*(T;k_r) | \theta] |_{t = 0}$) is then calculated by Equation \ref{eq:impMuEyStarT0cond}, for $\tilde{k}_r^{\kappa_r} = 1$ (indicating rainfall expectation in line with the historical benchmark). These stratified and whole sample parameters are reported along with the mean observed cost per unit area and harvest yield in Table 2.
+The fitted binary endowment coefficients ($\beta_i$) indicate that hybrid maize seed is the most significant contributor to TFP, followed by land prep method and tenure. Interestingly, the oxen coefficient contributes slightly more than tractor. Based on these values, the expenditure TFPs are calculated for each of the 12 TFP strata ($v_{\ell}$), as well as the average across all strata ($v$). The implicit mean expected yield ($E[\tilde{y}^*(T;k_r) | \theta] |_{t = 0}$) is then calculated by Equation \ref{eq:impMuEyStarT0cond}, for $\tilde{k}_r^{\kappa_r} = 1$ (indicating rainfall expectation in line with the historical benchmark). These parameters are reported along with the mean observed cost per unit area and harvest yield, by TFP stratum, in Figure \ref{fig:v0strata}.
 
-comment on higher yield of tractor but higher efficiency of oxen
-harvest was higher than expected, implicit expected yield based on kr=1 when in fact kr > 1 (graphic)-- expected less got more hence harvest yield higher than implicit expected yield at $\tilde{k}_r^{\kappa_r}=1$.
+Note, in passing, that the stratified view reveals interesting information. As one might expect, hybrid maize yields are generally higher in tractor TFP strata than they are in oxen TFP strata. But the oxen systems generally exhibit lower unit cost and higher expenditure TFP, suggesting higher cost effectiveness. And note that the implicit expected yield at planting is lower than the actual harvest yield obtained in the data year. This makes sense because the implicit expected yield is calculated assuming rainfall in line with the historical trend; and rainfall largely surpassed the historical benchmark ($\tilde{k}_r^{\kappa_r} > 1$) in the data year (see Appendix C for a rainfall histogram).
 
-```{r Fig3, fig.show = "hold", fig.width = 6, fig.height=3, fig.align="center", fig.cap="\\label{fig:v0strata}(Left) The expenditure TFP, conditional (observed) mean cost/area, harvest yield, and implicit expected yield for each of the 12 different combinations of binary endowments present in the Kenya farm data. The implicit expected yield assumes rainfall equal to the historical benchmark. (Right) their respective prevalance in the population.", echo = FALSE}
+\singlespacing
+```{r Fig3, fig.show = "hold", fig.width = 6, fig.height=3, fig.align="center", fig.cap="\\label{fig:v0strata}(Left) The expenditure TFP, observed (conditional) mean cost/area, implicit conditional mean unit expenditure, observed harvest yield, and implicit conditional expected yield for each of the 12 TFP strata present in the Kenya farm data. The implicit expected yield assumes rainfall equal to the historical benchmark. (Right) TFP strata prevalance in the sample.", echo = FALSE}
 #=============================================================================
 # Define constant in terms of convenient known reference value y0, in this case sample mean yield.
 # Sample mean yield varies with binary controls. Here is the mean with just the base constant
 # (i.e. all binaries = 0)
 coefVec <- mod3$coefficients; coefNames <- gsub("`", "", names(coefVec))
 #-----------------------------------------------------------------------------
-# Get muK
+# Get muKprime
 # HAVE TO FACTOR OUT KRAIN BECAUSE IT IS AN EX POST VARIABLE!!!!
 # IMPORTANT TO NOTE IN TEXT THAT EXOG CONTROL VARS ARE FROM POV OF PLANTING TIME
 # --> A crude way of calculating expected yield is by evaluating ex-post yield
@@ -1902,10 +1847,15 @@ kappaRn <- coefVec[which(coefNames == "ln[Rain anomaly]")]
 kRn <- exp(dfMod3$`ln[Rain anomaly]`)
 # EyStarT0 <- exp(dfMod3$`Yield (kg/acre)`) * kRn^(-kappaRn)
 EyStarT0trunc <- exp(mod3$fitted.values) * kRn^(-kappaRn)
-notThese <- c("Dist", "ln[Yield (kg/acre)]", "ln[Cost/acre (KES/acre)]", bin_vars, "ln[Rain anomaly]") 
-lnMod3Vars <- coefOrder
-kPrimeVars <- setdiff(lnMod3Vars, notThese)
-#kVars <- kVars[-grep("Tenure|Landprep", kVars)]
+# notThese <- c("Dist", "ln[Yield (kg/acre)]", "ln[Cost/acre (KES/acre)]", bin_vars, "ln[Rain anomaly]") 
+# lnMod3Vars <- coefOrder
+#kPrimeVars <- setdiff(lnMod3Vars, notThese)
+# notThese <- c("Dist", "ln[Yield (kg/acre)]", "ln[Cost/acre (KES/acre)]", bin_vars, "ln[Rain anomaly]") 
+# lnMod3Vars <- coefOrder
+# kPrime = continuous control vars except for rainfall (and any other meteorological controls)
+kPrimeVars <- c("ln[Farm size (acres)]",
+                "ln[Planting density (kg seed/acre)]",
+                "ln[Adult equivalent household size]")
 kappaPrimeVec <- coefVec[which(coefNames %in% kPrimeVars)]
 matKprime <- dfMod3[, kPrimeVars] %>% as.matrix()
 kPrimeLook <- matKprime %*% rep(1, ncol(matKprime))
@@ -1933,7 +1883,7 @@ vStrat <- exp(beta0adj)
 nStrat <- unique(vStrat) %>% length()
 dfx <- dfBins
 dfx$vStrat <- c(vStrat)
-dfx$lcStar <- dfMod3$`ln[Cost/acre (KES/acre)]`
+dfx$lcStarTrunc <- dfMod3$`ln[Cost/acre (KES/acre)]`
 dfx$ydHarv <- exp(dfMod3$`ln[Yield (kg/acre)]`)
 dfx$kPrime <- exp(lkPrimeVec)
 #--------------------------------------------------------------------------
@@ -1954,28 +1904,28 @@ endowVec <- gsub("  ", " ", endowVec)
 dfx$Type <- endowVec
 dfStrat <- dfx %>% group_by(Type) %>% summarise(Type = unique(Type),
                                                 vStrat = unique(vStrat),
-                                                mCstar = mean(lcStar),
-                                                 sCstar = sd(lcStar),
+                                                mCstarTrunc = mean(lcStarTrunc),
+                                                 sCstarTrunc = sd(lcStarTrunc),
                                                  muYdHarv = mean(ydHarv),
                                                  muKprimeStrat = mean(kPrime)) %>%
-  mutate(muCstarTruncStrat = exp(mCstar + sCstar^2 / 2)) %>%
-  mutate(muCstarHtruncStrat = exp(h * mCstar + h^2 * sCstar^2 / 2)) %>%
+  mutate(muCstarTruncStrat = exp(mCstarTrunc + sCstarTrunc^2 / 2)) %>%
+  mutate(muCstarHtruncStrat = exp(h * mCstarTrunc + h^2 * sCstarTrunc^2 / 2)) %>%
   mutate(muEyStarT0truncStrat = vStrat * muKprime * muCstarHtruncStrat) %>%
-  mutate(mEcSharpT0truncStrat = (1 - h) * mCstar - mKprime - log(vStrat),
-         sEcSharpT0truncStrat = sqrt((1 - h)^2 * sCstar^2 - sKprime^2)) %>%
+  mutate(mEcSharpT0truncStrat = (1 - h) * mCstarTrunc - mKprime - log(vStrat),
+         sEcSharpT0truncStrat = sqrt((1 - h)^2 * sCstarTrunc^2 - sKprime^2)) %>%
   mutate(muEcSharpT0truncStrat = exp(mEcSharpT0truncStrat + sEcSharpT0truncStrat^2 / 2)) %>%
   arrange(vStrat) %>% relocate(Type) %>%
   mutate(stratID = as.character(1:nStrat))
 dfAll <- dfx %>% summarise(v = mean(vStrat),
-                              mCstar = mean(lcStar),
-                              sCstar = sd(lcStar),
+                              mCstarTrunc = mean(lcStarTrunc),
+                              sCstarTrunc = sd(lcStarTrunc),
                               muYdHarv = mean(ydHarv),
                               muKprime = mean(kPrime)) %>%
-  mutate(muCstarTrunc = exp(mCstar + sCstar^2 / 2),
-         muCstarHtrunc = exp(h * mCstar + h^2 * sCstar^2 / 2)) %>%
+  mutate(muCstarTrunc = exp(mCstarTrunc + sCstarTrunc^2 / 2),
+         muCstarHtrunc = exp(h * mCstarTrunc + h^2 * sCstarTrunc^2 / 2)) %>%
   mutate(muEyStarT0trunc = mean(vStrat) * muKprime * muCstarHtrunc) %>%
-  mutate(mEcSharpT0trunc = (1 - h) * mCstar - mKprime - log(v),
-         sEcSharpT0trunc = sqrt((1 - h)^2 * sCstar^2 - sKprime^2)) %>%
+  mutate(mEcSharpT0trunc = (1 - h) * mCstarTrunc - mKprime - log(v),
+         sEcSharpT0trunc = sqrt((1 - h)^2 * sCstarTrunc^2 - sKprime^2)) %>%
   mutate(muEcSharpT0trunc = exp(mEcSharpT0trunc + sEcSharpT0trunc^2 / 2)) %>%
   mutate(stratID = "All",
          Type = "Sample") %>% relocate(Type)
@@ -2085,6 +2035,7 @@ ggBlank <- gg
 
 
 ```
+\doublespacing
 
 To evaluate the expected unconditional mean yield term ($E[\tilde{y}^*(T)]|_{t = 0}$) and parameters $m_{\#}$, $s_{\#}$ appearing in the expected aggregate supply expression (Equation \ref{eq:aggSup2}), first the conditional parameters $\bar{m}_{\#}$ and $\bar{s}_{\#}$ are calculated from the fitted values $v$ and $h$, and the sample parameters $\bar{m}_c$, $\bar{s}_c$, $m_k$, and $s_k$, as explained in section \ref{sec:evalInPract}. The expected price at planting time ($E[P(T)]|_{t = 0}$) for the year of the data is also required.
 <!-- by Equation \ref{eq:mCshrpsCshrp} -->
@@ -2321,6 +2272,7 @@ muEyStarT0strat <- dfStrat$vStrat * muKprime * muCstarhStrat
 # log(P02007) + (mPDown - sPDown^2 / 2) * timeHoriz + log(h) #mEcSharpT0
 ProbProfit <- pnorm((log(EPT02007) - mEcSharpT0) / (sEcSharpT0) - eta * sEcSharpT0)
 EmploymentRate <- pnorm((log(EPT02007) - mEcSharpT0) / sEcSharpT0)
+# Check that the two ways to deduce expected unconditional mean yield agree
 muEyStarT0check <- dfAll$muEyStarT0trunc * EmploymentRate / ProbProfit
 #muEyStarT0check - muEyStarT0
 #=============================================================================
@@ -2339,10 +2291,10 @@ Nf <- NfReport * 10^6
 <!-- Calculation of $m_{\#}$ and $s_{\#}$ requires the expected price at planting for 2007, the same year as the farm data used to estimate $\bar{m}_{\#}$ and $\bar{s}_{\#}$. -->
 The short rains harvest in 2007 was normal and so the "good short rains" estimate of $m_p$, and March 2007 price is used to compute $E[P(T)]|_{t = 0} = P(0) e^{m_p T}$ (where $P(0)$ is the price at planting in March), which then feeds into the calculation of the unconditional parameters $m_{\#}$ and $s_{\#}$ by simultaneous Equations \ref{eq:cSharpUncondParams}.
 
-Once $m_{\#}$ and $s_{\#}$ are calculated, the expected unconditional mean yield term ($E[\tilde{y}^*(T; k_r(T))]|_{t = 0}$) required to evaluate aggregate supply is calculated by Equation \ref{eq:impMuEyStarT0uncond} at four different expected rainfall levels: $E[E[k_r(T)^{\kappa_r}]]|_{t = 0} = 1.5^{\kappa_r}, \: 1^{\kappa_r}, \: 0.5^{\kappa_r}, \: 0.1^{\kappa_r}$. These values correspond to expected rainfall that is 150% of the historical benchmark ("high"), in line with the historical benchmark ("normal"), 50% of the historical benchmark ("low"), and 10% of the historical benchmark ("dismal"), respectively.
+Once $m_{\#}$ and $s_{\#}$ are calculated, the unconditional parameters $m_c$, $s_c$ are calculated by Equation \ref{eq:mCsC}, and then the expected unconditional mean yield term ($E[\tilde{y}^*(T; k_r(T))]|_{t = 0}$) appearing in the expected aggregate supply function is calculated by Equation \ref{eq:impMuEyStarT0cond} at four different expected rainfall levels: $E[\tilde{k}_r(T)^{\kappa_r}]|_{t = 0} = 1.5^{\kappa_r}, \: 1^{\kappa_r}, \: 0.5^{\kappa_r}, \: 0.1^{\kappa_r}$. These values correspond to expected rainfall that is 150% of the historical benchmark ("high"), in line with the historical benchmark ("normal"), 50% of the historical benchmark ("low"), and 10% of the historical benchmark ("dismal"), respectively.
 <!-- follows from Equation \ref{eq:condMeanYd2}. In the process, the farm employment rate is calculated as $\mathcal{E}=$ `r round(EmploymentRate, 2)` and the PEFS adjusted mean probability of profit is calculated as `r round(ProbProfit, 2)`. -->
 
-The two remaining parameters required to evaluate expected aggregate supply in Equation \ref{eq:aggSup2} are number of farms $N$ and mean farm size $k_a$. For mean farm size, the Kenya farm sample mean is used, giving $k_a =$ `r muAreaReport` acres. The number of maize farms is more difficult to assess. One sometimes sees the figure $3$ million mentioned [e.g. @njeru2022maize], but this appears to be unsupported by any hard evidence. Here, a rough estimate is deduced by dividing planted area by mean farm size. The midseason reports examined for this exercise suggest that planted main season maize area during the period in question ranges between 3 and 4.5 million acres [@KFSSGJul2011]. Divided by $k_a$, this gives a range between $1.56$ and $2.34$ million farms. The figure $N =$ `r NfReport` million is used as a rough estimate.
+The two remaining parameters required to evaluate expected aggregate supply in Equation \ref{eq:aggSup2} are number of farms $N$ and mean farm size $k_a$. For mean farm size, the Kenya farm sample mean is used, giving $k_a =$ `r muAreaReport` acres. The number of maize farms is more difficult to assess. Nowadays, one sometimes sees the figure $3$ million mentioned [e.g. @njeru2022maize], but this appears to be unsupported by hard evidence; and, to the extent that it is accurate, would imply a farm population far lower than 3 million in 2007. Here, a rough estimate is deduced by dividing planted area by mean farm size. The midseason reports examined for this exercise suggest that planted main season maize area during the period in question ranges between 3 and 4.5 million acres [@KFSSGJul2011]. Divided by $k_a$, this gives a range between $1.56$ and $2.34$ million farms. The figure $N =$ `r NfReport` million is used as a rough estimate.
 
 With all the necessary parameters estimated, the theoretical expected aggregate supply curve developed in the sections above is plotted at the four expected rainfall levels, with empirical aggregate supply estimates overlaid, in the top panel of Figure \ref{fig:EaggQs}. The empirical estimates for the major drought years agree closely with the theoretical expected supply curve evaluated at the "dismal" rainfall level, while the estimates in normal or good rainfall years generally agree with the theoretical curve evaluated at the "normal" and "high" rainfall levels. The curve overshoots the 2010 estimate somewhat, possibly due to crop loss from flooding that year [@GIEWS5Aug2010]. The one major empirical divergence from the theoretical curve is 2009, an historic drought year [@MoApressRelease2009].
 
@@ -2632,7 +2584,7 @@ probProfAdoptTot <- pnorm(phiArgTot)
 #muRcondTot <- EPT02007 * exp(-dfAll$mEcSharpT0trunc + dfAll$sEcSharpT0trunc^2 / 2)
 muRcond <- EPT02007 * exp(-dfAll$mEcSharpT0trunc + dfAll$sEcSharpT0trunc^2 / 2)
 dPsiStrat <- stratFrac * Nf * muArea * (dlnNu + dlng0) * muRcond * EmploymentRate * (muCstar * probProfAdoptStrat - cStarMaxAdopt * adoptRateStrat) * 10^-6 # In million KES
-#\Delta \psi = N E[k_a] E[r] \gamma (2 \mathcal{E} - \mathcal{P}(P; m_{\#}, s_{\#})) ( E[C^*] \mathcal{P}(\bar{\bar{C}^*}; m_c, s_c)  - \bar{\bar{C}^*} \mathcal{A} )
+#\Delta \psi = N E[k_a] E[r] \gamma (2 \mathcal{E} - \mathcal{P}(P; m_{\#}, s_{\#})) ( E[C^*] \mathcal{P}(\hat{C}^*; m_c, s_c)  - \hat{C}^* \mathcal{A} )
 # dPsiStrat <- stratFrac * Nf * muArea * muEyStarT0strat * EPT02007 * (dlnNu + dlng0) * (probProfAdoptStrat - cStarMaxAdopt / muCstarhStrat * adoptRateStrat)
 dPsiTot <- sum(dPsiStrat)
 #dPsiTot / 67.32 # 2007 USD exchange rate
@@ -2651,12 +2603,12 @@ dQStrat <- 10^-3 * dQStrat # in 1000 MT
 dQtot <- sum(dQStrat)
 dQtotCheck <- Nf * muArea * muEyStarT0 * (dlnNuh + dlng0) / (1 - h) * probProfAdoptTot * 10^-6
 #dQtot - dQtotCheck
-#\Delta Q = N E[k_a] E[y^*] \frac{\ell}{1 - h}\mathcal{P}(\bar{\bar{C^{*h}}}; m_c, s_c)
+#\Delta Q = N E[k_a] E[y^*] \frac{\ell}{1 - h}\mathcal{P}(\hat{C}^{*h}; m_c, s_c)
 ```
 
-Say a new technology package is released in Kenya that results in a `r 100 * dlng0`% increase in TFP on adopting farms. As explained in section \ref{sec:farmResp}, this is tantamount to adding another binary endowment $b_5\beta_5 =$ `r round(betaNew, 2)` to the yield model. Say that the expected $\boldsymbol{\alpha}$-adjusted percentage increase in input prices ($\boldsymbol{\alpha} '\partial \ln(\mathbf{w})$) is `r aDotdlw`, and the expected percentage decrease in output price ($\partial \ln(P)$) is `r dlP`, such that $\partial \ln(\nu) =$ `r dlnNu`, which is greater than the percentage increase in TFP. Adoption would thus result in a `r 100 * dlv0dlg0`% increase in expenditure TFP ($v$), a `r -round(100 * dlMuCstar)`% reduction in expenditure, and a `r round(100 * dlMuEyStarT0)`% increase in yield on adopting farms (recall Equations \ref{eq:dlv0dlg0}, \ref{eq:dlyStardlg0}, and \ref{eq:dlCstardlg0}). However, by the criterion in Inequality \ref{eq:adoptCondSimp}, adoption makes economic sense for the farmer only if a net subsidy is included in the technology package (i.e., only if $\partial B > 0$).
+Say a new technology package is released in Kenya that results in a `r 100 * dlng0`% increase in TFP on adopting farms. As explained in section \ref{sec:farmResp}, this is tantamount to adding another binary endowment $b_5\beta_5 =$ `r round(betaNew, 2)` to the yield model. Say that the expected efficiency adjusted percentage increase in input prices ($\boldsymbol{\alpha} '\partial \ln(\mathbf{w})$) is `r aDotdlw`, and the expected percentage decrease in output price ($\partial \ln(P)$) is `r dlP`, such that $\partial \ln(\nu) =$ `r dlnNu`, which is greater than the percentage increase in TFP. Adoption would thus result in a `r 100 * dlv0dlg0`% increase in expenditure TFP ($v$), a `r -round(100 * dlMuCstar)`% reduction in expenditure, and a `r round(100 * dlMuEyStarT0)`% increase in yield on adopting farms (recall Equations \ref{eq:dldlg0}). However, by the criterion in Inequality \ref{eq:adoptCond}, adoption makes economic sense for the farmer only if a net subsidy is included in the technology package (i.e., only if $\partial B > 0$).
 
-Say that the Ministry of Agriculture offers a net subsidy of $\partial B = $ `r dB` KES/acre to adopting farms, perhaps in the form of free seed and fertilizer. As explained in section \ref{sec:adopt}, this then implies the adoption expenditure per acre ceiling of $\bar{\bar{C}^*} =$ `r round(cStarMaxAdopt)` KES (Equation \ref{eq:cStarAdopt}), and the corresponding adoption rate of $\mathcal{A} =$ `r round(100 * adoptRateTotal, 1)`% (Equation \ref{eq:AdoptRate}). The aggregate net subsidy required from the Ministry of Agriculture to achieve this rate follows from Equation \ref{eq:aggSubsidy} as `r round(aggSubsidyTot, 1)` million KES. The corresponding increase in expected aggregate supply and producer welfare follow from Equations \ref{eq:dEQT0} and \ref{eq:dEPsi} as `r round(dQtot, 1)` thousand metric tons and `r round(dPsiTot, 1)` million KES, respectively (assuming normal rainfall $\tilde{k}_r^{\kappa_r} = 1$). The breakdown by stratum is given in the left panel of Figure \ref{fig:intervention}, accompanied by a graphic of the corresponding supply ribbon shift in the right panel.
+Say that the Ministry of Agriculture offers a net subsidy of $\partial B =$ `r dB` KES/acre to adopting farms, perhaps in the form of free seed and fertilizer. As explained in section \ref{sec:adopt}, this then implies the adoption expenditure per acre ceiling of $\hat{C}^* =$ `r round(cStarMaxAdopt)` KES (Equation \ref{eq:cStarAdopt}), and the corresponding adoption rate of $\mathcal{A} =$ `r round(100 * adoptRateTotal, 1)`% (Equation \ref{eq:AdoptRate}). The aggregate net subsidy required from the Ministry of Agriculture to achieve this rate follows from Equation \ref{eq:aggSubsidy} as `r round(aggSubsidyTot, 1)` million KES. The corresponding increase in expected aggregate supply and producer welfare follow from Equations \ref{eq:dEQT0} and \ref{eq:dEPsi} as `r round(dQtot, 1)` thousand metric tons and `r round(dPsiTot, 1)` million KES, respectively (assuming normal rainfall $\tilde{k}_r^{\kappa_r} = 1$). The breakdown by stratum is given in the left panel of Figure \ref{fig:intervention}, accompanied by a graphic of the corresponding supply ribbon shift in the right panel.
 <!-- By the criterion in Inequality \ref{eq:adoptCondSimp}, adoption in the absence of exogenous subsidies/costs will increase farm net benefit only if the the percentage increase in TFP $\partial \ln(g) =$ `r 100 * dlng0`% is greater than the absolute value of the percentage decrease in output price plus the $\alpha_i$-scaled increase in input prices (i.e. only if $\partial \ln(g) > |\partial \ln(\nu)|$).  -->
 
 \singlespacing
@@ -2780,11 +2732,12 @@ ggEQsT0Shift <- gg
 \doublespacing
 
 For policy formation, it is helpful to consider prospective interventions in a sensitivity heatmap format, whereby multiple farm subsidy and price change scenarios can be examined at a single glance (Figure \ref{fig:decisionMaps}). These "policy decision maps" plot the adoption rate, supply change, and producer welfare outcome over a range of different lever-assumption "coordinates". The maps here are expressed in coordinates of subsidy level (y-axis), and assumed price ratio change (x-axis). The policy assumption may be swapped out for other assumptions, such as assumed rainfall level.
+
 <!-- By illustrating the impact of changes in subsidy and assumed price shifts in a readily digestible manner, these maps facilitate intuition-building regarding the effectiveness of changes in subsidy policy and the implications of price changes associated with the intervention. Here  -->
 <!-- [address the alpha in aDotW] -->
 <!-- [Also can do "pro-poor" measures of change in aggregate (supply and?) producer welfare. Integrate dlnL instead of dL.] -->
-
-```{r Fig6, fig.show = "hold", fig.width = 7, fig.height=3, fig.align="center", fig.cap="\\label{fig:decisionMaps}Kenya maize farm subsidy policy heat maps of the (left to right) adoption rate, change in aggregate supply, and aggregate producer welfare given release of the technology package described in the text. Each 'coordinate' on the map represents an assumed percentage decrease in the $\\alpha$ adjusted output-input price ratio and a net subsidy per acre. The scenario presented in the previous figure above is marked with a black dot. In these maps, the ratio of change in input price to change in output price is fixed at 0.75.", echo = FALSE}
+\singlespacing
+```{r Fig6, fig.show = "hold", fig.width = 7, fig.height=3, fig.align="center", fig.cap="\\label{fig:decisionMaps}Kenya maize farm subsidy policy heat maps of the (left to right) adoption rate, change in aggregate supply, and aggregate producer welfare given release of the technology package described in the text. Each 'coordinate' on the map represents an assumed percentage decrease in the efficiency adjusted output-input price ratio and a net subsidy per acre. The scenario presented in the previous figure above is marked with a black dot. In these maps, the ratio of change in input price to change in output price is fixed at 0.75.", echo = FALSE}
 
 # rm(dfPlot, dfPlot1)
 # gc()
@@ -3014,6 +2967,7 @@ ggProbProfitAdopt <- gg
 ggAdopt | ggDq | ggDpsi
 
 ```
+\doublespacing
 
 The illustrative example presented above is an exercise in comparative statics. That is to say, it is a comparison of the "before new tech" (or status quo) and "after new tech" situations, without accounting for the time it takes for release and adoption to occur. In a standard impact assessment, the static analysis would be converted into a temporally explicit assessment by introducing a sigmoidal adoption rate curve over time, as explained in Alston et al. [-@alston1995science] and elsewhere. The welfare impact would be then be calculated as the sum of discounted yearly net impacts out to a relevant cutoff year determined by the policy question.
 
@@ -3058,6 +3012,8 @@ The proposed model is limited to the evaluation of aggregate supply and producer
 <!-- The model may likewise be linked to upstream market models such that input prices also become endogenous. That is to say, the proposed model is modular, and may be inserted into broader multimarket equilibrium frameworks. -->
 <!-- The framework derived here is the minimum -->
 <!-- The broader the scope of equilibrium, the more data is required. -->
+[can also address questions of how the same result might be achieved through interventions of other variables (Ethiopia bean an example), so as to compare which impact pathway is cheapest]
+
 
 # References {-}
 
@@ -3065,7 +3021,85 @@ The proposed model is limited to the evaluation of aggregate supply and producer
 
 \pagebreak
 
-# Appendix A
+# Appendix A: Literature review
+
+## Is impact assessment insensitive to misspecification of the supply curve?
+
+When pressed on the matter, proponents of the conventional aggregate supply functions make little attempt to defend their specifications on empirical or theoretical grounds. On the contrary, proponents of linear models generally admit that real world commodity supply and demand curves are almost certainly never linear [@brester2023equilibrium]. Proponents of the CES model generally argue that CES models are probably at least slightly more accurate than linear specifications [@voon1991calculation], but likewise offer no formal derivation of their model from theory. Rather, the defense of conventional models centers on the argument that the functional form is irrelevant for purposes of impact assessment.
+<!-- On the contrary, everyone involved in this literature acknowledges that the functional forms are specified primarily to facilitate calculations of consumer and producer surplus [@lindner1978supply; @alston1995science; @rose1980supply]. -->
+
+>\singlespacing"The pertinent question is whether the functional form used is an adequate approximation for the purpose. It turns out, empirically, that measures of total research benefits and their distribution between producers and consumers are quite insensitive to choices of functional form. They are much more sensitive to the related but separate choices concerning the nature of the research-induced supply curve shift and elasticities" [@alston1995science].
+
+\doublespacing
+
+Alston et al. [-@alston1995science] cite three peer reviewed articles in support of this claim. One of the cited articles actually runs contrary to the claim, explicitly concluding that impact assessment results are highly sensitive to choices of functional form [@voon1991calculation]---a conclusion subsequently reaffirmed in a comment [@elbasha1997calculation] and reply [@edwards1997calculation]. Another cited article, by Lindner and Jarrett [-@lindner1978supply], concludes that impact assessment results are sensitive to the nature of the supply curve shift (pivot versus parallel shift); but also acknowledges that these shifts are determined by the choice of functional form. In their words,
+
+>\singlespacing"[P]ast studies have made no attempt to justify or explain the particular assumptions made about the type of supply shift. In fact, in some studies the impression is given that the type of supply shift was determined by the specification of the mathematical form of the supply curve, which in turn appears to have been chosen simply for computational convenience" [@lindner1978supply].
+
+\doublespacing
+
+By the transitive property, then, their conclusion regarding impact assessment sensitivity to the type of supply curve shift extends to functional form, again contrary to the claim that functional form is irrelevant. Similarly, the third cited article, by Norton and Davis [-@norton1981evaluating], asserts that functional form is "less important than the type and magnitude of the supply shift". But then, contrary to this assertion, the authors proceed to survey four examples where the mathematical form of the shift is clearly prefigured by that of the supply curve; and explicitly state that differences between the four examples in the assessment of net benefits are due to differences in both type/magnitude of shift and functional form. Alston et al. [-@alston1995science] themselves point out that the practitioner is at liberty to choose between different types of shift only in the case of the linear specification---where the choice is between a pivot and a parallel shift, or some combination thereof. In the case of the CES specification, the practitioner is constricted to assume a pivot (a point later emphasized by Voon and Edwards [-@voon1991calculation]). And elsewhere Alston writes that "the choice [of type of supply shift is] dictated by analytic convenience, given _a prior_ choice of functional form for supply" [@martin1997producer].
+
+A fourth document is also cited [@alston1990measuring], but is not peer reviewed and not, at the time of writing, readily available from the publisher. A subsequent peer reviewed article by Zhao et al. [-@zhao1997functional] cites the unavailable document as an annex to a technical report on R&D in the Australian wool industry. The main text of this report appears to have been published in a peer reviewed journal, but without the annex in question [@scobie1991returns]. In their own analysis, Zhao et al. [-@zhao1997functional] find that assessment of net benefits (economic surplus) is highly sensitive to misspecification of the functional form in the case of the CES specification, again contrary to the claim that impact assessments are insensitive to misspecification of the supply curve.
+
+They also find that impact assessment is insensitive to misspecification error when 1) the linear specification is assumed together with 2) a parallel shift, and assuming 3) the shift is small [@zhao1997functional]. Proponents and critics alike acknowledge that the empirical and theoretical grounds for assumptions 1 and 2 are narrow, at best [@lindner1978supply; @alston2009economics; @voon1991calculation; @rose1980supply]. If the real shift is a pivot or mixture of pivot and shift, then Zhao et al.'s finding of insensitivity does not apply. Moreover, it is questionable whether the parallel supply curve shifts assumed in most economic surplus assessments of returns to agricultural R&D qualify as "small" [@hurley2014re; @alston2000research]. To know for sure, Zhao et al. [-@zhao1997functional] develop a method to calculate the upper bound on misspecification bias; but the present literature review finds no instance where this method has actually been implemented. Finally, Zhao et al. [-@zhao1997functional] acknowledge that their findings regarding linear misspecification are valid only insofar as farm populations consist entirely of identical marginal farms, a condition never actually observed in any real farm population.
+
+In synthesis, then, it is misleading to characterize the cited literature as supportive of Alston et al.'s [-@alston1995science] broad claim that impact assessments are insensitive to misspecification of the functional form of the supply curve. More accurately, the literature supports the much narrower claim that impact assessments are insensitive to misspecification when the linear specification is assumed together with a parallel shift, and when the real shift is also parallel; and when the shift is small, and when the farm population consists of identical marginal farms. Apart from this exceptionally implausible case identified by Zhao et al. [-@zhao1997functional], the literature indicates that impact assessments are highly sensitive to functional form, whether directly, as in the case of the CES function, or by the transitive property, i.e., through a supply curve shift which is mathematically prefigured by the functional form of the supply curve.
+
+## Is it impossible to do any better?
+
+As a final line of defense, proponents of conventional aggregate supply curves argue that there is no alternative to their cavalier approach of arbitrarily assuming a functional form for supply curves and supply curve shifts, however implausible or grossly inaccurate they might be. Alston et al. [-@alston1995science] write:
+
+>\singlespacing"What does economic theory tell us about the nature of ...[research induced aggregate supply curve] shifts? Unfortunately, not very much. To be confident about this aspect of the problem would require either (a) precise econometric evidence or (b) detailed information on the effects on individual agents, details of industry structure including details on exit and entry of firms, and a complete theory of aggregation. This information is not available; assumptions are unavoidable".
+
+\doublespacing
+
+<!-- The aggregate supply model derived in the subsequent sections -->
+The present work is effectively one long disagreement with this passage. The sweeping claim that economic theory does not tell us "very much" about the nature of aggregate supply curve shifts is especially perplexing. On the contrary, economic theory provides a set of microeconomic principles whence a firm level yield envelope is derived, whence "effects on individual agents", i.e., farm level response to exogenous shock, can be can modeled. Insofar as the phrase "complete theory of aggregation" refers to the specification of aggregate supply and demand curves, this too can be derived from theory by integrating individual effects over a suitable density function (i.e., Equation \ref{eq:aggSup0}). The firm yield model implies bounds on the domain of optimal output, such that the "exit and entry of firms" is accounted for by integrating over the domain of optimal behavior.
+<!-- (Similar bounds can be determined for optimal input use, whence an aggregate demand curve could be derived; but the focus here is limited to aggregate supply.) -->
+
+To be clear, the "precise econometric evidence or...detailed information" that the authors refer to is, indeed, generally not available; but the suggestion that economic theory offers nothing in its stead is mistaken. One of the key purposes of having a theory is to draw inference when detailed information is unavailable or otherwise provides no clear answer to our questions. And, yes, "assumptions are unavoidable"---but in the sense that axioms 1-5 in the Introduction are unavoidable, not in the sense of superimposing an exogenously assumed supply response on top of said axioms. Not economic theory, then, but rather a descriptive mathematical formulation which, by construction, precludes endogenous modeling of the aggregate supply response to exogenous shocks, is what tells us "not very much" about the the aggregate supply response to exogenous shocks.
+<!-- The authors themselves may have made little use of theory when they specified their linear aggregate supply and demand curves; but this does not mean that others are prohibited from doing so. -->
+
+## The limited policy relevance of conventional forms
+
+Effective policy formation requires careful assessment not only of the magnitude of net benefits of a given intervention, but also of their distribution across producers and consumers (the "food price dilemma"), and across income levels. Proponents and critics alike acknowledge that conventional functional forms are ill suited to the assessment of such distributional issues [@alston2009economics; @alston1995science; @lindner1978supply; @rose1980supply; @wohlgenant1997nature].
+
+More specifically, impact assessments based on a pivot of the linear or CES supply curve can result in consumer-producer tradeoffs, whereas assessments based on a linear parallel shift of the linear supply curve guarantee increases in both consumer and producer welfare [@alston2009economics]. With no clear theoretical or empirical premise upon which to recommend one set of results over another, little confidence can be attached to any of them. This is remarkable considering that the primary motive for conventional supply curve specifications is to facilitate the assessment of changes in consumer and producer surplus. It is also noteworthy that, of all the possible arbitrary configurations of supply curve and type of shift, most agricultural R&D impact assessments assume the one that, by construction, results in the highest net benefits and avoids any food-price dilemma [@hurley2014re; @alston2000research; @alston2009economics].
+<!-- mainly because they are not explicitly derived from a theoretical framework that maps model parameters to specific empirical economic phenomena. -->
+<!-- Effective food policy formation requires careful assessment not only of the magnitude of net benefits of a given intervention, but also of resulting consumer-producer tradeoffs (the "food price dilemma"), as well as the distributional effects of the intervention across income levels. In recent decades, rural-urban migration, and hence rural employment (farm entry/exit), is also a major concern []; as well as the overarching issue of smallholder price risk and risk-mitigating mechanisms []. -->
+<!-- Due to the fundamental disconnect between theory and functional form outlined above,  Impact assessment results regarding consumer-producer tradeoffs vary considerably with the assumed functional form and type of supply curve shift [@alston2009economic].  -->
+<!-- conspicuous -->
+
+As for the assessment of impacts on income inequality, conventional models are ill suited because, as noted earlier, they either do not explicitly account for heterogeneous farm endowments (in the case of the CES curve), or assume a population of identically endowed marginal farms (in the case of the linear specification). In some sectors, one might reasonably justify the assumption of homogeneously endowed firms by invoking competitive long run equilibrium. Such arguments are strained in the primary sector, however, where one typically sees an abundance of heterogeneously endowed, inframarginal farms in operation. By failing to account for such heterogeneity, the conventional models fail to account for farm entry/exit. (See Wohlgenant [-@wohlgenant1997nature] for a deeper treatment of this point.)
+
+Proponents of the conventional approach even go so far as to expressly discourage the assessment of distributional equity vis-a-vis agricultural research, arguing that such issues lie beyond its scope.
+<!-- Wohlgenant [-@wohlgenant1997nature] demonstrates that the long run equilibrium supply curve cannot be linear under such circumstances, even if the supply curves of individual farms are all linear. -->
+
+>\singlespacing"For many economists...the only defensible justification for government intervention in agricultural research, and the only legitimate and achievable objective of research, is the pursuit of economic efficiency. This is not to say that other objectives (such as...income distribution and food security) are illegitimate, irrelevant, or unimportant but that there are likely to be alternative, less costly ways to achieve these other objectives than by biasing the agricultural research portfolio away from programs that will maximize total national net income" [@alston1995science].
+
+\doublespacing
+
+An underlying assumption here is that distributional equity and economic growth ("efficiency") are mutually exlusive objectives, such that the one cannot be pursued except at the cost of the other. Norton [-@norton1992economic] makes this explicit by actually drawing an equity-efficiency tradeoff frontier to illustrate the concept. Again citing "many economists", he affirms that "agricultural research is a relatively poor instrument for achieving non-efficiency objectives".
+
+The authors provide no references to indicate who they mean by "many economists"; and it is not readily obvious who they might have in mind. On the contrary, many economists think and/or have demonstrated econometrically that the exact opposite is true: agricultural research generally results in agricultural productivity growth, which goes hand in hand with poverty reduction [@rosegrant2001transforming; @ravallion1996important; @thorbecke1996multiplier; @fan2005rural; @bourguignon1998inequality; @timmer1997well; @gallup1998economic; @ravallion1999gowth; @ravallion2002has; @byerlee2009agriculture; @valdes2010reflections; @kydd2004agricultural; @world2007world; @de2020using; @de2022agriculture; @gollin2021two]. Publicly funded agricultural research since the 1960s has generally endeavored to align with pro-poor growth objectives, with mixed success [@thirtle2003impact; @adato2007agricultural; @hazell2001agricultural; @lipton2005family; @redclift1983production; @feleke2016assessing; @pingali1998impact; @mathur2003agricultural]. Moreover, it is now well documented that a nation's economic growth is generally more robust and sustainable in the measure that it is equitable [@partridge1997inequality; @easterly2007inequality; @berg2012makes; @ostry2015inequality; @berg2017inequality; @berg2018redistribution; @ostry2021growth]. Equity and sustainable growth are not mutually exclusive, but rather "two sides of the same coin" [@berg2017inequality].
+
+Finally, conventional models also introduce awkward artifacts that further undermine their explanatory power. The CES function, by definition, implies that yield and entry/exit responses to price changes always offset each other precisely such that the elasticity of supply is constant. The linear aggregate supply curve implies the possibility of negative supply quantities and/or of farms producing for free. This either requires redefinition of the curve as a piecewise function---which further complicates interpretation in terms of Equation \ref{eq:aggSup0}---or compels us to regard the function as a local approximation to some inscrutable global function, with validity restricted to a small domain of convergence around the starting equilibrium point.
+<!-- The lack of any accounting for farm entry/exit  -->
+<!-- Effective policy formation also requires careful  rural-urban migration, and hence rural employment (farm entry/exit), is also a major concern [@lall2006rural; @nori2020migration; @crush2013linking].  The conventional approach also takes no account of commodity price risk and risk mitigating mechanisms, which have also received increasing attention in agriculture research and policy discussions [@bellemare2020producer; @byerlee2006managing]. -->
+<!-- By neglecting farm heterogeneity, the conventional approach also of course precludes decomposition of supply shifts into yield and entry/exit components. The  -->
+<!-- entry/exit and yield components []. -->
+<!-- price risk -->
+
+## Real consequences
+
+There is a growing "disconnect" between the actual level of funding for agricultural research and the level of funding that would be justified by impact assessments conducted on the basis of conventional aggregate supply models [@hurley2016returns]. And there is good reason to suspect that this disconnect is due to the implausibly high---and sometimes absurdly high---internal rates of return (IRR) reported in conventional impact assessments of agricultural R&D [@hurley2014re; @alston2001attribution; @hurley2016returns]. The high reported returns are, of course, made more conspicuous by the aforementioned conflict of interest inherent in the expert opinion upon which these studies are typically based. In a meta-analysis of 492 such impact assessments, for example, Hurley et al. [@hurley2016returns] note that the average reported IRR implies that the USDA's 2000 R&D investment of \$4.1 billion should be worth \$56.3 quintillion in 2050, or 2.3 million times projected world GDP at that time.^[The meta-analysis covered a variety of impact assessment methods in addition to expedient specifications of aggregate supply (economic surplus analyses). It is safe to assume that most of these studies were economic surplus analyses.] "[I]t is not difficult to see," the authors conclude, "how policy makers may question the credibility of such evidence" [@hurley2016returns].
+<!-- It could merely reflect the low cost of implementing the model, for example, and/or the lack of comparably low cost alternatives.  -->
+<!-- [In discussion: The implausibility is made more conspicuous considering that these assessments are typically written by or in close consultation with the scientists whose research is under evaluation, and who thus have a vested interest in its success.] -->
+
+Hurley et al. [@hurley2014re] respond to the incredulity of policy makers by replacing IRR with their "modified" IRR or "MIRR", whereby implausibly high projected returns are deflated to plausible levels. This is a suitable response insofar as the implausibility in question is rooted in the discounting method (although see the debate between Ohemke [-@oehmke2017re] and Hurley et al. [-@hurley2017re]). However, the theoretical opacity, dubious implications, and limited interpretability of these models, outlined above, are good reason to suspect that much of the incredulity is in fact aimed at the impact modeling itself, particularly the modeling of aggregate supply and the supply response to exogenous shocks. Insofar as this is true, MIRR is an insufficient response, and may even exacerbate the problem by masking the real sources of inaccuracy.
+
+# Appendix B
 
 A.1
 
@@ -3080,8 +3114,8 @@ To resolve the yield derivative, note that a more conventional textbook form of 
 
 \begin{equation}
 \begin{split}
-y^* &= y|_{x_i = x^*_i} = g \prod_{i = 1}^{n_k} k_i^{\kappa_i} \prod_{i = 1}^{n_x} x^*_i^{\alpha_i} \\
-&= g \prod_{i = 1}^{n_k} k_i^{\kappa_i} \prod_{i = 1}^{n_x} \left( \frac{y^* P \alpha_i}{\lambda w_i} \right)^{\alpha_i}
+y^* &= y|_{x_i = x^*_i} = g \prod_{i = 1}^{n_k} k_i^{\kappa_i} \prod_{i = 1}^{n_x} x_i^{* \alpha_i} \\
+&= g \prod_{i = 1}^{n_k} k_i^{\kappa_i} \prod_{i = 1}^{n_x} \left( \frac{y^* P \alpha_i}{\lambda w_i} \right)^{\alpha_i} \\
 &\rightarrow y^* = \left( g \prod_{i = 1}^{n_k} k_i^{\kappa_i} \prod_{i = 1}^{n_x} \frac{\alpha_i}{w_i} \right)^{1 / (1 - h)} \left( \frac{P}{\lambda} \right)^{h / (1 - h)}
 \end{split}
 \label{eq:yStarAlt}
@@ -3318,7 +3352,7 @@ And
 A.3
 ## Proof of Equation \ref{eq:keyResult}
 
-For any lognormally distributed $\chi$, the probability density function $\rho(\chi)$ is defined
+For lognormally distributed $\chi$, the probability density function $\rho(\chi)$ is defined
 
 \begin{equation}
 \rho(\chi) = \frac{1}{\sqrt{2\pi} s_{\chi}} e^{-\frac{(\ln(\chi) - m_{\chi})^2}{2 s^2_{\chi}}} \:\:;\:\:\: m_{\chi} = E[\ln(\chi)] \:\:\: s^2_{\chi} = Var[\ln(\chi)]
@@ -3327,22 +3361,22 @@ For any lognormally distributed $\chi$, the probability density function $\rho(\
 So for a given constant upper bound $\chi \leq \xi$,
 
 \begin{equation}
-\int_{0}^{\xi} \chi \rho(\chi) \: d\chi = \frac{1}{\sqrt{2\pi} s_{\chi}} \int_{0}^{P} \chi e^{-\frac{(\ln(\chi) - m_{\chi})^2}{2 s^2_{\chi}}} d \ln(\chi)
+\int_{0}^{\xi} \chi \rho(\chi) d\chi = \frac{1}{\sqrt{2\pi} s_{\chi}} \int_{0}^{\xi} \chi e^{-\frac{(\ln(\chi) - m_{\chi})^2}{2 s^2_{\chi}}} d \ln(\chi)
 \label{eq:proofStep1}
 \end{equation}
 
 Introducing a change of variables,
 
 \begin{equation}
-\gamma = \frac{\ln(\chi) - m_{\chi}}{s_{\chi}} \: \rightarrow \: d \ln(\chi) = s_{\chi} d \gamma
+\zeta = \frac{\ln(\chi) - m_{\chi}}{s_{\chi}} \: \rightarrow \: d \ln(\chi) = s_{\chi} d \zeta
 \end{equation}
 
 Equation \ref{eq:proofStep1} resolves as follows.
 
 \begin{equation}
 \begin{split}
-\int_{0}^{\xi} \chi \rho(\chi) \: d\chi &= \frac{1}{\sqrt{2\pi}} \int_{0}^{\frac{\ln(\xi) - m_{\chi}}{s_{\chi}}} e^{(\gamma s_{\chi} + m_{\chi}) } e^{-\frac{\gamma^2}{2}} d \gamma \\
-&= \frac{1}{\sqrt{2\pi}} \int_{0}^{\frac{\ln(\xi) - m_{\chi}}{s_{\chi}}} e^{-1/2[\gamma^2 - 2 \gamma s_{\chi}  - 2 m_{\chi} ]} d \gamma
+\int_{0}^{\xi} \chi \rho(\chi) d\chi &= \frac{1}{\sqrt{2\pi}} \int_{0}^{\frac{\ln(\xi) - m_{\chi}}{s_{\chi}}} e^{(\zeta s_{\chi} + m_{\chi}) } e^{-\frac{\zeta^2}{2}} d \zeta \\
+&= \frac{1}{\sqrt{2\pi}} \int_{0}^{\frac{\ln(\xi) - m_{\chi}}{s_{\chi}}} e^{-1/2[\zeta^2 - 2 \zeta s_{\chi} - 2 m_{\chi} ]} d \zeta
 \end{split}
 \end{equation}
 
@@ -3350,9 +3384,9 @@ Where the argument of the exponential function resolves as follows,
 
 \begin{equation}
 \begin{split}
--1/2[\gamma^2 - 2 m_{\chi}  - 2 \gamma s_{\chi} ]\end{split} \\
-&= -1/2 [(\gamma - s_{\chi} )^2 - 2 m_{\chi}  - s^2_{\chi} ^2 ] \\
-&= -\frac{(\gamma - s_{\chi} )^2}{2} + m_{\chi}  + \frac{s^2_{\chi}}{2} ^2
+-1/2[\zeta^2 - 2 \zeta s_{\chi} - 2 m_{\chi} ] \\
+&= -1/2 [(\zeta - s_{\chi})^2 - 2 m_{\chi} - s^2_{\chi}] \\
+&= -\frac{(\zeta - s_{\chi} )^2}{2} + m_{\chi}  + \frac{s^2_{\chi}}{2}
 \end{split}
 \end{equation}
 
@@ -3360,21 +3394,20 @@ So the integral can be rewritten
 
 \begin{equation}
 \begin{split}
-\frac{1}{\sqrt{2\pi}} \int_{0}^{\frac{\ln(\xi) - m_{\chi}}{s_{\chi}}} e^{-\frac{(\gamma - s_{\chi} )^2}{2} + m_{\chi}  + \frac{s^2_{\chi}}{2} ^2} d \gamma \\
-&= \frac{1}{\sqrt{2\pi}} e^{m_{\chi}  + \frac{s^2_{\chi}}{2} ^2} \int_{0}^{\frac{\ln(\xi) - m_{\chi}}{s_{\chi}}} e^{-\frac{(\gamma - s_{\chi} )^2}{2}} d \gamma \\
-&= \frac{E[\chi]}{\sqrt{2\pi}} \int_{0}^{\frac{\ln(\xi) - m_{\chi}}{s_{\chi}}} e^{-\frac{(\gamma - s_{\chi} )^2}{2}} d \gamma \\
+\frac{1}{\sqrt{2\pi}} \int_{0}^{\frac{\ln(\xi) - m_{\chi}}{s_{\chi}}} e^{-\frac{(\zeta - s_{\chi} )^2}{2} + m_{\chi} + \frac{s^2_{\chi}}{2}} d \zeta \\
+&= \frac{1}{\sqrt{2\pi}} e^{m_{\chi}  + \frac{s^2_{\chi}}{2} ^2} \int_{0}^{\frac{\ln(\xi) - m_{\chi}}{s_{\chi}}} e^{-\frac{(\zeta - s_{\chi} )^2}{2}} d \zeta \\
+&= \frac{E[\chi]}{\sqrt{2\pi}} \int_{0}^{\frac{\ln(\xi) - m_{\chi}}{s_{\chi}}} e^{-\frac{(\zeta - s_{\chi} )^2}{2}} d \zeta \\
 &= E[\chi] \Phi \left(\frac{\ln(\xi) - m_{\chi}}{s_{\chi}} - s_{\chi}  \right)
 \end{split}
 \end{equation}
 
-Where $\Phi()$ is the standard normal cumulative distribtion function.
+Where $\Phi()$ is the standard normal cumulative distribution function.
 
 \begin{equation}
-\Phi(\ell) = \frac{1}{\sqrt{2\pi}} \int_{0}^{\ell} e^{-\frac{\psi^2}{2}} d \psi
+\Phi(\mathcal{Z}) = \frac{1}{\sqrt{2\pi}} \int_{0}^{\mathcal{Z}} e^{-\frac{\psi^2}{2}} d \zeta
 \end{equation}
 
 $\blacksquare$
-
 <!-- (The proof below closely follows that of Hull in the appendix to chapter 13 of his book [-@hull9thEdition].) -->
 <!-- For lognormally distributed $C^{\#}$, the probability density function $\rho(C^{\#})$ is defined -->
 <!-- \begin{equation} -->
@@ -3419,7 +3452,7 @@ $\blacksquare$
 <!-- $\blacksquare$ -->
 
 A.5
-# Proof that optimal unit cost is a geometric brownian motion with the same parameters as price
+# Proof that optimal unit expenditure is a geometric brownian motion with the same parameters as output price
 
 If $P(t)$ is a gBm with drift and volatility parameters $m_p$ and $s_p$, and given the relation (Equation \ref{eq:useful3}),
 
@@ -3430,7 +3463,7 @@ $$
 Then Ito's Lemma states
 
 \begin{equation}
-\Delta C^{\#} = \left(\frac{\partial C^{\#}}{\partial t} + m_p P(t) \frac{\partial C^{\#}}{\partial P} +  \frac{1}{2} s_p^2 P(t)^2 \frac{\partial^2 C^{\#}}{\partial P^2}  \right) \Delta t + s_p P(t) \partial C^{\#}}{\partial P} \epsilon \sqrt{\Delta t}
+\Delta C^{\#} = \left(\frac{\partial C^{\#}}{\partial t} + m_p P(t) \frac{\partial C^{\#}}{\partial P} + \frac{1}{2} s_p^2 P(t)^2 \frac{\partial^2 C^{\#}}{\partial P^2}  \right) \Delta t + s_p P(t) \frac{\partial C^{\#}}{\partial P} \epsilon \sqrt{\Delta t}
 \label{eq:itoLem}
 \end{equation}
 
@@ -3468,7 +3501,62 @@ Var[\ln(C^{\#}(T))]\bigr|_{t = 0} &= s^2_p T
 
 $\blacksquare$
 
-# Appendix B: Data details and preparation
+<!-- # Appendix C: Derivation of the technology adoption condition in Equation \ref{eq:adoptCond} -->
+
+<!-- The farm profit lagrangian in Equation \ref{eq:lagrangian} evaluated at $y^*$ gives the farm profit envelope. -->
+
+<!-- \begin{equation} -->
+<!-- \mathcal{L}^* = R^* + \lambda (B - C^*) -->
+<!-- \end{equation} -->
+
+<!-- By Equation \ref{eq:cStar}, this reduces to -->
+
+<!-- \begin{equation} -->
+<!-- \mathcal{L}^* = R^* (1 - h) + \lambda B -->
+<!-- \end{equation} -->
+
+<!-- Assuming that farms will adopt a new yield scaling technology only if they expect it to increase their net benefit, the adoption condition is $\partial \mathcal{L}^*/\partial \ln(g) > 0$. That is, -->
+
+<!-- \begin{equation} -->
+<!-- \frac{\partial \mathcal{L}}{\partial \ln(g)} = E[R^*(T)]|_{t = 0} (1 - h) \left( \frac{\partial \ln(P)}{\partial u} + \frac{\partial \ln(y^*)}{\partial u} \right) + \lambda \frac{\partial B}{\partial u} > 0 -->
+<!-- \end{equation} -->
+
+<!-- The yield derivative resolves by substituting $P y^* h/\lambda$ for $C^*$ in Equation \ref{eq:YdEnvNeat0} and differentiating with repect to $\ln(g)$. -->
+
+<!-- \begin{equation} -->
+<!-- \begin{split} -->
+<!-- \frac{\partial \ln(y^*)}{\partial \ln(g)} &= 1 - \mathbf{\alpha} {'} \frac{\partial \ln(\mathbf{w})}{\partial \ln(g)} + h \frac{\partial \ln(P)}{\partial \ln(g)} + h \frac{\partial \ln(y^*)}{\partial \ln(g)} \\ -->
+<!-- &\rightarrow \frac{\partial \ln(y^*)}{\partial \ln(g)} = \frac{1}{1 - h} \left( 1 - \mathbf{\alpha} {'} \frac{\partial \ln(\mathbf{w})}{\partial \ln(g)} + \frac{\partial \ln(P)}{\partial \ln(g)} \right) -->
+<!-- \end{split} -->
+<!-- \end{equation} -->
+
+<!-- Substituting this into the adoption condition and simplifying, -->
+
+<!-- \begin{equation} -->
+<!-- \frac{\partial \mathcal{L}}{\partial \ln(g)} = \frac{1 - \mathbf{\alpha} {'} \frac{\partial \ln(\mathbf{w})}{\partial u}} + \partial \ln(P)}{\partial \ln(g)} \right) + \frac{\lambda}{R^*} \frac{\partial B}{\partial u} > 0 -->
+<!-- \end{equation} -->
+
+<!-- Which further reduces to -->
+
+<!-- \begin{equation} -->
+<!-- \partial \ln(P) - \mathbf{\alpha} {'} \partial \ln(\mathbf{w}) + \partial \ln(g)  + \frac{\lambda}{R^*} \partial B > 0 -->
+<!-- \end{equation} -->
+
+<!-- Or, substituting $h / C^*$ for $\lambda / R^*$, -->
+
+<!-- \begin{equation} -->
+<!-- \partial \ln(P) - \mathbf{\alpha} {'} \partial \ln(\mathbf{w}) + \partial \ln(g)  + \frac{h}{C^*} \partial B > 0 -->
+<!-- \end{equation} -->
+
+<!-- And, in stochastic terms, -->
+
+<!-- \begin{equation} -->
+<!-- \partial \ln(E[P(T)]|_{t = 0}) - \mathbf{\alpha} {'} \partial \ln(\mathbf{w}) + \partial \ln(g)  + \frac{h}{C^*} \partial B > 0 -->
+<!-- \end{equation} -->
+
+<!-- \blacksquare -->
+
+# Appendix C: Data details and preparation
 
 The raw Kenya farm data files used in this article are open access and available from Tegemeo Institute upon request. The files detail short and long rains maize production (and that of any other crops grown), farm size, input (seed, synthetic and organic fertilizer, chemical pest control) use and cost, land tenure type, and land preparation type and cost, for the years 1997, 2000, 2004, 2007, and 2010. For the present article, only the 2007 long rains (i.e. main season) data is used. Data on production, area, seed, fertilizer, land preparation, and tenure are provided at field level. Fields where maize is not grown or is not the main crop are dropped. Green and dry maize production are reported separately. Green maize production is converted to dry maize equivalent by subtracting 15% of the production weight. The field level input and production files are then merged and aggregated up to farm level. Farm yield is then calculated as maize production (kg.) divided by maize area (acres). Chemical input use and cost are reported at farm level, indicating the main crop on the farm to which the input is applied. Chemical pest controls are counted as costs only if applied primarily to maize. Synthetic fertilizer consists of calcium ammonium nitrate (CAN), nitrogen phosphorus potassium (NPK), Urea, and diammonium phosphate (DAP). Different mixtures under these headings (e.g. NPK 22:11:11, NPK 18:12:12, NPK 17:17:0, etc.) are aggregated. Farm level cost is then calculated as the sum of seed, fertilizer, chemical pest control, and land preparation costs in Kenyan Shillings per acre (KES/acre).
 <!-- This is then merged with the main farm level file.  -->
@@ -3477,97 +3565,63 @@ Land preparation type (manual, oxen, tractor, or none) and land tenure type (own
 
 The field level data files also include details on seed type and method of acquisition. For this article, farms are considered adopters of hybrid maize seed if they use either purchased hybrid seed or a mixture of retained and purchased hybrid maize seed on any of their fields.
 
-Main season rainfall is reported in millimeters at district level. (Prior to the 2010 constitution, counties were referred to as "districts".) The "rain anomaly" variable appearing in the regression is calculated as 2007 main season rainfall divided by 1997 main season rainfall. Rain anomaly values greater or less than $1$ thus indicate departures north or south of the 1997 benchmark.
+Main season rainfall is reported in millimeters at district level. (Prior to the 2010 constitution, counties were referred to as "districts".) The "rain anomaly" variable appearing in the regression is calculated as 2007 main season rainfall divided by 1997 main season rainfall. Rain anomaly values greater or less than 1 thus indicate departures north or south of the 1997 benchmark. The data indicate that 2007 main season rainfall exceeded the historical benchmark by a considerable margin for most of the sample (Figure \ref{fig:rainHist}). Summary statistics are presented in Table B1 for all variables in the yield model.
 <!--main07 This file, originally generated by Tavneet Suri, contains 2007 and historic average main season rainfall reported by the FEWS National Weather Service Climate Prediction Center, georeferenced to the 2007 TAMPA/TAPRA survey. -->
 
-```{r Fig7, fig.show = "hold", fig.width = 4, fig.height=4, fig.align="left", fig.cap="\\label{fig:sumStats}Summary statistics for the 2007 Kenya long rains farm level maize data.", echo = FALSE}
+\singlespacing
+```{r Fig7, fig.show = "hold", fig.width = 4, fig.height=2, fig.align="left", fig.cap="\\label{fig:rainHist}Histogram of 2007 rainfall anomaly. Values close to 1 (marked by the black vertical line) represent rainfall in line with the historical benchmark. The histogram indicates that rainfall exceeded this benchmark in 2007 for most of the farm sample.", echo = FALSE}
+
+gg <- ggplot(dfMod3, aes(x = exp(`ln[Rain anomaly]`)))
+gg <- gg + geom_histogram(color = 4, fill = "white", bins = 15)
+gg <- gg + geom_vline(xintercept = 1)
+gg <- gg + labs(x = "2007 rain anomaly")
+gg <- gg + theme(axis.title = element_text(size = axisTitleSize),
+        axis.text = element_text(size = axisTextSize))
+gg
+
+``` 
+\doublespacing
+
+```{r Fig8, fig.show = "hold", fig.width = 5, fig.height=2, fig.align="left", fig.cap="\\label{fig:sumStats}Summary statistics for the 2007 Kenya long rains farm level maize data.", echo = FALSE}
 # dfLook <- dfMod3 %>% select(`Landprep: oxen`, `Landprep: tractor`) %>%
 #   summarise_all(list(mean = "mean", sd = "sd"))
 gatherCols <- colnames(dfMod3)[-1]
 dfPlot <- dfMod3[, -1] %>% gather_("var", "val", gatherCols)
-dumVars <- c("Tenure: owned with title deed", "Landprep: oxen", "Landprep: tractor", "Adopter")
+dumVars <- c("Tenure - owned with title deed", "Landprep - oxen", "Landprep - tractor", "Hybrid seed")
 ind <- which(!(dfPlot$var %in% dumVars))
 dfPlot$val[ind] <- exp(dfPlot$val[ind])
 dfPlot$var[-ind] <- paste(dfPlot$var[-ind], "(dummy)")
+dumVars <- paste(dumVars, "(dummy)")
+dfPlot$var[ind] <- gsub("ln\\[|\\]", "", dfPlot$var[ind])
+continVars <- setdiff(unique(dfPlot$var), dumVars)
+varOrder <- rev(c(continVars, dumVars))
 dfPlot <- dfPlot %>% group_by(var) %>%
-  summarize_all(list(N = "length",
+  summarize_all(list(#N = "length",
                      Mean = "mean",
                      `Stand. dev.` = "sd",
                      Max = "max",
                      Min = "min")) %>%
   mutate(across(!var, round, 3))
-dfPlot <- dfPlot %>% gather(stat, val, N:Min)
+dfPlot$`Stand. dev.`[grep("dummy", dfPlot$var)] <- NA
+dfPlot <- dfPlot %>% gather(stat, val, Mean:Min)
 gg <- ggplot(dfPlot, aes(x = stat, y = var))
 gg <- gg + geom_tile(alpha = 0)
 gg <- gg + geom_text(aes(label = val), size = labelSize) +
-  scale_x_discrete(limits = c("N", "Mean", "Stand. dev.", "Max", "Min"), position = "top") +
-  theme_classic() +
+  scale_x_discrete(limits = c("Mean", "Stand. dev.", "Max", "Min"), position = "top")
+gg <- gg + scale_y_discrete(limits = varOrder)
+gg <- gg + labs(title = "Table C1: Summary statistics for the 2007 Kenya long rains farm level maize data.", subtitle = "N = 937")
+gg <- gg + theme_classic() +
   theme(axis.title = element_blank(),
-        axis.text = element_text(size = axisTextSize))#,
-        #plot.title = element_text(size = plotTitleSize),
+        axis.text = element_text(size = axisTextSize),
+        plot.title = element_text(size = axisTitleSize),
+        plot.subtitle = element_text(size = axisTextSize))
         #strip.text = element_text(size = facetTitleSize))
-
 # thisFile <- "Kenya 2007 maize summary statistics.png"
 # thisFilepath <- paste0(outFolder, thisFile)
 # ggsave(thisFilepath, height = 2, width = 7)
-
+gg
 
 ```
-
-# Appendix C: Derivation of the technology adoption condition in Equation \ref{eq:adoptCond}
-
-The farm profit lagrangian in Equation \ref{eq:lagrangian} evaluated at $y^*$ gives the farm profit envelope.
-
-\begin{equation}
-\mathcal{L}^* = R^* + \lambda (B - C^*)
-\end{equation}
-
-By Equation \ref{eq:cStar}, this reduces to
-
-\begin{equation}
-\mathcal{L}^* = R^* (1 - h) + \lambda B
-\end{equation}
-
-Assuming that farms will adopt a new yield scaling technology only if they expect it to increase their net benefit, the adoption condition is $\partial \mathcal{L}^*/\partial \ln(g) > 0$. That is,
-
-\begin{equation}
-\frac{\partial \mathcal{L}}{\partial \ln(g)} = E[R^*(T)]|_{t = 0} (1 - h) \left( \frac{\partial \ln(P)}{\partial u} + \frac{\partial \ln(y^*)}{\partial u} \right) + \lambda \frac{\partial B}{\partial u} > 0
-\end{equation}
-
-The yield derivative resolves by substituting $P y^* h/\lambda$ for $C^*$ in Equation \ref{eq:YdEnvNeat0} and differentiating with repect to $\ln(g)$.
-
-\begin{equation}
-\begin{split}
-\frac{\partial \ln(y^*)}{\partial \ln(g)} &= 1 - \mathbf{\alpha} {'} \frac{\partial \ln(\mathbf{w})}{\partial \ln(g)} + h \frac{\partial \ln(P)}{\partial \ln(g)} + h \frac{\partial \ln(y^*)}{\partial \ln(g)} \\
-&\rightarrow \frac{\partial \ln(y^*)}{\partial \ln(g)} = \frac{1}{1 - h} \left( 1 - \mathbf{\alpha} {'} \frac{\partial \ln(\mathbf{w})}{\partial \ln(g)} + \frac{\partial \ln(P)}{\partial \ln(g)} \right)
-\end{split}
-\end{equation}
-
-Substituting this into the adoption condition and simplifying,
-
-\begin{equation}
-\frac{\partial \mathcal{L}}{\partial \ln(g)} = \frac{1 - \mathbf{\alpha} {'} \frac{\partial \ln(\mathbf{w})}{\partial u}} + \partial \ln(P)}{\partial \ln(g)} \right) + \frac{\lambda}{R^*} \frac{\partial B}{\partial u} > 0
-\end{equation}
-
-Which further reduces to
-
-\begin{equation}
-\partial \ln(P) - \mathbf{\alpha} {'} \partial \ln(\mathbf{w}) + \partial \ln(g)  + \frac{\lambda}{R^*} \partial B > 0
-\end{equation}
-
-Or, substituting $h / C^*$ for $\lambda / R^*$,
-
-\begin{equation}
-\partial \ln(P) - \mathbf{\alpha} {'} \partial \ln(\mathbf{w}) + \partial \ln(g)  + \frac{h}{C^*} \partial B > 0
-\end{equation}
-
-And, in stochastic terms,
-
-\begin{equation}
-\partial \ln(E[P(T)]|_{t = 0}) - \mathbf{\alpha} {'} \partial \ln(\mathbf{w}) + \partial \ln(g)  + \frac{h}{C^*} \partial B > 0
-\end{equation}
-
-\blacksquare
 
 <!-- #==================================================================================== -->
 <!-- #==================================================================================== -->
@@ -4757,18 +4811,6 @@ And, in stochastic terms,
 <!-- \end{equation} -->
 
 
-
-
-
-
-Incidentally, note also that Equation \ref{eq:cStar} simplifies to
-
-\begin{equation}
-C^{\#} = P \frac{h}{\lambda}
-\label{eq:useful}
-\end{equation}
-
-Which, when evaluated at the upper bound $C^{\#} = P$ reveals a lower bound on the budget shadow price $\lambda \geq h$.
 <!-- Such that yield (Equation \ref{eq:YdEnvNeatSharp}) can be rewritten as a function of $P$, $\lambda$, and $h$ instead of $C^{\#}$. -->
 <!-- \begin{equation} -->
 <!-- y^* = E[y^*] \frac{k^{\eta + 1}}{E[k^{\eta + 1}]} \frac{C^{\# \eta}}{E[C^{\# \eta}]} -->
@@ -4776,25 +4818,25 @@ Which, when evaluated at the upper bound $C^{\#} = P$ reveals a lower bound on t
 <!-- \end{equation} -->
 <!-- Moreover, applying axiom 3 to Equation \ref{eq:useful} reveals that the budget shadow price $\lambda$ has a lower bound at the population constant $h$, facilitating integration of  presenting an alternative route the derivation could take. -->
 
-note that    to point out that the introduction of $C^{\#}$ in Equation \ref{eq:cStar} results in the following endogenous cost model.
+<!-- note that    to point out that the introduction of $C^{\#}$ in Equation \ref{eq:cStar} results in the following endogenous cost model. -->
 
-But first, it is worthwhile to pause and take stock of some important implications of the derivation thus far that diverge from or even contradict the conventional wisdom permeating much of the agricultural economic surplus literature. To begin with, 
+<!-- But first, it is worthwhile to pause and take stock of some important implications of the derivation thus far that diverge from or even contradict the conventional wisdom permeating much of the agricultural economic surplus literature. To begin with,  -->
 
-This is a particularly instructive expression because it indicates precisely under what circumstances optimal unit expenditure changes. Specifically, the expression indicates that optimal unit expenditure increases with improvements in technology (increases in $h$) and output price, and decreases with the budget shadow price. Note, moreover, that Equation \ref{eq:YdEnvNeatSharp} indicates that yield is positively correlated with optimal unit cost. The presumption at agricultural research institutions (and one that permeates much of the agricultural economic surplus analysis literature), on the other hand, is that an improvement in technology _exogenously_ lowers expenditure and/or increases yield. Insofar as axioms 1 and 2 are true, Equations \ref{eq:YdEnvNeatSharp} and \ref{eq:useful} demonstrate that this presumption is fallacious. It is a presumption that may be true under other axioms---e.g., by replacing axiom 2 (profit maximization) with a production quota axiom---but cannot be true under the axioms adopted here.
+<!-- This is a particularly instructive expression because it indicates precisely under what circumstances optimal unit expenditure changes. Specifically, the expression indicates that optimal unit expenditure increases with improvements in technology (increases in $h$) and output price, and decreases with the budget shadow price. Note, moreover, that Equation \ref{eq:YdEnvNeatSharp} indicates that yield is positively correlated with optimal unit cost. The presumption at agricultural research institutions (and one that permeates much of the agricultural economic surplus analysis literature), on the other hand, is that an improvement in technology _exogenously_ lowers expenditure and/or increases yield. Insofar as axioms 1 and 2 are true, Equations \ref{eq:YdEnvNeatSharp} and \ref{eq:useful} demonstrate that this presumption is fallacious. It is a presumption that may be true under other axioms---e.g., by replacing axiom 2 (profit maximization) with a production quota axiom---but cannot be true under the axioms adopted here. -->
 
-[[
-very nearly a case in point of what Paul Romer calls "mathiness".
+<!-- [[ -->
+<!-- very nearly a case in point of what Paul Romer calls "mathiness". -->
 
->"Like mathematical theory, mathiness uses a mixture of words and symbols, but instead of making tight links, it leaves ample room for slippage between statements in natural versus formal languages and between statements with theoretical as opposed to empirical content". [-@romer2015mathiness]
+<!-- >"Like mathematical theory, mathiness uses a mixture of words and symbols, but instead of making tight links, it leaves ample room for slippage between statements in natural versus formal languages and between statements with theoretical as opposed to empirical content". [-@romer2015mathiness] -->
 
-Or of what Von Neumann and Morgenstern had in mind when they observed that
+<!-- Or of what Von Neumann and Morgenstern had in mind when they observed that -->
 
->"part of the feeling of dissatisfaction with the mathematical treatment of economic theory derives largely from the fact that frequently one is offered not proofs but mere assertions which are really no better than the same assertions given in literary form" [-@morgenstern1953theory].
+<!-- >"part of the feeling of dissatisfaction with the mathematical treatment of economic theory derives largely from the fact that frequently one is offered not proofs but mere assertions which are really no better than the same assertions given in literary form" [-@morgenstern1953theory]. -->
 
-<!-- The authors go on to suggest there is a "scientifically unsound" inclination among economists to confuse these formalized literary assertions, including "very valuable surmises and inspiring anticipations of results", with actual proofs or otherwise rigorously derived theoretical results [@morgenstern1953theory]. -->
+<!-- <!-- The authors go on to suggest there is a "scientifically unsound" inclination among economists to confuse these formalized literary assertions, including "very valuable surmises and inspiring anticipations of results", with actual proofs or otherwise rigorously derived theoretical results [@morgenstern1953theory]. --> -->
 
 
-Specification of the aggregate supply curve may be considered a case in point. The model is not theoretically derived, but rather a collection of educated guesses or surmises translated into mathematical equations. Many of these surmises imply well documented contradictions of basic economic theory, and/or inconvenient ramifications vis-a-vis the supposed benefits of research and technology adoption []. The model has evolved into its present form not by force of logic, but as a matter of preference. For example, there was considerable debate in the 1970s over whether the research-induced supply curve shift should be modeled as a parallel shift or a pivot [@alston1995science; @norton1981evaluating; @lindner1978supply]. The debate was further complicated by differing views as to whether supply should be modeled as a linear or a curved function. Modeling results depend critically upon these choices. A curved specification   Without a theoretical framework to link parameter values and functional forms to real world conditions, the debate was ultimately inconclusive. The answers to the questions left unresolved by the debate have come down to us today as a matter of preference. In their highly influential book, _Science Under Scarcity_, Alston et al. indicated their preference for the linear parallel shift [-@alston1995science]. This is a conspicuous choice, to put it mildly, considering that 1) it prefigures research impacts in the best possible light, and 2) by the authors' own admission, there are no theoretical or empirical grounds to justify this preference [@alston1995science; @alston2009economics]. AR4D partial equilibrium impact studies since then have generally follow suit....the supply curve shift "k" + arbitrarily assumed adoption rate and "probability of success" (which are elicited from scientists with a conflict of interest) = results by modeler fiat, PETITIO PRINCIPII
+<!-- Specification of the aggregate supply curve may be considered a case in point. The model is not theoretically derived, but rather a collection of educated guesses or surmises translated into mathematical equations. Many of these surmises imply well documented contradictions of basic economic theory, and/or inconvenient ramifications vis-a-vis the supposed benefits of research and technology adoption []. The model has evolved into its present form not by force of logic, but as a matter of preference. For example, there was considerable debate in the 1970s over whether the research-induced supply curve shift should be modeled as a parallel shift or a pivot [@alston1995science; @norton1981evaluating; @lindner1978supply]. The debate was further complicated by differing views as to whether supply should be modeled as a linear or a curved function. Modeling results depend critically upon these choices. A curved specification   Without a theoretical framework to link parameter values and functional forms to real world conditions, the debate was ultimately inconclusive. The answers to the questions left unresolved by the debate have come down to us today as a matter of preference. In their highly influential book, _Science Under Scarcity_, Alston et al. indicated their preference for the linear parallel shift [-@alston1995science]. This is a conspicuous choice, to put it mildly, considering that 1) it prefigures research impacts in the best possible light, and 2) by the authors' own admission, there are no theoretical or empirical grounds to justify this preference [@alston1995science; @alston2009economics]. AR4D partial equilibrium impact studies since then have generally follow suit....the supply curve shift "k" + arbitrarily assumed adoption rate and "probability of success" (which are elicited from scientists with a conflict of interest) = results by modeler fiat, PETITIO PRINCIPII -->
 
 <!-- ...The current sense is that this is somehow impossible. The verdict: -->
 
@@ -4827,123 +4869,103 @@ Specification of the aggregate supply curve may be considered a case in point. T
 <!-- >\singlespacing "The best yields obtained on experiment stations are often used as the indicator of technology potential. Experiment stations are often located on the best lands within a region and have reliable irrigation water supplies. Agronomic yield potential determined on experiment stations, with no physical, biological, or economic constraints, is the maximum achievable yield.... When the objective of the experiment is changed from maximizing yields to maximizing profits, the yields obtained by experiment station researchers drop significantly..." [-@pingali2001cereal]. -->
 <!-- \doublespacing -->
 
-[In discussion: alternative form using lambda with lower bound h, working with remote sensing/spatial data vs survey data, key strength is versatility in the research questions that may be addressed either in concert or in isolation...may examine multi-lever, multi-faceted policy involving price stabilization, technology...The curve is empirically transparent, i.e. its parameters have a straightforward interpretation in terms of concrete, measurable phenomena, such that exogenous shocks may be modeled precisely and transparently. The research induced supply curve shift is complex. ...adoption...  derivative of aggregate supply with respect to price volatility, multiple levers at the policy maker's disposal.explicitly accounts for price risk and agroclimatic uncertainty, allowing explicit analysis of the role of futures markets and marketing board policy, in enhancing technological impact....the trade board debate... ...comparative analysis of multiple impact pathways to achieve the same result (ETH bean example)]
+<!-- [In discussion: alternative form using lambda with lower bound h, working with remote sensing/spatial data vs survey data, key strength is versatility in the research questions that may be addressed either in concert or in isolation...may examine multi-lever, multi-faceted policy involving price stabilization, technology...The curve is empirically transparent, i.e. its parameters have a straightforward interpretation in terms of concrete, measurable phenomena, such that exogenous shocks may be modeled precisely and transparently. The research induced supply curve shift is complex. ...adoption...  derivative of aggregate supply with respect to price volatility, multiple levers at the policy maker's disposal.explicitly accounts for price risk and agroclimatic uncertainty, allowing explicit analysis of the role of futures markets and marketing board policy, in enhancing technological impact....the trade board debate... ...comparative analysis of multiple impact pathways to achieve the same result (ETH bean example)] -->
 
-Address more nuanced questions like what is the right balance of policy and technology mix required to reach certain development goals...how can the impact of new technology release be enhanced through policy
+<!-- Address more nuanced questions like what is the right balance of policy and technology mix required to reach certain development goals...how can the impact of new technology release be enhanced through policy -->
 
-More than validation this is to illustrate the potential usefulness of the model in examining new technologies, policies (subsidies, storage, transportation, microfinance, insurance), etc....comparison of different impact pathways. Current methods focus on yield enhancing varieties...maybe the same development goals can be reached at lower cost and in a shorter time frame through policy instruments...
+<!-- More than validation this is to illustrate the potential usefulness of the model in examining new technologies, policies (subsidies, storage, transportation, microfinance, insurance), etc....comparison of different impact pathways. Current methods focus on yield enhancing varieties...maybe the same development goals can be reached at lower cost and in a shorter time frame through policy instruments... -->
 
-In minimum data contexts... have to assume (inverse) relation between yield and area
+<!-- In minimum data contexts... have to assume (inverse) relation between yield and area -->
 
-short cropping season is omitted from aggregate supply, but this generally accounts for less than 5% of total production in any given year
+<!-- short cropping season is omitted from aggregate supply, but this generally accounts for less than 5% of total production in any given year -->
 
-The participation term, does it mean employment? ...
+<!-- The participation term, does it mean employment? ... -->
 
-Of course, supply can also be defined in terms of an integral of farm yield over its density.
+<!-- Of course, supply can also be defined in terms of an integral of farm yield over its density. -->
 
-\begin{equation}
-Q_S = \int_{0}^{\bar{y}^*} y^* \rho(y^*) \: dq^*
-\end{equation}
+<!-- \begin{equation} -->
+<!-- Q_S = \int_{0}^{\bar{y}^*} y^* \rho(y^*) \: dq^* -->
+<!-- \end{equation} -->
 
-Where the yield density is defined such that
+<!-- Where the yield density is defined such that -->
 
-\begin{equation}
-\rho(y^*) = \int_{0}^{\infty} \rho(y^*) \: dy^* = N_a
-\end{equation}
+<!-- \begin{equation} -->
+<!-- \rho(y^*) = \int_{0}^{\infty} \rho(y^*) \: dy^* = N_a -->
+<!-- \end{equation} -->
 
-Where $N_a$ is the number of acres (or whatever the unit of area is) in the population.
+<!-- Where $N_a$ is the number of acres (or whatever the unit of area is) in the population. -->
 
-The latter expression may be more suitable when dealing with remote sensing data. The former is more suitable when dealing with farm survey data, as here.
+<!-- The latter expression may be more suitable when dealing with remote sensing data. The former is more suitable when dealing with farm survey data, as here. -->
 
-...it may be worthwhile to integrate using the cost form of yield...
+<!-- ...it may be worthwhile to integrate using the cost form of yield... -->
 
-...here focused on the motivating context, but the method is applicable in CGE models etc. anywhere a model of aggregate supply is required...
-
-
-
-...this form allows one to look at questions of the value of storage...forward contracts...for e.g. as policy instruments implemented in tandem with new technology...questions of how to optimize the enabling environment to maximize impact of new technology...
-
-...treatment of aggregate demand...
-...upper bound on $x_j^*$,
-
-\begin{equation}
-x_j^* < \frac{\alpha_j}{w_j} \left(y_0 \frac{P}{h} \right)
-\label{eq:inputUpBound}
-\end{equation}
+<!-- ...here focused on the motivating context, but the method is applicable in CGE models etc. anywhere a model of aggregate supply is required... -->
 
 
-...negatively sloped cross price demand curves implies that all inputs are complements, not substitutes...makes sense, can't substitute CAN for dap or labor or pesticide
 
-...Axioms can be formalized differently...intensive versus extensive diminishing marginal returns... or a risk constraint can be introduced in addition to the budget constraint in Axiom 2.  More than a specific functional form, an axiomatic approach... rules are made to be refined and ammended... the aim is to come up with a set of Axioms that generate a game that is worth the candle... Axioms should be formulated so as to minimize Axioms and maximize corollaries, i.e. maximize the number of Axioms that are explained by the original Axioms  and must not contradict each other.
+<!-- ...this form allows one to look at questions of the value of storage...forward contracts...for e.g. as policy instruments implemented in tandem with new technology...questions of how to optimize the enabling environment to maximize impact of new technology... -->
 
-In defense of CobbDoug
-[Mention the good empirical fit and validation tests (input demand, optimal area, etc.) as arguments in favor of C-D]
+<!-- ...treatment of aggregate demand... -->
+<!-- ...upper bound on $x_j^*$, -->
 
-Translog is so "flexible" that it ends up being restrictive from an economic standpoint---not homogeneous, monotonicity and concavity, global concavity requires negative semidefinite matrix of parameters, enforcement of which "destroys the flexibility of the form" and restricts the price elasticities in undesired way (from "Estimating a Derived Demand System from a Translog Cost Function"). Jorgenson etc. have to then devise ways to make it less flexible, in order to impose constant returns to scale, for eg.  Translog also violates axiom 1
-
-However, it does not directly address---not in an obvious way---the most enduring objections to the form: its perceived conflict with evidence and intuitions regarding 1) input substitution, 2) production elasticities, and 3) factor demand elasticities. A complete response to these objections is beyond the scope of the work at hand. Nonetheless, a minimal response is sketched out below in the hopes of retaining the attention of the many vigorous critics of Cobb-Douglas who might otherwise read no further.
-
-Enduring objection 1 is that the Cobb-Douglas function implies a unitary elasticity of input substitution, whereas intuition and evidence clearly suggest otherwise. Arrow et al. [-@arrow1961capital] set the tone in their seminal article:
-
->"Technological alternatives are numerous and flexible in some sectors, limited in others; and uniform substitutability is most unlikely. The difference in elasticities is confirmed by direct observation of capital-labor proportions, which show much more variation among countries in some sectors than in others".
-
-However, the authors here are objecting not to unitary elasticity of substitution, but rather "uniform substitutability". The measure of substitutability of one input for another in a two factor model $y(x_1, x_2)$ given an output target is not the elasticity of substitution, but rather the marginal rate of substitution, $dx_1/dx_2$. And the phrase "uniform substitutability" followed closely by the word "elasticities" may reasonably be interpreted as $d\ln(x_1)/\ln(dx_2) = 1$. (Hundreds of subsequent authors espousing this objection appear to mean this, at any rate.) It is straightforward to show that the two factor Cobb-Douglas model does not imply this. On the contrary, it implies
-
-\begin{equation}
-\frac{d \ln(x_1)}{d\ln(x_2)} = -\frac{\alpha_2}{\alpha_1}
-\end{equation}
-
-And thus agrees with Arrow et al.'s observations regarding the unlikelihood of "uniform substitutability".
-
-At the same time, it is true that the two factor Cobb-Douglas model implies a unitary elasticity of substitution. But the elasticity of substitution is not a measure of factor substitutability. It is a measure of how factor proportions change with substitutability. A unitary elasticity of substitution thus means that a $1\%$ change in substitutability ($dx_1/dx_2$) results in a $1\%$ change in the input usage ratio $x_1/x_2$. In plain English: a change in substitutability of $x_1$ for $x_2$ results in a proportionate change in the substitution of $x_1$ for $x_2$. One may conjecture without controversy that most farm managers would consider this an eminently reasonable characterization of management decision-making.
-
-Enduring objection 2 is that the Cobb-Douglas production elasticities $\alpha_i$ are constant, whereas intuition suggests that production elasticities are functions of inputs, and should thus vary with input use. To lift this "restriction", the translog production function was introduced, with production elasticities defined as Cobb-Douglas functions of the inputs.
-
-While the Cobb-Douglas production elasticities are indeed constant, it is fallacious to then conclude from this that they are not functions of the inputs. On the contrary, by Euler's theorem it is straightforward to show that
-
-\begin{equation}
-\alpha_i = \left(\frac{h - 1}{h} \right)  \frac{x_i}{y} \sum_{j}^{n} \frac{\partial^2 y}{\partial x_i \partial x_j} x_j
-\end{equation}
-
-And, moreover,
-
-\begin{equation}
-\frac{\partial^2 y}{\partial x_i \partial x_j} = \frac{1}{h - 2}  \sum_{k}^{n} \frac{\partial}{ \partial x_i} \frac{\partial y}{\partial x_j \partial x_k} x_k
-\end{equation}
-
-And, so on for any order $\mathcal{\ell}$ of differentiation, ad infinitum,
-
-\begin{equation}
-\frac{\partial^{\ell} y}{\partial x_i^{\ell}} = \frac{1}{h - \ell + 1}  \sum_{j}^{n} \frac{\partial^{\ell + 1} y}{\partial x_i^{\ell + 1} \partial x_j} x_j
-\end{equation}
-
-That is to say, for $h \neq 1$, the Cobb-Douglas production elasticities are not just functions of all inputs, but also of the $2^{nd}$, $3^{rd}$, $\dots$,$\infty^{th}$ order variation of production with respect to inputs, as well as the interactions of these implied in the successive orders of cross derivatives. That all this complex interaction should add up to a constant is a sign not of oversimplification, then, but of mathematical serendipity stemming from axiom 1. The translog function, meanwhile, is not derived from any first principle and is not even a homogeneous function. Which, then, is the more restrictive model? translog also violates axiom 1.
-
-It may be added that the economic principle of net-benefit maximization (cost minimization) implies that optimal input quantities are functions of prices and control variables, and are thus constant. In this sense, the translog production elasticities are also constant.
-
-The same riposte applies to enduring objection 3, namely, that the Cobb-Douglas input demand elasticities are constant, whereas intuition and evidence indicate that input demand elasticities vary with input use. Again, it is true that Cobb-Douglas demand elasticities are constant. But, again, this does not mean that they are not functions of inputs. On the assumption that producers maximize their net benefit (or minimize cost), the Cobb-Douglas input demand own and cross price elasticities follows as
-
-\begin{equation}
-\end{equation}
-
-The input own and cross price demand elasticities are thus functions of price and technology. Because optimal input use is also a function of price, these elasticities may be written as functions of input use, if so desired. Conversely, the Hicks-Allen partial elasticities derived using the translog model may be written in terms of prices, if so desired.
-
-how to implement in minimum data contexts...
-
-Also agrees with Lipton...
+<!-- \begin{equation} -->
+<!-- x_j^* < \frac{\alpha_j}{w_j} \left(y_0 \frac{P}{h} \right) -->
+<!-- \label{eq:inputUpBound} -->
+<!-- \end{equation} -->
 
 
-the mapping defaults to the subjective preferences of the modeler, which in turn prefigures the results of the impact assessment.  ...arbitrarily set by modeler...in the name of expedience, then, petitio principii. an assumed result dressed up in mathematical symbols. [In lit review: The most famous example is whether an improved variety does a shift or pivot of the supply curve. Results depend critically on this choice...conflict of interest.] Counterveiling changes in prices...Lipton.
+<!-- ...negatively sloped cross price demand curves implies that all inputs are complements, not substitutes...makes sense, can't substitute CAN for dap or labor or pesticide -->
 
-in Discussion: the starting Axioms are to be experimented with. Other sets of Axioms might yield the same or different results.
+<!-- ...Axioms can be formalized differently...intensive versus extensive diminishing marginal returns... or a risk constraint can be introduced in addition to the budget constraint in Axiom 2.  More than a specific functional form, an axiomatic approach... rules are made to be refined and ammended... the aim is to come up with a set of Axioms that generate a game that is worth the candle... Axioms should be formulated so as to minimize Axioms and maximize corollaries, i.e. maximize the number of Axioms that are explained by the original Axioms  and must not contradict each other. -->
 
-...the numerous methodological headaches incurred in the pursuit of expedience, outlined above (and reviewed in more detail below), outweigh any gain in computational expedience. [What good is computational expedience if it is not even clear what is being calculated, what its connection to reality is]
+<!-- In defense of CobbDoug -->
+<!-- [Mention the good empirical fit and validation tests (input demand, optimal area, etc.) as arguments in favor of C-D] -->
 
-can also address questions of how the same result might be achieved through interventions of other variables (Ethiopia bean an example), so as to compare which impact pathway is cheapest
+<!-- Translog is so "flexible" that it ends up being restrictive from an economic standpoint---not homogeneous, monotonicity and concavity, global concavity requires negative semidefinite matrix of parameters, enforcement of which "destroys the flexibility of the form" and restricts the price elasticities in undesired way (from "Estimating a Derived Demand System from a Translog Cost Function"). Jorgenson etc. have to then devise ways to make it less flexible, in order to impose constant returns to scale, for eg.  Translog also violates axiom 1 -->
 
+<!-- However, it does not directly address---not in an obvious way---the most enduring objections to the form: its perceived conflict with evidence and intuitions regarding 1) input substitution, 2) production elasticities, and 3) factor demand elasticities. A complete response to these objections is beyond the scope of the work at hand. Nonetheless, a minimal response is sketched out below in the hopes of retaining the attention of the many vigorous critics of Cobb-Douglas who might otherwise read no further. -->
 
-sketch out extension to aggregate demand and PE analysis...computing Econ Surplus, change in net benefit as alternative to ES
+<!-- Enduring objection 1 is that the Cobb-Douglas function implies a unitary elasticity of input substitution, whereas intuition and evidence clearly suggest otherwise. Arrow et al. [-@arrow1961capital] set the tone in their seminal article: -->
 
+<!-- >"Technological alternatives are numerous and flexible in some sectors, limited in others; and uniform substitutability is most unlikely. The difference in elasticities is confirmed by direct observation of capital-labor proportions, which show much more variation among countries in some sectors than in others". -->
+
+<!-- However, the authors here are objecting not to unitary elasticity of substitution, but rather "uniform substitutability". The measure of substitutability of one input for another in a two factor model $y(x_1, x_2)$ given an output target is not the elasticity of substitution, but rather the marginal rate of substitution, $dx_1/dx_2$. And the phrase "uniform substitutability" followed closely by the word "elasticities" may reasonably be interpreted as $d\ln(x_1)/\ln(dx_2) = 1$. (Hundreds of subsequent authors espousing this objection appear to mean this, at any rate.) It is straightforward to show that the two factor Cobb-Douglas model does not imply this. On the contrary, it implies -->
+
+<!-- \begin{equation} -->
+<!-- \frac{d \ln(x_1)}{d\ln(x_2)} = -\frac{\alpha_2}{\alpha_1} -->
+<!-- \end{equation} -->
+
+<!-- And thus agrees with Arrow et al.'s observations regarding the unlikelihood of "uniform substitutability". -->
+
+<!-- At the same time, it is true that the two factor Cobb-Douglas model implies a unitary elasticity of substitution. But the elasticity of substitution is not a measure of factor substitutability. It is a measure of how factor proportions change with substitutability. A unitary elasticity of substitution thus means that a $1\%$ change in substitutability ($dx_1/dx_2$) results in a $1\%$ change in the input usage ratio $x_1/x_2$. In plain English: a change in substitutability of $x_1$ for $x_2$ results in a proportionate change in the substitution of $x_1$ for $x_2$. One may conjecture without controversy that most farm managers would consider this an eminently reasonable characterization of management decision-making. -->
+
+<!-- Enduring objection 2 is that the Cobb-Douglas production elasticities $\alpha_i$ are constant, whereas intuition suggests that production elasticities are functions of inputs, and should thus vary with input use. To lift this "restriction", the translog production function was introduced, with production elasticities defined as Cobb-Douglas functions of the inputs. -->
+
+<!-- While the Cobb-Douglas production elasticities are indeed constant, it is fallacious to then conclude from this that they are not functions of the inputs. On the contrary, by Euler's theorem it is straightforward to show that -->
+
+<!-- \begin{equation} -->
+<!-- \alpha_i = \left(\frac{h - 1}{h} \right)  \frac{x_i}{y} \sum_{j}^{n} \frac{\partial^2 y}{\partial x_i \partial x_j} x_j -->
+<!-- \end{equation} -->
+
+<!-- And, moreover, -->
+
+<!-- \begin{equation} -->
+<!-- \frac{\partial^2 y}{\partial x_i \partial x_j} = \frac{1}{h - 2}  \sum_{k}^{n} \frac{\partial}{ \partial x_i} \frac{\partial y}{\partial x_j \partial x_k} x_k -->
+<!-- \end{equation} -->
+
+<!-- And, so on for any order $\mathcal{\ell}$ of differentiation, ad infinitum, -->
+
+<!-- \begin{equation} -->
+<!-- \frac{\partial^{\ell} y}{\partial x_i^{\ell}} = \frac{1}{h - \ell + 1}  \sum_{j}^{n} \frac{\partial^{\ell + 1} y}{\partial x_i^{\ell + 1} \partial x_j} x_j -->
+<!-- \end{equation} -->
+
+<!-- That is to say, for $h \neq 1$, the Cobb-Douglas production elasticities are not just functions of all inputs, but also of the $2^{nd}$, $3^{rd}$, $\dots$,$\infty^{th}$ order variation of production with respect to inputs, as well as the interactions of these implied in the successive orders of cross derivatives. That all this complex interaction should add up to a constant is a sign not of oversimplification, then, but of mathematical serendipity stemming from axiom 1. The translog function, meanwhile, is not derived from any first principle and is not even a homogeneous function. Which, then, is the more restrictive model? translog also violates axiom 1. -->
+
+<!-- It may be added that the economic principle of net-benefit maximization (cost minimization) implies that optimal input quantities are functions of prices and control variables, and are thus constant. In this sense, the translog production elasticities are also constant. -->
+
+<!-- The same riposte applies to enduring objection 3, namely, that the Cobb-Douglas input demand elasticities are constant, whereas intuition and evidence indicate that input demand elasticities vary with input use. Again, it is true that Cobb-Douglas demand elasticities are constant. But, again, this does not mean that they are not functions of inputs. On the assumption that producers maximize their net benefit (or minimize cost), the Cobb-Douglas input demand own and cross price elasticities follows as -->
+
+<!-- The input own and cross price demand elasticities are thus functions of price and technology. Because optimal input use is also a function of price, these elasticities may be written as functions of input use, if so desired. Conversely, the Hicks-Allen partial elasticities derived using the translog model may be written in terms of prices, if so desired. -->
 
 <!-- The $alpha_i$ can either be directly estimated by fitting Equation \ref{eq:cobbDoug2} or \ref{eq:cobbDoug3} to the farm data, or calculated based on cost share data and the value of $h$ estimated using Equation \ref{eq:lYdEnvReg2}. The latter approach takes advantage of an instructive corollary following immediately from input demand (Equation \ref{eq:inputdem2}), which states that input cost shares ($C^*_i / C^*$) are equal to their respective technology shares ($\alpha_i/h$). -->
 
@@ -5251,9 +5273,9 @@ sketch out extension to aggregate demand and PE analysis...computing Econ Surplu
 <!-- \begin{equation} -->
 <!-- \begin{split} -->
 <!-- \partial \mathcal{L}^*(C^*, k) &= r ( C^* \left(\partial \ln(g) - \boldsymbol{\alpha} ' \partial \mathbf{w} \right) + h \partial B ) \\ -->
-<!-- &= r \gamma (C^* - \bar{\bar{C}^*}) \:\:;\:\:\: \gamma = \left(\partial \ln(g) - \boldsymbol{\alpha} ' \partial \mathbf{w} \right) \\ -->
-<!-- &= \gamma P (y^* - \bar{\bar{y^*}}) \\ -->
-<!-- &= \gamma P v k  (C^{*h} - \bar{\bar{C^{*h}}}) -->
+<!-- &= r \gamma (C^* - \hat{C}^*) \:\:;\:\:\: \gamma = \left(\partial \ln(g) - \boldsymbol{\alpha} ' \partial \mathbf{w} \right) \\ -->
+<!-- &= \gamma P (y^* - \hat{y^*}) \\ -->
+<!-- &= \gamma P v k  (C^{*h} - \hat{C}^{*h}) -->
 <!-- \end{split} -->
 <!-- \end{equation} -->
 
@@ -5261,23 +5283,23 @@ sketch out extension to aggregate demand and PE analysis...computing Econ Surplu
 
 <!-- \begin{equation} -->
 <!-- \begin{split} -->
-<!-- \Delta \psi &= N E[k_a] E[k] v P \gamma \int_0^{\bar{\bar{C}^{*}}} (C^{*h} - \bar{\bar{C^{*h}}}) \rho (C^*) d C^* \\ -->
-<!-- &= N E[k_a] E[k] v P \gamma (E[C^{*h}] \mathcal{P}(\bar{\bar{C^*}}) - \bar{\bar{C^{*h}}} \mathcal{A}) \:\:;\:\:\: \mathcal{P}(\bar{\bar{C^{\#}}}) = \Phi \left( \frac{\ln(\bar{\bar{C^{\#}}}) - m_{\#}}{s_{\#}} - \eta s_{\#}  \right) \\ -->
-<!-- &= N E[k_a] P \gamma (E[y^*] \mathcal{P}(\bar{\bar{C^{\#}}}) - E[k] v \bar{\bar{C^{*h}}} \mathcal{A}) \\ -->
+<!-- \Delta \psi &= N E[k_a] E[k] v P \gamma \int_0^{\bar{\bar{C}^{*}}} (C^{*h} - \hat{C}^{*h}) \rho (C^*) d C^* \\ -->
+<!-- &= N E[k_a] E[k] v P \gamma (E[C^{*h}] \mathcal{P}(\hat{C^*}) - \hat{C}^{*h} \mathcal{A}) \:\:;\:\:\: \mathcal{P}(\bar{\bar{C^{\#}}}) = \Phi \left( \frac{\ln(\bar{\bar{C^{\#}}}) - m_{\#}}{s_{\#}} - \eta s_{\#}  \right) \\ -->
+<!-- &= N E[k_a] P \gamma (E[y^*] \mathcal{P}(\bar{\bar{C^{\#}}}) - E[k] v \hat{C}^{*h} \mathcal{A}) \\ -->
 <!-- &= N E[k_a] P \gamma \left( E[y^*] \mathcal{P}(\bar{\bar{C^{\#}}}) - E[\bar{\bar{y}^*}] \mathcal{A} \right) \:\:;\:\:\: E[\bar{\bar{y}^*}] = E[v k \bar{\bar{C^{*}}}] = \frac{\bar{\bar{C^{*}}}}{E[C^{* h}]} E[y^*] -->
 <!-- \end{split} -->
 <!-- \end{equation} -->
 <!-- $$ -->
-<!-- N E[k_a] E[k] v P \gamma (E[C^{*h}] \mathcal{P}(\bar{\bar{C^*}}) - \bar{\bar{C^{*h}}} \mathcal{A}) \:\:;\:\:\: \mathcal{P}(\bar{\bar{C^*}}) = \Phi \left( \frac{\ln(\bar{\bar{C^{\#}}}) - m_{\#}}{s_{\#}} - \eta s_{\#}  \right) -->
+<!-- N E[k_a] E[k] v P \gamma (E[C^{*h}] \mathcal{P}(\hat{C^*}) - \hat{C}^{*h} \mathcal{A}) \:\:;\:\:\: \mathcal{P}(\hat{C^*}) = \Phi \left( \frac{\ln(\bar{\bar{C^{\#}}}) - m_{\#}}{s_{\#}} - \eta s_{\#}  \right) -->
 <!-- $$ -->
-<!-- &= N E[k_a] E[k] v P \gamma (E[C^{*h}] (1 - \Phi(\zeta)) - \bar{\bar{C^{*h}}} \mathcal{A}) \\ -->
-<!-- &= N E[k_a] P \gamma (E[y^*] (1 - \Phi(\zeta)) - E[k] v \bar{\bar{C^{*h}}} \mathcal{A}) \\ -->
+<!-- &= N E[k_a] E[k] v P \gamma (E[C^{*h}] (1 - \Phi(\zeta)) - \hat{C}^{*h} \mathcal{A}) \\ -->
+<!-- &= N E[k_a] P \gamma (E[y^*] (1 - \Phi(\zeta)) - E[k] v \hat{C}^{*h} \mathcal{A}) \\ -->
 <!-- &= N E[k_a] P \gamma \left( E[y^*] (1 - \Phi(\zeta)) - E[\bar{\bar{y}^*}] \mathcal{A} \right) -->
 
 <!-- By Equation \ref{eq:keyResult2} this can also be written -->
 
 <!-- \begin{equation} -->
-<!-- \Delta \psi = N E[k_a] P \gamma \mathcal{A} \left( E[y^*| C^* \leq \bar{\bar{C^{*h}}}] -  E[\bar{\bar{y}^*}] \right) -->
+<!-- \Delta \psi = N E[k_a] P \gamma \mathcal{A} \left( E[y^*| C^* \leq \hat{C}^{*h}] -  E[\bar{\bar{y}^*}] \right) -->
 <!-- \end{equation} -->
 <!-- The total change in aggregate net benefit summed across all strata then follows as -->
 <!-- \begin{equation} -->
@@ -5299,8 +5321,8 @@ sketch out extension to aggregate demand and PE analysis...computing Econ Surplu
 
 <!-- \begin{equation} -->
 <!-- \begin{split} -->
-<!-- E[y^*] \Phi \left( \frac{\ln(\bar{\bar{C^*}}) - m_{c}}{s_c} - h s_c  \right) &= E[y^*| C^* \leq \bar{\bar{C^*}}] \Phi \left( \frac{\ln(\bar{\bar{C^*}}) - m_{c}}{s_c} \right) \\ -->
-<!-- E[y^*] (1 - \Phi(\zeta)) &= E[y^*| C^* \leq \bar{\bar{C^*}}] \mathcal{A} -->
+<!-- E[y^*] \Phi \left( \frac{\ln(\hat{C^*}) - m_{c}}{s_c} - h s_c  \right) &= E[y^*| C^* \leq \hat{C^*}] \Phi \left( \frac{\ln(\hat{C^*}) - m_{c}}{s_c} \right) \\ -->
+<!-- E[y^*] (1 - \Phi(\zeta)) &= E[y^*| C^* \leq \hat{C^*}] \mathcal{A} -->
 <!-- \end{split} -->
 <!-- \end{equation} -->
 
