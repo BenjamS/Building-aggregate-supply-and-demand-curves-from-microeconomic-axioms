@@ -3,7 +3,7 @@ title: A theoretical derivation of the agricultural aggregate supply curve and r
 # author: "Benjamin Schiek"
 # date: "`r Sys.Date()`"
 abstract: |
-  \singlespacing Conventional models of the aggregate supply of agricultural commodities---specifically those used in ex-ante impact assessments of policy and research shocks---do not endogenously model the supply response to technology (or any other exogenous) shocks, but rather 1) assume the farm level supply response as exogenously given based on agronomic information, and then 2) assume, as a matter of fiat, the mechanism by which the farm level response manifests at the aggregate level (whether it is a shift or pivot of the aggregate supply curve, and what the adoption rate will be). Such models also do not account for farm heterogeneity---or, worse still, assume identical marginal farms---and do not account for farm entry/exit. For applications where these things matter, here a tractable aggregate supply model is formally derived from five weak axioms. The derived form is expressed in parameters that have clear economic meaning, including novel parameters such as price volatility and a term representing the mean probability of profit---which in turn endogenously accounts for farm entry/exit---thus broadening the range of policy questions that can be addressed in partial equilibrium analysis. Equations for the _endogenous_ adoption rate, supply response, and producer welfare impact of technology shock are derived. As an illustrative use case, the model is fit to Kenya maize farm data. The fitted aggregate supply and price elasticity of aggregate supply curves agree with empirical estimates. The adoption rate, supply response, and welfare impact are calculated for a hypothetical technology shock.
+  \singlespacing Conventional models of the aggregate supply of agricultural commodities---specifically those used in ex-ante impact assessments of policy and research shocks---do not endogenously model the supply response to technology (or any other exogenous) shocks, but rather 1) assume the farm level supply response as exogenously given based on agronomic information, and then 2) assume, as a matter of fiat, the mechanism by which the farm level response manifests at the aggregate level (whether it is a shift or pivot of the aggregate supply curve, and what the adoption rate will be). Such models also do not account for farm heterogeneity---or, worse still, assume identical marginal farms---and do not account for farm entry/exit. For applications where these things matter, here a tractable aggregate supply model is formally derived from five weak axioms. The derived form is expressed in parameters that have clear economic meaning, including novel parameters such as price volatility and a term representing the mean probability of profit---which in turn endogenously accounts for farm entry/exit---thus broadening the range of policy questions that can be addressed in partial equilibrium analysis. Equations for the _endogenous_ adoption rate, supply response, and producer welfare impact of technology shock are derived. As an illustrative use case, the model is fit to Kenya maize farm data. The fitted aggregate supply and price elasticity of aggregate supply curves agree with empirical estimates. The adoption rate, supply response, and producer welfare impact are calculated for a hypothetical technology shock.
 header-includes:
   - \usepackage{geometry}
   - \geometry{top=1in,left=1in,bottom=1in,right=1in}
@@ -13,6 +13,8 @@ header-includes:
   - \floatplacement{figure}{H}
   - \usepackage{amsmath}
   - \numberwithin{equation}{section}
+  - \usepackage{caption}
+  - \captionsetup[figure]{font=small}  # Options: scriptsize, footnotesize, small
 output:
   pdf_document:
    fig_caption: true
@@ -129,9 +131,9 @@ All of the parameters appearing in the derived model have a straightforward inte
 <!-- Wohlgenant [-@wohlgenant1997nature] suggests the lognormal distribution as a suitable density fn... -->
 <!-- the probability that output price will be greater than the mean farm's expected unit cost at harvest---i.e. the mean farm's probability of profit -->
 
-In the Methodology section, immediately below, the model is derived from axioms 1-5. This includes a derivation of equations for assessing the endogenous supply response and producer welfare impact given an exogenous technology shock, together with an endogenous model of the adoption rate. The adoption rate model includes a term accounting for subsidies. The stochasticity of meteorology and output price is accommodated by axiom 5 at the end of the section. All major differences between the present work and the conventional model stem from this explicit, careful accounting of the endogenous response to exogenous shock, and of the stochastic nature of meteorology and output price.
+In the Methodology section, immediately below, the model is derived from axioms 1-5. This includes a derivation of equations for assessing the endogenous supply response and producer welfare impact given an exogenous technology shock, together with an endogenous model of the adoption rate. The adoption rate model includes a term accounting for subsidies. The stochasticity of meteorology and output price is accommodated by axiom 5 at the end of the section. All of the salient differences between the present work and the conventional modeling framework stem from this explicit, careful accounting of the endogenous response to exogenous shock, and of the stochastic nature of meteorology and output price.
 
-After the Methodology, the derived model is fit to Kenya maize farm data as an illustrative use case. The fitted maize supply model is vetted against empirical estimates of maize supply at different price points across seven years. The model's estimates of both supply and the price elasticity of supply agree closely with empirical estimates. The model's explicit stochastic accounting of rainfall proves critical to this accuracy. A hypothetical, generic technology shock is then introduced in order to showcase the model's impact assessment capacity. The endogenously modeled aggregate supply response to the shock, and associated producer welfare outcomes, are evaluated at a range of different subsidy levels and assumed price shocks. Results are presented in a heatmap format to facilitate policy discussion.
+After the Methodology, the derived model is fit to Kenya maize farm data as an illustrative use case. The fitted maize supply model is vetted against empirical estimates of maize supply at different price points across seven years. The model's estimates of both supply and the price elasticity of supply agree closely with the empirical estimates. The model's explicit stochastic accounting of rainfall proves critical to this accuracy. A hypothetical, generic technology shock is then introduced in order to showcase the model's impact assessment capacity. The endogenously modeled aggregate supply response to the shock, and associated producer welfare outcomes, are evaluated at a range of different subsidy levels and assumed price shocks. Results are presented in a heatmap format to facilitate policy discussion.
 
 The widespread use of conventional linear and CES modeling frameworks calls for a more detailed engagement with the literature than the cursory treatment offered above. To place the motivation of the present work on solid footing, this engagement is provided in Appendix A.
 <!-- [Because the conventional linear and CES aggregate supply functions are in such wide use, it is first worthwhile to engage with that literature in more detail than is offered in the cursory treatment above, and to thereby place the motivation for the present work on a more solid footing.] -->
@@ -140,7 +142,7 @@ The widespread use of conventional linear and CES modeling frameworks calls for 
 # Methodology: Theoretically derived, endogenous modeling of aggregate supply and response to exogenous shock
 \doublespacing
 
-Below, a deterministic model of aggregate supply and endogenous response to technology (or any other kind of exogenous) shock is derived from axioms 1-5. First, the farm production function is derived from axioms 1 and 2. Then a deterministic aggregate supply function is derived from the farm production function and axioms 3 and 4. (This is deterministic in the sense that it does not take into account the stochasticity of output price and weather.) An alternative deterministic form for aggregate supply is also derived based on the relation between conditional and unconditional means. Practical steps for evaluating curve parameters are briefly enumerated; and the importance of accounting for "stratified TFP"---i.e., variations in total factor productivity across farm populations---is addressed. The farm level endogenous yield and expenditure response to exogenous shock is then formalized---including a formula for calculating the endogenous adoption rate---and aggregated. Finally, stochasticity and axiom 5 are introduced to explicitly account for random fluctuations in weather and output price, resulting in the final functional form for expected aggregate supply.
+Below, a deterministic model of aggregate supply and endogenous response to technology (or any other kind of exogenous) shock is derived from axioms 1-5. First, the farm production function is derived from axioms 1 and 2. Then a deterministic aggregate supply function is derived from the farm production function and axioms 3 and 4. (This is deterministic in the sense that it does not take into account the stochasticity of output price and weather.) An alternative deterministic form for aggregate supply is also derived based on the relation between conditional and unconditional means. Practical steps for evaluating curve parameters are briefly enumerated; and the importance of accounting for "stratified TFP"---i.e., heterogeneous total factor productivity---is addressed. The farm level endogenous yield and expenditure response to exogenous shock is then formalized---including a formula for calculating the endogenous adoption rate---and aggregated. Finally, stochasticity and axiom 5 are introduced to explicitly account for random fluctuations in weather and output price, resulting in the final functional form for expected aggregate supply.
 
 ## Derivation of the farm production function from axioms 1 and 2 \label{sec:axioms1and2}
 
@@ -219,7 +221,7 @@ Where the $\kappa_i$ are the control variable elasticities of yield. Because the
 This is, of course, the Cobb-Douglas form. Outside of Economics, it would simply be referred to as a (multivariate) power law. Such forms are often good models of observed processes across a wide range of research contexts and disciplines. In Economics, the Cobb-Douglas form was widely used from the 1920s to 1950s on the basis of its good empirical fit, but fell into disrepute thereafter for its perceived lack a theoretical basis. Capalbo and Antle [-@capalbo2015agricultural] offer a succinct introduction to this vast discussion. The forgoing derivation of the Cobb-Douglas form from axiom 1 in some measure redresses the lack of a theoretical basis. A full defense against all of the criticisms levied against this form over the past seventy five years is a book-length project that will not be attempted here.
 <!-- [Other perceived shortcomings of the form are briefly addressed in the Discussion. if there is enough space!] [Or: In the course of the derivation below, a number of theoretical strengths are brought to light---underrepresented or overlooked by textbook treatments---that cast doubt on the bad reputation as a "restrictive" model] -->
 
-Interpretation of the constant $g$ is as difficult as one wants to make it. It is, of course, usually called the "total factor productivity" (TFP), and understood to represent the yield per unit "all inputs"---although a more accurate description would be yield per unit "all input and control variables, raised to various powers". The TFP constant $g$ may in fact be a sum of binary endowments $b_i \beta_i$ that augment the base constant $\beta_0$ on farms where the endowment is present (where $b_i = 1$). That is to say, 
+Interpretation of the constant $g$ is as difficult as one wants to make it. It is, of course, usually called the "total factor productivity" (TFP), and understood to represent the yield per unit "all inputs"---although a more accurate description would be yield per unit "all input and control variables, raised to various powers". The constant $g$ may in fact be a sum of binary endowments $b_i \beta_i$ that augment the TFP base constant ($\beta_0$) on farms where the endowment is present (where $b_i = 1$). That is to say, 
 
 \begin{equation}
 \ln(g) = \alpha_0 = \beta_0 + \sum_{i = 1}^{n_b} b_i \beta_i
@@ -250,14 +252,14 @@ y = u \frac{k}{E[k]} \prod_{i = 1}^{n_x} \left( \frac{x_i}{E[x_i]} \right)^{\alp
 \label{eq:cobbDoug3}
 \end{equation}
 
-This substitution will soon be seen to facilitate interpretation and manipulation of the optimal yield function. But first the optimal yield function must be derived from axiom 2 (profit maximization). Defining farm net benefit or profit ($\mathcal{L}$) as
+This substitution will soon facilitate interpretation and manipulation of the optimal yield function. But first the optimal yield function must be derived from axiom 2 (profit maximization). Defining farm net benefit or profit ($\mathcal{L}$) as
 
 \begin{equation}
 \mathcal{L} = Py - \lambda (C - B)
 \label{eq:lagrangian}
 \end{equation}
 
-Where $P$ is the output price, $C$ is expenditure ($C = \mathbf{w}'\mathbf{x}$), $B$ is the farm budget and $\lambda$ is the farm budget shadow price---that is, the marginal benefit to the farm of a marginal increase in budget ($\partial \mathcal{L} / \partial B = \lambda$)---then the first order conditions for a maximum,
+Where $P$ is the output price, $C$ is expenditure ($C = \mathbf{w}'\mathbf{x}$, where $w_i \in\mathbf{w}$ is the $i^{th}$ input price), $B$ is the farm budget and $\lambda$ is the farm budget shadow price---that is, the marginal benefit to the farm of a marginal increase in budget ($\partial \mathcal{L} / \partial B = \lambda$)---then the first order conditions for a maximum,
 
 \begin{equation}
 \begin{split}
@@ -276,7 +278,7 @@ x^*_i = \frac{y^* P \alpha_i}{\lambda w_i}
 \label{eq:inputDem1}
 \end{equation}
 
-Where $w_i \in\mathbf{w}$ is the $i^{th}$ input price, $\lambda$ is the farm budget shadow price, and $y*$ is the optimal yield, i.e., the yield function in Equation \ref{eq:cobbDoug2} evaluated at the optimal inputs $x^*_i$. Multiplying this expression for $x^*_i$ by $w_i$ and summing both sides over $i$ then gives an expression for optimal expenditure ($C^*$).
+Where $y*$ is the optimal yield, i.e., the yield function in Equation \ref{eq:cobbDoug2} evaluated at the optimal input demand $x^*_i$. Multiplying this expression for $x^*_i$ by $w_i$ and summing both sides over $i$ then gives an expression for optimal expenditure ($C^*$).
 
 \begin{equation}
 C^* = R^* \frac{h}{\lambda} \:;\:\:\: R^* = y^* P
@@ -336,7 +338,7 @@ y^* = v k C^{*h}e^{\epsilon} \:\:;\:\:\: v = \frac{E[y^*]}{E[k] E[C^{*h}]}
 \begin{split}
 v &= \frac{u}{E[k] E[C^*]^h} \\
 &= g \frac{\prod_i^{n_x}E[x_i]^{\alpha_i}}{E[C^*]^h} \\
-&= g \frac{1}{h}\prod_i^{n_x} \left( \frac{\alpha_i}{w_i} \right)^{\alpha_i}
+&= \frac{g}{h}\prod_i^{n_x} \left( \frac{\alpha_i}{w_i} \right)^{\alpha_i}
 \end{split}
 \label{eq:v0forms}
 \end{equation}
@@ -349,7 +351,7 @@ The second order condition for maximum profit is
 
 \begin{equation}
 \begin{split}
-\mathbf{x} ' \nabla_{\mathbf{x}}^2 \mathcal{L} \mathbf{x} &= P \mathbf{x} ' \nabla_{\mathbf{x}}^2 y \mathbf{x} ' < 0 \\
+\mathbf{x} ' (\nabla_{\mathbf{x}}^2 \mathcal{L}) \: \mathbf{x} &= P \mathbf{x} ' (\nabla_{\mathbf{x}}^2 y) \: \mathbf{x} < 0 \\
 &= P h (h - 1) < 0
 \end{split}
 \label{eq:eqSOC}
@@ -358,12 +360,6 @@ The second order condition for maximum profit is
 Where Euler's Theorem has been invoked in the second line of the condition. Axioms 1 and 2 thus require that yield exhibit decreasing returns to scale ($0 < h < 1$), whereby it also follows that yield is globally concave in inputs. (Increasing returns to scale would imply minimum profit and convexity in inputs, while constant returns would imply the break even point and linearity in inputs.)
 
 The price elasticity of farm supply resolves as follows.
-
-\begin{equation}
-\frac{\partial \ln(y^*)}{\partial P} = h \frac{\partial \ln(C^*)}{\partial P}
-\end{equation}
-
-Recalling that $C^* = R^* h / \lambda$ (Equation \ref{eq:cStar}), the output price elasticity of farm supply resolves as follows.
 
 \begin{equation}
 \begin{split}
@@ -375,7 +371,7 @@ Recalling that $C^* = R^* h / \lambda$ (Equation \ref{eq:cStar}), the output pri
 \label{eq:PelastYstar}
 \end{equation}
 
-(Where Equation \ref{eq:cStar} is invoked in the second line.) Because returns to scale are strictly decreasing, it follows that farm supply is positively sloped. Moreover, farm supply is elastic for $h \in (1 / 2 , 1)$, inelastic for $h \in (0, 1 / 2)$, and linear when $h = 1 / 2$. Note that increasing returns to scale would imply negatively sloped supply curves. In Appendix A.1, the input own and cross price elasticities of demand are likewise derived and shown to be strictly negative only when returns to scale are decreasing.
+(Where Equation \ref{eq:cStar} is invoked in the second line.) Because returns to scale are strictly decreasing, then farm supply must be positively sloped. Moreover, farm supply is elastic for $h \in (1 / 2 , 1)$, inelastic for $h \in (0, 1 / 2)$, and linear when $h = 1 / 2$. Note that increasing returns to scale would imply negatively sloped supply curves. In Appendix B.1, the input own and cross price elasticities of demand are likewise derived and shown to be strictly negative only when returns to scale are decreasing.
 <!-- Then $y^*$ can also be written -->
 <!-- \begin{equation} -->
 <!-- y^* = \left( g \prod_{i = 1}^{n_x} \left( \frac{\alpha_i}{w_i} \right)^{\alpha_i} \right) \left( \frac{P}{\lambda} \right) -->
@@ -406,8 +402,8 @@ The integral is now over the domain of expenditure $C^* \in (0, \bar{C}^*)$ inst
 \begin{equation}
 \begin{split}
 C^* = C^{\#} y^* &= C^{\#} v k C^{* h} \\
-&rightarrow C^* = (v k C^{\#})^{\eta / h} \:\:;\:\:\: \eta = \frac{h}{1 - h} \\
-&rightarrow y^* = (v k)^{\eta / h} C^{\# \eta}
+&\rightarrow C^* = (v k C^{\#})^{\eta / h} \:\:;\:\:\: \eta = \frac{h}{1 - h} \\
+&\rightarrow y^* = (v k)^{\eta / h} C^{\# \eta}
 \end{split}
 \label{eq:fnCsharp}
 \end{equation}
@@ -440,7 +436,7 @@ C^{\#} = \frac{P}{\lambda} h
 \label{eq:cSharp}
 \end{equation}
 
-Axiom 3 states that farms enter production only if they expect to make non-negative profit, i.e. if $C^* \leq R^*$, which simplifies to $C^{\#} \leq P$. (It follows from Equation \ref{eq:cStar} or \ref{eq:cStar} that another way of expressing axiom 3 is $\lambda \geq h$.) Note, in passing, that the farm employment rate $\mathcal{E}$ may thus be expressed as follows.
+Axiom 3 states that farms enter production only if they expect to make non-negative profit, i.e. if $C^* \leq R^*$, which simplifies to $C^{\#} \leq P$. (It follows from Equation \ref{eq:cStar} or \ref{eq:cStar} that another way of expressing axiom 3 is $\lambda \geq h$.) Note, in passing, that the farm employment rate ($\mathcal{E}$) may thus be expressed as follows.
 
 \begin{equation}
 \mathcal{E} = \int_0^{P} \rho(C^{\#}) dC^{\#}
@@ -449,13 +445,10 @@ Axiom 3 states that farms enter production only if they expect to make non-negat
 Assuming yield is lognormally distributed (axiom 4), then so must be $C^*$ and $C^{\#}$; and this expression reduces to
 
 \begin{equation}
-\begin{split}
-\mathcal{E} &= \Phi \left( \frac{\ln(P) - m_{\#}}{s_{\#}} \right) \\
-& m_{\#} = E[\ln(C^{\#})] \:\:\:\: s^2_{\#} = Var[\ln(C^{\#})]
-\end{split}
+\mathcal{E} = \Phi \left( \frac{\ln(P) - m_{\#}}{s_{\#}} \right)
 \end{equation}
 
-Where $\Phi()$ is the standard normal cumulative distribution function.
+Where $m_{\#} = E[\ln(C^{\#})]$, $s^2_{\#} = Var[\ln(C^{\#})]$, and $\Phi()$ is the standard normal cumulative distribution function.
 
 Now, to resolve the integral in the expression for aggregate supply (Equation \ref{eq:aggSupStep1}), note that, for any lognormally distributed variable $\chi$ and upper bound $\xi$,
 
@@ -467,16 +460,16 @@ Now, to resolve the integral in the expression for aggregate supply (Equation \r
 \label{eq:keyResult}
 \end{equation}
 
-(See Appendix A.4 for a proof.)
+(See Appendix B.2 for a proof.)
 
 Substituting $\chi = C^{\# \eta}$ and $\xi = P$,
 
 \begin{equation}
 \int_{0}^{P} C^{\# \eta} \rho(C^{\#}) d C^{\#} = E[C^{\# \eta}] \Phi \left( \frac{\ln(P) - m_{\#}}{s_{\#}} - \eta s_{\#} \right)
-<!-- \label{eq:integralStep2} -->
 \end{equation}
+<!-- \label{eq:integralStep2} -->
 
-Substituting the right hand side of this expression for the integral in Equation \ref{eq:aggSupStep2}, the expression for aggregate supply simplifies as follows.
+Substituting the right hand side of this expression for the integral in Equation \ref{eq:aggSupStep1}, the expression for aggregate supply simplifies as follows.
 
 \begin{equation}
 Q = N E[k_a] E[y^*] \Phi \left( \frac{\ln(P) - m_{\#}}{s_{\#}} - \eta s_{\#} \right)
@@ -501,7 +494,7 @@ Axioms 1-4 thus give us a provisional tractable expression for aggregate supply 
 ### Conditional vs. unconditional means, and an alternative form for aggregate supply \label{sec:condMean}
 \doublespacing
 
-It is important to keep in mind that $E[C^*]$, $E[y^*]$ are _unconditional_ means. Because axiom 3 truncates the upper tail of the distribution of $C^{\#}$ at $P$, then sample parameters calculated from observed data must be interpreted as _conditional_. That is to say, the sample means of expenditure and yield do not represent $E[C^*]$ and $E[y^*]$, but rather the conditional means $E[C^* | C^{\#} \leq P]$ and $E[y^* | C^{\#} \leq P]$. The conditional and unconditional means of any lognormally distributed variable $\chi$ with upper bound $\xi$ are related as follows.
+It is important to keep in mind that $E[C^*]$ and $E[y^*]$ are _unconditional_ means. Because axiom 3 truncates the upper tail of the distribution of $C^{\#}$ at $P$, then sample parameters calculated from observed data must be interpreted as _conditional_. That is to say, the sample means of expenditure and yield do not represent $E[C^*]$ and $E[y^*]$, but rather the conditional means $E[C^* | C^{\#} \leq P]$ and $E[y^* | C^{\#} \leq P]$. The conditional and unconditional means of any lognormally distributed variable $\chi$ with upper bound $\xi$ are related as follows.
 
 \begin{equation}
 E[\chi | \chi \leq \xi] \Phi \left( \frac{\ln(\xi) - m_{\chi}}{s_{\chi}} \right) = E[\chi] \Phi \left(\frac{\ln(\xi) - m_{\chi}}{s_{\chi}} - s_{\chi}\right)
@@ -527,16 +520,17 @@ Such that aggregate supply may also be written
 
 \begin{equation}
 Q = N E[k_a] E[y^*|C^{\#} \leq P] \mathcal{E}
+\label{eq:aggSup1Alt}
 \end{equation}
 
-Which may be useful for point estimates of aggregate supply along the curve since $E[y^*|C^{\#} \leq P]$ can be estimated from the observed yield distribution. This form is also instructive because $\mathcal{E}$ has a straightforward interpretation as the farm employment rate. However, it is inconvenient for purposes of drawing the entire aggregate supply curve, as the observed $E[y^*|C^{\#} \leq P]$ is valid only for the $P$ at which it is measured. The unconditional mean yield $E[y^*]$, on the other hand, is constant for all $P$. For this reason, Equation \ref{eq:aggSup1} is preferred for supply curve assessment. Moreover, the term $\mathcal{P}(P; m_{\#}, s_{\#})$ turns out to have a meaningful economic interpretation that will become clear when the stochastic character of price is taken into account farther below.
+Which may be useful for point estimates of aggregate supply along the curve since $E[y^*|C^{\#} \leq P]$ can be estimated from the observed yield distribution and because $\mathcal{E}$ has a straightforward interpretation as the farm employment rate. However, this form is inconvenient for purposes of drawing the entire aggregate supply curve, as the observed $E[y^*|C^{\#} \leq P]$ is valid only for the $P$ at which it is measured. The unconditional mean yield $E[y^*]$, on the other hand, is constant for all $P$. For this reason, Equation \ref{eq:aggSup1} is preferred for aggregate supply curve assessment. Moreover, the term $\mathcal{P}(P^{\eta}; m_{\#}, s_{\#})$ turns out to have a meaningful economic interpretation that will become clear when the stochastic character of price is taken into account farther below.
 
 ### Evaluating supply curve parameters in practice \label{sec:evalInPract}
 
 Tractable expressions for mean expenditure and yield follow from Equations \ref{eq:fnCsharp} and from the lognormality of $y^*$ and $C^*$ (axiom 4).
 
 \begin{equation}
-E[C^*] = e^{m_c + frac{s^2_c}{2}}
+E[C^*] = e^{m_c + \frac{s^2_c}{2}}
 \end{equation}
 
 Where
@@ -580,14 +574,14 @@ In practice, the sample parameters $\bar{m}_{\#}$ and $\bar{s}_{\#}$ can be calc
 \label{eq:mCshrpsCshrp}
 \end{equation}
 
-This is preferred to calculating the mean and standard deviation directly from observed $y^*/C^*$ because observed yield is harvest yield, whereas the $y^*$ appearing in all of the equations above refers not to harvest yield but to expected harvest yield at planting time. This becomes clear when stochasticity is taken into account.
+This is preferred to calculating the parameters directly from observed $C^* / y^*$ because observed yield is harvest yield, whereas the $y^*$ appearing in all of the equations above refers not to harvest yield but to expected harvest yield at planting time. This becomes clear when stochasticity is taken into account.
 
 Because $C^{\#}$ is lognormally distributed, the unconditional parameters $m_{\#}$ and $s_{\#}$ can then be deduced from the conditional parameters $\bar{m}_{\#}$ and $\bar{s}_{\#}$ by solving the following system of equations.
 
 \begin{equation}
 \begin{split}
-\bar{m}_{\#} &= m_{\#} - s_{\#} \frac{\phi(z)}{\Phi(z)} \\
-\bar{s}_{\#}^2 &= s_{\#}^2 \left( 1 - z \frac{\phi(z)}{\Phi(z)} - \left( \frac{\phi(z)}{\Phi(z)} \right)^2   \right) \:\:;\:\:\: z = \frac{\ln(P) - m_{\#}}{s_{\#}}
+\bar{m}_{\#} &= m_{\#} - s_{\#} \frac{\phi(\zeta)}{\Phi(\zeta)} \\
+\bar{s}_{\#}^2 &= s_{\#}^2 \left( 1 - \zeta \frac{\phi(\zeta)}{\Phi(\zeta)} - \left( \frac{\phi(\zeta)}{\Phi(\zeta)} \right)^2   \right) \:\:;\:\:\: \zeta = \frac{\ln(P) - m_{\#}}{s_{\#}}
 \end{split}
 \label{eq:cSharpUncondParams}
 \end{equation}
@@ -596,11 +590,12 @@ Whence it is then possible to evaluate the unconditional parameters $m_c$, $s_c$
 
 ### TFP strata \label{sec:TFPstrata}
 
-As noted earlier (Equation \ref{eq:g0Sum}), binary endowments $\beta_i b_i$, and hence TFP, vary across the population. In the Kenya maize farm example explored farther below, there are 12 distinct values of expenditure TFP, corresponding to 12 distinct combinations of the binary endowments, henceforth referred to as "TFP strata". Wherever $g$ or $v$ appears above, then, what is really meant is $g_{\ell}$ and $v_{\ell}$, where $\ell$ indexes the values of TFP corresponding to each stratum ($\ell \in (1,12)$ in this case). It follows that any parameters that are a function of $v_{\ell}$ likewise correspond to the $\ell^{th}$ stratum. In other words, $E[C^*]$ and $E[y^*]$ can be disaggregated by stratum as follows.
+As noted earlier (Equation \ref{eq:g0Sum}), binary endowments $\beta_i b_i$, and hence TFP, vary across the population. In the Kenya maize farm example explored farther below, there are 12 distinct values of expenditure TFP, corresponding to 12 distinct combinations of the binary endowments, henceforth referred to as "TFP strata" and indexed by $\ell$. It follows that any parameters that are a function of $v_{\ell}$ likewise correspond to the $\ell^{th}$ stratum. In other words, $E[C^*]$ and $E[y^*]$ can be disaggregated by TFP stratum as follows.
+<!-- Wherever $g$ or $v$ appears above, then, what is really meant is $g_{\ell}$ and $v_{\ell}$, where $\ell$ indexes the values of TFP corresponding to each stratum ($\ell \in (1,12)$ in this case).  -->
 
 \begin{equation}
 \begin{split}
-E[C^*]_{\ell} &= e^{m_{c \ell} + frac{s^2_c}{2}} \\
+E[C^*]_{\ell} &= e^{m_{c \ell} + \frac{s^2_c}{2}} \\
 \text{Where} &\:\:\: m_{c \ell} = \frac{1}{1 - h}(\ln(v_{\ell}) + m_k + m_{\#})
 \end{split}
 \end{equation}
@@ -613,8 +608,7 @@ E[y^*]_{\ell} &= v_{\ell} E[k] E[C^{* h}]_{\ell} \\
 &= v_{\ell} E[k] e^{h m_{c \ell} + h^2 \frac{s_c^2}{2}}
 \end{split}
 \end{equation}
-
-To evaluate the stratified conditional (observed) means, replace $m_{c \ell}$, $s_c$ in these expressions with $\bar{m}_{c \ell}$, $\bar{s}_c$.
+<!-- To evaluate the stratified conditional (observed) means, replace $m_{c \ell}$, $s_c$ in these expressions with $\bar{m}_{c \ell}$, $\bar{s}_c$. -->
 
 Parameters unindexed by $\ell$ refer to their average across all strata. For example, $E[y^*]$ refers to the unconditional mean yield evaluated at $v$, the average expenditure across all strata.
 
@@ -628,7 +622,7 @@ Where $N_{\ell} / N$ is the fraction of farms in the $\ell^{th}$ TFP stratum.
 ## An endogenous model of supply response to and welfare impact of exogenous shock
 \doublespacing
 
-Agronomic yield and expenditure response to exogenous stimulus at an experimental station does not translate into the economic yield and expenditure response likely to occur in real farm populations. This economically obvious fact of life [@herdt1988increasing; @balasubramanian2000yield] bears reiteration because confusion on this matter unfortunately still pervades the conversation in areas of agricultural research impact assessment [@sumberg2012mind].
+The agronomic yield and expenditure response to an exogenous shock observed at experimental stations does not translate into the economic yield and expenditure response likely to occur in real farm populations. This economically obvious fact of life [@herdt1988increasing; @balasubramanian2000yield] bears reiteration because confusion on this matter unfortunately still pervades the conversation in many areas of agricultural research impact assessment [@sumberg2012mind].
 
 As noted in the Introduction, the authors of the conventional modeling framework are cognizant of the difference between economic yields and agronomic yields; and offer some words of warning on the matter [@alston1995science]. But they provide no practical, formal method to distinguish between the two or to explicitly relate the former to the latter, such that their model effectively blurs the technology shock and supply response together as a single, nebulous exogenous shock.
 
@@ -663,9 +657,9 @@ Ideally, the value of $\beta_5$ should be estimated directly from field trials. 
 \label{eq:dldlg0}
 \end{equation}
 
-(See Appendix B.2 for details.)
+(See Appendix B.3 for details.)
 
-The direction of the expected change in prices depends upon the type of research product. Most agricultural research currently falls into one of two broad paradigms: "sustainable agricultural intensification" (SAI) or "agroecological intensification" (AEI) [@mockshell2018beyond]. Widespread adoption of a new SAI technology typically results in increased output supply and input demand, and hence a lower output price and higher input prices. Widespread adoption of an AEI technology, on the other hand, can result in lower input demand and emphasizes yield stability over quantity, hence lowering input prices and lowering output price volatility more than output price itself. For illustrative purposes, in this article the new technology is assumed to be an SAI research product, such that $\partial \ln(\mathbf{w}) / \partial \ln(g) > 0$ and $\partial \ln(P) / \partial \ln(g) < 0$.
+The direction of the expected change in prices depends upon the type of research product. Most agricultural research currently falls into one of two broad paradigms: "sustainable agricultural intensification" (SAI) or "agroecological intensification" (AEI) [@mockshell2018beyond]. Widespread adoption of a new SAI technology typically results in increased output supply and input demand, and hence a lower output price and higher input prices. Widespread adoption of an AEI technology, on the other hand, can result in lower input demand and emphasizes yield stability over quantity, which could result in more nuanced impacts (e.g. lowering output price volatility but not necessarily the price itself). For illustrative purposes, in this article the new technology is assumed to be an SAI research product, such that $\partial \ln(\mathbf{w}) / \partial \ln(g) > 0$ and $\partial \ln(P) / \partial \ln(g) < 0$.
 <!-- \begin{equation} -->
 <!-- \begin{split} -->
 <!-- \frac{\partial \ln(y^*)}{\partial \ln(g)} &= \frac{\partial \ln(v)}{\partial \ln(g)} + h \frac{\partial \ln(C^*)}{\partial \ln(g)} \\ -->
@@ -745,13 +739,13 @@ Where the term $\partial B$ represents the subsidies, costs, or any other exogen
 \label{eq:adoptCondSimp}
 \end{equation}
 
-As mentioned above, for SAI technologies the expectation is that $\partial \ln(P) < 0$, $\partial \ln(\mathbf{w}) > 0$, and thus $\partial \nu < 0$. In words, then, the adoption condition says that a farm stands to increase its net benefit through adoption of yield scaling technology only if the resulting percentage increase in TFP ($g$) is greater than the corresponding percentage decrease in output price minus the corresponding percentage increase in input prices scaled by their respective input elasticities ($\alpha_i$). Note the resemblance between this and the "price/productivity tightrope" condition formulated by Lipton [-@lipton2005family].
+As mentioned above, for SAI technologies the expectation is that $\partial \ln(P) < 0$, $\partial \ln(\mathbf{w}) > 0$, and thus $\partial \ln(\nu) < 0$. In words, then, the adoption condition says that a farm stands to increase its net benefit through adoption of yield scaling technology only if the resulting percentage increase in TFP ($\partial \ln(g)$) is greater than the corresponding percentage decrease in output price minus the corresponding percentage increase in input prices scaled by their respective input elasticities ($\alpha_i$). Note the resemblance between this and the "price/productivity tightrope" condition formulated by Lipton [-@lipton2005family].
 
 >\singlespacing "New [SAI] science usually raises farm supply of outputs and demand for inputs. That makes outputs cheaper and inputs more expensive; hence the ratio of farm output prices to input prices falls. Do small and poor farmers gain? If, and only if, this science-induced fall in their relative farm prices is slower than the science-induced rise in their conversion ratio of physical inputs into physical outputs (that is, TFP)."
 
 \doublespacing
 
-The only substantive difference between Lipton's condition and the condition in Inequality \ref{eq:adoptCondSimp} is that the percentage increases in input prices in the latter are scaled by their respective efficiency parameters. And of course the more complete version of the adoption condition in Inequality \ref{eq:adoptCond} differs from Lipton by also including the exogenous net subsidy term.
+The only substantive difference between Lipton's condition and the condition in Inequality \ref{eq:adoptCondSimp} is that the percentage increases in input prices in the latter are scaled by their respective efficiency parameters ($\boldsymbol{\alpha}$). And of course the more complete version of the adoption condition in Inequality \ref{eq:adoptCond} differs from Lipton by also including the exogenous net subsidy term.
 
 If the efficiency adjusted output-input price ratio decrease is greater than the increase in TFP ($g$), then the margin by which it is greater is the net subsidy term $h / C^* \partial B$ required to make adoption profitable. Note that the required net subsidy $\partial B$ will vary across farms based on $C^*$. The factor $h / C^*$, which may also be written $\lambda / R^*$, represents each farm's marginal valuation of the subsidy; and implies that the subsidy is relatively more valuable to farms with relatively lower expenditure. Solving Inequality \ref{eq:adoptCond} for $C^*$ gives the maximum expenditure level for which adoption is profitable if the (absolute value of the) efficiency adjusted output-input price ratio decrease is greater than the increase in TFP ($|\partial \ln(\nu)| > \partial \ln(g)$).
 
@@ -760,11 +754,11 @@ C^* \leq \frac{-h \partial B}{\partial \ln(\nu) + \partial \ln(g)}
 \label{eq:cStarAdopt}
 \end{equation}
 
-If $\partial B=0$, then Inequality \ref{eq:adoptCond} implies that adoption will be either $0\%$ or $100\%$. Empirically, this is almost never observed. Adoption rates tend to fall somewhere between $0\%$ and $100\%$. The increased input demand associated with new technology adoption implies in and of itself that, without subsidies, $\partial B < 0$. And, of course, every major green revolution success story has involved subsidies of one kind or another to offset the required increase in input expenditure, and then some [@patel2013long; @pingali2012green]. (In his Nobel lecture, Norman Borlaug said that "equally as important as" the research product itself was the "sound governmental economic policy which would assure the farmer a fair price for his grain, the availability of the necessary inputs...and the credit with which to buy them" [-@Borlaug1970].) Within the theoretical framework developed here, this means that the net subsidy $\partial B$ is generally positive.
+If $\partial B=0$, then Inequality \ref{eq:adoptCond} implies that adoption will be either $0\%$ or $100\%$. Empirically, this is almost never observed. Adoption rates tend to fall somewhere between $0\%$ and $100\%$. The increased input demand associated with new technology adoption implies in and of itself that, without subsidies, $\partial B < 0$. And, of course, every major green revolution success story has involved subsidies of one kind or another to offset the required increase in input expenditure, and then some [@patel2013long; @pingali2012green]. In his Nobel lecture, Norman Borlaug said that "equally as important as" the research product itself was the "sound governmental economic policy which would assure the farmer a fair price for his grain, the availability of the necessary inputs...and the credit with which to buy them" [-@Borlaug1970]. Within the theoretical framework developed here, this means that the net subsidy $\partial B$ is generally positive.
 <!-- Equally as important as the transfer of the new seed and new technology from Mexico to India and Pakistan was the introduction from Mexico of a crop-production campaign strategy. This strategy harnessed the high grain-yield potential of the new seed and new technology to sound governmental economic policy which would assure the farmer a fair price for his grain, the availability of the necessary inputs – seed, fertilizers, insecticides, weed killers, and machinery – and the credit with which to buy them. Collectively these inputs and strategy became the base from which the green revolution evolved. -->
 <!-- Assuming farms spend their whole farm budget ($B = C^*$), then the subsidy term simplifies to $h \partial \ln(C^*)$ and the adoption condition can be rewritten -->
 
-Denoting the upper adoption bound on $C^*$ (Equation \ref{eq:cStarAdopt}) as $\hat{C^*}$, the adoption rate $\mathcal{A}$ when $\partial \ln(g) < -\partial \ln(\nu)$ can be expressed as the integral of the density $\rho(C^*)$ over the domain $(0, \hat{C^*})$.
+Denoting the upper adoption bound on $C^*$ (Equation \ref{eq:cStarAdopt}) as $\hat{C^*}$, the adoption rate ($\mathcal{A}$) when $\partial \ln(g) < -\partial \ln(\nu)$ can be expressed as the integral of the density $\rho(C^*)$ over the domain $(0, \hat{C^*})$.
 
 \begin{equation}
 \mathcal{A} = \int_0^{\hat{C^*}} \rho(C^*) d C^*
@@ -780,10 +774,10 @@ Because $C^*$ is lognormally distributed, the expression resolves as follows.
 \label{eq:AdoptRate}
 \end{equation}
 
-The aggregate net subsidy required to reach this adoption rate can then be computed as the subsidy per unit area times the total farm area times the adoption rate.
+The aggregate net subsidy required to reach a given target adoption rate $\mathcal{A}'$ can then be computed as the subsidy per unit area times the total farm area times $\mathcal{A}'$.
 
 \begin{equation}
-\text{Aggregate net subsidy} = N E[k_a] \mathcal{A} \partial B
+\text{Aggregate net subsidy} = N E[k_a] \mathcal{A}' \partial B
 \label{eq:aggSubsidy}
 \end{equation}
 
@@ -867,7 +861,7 @@ Such that the integral reduces to
 <!-- = N E[k_a] v E[k] E[C^{*h}] \frac{1}{1 - h}(\partial \ln(g) - \boldsymbol{\alpha} ' \partial \ln(\mathbf{w})) \mathcal{P}(\hat{C}^{*h}; m_c, s_c) -->
 <!-- $$ -->
 
-Where the penultimate line follows from Equation \ref{eq:keyResult}. Recalling that $v = E[y^*] / (E[k] E[C^{*h}])$ (Equation \ref{eq:v0forms}), this further reduces to
+Where the penultimate line follows from Equation \ref{eq:keyResult}. Recalling from Equation \ref{eq:v0forms} that $v = E[y^*] / (E[k] E[C^{*h}])$, this further reduces to
 
 \begin{equation}
 \Delta Q = N E[k_a] E[y^*] \frac{\ell}{1 - h} \mathcal{P}(\hat{C}^{*h}; m_c, s_c)
@@ -888,24 +882,26 @@ To assess the aggregate change in net benefit, note from Equation \ref{eq:dLdlng
 \begin{equation}
 \begin{split}
 \partial \mathcal{L}^* &= \frac{\lambda}{h} ( C^* (\partial g - \boldsymbol{\alpha} ' \partial \ln(\mathbf{w}) + \partial \ln(P)) + h \partial B) \\
-&= r (C^* \gamma + h \partial B) \:\:;\:\:\: \gamma = \partial g - \boldsymbol{\alpha} ' \partial \ln(\mathbf{w}) + \partial \ln(P) \:\:\: r = \frac{\lambda}{h} = \frac{P}{C^{\#}}
+&= r (C^* \gamma + h \partial B) \\
+& \text{Where} \:\:\: \gamma = \partial g - \boldsymbol{\alpha} ' \partial \ln(\mathbf{w}) + \partial \ln(P), \:\:\: r = \frac{\lambda}{h} = \frac{P}{C^{\#}}
 \end{split}
 \end{equation}
 
 But recall from Equation \ref{eq:cStarAdopt} that $h \partial B = - \gamma \hat{C}^*$, such that the expression reduces to
 
 \begin{equation}
-\partial \mathcal{L}^*(r, C^*) = r \gamma (C^* - \hat{C}^*)
+\partial \mathcal{L}^*(C^*, r) = r \gamma (C^* - \hat{C}^*)
 \label{eq:dLstar}
 \end{equation}
 
-The aggregate change in net benefit ($\Delta \psi$) can be evaluated by integrating $\partial \mathcal{L}^*(C^*, r)$ over the farm expenditure ($C^* \in (0, \hat{C}^{*h})$), revenue to expenditure ratio ($r \in (1, \infty)$) and area ($k_a$) densities. The domain of $r$ follows from axiom 3.
+The aggregate change in net benefit ($\Delta \psi$) can be evaluated by integrating $\partial \mathcal{L}^*(C^*, r)$ over the farm expenditure ($C^* \in (0, \hat{C}^{*h})$), revenue to expenditure ratio ($r \in (1, \infty)$) and area ($k_a$) densities. (The domain of $r$ follows from axiom 3.)
 
 \begin{equation}
 \begin{split}
 \Delta \psi &= N \int_0^{\infty} \int_1^{\infty} \int_0^{\hat{C^*}} \partial \mathcal{L}^*(C^*, r) \rho(C^*) dC^* \rho(r) dr \rho(k_a) d k_a \\
 &= N E[k_a] \int_1^{\infty} r \rho(r) dr  \int_0^{\hat{C^*}} \gamma (C^* - \hat{C}^*)  \rho(C^*) dC^* \\
-&= N E[k_a] E[r] \gamma \Phi \left( \frac{\ln(P) - m_{\#}}{s_{\#}} + s_{\#} \right) \left( E[C^*] \mathcal{P}(\hat{C}^*; m_c, s_c) - \hat{C}^* \mathcal{A} \right)
+&= N E[k_a] E[r] \gamma \Phi \left( \frac{\ln(P) - m_{\#}}{s_{\#}} + s_{\#} \right) \left( E[C^*] \mathcal{P}(\hat{C}^*; m_c, s_c) - \hat{C}^* \mathcal{A} \right) \\
+&= N E[k_a] E[r] \gamma \mathcal{P}(P^{-1}; m_{\#}, s_{\#}) \left( E[C^*] \mathcal{P}(\hat{C}^*; m_c, s_c) - \hat{C}^* \mathcal{A} \right)
 \end{split}
 \end{equation}
 
@@ -918,7 +914,7 @@ But note that, by the symmetry of the normal cumulative distribution function,
 \end{split}
 \end{equation}
 
-Such that the previous equation reduces as follows.
+Such that the previous equation could also be written as follows.
 
 \begin{equation}
 \Delta \psi = N E[k_a] E[r] \gamma (2 \mathcal{E} - \mathcal{P}(P; m_{\#}, s_{\#})) ( E[C^*] \mathcal{P}(\hat{C}^*; m_c, s_c)  - \hat{C}^* \mathcal{A} )
@@ -931,22 +927,24 @@ Such that the previous equation reduces as follows.
 <!-- = N E[k_a] E[r] \gamma (2 \mathcal{E} - \mathcal{P}(P; m_{\#}, s_{\#})) ( E[C^*] \mathcal{P}(\hat{C}^*; m_c, s_c)  - \hat{C}^* \mathcal{A}) -->
 <!-- $$ -->
 
-By Equation \ref{eq:keyResult2}, this can also be written
+Or, by Equation \ref{eq:keyResult2},
 
 \begin{equation}
 \Delta \psi = N E[k_a] \gamma E[r | r \geq 1] \mathcal{A} \mathcal{E} (E[C^* | C^* \leq \hat{C}^*] - \hat{C}^*)
 \end{equation}
 
-To calculate the change in aggregate supply and welfare for each stratum ($\Delta Q_{\ell}$ and $\Delta \psi_{\ell}$), in the equations above simply replace $v$, $N$, with $v_{\ell}$, $N_{\ell}$.
+To calculate the change in aggregate supply and welfare for each stratum ($\Delta Q_{\ell}$ and $\Delta \psi_{\ell}$) in the equations above replace $v$, $N$, with $v_{\ell}$, $N_{\ell}$.
 
 \singlespacing
 ## Accounting for stochasticity, derivation of the expected aggregate supply curve based on axiom 5 \label{sec:acct4Stoch}
 \doublespacing
 
-The deterministic aggregate supply function derived in section \ref{sec:addSupDet} is a suitable aggregate supply function in sectors characterized by deterministic production processes, negligible delays between input decisions and output, and negligible output price volatility. However, it is not suited to the primary sector, where production is partly deterministic but also partly a function of stochastic meteorological variables; where there is a significant delay between input decisions and output (i.e., the cropping season); and where output price volatility looms large in any management decision. In order to accommodate these hallmarks of agricultural supply, it is necessary to be more explicit in the treatment of yield and output price as stochastic variables.
+The deterministic aggregate supply function derived in section \ref{sec:addSupDet} may be a suitable form for sectors characterized by deterministic production processes, negligible delays between input decisions and output, and negligible output price volatility. However, it is not suited to the primary sector, where production is partly deterministic but also partly a function of stochastic meteorological variables; where there is a significant delay between input decisions and output (i.e., the cropping season); and where output price volatility looms large in any management decision. In order to accommodate these hallmarks of agricultural supply, it is necessary to be more explicit in the treatment of yield and output price as stochastic variables.
 <!-- Equation \ref{eq:aggSup1} -->
 
-To begin with, yield is partly a function of stochastic meteorological variables unknown at planting time. Wherever $y^*$ appears in the equations above, what is really meant is $E[y^*(T)]|_{t = 0}$---that is to say, the farm's expectation of what yield will be at harvest time ($t = T$) as evaluated at planting time ($t = 0$). To arrive at an expression for $E[y^*(T)]|_{t = 0}$, consider observed yield at harvest.
+### Accounting for meteorological stochasticity
+
+To begin with, yield is partly a function of stochastic meteorological variables unknown at planting time. The farm yield $y^*$ appearing in the equations above does not refer to harvest yield, but rather expected harvest yield at planting time. This is written $E[y^*(T)]|_{t = 0}$, where $T$ represents the number of time steps from planting ($t = 0$) until harvest. An expression for $E[y^*(T)]|_{t = 0}$ can be derived from the expression for observed yield at harvest.
 
 \begin{equation}
 \begin{split}
@@ -973,20 +971,21 @@ E[E[y^*(T; k_m)]|_{t = 0}] = E[\tilde{y}^*(T; k_m)]|_{t = 0}
 
 This result, which can also be reached by invoking Fubini's theorem, maps the mean expected yield to the expected yield on the mean farm---i.e., the farm where $k = E[k]$ and $C^{*h} = E[C^{*h}]$.
 
-Farm data reports harvest yield $y^*(T)$, but expected yield at planting time ($E[y^*(T; k_m)]|_{t = 0}$) is generally not observable. Nonetheless, the implicit observed mean expected yield can be calculated from fitted $v$ and observed $E[k']$ and $E[C^{*h}|\theta]$, for a given mean expected meteorological condition. To see this, note that, by Fubini's theorem, the mean expected meteorological condition may be expressed
+Farm data reports harvest yield $y^*(T)$, but expected yield at planting time ($E[y^*(T; k_m)]|_{t = 0}$) is generally not observable. Nonetheless, the implicit observed mean expected yield can be calculated from fitted expenditure TFP ($v$), the mean observed exogenous continuous (non-meteorological) parameters raised to their fitted coefficients ($E[k']$), and mean observed $C^{* h}$, for a given mean expected meteorological condition. To see this, note that, by Fubini's theorem, the mean expected meteorological condition may be expressed
 
 \begin{equation}
 E[E[k_m(T)^{\kappa_m}]|_{t = 0}] = E[\tilde{k_m}(T)^{\kappa_m}]|_{t = 0} \:\:;\:\:\: \tilde{k_m}(T)^{\kappa_m} = E[k_m(T)^{\kappa_m}]
 \end{equation}
 
-Such that the implicit observed mean expected yield can be written
+Such that the implicit observed mean expected yield (i.e. the stochastically explicit version of Equation \ref{eq:uncondMuYstar}) can be written
 
 \begin{equation}
-E[\tilde{y}^*(T; k_m)|\theta]|_{t = 0} = v E[\tilde{k}_m(T)^{\kappa_m}]|_{t = 0} E[k'] E[C^{*h}|\theta]
+\begin{split}
+E[\tilde{y}^*(T; k_m)|\theta]|_{t = 0} = v E[\tilde{k}_m(T)^{\kappa_m}]|_{t = 0} E[k'] E[C^{*h}|\theta] \\
+& \text{Where} \:\: \theta = E[C^{\#}(T)]|_{t = 0} \leq E[P(T)]|_{t = 0}
+\end{split}
 \label{eq:impMuEyStarT0cond}
 \end{equation}
-
-That is to say, this is the stochastically explicit version of Equation \ref{eq:uncondMuYstar}.
 <!-- ...in section \ref{sec:condMean}, tractable expression for mean yield, stochastic version -->
 <!-- ... -->
 <!-- The relation between conditional and unconditional mean yield (Equation \ref{eq:condMeanYd1}) can thus be rewritten as follows. -->
@@ -1034,7 +1033,8 @@ That is to say, this is the stochastically explicit version of Equation \ref{eq:
 <!-- \label{eq:stochYd2} -->
 <!-- \end{equation} -->
 
-The optimal farm expenditure per acre $C^*$ remains a deterministic variable because it refers primarily to land preparation, seed, fertilizer and chemical pest control. Some formulations of farm cost might also include some harvest post harvest labor costs (e.g., shelling, stooking, transport), but the main cost components are typically known (executed or committed) at planting time.
+Note that the optimal farm expenditure per acre $C^*$ remains a deterministic variable because it refers primarily to land preparation, seed, fertilizer and chemical pest control. The main cost components are thus typically known (executed or committed) at planting time.
+<!-- Some formulations of farm cost might also include harvest post harvest labor costs (e.g., shelling, stooking, transport), but  -->
 <!-- For purposes of parameter estimation, expected yield is generally not observable. However, noting that -->
 <!-- \begin{equation} -->
 <!-- E[y^*(T)]|_{t = 0} = \frac{E[\tilde{y}^*(T)]|_{t = 0}}{\tilde{y}^*(T)} \left( \frac{E[k_m(T)]|_{t = 0}}{k_m(T)} \right)^{\kappa_m} y^*(T) -->
@@ -1099,6 +1099,8 @@ The optimal farm expenditure per acre $C^*$ remains a deterministic variable bec
 <!-- ``` -->
 <!-- [@jseData; @fpmaData; @cmeData; @nsrdbData] -->
 <!-- ---especially temperature, solar radiation, and humidity--- -->
+
+### Accounting for output price stochasticity
 
 Absent a forward contract, the output sale price $P$ is a stochastic variable unknown to the farmer at the time of planting. Wherever $P$ appears in the equations above, then, what is really meant is $E[P(T)]|_{t = 0}$---the value that the farmer expects $P$ to take at harvest/sale, as evaluated at planting time. To parse $E[P(T)]|_{t = 0}$, a suitable stochastic model must be assumed for $P(t)$. Within a given season, prices often follow a geometric Brownian motion (gBm). That is to say, changes in $P$ over a small time interval $\Delta t$ ($\Delta P = P(t + \Delta t) - P(t)$) are often accurately modeled by
 
@@ -1253,8 +1255,8 @@ Farm cost per acre is deterministic, but optimal unit expenditure $C^{\#}$ is pr
 
 \begin{equation}
 \begin{split}
-E[C^{\#}(T)]\bigr|_{t = 0} &= \frac{E[P(T)]\bigr|_{t = 0}}{\lambda} h \\
-&= \frac{P(0) e^{m_p T}}{\lambda} h
+E[C^{\#}(T)]\bigr|_{t = 0} &= E[P(T)]\bigr|_{t = 0} \frac{h}{\lambda} \\
+&= P(0) e^{m_p T} \frac{h}{\lambda}
 \end{split}
 \label{eq:useful2}
 \end{equation}
@@ -1264,12 +1266,13 @@ Substituting the stochastic terms developed above for $y^*$, $P$, and $C^{\#}$ i
 \begin{equation}
 \begin{split}
 E[Q(T)]|_{t = 0} = N E[k_a] E[\tilde{y}^*(T; k_m(T))]|_{t = 0} \Phi \left( \frac{\ln(E[P(T)]|_{t = 0}) - m_{\#}}{s_{\#}} - \eta s_{\#} \right) \\
-m_{\#} = E[\ln(E[C^{\#}(T)]|_{t = 0})] \:\:\:\: s^2_{\#} = Var\ln(E[C^{\#}(T)]|_{t = 0})
+&= N E[k_a] E[\tilde{y}^*(T; k_m(T))]|_{t = 0} \mathcal{P}(E[P(T)^{\eta}], m_{\#}, s_{\#}) \\
+& m_{\#} = E[\ln(E[C^{\#}(T)]|_{t = 0})] \:\:\:\: s^2_{\#} = Var\ln(E[C^{\#}(T)]|_{t = 0})
 \end{split}
 \label{eq:aggSup2}
 \end{equation}
 
-Equation \ref{eq:condMeanYd1}, relating the observed (conditional) mean and unconditional mean expected yield, must also be rewritten more carefully as follows.
+Equation \ref{eq:condMeanYd1}, relating the observed (conditional) mean and unconditional mean expected yield, can also be written in stochastically explicit form.
 
 \begin{equation}
 E[\tilde{y}^*(T; k_m(T))]|_{t = 0} \mathcal{P}(E[P(T)^{\eta}]|_{t = 0}, m_{\#}, s_{\#}) = E[\tilde{y}^*(T; k_m(T)) | \theta]|_{t = 0} \mathcal{E}
@@ -1284,28 +1287,36 @@ E[\tilde{y}^*(T; k_m(T))]|_{t = 0} \mathcal{P}(E[P(T)^{\eta}]|_{t = 0}, m_{\#}, 
 <!-- \label{eq:condMeanYd2} -->
 <!-- \end{equation} -->
 
-[have to change this as better method for deducing implicit expected yield given higher up:
--Above (in this same subsection) shown how to deduce implicit expected cond yield from the observed (cond) harvest yield.
--Now given the relation between the cond and uncond mean, the uncond mean can be derived from the cond mean as follows
-(this can be addressed in the unconditional and cond mean section higher up, then repeated here just to give the stochastic expressions of the relations?)
-Look, the two ways to deductively calculate expected unconditional mean yield are:
-$muEyStarT0check <- dfAll(dollarSign)muEyStarT0trunc * EmploymentRate / ProbProfit $
-$muEyStarT0 <- mean(vStrat) * muKprime * muCstarh$
-The latter is more straightforward from data based on cost. The former can be used as a check.
-So basically get rid of this part about deducing expected unconditional mean yield from employment rate and PEFS adj prob of profit--except maybe show that it could be used for back of envelope calcs in absence of data
-The most relevant usage might be as a way to calculate PEFS adj prob of profit from emplyment rate and mean yield?
-]
-In practice, the expected conditional mean yield ($E[\tilde{y}^*(T; k_m(T)) | \theta]|_{t = 0}$) is generally not observable. However, it can be estimated from the observed (conditional) mean harvest yield ($E[y^*(T; k_m(T))|\theta]$) as follows.
+By which the stochastically explicit version of aggregate supply (Equation \ref{eq:aggSup1Alt}) follows.
+<!-- Q = N E[k_a] E[y^*|C^{\#} \leq P] \mathcal{E} -->
 
 \begin{equation}
-E[\tilde{y}^*(T; k_m(T)) | \theta]|_{t = 0} = \frac{E[E[k_m(T)^{\kappa_m}]]|_{t = 0}}{E[k_m(T)^{\kappa_m}]} E[y^*(T; k_m(T))|\theta]
-\label{eq:EmuYstarCondEst}
+E[Q(T)]|_{t = 0} = N E[k_a] E[\tilde{y}^*(T; k_m(T))|\theta]|_{t = 0} \mathcal{E}
+\label{eq:aggSup2Alt}
 \end{equation}
+<!-- [have to change this as better method for deducing implicit expected yield given higher up: -->
+<!-- -Above (in this same subsection) shown how to deduce implicit expected cond yield from the observed (cond) harvest yield. -->
+<!-- -Now given the relation between the cond and uncond mean, the uncond mean can be derived from the cond mean as follows -->
+<!-- (this can be addressed in the unconditional and cond mean section higher up, then repeated here just to give the stochastic expressions of the relations?) -->
+<!-- Look, the two ways to deductively calculate expected unconditional mean yield are: -->
+<!-- $muEyStarT0check <- dfAll(dollarSign)muEyStarT0trunc * EmploymentRate / ProbProfit $ -->
+<!-- $muEyStarT0 <- mean(vStrat) * muKprime * muCstarh$ -->
+<!-- The latter is more straightforward from data based on cost. The former can be used as a check. -->
+<!-- So basically get rid of this part about deducing expected unconditional mean yield from employment rate and PEFS adj prob of profit--except maybe show that it could be used for back of envelope calcs in absence of data -->
+<!-- The most relevant usage might be as a way to calculate PEFS adj prob of profit from emplyment rate and mean yield? -->
+<!-- ] -->
+<!-- In practice, the expected conditional mean yield ($E[\tilde{y}^*(T; k_m(T)) | \theta]|_{t = 0}$) is generally not observable. However, it can be estimated from the observed (conditional) mean harvest yield ($E[y^*(T; k_m(T))|\theta]$) as follows. -->
+<!-- \begin{equation} -->
+<!-- E[\tilde{y}^*(T; k_m(T)) | \theta]|_{t = 0} = \frac{E[E[k_m(T)^{\kappa_m}]]|_{t = 0}}{E[k_m(T)^{\kappa_m}]} E[y^*(T; k_m(T))|\theta] -->
+<!-- \label{eq:EmuYstarCondEst} -->
+<!-- \end{equation} -->
 <!-- \begin{split} -->
 <!-- E[E[y^*(T)]|_{t = 0}] &= E[E[y^*(T)]|_{t = 0} | \theta] -->
 <!-- \frac{\Phi\left( \frac{\ln(P) - m_{\#}}{s_{\#}} \right)}{\Phi \left( \frac{\ln(P) - m_{\#}}{s_{\#}} - \eta s_{\#} \right)} \\ -->
 
-In the remainder of this section, it is shown that the $\mathcal{P}(E[P(T)]|_{t = 0})$ term appearing on the left hand side of Equation \ref{eq:condMeanYd2}, and in the expected aggregate supply function, also has a meaningful economic interpretation. Specifically,
+### Expected aggregate supply in stochastic price parameter space
+
+In the remainder of this section, it is shown that the $\mathcal{P}(E[P(T)]|_{t = 0})$ term appearing on the left hand side of Equation \ref{eq:condMeanYd2}, and in the expected aggregate supply function, has a meaningful economic interpretation. Specifically,
 
 \begin{equation}
 \mathcal{P}(E[P(T)^{\eta}]|_{t = 0}, m_{\#}, s_{\#}) = \text{Prob}(E[\tilde{C}^{\#}(T)^{\eta}]|_{t = 0} \leq P(T)^{\eta}) \:\:;\:\:\: \tilde{C}^{\#}(T) = E[C^{\#}(T)]
@@ -1431,7 +1442,7 @@ And, regardless of the parameter space in which calculations are made,
 \begin{equation}
 \begin{split}
 E[Q(T)]|_{t = 0} &= N E[k_a] E[\tilde{y}^*(T; k_m(T))]|_{t = 0} \text{Prob}(E[\tilde{C}^{\#}(T)^{\eta}]|_{t = 0} \leq P(T)^{\eta}) \\
-&= N E[k_a] E[\tilde{y}^*(T)]|_{t = 0} \times \text{PEFS-adj. mean probability of profit}
+&= N E[k_a] \times \text{Exp. uncond. mean yield} \times \text{PEFS-adj. mean probability of profit}
 \end{split}
 \label{eq:aggSup4}
 \end{equation}
@@ -1447,9 +1458,13 @@ E[\tilde{y}^*(T)]|_{t = 0} &= E[\tilde{y}^*(T) | \theta]|_{t = 0} \frac{\text{Pr
 \end{equation}
 <!-- \text{Mean expected undonditional yield} &= \text{Mean expected conditional yield} -->
 
-In the absence of both farm and price data, then, back of the envelope calculations can be made based on expert consensus regarding mean observed (conditional) yield, the farm employment rate, and the PEFS adjusted mean probability of profit.
+In the absence of both farm and price data, then, back of the envelope calculations can be made based on expert consensus regarding mean observed (conditional) expected yield, the farm employment rate, and the PEFS adjusted mean probability of profit.
 
-Note that the price elasticity of expected aggregate supply follows as
+\singlespacing
+### Stochastically explicit expressions for price elasticity of aggregate supply, aggregate supply response, and producer welfare impact
+\doublespacing
+
+The price elasticity of expected aggregate supply follows as
 
 \begin{equation}
 \begin{split}
@@ -1465,7 +1480,7 @@ Whereby it is clear that, under axioms 1-5, price elasticity of expected aggrega
 s_p \sqrt{T} </> \frac{\phi(-z)}{\Phi(-z)}
 \end{equation}
 
-Finally, the stochastically explicit formulations for the research induced change in aggregate supply and welfare derived in section \ref{sec:aggImpact} follow from the exposition above as
+The stochastically explicit formulations for the research induced change in aggregate supply and producer welfare derived in section \ref{sec:aggImpact} follow from the exposition above as
 
 <!-- \begin{equation} -->
 <!-- \Delta Q = N E[k_a] E[y^*] \frac{\ell}{1 - h} \mathcal{P}(\hat{C}^{*h}; m_c, s_c) -->
@@ -1486,7 +1501,7 @@ And
 \begin{equation}
 \begin{split}
 \Delta \psi &= N E[k_a] E[\tilde{r}(T)]|_{t = 0} \gamma (2 \mathcal{E} - \mathcal{P}(E[P(T)]|_{t = 0}; m_{\#}, s_{\#})) (E[C^*] \mathcal{P}(\hat{C}^*; m_c, s_c)  - \hat{C}^* \mathcal{A}) \\
-& \tilde{r}(T) = E[r(T)] = \frac{E[P(T)]|_{t = 0}}{E[C^{\#}(T)]|_{t = 0}}
+& \text{Where} \:\:\: \tilde{r}(T) = E[r(T)] = E\left[ \frac{P(T)}{C^{\#}(T)} \right] \Biggr|_{t = 0} =  \frac{E[\lambda]}{h}
 \end{split}
 \label{eq:dEPsi}
 \end{equation}
@@ -1502,7 +1517,7 @@ As an illustrative example, the expected aggregate supply curve derived above is
 The empirical estimates of aggregate supply for the years 2006-2012 are taken from commodity intelligence reports published in mid to late season---prior to harvest but after planted area and main season rainfall are known. These estimates, summarized in Table 1, cover some of Kenya's worst drought years in living memory.
 
 \singlespacing
-```{r, echo = FALSE}
+```{r, echo = FALSE, ft.arraystretch = 1}
 #out.width='\\textwidth',
 # Ministry of Ag midseason expected main season maize harvest, million MT
 # Or USDA FAS GAIN report or Commodity Intelligence report
@@ -1559,7 +1574,7 @@ dfPoints_ft$`Estimate (million MT)` <- as.character(dfPoints_ft$`Estimate (milli
 ft <- flextable(dfPoints_ft) %>% autofit() %>%
   add_header_lines(values = "Table 1. Empirical midseason forecasts of Kenya main season maize harvest 2006-2012") %>%
   fontsize(size = 7, part = "all") %>%
-  line_spacing(space = 0.75, part = "all") %>%
+  line_spacing(space = 0, part = "all") %>%
   fit_to_width(7)
 ft
   # set_caption(as_paragraph(as_chunk("Table 1. Empirical midseason forecasts of Kenya main season maize harvest 2006-2012", props = fp_text_default(font.size = 8))), align_with_table = F) %>% autofit() %>% fit_to_width(7)
@@ -1599,7 +1614,7 @@ As mentioned in section \ref{sec:axioms1and2}, in this exercise there are four b
 \pagebreak
 
 \singlespacing
-```{r, echo = FALSE}
+```{r, echo = FALSE, ft.arraystretch = 1}
 
 thisFile <- "df_mod2007.csv"
 thisFilepath <- paste0(mainFolder, thisFile)
@@ -2608,7 +2623,7 @@ dQtotCheck <- Nf * muArea * muEyStarT0 * (dlnNuh + dlng0) / (1 - h) * probProfAd
 
 Say a new technology package is released in Kenya that results in a `r 100 * dlng0`% increase in TFP on adopting farms. As explained in section \ref{sec:farmResp}, this is tantamount to adding another binary endowment $b_5\beta_5 =$ `r round(betaNew, 2)` to the yield model. Say that the expected efficiency adjusted percentage increase in input prices ($\boldsymbol{\alpha} '\partial \ln(\mathbf{w})$) is `r aDotdlw`, and the expected percentage decrease in output price ($\partial \ln(P)$) is `r dlP`, such that $\partial \ln(\nu) =$ `r dlnNu`, which is greater than the percentage increase in TFP. Adoption would thus result in a `r 100 * dlv0dlg0`% increase in expenditure TFP ($v$), a `r -round(100 * dlMuCstar)`% reduction in expenditure, and a `r round(100 * dlMuEyStarT0)`% increase in yield on adopting farms (recall Equations \ref{eq:dldlg0}). However, by the criterion in Inequality \ref{eq:adoptCond}, adoption makes economic sense for the farmer only if a net subsidy is included in the technology package (i.e., only if $\partial B > 0$).
 
-Say that the Ministry of Agriculture offers a net subsidy of $\partial B =$ `r dB` KES/acre to adopting farms, perhaps in the form of free seed and fertilizer. As explained in section \ref{sec:adopt}, this then implies the adoption expenditure per acre ceiling of $\hat{C}^* =$ `r round(cStarMaxAdopt)` KES (Equation \ref{eq:cStarAdopt}), and the corresponding adoption rate of $\mathcal{A} =$ `r round(100 * adoptRateTotal, 1)`% (Equation \ref{eq:AdoptRate}). The aggregate net subsidy required from the Ministry of Agriculture to achieve this rate follows from Equation \ref{eq:aggSubsidy} as `r round(aggSubsidyTot, 1)` million KES. The corresponding increase in expected aggregate supply and producer welfare follow from Equations \ref{eq:dEQT0} and \ref{eq:dEPsi} as `r round(dQtot, 1)` thousand metric tons and `r round(dPsiTot, 1)` million KES, respectively (assuming normal rainfall $\tilde{k}_r^{\kappa_r} = 1$). The breakdown by stratum is given in the left panel of Figure \ref{fig:intervention}, accompanied by a graphic of the corresponding supply ribbon shift in the right panel.
+Say that the Ministry of Agriculture offers a net subsidy of $\partial B =$ `r dB` KES/acre to adopting farms, perhaps in the form of free seed and fertilizer. As explained in section \ref{sec:adopt}, this then implies the adoption expenditure per acre ceiling of $\hat{C}^* =$ `r round(cStarMaxAdopt)` KES (Equation \ref{eq:cStarAdopt}), and the corresponding adoption rate of $\mathcal{A} =$ `r round(100 * adoptRateTotal, 1)`% (Equation \ref{eq:AdoptRate}). The aggregate net subsidy required from the Ministry of Agriculture to achieve this rate follows from Equation \ref{eq:aggSubsidy} as `r round(aggSubsidyTot, 1)` million KES. The corresponding increase in expected aggregate supply and producer welfare follow from Equations \ref{eq:dEQT0} and \ref{eq:dEPsi} as `r round(dQtot, 1)` thousand metric tons and `r round(dPsiTot, 1)` million KES, respectively (assuming normal rainfall $\tilde{k}_r^{\kappa_r} = 1$). The breakdown by TFP stratum is given in the left panel of Figure \ref{fig:intervention}, accompanied by a graphic of the corresponding supply ribbon shift in the right panel.
 <!-- By the criterion in Inequality \ref{eq:adoptCondSimp}, adoption in the absence of exogenous subsidies/costs will increase farm net benefit only if the the percentage increase in TFP $\partial \ln(g) =$ `r 100 * dlng0`% is greater than the absolute value of the percentage decrease in output price plus the $\alpha_i$-scaled increase in input prices (i.e. only if $\partial \ln(g) > |\partial \ln(\nu)|$).  -->
 
 \singlespacing
@@ -2743,13 +2758,13 @@ For policy formation, it is helpful to consider prospective interventions in a s
 # gc()
 # Adoption rate map
 muRcond <- EPT02007 * exp(-dfAll$mEcSharpT0trunc + dfAll$sEcSharpT0trunc^2 / 2)
-nRes <- 20
-aDotdlwVec <- seq(0.19, 0.22, length.out = nRes)
+nRes <- 30
+aDotdlwVec <- seq(0.19, 0.23, length.out = nRes)
 dlP <- -nuRatio * aDotdlwVec
 dlNuVec <- rev(-aDotdlwVec + dlP)
 dlNuhVec <- rev(-aDotdlwVec + h * dlP)
 #dBvec <- seq(400, 1100, length.out = nRes)
-dBvec <- seq(500, 1500, length.out = nRes)
+dBvec <- seq(300, 2000, length.out = nRes)
 matAdopt <- matrix(NA, nRes, nRes)
 matDq <- matrix(NA, nRes, nRes)
 matDpsi <- matrix(NA, nRes, nRes)
@@ -2824,10 +2839,10 @@ matSub[i, j] <- dPsiTot - aggSubsidy
 # hist(dPsiCheckVec)
 # hist(dQCheckVec)
 
-indX <- which(abs(dlNuPoint - dlNuVec) == min(abs(dlNuPoint - dlNuVec)))
-indY <- which(abs(dBPoint - dBvec) == min(abs(dBPoint - dBvec)))
+# indX <- which(abs(dlNuPoint - dlNuVec) == min(abs(dlNuPoint - dlNuVec)))
+# indY <- which(abs(dBPoint - dBvec) == min(abs(dBPoint - dBvec)))
 dfMat <- as.data.frame(matAdopt)
-dfMat[indX, indY] <- NA
+# dfMat[indX, indY] <- NA
 colnames(dfMat) <- round(dBvec, 2) # paste("dB =", round(dBvec, 2))
 gatherCols <- colnames(dfMat)
 dfMat$dlNu <- round(dlNuVec, 2) #paste("dlnNu =", round(dlnNuVec, 2))
@@ -2836,12 +2851,12 @@ dfPlot$dB <- as.numeric(dfPlot$dB)
 gg <- ggplot(dfPlot, aes(x = dlNu, y = dB, z = var, fill = var, group = 1))
 gg <- gg + geom_tile(alpha = 0.8) + geom_contour()
 gg <- gg + metR::geom_text_contour(aes(z = var), stroke = 0.15)
-gg <- gg + scale_fill_gradient(low = "coral", high = "cyan", na.value = "black")
-#gg <- gg + geom_text(aes(label = adoptRate), size = labelSize)
-# gg <- gg + annotate("rect", 
-#            xmin = dlNuPoint - 0.01, xmax = dlNuPoint + 0.01,
-#            ymin = dBPoint - 0.5, ymax = dBPoint + 0.5,
-#            fill = "blue", alpha = 0.8)
+gg <- gg + scale_fill_gradient(low = "coral", high = "cyan")#, na.value = "black")
+gg <- gg + annotate("point", 
+           x = dlNuPoint,  # Replace with your desired x-coordinate
+           y = dBPoint,  # Replace with your desired y-coordinate
+           color = "black",
+           size = 2)
 gg <- gg + labs(fill = "Adoption rate (%)", x = "Decrease in efficiency adjusted\noutput-input price ratio (%)",
                 y = "Net subsidy (KES/acre)")
 gg <- gg + theme_bw()
@@ -2855,7 +2870,7 @@ ggAdopt <- gg
 
 
 dfMat <- as.data.frame(matDpsi)
-dfMat[indX, indY] <- NA
+# dfMat[indX, indY] <- NA
 colnames(dfMat) <- round(dBvec, 2) # paste("dB =", round(dBvec, 2))
 gatherCols <- colnames(dfMat)
 dfMat$dlNu <- round(dlNuVec, 2) #paste("dlnNu =", round(dlnNuVec, 2))
@@ -2866,8 +2881,12 @@ gg <- gg + geom_tile(alpha = 1) + geom_contour()
 gg <- gg + metR::geom_text_contour(aes(z = var),
                                    #breaks = seq(100, 3000, length.out = 6),
                                    stroke = 0.15)
-gg <- gg + scale_fill_gradient(low = "coral", high = "cyan", na.value = "black")
-#gg <- gg + geom_text(aes(label = var), size = labelSize)
+gg <- gg + scale_fill_gradient(low = "coral", high = "cyan")#, na.value = "black")
+gg <- gg + annotate("point", 
+           x = dlNuPoint,  # Replace with your desired x-coordinate
+           y = dBPoint,  # Replace with your desired y-coordinate
+           color = "black",
+           size = 2)
 gg <- gg + labs(fill = "Change in aggregate\nproducer welfare (million KES)", 
                 x = "Decrease in efficiency adjusted\noutput-input price ratio (%)",
                 y = "Net subsidy (KES/acre)")
@@ -2882,7 +2901,7 @@ gg <- gg + theme(axis.text = element_text(size = axisTextSize),
 ggDpsi <- gg
 
 dfMat <- as.data.frame(matDq)
-dfMat[indX, indY] <- NA
+# dfMat[indX, indY] <- NA
 colnames(dfMat) <- round(dBvec, 2) # paste("dB =", round(dBvec, 2))
 gatherCols <- colnames(dfMat)
 dfMat$dlNu <- round(dlNuVec, 2) #paste("dlnNu =", round(dlnNuVec, 2))
@@ -2893,8 +2912,12 @@ gg <- gg + geom_tile(alpha = 1) + geom_contour()
 gg <- gg + metR::geom_text_contour(aes(z = var),
                                    #breaks = seq(100, 3000, length.out = 6),
                                    stroke = 0.15)
-gg <- gg + scale_fill_gradient(low = "coral", high = "cyan", na.value = "black")
-#gg <- gg + geom_text(aes(label = var), size = labelSize)
+gg <- gg + scale_fill_gradient(low = "coral", high = "cyan")#, na.value = "black")
+gg <- gg + annotate("point", 
+           x = dlNuPoint,  # Replace with your desired x-coordinate
+           y = dBPoint,  # Replace with your desired y-coordinate
+           color = "black",
+           size = 2)
 gg <- gg + labs(fill = "Change in aggregate supply (1000 MT)",
                 x = "Decrease in efficiency adjusted\noutput-input price ratio (%)",
                 y = "Net subsidy (KES/acre)")
@@ -2910,7 +2933,7 @@ ggDq <- gg
 
 
 dfMat <- as.data.frame(matSub)
-dfMat[indX, indY] <- NA
+# dfMat[indX, indY] <- NA
 colnames(dfMat) <- round(dBvec, 2) # paste("dB =", round(dBvec, 2))
 gatherCols <- colnames(dfMat)
 dfMat$dlNu <- round(dlNuVec, 2) #paste("dlnNu =", round(dlnNuVec, 2))
@@ -2921,8 +2944,12 @@ gg <- gg + geom_tile(alpha = 1) + geom_contour()
 gg <- gg + metR::geom_text_contour(aes(z = var),
                                    #breaks = seq(100, 3000, length.out = 6),
                                    stroke = 0.15)
-gg <- gg + scale_fill_gradient(low = "coral", high = "cyan", na.value = "black")
-#gg <- gg + geom_text(aes(label = var), size = labelSize)
+gg <- gg + scale_fill_gradient(low = "coral", high = "cyan")#, na.value = "black")
+gg <- gg + annotate("point", 
+           x = dlNuPoint,  # Replace with your desired x-coordinate
+           y = dBPoint,  # Replace with your desired y-coordinate
+           color = "black",
+           size = 2)
 gg <- gg + labs(fill = "Welfare-tot net subsidy (billion KES)",
                 x = "Decrease in efficiency adjusted\noutput-input price ratio (%)",
                 y = "Net subsidy (KES/acre)")
@@ -2937,7 +2964,7 @@ gg <- gg + theme(axis.text = element_text(size = axisTextSize),
 ggSub <- gg
 
 dfMat <- as.data.frame(matProfitAdopt)
-dfMat[indX, indY] <- NA
+# dfMat[indX, indY] <- NA
 colnames(dfMat) <- round(dBvec, 2) # paste("dB =", round(dBvec, 2))
 gatherCols <- colnames(dfMat)
 dfMat$dlNu <- round(dlNuVec, 2) #paste("dlnNu =", round(dlnNuVec, 2))
@@ -2948,8 +2975,12 @@ gg <- gg + geom_tile(alpha = 1) + geom_contour()
 gg <- gg + metR::geom_text_contour(aes(z = var),
                                    #breaks = seq(100, 3000, length.out = 6),
                                    stroke = 0.15)
-gg <- gg + scale_fill_gradient(low = "coral", high = "cyan", na.value = "black")
-#gg <- gg + geom_text(aes(label = var), size = labelSize)
+gg <- gg + scale_fill_gradient(low = "coral", high = "cyan")#, na.value = "black")
+gg <- gg + annotate("point", 
+           x = dlNuPoint,  # Replace with your desired x-coordinate
+           y = dBPoint,  # Replace with your desired y-coordinate
+           color = "black",
+           size = 2)
 gg <- gg + labs(fill = "ProbProfitAdopt",
                 x = "Decrease in efficiency adjusted\noutput-input price ratio (%)",
                 y = "Net subsidy (KES/acre)")
@@ -2969,7 +3000,7 @@ ggAdopt | ggDq | ggDpsi
 ```
 \doublespacing
 
-The illustrative example presented above is an exercise in comparative statics. That is to say, it is a comparison of the "before new tech" (or status quo) and "after new tech" situations, without accounting for the time it takes for release and adoption to occur. In a standard impact assessment, the static analysis would be converted into a temporally explicit assessment by introducing a sigmoidal adoption rate curve over time, as explained in Alston et al. [-@alston1995science] and elsewhere. The welfare impact would be then be calculated as the sum of discounted yearly net impacts out to a relevant cutoff year determined by the policy question.
+The illustrative example presented above is an exercise in comparative statics. That is to say, it is a comparison of the "before new tech" (or status quo) and "after new tech" situations, without accounting for the time it takes for release and adoption to occur. In a standard impact assessment, the static analysis would be converted into a temporally explicit assessment by introducing a sigmoidal adoption rate curve over time, as explained in Alston et al. [-@alston1995science] and elsewhere. The welfare impact would be then be calculated as the sum of discounted yearly net impacts out to a relevant cutoff year determined by the policy context.
 
 # Discussion and conclusion
 
@@ -3019,11 +3050,13 @@ The proposed model is limited to the evaluation of aggregate supply and producer
 
 <div id="refs"></div>
 
-\pagebreak
+\newpage
 
-# Appendix A: Literature review
+\renewcommand{\theequation}{A.\arabic{equation}}
 
-## Is impact assessment insensitive to misspecification of the supply curve?
+# Appendix A: Literature review {-}
+
+## Is impact assessment insensitive to misspecification of the supply curve? {-}
 
 When pressed on the matter, proponents of the conventional aggregate supply functions make little attempt to defend their specifications on empirical or theoretical grounds. On the contrary, proponents of linear models generally admit that real world commodity supply and demand curves are almost certainly never linear [@brester2023equilibrium]. Proponents of the CES model generally argue that CES models are probably at least slightly more accurate than linear specifications [@voon1991calculation], but likewise offer no formal derivation of their model from theory. Rather, the defense of conventional models centers on the argument that the functional form is irrelevant for purposes of impact assessment.
 <!-- On the contrary, everyone involved in this literature acknowledges that the functional forms are specified primarily to facilitate calculations of consumer and producer surplus [@lindner1978supply; @alston1995science; @rose1980supply]. -->
@@ -3046,7 +3079,7 @@ They also find that impact assessment is insensitive to misspecification error w
 
 In synthesis, then, it is misleading to characterize the cited literature as supportive of Alston et al.'s [-@alston1995science] broad claim that impact assessments are insensitive to misspecification of the functional form of the supply curve. More accurately, the literature supports the much narrower claim that impact assessments are insensitive to misspecification when the linear specification is assumed together with a parallel shift, and when the real shift is also parallel; and when the shift is small, and when the farm population consists of identical marginal farms. Apart from this exceptionally implausible case identified by Zhao et al. [-@zhao1997functional], the literature indicates that impact assessments are highly sensitive to functional form, whether directly, as in the case of the CES function, or by the transitive property, i.e., through a supply curve shift which is mathematically prefigured by the functional form of the supply curve.
 
-## Is it impossible to do any better?
+## Is it impossible to do any better? {-}
 
 As a final line of defense, proponents of conventional aggregate supply curves argue that there is no alternative to their cavalier approach of arbitrarily assuming a functional form for supply curves and supply curve shifts, however implausible or grossly inaccurate they might be. Alston et al. [-@alston1995science] write:
 
@@ -3061,7 +3094,7 @@ The present work is effectively one long disagreement with this passage. The swe
 To be clear, the "precise econometric evidence or...detailed information" that the authors refer to is, indeed, generally not available; but the suggestion that economic theory offers nothing in its stead is mistaken. One of the key purposes of having a theory is to draw inference when detailed information is unavailable or otherwise provides no clear answer to our questions. And, yes, "assumptions are unavoidable"---but in the sense that axioms 1-5 in the Introduction are unavoidable, not in the sense of superimposing an exogenously assumed supply response on top of said axioms. Not economic theory, then, but rather a descriptive mathematical formulation which, by construction, precludes endogenous modeling of the aggregate supply response to exogenous shocks, is what tells us "not very much" about the the aggregate supply response to exogenous shocks.
 <!-- The authors themselves may have made little use of theory when they specified their linear aggregate supply and demand curves; but this does not mean that others are prohibited from doing so. -->
 
-## The limited policy relevance of conventional forms
+## The limited policy relevance of conventional forms {-}
 
 Effective policy formation requires careful assessment not only of the magnitude of net benefits of a given intervention, but also of their distribution across producers and consumers (the "food price dilemma"), and across income levels. Proponents and critics alike acknowledge that conventional functional forms are ill suited to the assessment of such distributional issues [@alston2009economics; @alston1995science; @lindner1978supply; @rose1980supply; @wohlgenant1997nature].
 
@@ -3091,19 +3124,20 @@ Finally, conventional models also introduce awkward artifacts that further under
 <!-- entry/exit and yield components []. -->
 <!-- price risk -->
 
-## Real consequences
+## Real consequences {-}
 
-There is a growing "disconnect" between the actual level of funding for agricultural research and the level of funding that would be justified by impact assessments conducted on the basis of conventional aggregate supply models [@hurley2016returns]. And there is good reason to suspect that this disconnect is due to the implausibly high---and sometimes absurdly high---internal rates of return (IRR) reported in conventional impact assessments of agricultural R&D [@hurley2014re; @alston2001attribution; @hurley2016returns]. The high reported returns are, of course, made more conspicuous by the aforementioned conflict of interest inherent in the expert opinion upon which these studies are typically based. In a meta-analysis of 492 such impact assessments, for example, Hurley et al. [@hurley2016returns] note that the average reported IRR implies that the USDA's 2000 R&D investment of \$4.1 billion should be worth \$56.3 quintillion in 2050, or 2.3 million times projected world GDP at that time.^[The meta-analysis covered a variety of impact assessment methods in addition to expedient specifications of aggregate supply (economic surplus analyses). It is safe to assume that most of these studies were economic surplus analyses.] "[I]t is not difficult to see," the authors conclude, "how policy makers may question the credibility of such evidence" [@hurley2016returns].
+There is a growing "disconnect" between the actual level of funding for agricultural research and the level of funding that would be justified by impact assessments conducted on the basis of conventional aggregate supply models [@hurley2016returns]. And there is good reason to suspect that this disconnect is due to the implausibly high---and sometimes absurdly high---internal rates of return (IRR) reported in conventional impact assessments of agricultural R&D [@hurley2014re; @alston2001attribution; @hurley2016returns]. The high reported returns are, of course, made more conspicuous by the aforementioned conflict of interest inherent in the expert opinion upon which these studies are typically based. In a meta-analysis of 492 such impact assessments, for example, Hurley et al. [@hurley2016returns] note that the average reported IRR implies that the USDA's 2000 R&D investment of \$4.1 billion should be worth \$56.3 quintillion in 2050, or 2.3 million times projected world GDP at that time. "[I]t is not difficult to see," the authors conclude, "how policy makers may question the credibility of such evidence" [@hurley2016returns].
+<!-- world GDP at that time.^[The meta-analysis covered a variety of impact assessment methods in addition to expedient specifications of aggregate supply (economic surplus analyses). It is safe to assume that most of these studies were economic surplus analyses.] -->
 <!-- It could merely reflect the low cost of implementing the model, for example, and/or the lack of comparably low cost alternatives.  -->
 <!-- [In discussion: The implausibility is made more conspicuous considering that these assessments are typically written by or in close consultation with the scientists whose research is under evaluation, and who thus have a vested interest in its success.] -->
 
 Hurley et al. [@hurley2014re] respond to the incredulity of policy makers by replacing IRR with their "modified" IRR or "MIRR", whereby implausibly high projected returns are deflated to plausible levels. This is a suitable response insofar as the implausibility in question is rooted in the discounting method (although see the debate between Ohemke [-@oehmke2017re] and Hurley et al. [-@hurley2017re]). However, the theoretical opacity, dubious implications, and limited interpretability of these models, outlined above, are good reason to suspect that much of the incredulity is in fact aimed at the impact modeling itself, particularly the modeling of aggregate supply and the supply response to exogenous shocks. Insofar as this is true, MIRR is an insufficient response, and may even exacerbate the problem by masking the real sources of inaccuracy.
 
-# Appendix B
+\renewcommand{\theequation}{B.\arabic{equation}}
 
-A.1
+# Appendix B {-}
 
-## Price and cross price elsaticities of input demand
+## B.1 Price and cross price elsaticities of input demand {-}
 
 Decreasing returns to scale imply strictly downward sloping input demand curves. To see this, consider the derivative of input demand (Equation \ref{eq:inputDem1}) with respect to input own price.
 
@@ -3144,213 +3178,7 @@ And
 
 whereby it is clear that the domain of $h$ implies negatively sloped own and cross price demand curves. It follows, moreover, that input own price elasticity of demand is strictly less than or equal to unity. Input cross price elasticity of demand is elastic if $h \in (1 - \alpha_j, 1)$, inelastic if $h \in (0, 1 - \alpha_j)$, and linear if $h = 1 - \alpha_j$. Note that increasing returns to scale would imply strictly upward sloping cross price demand curves, and the possibility of upward sloping own price demand curves.
 
-A.2
-
-## Differentiation of expenditure TFP, yield, and expenditure with respect to TFP
-
-The derivative of expenditure TFP ($v$) with respect to TFP ($g$) follows from Equations \ref{eq:v0forms}.
-
-\begin{equation}
-\frac{\partial \ln(v)}{\partial \ln(g)} = 1 - \boldsymbol{\alpha} ' \frac{\partial \ln(\mathbf{w})}{\partial \ln(g)}
-\end{equation}
-
-And the derivatives $\partial \ln (C^*) / \partial \ln(g)$ and $\partial \ln(y^*) / \partial \ln(g)$ then follow from the expressions in Equation \ref{eq:fnCsharp}.
-
-\begin{equation}
-\begin{split}
-\frac{\partial \ln(C^*)}{\partial \ln(g)} &= \frac{1}{1 - h} \left( \frac{\partial \ln(v)}{\partial \ln(g)} + \frac{\partial \ln(C^*)}{\partial \ln(g)} \right)  \\
-&\rightarrow \frac{\partial \ln(C^*)}{\partial \ln(g)} = \frac{1}{1 - h} \left( 1 - \boldsymbol{\alpha} ' \frac{\partial \ln(\mathbf{w})}{\partial \ln(g)} + \frac{\partial \ln(P)}{\partial \ln(g)} \right)
-\end{split}
-\end{equation}
-
-And
-
-\begin{equation}
-\begin{split}
-\frac{\partial \ln(y^*)}{\partial \ln(g)} &= \frac{\partial \ln(v)}{\partial \ln(g)} - h \frac{\partial \ln(C^*)}{\partial \ln(g)} \\
-&= \frac{1}{1 - h} \left( 1 - \boldsymbol{\alpha} ' \frac{\partial \ln(\mathbf{w})}{\partial \ln(g)} + h \frac{\partial \ln(P)}{\partial \ln(g)} \right)
-\end{split}
-\end{equation}
-
-<!-- ## Derivation of input demand from axiom 2 \label{sec:A1} -->
-<!-- Standard textbook treatments of the first and second order conditions for Cobb-Douglas profit maximization [e.g. @heathfield1987introduction] are typically limited to the two input case (capital and labor) for the purpose of isoquant analysis, and omit the budget constraint. It is therefore necessary to take a moment to examine these conditions for the more general case, and specific aims, at hand. -->
-<!-- ; and because the widespread insistence on constant or increasing returns to scale together with profit maximization, upward sloping firm supply curves, and other commonly desired production function properties, without acknowledging the mathematical contradiction between the latter and the former, suggests a lack of familiarity with the mathematical implications of these axioms beyond a literary form, such that a review is relevant to the aims of this article. -->
-<!-- \begin{framed} -->
-<!--    \textbf{Axiom 2} \\ Farms apply inputs so as to maximize their net benefit subject to a budget constraint. -->
-<!-- \end{framed} -->
-
-<!-- Formally, axiom 2 may be written -->
-
-<!-- \begin{equation} -->
-<!-- y^* = y(\mathbf{x}^*; y_0, \tilde{\mathbf{x}}, \mathbf{k}, \tilde{\mathbf{k}}, \boldsymbol{\alpha}, \boldsymbol{\kappa}) \:;\:\: x^* = \text{argmax}_{\mathbf{x}}(P y - \lambda(C - B)) -->
-<!-- \end{equation} -->
-
-<!-- Where $P$ is the output price, $B$ is the farm budget, $C$ is the cost function, defined -->
-
-<!-- \begin{equation} -->
-<!-- C = \mathbf{w} ' \mathbf{x} -->
-<!-- \end{equation} -->
-
-<!-- and $\mathbf{w}$ is the vector of input prices corresponding to each element in the input vector $\mathbf{x}$. -->
-
-<!-- **-- -->
-<!-- The Lagrangian is then -->
-
-<!-- \begin{equation} -->
-<!-- \mathcal{L} = Py - \lambda (C - B) -->
-<!-- \label{eq:lagrangian} -->
-<!-- \end{equation} -->
-
-<!-- Where $\lambda$ is the farm budget shadow price, that is, the marginal benefit to the farm of a marginal increase in budget. -->
-
-<!-- \begin{equation} -->
-<!-- \frac{\partial \mathcal{L}}{\partial B} = \lambda -->
-<!-- \end{equation} -->
-<!-- <!-- The budget shadow price is an implicit measure of how each farm values cash for expenditures on farm inputs, and plays a central role in the aggregation step farther below. -->
-
-<!-- The first order conditions for a maximum of $\mathcal{L}$ are -->
-
-<!-- \begin{equation} -->
-<!-- \begin{split} -->
-<!-- \nabla_{\mathbf{x}} \mathcal{L} &= P \nabla_{\mathbf{x}} y - \lambda \mathbf{w} = \mathbf{0} \\ -->
-<!-- &= Py D(\mathbf{x})^{-1} \boldsymbol{\alpha} - \lambda \mathbf{w} = \mathbf{0} -->
-<!-- \end{split} -->
-<!-- \label{eq:eqFOC} -->
-<!-- \end{equation} -->
-
-<!-- Where the $\mathbf{0}$ indicates a vector of zeroes equal to the length of $\mathbf{x}$. -->
-
-<!-- And the second order condition for a maximum is -->
-
-<!-- \begin{equation} -->
-<!-- \begin{split} -->
-<!-- \mathbf{x} ' \nabla_{\mathbf{x}}^2 \mathcal{L} \mathbf{x} &= P \mathbf{x} ' \nabla_{\mathbf{x}}^2 y \mathbf{x} ' < 0 \\ -->
-<!-- &= P h (h - 1) < 0 -->
-<!-- \end{split} -->
-<!-- \label{eq:eqSOC} -->
-<!-- \end{equation} -->
-
-<!-- Where Euler's Theorem has been invoked in the second line of the condition. The first order conditions may be solved for input demand $x_j^*$ as follows. -->
-
-<!-- \begin{equation} -->
-<!-- x_j^* = \frac{P y^* \alpha_j}{\lambda w_j} -->
-<!-- \label{eq:inputDem1} -->
-<!-- \end{equation} -->
-
-<!-- A.2 -->
-<!-- ## Returns to scale and price elasticity of the farm yield envelope \label{sec:A2} -->
-
-<!-- The second order conditions examined above (Equation \ref{eq:eqSOC}) imply that constant returns to scale ($h = 1$) occur at the breakeven point of zero net benefit; and that increasing returns to scale ($h > 1$) minimize net benefit. The only values of $h$ over which the second order condition for maximum net benefit are met are $0 < h < 1$. Therefore, axioms 1 and 2 lead to the corollary that optimal farm yield exhibits strictly decreasing returns to scale. Note that it also follows that the farm yield function is globally concave in inputs only for decreasing returns to scale. Constant and increasing returns, on the other hand, would imply global linearity and convexity, respectively. -->
-
-<!-- Turning to output supply and input demand curves, note that the derivative of logged optimal yield (Equation \ref{eq:YdEnvNeat}) with respect to output price is -->
-
-<!-- \begin{equation} -->
-<!-- \frac{\partial \ln(y^*)}{\partial P} = h \frac{\partial \ln(C^*)}{\partial P} -->
-<!-- \end{equation} -->
-
-<!-- Recalling that $C^* = R^* h / \lambda$ (Equation \ref{eq:cStar}), the output price elasticity of farm supply resolves as follows. -->
-
-<!-- \begin{equation} -->
-<!-- \begin{split} -->
-<!-- \frac{\partial \ln(y^*)}{\partial P} &= h \left( \frac{\partial \ln(y^*)}{\partial P} + \frac{1}{P} \right) \\ -->
-<!-- \frac{\partial \ln(y^*)}{\partial P} &= \frac{h}{1 - h} \frac{1}{P} \\ -->
-<!-- \frac{\partial \ln(y^*)}{\partial \ln(P)} &= \frac{h}{1 - h} -->
-<!-- \end{split} -->
-<!-- \label{eq:PelastYstar} -->
-<!-- \end{equation} -->
-
-<!-- Because returns to scale are strictly decreasing, it follows that farm supply is positively sloped. Moreover, farm supply is elastic for $h \in (1 / 2 , 1)$, inelastic for $h \in (0, 1 / 2)$, and linear when $h = 1 / 2$. Note that increasing returns to scale would imply negatively sloped supply curves. -->
-<!-- <!-- first note that the optimal yield function in Equation \ref{eq:YdEnvNeat} can be rewritten in terms of output price $P$ by invoking Equation \ref{eq:cStar} to substitute $R^* h / \lambda$ for $C^*$. --> 
-<!-- **-- -->
-<!-- A.3 -->
-<!-- ## Marginal cost -->
-<!-- <!-- ### Marginal cost and unit cost -->
-<!-- <!-- Some important/underrepresented corollaries -->
-<!-- <!-- Because the C-D fn has fallen into such disrepute, it is worthwhile to take a moment to highlight some attractive corollaries that are underrepresented in the textbook treatments. [and one new one -lipton] -->
-
-<!-- From Equation \ref{eq:YdEnvNeat}, it follows that -->
-
-<!-- \begin{equation} -->
-<!-- \frac{d \ln(y^*)}{d \ln(C^*)} = h -->
-<!-- \end{equation} -->
-<!-- In words, the degree of homogeneity $h$ may also be interpreted as the "scale elasticity of yield"---the fraction by which yield increases given a unit increase in expenditure. (This is a standard result for the Cobb-Douglas form, usually noted in the textbooks [@heathfield1987introduction]). -->
-<!-- The farm marginal cost follows from this as -->
-<!-- \begin{equation} -->
-<!-- \frac{dC^*}{dy^*} = \frac{C^*}{y^* h} -->
-<!-- \end{equation} -->
-
-<!-- Which, considering Equation \ref{eq:cStar}, may also be written -->
-
-<!-- \begin{equation} -->
-<!-- \frac{dC^*}{dy^*} = \frac{P}{\lambda} -->
-<!-- \label{eq:margCost} -->
-<!-- \end{equation} -->
-
-<!-- Axioms 1 and 2 thus imply that marginal cost is proportionate, but not equal, to output price. If they were equal, then this would constitute theoretical grounds upon which to presume that every farm has the same marginal cost. And then from there it would be a short jump to presume, as is often done, that a given exogenous shock affects every farm's marginal cost identically. But no, marginal cost varies with $\lambda$. In highly developed economic sectors, it may be that $\lambda$ is effectively determined by the lending rate, and is thus homogeneous across firms; but this is generally not true in the primary sector. In the primary sector, heterogeneous endowments result in heterogeneous valuation of marginal increments in production expenditure (i.e. $\lambda$). -->
-<!-- <!-- This may be considered one of the hallmarks of the primary sector setting it apart from other sectors. -->
-
-<!-- The relation between marginal cost and "average cost" (i.e. optimal unit cost) readily follows from Equation \ref{eq:margCost}. -->
-
-<!-- \begin{equation} -->
-<!-- \frac{dC^*}{dy^*} = \frac{C^{\#}}{h} \:\:; \:\:\: C^{\#} = C^*/y^* -->
-<!-- \end{equation} -->
-
-<!-- The standard assertion that profit-maximizing farms produce such that marginal cost equals average cost thus implies constant returns to scale ($h = 1$), which in turn implies a marginal farm producing for zero profit with a perfectly inelastic farm supply curve that is globally linear in inputs. -->
-<!-- Since $P = d R^* / d y^*$, this can be rearranged into another instructive expression for $\lambda$. -->
-<!-- constant marginal cost. (As mentioned in the introduction, this is well supported empirically [].) -->
-<!-- \begin{equation} -->
-<!-- \lambda = \frac{dR^* / dy^*}{dC^* / dy^*} = \frac{dR^*}{dC^*} -->
-<!-- \label{eq:lambda2} -->
-<!-- \end{equation} -->
-<!-- \begin{equation} -->
-<!-- \begin{split} -->
-<!-- \frac{\partial \ln(x^*_i)}{\partial w_i} &= \frac{\partial \ln(C^*)}{\partial w_i} - \frac{1}{w_i} \\ -->
-<!-- &= \frac{1}{C^*} \left(x^*_i + \frac{\partial x_i^*}{\partial w_i} w_i \right) - \frac{1}{w_i} \\ -->
-<!-- &= \frac{x^*_i}{C^*} \left(1 + \frac{\partial \ln(x_i^*)}{\partial \ln(w_i)} \right) - \frac{1}{w_i} -->
-<!-- \end{split} -->
-<!-- \end{equation} -->
-<!-- Multiplying through by $w_i$, -->
-<!-- \begin{equation} -->
-<!-- \frac{\partial \ln(x^*_i)}{\partial \ln(w_i)} = \frac{C^*_i}{C^*} \left(1 + \frac{\partial \ln(x_i^*)}{\partial \ln(w_i)} \right) - 1 -->
-<!-- \end{equation} -->
-<!-- Where $C^*_i$ is the expenditure on input $i$. But note from Equation \ref{eq:inputDem2} that -->
-<!-- \begin{equation} -->
-<!-- \frac{C^*_i}{C^*} = \frac{\alpha_i}{h} -->
-<!-- \end{equation} -->
-<!-- This instructive corollary of axioms 1 and 2 says that optimal expenditure shares are equal to their respective technology shares. Substituting the technology share $\alpha_i / h$ for $C^*_i / C^*$ in the previous equation and isolating $\partial \ln(x^*_i) / \partial \ln(w_i)$ gives the expression for input own price elasticity of input demand. -->
-<!-- \begin{equation} -->
-<!-- \frac{\partial \ln(x^*_i)}{\partial \ln(w_i)} = \alpha_i + \frac{\partial \ln(x_i^*)}{\partial \ln(w_i)} \right) - 1 -->
-<!-- \end{equation} -->
-<!-- \begin{equation} -->
-<!-- \begin{split} -->
-<!-- y^* &= y|_{x_i = x^*_i} = u \frac{k}{E[k]} \prod_{i = 1}^{n_x} \left( \frac{x^*_i}{E[x_i]} \right)^{\alpha_i} \:\:;\:\:\: k = \prod_{i = 1}^{n_k} k_i^{\kappa_i} \\ -->
-<!-- &= u \frac{k}{E[k]} \prod_{i = 1}^{n_x} \left( \frac{x^*_i}{E[x_i]} \right)^{\alpha_i} -->
-<!-- \end{split} -->
-<!-- \end{equation} -->
-<!-- \begin{equation} -->
-<!-- y = u \frac{k}{E[k]} \prod_{i = 1}^{n_x} \left( \frac{x_i}{E[x_i]} \right)^{\alpha_i} \:\:;\:\:\: k = \prod_{i = 1}^{n_k} k_i^{\kappa_i} -->
-<!-- \label{eq:cobbDoug3} -->
-<!-- \end{equation} -->
-<!-- \begin{equation} -->
-<!-- x^*_i = \frac{y^* P \alpha_i}{\lambda w_i} -->
-<!-- \label{eq:inputDem1} -->
-<!-- \end{equation} -->
-<!-- [[By axioms 1 and 2, then we get corrollaries: upward sloping farm supply, downward sloping input demand, concavity in inputs, marginal cost equals P/lambda, MC and Avg cost]] -->
-<!-- [[Cost *increases* with tech (h)]] -->
-<!-- [[pause and review MC = h/lambda AC basis of the conventional concept and insistence on marginal firms]] -->
-
-<!-- Finally, note also the similarity between Equations \ref{eq:yStarC} and \ref{eq:integrate_lny}. And note that -->
-<!-- \begin{equation} -->
-<!-- \frac{\partial \ln(y^*)}{\partial C^*} \sim \frac{1}{C^*} -->
-<!-- \end{equation} -->
-<!-- Which is congruent to axiom 1. The question arises, then, whether axiom 2 requires axiom status, or whether it is implied by axiom 1. But this is a question for logicians. Pending clarification, it remains an axiom for now. -->
-<!-- In the case of cross price demand curves, this implies that all inputs are complements, not substitutes. -->
-<!-- \begin{equation} -->
-<!-- \theta_x = \prod_i {\alpha_i}^{\alpha_i} \:\:\: \theta_w = \prod_i{w_i}^{\alpha_i} \:\:\:  \theta_k = \prod_i \left( \frac{k_i}{\tilde{k}_i} \right)^{\kappa_i} -->
-<!-- \end{equation} -->
-
-A.3
-## Proof of Equation \ref{eq:keyResult}
+## B.2 Proof of Equation \ref{eq:keyResult} {-}
 
 For lognormally distributed $\chi$, the probability density function $\rho(\chi)$ is defined
 
@@ -3451,8 +3279,33 @@ $\blacksquare$
 <!-- \end{equation} -->
 <!-- $\blacksquare$ -->
 
-A.5
-# Proof that optimal unit expenditure is a geometric brownian motion with the same parameters as output price
+## B.3 Differentiation of expenditure TFP, yield, and expenditure with respect to TFP {-}
+
+The derivative of expenditure TFP ($v$) with respect to TFP ($g$) follows from Equations \ref{eq:v0forms}.
+
+\begin{equation}
+\frac{\partial \ln(v)}{\partial \ln(g)} = 1 - \boldsymbol{\alpha} ' \frac{\partial \ln(\mathbf{w})}{\partial \ln(g)}
+\end{equation}
+
+And the derivatives $\partial \ln (C^*) / \partial \ln(g)$ and $\partial \ln(y^*) / \partial \ln(g)$ then follow from the expressions in Equation \ref{eq:fnCsharp}.
+
+\begin{equation}
+\begin{split}
+\frac{\partial \ln(C^*)}{\partial \ln(g)} &= \frac{1}{1 - h} \left( \frac{\partial \ln(v)}{\partial \ln(g)} + \frac{\partial \ln(C^*)}{\partial \ln(g)} \right)  \\
+&\rightarrow \frac{\partial \ln(C^*)}{\partial \ln(g)} = \frac{1}{1 - h} \left( 1 - \boldsymbol{\alpha} ' \frac{\partial \ln(\mathbf{w})}{\partial \ln(g)} + \frac{\partial \ln(P)}{\partial \ln(g)} \right)
+\end{split}
+\end{equation}
+
+And
+
+\begin{equation}
+\begin{split}
+\frac{\partial \ln(y^*)}{\partial \ln(g)} &= \frac{\partial \ln(v)}{\partial \ln(g)} - h \frac{\partial \ln(C^*)}{\partial \ln(g)} \\
+&= \frac{1}{1 - h} \left( 1 - \boldsymbol{\alpha} ' \frac{\partial \ln(\mathbf{w})}{\partial \ln(g)} + h \frac{\partial \ln(P)}{\partial \ln(g)} \right)
+\end{split}
+\end{equation}
+
+# B.4 Proof that optimal unit expenditure is a geometric brownian motion with the same parameters as output price {-}
 
 If $P(t)$ is a gBm with drift and volatility parameters $m_p$ and $s_p$, and given the relation (Equation \ref{eq:useful3}),
 
@@ -3463,11 +3316,11 @@ $$
 Then Ito's Lemma states
 
 \begin{equation}
-\Delta C^{\#} = \left(\frac{\partial C^{\#}}{\partial t} + m_p P(t) \frac{\partial C^{\#}}{\partial P} + \frac{1}{2} s_p^2 P(t)^2 \frac{\partial^2 C^{\#}}{\partial P^2}  \right) \Delta t + s_p P(t) \frac{\partial C^{\#}}{\partial P} \epsilon \sqrt{\Delta t}
+\Delta C^{\#} = \left(\frac{\partial C^{\#}}{\partial t} + m_p P(t) \frac{\partial C^{\#}}{\partial P} + \frac{1}{2} s_p^2 P(t)^2 \frac{\partial^2 C^{\#}}{\partial P^2}  \right) \Delta t + s_p P(t) \frac{\partial C^{\#}}{\partial P} \varepsilon \sqrt{\Delta t}
 \label{eq:itoLem}
 \end{equation}
 
-Where $\epsilon$ is a normally distributed random variable with mean $0$ and standard deviation $1$. (For a reference see Hull [-@hull9thEdition].)
+Where $\varepsilon$ is a normally distributed random variable with mean $0$ and standard deviation $1$. (For a reference see Hull [-@hull9thEdition].)
 
 By Equation \ref{eq:useful3},
 
@@ -3478,15 +3331,15 @@ By Equation \ref{eq:useful3},
 Such that Equation \ref{eq:itoLem} resolves to
 
 \begin{equation}
-\Delta C^{\#} = m_p C^{\#} \Delta t + s_p C^{\#} \epsilon \sqrt{\Delta t}
+\Delta C^{\#} = m_p C^{\#} \Delta t + s_p C^{\#} \varepsilon \sqrt{\Delta t}
 \end{equation}
 
 By which it follows that $C^{\#}$ has the same drift and volatility parameters as $P(t)$.
 
 \begin{equation}
 \begin{split}
-E[C^{\#} / C^{\#}] &= m_p \Delta t \\
-Var[C^{\#}(T)] &= s^2_p \Delta t
+E[\Delta C^{\#} / C^{\#}] &= m_p \Delta t \\
+Var[\Delta C^{\#}] &= s^2_p \Delta t
 \end{split}
 \end{equation}
 
@@ -3556,7 +3409,7 @@ $\blacksquare$
 
 <!-- \blacksquare -->
 
-# Appendix C: Data details and preparation
+# Appendix C: Kenya farm survey data details and preparation {-}
 
 The raw Kenya farm data files used in this article are open access and available from Tegemeo Institute upon request. The files detail short and long rains maize production (and that of any other crops grown), farm size, input (seed, synthetic and organic fertilizer, chemical pest control) use and cost, land tenure type, and land preparation type and cost, for the years 1997, 2000, 2004, 2007, and 2010. For the present article, only the 2007 long rains (i.e. main season) data is used. Data on production, area, seed, fertilizer, land preparation, and tenure are provided at field level. Fields where maize is not grown or is not the main crop are dropped. Green and dry maize production are reported separately. Green maize production is converted to dry maize equivalent by subtracting 15% of the production weight. The field level input and production files are then merged and aggregated up to farm level. Farm yield is then calculated as maize production (kg.) divided by maize area (acres). Chemical input use and cost are reported at farm level, indicating the main crop on the farm to which the input is applied. Chemical pest controls are counted as costs only if applied primarily to maize. Synthetic fertilizer consists of calcium ammonium nitrate (CAN), nitrogen phosphorus potassium (NPK), Urea, and diammonium phosphate (DAP). Different mixtures under these headings (e.g. NPK 22:11:11, NPK 18:12:12, NPK 17:17:0, etc.) are aggregated. Farm level cost is then calculated as the sum of seed, fertilizer, chemical pest control, and land preparation costs in Kenyan Shillings per acre (KES/acre).
 <!-- This is then merged with the main farm level file.  -->
@@ -3569,7 +3422,7 @@ Main season rainfall is reported in millimeters at district level. (Prior to the
 <!--main07 This file, originally generated by Tavneet Suri, contains 2007 and historic average main season rainfall reported by the FEWS National Weather Service Climate Prediction Center, georeferenced to the 2007 TAMPA/TAPRA survey. -->
 
 \singlespacing
-```{r Fig7, fig.show = "hold", fig.width = 4, fig.height=2, fig.align="left", fig.cap="\\label{fig:rainHist}Histogram of 2007 rainfall anomaly. Values close to 1 (marked by the black vertical line) represent rainfall in line with the historical benchmark. The histogram indicates that rainfall exceeded this benchmark in 2007 for most of the farm sample.", echo = FALSE}
+```{r Fig7, fig.show = "hold", fig.width = 4, fig.height=2, fig.align="center", fig.cap="\\label{fig:rainHist}Histogram of 2007 rainfall anomaly. Values close to 1 (marked by the black vertical line) represent rainfall in line with the historical benchmark. The histogram indicates that rainfall exceeded this benchmark in 2007 for most of the farm sample.", echo = FALSE}
 
 gg <- ggplot(dfMod3, aes(x = exp(`ln[Rain anomaly]`)))
 gg <- gg + geom_histogram(color = 4, fill = "white", bins = 15)
