@@ -15,6 +15,8 @@ header-includes:
   - \numberwithin{equation}{section}
   - \usepackage{caption}
   - \captionsetup[figure]{font=small}  # Options: scriptsize, footnotesize, small
+  - \usepackage{etoolbox}
+  - \AtBeginEnvironment{equation}{\scriptsize}
 output:
   pdf_document:
    keep_tex: true
@@ -62,8 +64,8 @@ axisTextSize <- 6
 axisTitleSize <- 7
 facetTitleSize <- 7
 
-mainFolder <- "/home/ben/Documents/Theory of aggregate supply and shocks/"
-# mainFolder <- "D:/OneDrive - CGIAR/Documents 1/CIAT 2/A theory of aggregate supply and demand/"
+#mainFolder <- "/home/ben/Documents/Theory of aggregate supply and shocks/"
+mainFolder <- "D:/OneDrive - CGIAR/Documents 1/CIAT 2/A theory of aggregate supply and demand/"
 priceFolder <- "Price data/"
 
 
@@ -79,7 +81,7 @@ priceFolder <- "Price data/"
 The conventional linear and constant elasticity of supply (CES) aggregate supply curves commonly used in ex-ante impact assessments of new agricultural technology [@alston1995science; @alston2009economics] are not explicitly derived from microeconomic axioms, but rather specified primarily to facilitate calculations of consumer and producer surplus, with little consideration given to the plausibility of the theoretical underpinnings and empirical implications of this choice of functional form. In particular, it is unclear whether these forms are consistent with standard microeconomic axioms regarding homogeneity, convexity/concavity, profit maximization, and the slope of farm level supply and input demand curves.
 <!-- (The model documentation might make passing reference to such axioms; but the models themselves are not formally derived from them.) -->
 
-That is to say, if we consider aggregate supply $Q$ in its most basic definition as the definite integral of farm production function $q^*$ times the production density $\rho(q^*)$ over the domain of profitable production $(\underline{q}^*, \overline{q}^*)$,
+That is to say, if aggregate supply $Q$ in its most basic definition may be formulated as the definite integral of farm production function $q^*$ times the production density $\rho(q^*)$ over the domain of profitable production $(\underline{q}^*, \overline{q}^*)$,
 
 \begin{equation}
 Q(P) = \int_{\underline{q}^*}^{\overline{q}^*} q^* \rho(q^*) \: dq^*
@@ -125,7 +127,7 @@ In other words, policy formation does not require mathematical descriptions of a
 
 In the course of the derivation, it becomes evident that five other desirable properties immediately follow from axioms 1 and 2 as corollaries, and need not be imposed as additional axioms: 1) The farm yield function is homogeneous (and thus homothetic) and 2) concave in inputs; 3) farm supply curves are upward sloping; 4) input demand curves are downward sloping; and 5) the derived yield function implies agreement with a consensus view of the economic rationale driving technology adoption, articulated by Lipton [-@lipton2005family].
 
-On the other hand, two somewhat controversial corollaries also follow from this axiomatic approach: strictly decreasing returns to scale and constant marginal cost. The former contradicts the conventional wisdom handed down by Hicks [-@hicks1963theory] and Solow [-@solow1957technical]. The latter is well supported empirically [@lavoie2014post], but is eschewed in textbooks. Regardless of one's view on returns to scale and marginal cost curves, the very fact that it is possible to disagree with specific corollaries, and to trace the disagreement back to specific axioms, underscores a key strength of the derived model: its theoretical transparency. Under the theoretical opacity of the conventional approach, by contrast, it is not even possible to know if one agrees or disagrees with the premises, or whether the premises contradict each other mathematically, since those premises are stated in literary form (if they are stated at all), and the model is not explicitly derived from such premises.
+On the other hand, two somewhat controversial corollaries also follow from this axiomatic approach: strictly decreasing returns to scale and constant marginal cost. The former contradicts the conventional wisdom handed down by Hicks [-@hicks1963theory] and Solow [-@solow1957technical]. The latter is well supported empirically [@lavoie2014post], but is eschewed in textbooks. Regardless of one's view on returns to scale and marginal cost curves, the very fact that it is possible to disagree with specific corollaries, and to trace the disagreement back to specific axioms, underscores a key strength of the derived model: its theoretical transparency. Under the theoretical opacity of the conventional approach, by contrast, it is not possible to know if one agrees or disagrees with the premises, or whether the premises contradict each other mathematically, since those premises are stated in literary form (if they are stated at all), and the model is not explicitly derived from such premises.
 
 All of the parameters appearing in the derived model have a straightforward interpretation in terms of relevant, measurable, empirical phenomena. This includes, in addition to the usual variables of interest (technology, agroclimatic variables, output price), farm expenditure population parameters and terms capturing the farm employment rate (i.e. farm entry/exit) and mean probability of profit. This facilitates the exploration of a range of distributional policy issues that conventional modeling approaches are admittedly ill suited to address [@norton1992economic]. When stochasticity is taken into account, the aggregate supply curve is shown to have a dual expression in stochastic price parameter space, whereby questions of price volatility may be addressed.
 <!-- Wohlgenant [-@wohlgenant1997nature] suggests the lognormal distribution as a suitable density fn... -->
@@ -158,7 +160,7 @@ Throughout much of written history, astute observers have noticed that the usefu
 <!-- \end{framed} -->
 <!-- Formalization of Bernoulli's verbal statement of the law of diminishing marginal returns depends upon how one defines "small increase". If "small increase" means a marginal increase, then Bernoulli's statement can be written down as follows.^[Bernoulli himself could not have had "marginal increase" in mind per se, as calculus had not yet been invented.] -->
 
-Today, this is known as the "law of diminishing marginal returns". Bernoulli's statement is a consumer side formulation of the law. It can also has a producer side formulation: "In the absence of the unusual, the yield increase resulting from any small increase in a given input will be inversely proportionate to the quantity of the input already applied." With the aid of calculus (which was not available to Bernoulli), this may be formalized as follows.
+Today, this is known as the "law of diminishing marginal returns". Bernoulli's statement is a consumer side formulation of the law, which may be expressed on the producer side as: "In the absence of the unusual, the yield increase resulting from any small increase in a given input will be inversely proportionate to the quantity of the input already applied". With the aid of calculus (which was not available to Bernoulli), this may be formalized as follows.
 
 \begin{equation}
 \frac{\partial \ln(y)}{\partial x} \sim \frac{1}{x}
@@ -180,6 +182,7 @@ Where the proportionality constant $\alpha = \partial \ln(y)/ \partial \ln(x)$ i
 
 In the multivariate case, an expression $y(\mathbf{x})$ for yield as a function of a vector of $n$ goods $\mathbf{x} = [x_1,x_2,...,x_n]$ can be obtained as follows.
 
+\singlespacing
 \begin{equation}
 \int \nabla_{\mathbf{x}} \ln(y) \cdot d \mathbf{x} = \int D(\boldsymbol{\alpha}) \nabla_{\mathbf{x}} \ln(\mathbf{x}) \cdot d \mathbf{x}
 \end{equation}
@@ -191,6 +194,7 @@ y &= e^{\alpha_0} \prod_{i = 1}^{n} x_i^{\alpha_i}
 \end{split}
 \label{eq:cobbDoug}
 \end{equation}
+\doublespacing
 
 where $\boldsymbol{\alpha}$ is the vector of input elasticities corresponding to each $x_i$, the notation $D(\boldsymbol{\alpha})$ indicates a diagonal matrix with the elements of $\boldsymbol{\alpha}$ along its diagonal, and
 
@@ -265,7 +269,7 @@ Where $P$ is the output price, $C$ is expenditure ($C = \mathbf{w}'\mathbf{x}$, 
 \begin{split}
 \nabla_{\mathbf{x}} \mathcal{L} &= P \nabla_{\mathbf{x}} y - \lambda \mathbf{w} = \mathbf{0} \\
 &= Py D(\mathbf{x})^{-1} \boldsymbol{\alpha} - \lambda \mathbf{w} = \mathbf{0} \\
-& \text{(Where}\: \mathbf{0} \: \text{is a vector of zeroes equal to the length of}\: \mathbf{x} \text{.)}
+& \text{(Where}\: \mathbf{0} \: \text{is a vector of zeroes equal to the length of}\: \mathbf{x} \text{)}
 \end{split}
 \label{eq:eqFOC}
 \end{equation}
@@ -328,11 +332,14 @@ y^* = E[y^*] \frac{k}{E[k]} \frac{C^{*h}}{E[C^{*h}]}
 This expression for optimal farm yield---henceforth referred to simply as the farm yield---is particularly useful as an econometric yield model, as it only requires information on the control variables $k_i$ and total cost $C^*$, and no information on individual input quantities, as would be required when estimating Equations \ref{eq:cobbDoug2} or \ref{eq:cobbDoug3}. Given farm data, one specifies the model
 
 \begin{equation}
-y^* = v k C^{*h}e^{\epsilon} \:\:;\:\:\: v = \frac{E[y^*]}{E[k] E[C^{*h}]}
+\begin{split}
+y^* &= v k C^{*h}e^{\epsilon} \:\:;\:\:\: v = \frac{E[y^*]}{E[k] E[C^{*h}]} \\
+&\text{(Where} \:\: \epsilon \:\: \text{is the residual)}
+\end{split}
 \label{eq:YdEnvReg1}
 \end{equation}
 
-(Where $\epsilon$ is the error term.) Such that the estimated coefficient on logged farm cost may be directly interpreted as the degree of homogeneity for the population. When estimating the model in Equations \ref{eq:cobbDoug2} or \ref{eq:cobbDoug3}, by contrast, $h$ must be tallied by summing the estimated coefficients $\alpha_i$, and will likely vary across the population since not all farms necessarily apply all the inputs specified in the model. The new term $v$, moreover, retains meaning as a measure of TFP---and arguably a more instructive one since all inputs are expressed in identical units of cost. It is henceforth referred to as the "expenditure TFP", and is related to conventional TFP as follows.
+Such that the estimated coefficient on logged farm cost may be directly interpreted as the degree of homogeneity for the population. When estimating the model in Equations \ref{eq:cobbDoug2} or \ref{eq:cobbDoug3}, by contrast, $h$ must be tallied by summing the estimated coefficients $\alpha_i$, and will likely vary across the population since not all farms necessarily apply all the inputs specified in the model. The new term $v$, moreover, retains meaning as a measure of TFP---and arguably a more instructive one since all inputs are expressed in identical units of cost. It is henceforth referred to as the "expenditure TFP", and is related to conventional TFP as follows.
 
 \begin{equation}
 \begin{split}
@@ -635,7 +642,7 @@ More specifically, whereas the conventional approach assumes the farm level expe
 And whereas the conventional approach exogenously assumes the adoption rate, again typically based on the opinion of experts closely involved in the technology under evaluation, here the adoption rate follows endogenously from the theoretical derivation, based on whether or not adoption increases farm net benefit.
 <!-- ($\mathcal{L}^*$) -->
 
-### The endogenous farm yield and expenditure response to exgenous shock \label{sec:farmResp}
+### The endogenous farm yield and expenditure response to exogenous shock \label{sec:farmResp}
 
 The impact of yield scaling technologies and/or management practices on farm supply and expenditure can be represented through perturbations of the TFP parameter ($g_{\phi}$). This is tantamount to adding a binary endowment variable to the TFP sum in Equation \ref{eq:g0Sum}. The four binary endowments included in the Kenya maize model example may be considered yield scaling interventions that increase the value of $g_{\phi}$ on farms where the endowment is present. The percentage increase in TFP given the introduction of a new intervention $\beta_5 b_5$ on adopting farms (farms where $b_5 = 1$) may be calculated as
 
@@ -717,7 +724,7 @@ The farm net benefit function in Equation \ref{eq:lagrangian} evaluated at $y^*$
 <!-- \mathcal{L}^* = R^* (1 - h) + \lambda B -->
 <!-- \end{equation} -->
 
-The welfare effect on a given farm of adopting the new technology may be examined by differentiating $\mathcal{L}^*$ with respect to the change in TFP.
+The welfare effect on a given farm adopting the new technology may be examined by differentiating $\mathcal{L}^*$ with respect to the change in TFP.
 
 \begin{equation}
 \begin{split}
@@ -3045,9 +3052,12 @@ For the pedagogical purpose of demonstrating the derived model's basic functiona
 <!-- The broader the scope of equilibrium, the more data is required. -->
 <!-- [can also address questions of how the same result might be achieved through interventions of other variables (Ethiopia bean an example), so as to compare which impact pathway is cheapest] -->
 
+\singlespacing
 # References {-}
 
 <div id="refs"></div>
+
+\doublespacing
 
 \newpage
 
@@ -3324,7 +3334,7 @@ Where $\varepsilon$ is a normally distributed random variable with mean $0$ and 
 By Equation \ref{eq:useful3},
 
 \begin{equation}
-\frac{\partial C^{\#}}{\partial t} = 0 \:\:\:\: \frac{\partial C^{\#}}{\partial P} = \frac{C^{\#}}{P} \:\:\:\: \frac{\partial^2 C^{\#}}{\partial P^2} = 0
+\frac{\partial C^{\#}}{\partial t} = 0 \:\:\:\:\:\:\:\:\:\:\:\: \frac{\partial C^{\#}}{\partial P} = \frac{C^{\#}}{P} \:\:\:\:\:\:\:\:\:\:\:\: \frac{\partial^2 C^{\#}}{\partial P^2} = 0
 \end{equation}
 
 Such that Equation \ref{eq:itoLem} resolves to
@@ -3434,7 +3444,7 @@ gg
 ``` 
 \doublespacing
 
-```{r Fig8, fig.show = "hold", fig.width = 5, fig.height=2, fig.align="left", fig.cap="\\label{fig:sumStats}Summary statistics for the 2007 Kenya long rains farm level maize data.", echo = FALSE}
+```{r Fig8, fig.show = "hold", fig.width = 5, fig.height=2, fig.align="left", echo = FALSE}
 # dfLook <- dfMod3 %>% select(`Landprep: oxen`, `Landprep: tractor`) %>%
 #   summarise_all(list(mean = "mean", sd = "sd"))
 gatherCols <- colnames(dfMod3)[-1]
@@ -3461,7 +3471,7 @@ gg <- gg + geom_tile(alpha = 0)
 gg <- gg + geom_text(aes(label = val), size = labelSize) +
   scale_x_discrete(limits = c("Mean", "Stand. dev.", "Max", "Min"), position = "top")
 gg <- gg + scale_y_discrete(limits = varOrder)
-gg <- gg + labs(title = "Table C1: Summary statistics for the 2007 Kenya long rains farm level maize data.", subtitle = "N = 937")
+gg <- gg + labs(title = "Table C1: Summary statistics for the 2007 Kenya long rains\nfarm level maize data.", subtitle = "N = 937")
 gg <- gg + theme_classic() +
   theme(axis.title = element_blank(),
         axis.text = element_text(size = axisTextSize),
@@ -3474,6 +3484,7 @@ gg <- gg + theme_classic() +
 gg
 
 ```
+<!-- fig.cap="\\label{fig:sumStats}Summary statistics for the 2007 Kenya long rains farm level maize data.", -->
 
 <!-- #==================================================================================== -->
 <!-- #==================================================================================== -->
@@ -4010,7 +4021,7 @@ gg
 
 
 <!-- Given a lognormally distributed random variable $u$, such that $\ln(u)$ is normally distributed with mean $m_u$ and variance $s_u^2$, then the expected value of $u$ is -->
-<!-- <!-- Where $p(q)$ is the probability density function of the random variable $q$. If $\ln(q)$ is normally distributed with mean $m_u$ and variance $s_u^2$, then --> -->
+<!-- <!-- Where $p(q)$ is the probability density function of the random variable $q$. If $\ln(q)$ is normally distributed with mean $m_u$ and variance $s_u^2$, then -->
 
 <!-- \begin{equation} -->
 <!-- E[u] = e^{m_u + \frac{s_u^2}{2}} -->
