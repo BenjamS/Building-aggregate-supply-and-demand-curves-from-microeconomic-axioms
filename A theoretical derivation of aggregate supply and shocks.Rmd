@@ -92,7 +92,7 @@ then it is not readily apparent from conventional linear and CES specifications 
 
 Because these models are not formally derived from axioms, there is no clear mapping between their parameters and the relevant, measurable empirical phenomena (i.e., technology, input prices, agroclimatic conditions, demographic variables, etc.), such that it is not clear how a change in any of these phenomena might be accurately represented in terms of a change in parameter values, nor even which parameters might be affected by the change. This, in turn, precludes any endogenous modeling of economic decision making on the part of farmers in response to technology, or any other exogenous, shocks. Instead, the conventional models introduce farm level economic decision making (i.e., the economically rational supply/expenditure/input mix response to the exogenous shock) as a calibrated assumption based on agronomic data gathered from field trials, literature, and/or consultation with scientists involved in the research under evaluation.
 
-This bears emphasis. The conventional aggregate supply models specifically designed for ex-ante impact assessment of new technology do not in fact model the supply response to new technology, but rather present a mathematical description of a presumed supply response that has been predetermined outside of the model, and then exogenously introduced into it. Model guidelines might offer some words of warning about the difference between economically and agronomically optimal yields/expenditures/input mixes, and about the glaring conflict of interest inherent in the expert opinion of scientists closely involved in the research under evaluation; but very little in the way of actionable advice is actually given. To redress conflicts of interest, e.g., Alston et al. [@alston1995science] prescribe the creation of
+This bears emphasis. The conventional aggregate supply models specifically designed for ex-ante impact assessment of new technology do not in fact model the supply response to new technology, but rather present a mathematical description of a presumed supply response that has been predetermined outside of the model, and then exogenously introduced into it. Model guidelines might offer some words of warning about the difference between economically and agronomically optimal yields/expenditures/input mixes, and about the glaring conflict of interest inherent in the expert opinion of scientists closely involved in the research under evaluation; but very little in the way of actionable advice is actually given. To redress conflicts of interest, e.g., Alston et al. [-@alston1995science] prescribe the creation of
 <!-- The absurdly high rates of return to agricultural R&D reported in the literature based on such models [@hurley2016] suggests that few practitioners follow this advice in any substantive way. -->
 
 >\singlespacing"an environment of peer review and, perhaps, a competitive process (e.g., Delphi methods) that will reduce the potential for personal incentives to bias estimates of technical parameters, and...an institutional setting in which scientists will be held accountable for systematic biases in their estimates of research impact".
@@ -101,13 +101,13 @@ This bears emphasis. The conventional aggregate supply models specifically desig
 
 Admirable aspirations, to be sure, but not actionable. If research institute directors are hard pressed to effect such deep cultural changes over the course of a multi-year tenure, how can the lowly economist tasked with the impact assessment---often hired by the scientists as a short term consultant---be expected to do so?
 
-The subsequent step of translating the exogenously introduced farm level response into an aggregate supply response likewise involves no endogenous modeling of economic behavior, but rather exogenous guesswork translated into mathematical symbols. That is to say, after a long and inconclusive debate in the 1970s over whether the aggregate supply response should be represented as a pivot or parallel shift of the curve [@alston1995science; @norton1981evaluating; @voon1991calculation], or some combination thereof, the current default choice of parallel shift in most impact assessments emerges not on any theoretical or empirical basis, but purely as a matter of fiat [@alston2009economics].
+The subsequent step of translating the exogenously introduced farm level response into an aggregate supply response likewise involves no explicit, endogenous modeling of the adoption rate or any other economic behavior, but rather exogenous guesswork translated into mathematical symbols. That is to say, after a long and inconclusive debate in the 1970s over whether the aggregate supply response should be represented as a pivot or parallel shift of the curve [@alston1995science; @norton1981evaluating; @voon1991calculation], or some combination thereof, the current default choice of parallel shift in most impact assessments emerges not on any theoretical or empirical basis, but purely as a matter of fiat [@alston2009economics].
 <!-- The consensus since the 1990s is that the shock manifests as a parallel shift of the aggregate supply curve [@alston1995science]. But no theoretical or empirical grounds exist for this preference over, say, a supply curve pivot, or a combination of pivot and shift, which would result in a very different calculation of net benefits [@alston1995science; @alston2009economics]. -->
 
-The final step of calculating net benefits in terms of discounted economic surplus, adjusted for probability of success, expected adoption rate, time lags in research and adoption, capital depreciation, and other exogenously collected parameters, bears many of the markings of a rigorous economic assessment. But insofar as the result of this calculation is prefigured by the initial, exogenously determined farm supply/expenditure response to technology change, and to its expression-by-fiat at the aggregate level, it is not so much an impact assessment as it is an impact assertion, i.e., an exercise in _petitio principii_.
+The final step of calculating net benefits in terms of discounted economic surplus, adjusted for probability of success, time lags in research and adoption, capital depreciation, and other exogenously collected parameters, bears many of the outward markings of a rigorous economic assessment. But insofar as the result of this calculation is prefigured by the initial, exogenously determined farm supply/expenditure response to technology change, and to its expression-by-fiat at the aggregate level, it is not so much an impact assessment as it is an impact assertion, i.e., an exercise in _petitio principii_.
 <!-- To put it more plainly, impact assessments based on conventional supply curves are offer a depiction of what net benefits could look like _if_ the assumed supply and demand curves, type of supply curve shift, and magnitude of the shift are accurate (with no theoretical or empirical basis to suspect that they are). The  -->
 
-Critics have long noted as much, if perhaps in a muted way. Rose [-@rose1980supply], for example, notes that
+Critics have long noted as much, albeit in a muted way. Rose [-@rose1980supply], for example, notes that
 
 >\singlespacing"[T]reatments have been concentrated on increasing the geometric sophistication of explanatory models and even that has been subject to fundamental errors. What is more important is to have an understanding of supply curves and the derivation of cost changes. Geometric manipulations are of little help at that level" [@rose1980supply].
 
@@ -135,16 +135,17 @@ All of the parameters appearing in the derived model have a straightforward inte
 
 In the Methodology section, immediately below, the model is derived from axioms 1-5. This includes a derivation of equations for assessing the endogenous supply response and producer welfare impact given an exogenous technology shock, together with an endogenous model of the adoption rate. The adoption rate model includes a term accounting for subsidies. The stochasticity of meteorology and output price is accommodated by axiom 5 at the end of the section. All of the salient differences between the present work and the conventional modeling framework stem from this explicit, careful accounting of the endogenous response to exogenous shock, and of the stochastic nature of meteorology and output price.
 
-After the Methodology, the derived model is fit to Kenya maize farm data as an illustrative use case. The fitted maize supply model is vetted against empirical estimates of maize supply at different price points across seven years. The model's estimates of both supply and the price elasticity of supply agree closely with the empirical estimates. The model's explicit stochastic accounting of rainfall proves critical to this accuracy. A hypothetical, generic technology shock is then introduced in order to showcase the model's impact assessment capacity. The endogenously modeled aggregate supply response to the shock, and associated producer welfare outcomes, are evaluated at a range of different subsidy levels and assumed price shocks. Results are presented in a heatmap format to facilitate policy discussion.
+After the Methodology, the derived model is fit to Kenya maize farm data as an illustrative use case. The fitted maize supply model is vetted against empirical estimates of maize supply and price elasticity of supply at different price points across seven years. Model estimates agree closely with the empirical estimates. A hypothetical, generic technology shock is then introduced in order to showcase the model's impact assessment capacity. The endogenously modeled aggregate supply response to the shock, and associated producer welfare outcomes, are evaluated at a range of different subsidy levels and assumed price shocks. Results are presented in a heatmap format to facilitate policy discussion.
+<!-- The model's explicit stochastic accounting of rainfall proves critical to this accuracy.  -->
 
-The widespread use of conventional linear and CES modeling frameworks calls for a more detailed engagement with the literature than the cursory treatment offered above. To place the motivation of the present work on solid footing, this engagement is provided in Appendix A.
+The widespread use of conventional linear and CES modeling frameworks calls for a more detailed engagement with the literature than the cursory treatment offered above. To place the motivation for the present work on solid footing, this engagement is provided in Appendix A.
 <!-- [Because the conventional linear and CES aggregate supply functions are in such wide use, it is first worthwhile to engage with that literature in more detail than is offered in the cursory treatment above, and to thereby place the motivation for the present work on a more solid footing.] -->
 
 \singlespacing
 # Methodology: Theoretically derived, endogenous modeling of aggregate supply and response to exogenous shock
 \doublespacing
 
-Below, a deterministic model of aggregate supply and endogenous response to technology (or any other kind of exogenous) shock is derived from axioms 1-5. First, the farm production function is derived from axioms 1 and 2. Then a deterministic aggregate supply function is derived from the farm production function and axioms 3 and 4. (This is deterministic in the sense that it does not take into account the stochasticity of output price and weather.) An alternative deterministic form for aggregate supply is also derived based on the relation between conditional and unconditional means. Practical steps for evaluating curve parameters are briefly enumerated; and the importance of accounting for "stratified TFP"---i.e., heterogeneous total factor productivity---is addressed. The farm level endogenous yield and expenditure response to exogenous shock is then formalized---including a formula for calculating the endogenous adoption rate---and aggregated. Finally, stochasticity and axiom 5 are introduced to explicitly account for random fluctuations in weather and output price, resulting in the final functional form for expected aggregate supply.
+In sections \ref{sec:axioms1and2} and \ref{sec:axioms3and4}, a deterministic model of aggregate supply is derived from axioms 1-4, beginning with a derivation of the farm production function from axioms 1 and 2, which is then aggregated on the basis of axioms 3 and 4. (This is deterministic in the sense that it does not take into account the stochasticity of output price and weather.) An alternative form for aggregate supply is also derived based on the relation between conditional and unconditional means. Practical steps for evaluating curve parameters are briefly enumerated; and the importance of accounting for "stratified TFP"---i.e., heterogeneous total factor productivity---is addressed. In sections \ref{sec:endogResp} and \ref{sec:aggImpact}, the farm level endogenous supply and expenditure response to, and welfare impact of, exogenous technology shocks is formalized. The supply and welfare expressions are aggregated to population level, including endogenous modeling of the adoption rate. In section \ref{sec:axiom5}, the stochastic nature of weather and output price is formally accommodated, resulting in the final, stochastically explicit, functional form for expected aggregate supply. The introduction of axiom 5 permits an alternative or dual parsing of the curve in stochastic price parameter space, thus allowing for explicit modeling of changes in price volatility; and resulting in a novel interpretation of the curve in terms of the mean farm's probability of profit. An equation for the price elasticity of expected aggregate supply is presented at the end of the section, together with stochastically explicit versions of the equations for the aggregate supply response and producer welfare previously derived.
 
 ## Derivation of the farm production function from axioms 1 and 2 \label{sec:axioms1and2}
 
@@ -206,7 +207,7 @@ where $\boldsymbol{\alpha}$ is the vector of input elasticities corresponding to
 \end{matrix} \right]
 \end{equation}
 
-It is straightforward to see that equation \ref{eq:cobbDoug2} is a homogeneous (and thus also homothetic) function with degree of homogeneity $h$ equal to $\sum_i \alpha_i$. There is no need, then, to impose homogeneity as an additional axiom. It follows from the axiom of diminishing marginal returns.
+It is straightforward to see that equation \ref{eq:cobbDoug} is a homogeneous (and thus also homothetic) function with degree of homogeneity $h$ equal to $\sum_i \alpha_i$. There is no need, then, to impose homogeneity as an additional axiom. It follows from the axiom of diminishing marginal returns.
 
 Empirical analysis involves exogenously given control variables ($k_i$), typically including demographic variables such as age, education, gender, household size, as well as agroclimatic variables such as temperature, rainfall, soil conditions, and so forth. Equation \ref{eq:cobbDoug} is thus henceforth rewritten as follows.
 <!-- (Analysis is said to be "ceteris paribus" when these variables are held constant at a particular value across the population.) -->
@@ -222,19 +223,22 @@ Where the $\kappa_i$ are the control variable elasticities of yield. Because the
 <!-- Where the $x_i$ are management inputs (fertilizer, etc.), the $k_i$ are control variables (demographic and agroclimatic variables, etc.), and the $\alpha_i$ and $\kappa_i$ are input and control variable elasticities of yield, respectively. The input elasticities of yield are also referred to collectively as the "technology". The product bounds $n_x$ and $n_k$ indicate the number of inputs and control variables, respectively. -->
 <!-- The variables $x_i$ and $k_i$ are assumed to be linearly independent and are divided by their population means ($\tilde{x}_i$, $\tilde{k}_i)$, such that $y_0$ may be interpreted as the mean yield.  -->
 
-This is, of course, the Cobb-Douglas form. Outside of Economics, it would simply be referred to as a (multivariate) power law. Such forms are often good models of observed processes across a wide range of research contexts and disciplines. In Economics, the Cobb-Douglas form was widely used from the 1920s to 1950s on the basis of its good empirical fit, but fell into disrepute thereafter for its perceived lack a theoretical basis. Capalbo and Antle [-@capalbo2015agricultural] offer a succinct introduction to this vast discussion. The forgoing derivation of the Cobb-Douglas form from axiom 1 in some measure redresses the lack of a theoretical basis. A full defense against all of the criticisms levied against this form over the past seventy five years is a book-length project that will not be attempted here.
+This is, of course, the Cobb-Douglas form. Outside of Economics, it would simply be referred to as a (multivariate) power law. Such forms are often good models of observed processes across a wide range of research contexts and disciplines. In Economics, the Cobb-Douglas form was widely used from the 1920s to 1950s on the basis of its good empirical fit, but fell into disrepute thereafter for its perceived lack a theoretical basis. Capalbo and Antle [-@capalbo2015agricultural] offer a succinct introduction to this vast discussion. The forgoing derivation of the Cobb-Douglas form from axiom 1 in some measure redresses the lack of a theoretical basis. A full defense against all of the criticisms levied against this form over the past seventy five years is not attempted here.
 <!-- [Other perceived shortcomings of the form are briefly addressed in the Discussion. if there is enough space!] [Or: In the course of the derivation below, a number of theoretical strengths are brought to light---underrepresented or overlooked by textbook treatments---that cast doubt on the bad reputation as a "restrictive" model] -->
 
-Interpretation of the constant $g$ is as difficult as one wants to make it. It is, of course, usually called the "total factor productivity" (TFP), and understood to represent the yield per unit "all inputs"---although a more accurate description would be yield per unit "all input and control variables, raised to various powers". The constant $g$ may in fact be a sum of binary endowments $b_i \beta_i$ that augment the TFP base constant ($\beta_0$) on farms where the endowment is present (where $b_i = 1$). That is to say, 
+The constant $g$ is, of course, usually called the "total factor productivity" (TFP), and understood to represent the yield per unit "all inputs" (although a more accurate description would be yield per unit "all input and control variables, raised to various powers"). The constant $g$ may be a sum of binary endowment terms ($b_i \beta_i$) that augment the TFP base constant ($\beta_0$) on farms where the endowment is present. That is to say, 
 
 \begin{equation}
-\ln(g) = \alpha_0 = \beta_0 + \sum_{i = 1}^{n_b} b_i \beta_i
+\begin{split}
+\ln(g) &= \alpha_0 = \beta_0 + \sum_{i = 1}^{n_b} b_i \beta_i \\
+& \text{(Where $b_i = 1$ if the endowment is present, else $b_i = 0$ otherwise)}
+\end{split}
 \label{eq:g0Sum}
 \end{equation}
 
-In the Kenya maize farm exercise farther below, for example, there are four ($n_b = 4$) binary endowment variables $b_i$ (which take a value of $1$ if the endowment is present and $0$ otherwise): use of oxen in land preparation, use of tractor in land preparation, use of hybrid maize seed, and land tenure. This means that $g$ can vary across the population. In the Kenya maize exercise, there are 12 unique values of $g$ in the population, corresponding to 12 unique combinations of the four binary endowments plus the base endowment constant $\beta_0$.
+In the Kenya maize farm exercise farther below, for example, there are four ($n_b = 4$) binary endowments---use of oxen in land preparation, use of tractor in land preparation, use of hybrid maize seed, and land tenure---resulting in 12 unique values of $g$ in the population, corresponding to 12 unique combinations of the four binary endowments plus the base endowment constant $\beta_0$.
 
-The parameter $g$ may also be arbitrarily defined in terms of a new parameter ($u$) combined with judiciously chosen reference terms such that the new parameter has a meaningful interpretation and/or results in a more useful expression for yield. For present purposes, $g$ is defined as follows
+To derive a more compact expression for yield, the parameter $g$ may be arbitrarily defined in terms of a new parameter ($u$).
 <!-- For those not yet comfortable working in units of, say, -->
 <!-- $$ -->
 <!-- \text{kg.} \times \: \text{acres}^{-1} \times \: \text{liters}^{-\alpha_{pest}} \times \: \text{kg.}^{-\alpha_{fert}} \times \: \text{manhours}^{-\alpha_{labor}} \times\: \\ \text{mm.}^{-\alpha_{rain}} \times\: \text{num. persons}^{-\alpha_{HHsize}} -->
@@ -282,7 +286,7 @@ x^*_i = \frac{y^* P \alpha_i}{\lambda w_i}
 \label{eq:inputDem1}
 \end{equation}
 
-Where $y*$ is the optimal yield, i.e., the yield function in Equation \ref{eq:cobbDoug2} evaluated at the optimal input demand $x^*_i$. Multiplying this expression for $x^*_i$ by $w_i$ and summing both sides over $i$ then gives an expression for optimal expenditure ($C^*$).
+Where $y^*$ is the optimal yield, i.e., the yield function in Equation \ref{eq:cobbDoug2} evaluated at the optimal input demand $x^*_i$. Multiplying this expression for $x^*_i$ by $w_i$ and summing both sides over $i$ then gives an expression for optimal expenditure ($C^*$).
 
 \begin{equation}
 C^* = R^* \frac{h}{\lambda} \:;\:\:\: R^* = y^* P
@@ -339,7 +343,8 @@ y^* &= v k C^{*h}e^{\epsilon} \:\:;\:\:\: v = \frac{E[y^*]}{E[k] E[C^{*h}]} \\
 \label{eq:YdEnvReg1}
 \end{equation}
 
-Such that the estimated coefficient on logged farm cost may be directly interpreted as the degree of homogeneity for the population. When estimating the model in Equations \ref{eq:cobbDoug2} or \ref{eq:cobbDoug3}, by contrast, $h$ must be tallied by summing the estimated coefficients $\alpha_i$, and will likely vary across the population since not all farms necessarily apply all the inputs specified in the model. The new term $v$, moreover, retains meaning as a measure of TFP---and arguably a more instructive one since all inputs are expressed in identical units of cost. It is henceforth referred to as the "expenditure TFP", and is related to conventional TFP as follows.
+Such that the estimated coefficient on logged farm cost may be directly interpreted as the degree of homogeneity for the population. When estimating the model in Equations \ref{eq:cobbDoug2} or \ref{eq:cobbDoug3}, by contrast, $h$ must be tallied by summing the estimated coefficients $\alpha_i$. The new term $v$, moreover, retains meaning as a measure of TFP---and arguably a more instructive one since all inputs are expressed in identical units of cost. It is henceforth referred to as the "expenditure TFP", and is related to conventional TFP as follows.
+<!-- , and will likely vary across the population since not all farms necessarily apply all the inputs specified in the model -->
 
 \begin{equation}
 \begin{split}
@@ -389,7 +394,7 @@ The price elasticity of farm supply resolves as follows.
 <!-- \end{equation} -->
 <!-- In Appendices A.2 and A.3 it is shown that the second order conditions for maximum profit imply the degree of homogeneity $h$ must exhibit strictly decreasing returns to scale ($0 < h < 1$), whereby it also follows that farm , and that the farm supply curve is positively sloped. -->
 
-## Aggregation of farm level supply based on axioms 3 and 4
+## Aggregation of farm level supply based on axioms 3 and 4 \label{sec:axioms3and4}
 
 The derivation of a compact, instructive expression for $y^*$ above brings us a step closer to parsing the aggregate supply function defined in Equation \ref{eq:aggSup0}. Denoting area $k_a$ such that $q^* = k_a y^*$,
 <!-- (Equation \ref{eq:YdEnvReg1}) -->
@@ -416,7 +421,7 @@ C^* = C^{\#} y^* &= C^{\#} v k C^{* h} \\
 \label{eq:fnCsharp}
 \end{equation}
 
-And note that taking the expected value of the last line and rearranging gives
+And note that taking the mean of the last line and rearranging gives
 
 \begin{equation}
 v^{\eta / h} = \frac{E[y^*]}{E[k^{\eta / h}] E[C^{\# \eta}]}
@@ -444,7 +449,7 @@ C^{\#} = \frac{P}{\lambda} h
 \label{eq:cSharp}
 \end{equation}
 
-Axiom 3 states that farms enter production only if they expect to make non-negative profit, i.e. if $C^* \leq R^*$, which simplifies to $C^{\#} \leq P$. (It follows from Equation \ref{eq:cStar} or \ref{eq:cStar} that another way of expressing axiom 3 is $\lambda \geq h$.) Note, in passing, that the farm employment rate ($\mathcal{E}$) may thus be expressed as follows.
+Axiom 3 states that farms enter production only if they expect to make non-negative profit, i.e. if $C^* \leq R^*$, which simplifies to $C^{\#} \leq P$. (By Equation \ref{eq:cSharp} axiom 3 could also be expressed $\lambda \geq h$.) Note, in passing, that the farm employment rate ($\mathcal{E}$) may thus be expressed as follows.
 
 \begin{equation}
 \mathcal{E} = \int_0^{P} \rho(C^{\#}) dC^{\#}
@@ -463,7 +468,7 @@ Now, to resolve the integral in the expression for aggregate supply (Equation \r
 \begin{equation}
 \begin{split}
 \int_{0}^{\xi} \chi \rho(\chi) d\chi &= E[\chi] \Phi\left( \frac{\ln(\xi) - m_{\chi}}{s_{\chi}} - s_{\chi} \right) \:\:; \\ 
-&m_{\chi} = E[\ln(\chi)] \:\:\: s^2_{\chi} = Var[\ln(\chi)]
+&\text{(Where} \:\: m_{\chi} = E[\ln(\chi)] \:\:\:\:\:\:\:\:\: s^2_{\chi} = Var[\ln(\chi) \text{)}]
 \end{split}
 \label{eq:keyResult}
 \end{equation}
@@ -531,7 +536,7 @@ Q = N E[k_a] E[y^*|C^{\#} \leq P] \mathcal{E}
 \label{eq:aggSup1Alt}
 \end{equation}
 
-Which may be useful for point estimates of aggregate supply along the curve since $E[y^*|C^{\#} \leq P]$ can be estimated from the observed yield distribution, and because $\mathcal{E}$ has a straightforward interpretation as the farm employment rate. However, this form is inconvenient for purposes of drawing the entire aggregate supply curve, as the observed $E[y^*|C^{\#} \leq P]$ is valid only for the $P$ at which it is measured. The unconditional mean yield $E[y^*]$, on the other hand, is constant for all $P$. For this reason, Equation \ref{eq:aggSup1} is preferred for aggregate supply curve assessment. Moreover, the term $\mathcal{P}(P^{\eta}; m_{\#}, s_{\#})$ turns out to have a meaningful economic interpretation that will become clear when the stochastic character of price is taken into account.
+Which, prima facie, is more instructive than the previous form since $\mathcal{E}$ has a straightforward interpretation as the farm employment rate, and more useful because $E[y^*|C^{\#} \leq P]$ can be estimated directly from the observed yield distribution. However, this form is inconvenient for purposes of drawing the entire aggregate supply curve, as the observed $E[y^*|C^{\#} \leq P]$ is valid only for the $P$ at which it is measured. The unconditional mean yield $E[y^*]$, on the other hand, is constant for all $P$. For this reason, Equation \ref{eq:aggSup1} is preferred for most purposes. The unconditional mean yield can be evaluated from observed cost data as shown below. Moreover, the term $\mathcal{P}(P^{\eta}; m_{\#}, s_{\#})$ turns out to have a meaningful economic interpretation that will become clear when the stochastic character of price is taken into account.
 
 ### Evaluating supply curve parameters in practice \label{sec:evalInPract}
 
@@ -598,7 +603,7 @@ Whence it is then possible to evaluate the unconditional parameters $m_c$, $s_c$
 
 ### TFP strata \label{sec:TFPstrata}
 
-As noted earlier (Equation \ref{eq:g0Sum}), binary endowments $\beta_i b_i$, and hence TFP, vary across the population. In the Kenya maize farm example explored farther below, there are 12 distinct values of expenditure TFP, corresponding to 12 distinct combinations of the binary endowments, henceforth referred to as "TFP strata" and indexed by $\phi$. It follows that $E[C^*]$ and $E[y^*]$ can also be disaggregated by TFP stratum.
+As noted earlier (Equation \ref{eq:g0Sum}), binary endowments $\beta_i b_i$, and hence TFP, vary across the population. The distinct values that TFP takes in a given farm population, corresponding to the distinct number of combinations of binary endowments present in the population, are henceforth referred to as "TFP strata" and indexed by $\phi$. It follows that $E[C^*]$ and $E[y^*]$ can also be disaggregated by TFP stratum.
 <!-- Wherever $g$ or $v$ appears above, then, what is really meant is $g_{\phi}$ and $v_{\phi}$, where $\ell$ indexes the values of TFP corresponding to each stratum ($\ell \in (1,12)$ in this case).  -->
 
 \begin{equation}
@@ -627,20 +632,12 @@ v = \sum_{\phi} \frac{N_{\phi}}{N} v_{\phi}
 Where $N_{\phi} / N$ is the fraction of farms in the $\phi^{th}$ TFP stratum. That is to say, $E[y^*]$ and $E[C^*]$ refer to the unconditional mean yield and expenditure evaluated at $v$.
 
 \singlespacing
-## An endogenous model of supply response to and welfare impact of exogenous shock
+## An endogenous model of supply response to and welfare impact of exogenous shock \label{sec:endogResp}
 \doublespacing
 
-The agronomic yield and expenditure response to an exogenous shock observed at experimental stations does not translate into the economic yield and expenditure response likely to occur in real farm populations. This fact of life [@herdt1988increasing; @balasubramanian2000yield] bears reiteration because confusion on the matter unfortunately still pervades the conversation in many areas of agricultural research impact assessment [@sumberg2012mind].
+Agronomic yields and expenditures observed on an experimental plot do not translate into the economic yield and expenditure response likely to occur in real farm populations. This economically obvious, empirically well documented fact of life [@herdt1988increasing; @balasubramanian2000yield] bears reiteration because confusion unfortunately still pervades the conversation in many areas of agricultural research impact assessment [@sumberg2012mind]. As noted in the Introduction, the authors of the conventional modeling framework are cognizant of the difference between economic yields and agronomic yields; and offer some words of warning on the matter [@alston1995science]. But they provide no practical, formal method to distinguish between the two or to explicitly relate the former to the latter, such that their model effectively blurs the technology shock and supply response together as a single, nebulous exogenous shock.
 
-As noted in the Introduction, the authors of the conventional modeling framework are cognizant of the difference between economic yields and agronomic yields; and offer some words of warning on the matter [@alston1995science]. But they provide no practical, formal method to distinguish between the two or to explicitly relate the former to the latter, such that their model effectively blurs the technology shock and supply response together as a single, nebulous exogenous shock.
-
-In this subsection, equations for the evaluation of the farm level endogenous yield and expenditure response to exogenous shock are derived and aggregated based on the model derived above. This includes endogenous assessment of the adoption rate. As mentioned earlier, all of the salient differences between the theoretical framework proposed here and the conventional approach stem from these two steps.
-<!-- from axioms 1-4 in the subsections above -->
-
-More specifically, whereas the conventional approach assumes the farm level expenditure and/or yield response to exogenous shock based on agronomic data and expert opinion, the approach explained below endogenously models the farm level response to the shock based on the theoretical model derived from axioms 1-4 above. The farm level response model explicitly accounts not only for the shock itself, but also for any anticipated changes in input and output price, and for any subsidies included in the technology package.
-
-And whereas the conventional approach exogenously assumes the adoption rate, again typically based on the opinion of experts closely involved in the technology under evaluation, here the adoption rate follows endogenously from the theoretical derivation, based on whether or not adoption increases farm net benefit.
-<!-- ($\mathcal{L}^*$) -->
+In this section, equations for the evaluation of the farm level endogenous yield and expenditure response to, and producer welfare impact of, exogenous technology shocks are derived within the proposed axiomatic framework. The yield and expenditure response models account not only for the shock itself, but also for any anticipated changes in input and output price associated with the shock. The welfare impact model additionally accounts for any subsidies included in the technology package. The farm level supply response and welfare impact models are then aggregated up to population level to generate expressions for total supply response and total producer welfare impact. The aggregation step involves endogenous modeling of the adoption rate based on whether or not the farmer expects adoption to increase their net benefit. Many of the salient differences between the present work and the conventional approach stem from this careful separation of exogenous from endogenous effects.
 
 ### The endogenous farm yield and expenditure response to exogenous shock \label{sec:farmResp}
 
@@ -671,7 +668,7 @@ Ideally, the value of $\beta_5$ should be estimated directly from field trials. 
 
 The direction of the expected change in prices depends upon the type of research product. Most agricultural research currently falls into one of two broad paradigms: "sustainable agricultural intensification" (SAI) or "agroecological intensification" (AEI) [@mockshell2018beyond]. Briefly, the SAI paradigm focuses on genetic gain and high input, land sparing research stemming from the green revolution. The AEI paradigm, on the other hand, prioritizes low input, "land sharing" research and sustainability (or "socioecological resilience") over genetic gain [@dagunga2023agroecology; @MOCKSHELL201964; @altieri2020agroecology].
 
-Widespread adoption of a new SAI technology typically results in increased output supply and input demand, and hence a lower output price and higher input prices. Widespread adoption of an AEI technology, on the other hand, can result in lower input demand and more sustainable, but not necessarily higher, output, in addition to environmental services. For illustrative purposes, in this article the new technology is assumed to be an SAI research product, such that $\partial \ln(\mathbf{w}) / \partial \ln(g) > 0$ and $\partial \ln(P) / \partial \ln(g) < 0$.
+Widespread adoption of a new SAI technology typically results in increased output supply and input demand, and hence a lower output price and higher input prices. Widespread adoption of an AEI technology, on the other hand, can result in lower input demand and more sustainable, but not necessarily higher, output, in addition to environmental services. For pedagogical purposes, in this article the new technology is assumed to be an SAI research product, such that $\partial \ln(\mathbf{w}) / \partial \ln(g) > 0$ and $\partial \ln(P) / \partial \ln(g) < 0$.
 <!-- \begin{equation} -->
 <!-- \begin{split} -->
 <!-- \frac{\partial \ln(y^*)}{\partial \ln(g)} &= \frac{\partial \ln(v)}{\partial \ln(g)} + h \frac{\partial \ln(C^*)}{\partial \ln(g)} \\ -->
@@ -946,7 +943,7 @@ To calculate the change in aggregate supply and welfare for each TFP stratum ($\
 <!-- $$ -->
 
 \singlespacing
-## Accounting for stochasticity, derivation of the expected aggregate supply curve based on axiom 5
+## Accounting for stochasticity, derivation of the expected aggregate supply curve based on axiom 5 \label{sec:axiom5}
 \doublespacing
 
 The deterministic aggregate supply function derived in section \ref{sec:addSupDet} may be a suitable form for sectors characterized by deterministic production processes, negligible delays between input decisions and output, and negligible output price volatility. However, it is not suited to the primary sector, where production is partly deterministic but also partly a function of stochastic meteorological variables; where there is a significant delay between input decisions and output (i.e., the cropping season); and where output price volatility looms large in any management decision. In order to accommodate these hallmarks of agricultural supply, it is necessary to be more explicit in the treatment of yield and output price as stochastic variables.
@@ -1111,7 +1108,7 @@ Note that the optimal farm expenditure per acre $C^*$ remains a deterministic va
 
 ### Accounting for output price stochasticity \label{sec:acct4Stoch}
 
-Absent a forward contract, the output sale price $P$ is a stochastic variable unknown to the farmer at the time of planting. Wherever $P$ appears in the equations above, then, what is really meant is $E[P(T)]|_{t = 0}$---the value that the farmer expects $P$ to take at harvest/sale, as evaluated at planting time. To parse $E[P(T)]|_{t = 0}$, a suitable stochastic model must be assumed for $P(t)$. Within a given season, prices often follow a geometric Brownian motion (gBm). That is to say, changes in $P$ over a small time interval $\Delta t$---i.e. $\Delta P = P(t + \Delta t) - P(t)$)---are often accurately modeled by
+Absent a forward contract, the output sale price $P$ is a stochastic variable unknown to the farmer at the time of planting. Wherever $P$ appears in the equations above, then, what is really meant is $E[P(T)]|_{t = 0}$---i.e. the value that the farmer expects $P$ to take at harvest/sale, as evaluated at planting time. To parse $E[P(T)]|_{t = 0}$, a suitable stochastic model must be assumed for $P(t)$. Within a given season, prices often follow a geometric Brownian motion (gBm). That is to say, changes in $P$ over a small time interval $\Delta t$---i.e. $\Delta P = P(t + \Delta t) - P(t)$)---are often accurately modeled by
 
 \begin{equation}
 \Delta P = P(t) m_p \Delta t - P(t) s_p \varepsilon \sqrt{\Delta t}
@@ -1514,6 +1511,8 @@ And
 As an illustrative example, the expected aggregate supply curve derived above (Equation \ref{eq:aggSup2}) is fit to 2007 Kenyan maize farm data and compared against empirical estimates of expected aggregate supply for the years 2006-2012. The farm data used in this pedagogical exercise come from a panel covering the main and short rains seasons for multiple crops across Kenya for the years 1997, 2000, 2004, 2007, and 2010, originally gathered by the Egerton University Tegemeo Institute of Agricultural Policy and Development in partnership with Michigan State University, under the auspices of a USAID project [@maizeData]. For the present exercise, only the 2007 main rains season maize farm data is used. The main season in Kenya generally runs from March to August or September. Farms not reporting maize as their main crop or reporting zero maize production cost are excluded, as well as five farms reporting extremely high unit expenditure, resulting in a sample size of 937 maize farms across 20 districts (nowadays referred to as "counties"). The sample represents all major maize growing regions in the country. Full details regarding the data and its processing for the present exercise, including summary statistics, are provided in Appendix C.
 
 The empirical estimates of aggregate supply for the years 2006-2012 are taken from commodity intelligence reports published in mid to late season---prior to harvest but after planted area and main season rainfall are known. These estimates, summarized in Table 1, cover some of Kenya's worst drought years in living memory.
+
+\pagebreak
 
 \singlespacing
 ```{r, echo = FALSE, ft.arraystretch = 1}
@@ -3004,12 +3003,11 @@ The illustrative example presented above is an exercise in comparative statics. 
 
 # Discussion and conclusion
 
-The model developed thus far is limited to the evaluation of aggregate supply and producer side welfare impacts. Inclusion of consumer side impacts is fundamental to the technology investment case before donors because producer welfare alone may not offset the government's total subsidy cost (as in the Kenya example above). While this lies outside the scope of the present effort, it would be straightforward to extend the framework to include explicit modeling of aggregate demand and consumer side impacts---i.e. a full fledged partial equilibrium model---by reinterpreting the input demand curve derived in section \ref{sec:axioms1and2} as the wholesaler's or processing firm's (e.g. miller, starch factory) feedstock demand curve.
+The model developed thus far is limited to the evaluation of aggregate supply and producer side welfare impacts. Inclusion of consumer side impacts is fundamental to the technology investment case before donors because producer welfare alone may not offset the government's total subsidy cost (as in the Kenya example above). While this lies outside the scope of the present effort, it would be straightforward to extend the present framework to include explicit modeling of aggregate demand and consumer side impacts---i.e. a full fledged partial equilibrium model---by reinterpreting the input demand curve derived in section \ref{sec:axioms1and2} as the wholesaler's or processing firm's (e.g. miller, starch factory) feedstock demand curve.
 
-Aggregate demand is then evaluated by integrating this curve over the firm population density, where the density function and domain of integration are determined by axioms 3 and 4. If the number of firms buying from the farm population is small (i.e. a cartel or monopsony, which is often the case at subnational scales), the integral is replaced by a discrete sum of the individual firm demand curves. Once aggregate demand is integrated, output price would become endogenous to the model; and it would then be possible to assess consumer side impacts and producer-consumer tradeoffs (the food-price dilemma).
+Aggregate demand could then be evaluated by integrating this curve over the firm population density, where the density function and domain of integration are determined by axioms 3 and 4. If the number of firms buying from the farm population is small (i.e. a cartel or monopsony, which is often the case at subnational scales), the integral is replaced by a discrete sum of the individual firm demand curves. Once aggregate demand is integrated, output price would become endogenous to the model; and it would then be possible to assess consumer side impacts and producer-consumer tradeoffs (the food-price dilemma).
 <!-- As mentioned in section \ref{sec:farmResp}, -->
-
-In the theoretical development thus far, the technology shock is introduced as an adjustment to TFP. In some cases, it may make more sense to represent the shock as a perturbation to the degree of homogeneity $h$---i.e. a change in one or more of the underlying input efficiencies $\boldsymbol{\alpha}$. A cursory exploration of the matter (not shared here), suggests that shocks to $h$ are considerably more complex than shocks to TFP, requiring a separate, probably lengthy, treatment unto themselves. And so, for now, they remain the subject of future work.
+<!-- In the theoretical development thus far, the technology shock is introduced as an adjustment to TFP. In some cases, it may make more sense to represent the shock as a perturbation to the degree of homogeneity $h$---i.e. a change in one or more of the underlying input efficiencies $\boldsymbol{\alpha}$. A cursory exploration of the matter (not shared here), suggests that shocks to $h$ are considerably more complex than shocks to TFP, requiring a separate, probably lengthy, treatment unto themselves. And so, for now, they remain the subject of future work. -->
 
 A model of agricultural supply and of the supply and welfare impacts of new technology (or any exogenous shock) is useful to agricultural policy makers insofar as it can map out the plausible outcome space for the range of assumptions and policy lever settings (e.g. subsidies) relevant to the policy discussion; and insofar as this mapping is transparently rooted in an empirically vetted, sensible theoretical foundation.
 <!-- (typically as regards price and meteorological conditions) -->
